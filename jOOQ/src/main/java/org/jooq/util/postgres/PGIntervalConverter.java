@@ -35,9 +35,6 @@
  */
 package org.jooq.util.postgres;
 
-import static org.jooq.tools.reflect.Reflect.on;
-
-import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 
@@ -52,76 +49,54 @@ import org.jooq.types.YearToMonth;
  * intervals. Negative intervals have a sign before every date part!
  *
  * @author Lukas Eder
+ * @deprecated - 2.3.0 - Use {@link PostgresUtils} methods instead
  */
+@Deprecated
 public class PGIntervalConverter {
 
     /**
-     * Convert a jOOQ <code>DAY TO SECOND</code> interval to a Postgres representation
+     * Convert a jOOQ <code>DAY TO SECOND</code> interval to a Postgres
+     * representation
+     *
+     * @deprecated - 2.3.0 - Use {@link PostgresUtils#toPGInterval(DayToSecond)}
+     *             methods instead
      */
+    @Deprecated
     public static Object toPGInterval(DayToSecond interval) {
-        return on("org.postgresql.util.PGInterval").create(0, 0,
-            interval.getSign() * interval.getDays(),
-            interval.getSign() * interval.getHours(),
-            interval.getSign() * interval.getMinutes(),
-            interval.getSign() * interval.getSeconds() +
-            interval.getSign() * interval.getNano() / 1000000000.0).get();
+        return PostgresUtils.toPGInterval(interval);
     }
 
     /**
-     * Convert a jOOQ <code>YEAR TO MONTH</code> interval to a Postgres representation
+     * Convert a jOOQ <code>YEAR TO MONTH</code> interval to a Postgres
+     * representation
+     *
+     * @deprecated - 2.3.0 - Use {@link PostgresUtils#toPGInterval(YearToMonth)}
+     *             methods instead
      */
+    @Deprecated
     public static Object toPGInterval(YearToMonth interval) {
-        return on("org.postgresql.util.PGInterval").create(
-            interval.getSign() * interval.getYears(),
-            interval.getSign() * interval.getMonths(),
-            0, 0, 0, 0.0).get();
+        return PostgresUtils.toPGInterval(interval);
     }
 
     /**
      * Convert a Postgres interval to a jOOQ <code>DAY TO SECOND</code> interval
+     *
+     * @deprecated - 2.3.0 - Use {@link PostgresUtils#toDayToSecond(Object)}
+     *             methods instead
      */
+    @Deprecated
     public static DayToSecond toDayToSecond(Object pgInterval) {
-        boolean negative = pgInterval.toString().contains("-");
-
-        Reflect i = on(pgInterval);
-        if (negative) {
-            i.call("scale", -1);
-        }
-
-        Double seconds = i.call("getSeconds").<Double>get();
-        DayToSecond result = new DayToSecond(
-            i.call("getDays").<Integer>get(),
-            i.call("getHours").<Integer>get(),
-            i.call("getMinutes").<Integer>get(),
-            seconds.intValue(),
-            (int) (1000000000 * (seconds - seconds.intValue())));
-
-        if (negative) {
-            result = result.neg();
-        }
-
-        return result;
+        return PostgresUtils.toDayToSecond(pgInterval);
     }
 
     /**
      * Convert a Postgres interval to a jOOQ <code>YEAR TO MONTH</code> interval
+     *
+     * @deprecated - 2.3.0 - Use {@link PostgresUtils#toYearToMonth(Object)}
+     *             methods instead
      */
+    @Deprecated
     public static YearToMonth toYearToMonth(Object pgInterval) {
-        boolean negative = pgInterval.toString().contains("-");
-
-        Reflect i = on(pgInterval);
-        if (negative) {
-            i.call("scale", -1);
-        }
-
-        YearToMonth result = new YearToMonth(
-            i.call("getYears").<Integer>get(),
-            i.call("getMonths").<Integer>get());
-
-        if (negative) {
-            result = result.neg();
-        }
-
-        return result;
+        return PostgresUtils.toYearToMonth(pgInterval);
     }
 }

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.udt;
  */
 public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -15622476;
+	private static final long serialVersionUID = 1486738872;
 
 	/**
 	 * The singleton instance of public.u_address_type
@@ -57,6 +57,11 @@ public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.g
 	 * An uncommented item
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord, java.lang.Integer> CODE = createField("code", org.jooq.impl.SQLDataType.INTEGER, U_ADDRESS_TYPE);
+
+	/**
+	 * An uncommented item
+	 */
+	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord, byte[]> F_1323 = createField("f_1323", org.jooq.impl.SQLDataType.BLOB, U_ADDRESS_TYPE);
 
 	/**
 	 * No further instances allowed

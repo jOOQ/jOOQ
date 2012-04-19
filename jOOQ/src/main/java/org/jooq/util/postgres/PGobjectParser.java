@@ -35,145 +35,25 @@
  */
 package org.jooq.util.postgres;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A parser for Postgres PGobject anonymous types
  *
  * @author Lukas Eder
+ * @deprecated - 2.3.0 - Use {@link PostgresUtils#toPGObject(String)} instead
  */
+@Deprecated
 public class PGobjectParser {
 
     /**
      * Tokenize a PGObject input string
+     *
+     * @deprecated - 2.3.0 - Use {@link PostgresUtils#toPGObject(String)}
+     *             instead
      */
-    @SuppressWarnings("null")
-    public List<String> parse(String input) {
-        List<String> values = new ArrayList<String>();
-        int i = 0;
-        int state = 0;
-        StringBuilder sb = null;
-
-        while (i < input.length()) {
-            char c = input.charAt(i);
-
-            switch (state) {
-                // Initial state
-                case 0:
-
-                    // Consume the opening parenthesis
-                    if (c == '(') {
-                        state = 1;
-                    }
-
-                    break;
-
-                // Before a new value
-                case 1:
-                    sb = new StringBuilder();
-
-                    // Consume "empty"
-                    if (c == ',') {
-                        values.add(null);
-                        state = 1;
-                    }
-
-                    // Consume "empty"
-                    else if (c == ')') {
-                        values.add(null);
-                        state = 5;
-                    }
-
-                    // Consume the opening quote
-                    else if (c == '"') {
-                        state = 2;
-                    }
-
-                    // Consume "null"
-                    else if ((c == 'n' || c == 'N') && (i + 4 < input.length())
-                        && input.substring(i, i + 4).equalsIgnoreCase("null")) {
-                        values.add(null);
-                        i += 3;
-                        state = 4;
-                    }
-
-                    // Consume a character
-                    else {
-                        sb.append(c);
-                        state = 3;
-                    }
-
-                    break;
-
-                // A "value" is being created
-                case 2:
-
-                    // Consume a quote
-                    if (c == '"') {
-
-                        // Consume an escaped quote
-                        if (input.charAt(i + 1) == '"') {
-                            sb.append(c);
-                            i++;
-                        }
-
-                        // Consume the closing quote
-                        else {
-                            values.add(sb.toString());
-                            state = 4;
-                        }
-                    }
-
-                    // Consume any other character
-                    else {
-                        sb.append(c);
-                    }
-
-                    break;
-
-                // A value is being created
-                case 3:
-
-                    // Consume the closing parenthesis
-                    if (c == ')') {
-                        values.add(sb.toString());
-                        state = 5;
-                    }
-
-                    // Consume the value separator
-                    else if (c == ',') {
-                        values.add(sb.toString());
-                        state = 1;
-                    }
-
-                    // Consume any other character
-                    else {
-                        sb.append(c);
-                    }
-
-                    break;
-
-                // A value was just added
-                case 4:
-
-                    // Consume the closing parenthesis
-                    if (c == ')') {
-                        state = 5;
-                    }
-
-                    // Consume the value separator
-                    else if (c == ',') {
-                        state = 1;
-                    }
-
-                    break;
-            }
-
-            // Consume next character
-            i++;
-        }
-
-        return values;
+    @Deprecated
+    public static List<String> parse(String input) {
+        return PostgresUtils.toPGObject(input);
     }
 }

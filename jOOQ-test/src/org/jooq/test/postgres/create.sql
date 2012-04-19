@@ -80,7 +80,8 @@ CREATE TYPE u_country AS ENUM ('Brazil', 'England', 'Germany')/
 CREATE TYPE u_street_type AS (
   street VARCHAR(100),
   no VARCHAR(30),
-  floors integer[]
+  floors integer[],
+  f_1323 bytea
 )
 /
 
@@ -90,7 +91,8 @@ CREATE TYPE u_address_type AS (
   city VARCHAR(50),
   country u_country,
   since DATE,
-  code INTEGER
+  code INTEGER,
+  f_1323 bytea
 )
 /
 

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.udt.records;
  */
 public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -1354929159;
+	private static final long serialVersionUID = -377738439;
 
 
 	/**
@@ -93,6 +93,20 @@ public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.tes
 	 */
 	public java.lang.Integer getCode() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.CODE);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setF_1323(byte[] value) {
+		setValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.F_1323, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public byte[] getF_1323() {
+		return getValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.F_1323);
 	}
 
 	public UAddressTypeRecord() {

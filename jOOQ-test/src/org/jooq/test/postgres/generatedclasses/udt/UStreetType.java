@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.udt;
  */
 public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord> {
 
-	private static final long serialVersionUID = -578196600;
+	private static final long serialVersionUID = -842411288;
 
 	/**
 	 * The singleton instance of public.u_street_type
@@ -42,6 +42,11 @@ public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.ge
 	 * An uncommented item
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord, java.lang.Integer[]> FLOORS = createField("floors", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), U_STREET_TYPE);
+
+	/**
+	 * An uncommented item
+	 */
+	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord, byte[]> F_1323 = createField("f_1323", org.jooq.impl.SQLDataType.BLOB, U_STREET_TYPE);
 
 	/**
 	 * No further instances allowed

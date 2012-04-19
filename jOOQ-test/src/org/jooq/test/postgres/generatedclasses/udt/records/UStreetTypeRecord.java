@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.udt.records;
  */
 public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord> {
 
-	private static final long serialVersionUID = -1235026854;
+	private static final long serialVersionUID = -1296864888;
 
 
 	/**
@@ -51,6 +51,20 @@ public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 	 */
 	public java.lang.Integer[] getFloors() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.FLOORS);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setF_1323(byte[] value) {
+		setValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.F_1323, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public byte[] getF_1323() {
+		return getValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.F_1323);
 	}
 
 	public UStreetTypeRecord() {

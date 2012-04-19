@@ -35,6 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.SQLDataType.BLOB;
+import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.NCLOB;
+
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -467,6 +471,12 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     @Override
     public final boolean isInterval() {
         return Interval.class.isAssignableFrom(type);
+    }
+
+    @Override
+    public final boolean isLob() {
+        SQLDataType<T> t = getSQLDataType();
+        return (t == BLOB || t == CLOB || t == NCLOB);
     }
 
     @Override

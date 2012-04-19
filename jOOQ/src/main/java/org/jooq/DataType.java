@@ -162,8 +162,9 @@ public interface DataType<T> extends Serializable {
     T convert(Object object);
 
     /**
-     * Whether this data type is any numeric data type. This applies to any of
-     * these types:
+     * Whether this data type is any numeric data type.
+     * <p>
+     * This applies to any of these types:
      * <ul>
      * <li> {@link SQLDataType#TINYINT}</li>
      * <li> {@link SQLDataType#SMALLINT}</li>
@@ -180,8 +181,9 @@ public interface DataType<T> extends Serializable {
     boolean isNumeric();
 
     /**
-     * Whether this data type is any character data type. This applies to any of
-     * these types:
+     * Whether this data type is any character data type.
+     * <p>
+     * This applies to any of these types:
      * <ul>
      * <li> {@link SQLDataType#CHAR}</li>
      * <li> {@link SQLDataType#CLOB}</li>
@@ -196,8 +198,9 @@ public interface DataType<T> extends Serializable {
     boolean isString();
 
     /**
-     * Whether this data type is any date or time type. This applies to any of
-     * these types.
+     * Whether this data type is any date or time type.
+     * <p>
+     * This applies to any of these types.
      * <ul>
      * <li> {@link SQLDataType#DATE}</li>
      * <li> {@link SQLDataType#TIME}</li>
@@ -207,8 +210,9 @@ public interface DataType<T> extends Serializable {
     boolean isDateTime();
 
     /**
-     * Whether this data type is any date or time type. This applies to any of
-     * these types.
+     * Whether this data type is any date or time type.
+     * <p>
+     * This applies to any of these types.
      * <ul>
      * <li> {@link SQLDataType#DATE}</li>
      * <li> {@link SQLDataType#TIME}</li>
@@ -222,8 +226,9 @@ public interface DataType<T> extends Serializable {
     boolean isTemporal();
 
     /**
-     * Whether this data type is any interval type. This applies to any of
-     * these types.
+     * Whether this data type is any interval type.
+     * <p>
+     * This applies to any of these types.
      * <ul>
      * <li> {@link YearToMonth}</li>
      * <li> {@link DayToSecond}</li>
@@ -232,8 +237,9 @@ public interface DataType<T> extends Serializable {
     boolean isInterval();
 
     /**
-     * Whether this data type is any binary type. This applies to any of these
-     * types.
+     * Whether this data type is any binary type.
+     * <p>
+     * This applies to any of these types.
      * <ul>
      * <li> {@link SQLDataType#BINARY}</li>
      * <li> {@link SQLDataType#BLOB}</li>
@@ -242,6 +248,18 @@ public interface DataType<T> extends Serializable {
      * </ul>
      */
     boolean isBinary();
+
+    /**
+     * Whether this data type is best deserialised as a <code>LOB</code>.
+     * <p>
+     * This applies to any of these types.
+     * <ul>
+     * <li> {@link SQLDataType#BLOB}</li>
+     * <li> {@link SQLDataType#CLOB}</li>
+     * <li> {@link SQLDataType#NCLOB}</li>
+     * </ul>
+     */
+    boolean isLob();
 
     /**
      * Whether this data type is an array type.

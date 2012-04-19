@@ -91,9 +91,8 @@ import org.jooq.util.hsqldb.HSQLDBDataType;
 import org.jooq.util.ingres.IngresDataType;
 import org.jooq.util.mysql.MySQLDataType;
 import org.jooq.util.oracle.OracleDataType;
-import org.jooq.util.postgres.PGIntervalConverter;
-import org.jooq.util.postgres.PGobjectParser;
 import org.jooq.util.postgres.PostgresDataType;
+import org.jooq.util.postgres.PostgresUtils;
 import org.jooq.util.sqlite.SQLiteDataType;
 import org.jooq.util.sqlserver.SQLServerDataType;
 import org.jooq.util.sybase.SybaseDataType;
@@ -387,7 +386,7 @@ public final class FieldTypeHelper {
         else if (type == YearToMonth.class) {
             if (ctx.getDialect() == POSTGRES) {
                 Object object = rs.getObject(index);
-                return (T) (object == null ? null : PGIntervalConverter.toYearToMonth(object));
+                return (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
             }
             else {
                 String string = rs.getString(index);
@@ -397,7 +396,7 @@ public final class FieldTypeHelper {
         else if (type == DayToSecond.class) {
             if (ctx.getDialect() == POSTGRES) {
                 Object object = rs.getObject(index);
-                return (T) (object == null ? null : PGIntervalConverter.toDayToSecond(object));
+                return (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
             }
             else {
                 String string = rs.getString(index);
@@ -711,7 +710,7 @@ public final class FieldTypeHelper {
         else if (type == YearToMonth.class) {
             if (ctx.getDialect() == POSTGRES) {
                 Object object = stmt.getObject(index);
-                return (T) (object == null ? null : PGIntervalConverter.toYearToMonth(object));
+                return (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
             }
             else {
                 String string = stmt.getString(index);
@@ -721,7 +720,7 @@ public final class FieldTypeHelper {
         else if (type == DayToSecond.class) {
             if (ctx.getDialect() == POSTGRES) {
                 Object object = stmt.getObject(index);
-                return (T) (object == null ? null : PGIntervalConverter.toDayToSecond(object));
+                return (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
             }
             else {
                 String string = stmt.getString(index);
@@ -927,7 +926,7 @@ public final class FieldTypeHelper {
             return (T) Byte.valueOf(string);
         }
         else if (type == byte[].class) {
-            // Not supported
+	        return (T) PostgresUtils.toBytes(string);
         }
         else if (type == Clob.class) {
             // Not supported
@@ -1020,7 +1019,7 @@ public final class FieldTypeHelper {
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
         UDTRecord<?> record = (UDTRecord<?>) Util.newRecord((Class) type);
-        List<String> values = new PGobjectParser().parse(object.toString());
+        List<String> values = PostgresUtils.toPGObject(object.toString());
 
         List<Field<?>> fields = record.getFields();
         for (int i = 0; i < fields.size(); i++) {

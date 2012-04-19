@@ -33,9 +33,9 @@ INSERT INTO t_658_22 VALUES (1, 1), (2, 2), (3, 3)/
 INSERT INTO t_658_32 VALUES (1, 1), (2, 2), (3, 3)/
 INSERT INTO t_658_ref VALUES ('A', 1, 1, 'B', 2, 2)/
 
-INSERT INTO t_author VALUES (nextval('s_author_id'), 'George', 'Orwell', TO_DATE('1903-06-25', 'YYYY-MM-DD'), 1903, ROW(ROW('Parliament Hill', '77', '{1, 2, 3}'), 'NW31A9', 'Hampstead', 'England', '1980-01-01', null))
+INSERT INTO t_author VALUES (nextval('s_author_id'), 'George', 'Orwell', TO_DATE('1903-06-25', 'YYYY-MM-DD'), 1903, ROW(ROW('Parliament Hill', '77', '{1, 2, 3}', E'\\x7070'), 'NW31A9', 'Hampstead', 'England', '1980-01-01', null, E'\\x7171'))
 /
-INSERT INTO t_author VALUES (nextval('s_author_id'), 'Paulo', 'Coelho', TO_DATE('1947-08-24', 'YYYY-MM-DD'), 1947, ROW(ROW('Caixa Postal', '43.003', null), null, 'Rio de Janeiro', 'Brazil', '1940-01-01', 2))
+INSERT INTO t_author VALUES (nextval('s_author_id'), 'Paulo', 'Coelho', TO_DATE('1947-08-24', 'YYYY-MM-DD'), 1947, ROW(ROW('Caixa Postal', '43.003', null, null), null, 'Rio de Janeiro', 'Brazil', '1940-01-01', 2, null))
 /
 
 INSERT INTO t_book VALUES (1, 1, null, null, '1984', 1948, 1, 'To know and not to know, to be conscious of complete truthfulness while telling carefully constructed lies, to hold simultaneously two opinions which cancelled out, knowing them to be contradictory and believing in both of them, to use logic against logic, to repudiate morality while laying claim to it, to believe that democracy was impossible and that the Party was the guardian of democracy, to forget, whatever it was necessary to forget, then to draw it back into memory again at the moment when it was needed, and then promptly to forget it again, and above all, to apply the same process to the process itself -- that was the ultimate subtlety; consciously to induce unconsciousness, and then, once again, to become unconscious of the act of hypnosis you had just performed. Even to understand the word ''doublethink'' involved the use of doublethink..', null, 'ORDERED')
@@ -62,5 +62,5 @@ INSERT INTO t_book_to_book_store VALUES ('Buchhandlung im Volkshaus', 3, 1)/
 
 INSERT INTO t_arrays VALUES (1, null, null, null, null, null, null)/
 INSERT INTO t_arrays VALUES (2, '{}', '{}', '{}', '{}', '{}', '{}')/
-INSERT INTO t_arrays VALUES (3, '{"a"}', '{1}', ARRAY[TO_DATE('1981-07-10', 'YYYY-MM-DD')], ARRAY[ROW('Downing Street', '10', null)]::u_street_type[], '{"England"}', ARRAY[ARRAY[1]])/
-INSERT INTO t_arrays VALUES (4, '{"a", "b"}', '{1, 2}', ARRAY[TO_DATE('1981-07-10', 'YYYY-MM-DD'), TO_DATE('2000-01-01', 'YYYY-MM-DD')], ARRAY[ROW('Downing Street', '10', '{}'), ROW('Bahnhofstrasse', '12', '{1, 2}')]::u_street_type[], '{"England", "Germany"}', ARRAY[ARRAY[1], ARRAY[2]])/
+INSERT INTO t_arrays VALUES (3, '{"a"}', '{1}', ARRAY[TO_DATE('1981-07-10', 'YYYY-MM-DD')], ARRAY[ROW('Downing Street', '10', null, E'\\x6969')]::u_street_type[], '{"England"}', ARRAY[ARRAY[1]])/
+INSERT INTO t_arrays VALUES (4, '{"a", "b"}', '{1, 2}', ARRAY[TO_DATE('1981-07-10', 'YYYY-MM-DD'), TO_DATE('2000-01-01', 'YYYY-MM-DD')], ARRAY[ROW('Downing Street', '10', '{}', E'\\x6969'), ROW('Bahnhofstrasse', '12', '{1, 2}', E'\\x6969')]::u_street_type[], '{"England", "Germany"}', ARRAY[ARRAY[1], ARRAY[2]])/

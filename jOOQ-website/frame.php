@@ -58,7 +58,9 @@
 					data-show-faces="true"
 					data-font="verdana"></div>
 			</div>
-		</div>
+			<div class="tweet-item">
+				<a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.jooq.org&media=http%3A%2F%2Fwww.jooq.org%2Fimg%2Flogo.png&description=jOOQ%20%3A%20A%20peace%20treaty%20between%20SQL%20and%20Java" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>			</div>
+			</div>
 
 	    <div id="menu">
 	        <?php
@@ -121,5 +123,7 @@
 			style="position: absolute; top: 0; right: 0; border: 0;"/> </a>
 		<div style="display: none">
 			<img src="/img/logo.png" title="jOOQ Logo"/>
+
+		<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
 	</body>
 </html>

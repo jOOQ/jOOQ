@@ -2164,7 +2164,8 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static String escape(String value, char escape) {
-        return value.replace("%", escape + "%").replace("_", escape + "_");
+        String esc = "" + escape;
+        return value.replace(esc, esc + esc).replace("%", esc + "%").replace("_", esc + "_");
     }
 
     /**
@@ -2180,8 +2181,10 @@ public class Factory implements FactoryOperations {
     public static Field<String> escape(Field<String> field, char escape) {
         Field<String> replace = field;
 
-        replace = replace(replace, literal("'%'"), literal("'" + escape + "%'"));
-        replace = replace(replace, literal("'_'"), literal("'" + escape + "_'"));
+        String esc = "" + escape;
+        replace = replace(replace, inline(esc), inline(esc + esc));
+        replace = replace(replace, inline("%"), inline(esc + "%"));
+        replace = replace(replace, inline("_"), inline(esc + "_"));
 
         return replace;
     }
@@ -4692,6 +4695,49 @@ public class Factory implements FactoryOperations {
         Param<T> val = (Param<T>) val(value);
         val.setInline(true);
         return val;
+    }
+
+    /**
+     * Create a bind value, that is always inlined.
+     * <p>
+     * This is a convenience method for {@link #inline(Object)}, returning
+     * <code>Field&lt;String&gt;</code>, rather than
+     * <code>Field&lt;Character&gt;</code>
+     *
+     * @see #inline(Object)
+     */
+    @Support
+    public static Param<String> inline(char character) {
+        return inline("" + character);
+    }
+
+    /**
+     * Create a bind value, that is always inlined.
+     * <p>
+     * This is a convenience method for {@link #inline(Object)}, returning
+     * <code>Field&lt;String&gt;</code>, rather than
+     * <code>Field&lt;Character&gt;</code>
+     *
+     * @see #inline(Object)
+     */
+    @Support
+    public static Param<String> inline(Character character) {
+        return inline((character == null) ? null : ("" + character));
+    }
+
+    /**
+     * Create a bind value, that is always inlined.
+     * <p>
+     * This is a convenience method for {@link #inline(Object)}, returning
+     * <code>Field&lt;String&gt;</code>, rather than
+     * <code>Field&lt;CharSequence&gt;</code>
+     *
+     * @see #inline(Object)
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Support
+    public static Param<String> inline(CharSequence character) {
+        return (Param) inline((Object) ((character == null) ? null : ("" + character)));
     }
 
     /**

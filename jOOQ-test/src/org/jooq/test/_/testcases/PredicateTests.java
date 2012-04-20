@@ -166,7 +166,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 .set(TBook_AUTHOR_ID(), 2)
                 .set(TBook_PUBLISHED_IN(), 2012)
                 .set((Field<Object>) TBook_LANGUAGE_ID(), on(TBook_LANGUAGE_ID().getDataType().getType()).get("en"))
-                .set(TBook_TITLE(), "About percentages (%) and underscores (_), a critical review")
+                .set(TBook_TITLE(), "About percentages (%) and underscores (_), a critical review! Check exclamation marks, too!")
                 .execute());
 
         // [#1072] Add checks for ESCAPE syntax
@@ -218,14 +218,17 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         books =
         create().selectFrom(TBook())
                 .where(TBook_TITLE().contains("%"))
+                .and(TBook_TITLE().contains("review!"))
                 .and(derby ? trueCondition() :
                      TBook_TITLE().contains(val("(_")))
+
                 .and(TBook_TITLE().startsWith("About"))
                 .and(derby ? trueCondition() :
                      TBook_TITLE().startsWith(val("Abo")))
-                .and(TBook_TITLE().endsWith("review"))
+
+                .and(TBook_TITLE().endsWith("too!"))
                 .and(derby ? trueCondition() :
-                     TBook_TITLE().endsWith(val("review")))
+                     TBook_TITLE().endsWith(val("too!")))
                 .fetch();
 
         assertEquals(1, books.size());

@@ -70,6 +70,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -364,6 +365,15 @@ public class jOOQTest {
             Factory.coth((Integer) null),
             Factory.coth((Field<Integer>) null));
         assertEquals(
+            Factory.dateAdd((Date) null, (Integer) null),
+            Factory.dateAdd((Field<Date>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.dateDiff((Date) null, (Date) null),
+            Factory.dateDiff((Field<Date>) null, (Field<Date>) null));
+        assertEquals(
+            Factory.day((java.util.Date) null),
+            Factory.day((Field<java.util.Date>) null));
+        assertEquals(
             Factory.decode((Integer) null, null, null),
             Factory.decode((Field<Integer>) null, null, null));
         assertEquals(
@@ -379,24 +389,6 @@ public class jOOQTest {
             Factory.extract((java.util.Date) null, DatePart.DAY),
             Factory.extract((Field<java.util.Date>) null, DatePart.DAY));
         assertEquals(
-            Factory.year((java.util.Date) null),
-            Factory.year((Field<java.util.Date>) null));
-        assertEquals(
-            Factory.month((java.util.Date) null),
-            Factory.month((Field<java.util.Date>) null));
-        assertEquals(
-            Factory.day((java.util.Date) null),
-            Factory.day((Field<java.util.Date>) null));
-        assertEquals(
-            Factory.hour((java.util.Date) null),
-            Factory.hour((Field<java.util.Date>) null));
-        assertEquals(
-            Factory.minute((java.util.Date) null),
-            Factory.minute((Field<java.util.Date>) null));
-        assertEquals(
-            Factory.second((java.util.Date) null),
-            Factory.second((Field<java.util.Date>) null));
-        assertEquals(
             Factory.floor((Integer) null),
             Factory.floor((Field<Integer>) null));
         assertEquals(
@@ -411,6 +403,9 @@ public class jOOQTest {
         assertEquals(
             Factory.greatest((Integer) null, (Integer) null),
             Factory.greatest((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.hour((java.util.Date) null),
+            Factory.hour((Field<java.util.Date>) null));
         assertEquals(
             Factory.lag((Field<Integer>) null, 1, (Integer) null),
             Factory.lag((Field<Integer>) null, 1, (Field<Integer>) null));
@@ -444,6 +439,12 @@ public class jOOQTest {
         assertEquals(
             Factory.ltrim((String) null),
             Factory.ltrim((Field<String>) null));
+        assertEquals(
+            Factory.minute((java.util.Date) null),
+            Factory.minute((Field<java.util.Date>) null));
+        assertEquals(
+            Factory.month((java.util.Date) null),
+            Factory.month((Field<java.util.Date>) null));
         assertEquals(
             Factory.nullif((Integer) null, (Integer) null),
             Factory.nullif((Field<Integer>) null, (Integer) null));
@@ -514,6 +515,9 @@ public class jOOQTest {
             Factory.rtrim((String) null),
             Factory.rtrim((Field<String>) null));
         assertEquals(
+            Factory.second((java.util.Date) null),
+            Factory.second((Field<java.util.Date>) null));
+        assertEquals(
             Factory.shl((Integer) null, (Integer) null),
             Factory.shl((Integer) null, (Field<Integer>) null));
         assertEquals(
@@ -550,11 +554,20 @@ public class jOOQTest {
             Factory.tanh((Integer) null),
             Factory.tanh((Field<Integer>) null));
         assertEquals(
+            Factory.timestampAdd((Timestamp) null, (Integer) null),
+            Factory.timestampAdd((Field<Timestamp>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.timestampDiff((Timestamp) null, (Timestamp) null),
+            Factory.timestampDiff((Field<Timestamp>) null, (Field<Timestamp>) null));
+        assertEquals(
             Factory.trim((String) null),
             Factory.trim((Field<String>) null));
         assertEquals(
             Factory.upper((String) null),
             Factory.upper((Field<String>) null));
+        assertEquals(
+            Factory.year((java.util.Date) null),
+            Factory.year((Field<java.util.Date>) null));
     }
 
     @Test

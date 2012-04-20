@@ -2511,6 +2511,30 @@ public class Factory implements FactoryOperations {
     }
 
     /**
+     * Add an interval to a date
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#add(Number)
+     */
+    @Support
+    public static Field<Date> dateAdd(Date date, Number interval) {
+        return dateAdd(val(date), val(interval));
+    }
+
+    /**
+     * Add an interval to a date
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#add(Field)
+     */
+    @Support
+    public static Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval) {
+        return nullSafe(date).add(interval);
+    }
+
+    /**
      * Get the date difference in number of days
      * <p>
      * This translates into any dialect
@@ -2532,6 +2556,30 @@ public class Factory implements FactoryOperations {
     @Support
     public static Field<Integer> dateDiff(Field<Date> date1, Field<Date> date2) {
         return new DateDiff(nullSafe(date1), nullSafe(date2));
+    }
+
+    /**
+     * Add an interval to a timestamp
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#add(Number)
+     */
+    @Support
+    public static Field<Timestamp> timestampAdd(Timestamp timestamp, Number interval) {
+        return timestampAdd(val(timestamp), val(interval));
+    }
+
+    /**
+     * Add an interval to a timestamp
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#add(Field)
+     */
+    @Support
+    public static Field<Timestamp> timestampAdd(Field<Timestamp> timestamp, Field<? extends Number> interval) {
+        return nullSafe(timestamp).add(interval);
     }
 
     /**
@@ -2583,7 +2631,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Field<Timestamp> timestamp2) {
-        return new TimestampDiff(timestamp1, timestamp2);
+        return new TimestampDiff(nullSafe(timestamp1), nullSafe(timestamp2));
     }
 
     /**

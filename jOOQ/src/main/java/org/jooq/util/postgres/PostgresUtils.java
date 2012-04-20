@@ -39,6 +39,8 @@ import static org.jooq.tools.reflect.Reflect.on;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,35 +78,85 @@ public class PostgresUtils {
      * @author Peter Ertl
      */
     public static byte[] toBytes(final String string) {
+
+        // Hex encoding is the default since Postgres 9.0
         if (string.startsWith(POSTGRESQL_HEX_STRING_PREFIX)) {
-            String hex = string.substring(POSTGRESQL_HEX_STRING_PREFIX.length());
+            return toBytesFromHexEncoding(string);
+        } else {
+            return toBytesFromOctalEncoding(string);
+        }
+    }
 
-            final StringReader input = new StringReader(hex);
-            final ByteArrayOutputStream bytes = new ByteArrayOutputStream(hex.length() / 2);
-            int hexDigit;
-            int byteValue;
+    private static byte[] toBytesFromOctalEncoding(final String string) {
+        final Reader reader = new StringReader(string);
+        final ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
-            try {
-                while ((hexDigit = input.read()) != -1) {
-                    byteValue = (hexValue(hexDigit) << 4);
-                    if ((hexDigit = input.read()) == -1) {
-                        break;
-                    }
-                    byteValue += hexValue(hexDigit);
-                    bytes.write(byteValue);
-                }
-            }
-
-            // should never happen for a string reader
-            catch (IOException e) {
-                throw new DataTypeException("Error while decoding hex string", e);
-            }
-
-            input.close();
+        try {
+            convertOctalToBytes(reader, bytes);
             return bytes.toByteArray();
+        } catch (IOException x) {
+            throw new DataTypeException("failed to parse octal hex string: " + x.getMessage(), x);
+        }
+    }
+
+    private static void convertOctalToBytes(final Reader reader, final OutputStream bytes) throws IOException {
+        int ch;
+        while ((ch = reader.read()) != -1) {
+            if (ch == '\\') {
+                ch = reader.read();
+                if (ch == -1) {
+                    throw new DataTypeException("unexpected end of stream after initial backslash");
+                }
+                if (ch == '\\') {
+                    bytes.write('\\');
+                    continue;
+                }
+                int val = octalValue(ch);
+                ch = reader.read();
+                if (ch == -1) {
+                    throw new DataTypeException("unexpected end of octal value");
+                }
+                val <<= 3;
+                val += octalValue(ch);
+                ch = reader.read();
+                if (ch == -1) {
+                    throw new DataTypeException("unexpected end of octal value");
+                }
+                val <<= 3;
+                val += octalValue(ch);
+                bytes.write(val);
+            } else {
+                bytes.write(ch);
+            }
+        }
+    }
+
+    private static byte[] toBytesFromHexEncoding(String string) {
+        String hex = string.substring(POSTGRESQL_HEX_STRING_PREFIX.length());
+
+        final StringReader input = new StringReader(hex);
+        final ByteArrayOutputStream bytes = new ByteArrayOutputStream(hex.length() / 2);
+        int hexDigit;
+        int byteValue;
+
+        try {
+            while ((hexDigit = input.read()) != -1) {
+                byteValue = (hexValue(hexDigit) << 4);
+                if ((hexDigit = input.read()) == -1) {
+                    break;
+                }
+                byteValue += hexValue(hexDigit);
+                bytes.write(byteValue);
+            }
         }
 
-        throw new DataTypeException("unknown postgresql string format for bytes: " + string);
+        // should never happen for a string reader
+        catch (IOException e) {
+            throw new DataTypeException("Error while decoding hex string", e);
+        }
+
+        input.close();
+        return bytes.toByteArray();
     }
 
     /**
@@ -123,6 +175,18 @@ public class PostgresUtils {
 
         throw new DataTypeException("unknown postgresql character format for hexValue: " + hexDigit);
     }
+
+    /**
+     * Get the octal value of a {@code char} digit
+     */
+    private static int octalValue(final int octalDigit) {
+        if (octalDigit < '0' || octalDigit > '7') {
+            throw new DataTypeException("unknown postgresql character format for octalValue: " + octalDigit);
+        }
+
+        return octalDigit - '0';
+    }
+
 
     /**
      * Convert a jOOQ <code>DAY TO SECOND</code> interval to a Postgres representation

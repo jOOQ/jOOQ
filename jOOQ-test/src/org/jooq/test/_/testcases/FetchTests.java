@@ -42,6 +42,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.tools.reflect.Reflect.on;
@@ -877,31 +878,43 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
     @Test
     public void testFetchResultSet() throws Exception {
-        assertEquals(
-            create().fetch("select * from t_author order by id"),
-            create().fetch(create().resultQuery("select * from t_author order by id").fetchResultSet()));
+        for (int i = 0; i < 2; i++) {
+            assertEquals(
+                create().fetch("select * from t_author order by id"),
+                create().fetch(create().resultQuery("select * from t_author order by id").fetchResultSet()));
 
-        ResultSet rs = create().resultQuery("select * from t_author order by id").fetchResultSet();
-        assertTrue(rs.next());
-        assertEquals(1, rs.getInt(1));
-        assertEquals(1, rs.getInt(1));
-        assertFalse(rs.wasNull());
-        assertEquals(1, rs.getInt(TAuthor_ID().getName()));
-        assertEquals((short) 1, rs.getShort(TAuthor_ID().getName()));
-        assertEquals(1L, rs.getLong(TAuthor_ID().getName()));
-        assertEquals(AUTHOR_FIRST_NAMES.get(0), rs.getString(2));
-        assertEquals(AUTHOR_FIRST_NAMES.get(0), rs.getString(TAuthor_FIRST_NAME().getName()));
-        assertEquals(AUTHOR_LAST_NAMES.get(0), rs.getString(3));
-        assertEquals(AUTHOR_LAST_NAMES.get(0), rs.getString(TAuthor_LAST_NAME().getName()));
+            ResultSet rs = create().resultQuery("select * from t_author order by id").fetchResultSet();
+            assertTrue(rs.next());
+            assertEquals(1, rs.getInt(1));
+            assertEquals(1, rs.getInt(1));
+            assertFalse(rs.wasNull());
+            assertEquals(1, rs.getInt(TAuthor_ID().getName()));
+            assertEquals((short) 1, rs.getShort(TAuthor_ID().getName()));
+            assertEquals(1L, rs.getLong(TAuthor_ID().getName()));
+            assertEquals(AUTHOR_FIRST_NAMES.get(0), rs.getString(2));
+            assertEquals(AUTHOR_FIRST_NAMES.get(0), rs.getString(TAuthor_FIRST_NAME().getName()));
+            assertEquals(AUTHOR_LAST_NAMES.get(0), rs.getString(3));
+            assertEquals(AUTHOR_LAST_NAMES.get(0), rs.getString(TAuthor_LAST_NAME().getName()));
 
-        assertTrue(rs.next());
-        assertEquals(2, rs.getInt(1));
-        assertEquals(2, rs.getInt(1));
-        assertFalse(rs.wasNull());
-        assertEquals(2, rs.getInt(TAuthor_ID().getName()));
+            assertTrue(rs.next());
+            assertEquals(2, rs.getInt(1));
+            assertEquals(2, rs.getInt(1));
+            assertFalse(rs.wasNull());
+            assertEquals(2, rs.getInt(TAuthor_ID().getName()));
 
-        assertFalse(rs.next());
-        rs.close();
+            assertFalse(rs.next());
+            rs.close();
+
+            // [#1323] Check if Postgres' pre-9.0 encoding of binary data works, too
+            if (getDialect() == POSTGRES && i == 0) {
+                create().execute("set bytea_output to escape");
+            }
+
+            // Otherwise, don't repeat this test
+            else {
+                break;
+            }
+        }
     }
 
     @Test

@@ -36,11 +36,14 @@
 
 package org.jooq.util.oracle;
 
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.util.oracle.sys.Tables.ALL_ARGUMENTS;
+import static org.jooq.util.oracle.sys.Tables.ALL_COL_COMMENTS;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.tools.StringUtils;
@@ -58,6 +61,8 @@ import org.jooq.util.SchemaDefinition;
  */
 public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 
+    private static Boolean   is11g;
+
     private final BigDecimal objectId;
 
 	public OracleRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, BigDecimal objectId, String overload) {
@@ -68,7 +73,14 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 
 	@Override
     protected void init0() throws SQLException {
-	    Result<Record> result = create().select(
+
+	    // [#1324] The ALL_ARGUMENTS.DEFAULTED column is available in Oracle 11g
+	    // only. This feature should thus be deactivated for older versions
+	    Field<String> defaulted = is11g()
+	        ? ALL_ARGUMENTS.DEFAULTED
+            : inline("N");
+
+        Result<Record> result = create().select(
 	            ALL_ARGUMENTS.IN_OUT,
 	            ALL_ARGUMENTS.ARGUMENT_NAME,
 	            ALL_ARGUMENTS.DATA_TYPE,
@@ -77,7 +89,7 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 	            ALL_ARGUMENTS.DATA_SCALE,
 	            ALL_ARGUMENTS.TYPE_NAME,
 	            ALL_ARGUMENTS.POSITION,
-	            ALL_ARGUMENTS.DEFAULTED)
+	            defaulted)
 	        .from(ALL_ARGUMENTS)
             .where(ALL_ARGUMENTS.OWNER.equal(getSchema().getName()))
             .and(ALL_ARGUMENTS.OBJECT_NAME.equal(getName()))
@@ -118,9 +130,22 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
                 name,
                 position,
                 type,
-                record.getValue(ALL_ARGUMENTS.DEFAULTED, boolean.class));
+                record.getValue(defaulted, boolean.class));
 
             addParameter(inOut, parameter);
 	    }
 	}
+
+    private boolean is11g() {
+        if (is11g == null) {
+            is11g = create().selectCount()
+                            .from(ALL_COL_COMMENTS)
+                            .where(ALL_COL_COMMENTS.OWNER.equal(ALL_ARGUMENTS.getSchema().getName()))
+                            .and(ALL_COL_COMMENTS.TABLE_NAME.equal(ALL_ARGUMENTS.getName()))
+                            .and(ALL_COL_COMMENTS.COLUMN_NAME.equal(ALL_ARGUMENTS.DEFAULTED.getName()))
+                            .fetchOne(0, boolean.class);
+        }
+
+        return is11g;
+    }
 }

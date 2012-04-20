@@ -73,7 +73,7 @@ public interface Parameter<T> extends NamedTypeProviderQueryPart<T> {
      * If a procedure has defaulted parameters, jOOQ binds them by name, rather
      * than by index.
      * <p>
-     * Currently, this is only supported for Oracle
+     * Currently, this is only supported for Oracle 11g
      */
     @Support({ ORACLE })
     boolean isDefaulted();

@@ -2634,6 +2634,30 @@ public class Factory implements FactoryOperations {
         return new TimestampDiff(nullSafe(timestamp1), nullSafe(timestamp2));
     }
 
+    public static Field<Date> trunc(Date date) {
+        return trunc(date, DatePart.DAY);
+    }
+
+    public static Field<Date> trunc(Date date, DatePart part) {
+        return trunc(val(date), part);
+    }
+
+    public static Field<Timestamp> trunc(Timestamp timestamp) {
+        return trunc(timestamp, DatePart.DAY);
+    }
+
+    public static Field<Timestamp> trunc(Timestamp timestamp, DatePart part) {
+        return trunc(val(timestamp), part);
+    }
+
+    public static <T extends java.util.Date> Field<T> trunc(Field<T> date) {
+        return trunc(date, DatePart.DAY);
+    }
+
+    public static <T extends java.util.Date> Field<T> trunc(Field<T> date, DatePart part) {
+        throw new UnsupportedOperationException("This is not yet implemented");
+    }
+
     /**
      * Get the extract(field, datePart) function
      * <p>
@@ -3624,6 +3648,94 @@ public class Factory implements FactoryOperations {
     @Support
     public static <T extends Number> Field<T> ceil(Field<T> field) {
         return new Ceil<T>(nullSafe(field));
+    }
+
+    /**
+     * Truncate a number to a given number of decimals
+     *
+     * @see #trunc(Field, Field)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    public static <T extends Number> Field<T> trunc(T number) {
+        return trunc(val(number), inline(0));
+    }
+
+    /**
+     * Truncate a number to a given number of decimals
+     *
+     * @see #trunc(Field, Field)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    public static <T extends Number> Field<T> trunc(T number, int decimals) {
+        return trunc(val(number), inline(decimals));
+    }
+
+    /**
+     * Truncate a number to a given number of decimals
+     *
+     * @see #trunc(Field, Field)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    public static <T extends Number> Field<T> trunc(Field<T> number, int decimals) {
+        return trunc(nullSafe(number), inline(decimals));
+    }
+
+    /**
+     * Truncate a number to a given number of decimals
+     *
+     * @see #trunc(Field, Field)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    public static <T extends Number> Field<T> trunc(T number, Field<Integer> decimals) {
+        return trunc(val(number), nullSafe(decimals));
+    }
+
+    /**
+     * Truncate a number to a given number of decimals
+     * <p>
+     * This function truncates <code>number</code> to the amount of decimals
+     * specified in <code>decimals</code>. Passing <code>decimals = 0</code> to
+     * this function is the same as using {@link #floor(Field)}. Passing
+     * positive values for <code>decimal</code> has a similar effect as
+     * {@link #round(Field, int)}. Passing negative values for
+     * <code>decimal</code> will truncate <code>number</code> to a given power
+     * of 10. Some examples
+     * <table border="1">
+     * <tr>
+     * <th>Function call</th>
+     * <th>yields...</th>
+     * </tr>
+     * <tr>
+     * <td>trunc(125.815)</td>
+     * <td>125</td>
+     * </tr>
+     * <tr>
+     * <td>trunc(125.815, 0)</td>
+     * <td>125</td>
+     * </tr>
+     * <tr>
+     * <td>trunc(125.815, 1)</td>
+     * <td>125.8</td>
+     * </tr>
+     * <tr>
+     * <td>trunc(125.815, 2)</td>
+     * <td>125.81</td>
+     * </tr>
+     * <tr>
+     * <td>trunc(125.815, -1)</td>
+     * <td>120</td>
+     * </tr>
+     * <tr>
+     * <td>trunc(125.815, -2)</td>
+     * <td>100</td>
+     * </tr>
+     * </table>
+     *
+     * @see #trunc(Field, Field)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    public static <T extends Number> Field<T> trunc(Field<T> number, Field<Integer> decimals) {
+        return new Trunc<T>(number, decimals);
     }
 
     /**

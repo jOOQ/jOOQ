@@ -41,6 +41,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.Factory.abs;
 import static org.jooq.impl.Factory.acos;
@@ -79,6 +80,7 @@ import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.floor;
 import static org.jooq.impl.Factory.greatest;
 import static org.jooq.impl.Factory.hour;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.least;
 import static org.jooq.impl.Factory.length;
 import static org.jooq.impl.Factory.ln;
@@ -112,6 +114,7 @@ import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.tan;
 import static org.jooq.impl.Factory.tanh;
 import static org.jooq.impl.Factory.trim;
+import static org.jooq.impl.Factory.trunc;
 import static org.jooq.impl.Factory.upper;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.year;
@@ -568,6 +571,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     @Test
     public void testFunctionsOnNumbers() throws Exception {
 
+        boolean sqlite = (getDialect() == SQLITE);
+
         // The random function
         BigDecimal rand = create().select(rand()).fetchOne(rand());
         assertNotNull(rand);
@@ -577,10 +582,17 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         Field<Float> f2a = round(1.111f, 2);
         Field<Float> f3a = floor(1.111f);
         Field<Float> f4a = ceil(1.111f);
+        Field<Float> f5a = sqlite ? inline(1.0f) : trunc(1.111f);
+        Field<Float> f6a = sqlite ? inline(1.11f) : trunc(1.111f, 2);
+        Field<Float> f7a = sqlite ? inline(10.0f) : trunc(11.111f, -1);
+
         Field<Double> f1b = round(-1.111);
         Field<Double> f2b = round(-1.111, 2);
         Field<Double> f3b = floor(-1.111);
         Field<Double> f4b = ceil(-1.111);
+        Field<Double> f5b = sqlite ? inline(1.0) : trunc(1.111);
+        Field<Double> f6b = sqlite ? inline(1.11) : trunc(1.111, 2);
+        Field<Double> f7b = sqlite ? inline(10.0) : trunc(11.111, -1);
 
         Field<Float> f1c = round(2.0f);
         Field<Float> f2c = round(2.0f, 2);
@@ -596,7 +608,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         create().select(f1a)
                 .select(f2a, f3a)
                 .select(f4a)
-                .select(f1b, f2b, f3b, f4b)
+                .select(f5a, f6a, f7a)
+                .select(f1b, f2b, f3b, f4b, f6b, f6b, f7b)
                 .select(f1c, f2c, f3c, f4c)
                 .select(f1d, f2d, f3d, f4d).fetchOne();
 
@@ -605,11 +618,17 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals("1.11", record.getValueAsString(f2a));
         assertEquals("1.0", record.getValueAsString(f3a));
         assertEquals("2.0", record.getValueAsString(f4a));
+        assertEquals("1.0", record.getValueAsString(f5a));
+        assertEquals("1.11", record.getValueAsString(f6a));
+        assertEquals("10.0", record.getValueAsString(f7a));
 
         assertEquals("-1.0", record.getValueAsString(f1b));
         assertEquals("-1.11", record.getValueAsString(f2b));
         assertEquals("-2.0", record.getValueAsString(f3b));
         assertEquals("-1.0", record.getValueAsString(f4b));
+        assertEquals("1.0", record.getValueAsString(f5b));
+        assertEquals("1.11", record.getValueAsString(f6b));
+        assertEquals("10.0", record.getValueAsString(f7b));
 
         assertEquals("2.0", record.getValueAsString(f1c));
         assertEquals("2.0", record.getValueAsString(f2c));

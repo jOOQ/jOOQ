@@ -74,7 +74,9 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * unique key's value is already in the database.
      * <p>
      * If the loaded table does not have a main key, then all records are
-     * inserted.
+     * inserted. This may influence the JDBC driver's outcome on
+     * {@link Connection#getWarnings()}, depending on your JDBC driver's
+     * implementation
      * <p>
      * If you don't specify a behaviour, {@link #onDuplicateKeyError()} will be
      * the default. This cannot be combined with {@link #onDuplicateKeyError()}

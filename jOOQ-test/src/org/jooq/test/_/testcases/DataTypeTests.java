@@ -52,8 +52,10 @@ import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
+import static org.jooq.impl.Factory.dateAdd;
 import static org.jooq.impl.Factory.dateDiff;
 import static org.jooq.impl.Factory.inline;
+import static org.jooq.impl.Factory.timestampAdd;
 import static org.jooq.impl.Factory.timestampDiff;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.tools.unsigned.Unsigned.ubyte;
@@ -1305,22 +1307,32 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             // Extra care needs to be taken with Postgres negative DAY TO SECOND
             // intervals. Postgres allows for having several signs in intervals
             val(new Date(0)).add(1).as("d1"),
+            dateAdd(new Date(0), 1).as("d1a"),
             val(new Date(0)).add(-1).as("d2a"),
             val(new Date(0)).sub(1).as("d2b"),
+
             val(new Date(0)).add(new YearToMonth(1, 6)).as("d3"),
+            dateAdd(new Date(0), new YearToMonth(1, 6)).as("d3a"),
             val(new Date(0)).add(new YearToMonth(1, 6).neg()).as("d4a"),
             val(new Date(0)).sub(new YearToMonth(1, 6)).as("d4b"),
+
             val(new Date(0)).add(new DayToSecond(2)).as("d5"),
+            dateAdd(new Date(0), new DayToSecond(2)).as("d5a"),
             val(new Date(0)).add(new DayToSecond(2).neg()).as("d6a"),
             val(new Date(0)).sub(new DayToSecond(2)).as("d6b"),
 
             val(new Timestamp(0)).add(1).as("ts1"),
+            timestampAdd(new Timestamp(0), 1).as("ts1a"),
             val(new Timestamp(0)).add(-1).as("ts2a"),
             val(new Timestamp(0)).sub(1).as("ts2b"),
+
             val(new Timestamp(0)).add(new YearToMonth(1, 6)).as("ts3"),
+            timestampAdd(new Timestamp(0), new YearToMonth(1, 6)).as("ts3a"),
             val(new Timestamp(0)).add(new YearToMonth(1, 6).neg()).as("ts4a"),
             val(new Timestamp(0)).sub(new YearToMonth(1, 6)).as("ts4b"),
+
             val(new Timestamp(0)).add(new DayToSecond(2)).as("ts5"),
+            timestampAdd(new Timestamp(0), new DayToSecond(2)).as("ts5a"),
             val(new Timestamp(0)).add(new DayToSecond(2).neg()).as("ts6a"),
             val(new Timestamp(0)).sub(new DayToSecond(2)).as("ts6b"),
             val(new Timestamp(0)).add(new DayToSecond(2, 6)).as("ts7"),
@@ -1336,7 +1348,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         cal = cal();
         cal.add(Calendar.DATE, 1);
         assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d1"));
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d1a"));
         assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts1"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts1a"));
 
         cal = cal();
         cal.add(Calendar.DATE, -1);
@@ -1348,7 +1362,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         cal = cal();
         cal.add(Calendar.MONTH, 18);
         assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d3"));
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d3a"));
         assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts3"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts3a"));
 
         cal = cal();
         cal.add(Calendar.MONTH, -18);
@@ -1360,7 +1376,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         cal = cal();
         cal.add(Calendar.DATE, 2);
         assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d5"));
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d5a"));
         assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts5"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts5a"));
 
         cal = cal();
         cal.add(Calendar.DATE, -2);

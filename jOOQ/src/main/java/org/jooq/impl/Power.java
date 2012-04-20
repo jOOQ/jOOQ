@@ -56,7 +56,7 @@ class Power extends AbstractFunction<BigDecimal> {
     private final Field<? extends Number> arg2;
 
     Power(Field<? extends Number> arg1, Field<? extends Number> arg2) {
-        super("ceil", SQLDataType.NUMERIC, arg1, arg2);
+        super("power", SQLDataType.NUMERIC, arg1, arg2);
 
         this.arg1 = arg1;
         this.arg2 = arg2;

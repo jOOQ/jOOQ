@@ -46,6 +46,8 @@ import static org.jooq.tools.StringUtils.leftPad;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -479,6 +481,9 @@ final class Util {
         safeClose(ctx.resultSet());
         safeClose(ctx.statement());
         listener.end(ctx);
+
+        // [#1326] Clean up any potentially remaining temporary lobs
+        DefaultExecuteContext.clean();
     }
 
     /**
@@ -523,6 +528,30 @@ final class Util {
     static final void safeClose(ResultSet resultSet, PreparedStatement statement) {
         safeClose(resultSet);
         safeClose(statement);
+    }
+
+    /**
+     * Safely free a blob
+     */
+    static final void safeFree(Blob blob) {
+        if (blob != null) {
+            try {
+                blob.free();
+            }
+            catch (Exception ignore) {}
+        }
+    }
+
+    /**
+     * Safely free a clob
+     */
+    static final void safeFree(Clob clob) {
+        if (clob != null) {
+            try {
+                clob.free();
+            }
+            catch (Exception ignore) {}
+        }
     }
 
     /**

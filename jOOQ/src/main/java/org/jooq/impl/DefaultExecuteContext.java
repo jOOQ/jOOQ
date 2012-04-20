@@ -35,8 +35,12 @@
  */
 package org.jooq.impl;
 
+import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jooq.Configuration;
 import org.jooq.Delete;
@@ -62,21 +66,82 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID = -6653474082935089963L;
+    private static final long                    serialVersionUID = -6653474082935089963L;
 
     // Persistent attributes
-    private final Query                 query;
-    private final Routine<?>            routine;
-    private String                      sql;
+    private final Query                          query;
+    private final Routine<?>                     routine;
+    private String                               sql;
 
-    private final Query[]               batchQueries;
-    private final String[]              batchSQL;
+    private final Query[]                        batchQueries;
+    private final String[]                       batchSQL;
 
     // Transient attributes
-    private transient PreparedStatement statement;
-    private transient ResultSet         resultSet;
-    private transient Record            record;
-    private transient Result<?>         result;
+    private transient PreparedStatement          statement;
+    private transient ResultSet                  resultSet;
+    private transient Record                     record;
+    private transient Result<?>                  result;
+
+    // ------------------------------------------------------------------------
+    // XXX: Static utility methods for handling blob / clob lifecycle
+    // ------------------------------------------------------------------------
+    
+    private static final ThreadLocal<List<Blob>> BLOBS            = new ThreadLocal<List<Blob>>();
+    private static final ThreadLocal<List<Clob>> CLOBS            = new ThreadLocal<List<Clob>>();
+
+    /**
+     * Clean up blobs and clobs.
+     * <p>
+     * [#1326] This is necessary in those dialects that have long-lived
+     * temporary lob objects, which can cause memory leaks in certain contexts,
+     * where the lobs' underlying session / connection is long-lived as well.
+     * Specifically, Oracle and ojdbc have some trouble when streaming temporary
+     * lobs to UDTs:
+     * <ol>
+     * <li>The lob cannot have a call-scoped life time with UDTs</li>
+     * <li>Freeing the lob after binding will cause an ORA-22275</li>
+     * <li>Not freeing the lob after execution will cause an
+     * {@link OutOfMemoryError}</li>
+     * </ol>
+     */
+    static final void clean() {
+        List<Blob> blobs = BLOBS.get();
+        List<Clob> clobs = CLOBS.get();
+
+        if (blobs != null) {
+            for (Blob blob : blobs) {
+                Util.safeFree(blob);
+            }
+
+            BLOBS.remove();
+        }
+
+        if (clobs != null) {
+            for (Clob clob : clobs) {
+                Util.safeFree(clob);
+            }
+
+            CLOBS.remove();
+        }
+    }
+
+    /**
+     * Register a blob for later cleanup with {@link #clean()}
+     */
+    static final void register(Blob blob) {
+        BLOBS.get().add(blob);
+    }
+
+    /**
+     * Register a clob for later cleanup with {@link #clean()}
+     */
+    static final void register(Clob clob) {
+        CLOBS.get().add(clob);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Constructors
+    // ------------------------------------------------------------------------
 
     DefaultExecuteContext(Configuration configuration) {
         this(configuration, null, null, null);
@@ -110,6 +175,10 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
         else {
             this.batchSQL = new String[0];
         }
+
+        clean();
+        BLOBS.set(new ArrayList<Blob>());
+        CLOBS.set(new ArrayList<Clob>());
     }
 
     @Override

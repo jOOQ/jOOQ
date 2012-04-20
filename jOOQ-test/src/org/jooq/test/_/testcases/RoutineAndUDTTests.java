@@ -43,6 +43,7 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.val;
+import static org.jooq.tools.reflect.Reflect.on;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -837,13 +838,15 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         UDTRecord<?> a1 = authors.get(0).getValue(TAuthor_ADDRESS());
         UDTRecord<?> a2 = authors.get(1).getValue(TAuthor_ADDRESS());
 
-        Object street1 = a1.getClass().getMethod("getStreet").invoke(a1);
-        assertEquals("77", street1.getClass().getMethod("getNo").invoke(street1));
-        assertEquals("Parliament Hill", street1.getClass().getMethod("getStreet").invoke(street1));
-        assertEquals("NW31A9", a1.getClass().getMethod("getZip").invoke(a1));
-        assertEquals("Hampstead", a1.getClass().getMethod("getCity").invoke(a1));
-        assertEquals("England", "" + a1.getClass().getMethod("getCountry").invoke(a1));
-        assertEquals(null, a1.getClass().getMethod("getCode").invoke(a1));
+        Object street1 = on(a1).call("getStreet").get();
+        assertEquals("77", on(street1).call("getNo").get());
+        assertEquals("Parliament Hill", on(street1).call("getStreet").get());
+        assertTrue(Arrays.equals(new byte[] { 0x70, 0x70 }, on(street1).call("getF_1323").<byte[]>get()));
+        assertEquals("NW31A9", on(a1).call("getZip").get());
+        assertEquals("Hampstead", on(a1).call("getCity").get());
+        assertEquals("England", "" + on(a1).call("getCountry").get());
+        assertEquals(null, on(a1).call("getCode").get());
+        assertTrue(Arrays.equals(new byte[] { 0x71, 0x71 }, on(a1).call("getF_1323").<byte[]>get()));
 
         if (TArrays_NUMBER_R() != null) {
             assertEquals(Arrays.asList(1, 2, 3), invoke(invoke(street1, "getFloors"), "getList"));
@@ -852,13 +855,15 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             assertEquals(Arrays.asList(1, 2, 3), Arrays.asList((Object[]) invoke(street1, "getFloors")));
         }
 
-        Object street2 = a2.getClass().getMethod("getStreet").invoke(a2);
-        assertEquals("43.003", street1.getClass().getMethod("getNo").invoke(street2));
-        assertEquals("Caixa Postal", street1.getClass().getMethod("getStreet").invoke(street2));
-        assertEquals(null, a2.getClass().getMethod("getZip").invoke(a2));
-        assertEquals("Rio de Janeiro", a2.getClass().getMethod("getCity").invoke(a2));
-        assertEquals("Brazil", "" + a1.getClass().getMethod("getCountry").invoke(a2));
-        assertEquals(2, a1.getClass().getMethod("getCode").invoke(a2));
+        Object street2 = on(a2).call("getStreet").get();
+        assertEquals("43.003", on(street2).call("getNo").get());
+        assertEquals("Caixa Postal", on(street2).call("getStreet").get());
+        assertEquals(null, on(street2).call("getF_1323").<byte[]>get());
+        assertEquals(null, on(a2).call("getZip").get());
+        assertEquals("Rio de Janeiro", on(a2).call("getCity").get());
+        assertEquals("Brazil", "" + on(a2).call("getCountry").get());
+        assertEquals(2, on(a2).call("getCode").get());
+        assertEquals(null, on(a2).call("getF_1323").<byte[]>get());
 
         if (TArrays_NUMBER_R() != null) {
             assertEquals(null, invoke(street2, "getFloors"));

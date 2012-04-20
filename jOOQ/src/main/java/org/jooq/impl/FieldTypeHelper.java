@@ -39,6 +39,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Factory.getNewFactory;
+import static org.jooq.tools.reflect.Reflect.on;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -116,6 +117,7 @@ public final class FieldTypeHelper {
     @SuppressWarnings("unchecked")
     public static <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
         Class<? extends T> type = field.getType();
+        DataType<T> dataType = field.getDataType();
 
         if (type == Blob.class) {
             return (T) stream.readBlob();
@@ -134,7 +136,21 @@ public final class FieldTypeHelper {
             return (T) checkWasNull(stream, Byte.valueOf(stream.readByte()));
         }
         else if (type == byte[].class) {
-            return (T) stream.readBytes();
+
+            // [#1327] Oracle cannot deserialise BLOBs as byte[] from SQLInput
+            if (dataType.isLob()) {
+                Blob blob = null;
+                try {
+                    blob = stream.readBlob();
+                    return (T) (blob == null ? null : blob.getBytes(1, (int) blob.length()));
+                }
+                finally {
+                    Util.safeFree(blob);
+                }
+            }
+            else {
+                return (T) stream.readBytes();
+            }
         }
         else if (type == Clob.class) {
             return (T) stream.readClob();
@@ -216,10 +232,10 @@ public final class FieldTypeHelper {
     public static <T> void writeToSQLOutput(SQLOutput stream, Field<T> field, T value) throws SQLException {
         Class<? extends T> type = field.getType();
 
-        writeToSQLOutput(stream, type, value);
+        writeToSQLOutput(stream, type, field.getDataType(), value);
     }
 
-    public static <T> void writeToSQLOutput(SQLOutput stream, Class<? extends T> type, T value) throws SQLException {
+    private static <T> void writeToSQLOutput(SQLOutput stream, Class<? extends T> type, DataType<T> dataType, T value) throws SQLException {
         if (value == null) {
             stream.writeObject(null);
         }
@@ -239,7 +255,29 @@ public final class FieldTypeHelper {
             stream.writeByte((Byte) value);
         }
         else if (type == byte[].class) {
-            stream.writeBytes((byte[]) value);
+
+            // [#1327] Oracle cannot serialise BLOBs as byte[] to SQLOutput
+            // Use reflection to avoid dependency on OJDBC
+            if (dataType.isLob()) {
+                Blob blob = null;
+
+                try {
+                    blob = on("oracle.sql.BLOB").call("createTemporary",
+                               on(stream).call("getSTRUCT")
+                                         .call("getJavaSqlConnection").get(),
+                               false,
+                               on("oracle.sql.BLOB").get("DURATION_SESSION")).get();
+
+                    blob.setBytes(1, (byte[]) value);
+                    stream.writeBlob(blob);
+                }
+                finally {
+                    DefaultExecuteContext.register(blob);
+                }
+            }
+            else {
+                stream.writeBytes((byte[]) value);
+            }
         }
         else if (type == Clob.class) {
             stream.writeClob((Clob) value);
@@ -263,7 +301,29 @@ public final class FieldTypeHelper {
             stream.writeShort((Short) value);
         }
         else if (type == String.class) {
-            stream.writeString((String) value);
+
+            // [#1327] Oracle cannot serialise CLOBs as String to SQLOutput
+            // Use reflection to avoid dependency on OJDBC
+            if (dataType.isLob()) {
+                Clob clob = null;
+
+                try {
+                    clob = on("oracle.sql.CLOB").call("createTemporary",
+                               on(stream).call("getSTRUCT")
+                                         .call("getJavaSqlConnection").get(),
+                               false,
+                               on("oracle.sql.CLOB").get("DURATION_SESSION")).get();
+
+                    clob.setString(1, (String) value);
+                    stream.writeClob(clob);
+                }
+                finally {
+                    DefaultExecuteContext.register(clob);
+                }
+            }
+            else {
+                stream.writeString((String) value);
+            }
         }
         else if (type == Time.class) {
             stream.writeTime((Time) value);
@@ -301,6 +361,13 @@ public final class FieldTypeHelper {
         }
     }
 
+    /**
+     * @deprecated - 2.3.0 - Do not reuse this method
+     */
+    @Deprecated
+    public static <T> void writeToSQLOutput(SQLOutput stream, Class<? extends T> type, T value) throws SQLException {
+        writeToSQLOutput(stream, type, null, value);
+    }
 
     static <T, U> U getFromResultSet(ExecuteContext ctx, Field<U> field, int index)
         throws SQLException {

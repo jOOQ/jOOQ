@@ -225,7 +225,9 @@ CREATE TYPE u_date_table AS TABLE OF DATE/
 CREATE TYPE u_street_type AS OBJECT (
   street VARCHAR2(100),
   no VARCHAR2(30),
-  floors u_number_array
+  floors u_number_array,
+  f_1323 blob,
+  f_1326 clob
 )
 /
 
@@ -235,7 +237,9 @@ CREATE TYPE u_address_type AS OBJECT (
   city VARCHAR2(50),
   country VARCHAR2(50),
   since DATE,
-  code NUMBER(7)
+  code NUMBER(7),
+  f_1323 blob,
+  f_1326 clob
 )
 /
 
@@ -682,7 +686,9 @@ END p_enhance_address2;
 CREATE OR REPLACE PROCEDURE p_enhance_address3 (address IN OUT u_address_type)
 IS
 BEGIN
-	address.street := u_street_type('Zwinglistrasse', '17', u_number_array(2));
+	address.street.street := 'Zwinglistrasse';
+	address.street.no := '17';
+	address.street.floors := u_number_array(2);
 END p_enhance_address3;
 /
 

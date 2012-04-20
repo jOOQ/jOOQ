@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.zero;
@@ -120,7 +119,7 @@ class Trunc<T> extends AbstractFunction<T> {
             case INGRES:
             case ORACLE:
             default:
-                return function("{trunc}({0}, {1})", field.getDataType(), field, decimals);
+                return field("{trunc}({0}, {1})", field.getDataType(), field, decimals);
         }
     }
 }

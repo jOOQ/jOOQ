@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 1377334678;
+	private static final long serialVersionUID = 2045958859;
 
 	/**
 	 * The singleton instance of t_triggers
@@ -50,11 +50,6 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sq
 	 */
 	private TTriggers() {
 		super("t_triggers");
-	}
-
-	@Override
-	public org.jooq.Identity<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.test.sqlite.generatedclasses.Keys.IDENTITY_T_TRIGGERS;
 	}
 
 	@Override

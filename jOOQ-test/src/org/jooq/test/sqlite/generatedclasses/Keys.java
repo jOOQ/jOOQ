@@ -12,7 +12,6 @@ package org.jooq.test.sqlite.generatedclasses;
 public class Keys extends org.jooq.impl.AbstractKeys {
 
 	// IDENTITY definitions
-	public static final org.jooq.Identity<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = createIdentity(org.jooq.test.sqlite.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.sqlite.generatedclasses.tables.TTriggers.ID_GENERATED);
 
 	// UNIQUE and PRIMARY KEY definitions
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE_ID = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable.ID);

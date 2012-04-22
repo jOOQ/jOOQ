@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -1412539489;
+	private static final long serialVersionUID = 2119008681;
 
 	/**
 	 * The singleton instance of dbo.x_test_case_64_69
@@ -39,7 +39,7 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT fk_x_test_case_64_69
+	 * CONSTRAINT fk_x_test_case_64_69a
 	 * FOREIGN KEY (unused_id)
 	 * REFERENCES dbo.x_unused (id)
 	 * </pre></code>
@@ -74,7 +74,7 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record, ?>>asList(org.jooq.test.sqlserver.generatedclasses.Keys.FK_X_TEST_CASE_64_69);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record, ?>>asList(org.jooq.test.sqlserver.generatedclasses.Keys.FK_X_TEST_CASE_64_69A);
 	}
 
 	@Override

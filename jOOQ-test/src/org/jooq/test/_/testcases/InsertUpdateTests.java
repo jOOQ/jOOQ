@@ -52,7 +52,7 @@ import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
-import static org.jooq.impl.Factory.inline;
+import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
@@ -353,9 +353,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 .values(
                     create().select(vals(38)),
                     val("Alfred"),
-                    inline("Hitchcock"),
+                    literal("'Hitchcock'"),
                     val(null),
-                    inline((Object) null),
+                    literal((Object) null),
                     create().select(val(null)).asField())
                 .execute());
     }

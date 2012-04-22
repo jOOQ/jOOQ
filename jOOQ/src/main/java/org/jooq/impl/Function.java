@@ -61,6 +61,7 @@ import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
+import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowFinalStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOrderByStep;
@@ -81,6 +82,7 @@ class Function<T> extends AbstractField<T> implements
     // Cascading interface implementations for aggregate function behaviour
     OrderedAggregateFunction<T>,
     AggregateFunction<T>,
+    WindowBeforeOverStep<T>,
 
     // and for window function behaviour
     WindowIgnoreNullsStep<T>,
@@ -95,9 +97,11 @@ class Function<T> extends AbstractField<T> implements
     private final Term                     term;
     private final boolean                  distinct;
     private final SortFieldList            withinGroupOrderBy;
+    private final SortFieldList            keepDenseRankOrderBy;
     private final FieldList                partitionBy;
     private final SortFieldList            orderBy;
 
+    private boolean                        first;
     private boolean                        over;
     private boolean                        partitionByOne;
     private boolean                        ignoreNulls;
@@ -124,6 +128,7 @@ class Function<T> extends AbstractField<T> implements
         this.term = null;
         this.distinct = distinct;
         this.arguments = new QueryPartList<QueryPart>(arguments);
+        this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
         this.partitionBy = new FieldList();
         this.orderBy = new SortFieldList();
@@ -135,6 +140,7 @@ class Function<T> extends AbstractField<T> implements
         this.term = term;
         this.distinct = distinct;
         this.arguments = new QueryPartList<QueryPart>(arguments);
+        this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
         this.partitionBy = new FieldList();
         this.orderBy = new SortFieldList();
@@ -146,7 +152,7 @@ class Function<T> extends AbstractField<T> implements
 
     @Override
     public final List<Attachable> getAttachables() {
-        return getAttachables(arguments, withinGroupOrderBy, partitionBy, orderBy);
+        return getAttachables(arguments, keepDenseRankOrderBy, withinGroupOrderBy, partitionBy, orderBy);
     }
 
     @Override
@@ -162,6 +168,7 @@ class Function<T> extends AbstractField<T> implements
         }
         else {
             context.bind((QueryPart) arguments)
+                   .bind((QueryPart) keepDenseRankOrderBy)
                    .bind((QueryPart) withinGroupOrderBy)
                    .bind((QueryPart) partitionBy)
                    .bind((QueryPart) orderBy);
@@ -181,6 +188,7 @@ class Function<T> extends AbstractField<T> implements
         }
         else {
             toSQLArguments(context);
+            toSQLKeepDenseRankOrderByClause(context);
             toSQLWithinGroupClause(context);
             toSQLOverClause(context);
         }
@@ -357,6 +365,19 @@ class Function<T> extends AbstractField<T> implements
     }
 
     /**
+     * Render <code>KEEP (DENSE_RANK [FIRST | LAST] ORDER BY {...})</code> clause
+     */
+    private void toSQLKeepDenseRankOrderByClause(RenderContext context) {
+        if (!keepDenseRankOrderBy.isEmpty()) {
+            context.keyword(" keep (dense_rank ")
+                   .keyword(first ? "first" : "last")
+                   .keyword(" order by ")
+                   .sql(keepDenseRankOrderBy)
+                   .sql(")");
+        }
+    }
+
+    /**
      * Render <code>WITHIN GROUP (ORDER BY ..)</code> clause
      */
     private final void toSQLWithinGroupClause(RenderContext context) {
@@ -459,6 +480,42 @@ class Function<T> extends AbstractField<T> implements
     @Override
     public final AggregateFunction<T> withinGroupOrderBy(Collection<SortField<?>> fields) {
         withinGroupOrderBy.addAll(fields);
+        return this;
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Field<?>... fields) {
+        first = true;
+        keepDenseRankOrderBy.addAll(fields);
+        return this;
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(SortField<?>... fields) {
+        return keepDenseRankFirstOrderBy(Arrays.asList(fields));
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<SortField<?>> fields) {
+        first = true;
+        keepDenseRankOrderBy.addAll(fields);
+        return this;
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Field<?>... fields) {
+        keepDenseRankOrderBy.addAll(fields);
+        return this;
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> keepDenseRankLastOrderBy(SortField<?>... fields) {
+        return keepDenseRankLastOrderBy(Arrays.asList(fields));
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<SortField<?>> fields) {
+        keepDenseRankOrderBy.addAll(fields);
         return this;
     }
 

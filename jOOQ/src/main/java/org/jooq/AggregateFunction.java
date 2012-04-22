@@ -41,6 +41,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import java.util.Collection;
+
 /**
  * An aggregate function is a special field that is usually used in a
  * <code>GROUP BY</code> context. It is also the base for window function
@@ -51,9 +53,9 @@ import static org.jooq.SQLDialect.SYBASE;
 public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
 
     /**
-     * Turn this aggregate function into a window function, for example
+     * Turn this aggregate function into a window function.
      * <p>
-     * <code><pre>
+     * An example: <code><pre>
      * MAX(ID) OVER (PARTITION BY 1)
      * </code></pre>
      * <p>
@@ -63,4 +65,82 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
     @Override
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> over();
+
+    /**
+     * Restrict this aggregate function to <code>FIRST</code> values
+     * <p>
+     * An example: <code><pre>
+     * MAX(ID) KEEP (DENSE_RANK FIRST ORDER BY 1)
+     * </pre></code>
+     * <p>
+     * This clause is only available on
+     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
+     */
+    @Support(ORACLE)
+    WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Field<?>... fields);
+
+    /**
+     * Restrict this aggregate function to <code>FIRST</code> values
+     * <p>
+     * An example: <code><pre>
+     * MAX(ID) KEEP (DENSE_RANK FIRST ORDER BY 1)
+     * </pre></code>
+     * <p>
+     * This clause is only available on
+     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
+     */
+    @Support(ORACLE)
+    WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(SortField<?>... fields);
+
+    /**
+     * Restrict this aggregate function to <code>FIRST</code> values
+     * <p>
+     * An example: <code><pre>
+     * MAX(ID) KEEP (DENSE_RANK FIRST ORDER BY 1)
+     * </pre></code>
+     * <p>
+     * This clause is only available on
+     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
+     */
+    @Support(ORACLE)
+    WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<SortField<?>> fields);
+
+    /**
+     * Restrict this aggregate function to <code>FIRST</code> values
+     * <p>
+     * An example: <code><pre>
+     * MAX(ID) KEEP (DENSE_RANK LAST ORDER BY 1)
+     * </pre></code>
+     * <p>
+     * This clause is only available on
+     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
+     */
+    @Support(ORACLE)
+    WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Field<?>... fields);
+
+    /**
+     * Restrict this aggregate function to <code>FIRST</code> values
+     * <p>
+     * An example: <code><pre>
+     * MAX(ID) KEEP (DENSE_RANK LAST ORDER BY 1)
+     * </pre></code>
+     * <p>
+     * This clause is only available on
+     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
+     */
+    @Support(ORACLE)
+    WindowBeforeOverStep<T> keepDenseRankLastOrderBy(SortField<?>... fields);
+
+    /**
+     * Restrict this aggregate function to <code>FIRST</code> values
+     * <p>
+     * An example: <code><pre>
+     * MAX(ID) KEEP (DENSE_RANK LAST ORDER BY 1)
+     * </pre></code>
+     * <p>
+     * This clause is only available on
+     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
+     */
+    @Support(ORACLE)
+    WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<SortField<?>> fields);
 }

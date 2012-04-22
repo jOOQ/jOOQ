@@ -42,6 +42,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.Factory.currentUser;
 import static org.jooq.impl.Factory.falseCondition;
+import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
@@ -81,6 +82,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -1228,5 +1230,18 @@ public class jOOQOracleTest extends jOOQAbstractTest<
             currentUser()).fetchOne();
 
         assertEquals(user.getValue(0), user.getValue(1));
+    }
+
+    @Test
+    public void testKeepDenseRank() {
+        assertEquals(
+            Arrays.asList(3, 7),
+            Arrays.asList(
+            create().select(
+                        sum(TBook_ID()).keepDenseRankFirstOrderBy(TBook_AUTHOR_ID()),
+                        sum(TBook_ID()).keepDenseRankLastOrderBy(TBook_AUTHOR_ID()))
+                    .from(TBook())
+                    .fetchOne()
+                    .into(Integer[].class)));
     }
 }

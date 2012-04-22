@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -564243036;
+	private static final long serialVersionUID = -447879144;
 
 	private java.lang.Integer                                          id;
 	private java.lang.Integer                                          authorId;
@@ -86,7 +86,7 @@ public class TBook implements java.io.Serializable {
 		this.languageId = languageId;
 	}
 
-	@javax.persistence.Column(name = "CONTENT_TEXT", length = 4000)
+	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getContentText() {
 		return this.contentText;
 	}
@@ -95,7 +95,7 @@ public class TBook implements java.io.Serializable {
 		this.contentText = contentText;
 	}
 
-	@javax.persistence.Column(name = "CONTENT_PDF", length = 4000)
+	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getContentPdf() {
 		return this.contentPdf;
 	}

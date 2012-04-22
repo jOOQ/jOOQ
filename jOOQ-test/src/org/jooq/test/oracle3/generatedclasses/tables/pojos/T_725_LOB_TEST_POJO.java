@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_725_LOB_TEST", schema = "TEST")
 public class T_725_LOB_TEST_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -744225301;
+	private static final long serialVersionUID = -1890033140;
 
 	private java.lang.Integer ID;
 	private byte[]            LOB;
@@ -25,7 +25,7 @@ public class T_725_LOB_TEST_POJO extends java.lang.ThreadDeath implements java.l
 		this.ID = ID;
 	}
 
-	@javax.persistence.Column(name = "LOB", length = 4000)
+	@javax.persistence.Column(name = "LOB")
 	public byte[] getLOB() {
 		return this.LOB;
 	}

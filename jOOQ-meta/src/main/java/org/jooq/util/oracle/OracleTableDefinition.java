@@ -36,6 +36,8 @@
 
 package org.jooq.util.oracle;
 
+import static org.jooq.impl.Factory.decode;
+import static org.jooq.impl.Factory.zero;
 import static org.jooq.util.oracle.sys.Tables.ALL_COL_COMMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_TAB_COLS;
 
@@ -66,7 +68,10 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 
 		for (Record record : create().select(
 		        ALL_TAB_COLS.DATA_TYPE,
-		        ALL_TAB_COLS.DATA_LENGTH,
+		        decode(ALL_TAB_COLS.DATA_TYPE.upper(),
+		            "CLOB", zero(),
+		            "BLOB", zero(),
+		            ALL_TAB_COLS.DATA_LENGTH).as("data_length"),
 		        ALL_TAB_COLS.DATA_PRECISION,
 		        ALL_TAB_COLS.DATA_SCALE,
 		        ALL_TAB_COLS.NULLABLE,
@@ -87,7 +92,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(ALL_TAB_COLS.DATA_TYPE),
-                record.getValueAsInteger(ALL_TAB_COLS.DATA_LENGTH, 0),
+                record.getValueAsInteger("data_length", 0),
                 record.getValueAsInteger(ALL_TAB_COLS.DATA_PRECISION, 0),
                 record.getValueAsInteger(ALL_TAB_COLS.DATA_SCALE, 0));
 

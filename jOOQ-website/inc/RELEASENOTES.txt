@@ -9,6 +9,23 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.2.2 - April 22, 2012
+=================================================================
+
+This is a minor patch release, fixing some issues
+
+Bug fixes
+---------
+#1308 - Oracle's DataTypeDefinition reports the length of a BLOB
+        / CLOB data type to be 4000
+#1324 - Code generation error in Oracle 10g when generating
+        stored procedures
+#1329 - NullPointerException when passing null to
+        timestampDiff(Field, Field)
+#1343 - Regression in insertInto(...).values(...). Cannot pass
+        Field<?> to values()
+#1311 - NPE at org.jooq.util.AbstractDatabase.getOutputSchema()
+
 Version 2.2.1 - April 12, 2012
 =================================================================
 

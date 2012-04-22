@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt;
  */
 public class U_STREET_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -598064775;
+	private static final long serialVersionUID = 1786177499;
 
 	/**
 	 * The singleton instance of TEST.U_STREET_TYPE
@@ -42,16 +42,6 @@ public class U_STREET_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	 * An uncommented item
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> FLOORS = createField("FLOORS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class), U_STREET_TYPE);
-
-	/**
-	 * An uncommented item
-	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE, byte[]> F_1323 = createField("F_1323", org.jooq.impl.SQLDataType.BLOB, U_STREET_TYPE);
-
-	/**
-	 * An uncommented item
-	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE, java.lang.String> F_1326 = createField("F_1326", org.jooq.impl.SQLDataType.CLOB, U_STREET_TYPE);
 
 	/**
 	 * No further instances allowed

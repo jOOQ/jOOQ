@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt;
  */
 public class U_ADDRESS_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -805498140;
+	private static final long serialVersionUID = -1438599870;
 
 	/**
 	 * The singleton instance of TEST.U_ADDRESS_TYPE
@@ -57,16 +57,6 @@ public class U_ADDRESS_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.
 	 * An uncommented item
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE, java.lang.Integer> CODE = createField("CODE", org.jooq.impl.SQLDataType.INTEGER, U_ADDRESS_TYPE);
-
-	/**
-	 * An uncommented item
-	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE, byte[]> F_1323 = createField("F_1323", org.jooq.impl.SQLDataType.BLOB, U_ADDRESS_TYPE);
-
-	/**
-	 * An uncommented item
-	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE, java.lang.String> F_1326 = createField("F_1326", org.jooq.impl.SQLDataType.CLOB, U_ADDRESS_TYPE);
 
 	/**
 	 * No further instances allowed

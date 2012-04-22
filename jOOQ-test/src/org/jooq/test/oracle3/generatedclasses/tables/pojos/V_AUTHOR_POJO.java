@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class V_AUTHOR_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1900821802;
+	private static final long serialVersionUID = 1369668504;
 
 	private java.lang.Integer                                                 ID;
 	private java.lang.String                                                  FIRST_NAME;
@@ -64,7 +64,7 @@ public class V_AUTHOR_POJO extends java.lang.ThreadDeath implements java.lang.Cl
 		this.YEAR_OF_BIRTH = YEAR_OF_BIRTH;
 	}
 
-	@javax.persistence.Column(name = "ADDRESS", length = 40)
+	@javax.persistence.Column(name = "ADDRESS", length = 448)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE getADDRESS() {
 		return this.ADDRESS;
 	}

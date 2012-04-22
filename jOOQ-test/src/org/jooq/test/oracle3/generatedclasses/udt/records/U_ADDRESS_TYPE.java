@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
  */
 public class U_ADDRESS_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1722726941;
+	private static final long serialVersionUID = -1152928371;
 
 
 	/**
@@ -93,34 +93,6 @@ public class U_ADDRESS_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.or
 	 */
 	public java.lang.Integer getCODE() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.CODE);
-	}
-
-	/**
-	 * An uncommented item
-	 */
-	public void setF_1323(byte[] value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.F_1323, value);
-	}
-
-	/**
-	 * An uncommented item
-	 */
-	public byte[] getF_1323() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.F_1323);
-	}
-
-	/**
-	 * An uncommented item
-	 */
-	public void setF_1326(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.F_1326, value);
-	}
-
-	/**
-	 * An uncommented item
-	 */
-	public java.lang.String getF_1326() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.F_1326);
 	}
 
 	public U_ADDRESS_TYPE() {

@@ -10,11 +10,11 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class T_DIRECTORY_POJO implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1364284444;
+	private static final long serialVersionUID = 784456382;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer PARENT_ID;
-	private java.lang.Integer IS_DIRECTORY;
+	private java.lang.Byte    IS_DIRECTORY;
 	private java.lang.String  name;
 
 	@javax.persistence.Id
@@ -36,12 +36,12 @@ public class T_DIRECTORY_POJO implements java.io.Serializable {
 		this.PARENT_ID = PARENT_ID;
 	}
 
-	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 7)
-	public java.lang.Integer getIS_DIRECTORY() {
+	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 1)
+	public java.lang.Byte getIS_DIRECTORY() {
 		return this.IS_DIRECTORY;
 	}
 
-	public void setIS_DIRECTORY(java.lang.Integer IS_DIRECTORY) {
+	public void setIS_DIRECTORY(java.lang.Byte IS_DIRECTORY) {
 		this.IS_DIRECTORY = IS_DIRECTORY;
 	}
 

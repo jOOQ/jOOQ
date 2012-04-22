@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_BOOK", schema = "TEST")
 public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK> {
 
-	private static final long serialVersionUID = -2037335054;
+	private static final long serialVersionUID = 433718488;
 
 	/**
 	 * An uncommented item
@@ -127,7 +127,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CONTENT_TEXT", length = 4000)
+	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getCONTENT_TEXT() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.CONTENT_TEXT);
 	}
@@ -142,7 +142,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CONTENT_PDF", length = 4000)
+	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getCONTENT_PDF() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.CONTENT_PDF);
 	}

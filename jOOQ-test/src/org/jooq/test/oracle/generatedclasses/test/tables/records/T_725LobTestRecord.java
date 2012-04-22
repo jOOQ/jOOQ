@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_725_LOB_TEST", schema = "TEST")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1886427352;
+	private static final long serialVersionUID = 1892541915;
 
 	/**
 	 * An uncommented item
@@ -42,7 +42,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LOB", length = 4000)
+	@javax.persistence.Column(name = "LOB")
 	public byte[] getLob() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST.LOB);
 	}

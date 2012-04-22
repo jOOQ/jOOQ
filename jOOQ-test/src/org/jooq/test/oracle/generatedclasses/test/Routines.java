@@ -785,6 +785,27 @@ public final class Routines {
 	}
 
 	/**
+	 * Call TEST.P_DEFAULT
+	 *
+	 * @param pInNumber IN parameter
+	 * @param pOutNumber OUT parameter
+	 * @param pInVarchar IN parameter
+	 * @param pOutVarchar OUT parameter
+	 * @param pInDate IN parameter
+	 * @param pOutDate OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.test.routines.PDefault pDefault(org.jooq.Configuration configuration, java.lang.Number pInNumber, java.lang.String pInVarchar, java.sql.Date pInDate) {
+		org.jooq.test.oracle.generatedclasses.test.routines.PDefault p = new org.jooq.test.oracle.generatedclasses.test.routines.PDefault();
+		p.setPInNumber(pInNumber);
+		p.setPInVarchar(pInVarchar);
+		p.setPInDate(pInDate);
+
+		p.execute(configuration);
+		return p;
+	}
+
+	/**
 	 * Call TEST.P_ENHANCE_ADDRESS1
 	 *
 	 * @param address IN parameter

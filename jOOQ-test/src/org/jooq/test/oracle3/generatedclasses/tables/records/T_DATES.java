@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES> {
 
-	private static final long serialVersionUID = -1920332193;
+	private static final long serialVersionUID = 1860710931;
 
 	/**
 	 * An uncommented item
@@ -105,48 +105,6 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	@javax.persistence.Column(name = "TS_BIGINT", precision = 18)
 	public java.lang.Long getTS_BIGINT() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.TS_BIGINT);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * The SQL type of this item (INTERVAL YEAR(2) TO MONTH) could not be mapped.<br/>
-	 * Deserialising this field might not work!
-	 */
-	public void setI_Y(java.lang.Object value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.I_Y, value);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * The SQL type of this item (INTERVAL YEAR(2) TO MONTH) could not be mapped.<br/>
-	 * Deserialising this field might not work!
-	 */
-	@javax.persistence.Column(name = "I_Y", precision = 2)
-	public java.lang.Object getI_Y() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.I_Y);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * The SQL type of this item (INTERVAL DAY(2) TO SECOND(6)) could not be mapped.<br/>
-	 * Deserialising this field might not work!
-	 */
-	public void setI_D(java.lang.Object value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.I_D, value);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * The SQL type of this item (INTERVAL DAY(2) TO SECOND(6)) could not be mapped.<br/>
-	 * Deserialising this field might not work!
-	 */
-	@javax.persistence.Column(name = "I_D", precision = 2, scale = 6)
-	public java.lang.Object getI_D() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.I_D);
 	}
 
 	/**

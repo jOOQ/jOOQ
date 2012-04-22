@@ -12,7 +12,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_BOOK", schema = "TEST")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 777547931;
+	private static final long serialVersionUID = -1497888887;
 
 	/**
 	 * The book ID
@@ -214,7 +214,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Some textual content of the book
 	 */
-	@javax.persistence.Column(name = "CONTENT_TEXT", length = 4000)
+	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CONTENT_TEXT);
 	}
@@ -229,7 +229,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Some binary content of the book
 	 */
-	@javax.persistence.Column(name = "CONTENT_PDF", length = 4000)
+	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CONTENT_PDF);
 	}

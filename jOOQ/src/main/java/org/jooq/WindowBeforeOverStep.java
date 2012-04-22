@@ -41,6 +41,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+
 /**
  * This type is used for the window function DSL API.
  * <p>
@@ -54,17 +55,18 @@ import static org.jooq.SQLDialect.SYBASE;
  *      .andUnboundedFollowing()
  * </pre></code>
  * <p>
- * Unlike in {@link WindowBeforeOverStep}, <code>OVER()</code> is a mandatory
+ * Unlike in {@link WindowOverStep}, <code>OVER()</code> is an optional clause
  * clause.
  *
  * @param <T> The function return type
  * @author Lukas Eder
  */
-public interface WindowOverStep<T> {
+public interface WindowBeforeOverStep<T> extends WindowOverStep<T>, Field<T> {
 
     /**
      * Add an <code>OVER</code> clause
      */
+    @Override
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> over();
 

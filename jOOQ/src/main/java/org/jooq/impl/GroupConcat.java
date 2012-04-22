@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.inline;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -46,6 +46,7 @@ import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.SortField;
+import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowPartitionByStep;
 
 /**
@@ -83,11 +84,41 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
             result = new Function<String>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field);
         }
         else {
-            Field<String> literal = literal("'" + separator.replace("'", "''") + "'");
+            Field<String> literal = inline(separator);
             result = new Function<String>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, literal);
         }
 
         return result.withinGroupOrderBy(orderBy);
+    }
+
+    @Override
+    public final WindowBeforeOverStep<String> keepDenseRankFirstOrderBy(Field<?>... fields) {
+        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final WindowBeforeOverStep<String> keepDenseRankFirstOrderBy(SortField<?>... fields) {
+        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final WindowBeforeOverStep<String> keepDenseRankFirstOrderBy(Collection<SortField<?>> fields) {
+        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final WindowBeforeOverStep<String> keepDenseRankLastOrderBy(Field<?>... fields) {
+        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final WindowBeforeOverStep<String> keepDenseRankLastOrderBy(SortField<?>... fields) {
+        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final WindowBeforeOverStep<String> keepDenseRankLastOrderBy(Collection<SortField<?>> fields) {
+        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
     }
 
     @Override

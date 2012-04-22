@@ -45,6 +45,10 @@
 			    <artifactId>maven-jaxb2-plugin</artifactId>
 			    <version>0.8.1</version>
 			    <executions>
+			        <!-- If this causes trouble in your Eclipse m2e lifecycle configuration, try using
+			             http://m2eclipse.sonatype.org/sites/m2e/, instead of the official m2e Eclipse
+			             plugin
+			          -->
 			        <execution>
 			            <goals>
 			                <goal>generate</goal>

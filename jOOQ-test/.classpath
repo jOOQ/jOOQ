@@ -28,5 +28,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/rsyntaxtextarea-1.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/JDBC-8.4.1.2032-cubrid.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-console"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-meta"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

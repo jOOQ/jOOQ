@@ -69,6 +69,7 @@ import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.FieldLike;
 import org.jooq.FieldProvider;
 import org.jooq.NamedQueryPart;
 import org.jooq.Param;
@@ -200,6 +201,12 @@ final class Util {
                 if (values[i] instanceof Field<?>) {
                     result[i] = values[i];
                 }
+
+                // [#1347]
+                else if (values[i] instanceof FieldLike) {
+                    result[i] = ((FieldLike)values[i]).asField();
+                }
+
                 else {
                     result[i] = Convert.convert(values[i], fields.get(i).getType());
                 }

@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
@@ -341,6 +342,18 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         assertEquals(37, (int) author2.getValue(TAuthor_ID()));
         assertEquals("Erich", author2.getValue(TAuthor_FIRST_NAME()));
         assertEquals("Kästner", author2.getValue(TAuthor_LAST_NAME()));
+
+        // [#1343] Conversion mustn't be done on jOOQ artefacts
+        assertEquals(1,
+        create().insertInto(TAuthor())
+                .values(
+                    create().select(vals(38)),
+                    val("Alfred"),
+                    field("'Hitchcock'"),
+                    val(null),
+                    field("null"),
+                    create().select(val(null)).asField())
+                .execute());
     }
 
     @Test

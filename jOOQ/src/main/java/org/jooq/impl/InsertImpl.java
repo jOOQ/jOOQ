@@ -44,6 +44,7 @@ import java.util.Map;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.FieldLike;
 import org.jooq.Insert;
 import org.jooq.InsertOnDuplicateSetMoreStep;
 import org.jooq.InsertQuery;
@@ -133,8 +134,19 @@ class InsertImpl<R extends Record>
         return values(values.toArray());
     }
 
+    @SuppressWarnings("unchecked")
     private <T> void addValue(InsertQuery<R> delegate, Field<T> field, Object object) {
-        delegate.addValue(field, field.getDataType().convert(object));
+
+        // [#1343] Only convert non-jOOQ objects
+        if (object instanceof Field) {
+            delegate.addValue(field, (Field<T>) object);
+        }
+        else if (object instanceof FieldLike) {
+            delegate.addValue(field, ((FieldLike) object).<T>asField());
+        }
+        else {
+            delegate.addValue(field, field.getDataType().convert(object));
+        }
     }
 
     @SuppressWarnings("unchecked")

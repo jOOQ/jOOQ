@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
  */
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1376345949;
+	private static final long serialVersionUID = -74958384;
 
 	/**
 	 * An uncommented item
@@ -44,7 +44,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT fk_x_test_case_64_69
+	 * CONSTRAINT fk_x_test_case_64_69a
 	 * FOREIGN KEY (unused_id)
 	 * REFERENCES dbo.x_unused (id)
 	 * </pre></code>
@@ -57,7 +57,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT fk_x_test_case_64_69
+	 * CONSTRAINT fk_x_test_case_64_69a
 	 * FOREIGN KEY (unused_id)
 	 * REFERENCES dbo.x_unused (id)
 	 * </pre></code>
@@ -70,7 +70,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT fk_x_test_case_64_69
+	 * CONSTRAINT fk_x_test_case_64_69a
 	 * FOREIGN KEY (unused_id)
 	 * REFERENCES dbo.x_unused (id)
 	 * </pre></code>

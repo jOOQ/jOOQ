@@ -46,6 +46,7 @@ import java.lang.reflect.TypeVariable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -2270,6 +2271,7 @@ public class DefaultGenerator implements Generator {
 
             // e.g. in TAuthorRecord, print getTBooks()
 			// -----------------------------------------------------------------
+			Set<String> fetchMethodNames = new HashSet<String>();
 			for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
 			    if (out.printOnlyOnce(uniqueKey)) {
 	                foreignKeyLoop: for (ForeignKeyDefinition foreignKey : uniqueKey.getForeignKeys()) {
@@ -2286,23 +2288,36 @@ public class DefaultGenerator implements Generator {
 
 	                    TableDefinition referencing = foreignKey.getKeyTable();
 
+                        StringBuilder fetchMethodName = new StringBuilder();
+                        fetchMethodName.append("fetch");
+                        fetchMethodName.append(strategy.getJavaClassName(referencing));
+
+                        // #352 - Disambiguate foreign key navigation directions
+                        fetchMethodName.append("List");
+
+                        // #350 - Disambiguate multiple foreign keys referencing
+                        // the same table
+                        if (foreignKey.countSimilarReferences() > 1) {
+                            fetchMethodName.append("By");
+                            fetchMethodName.append(strategy.getJavaClassName(foreignKey.getKeyColumns().get(0)));
+                        }
+
+                        // #1270 - Disambiguate identical foreign keys
+                        if (fetchMethodNames.contains(fetchMethodName.toString())) {
+                            log.warn("Duplicate foreign key", foreignKey.getName() + " has the same properties as another foreign key! No code is generated for this key. See trac ticket #1270");
+                            continue foreignKeyLoop;
+                        }
+                        else {
+                            fetchMethodNames.add(fetchMethodName.toString());
+                        }
+
                         printFieldJavaDoc(out, column);
                         out.print("\tpublic ");
                         out.print(List.class);
                         out.print("<");
                         out.print(strategy.getFullJavaClassName(referencing, Mode.RECORD));
-                        out.print("> fetch");
-                        out.print(strategy.getJavaClassName(referencing));
-
-                        // #352 - Disambiguate foreign key navigation directions
-                        out.print("List");
-
-                        // #350 - Disambiguate multiple foreign keys referencing
-                        // the same table
-                        if (foreignKey.countSimilarReferences() > 1) {
-                            out.print("By");
-                            out.print(strategy.getJavaClassName(foreignKey.getKeyColumns().get(0)));
-                        }
+                        out.print("> ");
+                        out.print(fetchMethodName);
 
                         out.println("() {");
                         out.println("\t\treturn create()");

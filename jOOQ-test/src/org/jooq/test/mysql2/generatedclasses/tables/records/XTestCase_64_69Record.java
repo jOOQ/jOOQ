@@ -16,7 +16,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
@@ -25,7 +25,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
@@ -36,7 +36,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
@@ -50,7 +50,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT fk_x_test_case_64_69
+	 * CONSTRAINT fk_x_test_case_64_69a
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES test2.x_unused (ID, NAME)
 	 * </pre></code>
@@ -63,7 +63,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT fk_x_test_case_64_69
+	 * CONSTRAINT fk_x_test_case_64_69a
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES test2.x_unused (ID, NAME)
 	 * </pre></code>

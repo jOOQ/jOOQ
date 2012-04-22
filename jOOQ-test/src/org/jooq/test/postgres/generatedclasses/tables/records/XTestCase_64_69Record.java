@@ -14,7 +14,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
@@ -23,7 +23,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
@@ -34,7 +34,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
@@ -48,7 +48,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69
+	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69a
 	 * FOREIGN KEY (unused_id)
 	 * REFERENCES public.x_unused (id)
 	 * </pre></code>
@@ -61,7 +61,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69
+	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69a
 	 * FOREIGN KEY (unused_id)
 	 * REFERENCES public.x_unused (id)
 	 * </pre></code>
@@ -75,7 +75,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69
+	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69a
 	 * FOREIGN KEY (unused_id)
 	 * REFERENCES public.x_unused (id)
 	 * </pre></code>

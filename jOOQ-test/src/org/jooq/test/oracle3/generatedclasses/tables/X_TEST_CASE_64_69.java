@@ -30,7 +30,7 @@ public class X_TEST_CASE_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -39,7 +39,7 @@ public class X_TEST_CASE_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_64_69
+	 * CONSTRAINT FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES TEST.X_UNUSED (ID)
 	 * </pre></code>

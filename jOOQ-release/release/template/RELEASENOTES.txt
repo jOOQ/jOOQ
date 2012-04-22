@@ -9,6 +9,31 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.1.1 - April 22, 2012
+=================================================================
+
+This is a minor patch release, fixing some issues
+
+Bug fixes
+---------
+#1241 - Wrong variable binding when comparing CHAR columns in
+        Derby and DB2 without explicit casting to VARCHAR
+#1244 - Cannot override class name in GeneratorStrategy in
+        Mode.POJO
+#1264 - Pass fetchsizes <= 0 to the JDBC driver (for MySQL
+        compatibility)
+#1267 - User defined H2 functions codegen bug
+#1270 - Most databases allow for multiple identical foreign keys.
+        This leads to compilation errors in generated source code
+#1287 - Remove oracle.sql dependency also from OSGi information
+        in pom.xml
+#1298 - Avoid source code generation errors when generating code
+        for unknown, dialect-specific data types
+#1308 - Oracle's DataTypeDefinition reports the length of a BLOB
+        / CLOB data type to be 4000
+#1343 - Regression in insertInto(...).values(...). Cannot pass
+        Field<?> to values()
+
 Version 2.1.0 - March 18, 2012
 =================================================================
 

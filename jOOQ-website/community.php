@@ -53,7 +53,7 @@ Telling the world:<br/>
 <ul>
 	<li>Check out the codebase from sourceforge: <a href="https://sourceforge.net/scm/?type=svn&group_id=283484" title="jOOQ SVN repository">SVN</a>. <a href="https://github.com/lukaseder/jOOQ" title="jOOQ GitHub repository">GitHub</a> is also available but may be incomplete and not up to date!</li>
     <li>Import the jOOQ projects into <a href="http://www.eclipse.org/" title="jOOQ developers use Eclipse">Eclipse</a></li>
-    <li>If you haven't already, get <a href="http://www.eclipse.org/m2e/">M2E</a>, the Eclipse Maven plugin to build jOOQ with Maven in Eclipse</li>
+    <li>If you haven't already, get <a href="http://m2eclipse.sonatype.org/sites/m2e/">M2E</a>, the Eclipse Maven plugin to build jOOQ with Maven in Eclipse (The one from Sonatype, NOT the one from Eclipse)</li>
     <li>Use the Eclipse formatting settings that have been checked in with the projects. Keeps the code <a href="http://www.extremeprogramming.org/rules/standards.html">nice and clean</a>. Your code should not change (not much), if formatted with Ctrl-Shift-F. But don't format jOOQ DSL query code!</li>
     <li>Send me your changes directly to the <a href="http://groups.google.com/group/jooq-user" title="the jOOQ user group">user group</a> or in a <a href="https://sourceforge.net/apps/trac/jooq/newticket">trac ticket</a>.</li>
     <li>Send your changes as an Eclipse-compatible .patch file (or the sum of the modified Java classes). Ideally, the .patch file can be applied to the latest version of jOOQ on the SVN trunk.</li>

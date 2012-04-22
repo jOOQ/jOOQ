@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<project name="jOOQ-release" basedir="." default="release">
+	<property name="dir.workspace" value="${basedir}/.." />
+	<property name="dir.target" value="${basedir}/target" />
+	<property name="dir.release" value="${basedir}/release" />
+	<property name="version" value="2.2.1"/>
+
+	<!-- Run a full mvn clean package install deploy first before this -->
+	<target name="release" description="Release a new version">
+		<mkdir dir="${dir.release}/versions" />
+		<mkdir dir="${dir.release}/${version}" />
+		<mkdir dir="${dir.release}/${version}/lib" />
+		<mkdir dir="${dir.release}/${version}/src" />
+
+		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
+		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}.jar"/>
+		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}.jar"/>
+		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}.jar"/>
+
+		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ/target/jooq-${version}-sources.jar"/>
+		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-sources.jar"/>
+		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-sources.jar"/>
+		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}-sources.jar"/>
+
+		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ/target/jooq-${version}-javadoc.jar"/>
+		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-javadoc.jar"/>
+		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-javadoc.jar"/>
+		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}-javadoc.jar"/>
+
+		<copy todir="${dir.release}/${version}">
+			<fileset dir="${dir.release}/template">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+
+		<mkdir dir="${dir.release}/${version}/third-party/lib" />
+		<mkdir dir="${dir.release}/${version}/third-party/src" />
+
+		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\org\slf4j\slf4j-api\1.6.1\slf4j-api-1.6.1.jar"/>
+		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\org\slf4j\slf4j-api\1.6.1\slf4j-api-1.6.1-sources.jar"/>
+
+		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\log4j\log4j\1.2.16\log4j-1.2.16.jar"/>
+		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\log4j\log4j\1.2.16\log4j-1.2.16-sources.jar"/>
+
+		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\javax\persistence\persistence-api\1.0\persistence-api-1.0.jar"/>
+		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\javax\persistence\persistence-api\1.0\persistence-api-1.0-sources.jar"/>
+
+		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\com\fifesoft\rsyntaxtextarea\1.5.0\rsyntaxtextarea-1.5.0.jar"/>
+		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\com\fifesoft\rsyntaxtextarea\1.5.0\rsyntaxtextarea-1.5.0-sources.jar"/>
+
+ 		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\org\apache\ant\ant\1.8.2\ant-1.8.2.jar"/>
+
+		<!-- Include jooq.jar and rsyntaxtextarea.jar binaries in jooq-console.jar -->
+		<unzip dest="${dir.release}/${version}/third-party/src/unzipped" src="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
+		<unzip dest="${dir.release}/${version}/third-party/src/unzipped" src="${dir.release}/${version}/third-party/lib/rsyntaxtextarea-1.5.0.jar"/>
+
+
+		<jar update="true" destfile="${dir.release}/${version}/lib/jooq-console-${version}.jar">
+			<fileset dir="${dir.release}/${version}/third-party/src/unzipped">
+				<include name="org/**"/>
+			</fileset>
+		</jar>
+
+		<delete dir="${dir.release}/${version}/third-party/src/unzipped"/>
+		<!-- Include rsyntaxtextarea.jar binaries in jooq-console.jar -->
+
+		<zip destfile="${dir.release}/versions/jOOQ-${version}-full.zip">
+			<fileset dir="${dir.release}/${version}"/>
+		</zip>
+		<zip destfile="${dir.release}/versions/jOOQ-${version}-binaries-only.zip">
+			<fileset dir="${dir.release}/${version}">
+				<include name="*.txt"/>
+				<include name="lib/**"/>
+			</fileset>
+		</zip>
+
+		<delete dir="${dir.release}/${version}"/>
+	</target>
+</project>

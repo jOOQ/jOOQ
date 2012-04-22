@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project name="jOOQ-codegen" basedir=".">
+	<property name="dir.resources" value="${basedir}/src/main/resources" />
+	<property name="dir.java" value="${basedir}/src/main/java" />
+	<property name="dir.target" value="${dir.java}/org/jooq/util/jaxb" />
+
+	<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+		<classpath>
+			<fileset dir="${basedir}/lib" includes="*.jar" />
+			<fileset dir="${java.home}/lib" includes="rt.jar" />
+		</classpath>
+	</taskdef>
+
+	<!-- Run a full mvn clean package install deploy first before this -->
+	<target name="xjc-generator" description="Generate JAXB artefacts from XSD">
+		<mkdir dir="${dir.java}/org/jooq/util/jaxb" />
+		<xjc schema="${dir.resources}/xsd/jooq-codegen-2.1.0.xsd" destdir="${dir.java}" package="org.jooq.util.jaxb">
+			<arg value="-Xxew" />
+			<arg value="-Xfluent-api" />
+			<arg value="-Xdefault-value"/>
+		    <arg value="-instantiate lazy" />
+		</xjc>
+
+		<!-- Remove unnecessary artefacts again -->
+		<delete>
+			<fileset dir="${dir.target}">
+				<include name="EnumTypes.java"/>
+				<include name="ForcedTypes.java"/>
+				<include name="MasterDataTables.java"/>
+				<include name="ObjectFactory.java"/>
+				<include name="Schemata.java"/>
+				<include name="Properties.java"/>
+			</fileset>
+		</delete>
+	</target>
+</project>

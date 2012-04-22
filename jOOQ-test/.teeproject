@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Default Connection</comment>
+<entry key="sid">xe</entry>
+<entry key="displayName">TEST@localhost/xe</entry>
+<entry key="port">1521</entry>
+<entry key="host">localhost</entry>
+<entry key="userName">TEST</entry>
+<entry key="adapterId">oracle</entry>
+</properties>

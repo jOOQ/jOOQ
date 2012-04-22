@@ -1,0 +1,398 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>oss-parent</artifactId>
+		<groupId>org.sonatype.oss</groupId>
+		<version>7</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.jooq</groupId>
+	<artifactId>jooq-codegen-maven-example</artifactId>
+	<version>2.2.1</version>
+	<packaging>jar</packaging>
+
+	<name>jOOQ Codegen Maven</name>
+	<description>jOOQ effectively combines complex SQL, typesafety, source code generation, active records, stored procedures, advanced data types, and Java in a fluent, intuitive DSL.</description>
+	<url>http://www.jooq.org</url>
+
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.jooq.org/inc/LICENSE.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<developerConnection>scm:svn:https://jooq.svn.sourceforge.net/svnroot/jooq</developerConnection>
+		<url>https://jooq.svn.sourceforge.net/svnroot/jooq</url>
+		<connection>scm:svn:https://jooq.svn.sourceforge.net/svnroot/jooq</connection>
+	</scm>
+
+	<issueManagement>
+		<system>Trac</system>
+		<url>https://sourceforge.net/apps/trac/jooq/report/6</url>
+	</issueManagement>
+
+	<developers>
+		<developer>
+			<name>Lukas Eder</name>
+			<email>lukas.eder@gmail.com</email>
+		</developer>
+		<developer>
+			<name>Sander Plas</name>
+			<email>sander.plas@gmail.com</email>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq</artifactId>
+			<version>2.2.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.9</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.0-801.jdbc4</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+	  		<groupId>net.sourceforge.jtds</groupId>
+	  		<artifactId>jtds</artifactId>
+	  		<version>1.2.4</version>
+	  		<type>jar</type>
+			<scope>test</scope>
+	  	</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.18</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
+			<type>jar</type>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+	<properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<defaultGoal>deploy</defaultGoal>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+
+		<plugins>
+
+			<!-- The jOOQ code generator plugin for Postgres / Sybase ASE / MySQL -->
+			<plugin>
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>exec1</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<jdbc>
+								<driver>org.postgresql.Driver</driver>
+								<url>jdbc:postgresql:postgres</url>
+								<schema>public</schema>
+								<user>postgres</user>
+								<password>test</password>
+							</jdbc>
+							<generator>
+								<name>org.jooq.util.DefaultGenerator</name>
+								<database>
+									<name>org.jooq.util.postgres.PostgresDatabase</name>
+									<includes>.*</includes>
+									<excludes></excludes>
+									<dateAsTimestamp>true</dateAsTimestamp>
+								</database>
+								<generate>
+									<relations>true</relations>
+									<deprecated>false</deprecated>
+									<instanceFields>false</instanceFields>
+									<pojos>true</pojos>
+								</generate>
+								<target>
+									<packageName>org.jooq.util.maven.example.postgres</packageName>
+									<directory>target/generated-sources/jooq-postgres</directory>
+								</target>
+							</generator>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>exec2</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<jdbc>
+								<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+								<url>jdbc:jtds:sybase://lukas-hp:5000/TEST</url>
+								<schema>dbo</schema>
+								<user>sa</user>
+
+								<!-- [#951] This checks the possibility of empty passwords -->
+								<password></password>
+							</jdbc>
+							<generator>
+								<name>org.jooq.util.DefaultGenerator</name>
+								<database>
+									<name>org.jooq.util.ase.ASEDatabase</name>
+									<includes>t_.*,x_.*,v_.*,V_.*,p_.*,f_.*,(f|p)[0-9]+,s_.*</includes>
+									<excludes></excludes>
+								</database>
+								<generate>
+									<relations>true</relations>
+									<deprecated>false</deprecated>
+									<instanceFields>true</instanceFields>
+									<jpaAnnotations>true</jpaAnnotations>
+								</generate>
+								<target>
+									<packageName>org.jooq.util.maven.example.ase</packageName>
+									<directory>target/generated-sources/jooq-ase</directory>
+								</target>
+							</generator>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>exec3</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<jdbc>
+								<driver>com.mysql.jdbc.Driver</driver>
+								<url>jdbc:mysql://localhost/test</url>
+								<user>root</user>
+								<password></password>
+							</jdbc>
+							<generator>
+								<name>org.jooq.util.DefaultGenerator</name>
+								<database>
+									<name>org.jooq.util.mysql.MySQLDatabase</name>
+									<includes>.*</includes>
+									<excludes>t_book_details</excludes>
+									<unsignedTypes>true</unsignedTypes>
+
+									<!-- [#958] This checks the schema-rewriting functionality -->
+									<inputSchema>test</inputSchema>
+									<outputSchema>test2</outputSchema>
+
+									<!-- [#968] custom enum types -->
+									<enumTypes>
+										<enumType>
+											<name>BOOLEAN_10</name>
+											<literals>1,0</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_YN_UC</name>
+											<literals>"Y",N</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_YN_LC</name>
+											<literals>y,"n"</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_YES_NO_UC</name>
+											<literals>"YES","NO"</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_YES_NO_LC</name>
+											<literals>yes,no</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_TRUE_FALSE_UC</name>
+											<literals>TRUE,FALSE</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_TRUE_FALSE_LC</name>
+											<literals>true,false</literals>
+										</enumType>
+									</enumTypes>
+
+									<!-- [#968] [#677] forced column types -->
+									<forcedTypes>
+										<forcedType>
+											<name>BOOLEAN_10</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.ONE_ZERO)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_YN_UC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.Y_N_UC)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_YN_LC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.Y_N_LC)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_YES_NO_UC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.YES_NO_UC)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_YES_NO_LC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.YES_NO_LC)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_TRUE_FALSE_UC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.TRUE_FALSE_UC)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_TRUE_FALSE_LC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.TRUE_FALSE_LC)</expressions>
+										</forcedType>
+									</forcedTypes>
+								</database>
+								<generate>
+									<relations>true</relations>
+									<deprecated>false</deprecated>
+									<instanceFields>true</instanceFields>
+									<generatedAnnotation>false</generatedAnnotation>
+									<pojos>true</pojos>
+									<jpaAnnotations>true</jpaAnnotations>
+								</generate>
+								<target>
+									<packageName>org.jooq.util.maven.example.mysql</packageName>
+									<directory>target/generated-sources/jooq-mysql</directory>
+								</target>
+							</generator>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+				  		<groupId>net.sourceforge.jtds</groupId>
+				  		<artifactId>jtds</artifactId>
+				  		<version>1.2.4</version>
+				  	</dependency>
+					<dependency>
+						<groupId>postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>8.4-702.jdbc4</version>
+					</dependency>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.18</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<!-- Plugins used for Maven Central -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<fork>true</fork>
+					<maxmem>512m</maxmem>
+					<meminitial>256m</meminitial>
+					<encoding>UTF-8</encoding>
+					<source>1.6</source>
+					<target>1.6</target>
+					<debug>true</debug>
+					<debuglevel>lines,vars,source</debuglevel>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<excludeResources>true</excludeResources>
+					<useDefaultExcludes>true</useDefaultExcludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>bundle-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<maxmemory>512</maxmemory>
+					<encoding>UTF-8</encoding>
+					<show>protected</show>
+					<notree>true</notree>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <downloadSources>true</downloadSources>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
+</project>

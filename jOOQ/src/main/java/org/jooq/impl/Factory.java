@@ -2554,7 +2554,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Field<Timestamp> timestamp2) {
-        return new TimestampDiff(timestamp1, timestamp2);
+        return new TimestampDiff(nullSafe(timestamp1), nullSafe(timestamp2));
     }
 
     /**

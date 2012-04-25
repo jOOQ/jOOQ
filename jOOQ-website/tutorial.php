@@ -7,6 +7,8 @@ function getActiveMenu() {
     return "learn";
 }
 function printContent() {
+    global $root;
+    global $version;
 ?>
 <h2>Introduction</h2>
 <p>
@@ -36,7 +38,7 @@ Alternatively, you can create a Maven dependency:
   &lt;groupId&gt;org.jooq&lt;/groupId&gt;
   &lt;!-- artefacts are jooq, jooq-meta, jooq-codegen --&gt;
   &lt;artifactId&gt;jooq&lt;/artifactId&gt;
-  &lt;version&gt;2.0.0&lt;/version&gt;
+  &lt;version&gt;<?=$version?>&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 <p>
@@ -99,7 +101,8 @@ that looks like this:
            org.util.[database].[database]Database -->
       &lt;name>org.jooq.util.mysql.MySQLDatabase&lt;/name>
 
-      &lt;!-- The database schema (or owner, user, database name) to be generated -->
+      &lt;!-- The database schema (or in the absence of schema support, in your RDBMS this
+           can be the owner, user, database name) to be generated -->
       &lt;inputSchema>guestbook&lt;/inputSchema>
 
       &lt;!-- All elements that are generated from your schema (several Java regular expressions, separated by comma)
@@ -147,14 +150,14 @@ Once you have the JAR files and guestbook.xml in your temp directory, type this
 (use colons instead of semi-colons on UNIX/Linux systems):
 </p>
 <pre>
-java -classpath jooq-2.0.0.jar;jooq-meta-2.0.0.jar;jooq-codegen-2.0.0.jar;mysql-connector-java-5.1.18-bin.jar;. org.jooq.util.GenerationTool /guestbook.xml
+java -classpath jooq-<?=$version?>.jar;jooq-meta-<?=$version?>.jar;jooq-codegen-<?=$version?>.jar;mysql-connector-java-5.1.18-bin.jar;. org.jooq.util.GenerationTool /guestbook.xml
 </pre>
 <p>
 Note the prefix slash before guestbook.properies.
 Even though it's in our working directory, we need to prepend a slash, as it is
 loaded from the classpath.
 Replace the filenames with your filenames.
-In this example, jOOQ 2.0.0 is being used.
+In this example, jOOQ <?=$version?> is being used.
 If everything has worked, you should see this in your console output:
 </p>
 <pre>
@@ -247,7 +250,10 @@ public class Main {
             e.printStackTrace();
         } finally {
             if (conn != null) {
-                conn.close();
+                try {
+                    conn.close();
+                } catch (SQLException ignore) {
+                }
             }
         }
     }
@@ -331,7 +337,7 @@ public class Main {
             conn = DriverManager.getConnection(url, userName, password);
 
             GuestbookFactory create = new GuestbookFactory(conn);
-            Result result = create.select().from(POSTS).fetch();
+            Result&lt;?&gt; result = create.select().from(POSTS).fetch();
 
             for (Record r : result) {
                 Long id = r.getValue(POSTS.ID);
@@ -344,7 +350,10 @@ public class Main {
             e.printStackTrace();
         } finally {
             if (conn != null) {
-                conn.close();
+                try {
+                    conn.close();
+                } catch (SQLException ignore) {
+                }
             }
         }
     }

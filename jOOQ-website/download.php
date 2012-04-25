@@ -8,6 +8,7 @@ function getActiveMenu() {
 }
 function printContent() {
 	global $root;
+	global $version;
 ?>
 
 <h2>Download</h2>
@@ -42,7 +43,7 @@ The jOOQ roadmap plans for:
 Find release notes for currently maintained branches here:
 </p>
 <ul>
-  <li><a href="notes.php" title="Release notes for the latest jOOQ version">The latest version</a></li>
+  <li><a href="notes.php?version=<?=preg_replace('/(\\d+\\.\\d+)\\.\\d+/', '$1', $version)?>" title="Release notes for the latest jOOQ version">The latest version</a></li>
   <li><a href="notes.php?version=2.2" title="Release notes for the 2.2 jOOQ branch">The 2.2 branch</a></li>
   <li><a href="notes.php?version=2.1" title="Release notes for the 2.1 jOOQ branch">The 2.1 branch</a></li>
   <li><a href="notes.php?version=2.0" title="Release notes for the 2.0 jOOQ branch">The 2.0 branch</a></li>

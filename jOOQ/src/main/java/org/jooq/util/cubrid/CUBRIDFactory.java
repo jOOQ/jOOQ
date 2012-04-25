@@ -32,6 +32,7 @@ package org.jooq.util.cubrid;
 
 import java.sql.Connection;
 
+import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
@@ -106,5 +107,22 @@ public class CUBRIDFactory extends Factory {
      */
     public CUBRIDFactory() {
         super(SQLDialect.CUBRID);
+    }
+
+    // -------------------------------------------------------------------------
+    // MySQL-specific functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * Use the CUBRID-specific <code>INCR()</code> function.
+     * <p>
+     * This function can be used to increment a field value in a
+     * <code>SELECT</code> statement as such: <code><pre>
+     * SELECT article, INCR(read_count)
+     * FROM article_table
+     * WHERE article_id = 130,987</pre></code>
+     */
+    public static <T> Field<T> incr(Field<T> field) {
+        return field("{incr}({0})", field.getDataType(), field);
     }
 }

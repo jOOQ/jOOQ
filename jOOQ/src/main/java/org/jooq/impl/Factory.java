@@ -920,6 +920,10 @@ public class Factory implements FactoryOperations {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     *
+     * @param name The function name (without parentheses)
+     * @param type The function return type
+     * @param arguments The function arguments
      */
     @Support
     public static <T> Field<T> function(String name, Class<T> type, Field<?>... arguments) {
@@ -934,6 +938,10 @@ public class Factory implements FactoryOperations {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     *
+     * @param name The function name (without parentheses)
+     * @param type The function return type
+     * @param arguments The function arguments
      */
     @Support
     public static <T> Field<T> function(String name, DataType<T> type, Field<?>... arguments) {

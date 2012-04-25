@@ -83,7 +83,6 @@ import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
-import org.jooq.tools.JooqLogger;
 
 /**
  * Thread safe proxy for {@link Factory}.
@@ -104,15 +103,11 @@ public final class FactoryProxy implements FactoryOperations {
     /**
      * Generated UID
      */
-    private static final long      serialVersionUID = -8475057043526340066L;
+    private static final long serialVersionUID = -8475057043526340066L;
 
-    private static JooqLogger      log              = JooqLogger.getLogger(FactoryProxy.class);
-    private transient DataSource   dataSource;
-    private SQLDialect             dialect;
-
-    @SuppressWarnings("deprecation")
-    private org.jooq.SchemaMapping schemaMapping;
-    private Settings               settings;
+    private transient DataSource dataSource;
+    private SQLDialect dialect;
+    private Settings settings;
 
     // -------------------------------------------------------------------------
     // Injected configuration
@@ -120,13 +115,6 @@ public final class FactoryProxy implements FactoryOperations {
 
     public final void setDialect(SQLDialect dialect) {
         this.dialect = dialect;
-    }
-
-    @SuppressWarnings("deprecation")
-    public final void setSchemaMapping(org.jooq.SchemaMapping schemaMapping) {
-        this.schemaMapping = schemaMapping;
-
-        log.warn("DEPRECATION", "org.jooq.SchemaMapping is deprecated as of jOOQ 2.0.5. Consider using jOOQ's runtime configuration org.jooq.conf.Settings instead");
     }
 
     public final void setSettings(Settings settings) {
@@ -153,7 +141,7 @@ public final class FactoryProxy implements FactoryOperations {
     @Override
     @Deprecated
     public final org.jooq.SchemaMapping getSchemaMapping() {
-        return schemaMapping;
+        return null;
     }
 
     @Override
@@ -526,7 +514,6 @@ public final class FactoryProxy implements FactoryOperations {
         return getDelegate().executeDeleteOne(table, condition);
     }
 
-    @SuppressWarnings("deprecation")
     private Factory getDelegate() {
         if (dataSource == null || dialect == null) {
             throw new DataAccessException("Both dataSource and dialect properties should be set");
@@ -536,17 +523,15 @@ public final class FactoryProxy implements FactoryOperations {
             Connection con = getDataSource().getConnection();
 
             Constructor<? extends Factory> constructor;
-            if (schemaMapping == null) {
+            if (settings == null) {
                 constructor = clazz.getConstructor(Connection.class);
                 return constructor.newInstance(con);
+            } else {
+                constructor = clazz.getConstructor(Connection.class, Settings.class);
+                return constructor.newInstance(con, settings);
             }
-            else {
-                constructor = clazz.getConstructor(Connection.class, org.jooq.SchemaMapping.class);
-                return constructor.newInstance(con, schemaMapping);
-            }
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Failed to create jOOQ Factory", e);
+        } catch (Exception exc) {
+            throw new DataAccessException("Failed to create jOOQ Factory", exc);
         }
     }
 }

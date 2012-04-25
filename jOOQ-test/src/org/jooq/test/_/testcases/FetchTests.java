@@ -366,13 +366,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         }
         catch (MappingException expected) {}
 
-        try {
-            // Cannot a class without default constructor
-            create().selectFrom(TAuthor())
-                    .fetchInto(Math.class);
-            fail();
-        }
-        catch (MappingException expected) {}
+        // [#1340] While useless, this should be possible
+        create().selectFrom(TAuthor())
+                .fetchInto(Math.class);
 
         // [#930] Calendar/Date conversion checks
         // --------------------------------------

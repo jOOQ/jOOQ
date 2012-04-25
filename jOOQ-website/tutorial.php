@@ -270,7 +270,7 @@ Let's add a simple query:
 </p>
 <pre class="prettyprint lang-java">
 GuestbookFactory create = new GuestbookFactory(conn);
-Result&lt;?&gt; result = create.select().from(POSTS).fetch();
+Result&lt;Record&gt; result = create.select().from(POSTS).fetch();
 </pre>
 <p>
 First get an instance of <code>GuestbookFactory</code> so we can write a simple
@@ -337,7 +337,7 @@ public class Main {
             conn = DriverManager.getConnection(url, userName, password);
 
             GuestbookFactory create = new GuestbookFactory(conn);
-            Result&lt;?&gt; result = create.select().from(POSTS).fetch();
+            Result&lt;Record&gt; result = create.select().from(POSTS).fetch();
 
             for (Record r : result) {
                 Long id = r.getValue(POSTS.ID);

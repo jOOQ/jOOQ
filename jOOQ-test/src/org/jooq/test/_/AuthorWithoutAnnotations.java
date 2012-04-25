@@ -47,4 +47,7 @@ public class AuthorWithoutAnnotations {
     public String lastName;
     public Date dateOfBirth;
     public Short yearOfBirth;
+
+    // Check if setAccessible is called correctly
+    private AuthorWithoutAnnotations() {}
 }

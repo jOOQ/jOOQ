@@ -45,6 +45,7 @@ import static org.jooq.impl.Util.getMatchingSetters;
 import static org.jooq.impl.Util.hasColumnAnnotations;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
@@ -599,7 +600,13 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     private final <T> T intoPOJO(Class<? extends T> type) throws Exception {
-        T result = type.newInstance();
+
+        // [#1340] Allow for using non-public default constructors
+        Constructor<? extends T> constructor = type.getDeclaredConstructor();
+        if (!constructor.isAccessible())
+            constructor.setAccessible(true);
+
+        T result = constructor.newInstance();
         boolean useAnnotations = hasColumnAnnotations(type);
 
         for (Field<?> field : getFields()) {

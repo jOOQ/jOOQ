@@ -615,7 +615,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
     @Override
     public final <T> List<T> getValues(Field<T> field) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<T>(size());
 
         for (R record : this) {
             result.add(record.getValue(field));
@@ -666,7 +666,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<BigDecimal> getValuesAsBigDecimal(Field<?> field) {
-        List<BigDecimal> result = new ArrayList<BigDecimal>();
+        List<BigDecimal> result = new ArrayList<BigDecimal>(size());
 
         for (R record : this) {
             result.add(record.getValueAsBigDecimal(field));
@@ -682,7 +682,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<BigInteger> getValuesAsBigInteger(Field<?> field) {
-        List<BigInteger> result = new ArrayList<BigInteger>();
+        List<BigInteger> result = new ArrayList<BigInteger>(size());
 
         for (R record : this) {
             result.add(record.getValueAsBigInteger(field));
@@ -698,7 +698,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<Byte> getValuesAsByte(Field<?> field) {
-        List<Byte> result = new ArrayList<Byte>();
+        List<Byte> result = new ArrayList<Byte>(size());
 
         for (R record : this) {
             result.add(record.getValueAsByte(field));
@@ -714,7 +714,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<Date> getValuesAsDate(Field<?> field) {
-        List<Date> result = new ArrayList<Date>();
+        List<Date> result = new ArrayList<Date>(size());
 
         for (R record : this) {
             result.add(record.getValueAsDate(field));
@@ -730,7 +730,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<Double> getValuesAsDouble(Field<?> field) {
-        List<Double> result = new ArrayList<Double>();
+        List<Double> result = new ArrayList<Double>(size());
 
         for (R record : this) {
             result.add(record.getValueAsDouble(field));
@@ -746,7 +746,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<Float> getValuesAsFloat(Field<?> field) {
-        List<Float> result = new ArrayList<Float>();
+        List<Float> result = new ArrayList<Float>(size());
 
         for (R record : this) {
             result.add(record.getValueAsFloat(field));
@@ -762,7 +762,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<Integer> getValuesAsInteger(Field<?> field) {
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<Integer>(size());
 
         for (R record : this) {
             result.add(record.getValueAsInteger(field));
@@ -778,7 +778,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<Long> getValuesAsLong(Field<?> field) {
-        List<Long> result = new ArrayList<Long>();
+        List<Long> result = new ArrayList<Long>(size());
 
         for (R record : this) {
             result.add(record.getValueAsLong(field));
@@ -794,7 +794,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<Short> getValuesAsShort(Field<?> field) {
-        List<Short> result = new ArrayList<Short>();
+        List<Short> result = new ArrayList<Short>(size());
 
         for (R record : this) {
             result.add(record.getValueAsShort(field));
@@ -810,7 +810,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<String> getValuesAsString(Field<?> field) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>(size());
 
         for (R record : this) {
             result.add(record.getValueAsString(field));
@@ -826,7 +826,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<Time> getValuesAsTime(Field<?> field) {
-        List<Time> result = new ArrayList<Time>();
+        List<Time> result = new ArrayList<Time>(size());
 
         for (R record : this) {
             result.add(record.getValueAsTime(field));
@@ -842,7 +842,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<Timestamp> getValuesAsTimestamp(Field<?> field) {
-        List<Timestamp> result = new ArrayList<Timestamp>();
+        List<Timestamp> result = new ArrayList<Timestamp>(size());
 
         for (R record : this) {
             result.add(record.getValueAsTimestamp(field));
@@ -1271,7 +1271,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <T> List<T> into(Class<? extends T> type) {
-        List<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<T>(size());
 
         for (R record : this) {
             list.add(record.into(type));

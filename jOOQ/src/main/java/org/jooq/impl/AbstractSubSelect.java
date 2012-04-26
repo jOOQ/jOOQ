@@ -390,16 +390,24 @@ implements
         toSQLReference0(local);
         String enclosed = local.render();
 
-        String subqueryName = "limit_" + Util.hash(enclosed);
+        String innerSubqueryName = "inner_" + Util.hash(enclosed);
+        String outerSubqueryName = "outer_" + Util.hash(enclosed);
         String rownumName = "rownum_" + Util.hash(enclosed);
 
         context.keyword("select * from (")
                .formatIndentStart()
                .formatNewLine()
                .keyword("select ")
-               .sql(subqueryName)
+               .sql(outerSubqueryName)
                .keyword(".*, rownum as ")
                .sql(rownumName)
+               .formatSeparator()
+               .keyword("from (")
+               .formatIndentStart()
+               .formatNewLine()
+               .keyword("select ")
+               .sql(innerSubqueryName)
+               .keyword(".*")
                .formatSeparator()
                .keyword("from (")
                .formatIndentStart()
@@ -408,7 +416,11 @@ implements
                .formatIndentEnd()
                .formatNewLine()
                .sql(") ")
-               .sql(subqueryName)
+               .sql(innerSubqueryName)
+               .formatSeparator()
+               .keyword("where rownum <=")
+               .sql(getLimit().getUpperRownum())
+               .sql(outerSubqueryName)
                .formatIndentEnd()
                .formatNewLine()
                .keyword(")")
@@ -416,12 +428,7 @@ implements
                .keyword("where ")
                .sql(rownumName)
                .sql(" > ")
-               .sql(getLimit().getLowerRownum())
-               .formatSeparator()
-               .keyword("and ")
-               .sql(rownumName)
-               .sql(" <= ")
-               .sql(getLimit().getUpperRownum());
+               .sql(getLimit().getLowerRownum());
     }
 
     /**

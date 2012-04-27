@@ -926,7 +926,7 @@ final class Util {
                 EXECUTE_LISTENERS.put(name, type);
             }
 
-            return (ExecuteListener) type.newInstance();
+            return (ExecuteListener) accessible(type.getDeclaredConstructor()).newInstance();
         }
         catch (Exception e) {
             throw new RuntimeException(e);

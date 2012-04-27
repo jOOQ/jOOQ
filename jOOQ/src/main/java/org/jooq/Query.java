@@ -73,6 +73,15 @@ public interface Query extends QueryPart {
     int execute() throws DataAccessException;
 
     /**
+     * Whether this query is executable in its current state
+     * <p>
+     * DML queries may be incomplete in structure and thus not executable.
+     * Calling {@link #execute()} on such queries has no effect, but beware that
+     * {@link #getSQL()} may not render valid SQL!
+     */
+    boolean isExecutable();
+
+    /**
      * Retrieve the SQL code rendered by this Query
      * <p>
      * This method can be expected to work correctly for any SQL dialect, as a

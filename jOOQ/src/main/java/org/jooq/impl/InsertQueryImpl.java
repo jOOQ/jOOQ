@@ -306,7 +306,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    protected final boolean isExecutable() {
+    public final boolean isExecutable() {
         return insertMaps.isExecutable();
     }
 

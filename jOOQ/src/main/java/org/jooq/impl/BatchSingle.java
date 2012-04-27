@@ -52,6 +52,11 @@ import org.jooq.Query;
  */
 class BatchSingle implements BatchBindStep {
 
+    /**
+     * Generated UID
+     */
+    private static final long       serialVersionUID = 3793967258181493207L;
+
     private final Factory           create;
     private final Query             query;
     private final List<Object[]>    allBindValues;

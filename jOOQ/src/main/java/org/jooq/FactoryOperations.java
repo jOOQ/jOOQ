@@ -57,6 +57,8 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
 
+import org.jooq.conf.Settings;
+import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.Factory;
@@ -71,7 +73,7 @@ import org.jooq.impl.Factory;
 public interface FactoryOperations extends Configuration {
 
     // -------------------------------------------------------------------------
-    // RenderContext and BindContext accessors
+    // XXX RenderContext and BindContext accessors
     // -------------------------------------------------------------------------
 
     /**
@@ -109,7 +111,7 @@ public interface FactoryOperations extends Configuration {
     String renderInlined(QueryPart part);
 
     // -------------------------------------------------------------------------
-    // Attachable and Serializable API
+    // XXX Attachable and Serializable API
     // -------------------------------------------------------------------------
 
     /**
@@ -123,7 +125,7 @@ public interface FactoryOperations extends Configuration {
     void attach(Collection<Attachable> attachables);
 
     // -------------------------------------------------------------------------
-    // Access to the loader API
+    // XXX Access to the loader API
     // -------------------------------------------------------------------------
 
     /**
@@ -134,7 +136,7 @@ public interface FactoryOperations extends Configuration {
     <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table);
 
     // -------------------------------------------------------------------------
-    // Plain SQL object factory
+    // XXX Plain SQL object factory
     // -------------------------------------------------------------------------
 
     /**
@@ -179,7 +181,7 @@ public interface FactoryOperations extends Configuration {
     Query query(String sql, Object... bindings);
 
     // -------------------------------------------------------------------------
-    // JDBC convenience methods
+    // XXX JDBC convenience methods
     // -------------------------------------------------------------------------
 
     /**
@@ -195,7 +197,7 @@ public interface FactoryOperations extends Configuration {
     Result<Record> fetch(ResultSet rs) throws DataAccessException;
 
     // -------------------------------------------------------------------------
-    // Global Query factory
+    // XXX Global Query factory
     // -------------------------------------------------------------------------
 
     /**
@@ -549,6 +551,10 @@ public interface FactoryOperations extends Configuration {
     @Support
     <R extends Record> DeleteWhereStep<R> delete(Table<R> table);
 
+    // -------------------------------------------------------------------------
+    // XXX Batch query execution
+    // -------------------------------------------------------------------------
+
     /**
      * Execute a set of queries in batch mode (without bind values).
      * <p>
@@ -608,14 +614,56 @@ public interface FactoryOperations extends Configuration {
      *
      * s.execute();
      * </pre></code>
+     * <p>
+     * Note: bind values will be inlined to a static batch query as in
+     * {@link #batch(Query...)}, if you choose to execute queries with
+     * <code>{@link Settings#getStatementType()} == {@link StatementType#STATIC_STATEMENT}</code>
      *
      * @see Statement#executeBatch()
      */
     @Support
     BatchBindStep batch(Query query);
 
+    /**
+     * Execute a set of <code>INSERT</code> and <code>UPDATE</code> queries in
+     * batch mode (with bind values).
+     * <p>
+     * This batch operation can be executed in two modes:
+     * <h3>With
+     * <code>{@link Settings#getStatementType()} == {@link StatementType#PREPARED_STATEMENT}</code>
+     * (the default)</h3> In this mode, record order is preserved as much as
+     * possible, as long as two subsequent records generate the same SQL (with
+     * bind variables). The number of executed batch operations corresponds to
+     * <code>[number of distinct rendered SQL statements]</code>. In the worst
+     * case, this corresponds to the number of total records.
+     * <p>
+     * The record type order is preserved in the way they are passed to this
+     * method. This is an example of how statements will be ordered: <code><pre>
+     * // Let's assume, odd numbers result in INSERTs and even numbers in UPDATES
+     * // Let's also assume a[n] are all of the same type, just as b[n], c[n]...
+     * int[] result = create.batchStore(a1, a2, a3, b1, a4, c1, b3, a5)
+     *                      .execute();
+     * </pre></code> The above results in <code>result.length == 8</code> and
+     * the following 4 separate batch statements:
+     * <ol>
+     * <li>INSERT a1, a3, a5</li>
+     * <li>UPDATE a2, a4</li>
+     * <li>INSERT b1, b3</li>
+     * <li>INSERT c1</li>
+     * </ol>
+     * <h3>With
+     * <code>{@link Settings#getStatementType()} == {@link StatementType#STATIC_STATEMENT}</code>
+     * </h3> This mode may be better for large and complex batch store
+     * operations, as the order of records is preserved entirely, and jOOQ can
+     * guarantee that only a single batch statement is serialised to the
+     * database.
+     *
+     * @see Statement#executeBatch()
+     */
+    Batch batchStore(UpdatableRecord<?>... records);
+
     // -------------------------------------------------------------------------
-    // DDL Statements
+    // XXX DDL Statements
     // -------------------------------------------------------------------------
 
     /**
@@ -643,7 +691,7 @@ public interface FactoryOperations extends Configuration {
     <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table);
 
     // -------------------------------------------------------------------------
-    // Other queries for identities and sequences
+    // XXX Other queries for identities and sequences
     // -------------------------------------------------------------------------
 
     /**
@@ -750,7 +798,7 @@ public interface FactoryOperations extends Configuration {
     int use(String schema) throws DataAccessException;
 
     // -------------------------------------------------------------------------
-    // Global Record factory
+    // XXX Global Record factory
     // -------------------------------------------------------------------------
 
     /**
@@ -790,7 +838,7 @@ public interface FactoryOperations extends Configuration {
     <R extends TableRecord<R>> R newRecord(Table<R> table, Object source) throws MappingException;
 
     // -------------------------------------------------------------------------
-    // Fast querying
+    // XXX Fast querying
     // -------------------------------------------------------------------------
 
     /**

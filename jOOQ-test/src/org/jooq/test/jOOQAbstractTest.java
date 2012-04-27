@@ -1416,6 +1416,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBatchStore() throws Exception {
+        new GeneralTests(this).testBatchStore();
+    }
+
+    @Test
     public void testNamedParams() throws Exception {
         new RenderAndBindTests(this).testNamedParams();
     }

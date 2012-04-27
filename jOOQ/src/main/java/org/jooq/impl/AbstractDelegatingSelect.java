@@ -323,6 +323,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final boolean isExecutable() {
+        return getDelegate().isExecutable();
+    }
+
+    @Override
     public final Table<R> asTable() {
         return getDelegate().asTable();
     }

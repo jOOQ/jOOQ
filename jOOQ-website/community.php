@@ -32,6 +32,7 @@ worth mentioning (in alphabetical order)
     <li>Florian Adler: jOOQ-minuteproject contribution</li>
     <li>Lukas Eder: Project lead</li>
     <li>Rakesh Waghela: Spreading the news</li>
+    <li>Robin Stocker: Git and GitHub support</li>
     <li>Sander Plas: jOOQ-codegen-maven, jOOQ-wicket contribution</li>
     <li>Sergey Epik: jOOQ-spring contribution</li>
     <li>Vladislav "FractalizeR" Rastrusny: MySQL integration feedback</li>

@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import java.io.Serializable;
 import java.sql.Statement;
 
 import org.jooq.exception.DataAccessException;
@@ -56,15 +57,15 @@ import org.jooq.exception.DataAccessException;
  *       .execute();
  * </pre></code></li>
  * </ol>
- * 
+ *
  * @author Lukas Eder
  * @see Statement#executeBatch()
  */
-public interface Batch {
+public interface Batch extends Serializable {
 
     /**
      * Execute the batch operation.
-     * 
+     *
      * @see Statement#executeBatch()
      * @throws DataAccessException if something went wrong executing the query
      */

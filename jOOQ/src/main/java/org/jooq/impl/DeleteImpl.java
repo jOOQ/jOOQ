@@ -77,6 +77,11 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    public final boolean isExecutable() {
+        return getDelegate().isExecutable();
+    }
+
+    @Override
     public final Query bind(String param, Object value) {
         return getDelegate().bind(param, value);
     }

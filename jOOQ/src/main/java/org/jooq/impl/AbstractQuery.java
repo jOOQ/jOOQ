@@ -197,8 +197,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
     /**
      * Default implementation for executable check. Subclasses may override this
      * method.
+     *
+     * {@inheritDoc}
      */
-    protected boolean isExecutable() {
+    @Override
+    public boolean isExecutable() {
         return true;
     }
 }

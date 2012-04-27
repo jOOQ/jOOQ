@@ -79,6 +79,7 @@ import org.jooq.TableRecord;
 import org.jooq.Truncate;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
+import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
 import org.jooq.conf.Settings;
@@ -332,6 +333,11 @@ public final class FactoryProxy implements FactoryOperations {
     @Override
     public final BatchBindStep batch(Query query) {
         return getDelegate().batch(query);
+    }
+
+    @Override
+    public final Batch batchStore(UpdatableRecord<?>... records) {
+        return getDelegate().batchStore(records);
     }
 
     @Override

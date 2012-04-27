@@ -106,11 +106,14 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
             result = storeInsert();
         }
 
-        for (Value<?> value : getValues()) {
-            value.setChanged(false);
-        }
-
+        setAllChanged(false);
         return result;
+    }
+
+    void setAllChanged(boolean changed) {
+        for (Value<?> value : getValues()) {
+            value.setChanged(changed);
+        }
     }
 
     @SuppressWarnings("unchecked")

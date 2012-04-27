@@ -48,6 +48,11 @@ import org.jooq.Query;
  */
 class BatchMultiple implements Batch {
 
+    /**
+     * Generated UID
+     */
+    private static final long       serialVersionUID = -7337667281292354043L;
+
     private final Factory           create;
     private final Query[]           queries;
 

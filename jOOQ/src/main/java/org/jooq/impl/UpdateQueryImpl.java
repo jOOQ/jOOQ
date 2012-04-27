@@ -141,7 +141,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    protected boolean isExecutable() {
+    public boolean isExecutable() {
         return updateMap.size() > 0;
     }
 }

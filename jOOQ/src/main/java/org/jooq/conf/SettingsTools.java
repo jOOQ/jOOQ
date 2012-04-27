@@ -144,8 +144,15 @@ public final class SettingsTools {
     public static final Settings defaultSettings() {
 
         // Clone the DEFAULT_SETTINGS to prevent modification
+        return clone(DEFAULT_SETTINGS);
+    }
+
+    /**
+     * Clone some settings
+     */
+    public static final Settings clone(Settings settings) {
         StringWriter xml = new StringWriter();
-        JAXB.marshal(DEFAULT_SETTINGS, xml);
+        JAXB.marshal(settings, xml);
         return JAXB.unmarshal(new StringReader(xml.toString()), Settings.class);
     }
 }

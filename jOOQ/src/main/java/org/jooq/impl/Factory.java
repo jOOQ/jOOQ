@@ -124,6 +124,7 @@ import org.jooq.TableRecord;
 import org.jooq.Truncate;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
+import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
 import org.jooq.WindowIgnoreNullsStep;
@@ -1361,6 +1362,14 @@ public class Factory implements FactoryOperations {
     @Override
     public final BatchBindStep batch(Query query) {
         return new BatchSingle(this, query);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Batch batchStore(UpdatableRecord<?>... records) {
+        return new BatchStore(this, records);
     }
 
     // -------------------------------------------------------------------------

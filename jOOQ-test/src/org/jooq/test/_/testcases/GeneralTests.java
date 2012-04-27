@@ -754,7 +754,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                                .execute();
 
         assertEquals(3, result.length);
-        testBatchAuthors();
+        testBatchAuthors("Gamma", "Helm", "Johnson");
     }
 
     @Test
@@ -785,20 +785,71 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals(4, result.length);
         assertEquals(5, create().fetch(TBook()).size());
         assertEquals(1, create().fetch(TBook(), TBook_AUTHOR_ID().equal(8)).size());
-        testBatchAuthors();
+        testBatchAuthors("Gamma", "Helm", "Johnson");
     }
 
-    private void testBatchAuthors() throws Exception {
-        assertEquals(5, create().fetch(TAuthor()).size());
+    @Test
+    public void testBatchStore() throws Exception {
+        jOOQAbstractTest.reset = false;
 
-        assertEquals(Arrays.asList(8, 9, 10),
+        // First, INSERT two authors and one book
+        // --------------------------------------
+        A a1 = create().newRecord(TAuthor());
+        a1.setValue(TAuthor_ID(), 8);
+        a1.setValue(TAuthor_LAST_NAME(), "XX");
+
+        A a2 = create().newRecord(TAuthor());
+        a2.setValue(TAuthor_ID(), 9);
+        a2.setValue(TAuthor_LAST_NAME(), "YY");
+
+        B b1 = create().newRecord(TBook());
+        b1.setValue(TBook_ID(), 80);
+        b1.setValue(TBook_AUTHOR_ID(), 8);
+        b1.setValue(TBook_TITLE(), "XX 1");
+        b1.setValue(TBook_PUBLISHED_IN(), 2000);
+        b1.setValue((Field<Object>)TBook_LANGUAGE_ID(), on(TBook_LANGUAGE_ID().getDataType().getType()).get("en"));
+
+        int[] result1 = create().batchStore(a1, b1, a2).execute();
+        assertEquals(3, result1.length);
+        testBatchAuthors("XX", "YY");
+        assertEquals("XX 1", create()
+            .select(TBook_TITLE())
+            .from(TBook())
+            .where(TBook_ID().equal(80))
+            .fetchOne(0));
+
+        // Then, update one author and insert another one
+        // ----------------------------------------------
+        a2.setValue(TAuthor_LAST_NAME(), "ABC");
+
+        A a3 = create().newRecord(TAuthor());
+        a3.setValue(TAuthor_ID(), 10);
+        a3.setValue(TAuthor_LAST_NAME(), "ZZ");
+
+        int[] result2 = create().batchStore(b1, a1, a2, a3).execute();
+        assertEquals(2, result2.length);
+        testBatchAuthors("XX", "ABC", "ZZ");
+        assertEquals("XX 1", create()
+            .select(TBook_TITLE())
+            .from(TBook())
+            .where(TBook_ID().equal(80))
+            .fetchOne(0));
+    }
+
+    private void testBatchAuthors(String... names) throws Exception {
+        assertEquals(names.length == 3 ? 5 : 4, create().fetch(TAuthor()).size());
+
+        assertEquals(
+             names.length == 3
+                 ? Arrays.asList(8, 9, 10)
+                 : Arrays.asList(8, 9),
              create().select(TAuthor_ID())
                      .from(TAuthor())
                      .where(TAuthor_ID().in(8, 9, 10))
                      .orderBy(TAuthor_ID())
                      .fetch(TAuthor_ID()));
 
-        assertEquals(Arrays.asList("Gamma", "Helm", "Johnson"),
+        assertEquals(Arrays.asList(names),
             create().select(TAuthor_LAST_NAME())
                     .from(TAuthor())
                     .where(TAuthor_ID().in(8, 9, 10))

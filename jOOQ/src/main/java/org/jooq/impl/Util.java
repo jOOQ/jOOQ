@@ -43,7 +43,7 @@ import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.tools.StringUtils.leftPad;
 
-import java.lang.reflect.Constructor;
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.sql.Blob;
@@ -169,14 +169,9 @@ final class Util {
 
             // Any generated record
             else {
-                Constructor<R> constructor = type.getDeclaredConstructor();
 
                 // [#919] Allow for accessing non-public constructors
-                if (!constructor.isAccessible()) {
-                    constructor.setAccessible(true);
-                }
-
-                result = constructor.newInstance();
+                result = accessible(type.getDeclaredConstructor()).newInstance();
             }
 
             result.attach(configuration);
@@ -204,6 +199,33 @@ final class Util {
                 }
                 else {
                     result[i] = Convert.convert(values[i], fields.get(i).getType());
+                }
+            }
+
+            return result;
+        }
+        else {
+            return null;
+        }
+    }
+
+    /**
+     * [#1005] Convert values from the <code>VALUES</code> clause to appropriate
+     * values as specified by the <code>INTO</code> clause's column list.
+     */
+    static final Object[] convert(Class<?>[] types, Object[] values) {
+        if (values != null) {
+            Object[] result = new Object[values.length];
+
+            for (int i = 0; i < values.length; i++) {
+
+                // TODO [#1008] Should fields be cast? Check this with
+                // appropriate integration tests
+                if (values[i] instanceof Field<?>) {
+                    result[i] = values[i];
+                }
+                else {
+                    result[i] = Convert.convert(values[i], types[i]);
                 }
             }
 
@@ -827,6 +849,17 @@ final class Util {
         }
 
         return result;
+    }
+
+    /**
+     * Ensure an {@link AccessibleObject} is really accessible
+     */
+    static final <T extends AccessibleObject> T accessible(T accessible) {
+        if (!accessible.isAccessible()) {
+            accessible.setAccessible(true);
+        }
+
+        return accessible;
     }
 
     /**

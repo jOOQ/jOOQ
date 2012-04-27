@@ -40,12 +40,28 @@ import java.util.Date;
 /**
  * @author Lukas Eder
  */
-public class AuthorWithoutAnnotations {
+public class ImmutableAuthor {
 
-    public int ID;
-    public String firstName;
-    public String lastName;
-    public Date dateOfBirth;
-    public Short yearOfBirth;
+    public final int    ID;
+    public final String firstName;
+    public final String lastName;
+    public final Date   dateOfBirth;
 
+    // Check if setAccessible is called correctly
+    public ImmutableAuthor(int ID, String firstName, String lastName, Date dateOfBirth) {
+
+        this.ID = ID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    // Check if setAccessible is called correctly
+    ImmutableAuthor(Long ID, String firstName, String lastName) {
+
+        this.ID = ID.intValue();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = null;
+    }
 }

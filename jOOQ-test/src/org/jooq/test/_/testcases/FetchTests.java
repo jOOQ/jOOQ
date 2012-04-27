@@ -83,6 +83,7 @@ import org.jooq.test._.CharWithAnnotations;
 import org.jooq.test._.DatesWithAnnotations;
 import org.jooq.test._.FinalWithAnnotations;
 import org.jooq.test._.FinalWithoutAnnotations;
+import org.jooq.test._.ImmutableAuthor;
 import org.jooq.test._.StaticWithAnnotations;
 import org.jooq.test._.StaticWithoutAnnotations;
 import org.jooq.tools.reflect.Reflect;
@@ -714,6 +715,74 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // [#935] ... but not when writing
         FinalWithoutAnnotations f = create().newRecord(TBook()).into(FinalWithoutAnnotations.class);
         assertEquals(f.ID, new FinalWithoutAnnotations().ID);
+    }
+
+    @Test
+    public void testReflectionWithImmutables() throws Exception {
+
+        // [#1336] Try instanciating "immutable" POJOs
+        // -------------------------------------------
+        Record author1 =
+        create().select(
+                    TAuthor_ID(),
+                    TAuthor_FIRST_NAME(),
+                    TAuthor_LAST_NAME(),
+                    TAuthor_DATE_OF_BIRTH())
+                .from(TAuthor())
+                .where(TAuthor_ID().equal(1))
+                .fetchOne();
+
+        ImmutableAuthor immutable1 = author1.into(ImmutableAuthor.class);
+        assertEquals((int) author1.getValue(TAuthor_ID()), immutable1.ID);
+        assertEquals(author1.getValue(TAuthor_FIRST_NAME()), immutable1.firstName);
+        assertEquals(author1.getValue(TAuthor_LAST_NAME()), immutable1.lastName);
+        assertEquals(author1.getValue(TAuthor_DATE_OF_BIRTH()), immutable1.dateOfBirth);
+
+        // Try again, using a different constructor
+        // -------------------------------------------
+        Record author2 =
+        create().select(
+                    TAuthor_ID(),
+                    TAuthor_FIRST_NAME(),
+                    TAuthor_LAST_NAME())
+                .from(TAuthor())
+                .where(TAuthor_ID().equal(1))
+                .fetchOne();
+
+        ImmutableAuthor immutable2 = author2.into(ImmutableAuthor.class);
+        assertEquals((int) author2.getValue(TAuthor_ID()), immutable2.ID);
+        assertEquals(author2.getValue(TAuthor_FIRST_NAME()), immutable2.firstName);
+        assertEquals(author2.getValue(TAuthor_LAST_NAME()), immutable2.lastName);
+        assertEquals(null, immutable2.dateOfBirth);
+
+        // Try again, using an inexistent constructor
+        // -------------------------------------------
+        try {
+            create().select(
+                        TAuthor_ID(),
+                        TAuthor_FIRST_NAME())
+                    .from(TAuthor())
+                    .where(TAuthor_ID().equal(1))
+                    .fetchOne()
+                    .into(ImmutableAuthor.class);
+            fail();
+        }
+        catch (MappingException expected) {}
+
+        // Try again, using an invalid constructor
+        // -------------------------------------------
+        try {
+            create().select(
+                        TAuthor_FIRST_NAME(),
+                        TAuthor_LAST_NAME(),
+                        TAuthor_ID())
+                    .from(TAuthor())
+                    .where(TAuthor_ID().equal(1))
+                    .fetchOne()
+                    .into(ImmutableAuthor.class);
+            fail();
+        }
+        catch (MappingException expected) {}
     }
 
     @Test

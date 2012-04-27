@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Util.accessible;
 import static org.jooq.impl.Util.getAnnotatedGetter;
 import static org.jooq.impl.Util.getAnnotatedMembers;
 import static org.jooq.impl.Util.getAnnotatedSetters;
@@ -580,12 +581,24 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
             }
         }
 
-        // All reflection exceptions are intercepted
+        // Pass MappingExceptions on to client code
+        catch (MappingException e) {
+            throw e;
+        }
+
+        // All other reflection exceptions are intercepted
         catch (Exception e) {
             throw new MappingException("An error ocurred when mapping record to " + type, e);
         }
     }
 
+    /**
+     * Convert this record into an array of a given type.
+     * <p>
+     * The supplied type is usually <code>Object[]</code>, but in some cases, it
+     * may make sense to supply <code>String[]</code>, <code>Integer[]</code>
+     * etc.
+     */
     @SuppressWarnings("unchecked")
     private final <T> T intoArray(Class<? extends T> type) {
         int size = getFields().size();
@@ -599,14 +612,50 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         return (T) result;
     }
 
+    /**
+     * Convert this record into a POJO
+     */
     private final <T> T intoPOJO(Class<? extends T> type) throws Exception {
 
-        // [#1340] Allow for using non-public default constructors
-        Constructor<? extends T> constructor = type.getDeclaredConstructor();
-        if (!constructor.isAccessible())
-            constructor.setAccessible(true);
+        // If a default, no argument constructor is present, use that one.
+        try {
 
-        T result = constructor.newInstance();
+            // [#1340] Allow for using non-public default constructors
+            T result = accessible(type.getDeclaredConstructor()).newInstance();
+            return intoMutablePOJO(type, result);
+        }
+
+        // [#1336] If no default constructor is present, check if there is a
+        // "matching" constructor with the same number of fields as this record
+        catch (NoSuchMethodException e) {
+            return intoImmutablePOJO(type);
+        }
+    }
+
+    /**
+     * Convert this record into an "immutable" POJO (final fields, "matching"
+     * constructor).
+     */
+    @SuppressWarnings("unchecked")
+    private final <T> T intoImmutablePOJO(Class<? extends T> type) throws Exception {
+        for (Constructor<T> constructor : (Constructor<T>[]) type.getDeclaredConstructors()) {
+            Class<?>[] parameterTypes = constructor.getParameterTypes();
+
+            // Match the first constructor by parameter length
+            if (parameterTypes.length == getFields().size()) {
+                Object[] converted = Util.convert(parameterTypes, intoArray());
+                return accessible(constructor).newInstance(converted);
+            }
+        }
+
+        throw new MappingException("No matching constructor found on type " + type + " for record " + this);
+    }
+
+    /**
+     * Convert this record into a "mutable" POJO (non-final fields or setters
+     * available)
+     */
+    private final <T> T intoMutablePOJO(Class<? extends T> type, T result) throws Exception {
         boolean useAnnotations = hasColumnAnnotations(type);
 
         for (Field<?> field : getFields()) {

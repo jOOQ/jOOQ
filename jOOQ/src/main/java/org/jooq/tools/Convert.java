@@ -291,7 +291,7 @@ public final class Convert {
      */
     private static <T, U> List<U> convert0(List<?> list, Converter<T, U> converter) throws DataTypeException {
         ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
-        List<U> result = new ArrayList<U>();
+        List<U> result = new ArrayList<U>(list.size());
 
         for (Object o : list) {
             result.add(convert(all.from(o), converter));

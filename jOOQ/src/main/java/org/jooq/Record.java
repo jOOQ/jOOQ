@@ -1123,11 +1123,12 @@ public interface Record extends FieldProvider, Store<Object> {
      * <h3>If <code>type</code> is an array:</h3> The resulting array is of the
      * nature described in {@link #intoArray()}. Arrays more specific than
      * <code>Object[]</code> can be specified as well, e.g.
-     * <code>String[]</code>. If conversion fails, a {@link MappingException}
-     * is thrown, wrapping conversion exceptions.
+     * <code>String[]</code>. If conversion fails, a {@link MappingException} is
+     * thrown, wrapping conversion exceptions.
      * <p>
-     * <h3>If any JPA {@link Column} annotations are found on the provided
-     * <code>type</code>, only those are used:</h3>
+     * <h3>If a default constructor is available and any JPA {@link Column}
+     * annotations are found on the provided <code>type</code>, only those are
+     * used:</h3>
      * <ul>
      * <li>If <code>type</code> contains public single-argument instance methods
      * annotated with <code>Column</code>, those methods are invoked</li>
@@ -1146,9 +1147,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * <li>Static methods / member fields are ignored</li>
      * <li>Final member fields are ignored</li>
      * </ul>
-     * <h3>If there are no JPA <code>Column</code> annotations, or jOOQ can't
-     * find the <code>javax.persistence</code> API on the classpath, jOOQ will
-     * map <code>Record</code> values by naming convention:</h3> If
+     * <h3>If a default constructor is available and if there are no JPA
+     * <code>Column</code> annotations, or jOOQ can't find the
+     * <code>javax.persistence</code> API on the classpath, jOOQ will map
+     * <code>Record</code> values by naming convention:</h3> If
      * {@link Field#getName()} is <code>MY_field</code> (case-sensitive!), then
      * this field's value will be set on all of these:
      * <ul>
@@ -1159,10 +1161,19 @@ public interface Record extends FieldProvider, Store<Object> {
      * <li>Public non-final instance member field <code>MY_field</code></li>
      * <li>Public non-final instance member field <code>myField</code></li>
      * </ul>
+     * <h3>If no default constructor is available, but at least one "matching"
+     * constructor is available, that one is used</h3>
+     * <ul>
+     * <li>A "matching" constructor is one with exactly as many arguments as
+     * this record holds fields</li>
+     * <li>When several "matching" constructors are found, the first one is
+     * chosen (as reported by {@link Class#getDeclaredConstructors()}</li>
+     * <li>When invoking the "matching"
+     * </ul>
      * <h3>Other restrictions</h3>
      * <ul>
-     * <li><code>type</code> must provide a default constructor. Non-public
-     * default constructors are made accessible using
+     * <li><code>type</code> must provide a default or a "matching" constructor.
+     * Non-public default constructors are made accessible using
      * {@link Constructor#setAccessible(boolean)}</li>
      * <li>primitive types are supported. If a value is <code>null</code>, this
      * will result in setting the primitive type's default value (zero for

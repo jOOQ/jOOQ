@@ -997,6 +997,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testReflectionWithImmutables() throws Exception {
+        new FetchTests(this).testReflectionWithImmutables();
+    }
+
+    @Test
     public void testFetchIntoCustomTable() throws Exception {
         new FetchTests(this).testFetchIntoCustomTable();
     }

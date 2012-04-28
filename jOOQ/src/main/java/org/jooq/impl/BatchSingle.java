@@ -45,6 +45,7 @@ import java.util.List;
 import org.jooq.BatchBindStep;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
+import org.jooq.Param;
 import org.jooq.Query;
 
 /**
@@ -92,6 +93,14 @@ class BatchSingle implements BatchBindStep {
         ExecuteContext ctx = new DefaultExecuteContext(create, new Query[] { query });
         ExecuteListener listener = new ExecuteListeners(ctx);
 
+        // [#1371] fetch bind variables to restore them again, later
+        List<Param<?>> params = new ArrayList<Param<?>>(query.getParams().values());
+        List<Object> previous = new ArrayList<Object>();
+
+        for (Param<?> param : params) {
+            previous.add(param.getValue());
+        }
+
         try {
             listener.renderStart(ctx);
             ctx.sql(create.render(query));
@@ -103,9 +112,15 @@ class BatchSingle implements BatchBindStep {
 
             for (Object[] bindValues : allBindValues) {
                 listener.bindStart(ctx);
-                new DefaultBindContext(create, ctx.statement()).bindValues(bindValues);
-                listener.bindEnd(ctx);
 
+                // [#1371] Don't bind variables directly onto statement, bind
+                // them through the Query to preserve type information
+                for (int i = 0; i < params.size(); i++) {
+                    params.get(i).setConverted(bindValues[i]);
+                }
+                new DefaultBindContext(create, ctx.statement()).bind(query);
+
+                listener.bindEnd(ctx);
                 ctx.statement().addBatch();
             }
 
@@ -120,6 +135,11 @@ class BatchSingle implements BatchBindStep {
         }
         finally {
             Util.safeClose(listener, ctx);
+
+            // Restore bind variables to values prior to batch execution
+            for (int i = 0; i < params.size(); i++) {
+                params.get(i).setConverted(previous.get(i));
+            }
         }
     }
 

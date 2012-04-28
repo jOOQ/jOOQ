@@ -17,13 +17,18 @@ Get the latest version from SourceForge<br/>
 <a href="https://sourceforge.net/projects/jooq/files/Release/" title="Get the latest jOOQ version from SourceForge">https://sourceforge.net/projects/jooq/files/Release/</a>
 </p>
 
+<h3>Maven</h3>
 <p>
-jOOQ is also available as a Maven dependency from Maven central
+jOOQ is also available as a Maven dependency from Maven central. Early snapshots can be obtained from the Sonatype Maven repository:
+<br/>
+<a href="https://oss.sonatype.org/content/repositories/snapshots/org/jooq/" title="jOOQ's SNAPSHOT repository at Sonatype">https://oss.sonatype.org/content/repositories/snapshots/org/jooq/</a>
 </p>
 
-<h2>License</h2>
+<h3>Source Code</h3>
 <p>
-jOOQ is distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2.0 License">Apache 2.0 licence</a>
+jOOQ's sources are hosted at GitHub:
+<br/>
+<a href="http://github.com/jOOQ/jOOQ" title="jOOQ GitHub repository">git@github.com:jOOQ/jOOQ.git</a>
 </p>
 
 <h2>Get the right version of jOOQ</h2>
@@ -58,6 +63,11 @@ All branches are available here<br/>
 <p>
 The semi-formal roadmap is here:<br/>
 <a href="https://sourceforge.net/apps/trac/jooq/report/6" title="The jOOQ Roadmap">https://sourceforge.net/apps/trac/jooq/report/6</a>
+</p>
+
+<h2>License</h2>
+<p>
+jOOQ is distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2.0 License">Apache 2.0 licence</a>
 </p>
 
 <h2>Download other products of the jOO* family</h2>

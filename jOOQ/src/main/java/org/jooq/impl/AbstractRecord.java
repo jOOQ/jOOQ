@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.Util.accessible;
 import static org.jooq.impl.Util.getAnnotatedGetter;
 import static org.jooq.impl.Util.getAnnotatedMembers;
 import static org.jooq.impl.Util.getAnnotatedSetters;
@@ -68,6 +67,7 @@ import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
+import org.jooq.tools.reflect.Reflect;
 
 /**
  * @author Lukas Eder
@@ -621,7 +621,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         try {
 
             // [#1340] Allow for using non-public default constructors
-            T result = accessible(type.getDeclaredConstructor()).newInstance();
+            T result = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
             return intoMutablePOJO(type, result);
         }
 
@@ -644,7 +644,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
             // Match the first constructor by parameter length
             if (parameterTypes.length == getFields().size()) {
                 Object[] converted = Util.convert(parameterTypes, intoArray());
-                return accessible(constructor).newInstance(converted);
+                return Reflect.accessible(constructor).newInstance(converted);
             }
         }
 

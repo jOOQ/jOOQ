@@ -39,8 +39,12 @@ package org.jooq.debug;
 
 public interface StatementExecutor {
 
-    public StatementExecution execute();
+    public StatementExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold);
 
     public void stopExecution();
+
+    public String[] getTableNames();
+
+    public String[] getTableColumnNames();
 
 }

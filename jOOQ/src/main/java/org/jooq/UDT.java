@@ -56,7 +56,10 @@ public interface UDT<R extends UDTRecord<R>> extends Type<R> {
      *
      * @see Schema#getTypeMapping() for the {@link Schema}'s complete type
      *      mapping
+     * @deprecated - 2.3.0 - Do not reuse this method. It will be moved to
+     *             jOOQ's internals, soon
      */
+    @Deprecated
     Map<String, Class<?>> getTypeMapping() throws SQLException;
 
     /**

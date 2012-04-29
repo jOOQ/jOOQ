@@ -35,6 +35,11 @@
  */
 package org.jooq.impl;
 
+import java.sql.Array;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +54,8 @@ import org.jooq.exception.DataTypeException;
  */
 final class DataTypes {
 
-    private static final Map<Class<?>, Converter<?, ?>> CONVERTERS = new HashMap<Class<?>, Converter<?, ?>>();
+    private static final Map<Class<?>, Converter<?, ?>> CONVERTERS  = new HashMap<Class<?>, Converter<?, ?>>();
+    private static final Map<String, Class<?>>          UDT_RECORDS = new HashMap<String, Class<?>>();
 
     // ------------------------------------------------------------------------
     // XXX: Public API used for initialisation from generated artefacts
@@ -102,6 +108,23 @@ final class DataTypes {
         }
     }
 
+    /**
+     * Register a type mapping for a UDT
+     * <p>
+     * This registers a Java type for a given UDT as expected in various JDBC
+     * methods, such as {@link Connection#setTypeMap(Map)},
+     * {@link ResultSet#getObject(int, Map)}, {@link Array#getArray(Map)},
+     * {@link CallableStatement#getObject(int, Map)}, etc.
+     */
+    static final synchronized void registerUDTRecord(String name, Class<?> type) {
+
+        // A mapping can be registered only once
+        if (!UDT_RECORDS.containsKey(name)) {
+            UDT_RECORDS.put(name, type);
+        }
+    }
+
+
     // ------------------------------------------------------------------------
     // XXX: Internal API
     // ------------------------------------------------------------------------
@@ -111,6 +134,10 @@ final class DataTypes {
 
         // TODO: Is synchronisation needed? How to implement it most efficiently?
         return (Converter<?, U>) CONVERTERS.get(customType);
+    }
+
+    static final Map<String, Class<?>> udtRecords() {
+        return Collections.unmodifiableMap(UDT_RECORDS);
     }
 
     /**

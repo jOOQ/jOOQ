@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
  */
 public class UInvalidType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UInvalidTypeRecord> {
 
-	private static final long serialVersionUID = -1194068720;
+	private static final long serialVersionUID = -825181583;
 
 	/**
 	 * The singleton instance of TEST.U_INVALID_TYPE
@@ -18,14 +18,9 @@ public class UInvalidType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gen
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle.generatedclasses.test.udt.records.UInvalidTypeRecord> __RECORD_TYPE = org.jooq.test.oracle.generatedclasses.test.udt.records.UInvalidTypeRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle.generatedclasses.test.udt.records.UInvalidTypeRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle.generatedclasses.test.udt.records.UInvalidTypeRecord.class;
 	}
 
 	/**
@@ -33,5 +28,8 @@ public class UInvalidType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gen
 	 */
 	private UInvalidType() {
 		super("U_INVALID_TYPE", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+
+		// Initialise data type
+		getDataType();
 	}
 }

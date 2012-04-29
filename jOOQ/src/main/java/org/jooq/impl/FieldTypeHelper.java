@@ -515,7 +515,7 @@ public final class FieldTypeHelper {
                     return (T) pgNewUDTRecord(type, rs.getObject(index));
             }
 
-            return (T) rs.getObject(index, getTypeMapping(type));
+            return (T) rs.getObject(index, DataTypes.udtRecords());
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) rs.getObject(index);
@@ -661,6 +661,10 @@ public final class FieldTypeHelper {
         }
     }
 
+    /**
+     * @deprecated - 2.3.0 - Do not reuse this method
+     */
+    @Deprecated
     public static Map<String, Class<?>> getTypeMapping(Class<?> udtType) throws SQLException {
         try {
             return ((UDTRecord<?>) udtType.newInstance()).getUDT().getTypeMapping();
@@ -830,7 +834,7 @@ public final class FieldTypeHelper {
                     return (T) pgNewUDTRecord(type, stmt.getObject(index));
             }
 
-            return (T) stmt.getObject(index, getTypeMapping(type));
+            return (T) stmt.getObject(index, DataTypes.udtRecords());
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) stmt.getObject(index);

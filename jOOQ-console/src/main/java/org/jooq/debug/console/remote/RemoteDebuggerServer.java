@@ -45,9 +45,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import org.jooq.debug.Debugger;
-import org.jooq.debug.DebuggerData;
 import org.jooq.debug.DebuggerRegistry;
-import org.jooq.debug.DebuggerResultSetData;
+import org.jooq.debug.LocalDebugger;
+import org.jooq.debug.LoggingListener;
+import org.jooq.debug.QueryLoggingData;
+import org.jooq.debug.ResultSetLoggingData;
 
 /**
  * @author Christopher Deckers
@@ -88,38 +90,40 @@ public class RemoteDebuggerServer {
 		Thread clientThread = new Thread("SQL Remote Debugger Server on port " + port) {
 			@Override
 			public void run() {
-				Debugger sqlQueryDebugger = null;
+				Debugger debugger = null;
 				boolean isLogging = false;
 				try {
 					ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 					final ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-					sqlQueryDebugger = new Debugger() {
-						@Override
-						public synchronized void debugQueries(DebuggerData sqlQueryDebuggerData) {
-							try {
-								out.writeObject(new ClientDebugQueriesMessage(sqlQueryDebuggerData));
-								out.flush();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-						@Override
-						public synchronized void debugResultSet(int sqlQueryDebuggerDataID, DebuggerResultSetData sqlQueryDebuggerResultSetData) {
-							try {
-								out.writeObject(new ClientDebugResultSetMessage(sqlQueryDebuggerDataID, sqlQueryDebuggerResultSetData));
-								out.flush();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-					};
+					// TODO: find how to pass a database descriptor for remote edition.
+					debugger = new LocalDebugger(null);
+					DebuggerRegistry.addSqlQueryDebugger(debugger);
 					for(Message o; (o=(Message)in.readObject()) != null; ) {
 						if(o instanceof ServerLoggingActivationMessage) {
 							isLogging = ((ServerLoggingActivationMessage) o).isLogging();
 							if(isLogging) {
-								DebuggerRegistry.addSqlQueryDebugger(sqlQueryDebugger);
+								debugger.setLoggingListener(new LoggingListener() {
+                                    @Override
+                                    public void logQueries(QueryLoggingData queryLoggingData) {
+                                        try {
+                                            out.writeObject(new ClientDebugQueriesMessage(queryLoggingData));
+                                            out.flush();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    @Override
+                                    public void logResultSet(int sqlQueryDebuggerDataID, ResultSetLoggingData resultSetLoggingData) {
+                                        try {
+                                            out.writeObject(new ClientDebugResultSetMessage(sqlQueryDebuggerDataID, resultSetLoggingData));
+                                            out.flush();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
 							} else {
-								DebuggerRegistry.removeSqlQueryDebugger(sqlQueryDebugger);
+							    debugger.setLoggingListener(null);
 							}
 						}
 					}
@@ -128,8 +132,8 @@ public class RemoteDebuggerServer {
 						e.printStackTrace();
 					}
 				} finally {
-					if(sqlQueryDebugger != null) {
-						DebuggerRegistry.removeSqlQueryDebugger(sqlQueryDebugger);
+					if(debugger != null) {
+						DebuggerRegistry.removeSqlQueryDebugger(debugger);
 					}
 				}
 			}

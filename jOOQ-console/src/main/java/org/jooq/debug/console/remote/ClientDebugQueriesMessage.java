@@ -36,7 +36,7 @@
  */
 package org.jooq.debug.console.remote;
 
-import org.jooq.debug.DebuggerData;
+import org.jooq.debug.QueryLoggingData;
 
 /**
  * @author Christopher Deckers
@@ -44,13 +44,13 @@ import org.jooq.debug.DebuggerData;
 @SuppressWarnings("serial")
 public class ClientDebugQueriesMessage implements Message {
 
-	private DebuggerData sqlQueryDebuggerData;
+	private QueryLoggingData sqlQueryDebuggerData;
 
-	public ClientDebugQueriesMessage(DebuggerData sqlQueryDebuggerData) {
+	public ClientDebugQueriesMessage(QueryLoggingData sqlQueryDebuggerData) {
 		this.sqlQueryDebuggerData = sqlQueryDebuggerData;
 	}
 
-	public DebuggerData getSqlQueryDebuggerData() {
+	public QueryLoggingData getSqlQueryDebuggerData() {
 		return sqlQueryDebuggerData;
 	}
 

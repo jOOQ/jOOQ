@@ -121,10 +121,21 @@ public class DebugListener extends DefaultExecuteListener {
 			return;
 		}
 		endExecutionTime = System.currentTimeMillis();
-		List<Debugger> sqlQueryDebuggerList = DebuggerRegistry.getDebuggerList();
-		if(sqlQueryDebuggerList.isEmpty()) {
+		List<Debugger> debuggerList = DebuggerRegistry.getDebuggerList();
+		if(debuggerList.isEmpty()) {
 			return;
 		}
+		boolean hasListener = false;
+        for(Debugger listener: debuggerList) {
+            LoggingListener loggingListener = listener.getLoggingListener();
+            if(loggingListener != null) {
+                hasListener = true;
+                break;
+            }
+        }
+        if(!hasListener) {
+            return;
+        }
 		ResultSet resultSet = ctx.resultSet();
 		String[] sql = ctx.batchSQL();
 		SqlQueryType sqlQueryType = SqlQueryType.detectType(sql[0]);
@@ -135,22 +146,31 @@ public class DebugListener extends DefaultExecuteListener {
 		        parameterDescription = ((UsageTrackingPreparedStatement) statement).getParameterDescription();
 		    }
 		}
-		DebuggerData sqlQueryDebuggerData = new DebuggerData(sqlQueryType, sql, parameterDescription, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
-		for(Debugger listener: sqlQueryDebuggerList) {
-			listener.debugQueries(sqlQueryDebuggerData);
+		QueryLoggingData queryLoggingData = new QueryLoggingData(sqlQueryType, sql, parameterDescription, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
+		for(Debugger listener: debuggerList) {
+		    LoggingListener loggingListener = listener.getLoggingListener();
+		    if(loggingListener != null) {
+		        loggingListener.logQueries(queryLoggingData);
+		    }
 		}
 		if(resultSet != null) {
-			final int sqlQueryDebuggerDataID = sqlQueryDebuggerData.getID();
+			final int queryLoggingDataID = queryLoggingData.getID();
 			ResultSet newResultSet = new UsageTrackingResultSet(resultSet) {
 				@Override
 				protected void notifyData(long lifeTime, int readRows, int readCount, int writeCount) {
-					List<Debugger> sqlQueryDebuggerList = DebuggerRegistry.getDebuggerList();
-					if(sqlQueryDebuggerList.isEmpty()) {
+					List<Debugger> debuggerList = DebuggerRegistry.getDebuggerList();
+					if(debuggerList.isEmpty()) {
 						return;
 					}
-                    DebuggerResultSetData sqlQueryDebuggerResultSetData = new DebuggerResultSetData(lifeTime, readRows, readCount, writeCount);
-					for(Debugger listener: sqlQueryDebuggerList) {
-						listener.debugResultSet(sqlQueryDebuggerDataID, sqlQueryDebuggerResultSetData);
+                    ResultSetLoggingData resultSetLoggingData = null;
+					for(Debugger debugger: debuggerList) {
+			            LoggingListener loggingListener = debugger.getLoggingListener();
+			            if(loggingListener != null) {
+			                if(resultSetLoggingData == null) {
+			                    resultSetLoggingData = new ResultSetLoggingData(lifeTime, readRows, readCount, writeCount);
+			                }
+			                loggingListener.logResultSet(queryLoggingDataID, resultSetLoggingData);
+			            }
 					}
 				}
 			};

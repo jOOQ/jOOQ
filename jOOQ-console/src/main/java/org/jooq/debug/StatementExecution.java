@@ -38,20 +38,23 @@ package org.jooq.debug;
 
 
 
-public interface Debugger {
+public class StatementExecution {
 
-    public void setLoggingListener(LoggingListener loggingListener);
+    private long executionDuration;
 
-    public LoggingListener getLoggingListener();
+    private StatementExecutionResult[] results;
 
-    public boolean isExecutionSupported();
+    public StatementExecution(long executionDuration, StatementExecutionResult... results) {
+        this.executionDuration = executionDuration;
+        this.results = results;
+    }
 
-    public StatementExecutor createStatementExecutor(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold);
+    public StatementExecutionResult[] getResults() {
+        return results;
+    }
 
-    public String[] getTableNames();
-
-    public String[] getTableColumnNames();
-
-    public boolean isReadOnly();
+    public long getExecutionDuration() {
+        return executionDuration;
+    }
 
 }

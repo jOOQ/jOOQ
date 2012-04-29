@@ -37,21 +37,10 @@
 package org.jooq.debug;
 
 
+public interface LoggingListener {
 
-public interface Debugger {
+    public void logQueries(QueryLoggingData queryLoggingData);
 
-    public void setLoggingListener(LoggingListener loggingListener);
-
-    public LoggingListener getLoggingListener();
-
-    public boolean isExecutionSupported();
-
-    public StatementExecutor createStatementExecutor(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold);
-
-    public String[] getTableNames();
-
-    public String[] getTableColumnNames();
-
-    public boolean isReadOnly();
+    public void logResultSet(int queryLoggingDataID, ResultSetLoggingData sqlQueryDebuggerResultSetData);
 
 }

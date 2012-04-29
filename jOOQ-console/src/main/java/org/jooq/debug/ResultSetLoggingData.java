@@ -41,7 +41,7 @@ import java.io.Serializable;
 /**
  * @author Christopher Deckers
  */
-public class DebuggerResultSetData implements Serializable {
+public class ResultSetLoggingData implements Serializable {
 
 	private static volatile int nextID;
 
@@ -51,7 +51,7 @@ public class DebuggerResultSetData implements Serializable {
     private final int readCount;
     private final int writeCount;
 
-    public DebuggerResultSetData(long lifeTime, final int readRows, final int readCount, final int writeCount) {
+    public ResultSetLoggingData(long lifeTime, final int readRows, final int readCount, final int writeCount) {
     	this.id = nextID++;
         this.lifeTime = lifeTime;
         this.readRows = readRows;

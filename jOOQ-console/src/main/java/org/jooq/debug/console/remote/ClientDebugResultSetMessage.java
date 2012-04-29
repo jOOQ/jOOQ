@@ -36,7 +36,7 @@
  */
 package org.jooq.debug.console.remote;
 
-import org.jooq.debug.DebuggerResultSetData;
+import org.jooq.debug.ResultSetLoggingData;
 
 /**
  * @author Christopher Deckers
@@ -45,9 +45,9 @@ import org.jooq.debug.DebuggerResultSetData;
 public class ClientDebugResultSetMessage implements Message {
 
 	private int sqlQueryDebuggerDataID;
-	private DebuggerResultSetData sqlQueryDebuggerResultSetData;
+	private ResultSetLoggingData sqlQueryDebuggerResultSetData;
 
-	public ClientDebugResultSetMessage(int sqlQueryDebuggerDataID, DebuggerResultSetData sqlQueryDebuggerData) {
+	public ClientDebugResultSetMessage(int sqlQueryDebuggerDataID, ResultSetLoggingData sqlQueryDebuggerData) {
 		this.sqlQueryDebuggerDataID = sqlQueryDebuggerDataID;
 		this.sqlQueryDebuggerResultSetData = sqlQueryDebuggerData;
 	}
@@ -56,7 +56,7 @@ public class ClientDebugResultSetMessage implements Message {
 		return sqlQueryDebuggerDataID;
 	}
 
-	public DebuggerResultSetData getSqlQueryDebuggerResultSetData() {
+	public ResultSetLoggingData getSqlQueryDebuggerResultSetData() {
 		return sqlQueryDebuggerResultSetData;
 	}
 

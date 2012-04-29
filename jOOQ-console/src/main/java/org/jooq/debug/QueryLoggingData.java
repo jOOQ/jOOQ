@@ -42,7 +42,7 @@ import java.io.Serializable;
 /**
  * @author Christopher Deckers
  */
-public class DebuggerData implements Serializable {
+public class QueryLoggingData implements Serializable {
 
     private static volatile int nextID;
 
@@ -57,7 +57,7 @@ public class DebuggerData implements Serializable {
     private long threadID;
     private StackTraceElement[] callerStackTraceElements;
 
-    public DebuggerData(SqlQueryType queryType, String[] queries, String parameterDescription, Long preparationDuration, Long bindingDuration, long executionDuration) {
+    public QueryLoggingData(SqlQueryType queryType, String[] queries, String parameterDescription, Long preparationDuration, Long bindingDuration, long executionDuration) {
         this.id = nextID++;
         Thread currentThread = Thread.currentThread();
         this.threadName = currentThread.getName();

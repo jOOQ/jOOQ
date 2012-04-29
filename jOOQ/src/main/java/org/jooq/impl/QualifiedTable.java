@@ -40,17 +40,17 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.DataType;
-import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.Table;
 
 /**
- * A <code>Qualifier</code> is a {@link Field} that always renders a field name
- * or alias as a literal using {@link RenderContext#literal(String)}
+ * A <code>QualifiedTable</code> is a {@link Table} that always renders a table
+ * name or alias as a literal using {@link RenderContext#literal(String)}
  *
  * @author Lukas Eder
  */
-class Qualifier<T> extends AbstractField<T> {
+class QualifiedTable extends AbstractTable<Record> {
 
     /**
      * Generated UID
@@ -59,20 +59,15 @@ class Qualifier<T> extends AbstractField<T> {
 
     private final String[]    sql;
 
-    Qualifier(DataType<T> type, String... sql) {
-        super(sql[sql.length - 1], type);
+    QualifiedTable(String... sql) {
+        super(sql[sql.length - 1]);
 
         this.sql = sql;
     }
 
     // ------------------------------------------------------------------------
-    // Field API
+    // Table API
     // ------------------------------------------------------------------------
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
-    }
 
     @Override
     public final void toSQL(RenderContext context) {
@@ -89,7 +84,22 @@ class Qualifier<T> extends AbstractField<T> {
     public final void bind(BindContext context) {}
 
     @Override
-    public final boolean isNullLiteral() {
-        return false;
+    public final List<Attachable> getAttachables0() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public final Class<? extends Record> getRecordType() {
+        return RecordImpl.class;
+    }
+
+    @Override
+    public final Table<Record> as(String alias) {
+        return new TableAlias<Record>(this, alias);
+    }
+
+    @Override
+    protected final FieldList getFieldList() {
+        return new FieldList();
     }
 }

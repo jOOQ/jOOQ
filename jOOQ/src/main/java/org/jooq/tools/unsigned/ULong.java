@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2011-2012, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -77,7 +77,6 @@ public final class ULong extends UNumber implements Comparable<ULong> {
      *
      * @throws NumberFormatException If <code>value</code> does not contain a
      *             parsable <code>unsigned long</code>.
-     * @see ULong#ULong(String)
      */
     public static ULong valueOf(String value) throws NumberFormatException {
         return new ULong(value);
@@ -87,8 +86,6 @@ public final class ULong extends UNumber implements Comparable<ULong> {
      * Create an <code>unsigned long</code> by masking it with
      * <code>0xFFFFFFFFFFFFFFFF</code> i.e. <code>(long) -1</code> becomes
      * <code>(uint) 18446744073709551615</code>
-     *
-     * @see ULong#ULong(long)
      */
     public static ULong valueOf(long value) {
         return new ULong(value);
@@ -100,6 +97,19 @@ public final class ULong extends UNumber implements Comparable<ULong> {
      * @throws NumberFormatException If <code>value</code> is not in the range
      *             of an <code>unsigned long</code>
      */
+    public static ULong valueOf(BigInteger value) throws NumberFormatException {
+        return new ULong(value);
+    }
+
+    /**
+     * Create an <code>unsigned long</code>
+     *
+     * @throws NumberFormatException If <code>value</code> is not in the range
+     *             of an <code>unsigned long</code>
+     * @deprecated - Use {@link #valueOf(BigInteger)}, or
+     *             {@link Unsigned#ulong(BigInteger)} instead
+     */
+    @Deprecated
     public ULong(BigInteger value) throws NumberFormatException {
         this.value = value;
         rangeCheck();
@@ -109,7 +119,11 @@ public final class ULong extends UNumber implements Comparable<ULong> {
      * Create an <code>unsigned long</code> by masking it with
      * <code>0xFFFFFFFFFFFFFFFF</code> i.e. <code>(long) -1</code> becomes
      * <code>(uint) 18446744073709551615</code>
+     *
+     * @deprecated - Use {@link #valueOf(long)}, or {@link Unsigned#ulong(long)}
+     *             instead
      */
+    @Deprecated
     public ULong(long value) {
         if (value >= 0) {
             this.value = BigInteger.valueOf(value);
@@ -124,7 +138,10 @@ public final class ULong extends UNumber implements Comparable<ULong> {
      *
      * @throws NumberFormatException If <code>value</code> does not contain a
      *             parsable <code>unsigned long</code>.
+     * @deprecated - Use {@link #valueOf(String)}, or
+     *             {@link Unsigned#ulong(String)} instead
      */
+    @Deprecated
     public ULong(String value) throws NumberFormatException {
         this.value = new BigInteger(value);
         rangeCheck();

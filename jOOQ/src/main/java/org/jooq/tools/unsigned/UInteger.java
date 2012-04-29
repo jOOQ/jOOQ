@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2011-2012, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -69,7 +69,6 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
      *
      * @throws NumberFormatException If <code>value</code> does not contain a
      *             parsable <code>unsigned int</code>.
-     * @see UInteger#UInteger(String)
      */
     public static UInteger valueOf(String value) throws NumberFormatException {
         return new UInteger(value);
@@ -79,8 +78,6 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
      * Create an <code>unsigned int</code> by masking it with
      * <code>0xFFFFFFFF</code> i.e. <code>(int) -1</code> becomes
      * <code>(uint) 4294967295</code>
-     *
-     * @see UInteger#UInteger(int)
      */
     public static UInteger valueOf(int value) {
         return new UInteger(value);
@@ -90,8 +87,21 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
      * Create an <code>unsigned int</code>
      *
      * @throws NumberFormatException If <code>value</code> is not in the range
-     *             of an <code>unsigned int</code>
+     *             of an <code>unsigned byte</code>
      */
+    public static UInteger valueOf(long value) throws NumberFormatException {
+        return new UInteger(value);
+    }
+
+    /**
+     * Create an <code>unsigned int</code>
+     *
+     * @throws NumberFormatException If <code>value</code> is not in the range
+     *             of an <code>unsigned int</code>
+     * @deprecated - Use {@link #valueOf(long)}, or {@link Unsigned#uint(long)}
+     *             instead
+     */
+    @Deprecated
     public UInteger(long value) throws NumberFormatException {
         this.value = value;
         rangeCheck();
@@ -101,7 +111,11 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
      * Create an <code>unsigned int</code> by masking it with
      * <code>0xFFFFFFFF</code> i.e. <code>(int) -1</code> becomes
      * <code>(uint) 4294967295</code>
+     *
+     * @deprecated - Use {@link #valueOf(int)}, or {@link Unsigned#uint(int)}
+     *             instead
      */
+    @Deprecated
     public UInteger(int value) {
         this.value = value & MAX_VALUE;
     }
@@ -111,7 +125,10 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
      *
      * @throws NumberFormatException If <code>value</code> does not contain a
      *             parsable <code>unsigned int</code>.
+     * @deprecated - Use {@link #valueOf(String)}, or
+     *             {@link Unsigned#uint(String)} instead
      */
+    @Deprecated
     public UInteger(String value) throws NumberFormatException {
         this.value = Long.parseLong(value);
         rangeCheck();

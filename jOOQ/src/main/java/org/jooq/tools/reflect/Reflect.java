@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2011-2012, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -35,6 +35,7 @@
  */
 package org.jooq.tools.reflect;
 
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -109,6 +110,24 @@ public class Reflect {
         return new Reflect(object);
     }
 
+    /**
+     * Conveniently render an {@link AccessibleObject} accessible
+     *
+     * @param accessible The object to render accessible
+     * @return The argument object rendered accessible
+     */
+    public static <T extends AccessibleObject> T accessible(T accessible) {
+        if (accessible == null) {
+            return null;
+        }
+
+        if (!accessible.isAccessible()) {
+            accessible.setAccessible(true);
+        }
+
+        return accessible;
+    }
+
     // ---------------------------------------------------------------------
     // Members
     // ---------------------------------------------------------------------
@@ -138,12 +157,6 @@ public class Reflect {
         this.object = object;
         this.isClass = false;
     }
-
-    // ---------------------------------------------------------------------
-    // Fluent Configuration API
-    // ---------------------------------------------------------------------
-
-    // TODO: Allow for accessing non-public members, methods, etc
 
     // ---------------------------------------------------------------------
     // Fluent Reflection API
@@ -181,26 +194,14 @@ public class Reflect {
             return this;
         }
         catch (Exception e1) {
-            boolean accessible = true;
-            Field field = null;
 
             // Try again, setting a non-public field
             try {
-                field = type().getDeclaredField(name);
-                accessible = field.isAccessible();
-                if (!accessible)
-                    field.setAccessible(true);
-
-                field.set(object, unwrap(value));
+                accessible(type().getDeclaredField(name)).set(object, unwrap(value));
                 return this;
             }
             catch (Exception e2) {
                 throw new ReflectException(e2);
-            }
-            finally {
-                if (field != null && !accessible) {
-                    field.setAccessible(false);
-                }
             }
         }
     }
@@ -245,26 +246,13 @@ public class Reflect {
             return on(field.get(object));
         }
         catch (Exception e1) {
-            Field field = null;
-            boolean accessible = true;
 
             // Try again, getting a non-public field
             try {
-                field = type().getDeclaredField(name);
-                accessible = field.isAccessible();
-
-                if (!accessible)
-                    field.setAccessible(true);
-
-                return on(field.get(object));
+                return on(accessible(type().getDeclaredField(name)).get(object));
             }
             catch (Exception e2) {
                 throw new ReflectException(e2);
-            }
-            finally {
-                if (field != null && !accessible) {
-                    field.setAccessible(false);
-                }
             }
         }
     }
@@ -519,11 +507,8 @@ public class Reflect {
      * Wrap an object returned from a method
      */
     private static Reflect on(Method method, Object object, Object... args) throws ReflectException {
-        boolean accessible = method.isAccessible();
-
         try {
-            if (!accessible)
-                method.setAccessible(true);
+            accessible(method);
 
             if (method.getReturnType() == void.class) {
                 method.invoke(object, args);
@@ -535,11 +520,6 @@ public class Reflect {
         }
         catch (Exception e) {
             throw new ReflectException(e);
-        }
-        finally {
-            if (!accessible) {
-                method.setAccessible(false);
-            }
         }
     }
 

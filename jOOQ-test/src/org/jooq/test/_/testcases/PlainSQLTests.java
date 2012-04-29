@@ -40,9 +40,11 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.table;
+import static org.jooq.impl.Factory.tableByName;
 import static org.jooq.impl.Factory.val;
 
 import java.sql.SQLException;
@@ -94,6 +96,21 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
     public PlainSQLTests(jOOQAbstractTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         super(delegate);
+    }
+
+    @Test
+    public void testQualifiedSQL() throws Exception {
+        Result<Record> result =
+        create().select(
+                    fieldByName(Integer.class, TBook_ID().getName()),
+                    fieldByName(String.class, TBook_TITLE().getName()))
+                .from(tableByName(TBook().getName()))
+                .orderBy(fieldByName(TBook().getName(), TBook_ID().getName()))
+                .fetch();
+
+        assertEquals(4, result.size());
+        assertEquals(BOOK_IDS, result.getValues(0));
+        assertEquals(BOOK_TITLES, result.getValues(1));
     }
 
     @Test

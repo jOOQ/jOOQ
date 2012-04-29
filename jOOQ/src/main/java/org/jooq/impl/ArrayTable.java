@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.fieldByName;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -73,7 +75,7 @@ class ArrayTable extends AbstractTable<Record> {
         this(array, "array_table");
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "unchecked" })
     ArrayTable(Field<?> array, String alias) {
         super(alias);
 
@@ -111,7 +113,7 @@ class ArrayTable extends AbstractTable<Record> {
             try {
                 UDTRecord<?> record = (UDTRecord<?>) arrayType.newInstance();
                 for (Field<?> f : record.getFields()) {
-                    this.field.add(new Qualifier(f.getDataType(), alias, f.getName()));
+                    this.field.add(fieldByName(f.getDataType(), alias, f.getName()));
                 }
             }
             catch (Exception e) {
@@ -121,7 +123,7 @@ class ArrayTable extends AbstractTable<Record> {
 
         // Simple array types have a synthetic field called "COLUMN_VALUE"
         else {
-            this.field.add(new Qualifier(Factory.getDataType(arrayType), alias, "COLUMN_VALUE"));
+            this.field.add(fieldByName(Factory.getDataType(arrayType), alias, "COLUMN_VALUE"));
         }
     }
 

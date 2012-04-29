@@ -129,6 +129,7 @@ import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
+import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
@@ -665,6 +666,32 @@ public class Factory implements FactoryOperations {
     }
 
     /**
+     * Create a qualified table, given its table name
+     * <p>
+     * This constructs a table reference given the table's qualified name. jOOQ
+     * will render the table name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example:
+     * <code><pre>
+     * // This table...
+     * tableName("MY_SCHEMA", "MY_TABLE");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE]
+     * </pre></code>
+     *
+     * @param tableName The various parts making up your table's reference name.
+     * @return A table referenced by <code>tableName</code>
+     */
+    @Support
+    public static Table<Record> tableByName(String... tableName) {
+        return new QualifiedTable(tableName);
+    }
+
+    /**
      * A custom SQL clause that can render arbitrary SQL elements.
      * <p>
      * This is useful for constructing more complex SQL syntax elements wherever
@@ -911,6 +938,86 @@ public class Factory implements FactoryOperations {
     @Support
     public static <T> Field<T> field(String sql, DataType<T> type, Object... bindings) {
         return new SQLField<T>(sql, type, bindings);
+    }
+
+    /**
+     * Create a qualified field, given its field name
+     * <p>
+     * This constructs a field reference given the field's qualified name. jOOQ
+     * will render the field name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example:
+     * <code><pre>
+     * // This field...
+     * fieldName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     *
+     * @param fieldName The various parts making up your field's reference name.
+     * @return A field referenced by <code>fieldName</code>
+     */
+    @Support
+    public static Field<Object> fieldByName(String... fieldName) {
+        return fieldByName(Object.class, fieldName);
+    }
+
+    /**
+     * Create a qualified field, given its field name
+     * <p>
+     * This constructs a field reference given the field's qualified name. jOOQ
+     * will render the field name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example:
+     * <code><pre>
+     * // This field...
+     * fieldName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     *
+     * @param fieldName The various parts making up your field's reference name.
+     * @param type The type of the returned field
+     * @return A field referenced by <code>fieldName</code>
+     */
+    @Support
+    public static <T> Field<T> fieldByName(Class<T> type, String... fieldName) {
+        return fieldByName(getDataType(type), fieldName);
+    }
+
+    /**
+     * Create a qualified field, given its field name
+     * <p>
+     * This constructs a field reference given the field's qualified name. jOOQ
+     * will render the field name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example:
+     * <code><pre>
+     * // This field...
+     * fieldName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     *
+     * @param fieldName The various parts making up your field's reference name.
+     * @param type The type of the returned field
+     * @return A field referenced by <code>fieldName</code>
+     */
+    @Support
+    public static <T> Field<T> fieldByName(DataType<T> type, String... fieldName) {
+        return new QualifiedField<T>(type, fieldName);
     }
 
     /**

@@ -236,7 +236,7 @@ import static test.generated.Tables.*;
 import static org.jooq.impl.Factory.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Connection conn = null;
 
         String userName = "root";
@@ -247,6 +247,7 @@ public class Main {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
         } catch (Exception e) {
+            // For the sake of this tutorial, let's keep exception handling simple
             e.printStackTrace();
         } finally {
             if (conn != null) {
@@ -347,6 +348,7 @@ public class Main {
                 System.out.println("ID: " + id + " title: " + title + " desciption: " + description);
             }
         } catch (Exception e) {
+            // For the sake of this tutorial, let's keep exception handling simple
             e.printStackTrace();
         } finally {
             if (conn != null) {

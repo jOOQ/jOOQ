@@ -94,7 +94,10 @@ import org.jooq.exception.DataAccessException;
  * and creates a new <code>Factory</code> with a new <code>Connection</code>
  * every time you use any of the operations from {@link FactoryOperations}
  * <p>
- * Refer to the jOOQ manual to see possible operation modes for jOOQ with Spring
+ * Refer to the jOOQ manual to see possible operation modes for jOOQ with
+ * Spring. Note that this implementation of a <code>FactoryProxy</code> might be
+ * re-designed in jOOQ 3.0. Please consider this functionality as being
+ * EXPERIMENTAL
  *
  * @author Sergey Epik
  * @author Lukas Eder

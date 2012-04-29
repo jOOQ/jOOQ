@@ -62,8 +62,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.Box;
 import javax.swing.DefaultCellEditor;
@@ -127,7 +125,6 @@ public class EditorPane extends JPanel {
 
     private SqlTextArea editorTextArea;
     private JPanel southPanel = new JPanel(new BorderLayout());
-    private boolean isDBEditable;
     private Debugger debugger;
     private StatementExecutor lastStatementExecutor;
     private JButton startButton;
@@ -136,7 +133,6 @@ public class EditorPane extends JPanel {
     EditorPane(Debugger debugger) {
         super(new BorderLayout());
         this.debugger = debugger;
-        this.isDBEditable = !debugger.isReadOnly();
         setOpaque(false);
         JPanel northPanel = new JPanel(new BorderLayout());
         northPanel.setOpaque(false);
@@ -249,60 +245,16 @@ public class EditorPane extends JPanel {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                evaluate_(sql);
+                final int maxDisplayedRowCount = ((Number)displayedRowCountField.getValue()).intValue();
+                Thread evaluationThread = new Thread("SQLConsole - Evaluation") {
+                    @Override
+                    public void run() {
+                        evaluate_unrestricted_nothread(sql, maxDisplayedRowCount);
+                    }
+                };
+                evaluationThread.start();
             }
         });
-    }
-
-    private void evaluate_(String sql) {
-    	// Here could pre process magic commands.
-        boolean isAllowed = true;
-        if(!isDBEditable) {
-            String simplifiedSql = sql.replaceAll("'[^']*'", "");
-            Matcher matcher = Pattern.compile("[a-zA-Z_0-9\\$]+").matcher(simplifiedSql);
-            boolean isFirst = true;
-            while(matcher.find()) {
-                String word = simplifiedSql.substring(matcher.start(), matcher.end()).toUpperCase(Locale.ENGLISH);
-                if(isFirst && !word.equals("SELECT")) {
-                    isAllowed = false;
-                    break;
-                }
-                isFirst = false;
-                for(String keyword: new String[] {
-                        "INSERT",
-                        "UPDATE",
-                        "DELETE",
-                        "ALTER",
-                        "DROP",
-                        "CREATE",
-                        "EXEC",
-                        "EXECUTE",
-                }) {
-                    if(word.equals(keyword)) {
-                        isAllowed = false;
-                        break;
-                    }
-                }
-            }
-        }
-        if(!isAllowed) {
-            setMessage(southPanel, "It is only possible to execute SELECT queries.", true);
-        } else {
-            evaluate_unrestricted(sql);
-        }
-        southPanel.revalidate();
-        southPanel.repaint();
-    }
-
-    private void evaluate_unrestricted(final String sql) {
-        final int maxDisplayedRowCount = ((Number)displayedRowCountField.getValue()).intValue();
-        Thread evaluationThread = new Thread("SQLConsole - Evaluation") {
-            @Override
-            public void run() {
-                evaluate_unrestricted_nothread(sql, maxDisplayedRowCount);
-            }
-        };
-        evaluationThread.start();
     }
 
     private void evaluate_unrestricted_nothread(final String sql, final int maxDisplayedRowCount) {
@@ -317,12 +269,12 @@ public class EditorPane extends JPanel {
         });
         StatementExecutor statementExecutor;
         synchronized (debugger) {
-            statementExecutor = debugger.createStatementExecutor(sql, isUsingMaxRowCount? MAX_ROW_COUNT: Integer.MAX_VALUE, maxDisplayedRowCount);
+            statementExecutor = debugger.createStatementExecutor();
             lastStatementExecutor = statementExecutor;
         }
         StatementExecution statementExecution;
         try {
-            statementExecution = statementExecutor.execute();
+            statementExecution = statementExecutor.execute(sql, isUsingMaxRowCount? MAX_ROW_COUNT: Integer.MAX_VALUE, maxDisplayedRowCount);
         } finally {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -877,10 +829,11 @@ public class EditorPane extends JPanel {
         List<CompletionCandidate> candidateList = new ArrayList<CompletionCandidate>();
         // Here can add more candidates depending on magic word start.
         if(candidateList.isEmpty()) {
-            for(String s: debugger.getTableNames()) {
+            StatementExecutor statementExecutor = debugger.createStatementExecutor();
+            for(String s: statementExecutor.getTableNames()) {
                 candidateList.add(new CompletionCandidate(KeyWordType.TABLE, s));
             }
-            for(String s: debugger.getTableColumnNames()) {
+            for(String s: statementExecutor.getTableColumnNames()) {
                 candidateList.add(new CompletionCandidate(KeyWordType.TABLE_COlUMN, s));
             }
             for(String s: new String[] {

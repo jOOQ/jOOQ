@@ -247,7 +247,7 @@ public class Console extends JFrame {
 
 	private void addEditorTab() {
 		JPanel editorsPane = new JPanel(new BorderLayout());
-        final String[] tableNames = debugger.getTableNames();
+        final String[] tableNames = debugger.createStatementExecutor().getTableNames();
         final JList tableNamesJList = new JList(tableNames);
         tableNamesJList.addMouseListener(new MouseAdapter() {
             @Override

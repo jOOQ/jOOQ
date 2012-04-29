@@ -117,27 +117,9 @@ public class RemoteDebuggerClient implements Debugger {
     }
 
     @Override
-    public StatementExecutor createStatementExecutor(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
+    public StatementExecutor createStatementExecutor() {
         // TODO: implement
         return null;
-    }
-
-    @Override
-    public String[] getTableNames() {
-        // TODO: implement
-        return null;
-    }
-
-    @Override
-    public String[] getTableColumnNames() {
-        // TODO: implement
-        return null;
-    }
-
-    @Override
-    public boolean isReadOnly() {
-        // TODO: implement
-        return false;
     }
 
 }

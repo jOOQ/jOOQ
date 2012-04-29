@@ -51,28 +51,29 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.Table;
 import org.jooq.debug.StatementExecutionResultSetResult.TypeInfo;
 import org.jooq.debug.console.DatabaseDescriptor;
 import org.jooq.debug.console.misc.Utils;
 
-public class StatementExecutorImpl implements StatementExecutor {
+public class LocalStatementExecutor implements StatementExecutor {
 
     private DatabaseDescriptor databaseDescriptor;
-    private String sql;
-    private int maxRSRowsParsing;
-    private int retainParsedRSDataRowCountThreshold;
 
-    public StatementExecutorImpl(DatabaseDescriptor databaseDescriptor, String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
+    public LocalStatementExecutor(DatabaseDescriptor databaseDescriptor) {
         this.databaseDescriptor = databaseDescriptor;
-        this.sql = sql;
-        this.maxRSRowsParsing = maxRSRowsParsing;
-        this.retainParsedRSDataRowCountThreshold = retainParsedRSDataRowCountThreshold;
     }
 
     private volatile Connection conn;
@@ -81,7 +82,7 @@ public class StatementExecutorImpl implements StatementExecutor {
     private volatile Thread evaluationThread;
 
     @Override
-    public StatementExecution execute() {
+    public StatementExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
         boolean isAllowed = true;
         if(databaseDescriptor.isReadOnly()) {
             String simplifiedSql = sql.replaceAll("'[^']*'", "");
@@ -114,7 +115,7 @@ public class StatementExecutorImpl implements StatementExecutor {
         if(!isAllowed) {
             return new StatementExecution(0, new StatementExecutionMessageResult("The database is not editable but the statement to evaluate is a modification statement!", true));
         }
-        closeConnection();
+        stopExecution();
         evaluationThread = Thread.currentThread();
         long start = System.currentTimeMillis();
         try {
@@ -265,8 +266,6 @@ public class StatementExecutorImpl implements StatementExecutor {
                 closeConnection();
             }
         }
-
-        // TODO: implement
     }
 
     private void closeConnection() {
@@ -296,6 +295,32 @@ public class StatementExecutorImpl implements StatementExecutor {
             evaluationThread = null;
             closeConnection();
         }
+    }
+
+    @Override
+    public String[] getTableNames() {
+        List<Table<?>> tableList = databaseDescriptor.getSchema().getTables();
+        List<String> tableNameList = new ArrayList<String>();
+        for(Table<? extends Record> table: tableList) {
+            String tableName = table.getName();
+            tableNameList.add(tableName);
+        }
+        Collections.sort(tableNameList, String.CASE_INSENSITIVE_ORDER);
+        return tableNameList.toArray(new String[0]);
+    }
+
+    @Override
+    public String[] getTableColumnNames() {
+        Set<String> columnNameSet = new HashSet<String>();
+        for(Table<?> table: databaseDescriptor.getSchema().getTables()) {
+            for(Field<?> field: table.getFields()) {
+                String columnName = field.getName();
+                columnNameSet.add(columnName);
+            }
+        }
+        String[] columnNames = columnNameSet.toArray(new String[0]);
+        Arrays.sort(columnNames, String.CASE_INSENSITIVE_ORDER);
+        return columnNames;
     }
 
 }

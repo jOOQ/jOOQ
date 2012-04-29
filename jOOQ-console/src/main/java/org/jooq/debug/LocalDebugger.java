@@ -36,16 +36,6 @@
  */
 package org.jooq.debug;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.Table;
 import org.jooq.debug.console.DatabaseDescriptor;
 
 
@@ -75,39 +65,8 @@ public class LocalDebugger implements Debugger {
     }
 
     @Override
-    public StatementExecutor createStatementExecutor(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
-        return new StatementExecutorImpl(databaseDescriptor, sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
-    }
-
-    @Override
-    public String[] getTableNames() {
-        List<Table<?>> tableList = databaseDescriptor.getSchema().getTables();
-        List<String> tableNameList = new ArrayList<String>();
-        for(Table<? extends Record> table: tableList) {
-            String tableName = table.getName();
-            tableNameList.add(tableName);
-        }
-        Collections.sort(tableNameList, String.CASE_INSENSITIVE_ORDER);
-        return tableNameList.toArray(new String[0]);
-    }
-
-    @Override
-    public String[] getTableColumnNames() {
-        Set<String> columnNameSet = new HashSet<String>();
-        for(Table<?> table: databaseDescriptor.getSchema().getTables()) {
-            for(Field<?> field: table.getFields()) {
-                String columnName = field.getName();
-                columnNameSet.add(columnName);
-            }
-        }
-        String[] columnNames = columnNameSet.toArray(new String[0]);
-        Arrays.sort(columnNames, String.CASE_INSENSITIVE_ORDER);
-        return columnNames;
-    }
-
-    @Override
-    public boolean isReadOnly() {
-        return databaseDescriptor.isReadOnly();
+    public StatementExecutor createStatementExecutor() {
+        return new LocalStatementExecutor(databaseDescriptor);
     }
 
 }

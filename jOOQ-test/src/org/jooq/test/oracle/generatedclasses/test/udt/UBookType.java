@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
  */
 public class UBookType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> {
 
-	private static final long serialVersionUID = -233352372;
+	private static final long serialVersionUID = -1690422101;
 
 	/**
 	 * The singleton instance of TEST.U_BOOK_TYPE
@@ -18,14 +18,9 @@ public class UBookType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.genera
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> __RECORD_TYPE = org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord.class;
 	}
 
 	/**
@@ -43,5 +38,8 @@ public class UBookType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.genera
 	 */
 	private UBookType() {
 		super("U_BOOK_TYPE", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+
+		// Initialise data type
+		getDataType();
 	}
 }

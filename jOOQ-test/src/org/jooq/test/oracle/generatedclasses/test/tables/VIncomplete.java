@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class VIncomplete extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> {
 
-	private static final long serialVersionUID = 1048461901;
+	private static final long serialVersionUID = 571561915;
 
 	/**
 	 * The singleton instance of TEST.V_INCOMPLETE
@@ -18,14 +18,9 @@ public class VIncomplete extends org.jooq.impl.TableImpl<org.jooq.test.oracle.ge
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> __RECORD_TYPE = org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord.class;
 	}
 
 	/**

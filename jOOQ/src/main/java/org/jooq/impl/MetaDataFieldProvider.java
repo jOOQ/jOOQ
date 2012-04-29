@@ -103,10 +103,7 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
                 int precision = meta.getPrecision(i);
                 int scale = meta.getScale(i);
                 DataType<?> dataType = SQLDataType.OTHER;
-
-                // TODO: [#650] Find a more intelligent way to strip the
-                // schema from Oracle UDT names!
-                String type = meta.getColumnTypeName(i).replaceAll(".*\\.", "");
+                String type = meta.getColumnTypeName(i);
 
                 try {
                     dataType = FieldTypeHelper.getDialectDataType(configuration.getDialect(), type, precision, scale);

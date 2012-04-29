@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = 112930244;
+	private static final long serialVersionUID = -629533879;
 
 	/**
 	 * The singleton instance of TEST.T_DIRECTORY
@@ -18,14 +18,9 @@ public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.o
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> __RECORD_TYPE = org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord.class;
 	}
 
 	/**

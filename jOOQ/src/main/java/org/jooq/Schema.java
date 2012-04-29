@@ -55,7 +55,9 @@ public interface Schema extends NamedQueryPart {
      * methods.
      *
      * @see UDT#getTypeMapping() for a UDT-specific type mapping
+     * @deprecated - 2.3.0 - Do not reuse this method
      */
+    @Deprecated
     Map<String, Class<?>> getTypeMapping();
 
     /**

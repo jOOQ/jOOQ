@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
  */
 public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> implements org.jooq.Package {
 
-	private static final long serialVersionUID = -703790379;
+	private static final long serialVersionUID = 246883278;
 
 	/**
 	 * The singleton instance of TEST.U_AUTHOR_TYPE
@@ -18,14 +18,9 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> __RECORD_TYPE = org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord.class;
 	}
 
 	/**
@@ -117,5 +112,8 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	 */
 	private UAuthorType() {
 		super("U_AUTHOR_TYPE", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+
+		// Initialise data type
+		getDataType();
 	}
 }

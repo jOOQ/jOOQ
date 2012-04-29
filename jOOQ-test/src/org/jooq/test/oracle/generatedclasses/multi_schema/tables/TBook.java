@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -751508949;
+	private static final long serialVersionUID = 2009502471;
 
 	/**
 	 * The singleton instance of MULTI_SCHEMA.T_BOOK
@@ -18,14 +18,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> __RECORD_TYPE = org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord.class;
 	}
 
 	/**

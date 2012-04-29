@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1457728164;
+	private static final long serialVersionUID = -639992223;
 
 	/**
 	 * The singleton instance of TEST.V_BOOK
@@ -18,14 +18,9 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> __RECORD_TYPE = org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord.class;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test;
  */
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1457205035;
+	private static final long serialVersionUID = 1732742543;
 
 	/**
 	 * The singleton instance of TEST
@@ -20,19 +20,6 @@ public class Test extends org.jooq.impl.SchemaImpl {
 	 */
 	private Test() {
 		super("TEST");
-	}
-
-	/*
-	 * instance initialiser
-	 */
-	{
-		addMapping("TEST.O_INVALID_TYPE", org.jooq.test.oracle.generatedclasses.test.udt.records.OInvalidTypeRecord.class);
-		addMapping("TEST.U_ADDRESS_TYPE", org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord.class);
-		addMapping("TEST.U_AUTHOR_TYPE", org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord.class);
-		addMapping("TEST.U_BOOK_TYPE", org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord.class);
-		addMapping("TEST.U_INVALID_TABLE", org.jooq.test.oracle.generatedclasses.test.udt.records.UInvalidTableRecord.class);
-		addMapping("TEST.U_INVALID_TYPE", org.jooq.test.oracle.generatedclasses.test.udt.records.UInvalidTypeRecord.class);
-		addMapping("TEST.U_STREET_TYPE", org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord.class);
 	}
 
 	@Override

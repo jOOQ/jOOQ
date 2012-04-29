@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
 /**
  * @author Christopher Deckers
  */
@@ -53,32 +54,12 @@ public class DebuggerRegistry {
 	public static void addSqlQueryDebugger(Debugger sqlQueryDebugger) {
 		synchronized(LOCK) {
 			debuggerList.add(sqlQueryDebugger);
-			for(DebuggerRegistryListener l: debuggerRegisterListenerList) {
-				l.notifyDebuggerListenersModified();
-			}
 		}
 	}
 
 	public static void removeSqlQueryDebugger(Debugger sqlQueryDebugger) {
 		synchronized(LOCK) {
 			debuggerList.remove(sqlQueryDebugger);
-			for(DebuggerRegistryListener l: debuggerRegisterListenerList) {
-				l.notifyDebuggerListenersModified();
-			}
-		}
-	}
-
-	private static final List<DebuggerRegistryListener> debuggerRegisterListenerList = new ArrayList<DebuggerRegistryListener>(1);
-
-	public static void addDebuggerRegisterListener(DebuggerRegistryListener listener) {
-		synchronized(LOCK) {
-			debuggerRegisterListenerList.add(listener);
-		}
-	}
-
-	public static void removeDebuggerRegisterListener(DebuggerRegistryListener listener) {
-		synchronized(LOCK) {
-			debuggerRegisterListenerList.remove(listener);
 		}
 	}
 

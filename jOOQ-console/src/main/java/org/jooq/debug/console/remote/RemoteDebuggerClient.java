@@ -44,66 +44,100 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import org.jooq.debug.Debugger;
-import org.jooq.debug.DebuggerData;
-import org.jooq.debug.DebuggerRegistry;
-import org.jooq.debug.DebuggerRegistryListener;
-import org.jooq.debug.DebuggerResultSetData;
+import org.jooq.debug.LoggingListener;
+import org.jooq.debug.QueryLoggingData;
+import org.jooq.debug.ResultSetLoggingData;
+import org.jooq.debug.StatementExecutor;
 
 /**
  * @author Christopher Deckers
  */
-public class RemoteDebuggerClient {
+public class RemoteDebuggerClient implements Debugger {
 
 	private Socket socket;
+	private ObjectOutputStream out;
+	private final Object LOCK = new Object();
 
 	public RemoteDebuggerClient(String ip, int port) throws Exception {
 		socket = new Socket(ip, port);
+		out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 		Thread thread = new Thread("SQL Remote Debugger Client on port " + port) {
 			@Override
 			public void run() {
-				DebuggerRegistryListener debuggerRegisterListener = null;
-				try {
-					final ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-					debuggerRegisterListener = new DebuggerRegistryListener() {
-						@Override
-						public void notifyDebuggerListenersModified() {
-							try {
-								boolean isLogging = !DebuggerRegistry.getDebuggerList().isEmpty();
-								out.writeObject(new ServerLoggingActivationMessage(isLogging));
-								out.flush();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-					};
-					DebuggerRegistry.addDebuggerRegisterListener(debuggerRegisterListener);
-					ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-					for(Message o; (o=(Message)in.readObject()) != null; ) {
-						if(o instanceof ClientDebugQueriesMessage) {
-							DebuggerData sqlQueryDebuggerData = ((ClientDebugQueriesMessage) o).getSqlQueryDebuggerData();
-							for(Debugger debugger: DebuggerRegistry.getDebuggerList()) {
-								debugger.debugQueries(sqlQueryDebuggerData);
-							}
-						} else if(o instanceof ClientDebugResultSetMessage) {
-							ClientDebugResultSetMessage m = (ClientDebugResultSetMessage) o;
-							int sqlQueryDebuggerDataID = m.getSqlQueryDebuggerDataID();
-							DebuggerResultSetData clientDebugResultSetData = m.getSqlQueryDebuggerResultSetData();
-							for(Debugger debugger: DebuggerRegistry.getDebuggerList()) {
-								debugger.debugResultSet(sqlQueryDebuggerDataID, clientDebugResultSetData);
-							}
-						}
-					}
+			    try {
+			        ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+			        for(Message o; (o=(Message)in.readObject()) != null; ) {
+			            if(o instanceof ClientDebugQueriesMessage) {
+			                if(loggingListener != null) {
+			                    QueryLoggingData sqlQueryDebuggerData = ((ClientDebugQueriesMessage) o).getSqlQueryDebuggerData();
+			                    loggingListener.logQueries(sqlQueryDebuggerData);
+			                }
+			            } else if(o instanceof ClientDebugResultSetMessage) {
+			                if(loggingListener != null) {
+			                    ClientDebugResultSetMessage m = (ClientDebugResultSetMessage) o;
+			                    int sqlQueryDebuggerDataID = m.getSqlQueryDebuggerDataID();
+			                    ResultSetLoggingData clientDebugResultSetData = m.getSqlQueryDebuggerResultSetData();
+			                    loggingListener.logResultSet(sqlQueryDebuggerDataID, clientDebugResultSetData);
+			                }
+			            }
+			        }
 				} catch(Exception e) {
 					e.printStackTrace();
-				} finally {
-					if(debuggerRegisterListener != null) {
-						DebuggerRegistry.removeDebuggerRegisterListener(debuggerRegisterListener);
-					}
 				}
 			}
 		};
 		thread.setDaemon(true);
 		thread.start();
 	}
+
+    private LoggingListener loggingListener;
+
+    @Override
+    public void setLoggingListener(LoggingListener loggingListener) {
+        this.loggingListener = loggingListener;
+        try {
+            synchronized (LOCK) {
+                out.writeObject(new ServerLoggingActivationMessage(loggingListener != null));
+                out.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public LoggingListener getLoggingListener() {
+        return loggingListener;
+    }
+
+    @Override
+    public boolean isExecutionSupported() {
+        // TODO: implement
+        return false;
+    }
+
+    @Override
+    public StatementExecutor createStatementExecutor(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public String[] getTableNames() {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public String[] getTableColumnNames() {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public boolean isReadOnly() {
+        // TODO: implement
+        return false;
+    }
 
 }

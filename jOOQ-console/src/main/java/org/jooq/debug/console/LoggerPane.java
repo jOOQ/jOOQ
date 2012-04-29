@@ -97,9 +97,9 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jooq.debug.Debugger;
-import org.jooq.debug.DebuggerData;
-import org.jooq.debug.DebuggerRegistry;
-import org.jooq.debug.DebuggerResultSetData;
+import org.jooq.debug.LoggingListener;
+import org.jooq.debug.QueryLoggingData;
+import org.jooq.debug.ResultSetLoggingData;
 import org.jooq.debug.SqlQueryType;
 import org.jooq.debug.console.misc.JTableX;
 import org.jooq.debug.console.misc.RichTextTransferable;
@@ -135,7 +135,7 @@ public class LoggerPane extends JPanel {
     private final ImageIcon OTHER_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlOther16.png"));
     private final ImageIcon SELECT_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlSelect16.png"));
 
-    private Debugger sqlQueryDebugger;
+    private Debugger debugger;
     private JTableX table;
     private SqlTextArea textArea;
     private JLabel loggerStatusLabel;
@@ -147,8 +147,9 @@ public class LoggerPane extends JPanel {
     private boolean isOtherQueryTypeDisplayed = true;
     private boolean isScrollLocked;
 
-    public LoggerPane() {
+    public LoggerPane(Debugger debugger) {
         super(new BorderLayout());
+        this.debugger = debugger;
         setOpaque(false);
         JPanel loggerHeaderPanel = new JPanel(new BorderLayout());
         loggerHeaderPanel.setOpaque(false);
@@ -359,15 +360,15 @@ public class LoggerPane extends JPanel {
                         return duration < 0? null: duration;
                     }
                     case COLUMN_RS_LIFETIME: {
-                        DebuggerResultSetData rsData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
+                        ResultSetLoggingData rsData = queryDebuggingInfo.getResultSetLoggingData();
                         return rsData == null? null: rsData.getLifeTime();
                     }
                     case COLUMN_RS_READ: {
-                        DebuggerResultSetData rsData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
+                        ResultSetLoggingData rsData = queryDebuggingInfo.getResultSetLoggingData();
                         return rsData == null? null: rsData.getReadCount();
                     }
                     case COLUMN_RS_READ_ROWS: {
-                        DebuggerResultSetData rsData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
+                        ResultSetLoggingData rsData = queryDebuggingInfo.getResultSetLoggingData();
                         return rsData == null? null: rsData.getReadRows();
                     }
                     case COLUMN_DUPLICATION_COUNT: {
@@ -732,36 +733,36 @@ public class LoggerPane extends JPanel {
 
     private static class QueryDebuggingInfo {
         private long timestamp;
-        private DebuggerData sqlQueryDebuggerData;
+        private QueryLoggingData queryLoggingData;
         private Throwable throwable;
         private int duplicationCount;
-        public QueryDebuggingInfo(long timestamp, DebuggerData sqlQueryDebuggerData) {
+        public QueryDebuggingInfo(long timestamp, QueryLoggingData queryLoggingData) {
             this.timestamp = timestamp;
-            this.sqlQueryDebuggerData = sqlQueryDebuggerData;
+            this.queryLoggingData = queryLoggingData;
             this.throwable = new Exception("Statement Stack trace");
-            throwable.setStackTrace(sqlQueryDebuggerData.getCallerStackTraceElements());
+            throwable.setStackTrace(queryLoggingData.getCallerStackTraceElements());
         }
         public long getTimestamp() {
             return timestamp;
         }
-        public DebuggerData getSqlQueryDebuggerData() {
-            return sqlQueryDebuggerData;
+        public QueryLoggingData getQueryLoggingData() {
+            return queryLoggingData;
         }
         public Long getPrepardeStatementPreparationDuration() {
-            return sqlQueryDebuggerData.getPreparedStatementPreparationDuration();
+            return queryLoggingData.getPreparedStatementPreparationDuration();
         }
         public Long getPrepardeStatementBindingDuration() {
-            return sqlQueryDebuggerData.getPreparedStatementBindingDuration();
+            return queryLoggingData.getPreparedStatementBindingDuration();
         }
         public long getExecutionDuration() {
-            return sqlQueryDebuggerData.getExecutionDuration();
+            return queryLoggingData.getExecutionDuration();
         }
         public SqlQueryType getQueryType() {
-            return sqlQueryDebuggerData.getQueryType();
+            return queryLoggingData.getQueryType();
         }
         public String[] getQueries() {
-            String parameterDescription = sqlQueryDebuggerData.getParameterDescription();
-            String[] queries = sqlQueryDebuggerData.getQueries();
+            String parameterDescription = queryLoggingData.getParameterDescription();
+            String[] queries = queryLoggingData.getQueries();
             if(parameterDescription != null) {
                 return new String[] {queries[0] + " -> " + parameterDescription};
             }
@@ -771,10 +772,10 @@ public class LoggerPane extends JPanel {
             return throwable;
         }
         public String getThreadName() {
-            return sqlQueryDebuggerData.getThreadName();
+            return queryLoggingData.getThreadName();
         }
         public long getThreadId() {
-            return sqlQueryDebuggerData.getThreadID();
+            return queryLoggingData.getThreadID();
         }
         public void setDuplicationCount(int duplicationCount) {
             this.duplicationCount = duplicationCount;
@@ -782,12 +783,12 @@ public class LoggerPane extends JPanel {
         public int getDuplicationCount() {
             return duplicationCount;
         }
-        private DebuggerResultSetData sqlQueryDebuggerResultSetData;
-        public void setSqlQueryDebuggerResultSetData(DebuggerResultSetData sqlQueryDebuggerResultSetData) {
-            this.sqlQueryDebuggerResultSetData = sqlQueryDebuggerResultSetData;
+        private ResultSetLoggingData resultSetLoggingData;
+        public void setResultSetLoggingData(ResultSetLoggingData resultSetLoggingData) {
+            this.resultSetLoggingData = resultSetLoggingData;
         }
-        public DebuggerResultSetData getSqlQueryDebuggerResultSetData() {
-            return sqlQueryDebuggerResultSetData;
+        public ResultSetLoggingData getResultSetLoggingData() {
+            return resultSetLoggingData;
         }
         private int displayedRow = -1;
         public int getDisplayedRow() {
@@ -807,15 +808,11 @@ public class LoggerPane extends JPanel {
         this.isLogging = isLogging;
         loggerOnButton.setVisible(!isLogging);
         loggerOffButton.setVisible(isLogging);
-        if(sqlQueryDebugger != null) {
-            DebuggerRegistry.removeSqlQueryDebugger(sqlQueryDebugger);
-            sqlQueryDebugger = null;
-        }
         if(isLogging) {
-            sqlQueryDebugger = new Debugger() {
+            LoggingListener loggingListener = new LoggingListener() {
                 @Override
-                public void debugQueries(DebuggerData sqlQueryDebuggerData) {
-                    debugQueries(new QueryDebuggingInfo(System.currentTimeMillis(), sqlQueryDebuggerData));
+                public void logQueries(QueryLoggingData queryLoggingData) {
+                    debugQueries(new QueryDebuggingInfo(System.currentTimeMillis(), queryLoggingData));
                 }
                 public void debugQueries(final QueryDebuggingInfo queryDebuggingInfo) {
                     if(!SwingUtilities.isEventDispatchThread()) {
@@ -830,20 +827,20 @@ public class LoggerPane extends JPanel {
                     addRow(queryDebuggingInfo);
                 }
                 @Override
-                public void debugResultSet(final int sqlQueryDebuggerDataID, final DebuggerResultSetData sqlQueryDebuggerResultSetData) {
+                public void logResultSet(final int queryLoggingDataID, final ResultSetLoggingData resultSetLoggingData) {
                     if(!SwingUtilities.isEventDispatchThread()) {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
-                                debugResultSet(sqlQueryDebuggerDataID, sqlQueryDebuggerResultSetData);
+                                logResultSet(queryLoggingDataID, resultSetLoggingData);
                             }
                         });
                         return;
                     }
                     for(int i=queryDebuggingInfoList.size()-1; i>=0; i--) {
                         QueryDebuggingInfo queryDebuggingInfo = queryDebuggingInfoList.get(i);
-                        if(queryDebuggingInfo.getSqlQueryDebuggerData().getID() == sqlQueryDebuggerDataID) {
-                            queryDebuggingInfo.setSqlQueryDebuggerResultSetData(sqlQueryDebuggerResultSetData);
+                        if(queryDebuggingInfo.getQueryLoggingData().getID() == queryLoggingDataID) {
+                            queryDebuggingInfo.setResultSetLoggingData(resultSetLoggingData);
                             XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
                             boolean isResultSetDataShown = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(COLUMN_RS_LIFETIME));
                             if(isResultSetDataShown) {
@@ -854,7 +851,9 @@ public class LoggerPane extends JPanel {
                     }
                 }
             };
-            DebuggerRegistry.addSqlQueryDebugger(sqlQueryDebugger);
+            debugger.setLoggingListener(loggingListener);
+        } else {
+            debugger.setLoggingListener(null);
         }
     }
 
@@ -909,7 +908,7 @@ public class LoggerPane extends JPanel {
                 "<th>Stack trace</th>" +
                 "</tr>\n");
         for(QueryDebuggingInfo queryDebuggingInfo: queryDebuggingInfos) {
-            DebuggerResultSetData resultSetData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
+            ResultSetLoggingData resultSetData = queryDebuggingInfo.getResultSetLoggingData();
             htmlSB.append("<tr>\n");
             htmlSB.append("<td>");
             htmlSB.append(queryDebuggingInfo.getQueryType());

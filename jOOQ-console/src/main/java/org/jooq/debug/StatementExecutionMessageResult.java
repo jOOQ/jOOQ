@@ -36,22 +36,32 @@
  */
 package org.jooq.debug;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
+public class StatementExecutionMessageResult implements StatementExecutionResult {
 
-public interface Debugger {
+    private String message;
+    private boolean isError;
 
-    public void setLoggingListener(LoggingListener loggingListener);
+    public StatementExecutionMessageResult(String message, boolean isError) {
+        this.message = message;
+        this.isError = isError;
+    }
 
-    public LoggingListener getLoggingListener();
+    public StatementExecutionMessageResult(Exception e) {
+        StringWriter stringWriter = new StringWriter();
+        e.printStackTrace(new PrintWriter(stringWriter));
+        this.message = stringWriter.toString();
+        isError = true;
+    }
 
-    public boolean isExecutionSupported();
+    public String getMessage() {
+        return message;
+    }
 
-    public StatementExecutor createStatementExecutor(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold);
-
-    public String[] getTableNames();
-
-    public String[] getTableColumnNames();
-
-    public boolean isReadOnly();
+    public boolean isError() {
+        return isError;
+    }
 
 }

@@ -59,6 +59,18 @@ public class LocalDebugger implements Debugger {
         return loggingListener;
     }
 
+    private StatementMatcher[] loggingStatementMatchers;
+
+    @Override
+    public void setLoggingStatementMatchers(StatementMatcher[] loggingStatementMatchers) {
+        this.loggingStatementMatchers = loggingStatementMatchers;
+    }
+
+    @Override
+    public StatementMatcher[] getLoggingStatementMatchers() {
+        return loggingStatementMatchers;
+    }
+
     @Override
     public boolean isExecutionSupported() {
         return databaseDescriptor != null;

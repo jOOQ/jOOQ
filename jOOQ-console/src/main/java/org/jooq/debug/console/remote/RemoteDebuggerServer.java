@@ -87,7 +87,7 @@ public class RemoteDebuggerServer {
 	}
 
 	private void startServerToClientThread(final Socket socket, int port) {
-		Thread clientThread = new Thread("SQL Remote Debugger Server on port " + port) {
+		Thread clientThread = new Thread("SQL Remote Debugger Server-Client on port " + port) {
 			@Override
 			public void run() {
 				Debugger debugger = null;
@@ -125,6 +125,8 @@ public class RemoteDebuggerServer {
 							} else {
 							    debugger.setLoggingListener(null);
 							}
+						} else if(o instanceof ServerLoggingStatementMatchersMessage) {
+						    debugger.setLoggingStatementMatchers(((ServerLoggingStatementMatchersMessage) o).getStatementMatchers());
 						}
 					}
 				} catch(Exception e) {

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -614120380;
+	private static final long serialVersionUID = 1412664963;
 
 	/**
 	 * The singleton instance of TEST.T_TRIGGERS
@@ -18,14 +18,9 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord> __RECORD_TYPE = org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord.class;
 	}
 
 	/**

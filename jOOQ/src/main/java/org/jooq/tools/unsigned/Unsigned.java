@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2011-2012, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -53,20 +53,20 @@ public final class Unsigned {
      *
      * @throws NumberFormatException If <code>value</code> does not contain a
      *             parsable <code>unsigned byte</code>.
-     * @see UByte#UByte(String)
+     * @see UByte#valueOf(String)
      */
     public static UByte ubyte(String value) throws NumberFormatException {
-        return value == null ? null : new UByte(value);
+        return value == null ? null : UByte.valueOf(value);
     }
 
     /**
      * Create an <code>unsigned byte</code> by masking it with <code>0xFF</code>
      * i.e. <code>(byte) -1</code> becomes <code>(ubyte) 255</code>
      *
-     * @see UByte#UByte(byte)
+     * @see UByte#valueOf(byte)
      */
     public static UByte ubyte(byte value) {
-        return new UByte(value);
+        return UByte.valueOf(value);
     }
 
     /**
@@ -74,10 +74,32 @@ public final class Unsigned {
      *
      * @throws NumberFormatException If <code>value</code> is not in the range
      *             of an <code>unsigned byte</code>
-     * @see UByte#UByte(short)
+     * @see UByte#valueOf(short)
      */
     public static UByte ubyte(short value) throws NumberFormatException {
-        return new UByte(value);
+        return UByte.valueOf(value);
+    }
+
+    /**
+     * Create an <code>unsigned byte</code>
+     *
+     * @throws NumberFormatException If <code>value</code> is not in the range
+     *             of an <code>unsigned byte</code>
+     * @see UByte#valueOf(short)
+     */
+    public static UByte ubyte(int value) throws NumberFormatException {
+        return UByte.valueOf(value);
+    }
+
+    /**
+     * Create an <code>unsigned byte</code>
+     *
+     * @throws NumberFormatException If <code>value</code> is not in the range
+     *             of an <code>unsigned byte</code>
+     * @see UByte#valueOf(short)
+     */
+    public static UByte ubyte(long value) throws NumberFormatException {
+        return UByte.valueOf(value);
     }
 
     /**
@@ -85,10 +107,10 @@ public final class Unsigned {
      *
      * @throws NumberFormatException If <code>value</code> does not contain a
      *             parsable <code>unsigned short</code>.
-     * @see UShort#UShort(String)
+     * @see UShort#valueOf(String)
      */
     public static UShort ushort(String value) throws NumberFormatException {
-        return value == null ? null : new UShort(value);
+        return value == null ? null : UShort.valueOf(value);
     }
 
     /**
@@ -96,10 +118,10 @@ public final class Unsigned {
      * <code>0xFFFF</code> i.e. <code>(short) -1</code> becomes
      * <code>(ushort) 65535</code>
      *
-     * @see UShort#UShort(short)
+     * @see UShort#valueOf(short)
      */
     public static UShort ushort(short value) {
-        return new UShort(value);
+        return UShort.valueOf(value);
     }
 
     /**
@@ -107,10 +129,10 @@ public final class Unsigned {
      *
      * @throws NumberFormatException If <code>value</code> is not in the range
      *             of an <code>unsigned short</code>
-     * @see UShort#UShort(int)
+     * @see UShort#valueOf(int)
      */
     public static UShort ushort(int value) throws NumberFormatException {
-        return new UShort(value);
+        return UShort.valueOf(value);
     }
 
     /**
@@ -118,10 +140,10 @@ public final class Unsigned {
      *
      * @throws NumberFormatException If <code>value</code> does not contain a
      *             parsable <code>unsigned int</code>.
-     * @see UInteger#UInteger(String)
+     * @see UInteger#valueOf(String)
      */
     public static UInteger uint(String value) throws NumberFormatException {
-        return value == null ? null : new UInteger(value);
+        return value == null ? null : UInteger.valueOf(value);
     }
 
     /**
@@ -129,10 +151,10 @@ public final class Unsigned {
      * <code>0xFFFFFFFF</code> i.e. <code>(int) -1</code> becomes
      * <code>(uint) 4294967295</code>
      *
-     * @see UInteger#UInteger(int)
+     * @see UInteger#valueOf(int)
      */
     public static UInteger uint(int value) {
-        return new UInteger(value);
+        return UInteger.valueOf(value);
     }
 
     /**
@@ -140,10 +162,10 @@ public final class Unsigned {
      *
      * @throws NumberFormatException If <code>value</code> is not in the range
      *             of an <code>unsigned int</code>
-     * @see UInteger#UInteger(long)
+     * @see UInteger#valueOf(long)
      */
     public static UInteger uint(long value) throws NumberFormatException {
-        return new UInteger(value);
+        return UInteger.valueOf(value);
     }
 
     /**
@@ -151,10 +173,10 @@ public final class Unsigned {
      *
      * @throws NumberFormatException If <code>value</code> does not contain a
      *             parsable <code>unsigned long</code>.
-     * @see ULong#ULong(String)
+     * @see ULong#valueOf(String)
      */
     public static ULong ulong(String value) throws NumberFormatException {
-        return value == null ? null : new ULong(value);
+        return value == null ? null : ULong.valueOf(value);
     }
 
     /**
@@ -162,10 +184,10 @@ public final class Unsigned {
      * <code>0xFFFFFFFFFFFFFFFF</code> i.e. <code>(long) -1</code> becomes
      * <code>(uint) 18446744073709551615</code>
      *
-     * @see ULong#ULong(long)
+     * @see ULong#valueOf(long)
      */
     public static ULong ulong(long value) {
-        return new ULong(value);
+        return ULong.valueOf(value);
     }
 
     /**
@@ -173,10 +195,10 @@ public final class Unsigned {
      *
      * @throws NumberFormatException If <code>value</code> is not in the range
      *             of an <code>unsigned long</code>
-     * @see ULong#ULong(BigInteger)
+     * @see ULong#valueOf(BigInteger)
      */
     public static ULong ulong(BigInteger value) throws NumberFormatException {
-        return new ULong(value);
+        return ULong.valueOf(value);
     }
 
     /**

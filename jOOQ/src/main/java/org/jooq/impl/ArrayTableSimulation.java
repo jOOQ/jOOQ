@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.falseCondition;
+import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.one;
 
 import java.util.Collections;
@@ -74,14 +75,13 @@ class ArrayTableSimulation extends AbstractTable<Record> {
         this(array, "array_table");
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     ArrayTableSimulation(Object[] array, String alias) {
         super(alias);
 
         this.array = array;
         this.field = new FieldList();
         this.alias = alias;
-        this.field.add(new Qualifier(Factory.getDataType(array.getClass().getComponentType()), alias, "COLUMN_VALUE"));
+        this.field.add(fieldByName(Factory.getDataType(array.getClass().getComponentType()), alias, "COLUMN_VALUE"));
     }
 
     @Override

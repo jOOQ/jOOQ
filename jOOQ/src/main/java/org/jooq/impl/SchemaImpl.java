@@ -60,6 +60,7 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
 
     private static final long           serialVersionUID = -8101463810207566546L;
 
+    @Deprecated
     private final Map<String, Class<?>> typeMapping;
 
     public SchemaImpl(String name) {
@@ -82,12 +83,17 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
     }
 
     @Override
+    @Deprecated
     public final Map<String, Class<?>> getTypeMapping() {
         return Collections.unmodifiableMap(typeMapping);
     }
 
-    protected final void addMapping(String name, Class<?> type) {
-        typeMapping.put(name, type);
+    /**
+     * @deprecated - 2.3.0 - regenerate your schema
+     */
+    @Deprecated
+    protected final void addMapping(String name, Class<?> recordType) {
+        typeMapping.put(name, recordType);
     }
 
     @Override

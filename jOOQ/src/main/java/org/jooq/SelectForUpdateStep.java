@@ -36,6 +36,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -44,6 +45,7 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
 /**
@@ -101,7 +103,7 @@ public interface SelectForUpdateStep extends SelectFinalStep {
      *
      * @see LockProvider#setForUpdate(boolean) see LockProvider for more details
      */
-    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectForUpdateOfStep forUpdate();
 
     /**

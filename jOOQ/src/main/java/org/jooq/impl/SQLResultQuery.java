@@ -104,6 +104,11 @@ class SQLResultQuery extends AbstractResultQuery<Record> implements BindingProvi
         return false;
     }
 
+    @Override
+    final boolean isForUpdate() {
+        return false;
+    }
+
     // ------------------------------------------------------------------------
     // QueryPart API
     // ------------------------------------------------------------------------

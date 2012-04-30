@@ -36,6 +36,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -44,8 +45,12 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Collection;
 
 /**
@@ -59,7 +64,8 @@ public interface LockProvider {
     /**
      * Sets the "FOR UPDATE" flag onto the query
      * <p>
-     * This has been observed to be supported by any of these dialects:
+     * <h3>Native implementation</h3> This has been observed to be supported by
+     * any of these dialects:
      * <ul>
      * <li><a href=
      * "http://publib.boulder.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=/com.ibm.db2.luw.sql.ref.doc/doc/r0000879.html"
@@ -82,12 +88,23 @@ public interface LockProvider {
      * "http://www.postgresql.org/docs/9.0/static/sql-select.html#SQL-FOR-UPDATE-SHARE"
      * >Postgres FOR UPDATE / FOR SHARE</a></li>
      * </ul>
+     * <h3>Simulation</h3> These dialects can simulate the
+     * <code>FOR UPDATE</code> clause using a cursor. The cursor is handled by
+     * the JDBC driver, at {@link PreparedStatement} construction time, when
+     * calling {@link Connection#prepareStatement(String, int, int)} with
+     * {@link ResultSet#CONCUR_UPDATABLE}. jOOQ handles simulation of a
+     * <code>FOR UPDATE</code> clause using <code>CONCUR_UPDATABLE</code> for
+     * these dialects:
+     * <ul>
+     * <li> {@link SQLDialect#CUBRID}</li>
+     * <li> {@link SQLDialect#SQLSERVER}</li>
+     * </ul>
      * <p>
-     * These dialects are known not to support the <code>FOR UPDATE</code>
-     * clause in regular SQL:
+     * Note: This simulation may not be efficient for large result sets!
+     * <h3>Not supported</h3> These dialects are known not to support the
+     * <code>FOR UPDATE</code> clause in regular SQL:
      * <ul>
      * <li> {@link SQLDialect#SQLITE}</li>
-     * <li> {@link SQLDialect#SQLSERVER}</li>
      * </ul>
      * <p>
      * If your dialect does not support this clause, jOOQ will still render it,
@@ -98,7 +115,7 @@ public interface LockProvider {
      *
      * @param forUpdate The flag's value
      */
-    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     void setForUpdate(boolean forUpdate);
 
     /**

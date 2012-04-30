@@ -659,6 +659,10 @@ public abstract class BaseTest<
         return delegate.getConnection();
     }
 
+    protected final Connection getNewConnection() {
+        return delegate.getConnection0(null, null);
+    }
+
     protected final Factory create() {
         return delegate.create();
     }
@@ -669,6 +673,13 @@ public abstract class BaseTest<
 
     protected final QueryPartInternal internal(QueryPart q) {
         return delegate.internal(q);
+    }
+
+    protected final void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        }
+        catch (InterruptedException ignore) {}
     }
 
     @SuppressWarnings("unchecked")

@@ -35,8 +35,13 @@
  */
 package org.jooq.impl;
 
+import static java.sql.ResultSet.CONCUR_UPDATABLE;
+import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
+import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.SQLSERVER;
 
 import java.lang.reflect.Array;
 import java.sql.Connection;
@@ -114,7 +119,17 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     protected final void prepare(ExecuteContext ctx) throws SQLException {
-        super.prepare(ctx);
+
+        // [#1296] These dialects do not implement FOR UPDATE. But the same
+        // effect can be achieved using ResultSet.CONCUR_UPDATABLE
+        if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.getDialect())) {
+            ctx.statement(ctx.getConnection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
+        }
+
+        // Regular behaviour
+        else {
+            ctx.statement(ctx.getConnection().prepareStatement(ctx.sql()));
+        }
 
         // [#1263] Allow for negative fetch sizes to support some non-standard
         // MySQL feature, where Integer.MIN_VALUE is used
@@ -227,6 +242,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
      * Subclasses should indicate whether a Postgres refcursor is being selected
      */
     abstract boolean isSelectingRefCursor();
+
+    /**
+     * Subclasses should indicate whether they want an updatable {@link ResultSet}
+     */
+    abstract boolean isForUpdate();
 
     @Override
     public final Result<R> fetch() {

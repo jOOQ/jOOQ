@@ -35,12 +35,15 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.countDistinct;
 import static org.jooq.impl.Factory.trim;
 import static org.jooq.impl.Factory.val;
+
+import java.util.Vector;
 
 import org.jooq.Field;
 import org.jooq.Record;
@@ -50,6 +53,8 @@ import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.exception.DataAccessException;
+import org.jooq.impl.Factory;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -342,25 +347,91 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     @Test
     public void testForUpdateClauses() throws Exception {
         switch (getDialect()) {
-            case CUBRID:
             case SQLITE:
-            case SQLSERVER:
                 log.info("SKIPPING", "FOR UPDATE tests");
                 return;
         }
 
-        // Just checking for syntax correctness. Locking should be OK
-        Result<Record> result = create().select(TAuthor_ID())
-                                        .from(TAuthor())
-                                        .forUpdate()
-                                        .fetch();
-        assertEquals(2, result.size());
-        Result<A> result2 = create().selectFrom(TAuthor())
-                                    .forUpdate()
-                                    .fetch();
-        assertEquals(2, result2.size());
+        // Checking for syntax correctness and locking behaviour
+        // -----------------------------------------------------
+        final Factory create1 = create();
+        final Factory create2 = create();
+
+        create2.setConnection(getNewConnection());
+        create2.getConnection().setAutoCommit(false);
+
+        final Vector<String> execOrder = new Vector<String>();
+
+        try {
+            final Thread t1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    sleep(2000);
+                    execOrder.add("t1-block");
+                    try {
+                        create1
+                            .select(TAuthor_ID())
+                            .from(TAuthor())
+                            .forUpdate()
+                            .fetch();
+                    }
+
+                    // Some databases fail on locking, others lock for a while
+                    catch (DataAccessException ignore) {
+                    }
+                    finally {
+                        execOrder.add("t1-fail-or-t2-commit");
+                    }
+                }
+            });
+
+            final Thread t2 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    execOrder.add("t2-exec");
+                    Result<A> result2 = create2
+                        .selectFrom(TAuthor())
+                        .forUpdate()
+                        .fetch();
+                    assertEquals(2, result2.size());
+
+                    execOrder.add("t2-signal");
+                    sleep(4000);
+                    execOrder.add("t1-fail-or-t2-commit");
+
+                    try {
+                        create2.getConnection().commit();
+                        create2.getConnection().close();
+                    }
+                    catch (Exception e) {}
+                }
+            });
+
+            // This is the test case:
+            // 0.0s: Both threads start
+            // 0.0s: t1 sleeps for 2s
+            // 0.0s: t2 locks the T_AUTHOR table
+            // 0.1s: t2 sleeps for 4s
+            // 2.0s: t1 blocks on the T_AUTHOR table
+            // ???s: t1 fails
+            // 4.0s: t2 commits and unlocks T_AUTHOR
+            t1.start();
+            t2.start();
+
+            t1.join();
+            t2.join();
+
+            assertEquals(asList("t2-exec", "t2-signal", "t1-block", "t1-fail-or-t2-commit", "t1-fail-or-t2-commit"), execOrder);
+        }
+        finally {
+            try {
+                create2.getConnection().close();
+            }
+            catch (Exception e) {}
+        }
 
         // Check again with limit / offset clauses
+        // ---------------------------------------
         switch (getDialect()) {
             case INGRES:
             case ORACLE:
@@ -398,7 +469,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 break;
 
             default: {
-                result = create().select(TAuthor_ID())
+                Result<Record> result = create().select(TAuthor_ID())
                         .from(TAuthor())
                         .forUpdate()
                         .wait(2)
@@ -418,7 +489,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 assertEquals(2, result.size());
 
 
-                result2 = create().selectFrom(TAuthor())
+                Result<A> result2 = create().selectFrom(TAuthor())
                         .forUpdate()
                         .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
                         .wait(2)
@@ -452,14 +523,14 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             case INGRES:
             case ORACLE:
             case SYBASE: {
-                result = create().select(TAuthor_ID())
+                Result<Record> result = create().select(TAuthor_ID())
                         .from(TAuthor())
                         .forUpdate()
                         .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
                         .fetch();
                 assertEquals(2, result.size());
 
-                result2 = create().selectFrom(TAuthor())
+                Result<A> result2 = create().selectFrom(TAuthor())
                         .forUpdate()
                         .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
                         .fetch();
@@ -470,14 +541,14 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
             // Postgres only supports the OF clause with tables as parameters
             case POSTGRES: {
-                result = create().select(TAuthor_ID())
+                Result<Record> result = create().select(TAuthor_ID())
                         .from(TAuthor())
                         .forUpdate()
                         .of(TAuthor())
                         .fetch();
                 assertEquals(2, result.size());
 
-                result2 = create().selectFrom(TAuthor())
+                Result<A> result2 = create().selectFrom(TAuthor())
                         .forUpdate()
                         .of(TAuthor())
                         .fetch();
@@ -491,13 +562,13 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         switch (getDialect()) {
             case MYSQL:
             case POSTGRES: {
-                result = create().select(TAuthor_ID())
+                Result<Record> result = create().select(TAuthor_ID())
                                  .from(TAuthor())
                                  .forShare()
                                  .fetch();
                 assertEquals(2, result.size());
 
-                result2 = create().selectFrom(TAuthor())
+                Result<A> result2 = create().selectFrom(TAuthor())
                                   .forShare()
                                   .fetch();
                 assertEquals(2, result2.size());

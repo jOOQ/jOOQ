@@ -54,8 +54,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.swing.UIManager;
-
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
 import org.jooq.ExecuteType;
@@ -76,7 +74,6 @@ import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.debug.DebugListener;
-import org.jooq.debug.console.Console;
 import org.jooq.debug.console.DatabaseDescriptor;
 import org.jooq.debug.console.remote.RemoteDebuggerServer;
 import org.jooq.impl.Factory;
@@ -441,10 +438,10 @@ public abstract class jOOQAbstractTest<
                 };
 
                 try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                    Console console = new Console(descriptor, true);
-                    console.setLoggingActive(true);
-                    console.setVisible(true);
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//                    Console console = new Console(descriptor, true);
+//                    console.setLoggingActive(true);
+//                    console.setVisible(true);
                 }
                 catch (Exception ignore) {}
             }
@@ -471,7 +468,7 @@ public abstract class jOOQAbstractTest<
         return connectionMultiSchemaUnused;
     }
 
-    private final Connection getConnection0(String jdbcUser, String jdbcPassword) {
+    final Connection getConnection0(String jdbcUser, String jdbcPassword) {
         try {
             String configuration = System.getProperty("jdbc.properties");
             if (configuration == null) {

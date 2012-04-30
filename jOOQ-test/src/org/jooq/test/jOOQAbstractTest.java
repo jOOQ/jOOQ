@@ -807,6 +807,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testQualifiedSQL() throws Exception {
+        new PlainSQLTests(this).testQualifiedSQL();
+    }
+
+    @Test
     public void testPlainSQL() throws Exception {
         new PlainSQLTests(this).testPlainSQL();
     }

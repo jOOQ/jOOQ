@@ -65,6 +65,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractType<R> implements 
 
     private final FieldList                 fields;
     private transient DataType<R>           type;
+    @Deprecated
     private transient Map<String, Class<?>> typeMapping;
 
     public UDTImpl(String name, Schema schema) {
@@ -93,6 +94,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractType<R> implements 
     }
 
     @Override
+    @Deprecated
     public final synchronized Map<String, Class<?>> getTypeMapping() throws SQLException {
         if (typeMapping == null) {
             typeMapping = new HashMap<String, Class<?>>();

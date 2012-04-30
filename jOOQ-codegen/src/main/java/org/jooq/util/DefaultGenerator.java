@@ -1236,16 +1236,13 @@ public class DefaultGenerator implements Generator {
                         out.println("\t\tsuper(\"" + udt.getOutputName() + "\");");
                     }
 
+                    out.println();
+                    out.println("\t\t// Initialise data type");
+                    out.println("\t\tgetDataType();");
                     out.println("\t}");
 
                     out.println("}");
                     out.close();
-
-                    if (outS != null) {
-                        outS.printInitialisationStatement(
-                            "addMapping(\"" + udt.getQualifiedOutputName() + "\", " +
-                            strategy.getFullJavaClassName(udt, Mode.RECORD) + ".class);");
-                    }
                 } catch (Exception e) {
                     log.error("Error while generating udt " + udt, e);
                 }
@@ -2312,25 +2309,15 @@ public class DefaultGenerator implements Generator {
         out.println("\t/**");
         out.println("\t * The class holding records for this type");
         out.println("\t */");
-        out.print("\tprivate static final ");
-        out.print(Class.class);
-        out.print("<");
-        out.print(strategy.getFullJavaClassName(definition, Mode.RECORD));
-        out.print("> __RECORD_TYPE = ");
-        out.print(strategy.getFullJavaClassName(definition, Mode.RECORD));
-        out.println(".class;");
-
-        out.println();
-        out.println("\t/**");
-        out.println("\t * The class holding records for this type");
-        out.println("\t */");
         printOverride(out);
         out.print("\tpublic ");
         out.print(Class.class);
         out.print("<");
         out.print(strategy.getFullJavaClassName(definition, Mode.RECORD));
         out.println("> getRecordType() {");
-        out.println("\t\treturn __RECORD_TYPE;");
+        out.print("\t\treturn ");
+        out.print(strategy.getFullJavaClassName(definition, Mode.RECORD));
+        out.println(".class;");
         out.println("\t}");
     }
 

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -1067175958;
+	private static final long serialVersionUID = -2005499030;
 
 	/**
 	 * The singleton instance of TEST.T_ARRAYS
@@ -18,14 +18,9 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> __RECORD_TYPE = org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord.class;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 874852289;
+	private static final long serialVersionUID = -1916070700;
 
 	/**
 	 * The singleton instance of TEST.T_DATES
@@ -18,14 +18,9 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracl
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> __RECORD_TYPE = org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord.class;
 	}
 
 	/**

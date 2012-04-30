@@ -43,7 +43,6 @@ import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.tools.StringUtils.leftPad;
 
-import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.sql.Blob;
@@ -86,6 +85,7 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.reflect.Reflect;
 
 /**
  * General jOOQ utilities
@@ -171,7 +171,7 @@ final class Util {
             else {
 
                 // [#919] Allow for accessing non-public constructors
-                result = accessible(type.getDeclaredConstructor()).newInstance();
+                result = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
             }
 
             result.attach(configuration);
@@ -852,17 +852,6 @@ final class Util {
     }
 
     /**
-     * Ensure an {@link AccessibleObject} is really accessible
-     */
-    static final <T extends AccessibleObject> T accessible(T accessible) {
-        if (!accessible.isAccessible()) {
-            accessible.setAccessible(true);
-        }
-
-        return accessible;
-    }
-
-    /**
      * Type-safely copy a value from one record to another
      */
     static final <T> void setValue(Record target, Field<T> targetField, Record source, Field<?> sourceField) {
@@ -926,7 +915,7 @@ final class Util {
                 EXECUTE_LISTENERS.put(name, type);
             }
 
-            return (ExecuteListener) accessible(type.getDeclaredConstructor()).newInstance();
+            return (ExecuteListener) Reflect.accessible(type.getDeclaredConstructor()).newInstance();
         }
         catch (Exception e) {
             throw new RuntimeException(e);

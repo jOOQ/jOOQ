@@ -175,16 +175,10 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
         else {
             Object o;
 
-            // [#1179] This is needed to load TABLE OF OBJECT
+            // [#1179 #1376 #1377] This is needed to load TABLE OF OBJECT
             // [#884] TODO: This name is used in inlined SQL. It should be
             // correctly escaped and schema mapped!
-            if (schema != null) {
-                o = array.getArray(schema.getTypeMapping());
-            }
-            else {
-                o = array.getArray();
-            }
-
+            o = array.getArray(DataTypes.udtRecords());
             this.array = Convert.convert(o, type.getArrayType());
         }
     }

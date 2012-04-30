@@ -33,37 +33,63 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
+
+import org.jooq.Attachable;
+import org.jooq.BindContext;
+import org.jooq.DataType;
+import org.jooq.Field;
+import org.jooq.RenderContext;
 
 /**
- * UDT definition
+ * A <code>QualifiedField</code> is a {@link Field} that always renders a field name
+ * or alias as a literal using {@link RenderContext#literal(String)}
  *
- * @param <R> The record type
  * @author Lukas Eder
  */
-public interface UDT<R extends UDTRecord<R>> extends Type<R> {
+class QualifiedField<T> extends AbstractField<T> {
 
     /**
-     * The complete type mapping for this UDT.
-     * <p>
-     * This method returns all types involved with this UDT, including nested
-     * types. The result can be used in {@link ResultSet#getObject(int, Map)}
-     * and similar methods.
-     *
-     * @see Schema#getTypeMapping() for the {@link Schema}'s complete type
-     *      mapping
-     * @deprecated - 2.3.0 - Do not reuse this method. It will be moved to
-     *             jOOQ's internals, soon
+     * Generated UID
      */
-    @Deprecated
-    Map<String, Class<?>> getTypeMapping() throws SQLException;
+    private static final long serialVersionUID = 6937002867156868761L;
 
-    /**
-     * The UDT's data type as known to the database
-     */
-    DataType<R> getDataType();
+    private final String[]    sql;
+
+    QualifiedField(DataType<T> type, String... sql) {
+        super(sql[sql.length - 1], type);
+
+        this.sql = sql;
+    }
+
+    // ------------------------------------------------------------------------
+    // Field API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final List<Attachable> getAttachables() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public final void toSQL(RenderContext context) {
+        String separator = "";
+        for (String string : sql) {
+            context.sql(separator);
+            context.literal(string);
+
+            separator = ".";
+        }
+    }
+
+    @Override
+    public final void bind(BindContext context) {}
+
+    @Override
+    public final boolean isNullLiteral() {
+        return false;
+    }
 }

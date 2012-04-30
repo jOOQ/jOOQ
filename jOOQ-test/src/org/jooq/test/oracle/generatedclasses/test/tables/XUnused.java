@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1436757446;
+	private static final long serialVersionUID = 1603790578;
 
 	/**
 	 * The singleton instance of TEST.X_UNUSED
@@ -20,14 +20,9 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> __RECORD_TYPE = org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord.class;
 	}
 
 	/**

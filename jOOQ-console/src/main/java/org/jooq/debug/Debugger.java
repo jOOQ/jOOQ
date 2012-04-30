@@ -47,6 +47,10 @@ public interface Debugger {
 
     public LoggingListener getLoggingListener();
 
+    public void setLoggingStatementMatchers(StatementMatcher[] loggingStatementMatchers);
+
+    public StatementMatcher[] getLoggingStatementMatchers();
+
     public boolean isExecutionSupported();
 
     public StatementExecutor createStatementExecutor();

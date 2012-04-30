@@ -36,36 +36,28 @@
  */
 package org.jooq.debug;
 
-import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
+
 
 
 /**
  * @author Christopher Deckers
  */
-public class QueryLoggingData implements Serializable {
+@SuppressWarnings("serial")
+public class QueryLoggingData extends StatementInfo {
 
-    private static volatile int nextID;
+    private static AtomicInteger nextID = new AtomicInteger();
 
     private int id;
-    private SqlQueryType queryType;
-    private String[] queries;
-    private String parameterDescription;
     private Long preparationDuration;
     private Long bindingDuration;
     private long executionDuration;
-    private String threadName;
-    private long threadID;
     private StackTraceElement[] callerStackTraceElements;
 
     public QueryLoggingData(SqlQueryType queryType, String[] queries, String parameterDescription, Long preparationDuration, Long bindingDuration, long executionDuration) {
-        this.id = nextID++;
-        Thread currentThread = Thread.currentThread();
-        this.threadName = currentThread.getName();
-        this.threadID = currentThread.getId();
+        super(queryType, queries, parameterDescription);
+        this.id = nextID.getAndIncrement();
         this.callerStackTraceElements = new Exception().getStackTrace();
-        this.queryType = queryType;
-        this.queries = queries;
-        this.parameterDescription = parameterDescription;
         this.preparationDuration = preparationDuration;
         this.bindingDuration = bindingDuration;
         this.executionDuration = executionDuration;
@@ -75,31 +67,8 @@ public class QueryLoggingData implements Serializable {
         return id;
     }
 
-    public String getThreadName() {
-        return threadName;
-    }
-
-    public long getThreadID() {
-        return threadID;
-    }
-
     public StackTraceElement[] getCallerStackTraceElements() {
         return callerStackTraceElements;
-    }
-
-    public SqlQueryType getQueryType() {
-        return queryType;
-    }
-
-    public String[] getQueries() {
-        return queries;
-    }
-
-    /**
-     * @return non null if queries consist of a single prepared statement with parameters.
-     */
-    public String getParameterDescription() {
-        return parameterDescription;
     }
 
     public Long getPreparedStatementPreparationDuration() {

@@ -39,6 +39,7 @@ package org.jooq.debug;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.ExecuteContext;
@@ -147,30 +148,34 @@ public class DebugListener extends DefaultExecuteListener {
 		    }
 		}
 		QueryLoggingData queryLoggingData = new QueryLoggingData(sqlQueryType, sql, parameterDescription, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
+		final List<LoggingListener> loggingListenerList = new ArrayList<LoggingListener>(debuggerList.size());
 		for(Debugger listener: debuggerList) {
 		    LoggingListener loggingListener = listener.getLoggingListener();
 		    if(loggingListener != null) {
-		        loggingListener.logQueries(queryLoggingData);
+		        StatementMatcher[] loggingStatementMatchers = listener.getLoggingStatementMatchers();
+		        if(loggingStatementMatchers == null) {
+		            loggingListenerList.add(loggingListener);
+		            loggingListener.logQueries(queryLoggingData);
+		        } else for(StatementMatcher statementMatcher: loggingStatementMatchers) {
+		            if(statementMatcher.matches(queryLoggingData)) {
+		                loggingListenerList.add(loggingListener);
+		                loggingListener.logQueries(queryLoggingData);
+		                break;
+		            }
+		        }
 		    }
 		}
-		if(resultSet != null) {
+		if(resultSet != null && !loggingListenerList.isEmpty()) {
 			final int queryLoggingDataID = queryLoggingData.getID();
 			ResultSet newResultSet = new UsageTrackingResultSet(resultSet) {
 				@Override
 				protected void notifyData(long lifeTime, int readRows, int readCount, int writeCount) {
-					List<Debugger> debuggerList = DebuggerRegistry.getDebuggerList();
-					if(debuggerList.isEmpty()) {
-						return;
-					}
                     ResultSetLoggingData resultSetLoggingData = null;
-					for(Debugger debugger: debuggerList) {
-			            LoggingListener loggingListener = debugger.getLoggingListener();
-			            if(loggingListener != null) {
-			                if(resultSetLoggingData == null) {
-			                    resultSetLoggingData = new ResultSetLoggingData(lifeTime, readRows, readCount, writeCount);
-			                }
-			                loggingListener.logResultSet(queryLoggingDataID, resultSetLoggingData);
+					for(LoggingListener loggingListener: loggingListenerList) {
+			            if(resultSetLoggingData == null) {
+			                resultSetLoggingData = new ResultSetLoggingData(lifeTime, readRows, readCount, writeCount);
 			            }
+			            loggingListener.logResultSet(queryLoggingDataID, resultSetLoggingData);
 					}
 				}
 			};

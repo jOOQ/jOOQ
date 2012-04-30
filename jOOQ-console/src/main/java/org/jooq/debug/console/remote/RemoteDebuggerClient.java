@@ -48,6 +48,7 @@ import org.jooq.debug.LoggingListener;
 import org.jooq.debug.QueryLoggingData;
 import org.jooq.debug.ResultSetLoggingData;
 import org.jooq.debug.StatementExecutor;
+import org.jooq.debug.StatementMatcher;
 
 /**
  * @author Christopher Deckers
@@ -67,17 +68,25 @@ public class RemoteDebuggerClient implements Debugger {
 			    try {
 			        ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 			        for(Message o; (o=(Message)in.readObject()) != null; ) {
-			            if(o instanceof ClientDebugQueriesMessage) {
-			                if(loggingListener != null) {
+                        if(o instanceof ClientDebugQueriesMessage) {
+                            LoggingListener loggingListener_;
+			                synchronized (LOCK) {
+			                    loggingListener_ = loggingListener;
+			                }
+			                if(loggingListener_ != null) {
 			                    QueryLoggingData sqlQueryDebuggerData = ((ClientDebugQueriesMessage) o).getSqlQueryDebuggerData();
-			                    loggingListener.logQueries(sqlQueryDebuggerData);
+			                    loggingListener_.logQueries(sqlQueryDebuggerData);
 			                }
 			            } else if(o instanceof ClientDebugResultSetMessage) {
-			                if(loggingListener != null) {
+                            LoggingListener loggingListener_;
+                            synchronized (LOCK) {
+                                loggingListener_ = loggingListener;
+                            }
+			                if(loggingListener_ != null) {
 			                    ClientDebugResultSetMessage m = (ClientDebugResultSetMessage) o;
 			                    int sqlQueryDebuggerDataID = m.getSqlQueryDebuggerDataID();
 			                    ResultSetLoggingData clientDebugResultSetData = m.getSqlQueryDebuggerResultSetData();
-			                    loggingListener.logResultSet(sqlQueryDebuggerDataID, clientDebugResultSetData);
+			                    loggingListener_.logResultSet(sqlQueryDebuggerDataID, clientDebugResultSetData);
 			                }
 			            }
 			        }
@@ -94,10 +103,30 @@ public class RemoteDebuggerClient implements Debugger {
 
     @Override
     public void setLoggingListener(LoggingListener loggingListener) {
-        this.loggingListener = loggingListener;
+        synchronized (LOCK) {
+            this.loggingListener = loggingListener;
+            try {
+                out.writeObject(new ServerLoggingActivationMessage(loggingListener != null));
+                out.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public LoggingListener getLoggingListener() {
+        return loggingListener;
+    }
+
+    private StatementMatcher[] loggingStatementMatchers;
+
+    @Override
+    public void setLoggingStatementMatchers(StatementMatcher[] loggingStatementMatchers) {
+        this.loggingStatementMatchers = loggingStatementMatchers;
         try {
             synchronized (LOCK) {
-                out.writeObject(new ServerLoggingActivationMessage(loggingListener != null));
+                out.writeObject(new ServerLoggingStatementMatchersMessage(loggingStatementMatchers));
                 out.flush();
             }
         } catch (IOException e) {
@@ -106,8 +135,8 @@ public class RemoteDebuggerClient implements Debugger {
     }
 
     @Override
-    public LoggingListener getLoggingListener() {
-        return loggingListener;
+    public StatementMatcher[] getLoggingStatementMatchers() {
+        return loggingStatementMatchers;
     }
 
     @Override

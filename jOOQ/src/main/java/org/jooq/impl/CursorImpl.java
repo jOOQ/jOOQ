@@ -1242,6 +1242,14 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
             try {
                 if (!isClosed && rs.next()) {
+
+                    // [#1296] Force a row-lock by updating the row if the
+                    // FOR UPDATE clause is simulated
+                    if (rs.getConcurrency() == ResultSet.CONCUR_UPDATABLE) {
+                        rs.updateObject(1, rs.getObject(1));
+                        rs.updateRow();
+                    }
+
                     record = Util.newRecord(type, fields, ctx.configuration());
 
                     ctx.record(record);

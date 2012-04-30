@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.one;
@@ -248,7 +250,8 @@ implements
             toSQLReference0(context);
         }
 
-        if (forUpdate) {
+        // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
+        if (forUpdate && !asList(CUBRID, SQLSERVER).contains(context.getDialect())) {
             context.formatSeparator()
                    .keyword("for update");
 
@@ -813,6 +816,11 @@ implements
 
     final void setHint(String hint) {
         this.hint = hint;
+    }
+
+    @Override
+    final boolean isForUpdate() {
+        return forUpdate;
     }
 
     // -------------------------------------------------------------------------

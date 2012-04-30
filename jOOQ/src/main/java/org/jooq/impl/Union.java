@@ -129,4 +129,9 @@ class Union<R extends Record> extends AbstractSelect<R> {
     public final void bind(BindContext context) {
         context.bind(queries);
     }
+
+    @Override
+    final boolean isForUpdate() {
+        return false;
+    }
 }

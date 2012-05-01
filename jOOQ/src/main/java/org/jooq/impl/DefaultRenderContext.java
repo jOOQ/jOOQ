@@ -61,6 +61,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private final StringBuilder sql;
     private boolean             inline;
     private boolean             renderNamedParams;
+    private boolean             qualify          = true;
     private int                 alias;
     private CastMode            castMode         = CastMode.DEFAULT;
     private SQLDialect[]        castDialects;
@@ -310,6 +311,17 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext inline(boolean i) {
         this.inline = i;
+        return this;
+    }
+
+    @Override
+    public final boolean qualify() {
+        return qualify;
+    }
+
+    @Override
+    public final RenderContext qualify(boolean q) {
+        this.qualify = q;
         return this;
     }
 

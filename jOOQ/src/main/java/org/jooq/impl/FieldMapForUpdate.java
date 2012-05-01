@@ -61,6 +61,8 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
         if (size() > 0) {
             String separator = "";
 
+            // [#989] Avoid qualifying fields in INSERT field declaration
+            boolean qualify = context.qualify();
             for (Entry<Field<?>, Field<?>> entry : entrySet()) {
                 context.sql(separator);
 
@@ -68,7 +70,9 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
                     context.formatNewLine();
                 }
 
-                context.literal(entry.getKey().getName())
+                context.qualify(false)
+                       .sql(entry.getKey())
+                       .qualify(qualify)
                        .sql(" = ")
                        .sql(entry.getValue());
 

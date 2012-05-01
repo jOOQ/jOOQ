@@ -174,6 +174,16 @@ public interface RenderContext extends Context<RenderContext> {
     RenderContext inline(boolean inline);
 
     /**
+     * Whether query parts should render qualified names or not
+     */
+    boolean qualify();
+
+    /**
+     * Sett the new context value for {@link #qualify()}
+     */
+    RenderContext qualify(boolean qualify);
+
+    /**
      * Whether bind variables should be rendered as named parameters:<br/>
      * <code>&#160; :1, :2, :custom_name</code>
      * <p>

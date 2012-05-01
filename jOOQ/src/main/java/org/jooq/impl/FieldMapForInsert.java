@@ -75,6 +75,10 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
             context.formatIndentStart();
         }
 
+        // [#989] Avoid qualifying fields in INSERT field declaration
+        boolean qualify = context.qualify();
+        context.qualify(false);
+
         String separator = "";
         for (Field<?> field : keySet()) {
             context.sql(separator);
@@ -83,9 +87,11 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
                 context.formatNewLine();
             }
 
-            context.literal(field.getName());
+            context.sql(field);
             separator = ", ";
         }
+
+        context.qualify(qualify);
 
         if (indent) {
             context.formatIndentEnd()

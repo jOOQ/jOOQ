@@ -105,10 +105,6 @@ import org.jooq.test.oracle.generatedclasses.test.Sequences;
 import org.jooq.test.oracle.generatedclasses.test.TestFactory;
 import org.jooq.test.oracle.generatedclasses.test.packages.Library;
 import org.jooq.test.oracle.generatedclasses.test.routines.F377;
-import org.jooq.test.oracle.generatedclasses.test.routines.FArrays1;
-import org.jooq.test.oracle.generatedclasses.test.routines.FArrays4;
-import org.jooq.test.oracle.generatedclasses.test.routines.FTables1;
-import org.jooq.test.oracle.generatedclasses.test.routines.FTables4;
 import org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord;
@@ -831,13 +827,6 @@ public class jOOQOracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleTableTypes() throws Exception {
-        // TODO [#523] [#1109] These two statements are needed when running this test
-        // in standalone mode. The data type is not registered automatically for
-        // ArrayRecords
-        new FArrays1();
-        new FTables1();
-        new FArrays4();
-        new FTables4();
 
         // FIRST, check unnesting of VARRAY/TABLE of NUMBER
         // ------------------------------------------------

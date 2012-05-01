@@ -600,7 +600,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     }
 
     @Test
-    public void testInsertOnDuplicateKey() throws Exception {
+    public void testInsertOnDuplicateKeyUpdate() throws Exception {
         switch (getDialect()) {
             case ASE:
             case DERBY:
@@ -635,6 +635,43 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
         assertEquals("Christie", author.getValue(TAuthor_LAST_NAME()));
         assertEquals(Integer.valueOf(3), create().select(count()).from(TAuthor()).fetchOne(0));
+    }
+
+    @Test
+    public void testInsertOnDuplicateKeyIgnore() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+            case DERBY:
+            case H2:
+            case INGRES:
+            case POSTGRES:
+            case SQLITE:
+                log.info("SKIPPING", "ON DUPLICATE KEY IGNORE test");
+                return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                .values(3, "Koontz")
+                .onDuplicateKeyIgnore()
+                .execute();
+        A author =
+        create().fetchOne(TAuthor(), TAuthor_ID().equal(3));
+        assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
+        assertEquals("Koontz", author.getValue(TAuthor_LAST_NAME()));
+        assertEquals(Integer.valueOf(3), create().select(count()).from(TAuthor()).fetchOne(0));
+
+        create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                .values(3, "Rose")
+                .onDuplicateKeyIgnore()
+                .execute();
+        author =
+        create().fetchOne(TAuthor(), TAuthor_ID().equal(3));
+        assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
+        assertEquals("Koontz", author.getValue(TAuthor_LAST_NAME()));
+        assertEquals(Integer.valueOf(3), create().select(count()).from(TAuthor()).fetchOne(0));
+
     }
 
     @Test

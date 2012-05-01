@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.util.sqlite.SQLiteFactory.rowid;
 
@@ -59,6 +60,8 @@ import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Merge;
+import org.jooq.MergeNotMatchedStep;
+import org.jooq.MergeOnConditionStep;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -81,6 +84,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     private final FieldList          returning;
     private Result<R>                returned;
     private boolean                  onDuplicateKeyUpdate;
+    private boolean                  onDuplicateKeyIgnore;
 
     InsertQueryImpl(Configuration configuration, Table<R> into) {
         super(configuration, into);
@@ -120,7 +124,14 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final void onDuplicateKeyUpdate(boolean flag) {
+        this.onDuplicateKeyIgnore = false;
         this.onDuplicateKeyUpdate = flag;
+    }
+
+    @Override
+    public final void onDuplicateKeyIgnore(boolean flag) {
+        this.onDuplicateKeyUpdate = false;
+        this.onDuplicateKeyIgnore = flag;
     }
 
     @Override
@@ -150,12 +161,10 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        if (!onDuplicateKeyUpdate) {
-            toSQLInsert(context);
-        }
 
         // ON DUPLICATE KEY UPDATE clause
-        else {
+        // ------------------------------
+        if (onDuplicateKeyUpdate) {
             switch (context.getDialect()) {
 
                 // MySQL has a nice syntax for this
@@ -190,16 +199,67 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.getDialect());
             }
         }
+
+        // ON DUPLICATE KEY IGNORE clause
+        // ------------------------------
+        else if (onDuplicateKeyIgnore) {
+            switch (context.getDialect()) {
+
+                // MySQL has a nice, native syntax for this
+                case MYSQL: {
+                    toSQLInsert(context);
+                    break;
+                }
+
+                // CUBRID can simulate this using ON DUPLICATE KEY UPDATE
+                case CUBRID: {
+                    FieldMapForUpdate update = new FieldMapForUpdate();
+                    Field<?> field = getInto().getField(0);
+                    update.put(field, field);
+
+                    toSQLInsert(context);
+                    context.formatSeparator()
+                           .keyword("on duplicate key update ")
+                           .sql(update);
+
+                    break;
+                }
+
+                // Some dialects can't really handle this clause. Simulation
+                // should be done in two steps
+                case H2: {
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.getDialect());
+                }
+
+                // Some databases allow for simulating this clause using a
+                // MERGE statement
+                case DB2:
+                case HSQLDB:
+                case ORACLE:
+                case SQLSERVER:
+                case SYBASE: {
+                    context.sql(toMerge());
+                    break;
+                }
+
+                default:
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.getDialect());
+            }
+        }
+
+        // Default mode
+        // ------------
+        else {
+            toSQLInsert(context);
+        }
     }
 
     @Override
     public final void bind(BindContext context) {
-        if (!onDuplicateKeyUpdate) {
-            bindInsert(context);
-        }
 
         // ON DUPLICATE KEY UPDATE clause
-        else {
+        // ------------------------------
+        if (onDuplicateKeyUpdate) {
             switch (context.getDialect()) {
 
                 // MySQL has a nice syntax for this
@@ -230,10 +290,58 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.getDialect());
             }
         }
+
+        // ON DUPLICATE KEY IGNORE clause
+        // ------------------------------
+        else if (onDuplicateKeyIgnore) {
+            switch (context.getDialect()) {
+
+                // MySQL has a nice, native syntax for this
+                case MYSQL: {
+                    bindInsert(context);
+                    break;
+                }
+
+                // CUBRID can simulate this using ON DUPLICATE KEY UPDATE
+                case CUBRID: {
+                    bindInsert(context);
+                    break;
+                }
+
+                // Some dialects can't really handle this clause. Simulation
+                // is done in two steps
+                case H2: {
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.getDialect());
+                }
+
+                // Some databases allow for simulating this clause using a
+                // MERGE statement
+                case DB2:
+                case HSQLDB:
+                case ORACLE:
+                case SQLSERVER:
+                case SYBASE: {
+                    context.bind(toMerge());
+                    break;
+                }
+
+                default:
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.getDialect());
+            }
+        }
+
+        // Default mode
+        // ------------
+        else {
+            bindInsert(context);
+        }
     }
 
     private final void toSQLInsert(RenderContext context) {
-        context.keyword("insert into ")
+        context.keyword("insert ")
+               // [#1295] MySQL natively supports the IGNORE keyword
+               .keyword((onDuplicateKeyIgnore && context.getDialect() == MYSQL) ? "ignore " : "")
+               .keyword("into ")
                .sql(getInto())
                .sql(" ")
                .sql(insertMaps);
@@ -292,16 +400,24 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
             }
 
-            return create().mergeInto(into)
-                           .usingDual()
-                           .on(condition)
-                           .whenMatchedThenUpdate()
-                           .set(updateMap)
-                           .whenNotMatchedThenInsert(insertMaps.getMap().keySet())
-                           .values(insertMaps.getMap().values());
+            MergeOnConditionStep<R> on =
+            create().mergeInto(into)
+                    .usingDual()
+                    .on(condition);
+
+            // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
+            // not with ON DUPLICATE KEY IGNORE
+            MergeNotMatchedStep<R> notMatched = on;
+            if (onDuplicateKeyUpdate) {
+                notMatched = on.whenMatchedThenUpdate()
+                               .set(updateMap);
+            }
+
+            return notMatched.whenNotMatchedThenInsert(insertMaps.getMap().keySet())
+                             .values(insertMaps.getMap().values());
         }
         else {
-            throw new IllegalStateException("The ON DUPLICATE KEY UPDATE clause cannot be simulated when inserting into non-updatable tables : " + getInto());
+            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be simulated when inserting into non-updatable tables : " + getInto());
         }
     }
 

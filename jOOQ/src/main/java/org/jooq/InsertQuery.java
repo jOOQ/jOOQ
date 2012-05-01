@@ -87,11 +87,56 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <p>
      * When setting this flag to <code>true</code>, be sure to also add values
      * "for update" using the {@link #addValueForUpdate(Field, Field)} methods.
+     * <p>
+     * The <code>ON DUPLICATE KEY UPDATE</code> flag is mutually exclusive with
+     * the <code>ON DUPLICATE KEY IGNORE</code> flag (see
+     * {@link #onDuplicateKeyIgnore(boolean)}. Setting one will unset the other
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     void onDuplicateKeyUpdate(boolean flag);
+
+    /**
+     * Whether an <code>ON DUPLICATE KEY IGNORE</code> clause should be added to
+     * this <code>INSERT</code> statement.
+     * <p>
+     * This clause is not actually supported in this form by any database, but
+     * can be simulated as such:
+     * <table border="1">
+     * <tr>
+     * <th>Dialect</th>
+     * <th>Simulation</th>
+     * </tr>
+     * <tr>
+     * <td> {@link SQLDialect#MYSQL}</td>
+     * <td> <code><pre>INSERT IGNORE INTO ..</pre></code></td>
+     * </tr>
+     * <tr>
+     * <td> {@link SQLDialect#CUBRID}</td>
+     * <td>
+     * <code><pre>INSERT INTO .. ON DUPLICATE KEY UPDATE [any-field] = [any-field]</pre></code>
+     * </td>
+     * </tr>
+     * <tr>
+     * <td> {@link SQLDialect#DB2}<br/>
+     * {@link SQLDialect#HSQLDB}<br/>
+     * {@link SQLDialect#ORACLE}<br/>
+     * {@link SQLDialect#SQLSERVER}<br/>
+     * {@link SQLDialect#SYBASE}</td>
+     * <td><code><pre>MERGE INTO [dst]
+     * USING ([values]) src
+     * ON [dst.key] = [src.key]
+     * WHEN NOT MATCHED THEN INSERT ..</pre></code></td>
+     * </tr>
+     * </table>
+     * <p>
+     * The <code>ON DUPLICATE KEY UPDATE</code> flag is mutually exclusive with
+     * the <code>ON DUPLICATE KEY IGNORE</code> flag (see
+     * {@link #onDuplicateKeyIgnore(boolean)}. Setting one will unset the other
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    void onDuplicateKeyIgnore(boolean flag);
 
     /**
      * Add a value to the <code>ON DUPLICATE KEY UPDATE</code> clause of this

@@ -86,4 +86,45 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
+
+    /**
+     * Add an <code>ON DUPLICATE KEY IGNORE</code> clause to this insert query.
+     * <p>
+     * This will try to <code>INSERT</code> a record. If there is a primary key
+     * or unique key in this <code>INSERT</code> statement's affected table that
+     * matches the value being inserted, then the <code>INSERT</code> statement
+     * is ignored.
+     * <p>
+     * This clause is not actually supported in this form by any database, but
+     * can be simulated as such:
+     * <table border="1">
+     * <tr>
+     * <th>Dialect</th>
+     * <th>Simulation</th>
+     * </tr>
+     * <tr>
+     * <td> {@link SQLDialect#MYSQL}</td>
+     * <td> <code><pre>INSERT IGNORE INTO ..</pre></code></td>
+     * </tr>
+     * <tr>
+     * <td> {@link SQLDialect#CUBRID}</td>
+     * <td>
+     * <code><pre>INSERT INTO .. ON DUPLICATE KEY UPDATE [any-field] = [any-field]</pre></code>
+     * </td>
+     * </tr>
+     * <tr>
+     * <td> {@link SQLDialect#DB2}<br/>
+     * {@link SQLDialect#HSQLDB}<br/>
+     * {@link SQLDialect#ORACLE}<br/>
+     * {@link SQLDialect#SQLSERVER}<br/>
+     * {@link SQLDialect#SYBASE}</td>
+     * <td><code><pre>MERGE INTO [dst]
+     * USING ([values]) src
+     * ON [dst.key] = [src.key]
+     * WHEN NOT MATCHED THEN INSERT ..</pre></code></td>
+     * </tr>
+     * </table>
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    InsertFinalStep<R> onDuplicateKeyIgnore();
 }

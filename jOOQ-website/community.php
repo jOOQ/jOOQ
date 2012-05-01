@@ -62,6 +62,10 @@ Telling the world:<br/>
     <li>If you are a committer on sourceforge, please commit with the following comment scheme: <br/>[#Trac-ID] Trac-Ticket-Title - Your specific comment</li>
 </ul>
 
+<h3>Hints for new features</h3>
+
+<p>A lot of ideas are around already. Check out this <a href="https://sourceforge.net/apps/trac/jooq/query?milestone=Version+X%3A+User+contribution+candidates">Trac Milestone</a> to see some of them</p>
+
 <h3>Hints for new database integrations</h3>
 
 <p>Should you wish to provide an extension/support for a new RDBMS (such as Informix, Firebird, etc) your work would consist of these steps:</p>

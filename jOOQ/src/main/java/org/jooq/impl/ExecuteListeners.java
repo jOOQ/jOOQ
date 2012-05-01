@@ -187,4 +187,11 @@ class ExecuteListeners implements ExecuteListener {
             listener.end(ctx);
         }
     }
+
+    @Override
+    public final void exception(ExecuteContext ctx) {
+        for (ExecuteListener listener : listeners) {
+            listener.exception(ctx);
+        }
+    }
 }

@@ -281,8 +281,19 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
 
     /**
      * Internal convenience method
+     *
+     * @deprecated - 2.3.0 - Do not reuse
      */
+    @SuppressWarnings("unused")
+    @Deprecated
     protected final DataAccessException translate(String task, String sql, SQLException e) {
-        return Util.translate(task, sql, e);
+        return translate(sql, e);
+    }
+
+    /**
+     * Internal convenience method
+     */
+    protected final DataAccessException translate(String sql, SQLException e) {
+        return Util.translate(sql, e);
     }
 }

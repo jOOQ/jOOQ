@@ -53,7 +53,6 @@ import java.util.List;
 import java.util.Queue;
 
 import org.jooq.ExecuteContext;
-import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
 import org.jooq.Field;
 import org.jooq.Result;
@@ -61,6 +60,7 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.Factory;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -90,6 +90,26 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
     public ExecuteListenerTests(jOOQAbstractTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         super(delegate);
+    }
+
+    @Test
+    public void testExecuteListenerCustomException() throws Exception {
+        Factory create = create(new Settings()
+            .withExecuteListeners(CustomExceptionListener.class.getName()));
+
+        try {
+            create.fetch("invalid sql");
+        }
+        catch (E e) {
+            assertEquals("ERROR", e.getMessage());
+        }
+    }
+
+    public static class CustomExceptionListener extends DefaultExecuteListener {
+        @Override
+        public void exception(ExecuteContext ctx) {
+            ctx.exception(new E("ERROR"));
+        }
     }
 
     @Test
@@ -129,7 +149,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals(2, result.size());
     }
 
-    public static class ResultQueryListener implements ExecuteListener {
+    public static class ResultQueryListener extends DefaultExecuteListener {
 
         // A counter that is incremented in callback methods
         private static int           callbackCount = 0;
@@ -412,6 +432,18 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         }
     }
 
+    static class E extends RuntimeException {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 594781555404278995L;
+
+        public E(String message) {
+            super(message);
+        }
+    }
+
     @Test
     public void testExecuteListenerOnBatchSingle() {
         if (!executePreparedStatements(create().getSettings())) {
@@ -450,7 +482,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals(14, BatchSingleListener.end);
     }
 
-    public static class BatchSingleListener implements ExecuteListener {
+    public static class BatchSingleListener extends DefaultExecuteListener {
 
         // A counter that is incremented in callback methods
         private static int           callbackCount = 0;
@@ -672,7 +704,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals(20, BatchMultipleListener.end);
     }
 
-    public static class BatchMultipleListener implements ExecuteListener {
+    public static class BatchMultipleListener extends DefaultExecuteListener {
 
         // A counter that is incremented in callback methods
         private static int           callbackCount = 0;

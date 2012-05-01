@@ -1267,7 +1267,9 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                 }
             }
             catch (SQLException e) {
-                throw Util.translate("Cursor.fetch", ctx.sql(), e);
+                ctx.sqlException(e);
+                listener.exception(ctx);
+                throw ctx.exception();
             }
 
             // Conveniently close cursors and underlying objects after the last

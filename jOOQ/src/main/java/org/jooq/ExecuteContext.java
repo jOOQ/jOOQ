@@ -38,8 +38,10 @@ package org.jooq;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.jooq.conf.StatementType;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A context object for {@link Query} execution passed to registered
@@ -104,8 +106,9 @@ public interface ExecuteContext extends Configuration {
     String sql();
 
     /**
-     * Override the SQL statement that is being executed. This may have no
-     * effect, if called at the wrong moment.
+     * Override the SQL statement that is being executed.
+     * <p>
+     * This may have no effect, if called at the wrong moment.
      *
      * @see ExecuteListener#renderEnd(ExecuteContext)
      * @see ExecuteListener#prepareStart(ExecuteContext)
@@ -133,8 +136,9 @@ public interface ExecuteContext extends Configuration {
     Connection getConnection();
 
     /**
-     * Override the {@link Connection} that is being used for execution. This
-     * may have no effect, if called at the wrong moment.
+     * Override the {@link Connection} that is being used for execution.
+     * <p>
+     * This may have no effect, if called at the wrong moment.
      *
      * @see ExecuteListener#start(ExecuteContext)
      */
@@ -161,8 +165,9 @@ public interface ExecuteContext extends Configuration {
     PreparedStatement statement();
 
     /**
-     * Override the {@link PreparedStatement} that is being executed. This may
-     * have no effect, if called at the wrong moment.
+     * Override the {@link PreparedStatement} that is being executed.
+     * <p>
+     * This may have no effect, if called at the wrong moment.
      *
      * @see ExecuteListener#prepareEnd(ExecuteContext)
      * @see ExecuteListener#bindStart(ExecuteContext)
@@ -176,8 +181,9 @@ public interface ExecuteContext extends Configuration {
     ResultSet resultSet();
 
     /**
-     * Override the {@link ResultSet} that is being fetched. This may have no
-     * effect, if called at the wrong moment.
+     * Override the {@link ResultSet} that is being fetched.
+     * <p>
+     * This may have no effect, if called at the wrong moment.
      *
      * @see ExecuteListener#executeEnd(ExecuteContext)
      * @see ExecuteListener#fetchStart(ExecuteContext)
@@ -205,4 +211,31 @@ public interface ExecuteContext extends Configuration {
      * Calling this has no effect. It is being used by jOOQ internally.
      */
     void result(Result<?> result);
+
+    /**
+     * The {@link RuntimeException} being thrown.
+     */
+    RuntimeException exception();
+
+    /**
+     * Override the {@link RuntimeException} being thrown.
+     * <p>
+     * This may have no effect, if called at the wrong moment.
+     */
+    void exception(RuntimeException e);
+
+    /**
+     * The {@link SQLException} that was thrown by the database.
+     */
+    SQLException sqlException();
+
+    /**
+     * Override the {@link SQLException} being thrown.
+     * <p>
+     * Any <code>SQLException</code> will be wrapped by jOOQ using an unchecked
+     * {@link DataAccessException}. To have jOOQ throw your own custom
+     * {@link RuntimeException}, use {@link #exception(RuntimeException)}
+     * instead. This may have no effect, if called at the wrong moment.
+     */
+    void sqlException(SQLException e);
 }

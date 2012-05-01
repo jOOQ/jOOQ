@@ -39,6 +39,7 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +69,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
      */
     private static final long                    serialVersionUID = -6653474082935089963L;
 
-    // Persistent attributes
+    // Persistent attributes (repeatable)
     private final Query                          query;
     private final Routine<?>                     routine;
     private String                               sql;
@@ -76,16 +77,18 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     private final Query[]                        batchQueries;
     private final String[]                       batchSQL;
 
-    // Transient attributes
+    // Transient attributes (created afresh per execution)
     private transient PreparedStatement          statement;
     private transient ResultSet                  resultSet;
     private transient Record                     record;
     private transient Result<?>                  result;
+    private transient SQLException               sqlException;
+    private transient RuntimeException           exception;
 
     // ------------------------------------------------------------------------
     // XXX: Static utility methods for handling blob / clob lifecycle
     // ------------------------------------------------------------------------
-    
+
     private static final ThreadLocal<List<Blob>> BLOBS            = new ThreadLocal<List<Blob>>();
     private static final ThreadLocal<List<Clob>> CLOBS            = new ThreadLocal<List<Clob>>();
 
@@ -334,5 +337,26 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     @Override
     public final Result<?> result() {
         return result;
+    }
+
+    @Override
+    public final RuntimeException exception() {
+        return exception;
+    }
+
+    @Override
+    public final void exception(RuntimeException e) {
+        this.exception = e;
+    }
+
+    @Override
+    public final SQLException sqlException() {
+        return sqlException;
+    }
+
+    @Override
+    public final void sqlException(SQLException e) {
+        this.sqlException = e;
+        exception(Util.translate(sql(), e));
     }
 }

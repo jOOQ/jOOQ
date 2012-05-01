@@ -413,7 +413,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                     context.statement().setInt(context.nextIndex(), 2);
                 }
                 catch (SQLException e) {
-                    throw translate("CustomCondition.bind", getSQL(), e);
+                    throw translate(getSQL(), e);
                 }
             }
         };
@@ -443,7 +443,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                     context.statement().setInt(context.nextIndex(), 3);
                 }
                 catch (SQLException e) {
-                    throw translate("CustomCondition.bind", getSQL(), e);
+                    throw translate(getSQL(), e);
                 }
             }
         };

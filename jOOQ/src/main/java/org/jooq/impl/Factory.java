@@ -1238,7 +1238,9 @@ public class Factory implements FactoryOperations {
             return new CursorImpl<Record>(ctx, listener, fields).fetch();
         }
         catch (SQLException e) {
-            throw Util.translate("Factory.fetch", ctx.sql(), e);
+            ctx.sqlException(e);
+            listener.exception(ctx);
+            throw ctx.exception();
         }
     }
 

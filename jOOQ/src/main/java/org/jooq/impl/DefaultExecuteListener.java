@@ -96,4 +96,7 @@ public class DefaultExecuteListener implements ExecuteListener {
     @Override
     public void end(ExecuteContext ctx) {}
 
+    @Override
+    public void exception(ExecuteContext ctx) {}
+
 }

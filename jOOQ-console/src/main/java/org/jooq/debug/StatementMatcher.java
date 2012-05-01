@@ -39,135 +39,69 @@ package org.jooq.debug;
 import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.Set;
-import java.util.regex.Pattern;
+
+import org.jooq.debug.console.misc.TextMatcher;
 
 @SuppressWarnings("serial")
 public class StatementMatcher implements Serializable {
 
-    public static enum TextMatchingType {
-        STARTS_WITH,
-        CONTAINS,
-        EQUALS,
-        MATCHES_REG_EXP,
-    }
-
-    private String threadName;
-    private TextMatchingType textMatchingType;
-    private String text;
-    private boolean isTextMatchingCaseSensitive;
+    private boolean isActive;
+    private TextMatcher threadNameTextMatcher;
+    private TextMatcher statementTextMatcher;
     private Set<SqlQueryType> queryTypeSet;
 
-    private Pattern pattern;
-
     /**
-     * @param threadName a name or null for no matching on thread name.
-     * @param textMatchingType a type or null for no text matching.
+     * @param threadNameTextMatcher a text matcher for thread name or null for no text matching.
+     * @param statementTextMatcher a text matcher for statement or null for no text matching.
      * @param queryTypeSet some types or null for all types.
      */
-    public StatementMatcher(String threadName, TextMatchingType textMatchingType, String text, boolean isTextMatchingCaseSensitive, Set<SqlQueryType> queryTypeSet) {
-        this.threadName = threadName;
-        this.textMatchingType = textMatchingType;
-        this.text = text;
-        this.isTextMatchingCaseSensitive = isTextMatchingCaseSensitive;
+    public StatementMatcher(TextMatcher threadNameTextMatcher, TextMatcher statementTextMatcher, Set<SqlQueryType> queryTypeSet, boolean isActive) {
+        this.threadNameTextMatcher = threadNameTextMatcher;
+        this.statementTextMatcher = statementTextMatcher;
         this.queryTypeSet = queryTypeSet == null? null: EnumSet.copyOf(queryTypeSet);
-        switch (textMatchingType) {
-            case CONTAINS: {
-                String patternText = ".*\\Q" + text.replace("\\E", "\\\\E").replace("\\Q", "\\\\Q") + "\\E.*\\Q";
-                pattern = Pattern.compile(patternText, isTextMatchingCaseSensitive? 0: Pattern.CASE_INSENSITIVE);
-                break;
-            }
-            case MATCHES_REG_EXP: {
-                pattern = Pattern.compile(text, isTextMatchingCaseSensitive? 0: Pattern.CASE_INSENSITIVE);
-                break;
-            }
-        }
+        this.isActive = isActive;
     }
 
     public boolean matches(StatementInfo statementInfo) {
-        if(threadName != null) {
-            if(!threadName.equals(statementInfo.getThreadName())) {
-                return false;
-            }
+        if(!isActive) {
+            return false;
         }
-        if(textMatchingType != null) {
-            if(text == null) {
+        boolean hasMatcher = false;
+        if(threadNameTextMatcher != null) {
+            if(!threadNameTextMatcher.matches(statementInfo.getThreadName())) {
                 return false;
             }
-            switch(textMatchingType) {
-                case STARTS_WITH: {
-                    boolean isMatching = false;
-                    for(String sql: statementInfo.getQueries()) {
-                        if(isTextMatchingCaseSensitive) {
-                            if(sql.startsWith(text)) {
-                                isMatching = true;
-                                break;
-                            }
-                        } else if(sql.length() >= text.length()) {
-                            // Let's avoid creating new String instance.
-                            if(sql.substring(0, text.length()).equalsIgnoreCase(text)) {
-                                isMatching = true;
-                                break;
-                            }
-                        }
-                    }
-                    if(!isMatching) {
-                        return false;
-                    }
-                    break;
-                }
-                case EQUALS: {
-                    boolean isMatching = false;
-                    for(String sql: statementInfo.getQueries()) {
-                        if(isTextMatchingCaseSensitive) {
-                            if(sql.equals(text)) {
-                                isMatching = true;
-                                break;
-                            }
-                        } else {
-                            if(sql.equalsIgnoreCase(text)) {
-                                isMatching = true;
-                                break;
-                            }
-                        }
-                    }
-                    if(!isMatching) {
-                        return false;
-                    }
-                    break;
-                }
-                case CONTAINS: {
-                    boolean isMatching = false;
-                    for(String sql: statementInfo.getQueries()) {
-                        if(pattern.matcher(sql).matches()) {
-                            isMatching = true;
-                            break;
-                        }
-                    }
-                    if(!isMatching) {
-                        return false;
-                    }
-                }
-                case MATCHES_REG_EXP: {
-                    boolean isMatching = false;
-                    for(String sql: statementInfo.getQueries()) {
-                        if(pattern.matcher(sql).matches()) {
-                            isMatching = true;
-                            break;
-                        }
-                    }
-                    if(!isMatching) {
-                        return false;
-                    }
-                }
+            hasMatcher = true;
+        }
+        if(statementTextMatcher != null) {
+            if(!statementTextMatcher.matches(statementInfo.getQueries())) {
+                return false;
             }
+            hasMatcher = true;
         }
         if(queryTypeSet != null) {
             if(!queryTypeSet.contains(statementInfo.getQueryType())) {
                 return false;
             }
+            hasMatcher = true;
         }
-        return true;
+        return hasMatcher;
     }
 
+    public TextMatcher getThreadNameTextMatcher() {
+        return threadNameTextMatcher;
+    }
+
+    public TextMatcher getStatementTextMatcher() {
+        return statementTextMatcher;
+    }
+
+    public Set<SqlQueryType> getQueryTypeSet() {
+        return queryTypeSet;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
 
 }

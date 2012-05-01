@@ -1,0 +1,360 @@
+/**
+ * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
+ *                          Christopher Deckers, chrriis@gmail.com
+ * All rights reserved.
+ *
+ * This software is licensed to you under the Apache License, Version 2.0
+ * (the "License"); You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * . Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ *
+ * . Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * . Neither the name "jOOQ" nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.jooq.debug.console.remote.messaging;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.LinkedList;
+import java.util.List;
+
+
+/**
+ * @author Christopher Deckers
+ */
+public class MessagingInterface {
+
+    private static final boolean IS_DEBUGGING_MESSAGES = Boolean.parseBoolean(System.getProperty("communication.interface.debug.printmessages"));
+
+    @SuppressWarnings("serial")
+    private static class CommandResultMessage extends Message {
+
+        private int originalID;
+        private Object result;
+        private Throwable exception;
+
+        CommandResultMessage(int originalID, Object result, Throwable exception) {
+            this.originalID = originalID;
+            this.result = result;
+            this.exception = exception;
+        }
+
+        int getOriginalID() {
+            return originalID;
+        }
+
+        public Object getResult() {
+            return result;
+        }
+
+        public Throwable getException() {
+            return exception;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + "(" + originalID + ")";
+        }
+
+    }
+
+    private Object RECEIVER_LOCK = new Object();
+
+    private ObjectOutputStream oos;
+    private ObjectInputStream ois;
+
+    private boolean isAlive = true;
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void destroy() {
+        isAlive = false;
+        try {
+            ois.close();
+        } catch(Exception e) {
+        }
+    }
+
+    private CommunicationInterface communicationInterface;
+
+    public MessagingInterface(final CommunicationInterface communicationInterface, final Socket socket) {
+        this.communicationInterface = communicationInterface;
+        try {
+            oos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()) {
+                @Override
+                public synchronized void write(int b) throws IOException {
+                    super.write(b);
+                    oosByteCount++;
+                }
+                @Override
+                public synchronized void write(byte[] b, int off, int len) throws IOException {
+                    super.write(b, off, len);
+                    oosByteCount += len;
+                }
+            });
+            oos.flush();
+            ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+        Thread receiverThread = new Thread("MessagingInterface Receiver") {
+            @Override
+            public void run() {
+                while(isAlive) {
+                    Message message = null;
+                    try {
+                        message = readMessage();
+                    } catch(Exception e) {
+                        if(isAlive) {
+                            isAlive = false;
+//                            e.printStackTrace();
+                            try {
+                                communicationInterface.notifyKilled();
+                            } catch(Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        // Unlock all locked sync calls
+                        synchronized(RECEIVER_LOCK) {
+                            receivedMessageList.clear();
+                            RECEIVER_LOCK.notify();
+                        }
+                        for(int instanceID: syncThreadRegistry.getInstanceIDs()) {
+                            Thread thread = (Thread)syncThreadRegistry.get(instanceID);
+                            if(thread != null) {
+                                synchronized(thread) {
+                                    thread.notify();
+                                }
+                            }
+                        }
+                    }
+                    if(message != null) {
+                        final Message message_ = message;
+                        new Thread("Communication Interface Async") {
+                            @Override
+                            public void run() {
+                                runMessage(message_);
+                            }
+                        }.start();
+                    }
+                }
+                try {
+                    oos.close();
+                } catch(Exception e) {
+                }
+                try {
+                    ois.close();
+                } catch(Exception e) {
+                }
+                try {
+                    socket.close();
+                } catch(Exception e) {
+                }
+            }
+        };
+        receiverThread.setDaemon(true);
+        receiverThread.start();
+    }
+
+    private CommandResultMessage runMessage(Message message) {
+        if(IS_DEBUGGING_MESSAGES) {
+            System.err.println(">RUN: " + message.getID() + ", " + message);
+        }
+        CommandResultMessage commandResultMessage;
+        if(message instanceof CommandMessage) {
+            CommandMessage commandMessage = (CommandMessage)message;
+            Object result = null;
+            Throwable throwable = null;
+            if(message.isValid()) {
+                try {
+                    result = commandMessage.runCommand();
+                } catch(Throwable t) {
+                    throwable = t;
+                }
+            }
+            if(commandMessage.isSyncExec()) {
+                commandResultMessage = new CommandResultMessage(commandMessage.getID(), result, throwable);
+                asyncSend(commandResultMessage);
+            } else {
+                if(throwable != null) {
+                    throwable.printStackTrace();
+                }
+                commandResultMessage = new CommandResultMessage(message.getID(), result, throwable);
+            }
+        } else {
+            commandResultMessage = new CommandResultMessage(message.getID(), null, null);
+            if(message.isSyncExec()) {
+                asyncSend(commandResultMessage);
+            }
+        }
+        if(IS_DEBUGGING_MESSAGES) {
+            System.err.println("<RUN: " + message.getID());
+        }
+        return commandResultMessage;
+    }
+
+    private List<Message> receivedMessageList = new LinkedList<Message>();
+
+    @SuppressWarnings("serial")
+    private static class CM_asyncExecResponse extends CommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            MessagingInterface messagingInterface = getCommunicationInterface().getMessagingInterface();
+            int instanceID = (Integer)args[0];
+            Thread thread = (Thread)messagingInterface.syncThreadRegistry.get(instanceID);
+            messagingInterface.syncThreadRegistry.remove(instanceID);
+            if(thread == null) {
+                return null;
+            }
+            synchronized(thread) {
+                messagingInterface.syncThreadRegistry.add(args[1], instanceID);
+                thread.notify();
+            }
+            return null;
+        }
+    }
+
+    @SuppressWarnings("serial")
+    private static class CM_asyncExec extends CommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            Message message = (Message)args[1];
+            message.setSyncExec(false);
+            CommunicationInterface communicationInterface = getCommunicationInterface();
+            MessagingInterface messagingInterface = communicationInterface.getMessagingInterface();
+            CM_asyncExecResponse asyncExecResponse = new CM_asyncExecResponse();
+            asyncExecResponse.setArgs(args[0], messagingInterface.runMessage(message));
+            messagingInterface.asyncSend(asyncExecResponse);
+            return null;
+        }
+    }
+
+    private ObjectRegistry syncThreadRegistry = new ObjectRegistry();
+
+    private void printFailedInvocation(Message message) {
+        System.err.println("Failed messaging: " + message);
+    }
+
+    public Object syncSend(Message message) {
+        Thread thread = Thread.currentThread();
+        final int instanceID = syncThreadRegistry.add(Thread.currentThread());
+        CM_asyncExec asyncExec = new CM_asyncExec();
+        asyncExec.setArgs(instanceID, message);
+        asyncSend(asyncExec);
+        synchronized(thread) {
+            while(syncThreadRegistry.get(instanceID) instanceof Thread) {
+                try {
+                    thread.wait();
+                } catch(Exception e) {
+                }
+                if(!isAlive()) {
+                    syncThreadRegistry.remove(instanceID);
+                    printFailedInvocation(message);
+                    return null;
+                }
+            }
+            CommandResultMessage commandResultMessage = (CommandResultMessage)syncThreadRegistry.get(instanceID);
+            syncThreadRegistry.remove(instanceID);
+            return processCommandResult(commandResultMessage);
+        }
+    }
+
+    private Object processCommandResult(CommandResultMessage commandResultMessage) {
+        if(IS_DEBUGGING_MESSAGES) {
+            System.err.println("<USE: " + commandResultMessage.getID());
+        }
+        Throwable exception = commandResultMessage.getException();
+        if(exception != null) {
+            //      if(exception instanceof RuntimeException) {
+            //        throw (RuntimeException)exception;
+            //      }
+            throw new RuntimeException(exception);
+        }
+        return commandResultMessage.getResult();
+    }
+
+    public void asyncSend(Message message) {
+        message.setSyncExec(false);
+        try {
+            writeMessage(message);
+        } catch(Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static final int OOS_RESET_THRESHOLD;
+
+    static {
+        String maxByteCountProperty = System.getProperty("communication.interface.streamresetthreshold");
+        if(maxByteCountProperty != null) {
+            OOS_RESET_THRESHOLD = Integer.parseInt(maxByteCountProperty);
+        } else {
+            OOS_RESET_THRESHOLD = 500000;
+        }
+    }
+
+    private int oosByteCount;
+
+    private void writeMessage(Message message) throws IOException {
+        if(!isAlive()) {
+            printFailedInvocation(message);
+            return;
+        }
+        if(IS_DEBUGGING_MESSAGES) {
+            System.err.println((message.isSyncExec()? "SYNDS": "SYNDA") + ": " + message.getID() + ", " + message);
+        }
+        synchronized(oos) {
+            oos.writeUnshared(message);
+            oos.flush();
+            // Messages are cached, so we need to reset() from time to time to clean the cache, or else we get an OutOfMemoryError.
+            if(oosByteCount > OOS_RESET_THRESHOLD) {
+                oos.reset();
+                oosByteCount = 0;
+            }
+        }
+    }
+
+    private Message readMessage() throws IOException, ClassNotFoundException {
+        Object o = ois.readUnshared();
+        if(o instanceof Message) {
+            Message message = (Message)o;
+            if(IS_DEBUGGING_MESSAGES) {
+                System.err.println("RECV: " + message.getID() + ", " + message);
+            }
+            message.setCommunicationInterface(communicationInterface);
+            return message;
+        }
+        System.err.println("Unknown message: " + o);
+        return null;
+    }
+
+}

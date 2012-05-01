@@ -36,112 +36,50 @@
  */
 package org.jooq.debug.console.remote;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
-import java.net.Socket;
 
-import org.jooq.debug.Debugger;
 import org.jooq.debug.DebuggerRegistry;
-import org.jooq.debug.LocalDebugger;
-import org.jooq.debug.LoggingListener;
-import org.jooq.debug.QueryLoggingData;
-import org.jooq.debug.ResultSetLoggingData;
+import org.jooq.debug.console.DatabaseDescriptor;
+import org.jooq.debug.console.remote.messaging.CommunicationInterface;
+import org.jooq.debug.console.remote.messaging.CommunicationInterfaceFactory;
 
 /**
  * @author Christopher Deckers
  */
 public class RemoteDebuggerServer {
 
-	private final Object LOCK = new Object();
-	private ServerSocket serverSocket;
+    private final Object LOCK = new Object();
+    private ServerSocket serverSocket;
 
 	public RemoteDebuggerServer(final int port) {
-		Thread serverThread = new Thread("SQL Remote Debugger Server on port " + port) {
-			@Override
-			public void run() {
-				try {
-					synchronized(LOCK) {
-						serverSocket = new ServerSocket(port);
-					}
-					while(true) {
-						ServerSocket serverSocket_;
-						synchronized(LOCK) {
-							serverSocket_ = serverSocket;
-						}
-						if(serverSocket_ != null) {
-							Socket socket = serverSocket_.accept();
-							startServerToClientThread(socket, port);
-						}
-					}
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-		};
-		serverThread.setDaemon(true);
-		serverThread.start();
-	}
+	    // TODO: pass databaseDescriptor.
+	    final DatabaseDescriptor databaseDescriptor = null;
+        try {
+            synchronized(LOCK) {
+                serverSocket = CommunicationInterface.openServerCommunicationChannel(new CommunicationInterfaceFactory() {
+                    @Override
+                    public CommunicationInterface createCommunicationInterface(int port_) {
+                        final DebuggerServer serverDebugger = new DebuggerServer(databaseDescriptor);
+                        DebuggerCommmunicationInterface commmunicationInterface = new DebuggerCommmunicationInterface(serverDebugger, port_) {
+                            @Override
+                            protected void processOpened() {
+                                DebuggerRegistry.addSqlQueryDebugger(serverDebugger);
+                            }
 
-	private void startServerToClientThread(final Socket socket, int port) {
-		Thread clientThread = new Thread("SQL Remote Debugger Server-Client on port " + port) {
-			@Override
-			public void run() {
-				Debugger debugger = null;
-				boolean isLogging = false;
-				try {
-					ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-					final ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-					// TODO: find how to pass a database descriptor for remote edition.
-					debugger = new LocalDebugger(null);
-					DebuggerRegistry.addSqlQueryDebugger(debugger);
-					for(Message o; (o=(Message)in.readObject()) != null; ) {
-						if(o instanceof ServerLoggingActivationMessage) {
-							isLogging = ((ServerLoggingActivationMessage) o).isLogging();
-							if(isLogging) {
-								debugger.setLoggingListener(new LoggingListener() {
-                                    @Override
-                                    public void logQueries(QueryLoggingData queryLoggingData) {
-                                        try {
-                                            out.writeObject(new ClientDebugQueriesMessage(queryLoggingData));
-                                            out.flush();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                    @Override
-                                    public void logResultSet(int sqlQueryDebuggerDataID, ResultSetLoggingData resultSetLoggingData) {
-                                        try {
-                                            out.writeObject(new ClientDebugResultSetMessage(sqlQueryDebuggerDataID, resultSetLoggingData));
-                                            out.flush();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-							} else {
-							    debugger.setLoggingListener(null);
-							}
-						} else if(o instanceof ServerLoggingStatementMatchersMessage) {
-						    debugger.setLoggingStatementMatchers(((ServerLoggingStatementMatchersMessage) o).getStatementMatchers());
-						}
-					}
-				} catch(Exception e) {
-					if(isLogging) {
-						e.printStackTrace();
-					}
-				} finally {
-					if(debugger != null) {
-						DebuggerRegistry.removeSqlQueryDebugger(debugger);
-					}
-				}
-			}
-		};
-		clientThread.setDaemon(true);
-		clientThread.start();
+                            @Override
+                            protected void processClosed() {
+                                DebuggerRegistry.removeSqlQueryDebugger(serverDebugger);
+                            }
+                        };
+                        serverDebugger.setCommunicationInterface(commmunicationInterface);
+                        return commmunicationInterface;
+                    }
+                }, port);
+            }
+        } catch(Exception e) {
+            throw new RuntimeException(e);
+        }
 	}
 
 	public void close() {

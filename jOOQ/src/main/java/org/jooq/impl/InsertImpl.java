@@ -190,6 +190,12 @@ class InsertImpl<R extends Record>
     }
 
     @Override
+    public final InsertImpl<R> onDuplicateKeyIgnore() {
+        getDelegate().onDuplicateKeyIgnore(true);
+        return this;
+    }
+
+    @Override
     public final <T> InsertImpl<R> set(Field<T> field, T value) {
         if (onDuplicateKeyUpdate) {
             getDelegate().addValueForUpdate(field, value);

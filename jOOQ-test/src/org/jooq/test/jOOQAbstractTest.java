@@ -1074,8 +1074,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testInsertOnDuplicateKey() throws Exception {
-        new InsertUpdateTests(this).testInsertOnDuplicateKey();
+    public void testInsertOnDuplicateKeyUpdate() throws Exception {
+        new InsertUpdateTests(this).testInsertOnDuplicateKeyUpdate();
+    }
+
+    @Test
+    public void testInsertOnDuplicateKeyIgnore() throws Exception {
+        new InsertUpdateTests(this).testInsertOnDuplicateKeyIgnore();
     }
 
     @Test

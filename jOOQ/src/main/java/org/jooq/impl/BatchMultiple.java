@@ -93,7 +93,9 @@ class BatchMultiple implements Batch {
             return result;
         }
         catch (SQLException e) {
-            throw Util.translate("BatchMultiple.execute", ctx.sql(), e);
+            ctx.sqlException(e);
+            listener.exception(ctx);
+            throw ctx.exception();
         }
         finally {
             Util.safeClose(listener, ctx);

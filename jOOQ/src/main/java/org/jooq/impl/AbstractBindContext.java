@@ -146,7 +146,7 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
             return bindValue0(value, type);
         }
         catch (SQLException e) {
-            throw Util.translate("DefaultBindContext.bindValue", null, e);
+            throw Util.translate(null, e);
         }
     }
 

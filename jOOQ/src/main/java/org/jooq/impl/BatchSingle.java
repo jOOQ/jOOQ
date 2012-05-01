@@ -131,7 +131,9 @@ class BatchSingle implements BatchBindStep {
             return result;
         }
         catch (SQLException e) {
-            throw Util.translate("BatchSingle.execute", ctx.sql(), e);
+            ctx.sqlException(e);
+            listener.exception(ctx);
+            throw ctx.exception();
         }
         finally {
             Util.safeClose(listener, ctx);

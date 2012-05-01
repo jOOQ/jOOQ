@@ -491,8 +491,8 @@ final class Util {
     /**
      * Translate a {@link SQLException} to a {@link DataAccessException}
      */
-    static final DataAccessException translate(String task, String sql, SQLException e) {
-        String message = task + "; SQL [" + sql + "]; " + e.getMessage();
+    static final DataAccessException translate(String sql, SQLException e) {
+        String message = "SQL [" + sql + "]; " + e.getMessage();
         return new DataAccessException(message, e);
     }
 

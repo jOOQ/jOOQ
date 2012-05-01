@@ -329,7 +329,9 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
             return 0;
         }
         catch (SQLException e) {
-            throw translate("AbstractRoutine.executeCallableStatement", ctx.sql(), e);
+            ctx.sqlException(e);
+            listener.exception(ctx);
+            throw ctx.exception();
         }
         finally {
             Util.safeClose(listener, ctx);

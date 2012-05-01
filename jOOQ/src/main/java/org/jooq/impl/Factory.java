@@ -2760,29 +2760,35 @@ public class Factory implements FactoryOperations {
         return new TimestampDiff(nullSafe(timestamp1), nullSafe(timestamp2));
     }
 
-    public static Field<Date> trunc(Date date) {
+    // -------------------------------------------------------------------------
+    // [#470] TRUNC(datetime) will be implemented in a future release
+    // -------------------------------------------------------------------------
+
+    static Field<Date> trunc(Date date) {
         return trunc(date, DatePart.DAY);
     }
 
-    public static Field<Date> trunc(Date date, DatePart part) {
+    static Field<Date> trunc(Date date, DatePart part) {
         return trunc(val(date), part);
     }
 
-    public static Field<Timestamp> trunc(Timestamp timestamp) {
+    static Field<Timestamp> trunc(Timestamp timestamp) {
         return trunc(timestamp, DatePart.DAY);
     }
 
-    public static Field<Timestamp> trunc(Timestamp timestamp, DatePart part) {
+    static Field<Timestamp> trunc(Timestamp timestamp, DatePart part) {
         return trunc(val(timestamp), part);
     }
 
-    public static <T extends java.util.Date> Field<T> trunc(Field<T> date) {
+    static <T extends java.util.Date> Field<T> trunc(Field<T> date) {
         return trunc(date, DatePart.DAY);
     }
 
-    public static <T extends java.util.Date> Field<T> trunc(Field<T> date, DatePart part) {
+    static <T extends java.util.Date> Field<T> trunc(Field<T> date, DatePart part) {
         throw new UnsupportedOperationException("This is not yet implemented");
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Get the extract(field, datePart) function

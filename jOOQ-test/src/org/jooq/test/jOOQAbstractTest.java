@@ -1194,6 +1194,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testJoinDuplicateFieldNames() throws Exception {
+        new JoinTests(this).testJoinDuplicateFieldNames();
+    }
+
+    @Test
     public void testJoinQuery() throws Exception {
         new JoinTests(this).testJoinQuery();
     }

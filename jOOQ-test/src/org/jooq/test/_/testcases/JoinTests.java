@@ -96,6 +96,29 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     }
 
     @Test
+    public void testJoinDuplicateFieldNames() throws Exception {
+
+        // [#783] Result holds wrong data when tables in a cartesian self
+        // product (or self cross join) are not aliased
+        // --------------------------------------------
+
+        // This query selects two different ID fields. It should be possible
+        // to extract both from the resulting records
+        Result<?> result =
+        create().select()
+                .from(TAuthor())
+                .join(TBook()).on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
+                .crossJoin(create().select(one().as("one")))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(4, result.size());
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(TAuthor_ID()));
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(TBook_AUTHOR_ID()));
+        assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
+    }
+
+    @Test
     public void testJoinQuery() throws Exception {
         SimpleSelectQuery<L> q1 = create().selectQuery(VLibrary());
 
@@ -237,6 +260,22 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals(Integer.valueOf(1), result.getValue(0, 1));
         assertEquals(Integer.valueOf(1), result.getValue(1, 0));
         assertEquals(Integer.valueOf(2), result.getValue(1, 1));
+
+        // [#783] Unqualified (unaliased) self-joins
+        result =
+        create().select()
+                .from(TAuthor().as("x"))
+                .crossJoin(TAuthor())
+                .orderBy(1, 1 + TAuthor().getFields().size())
+                .fetch();
+
+        assertEquals(4, result.size());
+        assertEquals(
+            asList(1, 1, 2, 2),
+            result.getValues(0, Integer.class));
+        assertEquals(
+           asList(1, 2, 1, 2),
+           result.getValues(0 + TAuthor().getFields().size(), Integer.class));
     }
 
     @Test

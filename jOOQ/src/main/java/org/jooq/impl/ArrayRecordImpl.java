@@ -100,12 +100,16 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
     /**
      * Create an empty array record
      */
+    @SuppressWarnings("unchecked")
     protected ArrayRecordImpl(Schema schema, String name, DataType<T> type, Configuration configuration) {
         super(configuration);
 
         this.schema = schema;
         this.name = name;
         this.type = type;
+
+        // Array data type initialisation
+        type.asArrayDataType(getClass());
     }
 
     /**

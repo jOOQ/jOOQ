@@ -101,6 +101,7 @@ import org.jooq.debug.LoggingListener;
 import org.jooq.debug.QueryLoggingData;
 import org.jooq.debug.ResultSetLoggingData;
 import org.jooq.debug.SqlQueryType;
+import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.misc.JTableX;
 import org.jooq.debug.console.misc.RichTextTransferable;
 import org.jooq.debug.console.misc.Utils;
@@ -141,6 +142,7 @@ public class LoggerPane extends JPanel {
     private JLabel loggerStatusLabel;
     private JButton loggerOnButton;
     private JButton loggerOffButton;
+    private JButton statementMatcherButton;
     private boolean isLogging;
     private boolean isReadQueryTypeDisplayed = true;
     private boolean isWriteQueryTypeDisplayed = true;
@@ -180,6 +182,19 @@ public class LoggerPane extends JPanel {
             }
         });
         loggerHeaderWestPanel.add(loggerOffButton);
+        statementMatcherButton = new JButton();
+        statementMatcherButton.setOpaque(false);
+        statementMatcherButton.setFocusable(false);
+        statementMatcherButton.setToolTipText("Filter incoming statements");
+        adjustStatementMatcherButton();
+        statementMatcherButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new StatementMatcherDialogBox(LoggerPane.this, LoggerPane.this.debugger).setVisible(true);
+                adjustStatementMatcherButton();
+            }
+        });
+        loggerHeaderWestPanel.add(statementMatcherButton);
         loggerHeaderPanel.add(loggerHeaderWestPanel, BorderLayout.WEST);
         JPanel loggerHeaderCenterPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
         loggerHeaderCenterPanel.setOpaque(false);
@@ -635,6 +650,15 @@ public class LoggerPane extends JPanel {
         loggerTimestampCheckBox.setSelected(false);
         loggerDurationCheckBox.setSelected(false);
         loggerThreadCheckBox.setSelected(false);
+    }
+
+    private void adjustStatementMatcherButton() {
+        StatementMatcher[] loggingStatementMatchers = LoggerPane.this.debugger.getLoggingStatementMatchers();
+        if(loggingStatementMatchers != null) {
+            statementMatcherButton.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/FilterOn16.png")));
+        } else {
+            statementMatcherButton.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/FilterOff16.png")));
+        }
     }
 
     private List<QueryDebuggingInfo> queryDebuggingInfoList = new ArrayList<QueryDebuggingInfo>();

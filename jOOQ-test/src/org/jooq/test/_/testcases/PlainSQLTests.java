@@ -248,10 +248,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     public void testPlainSQLCRUD() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        // CRUD with plain SQL
+        // [#989] CRUD with plain SQL
         Table<Record> table = table(TAuthor().getName());
-        Field<Integer> id = field(TAuthor_ID().getName(), Integer.class);
-        Field<String> firstName = field(TAuthor_FIRST_NAME().getName(), String.class);
+        Field<Integer> id = field("id", Integer.class);
+        Field<String> firstName = field("first_name", String.class);
         Field<String> lastName = field(TAuthor_LAST_NAME().getName(), String.class);
 
         assertEquals(2,

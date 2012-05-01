@@ -71,11 +71,11 @@ public class TextMatcher implements Serializable {
         switch (type) {
             case CONTAINS: {
                 String patternText = ".*\\Q" + text.replace("\\E", "\\\\E").replace("\\Q", "\\\\Q") + "\\E.*\\Q";
-                pattern = Pattern.compile(patternText, isCaseSensitive? 0: Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+                pattern = Pattern.compile(patternText, isCaseSensitive? Pattern.DOTALL: Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
                 break;
             }
             case MATCHES_REG_EXP: {
-                pattern = Pattern.compile(text, isCaseSensitive? 0: Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+                pattern = Pattern.compile(text, isCaseSensitive? Pattern.DOTALL: Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
                 break;
             }
         }

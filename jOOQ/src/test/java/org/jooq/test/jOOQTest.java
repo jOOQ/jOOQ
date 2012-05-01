@@ -559,9 +559,9 @@ public class jOOQTest {
         assertEquals(
             Factory.timestampDiff((Timestamp) null, (Timestamp) null),
             Factory.timestampDiff((Field<Timestamp>) null, (Field<Timestamp>) null));
-        assertEquals(
-            Factory.trunc((Timestamp) null, null),
-            Factory.trunc((Field<Timestamp>) null, null));
+//        assertEquals(
+//            Factory.trunc((Timestamp) null, null),
+//            Factory.trunc((Field<Timestamp>) null, null));
         assertEquals(
             Factory.trunc((Integer) null, null),
             Factory.trunc((Field<Integer>) null, null));

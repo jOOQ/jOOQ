@@ -380,7 +380,7 @@ public class MessagingInterface {
         ThreadInfo threadInfo = new ThreadInfo();
         boolean isAdded;
         synchronized (idToThreadInfo) {
-            isAdded = idToThreadInfo.put(threadID, threadInfo) != null;
+            isAdded = idToThreadInfo.put(threadID, threadInfo) == null;
         }
         CM_asyncExec asyncExec = new CM_asyncExec();
         asyncExec.setArgs(threadID, message);

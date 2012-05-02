@@ -75,4 +75,10 @@ public class TextMatcherPane extends JPanel {
         return new TextMatcher((TextMatchingType)matcherTypeComboBox.getSelectedItem(), textField.getText(), caseSensitiveCheckBox.isSelected());
     }
 
+    public void setLocked(boolean isLocked) {
+        matcherTypeComboBox.setEnabled(!isLocked);
+        textField.setEnabled(!isLocked);
+        caseSensitiveCheckBox.setEnabled(!isLocked);
+    }
+
 }

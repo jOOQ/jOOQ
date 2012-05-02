@@ -107,7 +107,7 @@ public class DebuggerClient implements Debugger {
             if(loggingListener != null) {
                 loggingListener.logQueries((QueryLoggingData)args[0]);
             }
-            return null;
+            return 1;
         }
     }
 

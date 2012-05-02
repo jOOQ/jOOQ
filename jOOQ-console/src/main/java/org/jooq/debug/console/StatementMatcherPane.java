@@ -41,6 +41,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -81,6 +83,12 @@ public class StatementMatcherPane extends JPanel {
         int y = 0;
         JPanel northPane = new JPanel(new GridBagLayout());
         activeCheckBox = new JCheckBox("Active", statementMatcher.isActive());
+        activeCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                adjustStates();
+            }
+        });
         northPane.add(activeCheckBox, new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         JToolBar closeButtonPane = new JToolBar();
         closeButtonPane.setFloatable(false);
@@ -98,12 +106,24 @@ public class StatementMatcherPane extends JPanel {
         y++;
         TextMatcher statementTextMatcher = statementMatcher.getStatementTextMatcher();
         statementTextMatcherCheckBox = new JCheckBox("Statement", statementTextMatcher != null);
+        statementTextMatcherCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                adjustStates();
+            }
+        });
         add(statementTextMatcherCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         statementTextMatcherPane = new TextMatcherPane(statementTextMatcher);
         add(statementTextMatcherPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
         y++;
         Set<SqlQueryType> queryTypeSet = statementMatcher.getQueryTypeSet();
         statementTypeCheckBox = new JCheckBox("Type", queryTypeSet != null);
+        statementTypeCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                adjustStates();
+            }
+        });
         add(statementTypeCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         JPanel typesPane = new JPanel(new GridBagLayout());
         statementTypeSelectCheckBox = new JCheckBox("SELECT", queryTypeSet != null && queryTypeSet.contains(SqlQueryType.SELECT));
@@ -120,9 +140,30 @@ public class StatementMatcherPane extends JPanel {
         y++;
         TextMatcher threadNameTextMatcher = statementMatcher.getThreadNameTextMatcher();
         threadNameTextMatcherCheckBox = new JCheckBox("Thread name", threadNameTextMatcher != null);
+        threadNameTextMatcherCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                adjustStates();
+            }
+        });
         add(threadNameTextMatcherCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         threadNameTextMatcherPane = new TextMatcherPane(threadNameTextMatcher);
         add(threadNameTextMatcherPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
+        adjustStates();
+    }
+
+    private void adjustStates() {
+        boolean isActive = activeCheckBox.isSelected();
+        statementTextMatcherCheckBox.setEnabled(isActive);
+        statementTypeCheckBox.setEnabled(isActive);
+        threadNameTextMatcherCheckBox.setEnabled(isActive);
+        statementTextMatcherPane.setLocked(!isActive || !statementTextMatcherCheckBox.isSelected());
+        statementTypeSelectCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
+        statementTypeUpdateCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
+        statementTypeInsertCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
+        statementTypeDeleteCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
+        statementTypeOtherCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
+        threadNameTextMatcherPane.setLocked(!isActive || !threadNameTextMatcherCheckBox.isSelected());
     }
 
     public StatementMatcher getStatementMatcher() {

@@ -68,10 +68,6 @@ public class MessagingInterface {
             this.exception = exception;
         }
 
-        int getOriginalID() {
-            return originalID;
-        }
-
         public Object getResult() {
             return result;
         }

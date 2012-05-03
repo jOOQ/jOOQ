@@ -190,7 +190,7 @@ public class LoggerPane extends JPanel {
         statementMatcherButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new StatementMatcherDialogBox(LoggerPane.this, LoggerPane.this.debugger).setVisible(true);
+                new StatementMatchersDialogBox(LoggerPane.this, LoggerPane.this.debugger).setVisible(true);
                 adjustStatementMatcherButton();
             }
         });

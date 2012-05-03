@@ -42,6 +42,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Scrollable;
@@ -89,6 +90,7 @@ public class StatementMatchersPane extends JPanel {
     public StatementMatchersPane(StatementMatcher[] statementMatchers) {
         super(new BorderLayout());
         statementMatcherPanesContainer = new ScrollablePane();
+        statementMatcherPanesContainer.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         add(new JScrollPane(statementMatcherPanesContainer), BorderLayout.CENTER);
         if(statementMatchers != null) {
             for(StatementMatcher statementMatcher: statementMatchers) {

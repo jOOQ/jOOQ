@@ -53,13 +53,14 @@ import org.jooq.debug.Debugger;
 import org.jooq.debug.StatementMatcher;
 
 @SuppressWarnings("serial")
-public class StatementMatcherDialogBox extends JDialog {
+public class StatementMatchersDialogBox extends JDialog {
 
-    public StatementMatcherDialogBox(Component parent, final Debugger debugger) {
+    public StatementMatchersDialogBox(Component parent, final Debugger debugger) {
         super(SwingUtilities.getWindowAncestor(parent), "Statement filters", ModalityType.DOCUMENT_MODAL);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         Container contentPane = getContentPane();
         final StatementMatchersPane statementMatchersPane = new StatementMatchersPane(debugger.getLoggingStatementMatchers());
+        statementMatchersPane.setBorder(BorderFactory.createEmptyBorder(2, 2, 0, 2));
         contentPane.add(statementMatchersPane, BorderLayout.CENTER);
         JPanel buttonBar = new JPanel(new BorderLayout());
         buttonBar.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));

@@ -115,7 +115,7 @@ public class CommunicationInterface {
         if(socket == null) {
             throw new IllegalStateException("Failed to connect to " + ip + "!");
         }
-        messagingInterface = new MessagingInterface(this, socket);
+        messagingInterface = new MessagingInterface(this, socket, true);
         notifyOpen();
     }
 
@@ -133,6 +133,7 @@ public class CommunicationInterface {
         checkOpen();
         if(message instanceof LocalMessage) {
             LocalMessage localMessage = (LocalMessage)message;
+            localMessage.setCommunicationInterface(this);
             return localMessage.runCommand();
         }
         return messagingInterface.syncSend(message);
@@ -145,6 +146,7 @@ public class CommunicationInterface {
             checkOpen();
             if(message instanceof LocalMessage) {
                 LocalMessage localMessage = (LocalMessage)message;
+                localMessage.setCommunicationInterface(this);
                 localMessage.runCommand();
                 return;
             }
@@ -172,7 +174,7 @@ public class CommunicationInterface {
                             @Override
                             public void run() {
                                 CommunicationInterface communicationInterface = communicationInterfaceFactory.createCommunicationInterface(port);
-                                communicationInterface.messagingInterface = new MessagingInterface(communicationInterface, socket);
+                                communicationInterface.messagingInterface = new MessagingInterface(communicationInterface, socket, false);
                                 communicationInterface.notifyOpen();
                             }
                         }.start();

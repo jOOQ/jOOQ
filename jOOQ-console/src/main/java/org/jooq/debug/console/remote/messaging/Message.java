@@ -51,7 +51,7 @@ public abstract class Message implements Serializable {
     private int id = nextID++;
     private boolean isSyncExec;
     private long threadID;
-    private boolean isOriginatingSide;
+    private boolean isProcessorToOriginator;
 
     /**
      * Create an empty message.
@@ -62,9 +62,6 @@ public abstract class Message implements Serializable {
     private transient CommunicationInterface communicationInterface;
 
     void setCommunicationInterface(CommunicationInterface communicationInterface) {
-        if(communicationInterface == null) {
-            System.err.println("in");
-        }
         this.communicationInterface = communicationInterface;
     }
 
@@ -88,12 +85,12 @@ public abstract class Message implements Serializable {
         return threadID;
     }
 
-    public void setOriginatingSide(boolean isOriginatingSide) {
-        this.isOriginatingSide = isOriginatingSide;
+    void setProcessorToOriginator(boolean isProcessorToOriginator) {
+        this.isProcessorToOriginator = isProcessorToOriginator;
     }
 
-    public boolean isOriginatingSide() {
-        return isOriginatingSide;
+    boolean isProcessorToOriginator() {
+        return isProcessorToOriginator;
     }
 
     boolean isSyncExec() {

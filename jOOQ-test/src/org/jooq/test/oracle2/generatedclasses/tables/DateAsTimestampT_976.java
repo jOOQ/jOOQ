@@ -8,7 +8,7 @@ package org.jooq.test.oracle2.generatedclasses.tables;
  */
 public class DateAsTimestampT_976 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> {
 
-	private static final long serialVersionUID = 357908338;
+	private static final long serialVersionUID = 2097991947;
 
 	/**
 	 * The singleton instance of TEST.T_976
@@ -18,14 +18,9 @@ public class DateAsTimestampT_976 extends org.jooq.impl.UpdatableTableImpl<org.j
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> __RECORD_TYPE = org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record.class;
 	}
 
 	/**

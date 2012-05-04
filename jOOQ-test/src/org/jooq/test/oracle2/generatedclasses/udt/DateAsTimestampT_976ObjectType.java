@@ -8,7 +8,7 @@ package org.jooq.test.oracle2.generatedclasses.udt;
  */
 public class DateAsTimestampT_976ObjectType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> {
 
-	private static final long serialVersionUID = 1338099610;
+	private static final long serialVersionUID = -1768225791;
 
 	/**
 	 * The singleton instance of TEST.T_976_OBJECT_TYPE
@@ -18,14 +18,9 @@ public class DateAsTimestampT_976ObjectType extends org.jooq.impl.UDTImpl<org.jo
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> __RECORD_TYPE = org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord.class;
 	}
 
 	/**
@@ -38,5 +33,8 @@ public class DateAsTimestampT_976ObjectType extends org.jooq.impl.UDTImpl<org.jo
 	 */
 	private DateAsTimestampT_976ObjectType() {
 		super("T_976_OBJECT_TYPE", org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST);
+
+		// Initialise data type
+		getDataType();
 	}
 }

@@ -103,9 +103,34 @@ public class Console extends JFrame {
     private JTabbedPane mainTabbedPane;
     private JTabbedPane editorTabbedPane;
 
+    public Console(DatabaseDescriptor editorDatabaseDescriptor, boolean isShowingLoggingTab) {
+        debugger = new LocalDebugger(editorDatabaseDescriptor);
+        // Local debugger registration is managed by the console since it hides the debugger.
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                DebuggerRegistry.addSqlQueryDebugger(debugger);
+            }
+            @Override
+            public void windowClosed(WindowEvent e) {
+                DebuggerRegistry.removeSqlQueryDebugger(debugger);
+            }
+        });
+        init(isShowingLoggingTab);
+    }
+
     public Console(final Debugger debugger, boolean isShowingLoggingTab) {
-    	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    	this.debugger = debugger;
+        this.debugger = debugger;
+        // Local debugger registration is handled externally if needed (e.g.: remote client must not be registered).
+    	init(isShowingLoggingTab);
+    }
+
+    /**
+     * @param debugger
+     * @param isShowingLoggingTab
+     */
+    private void init(boolean isShowingLoggingTab) {
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     	JMenuBar menuBar = new JMenuBar();
     	JMenu fileMenu = new JMenu("File");
     	fileMenu.setMnemonic('F');
@@ -382,15 +407,8 @@ public class Console extends JFrame {
 	}
 
     public static void openConsole(DatabaseDescriptor databaseDescriptor, boolean isLoggingActive) {
-    	final LocalDebugger debugger = new LocalDebugger(databaseDescriptor);
-        Console sqlConsoleFrame = new Console(debugger, true);
+        Console sqlConsoleFrame = new Console(databaseDescriptor, true);
     	sqlConsoleFrame.setLoggingActive(isLoggingActive);
-    	sqlConsoleFrame.addWindowListener(new WindowAdapter() {
-    	    @Override
-    	    public void windowClosing(WindowEvent e) {
-    	        DebuggerRegistry.removeSqlQueryDebugger(debugger);
-    	    }
-    	});
     	sqlConsoleFrame.setVisible(true);
     }
 

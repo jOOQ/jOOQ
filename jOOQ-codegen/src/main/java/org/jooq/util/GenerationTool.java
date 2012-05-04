@@ -358,6 +358,9 @@ public class GenerationTool {
             generator.setTargetPackage(g.getTarget().getPackageName());
             generator.setTargetDirectory(g.getTarget().getDirectory());
 
+            // [#1394] The <generate/> element should be optional
+            if (g.getGenerate() == null)
+                g.setGenerate(new Generate());
             if (g.getGenerate().isRelations() != null)
                 generator.setGenerateRelations(g.getGenerate().isRelations());
             if (g.getGenerate().isNavigationMethods() != null)

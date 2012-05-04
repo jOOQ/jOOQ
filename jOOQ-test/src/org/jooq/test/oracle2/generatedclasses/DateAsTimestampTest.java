@@ -8,7 +8,7 @@ package org.jooq.test.oracle2.generatedclasses;
  */
 public class DateAsTimestampTest extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1344120928;
+	private static final long serialVersionUID = -1283473344;
 
 	/**
 	 * The singleton instance of TEST
@@ -20,13 +20,6 @@ public class DateAsTimestampTest extends org.jooq.impl.SchemaImpl {
 	 */
 	private DateAsTimestampTest() {
 		super("TEST");
-	}
-
-	/*
-	 * instance initialiser
-	 */
-	{
-		addMapping("TEST.T_976_OBJECT_TYPE", org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord.class);
 	}
 
 	@Override

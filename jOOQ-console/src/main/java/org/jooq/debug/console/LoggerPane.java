@@ -142,7 +142,7 @@ public class LoggerPane extends JPanel {
     private JLabel loggerStatusLabel;
     private JButton loggerOnButton;
     private JButton loggerOffButton;
-    private JButton statementMatcherButton;
+    private JToggleButton statementMatcherButton;
     private boolean isLogging;
     private boolean isReadQueryTypeDisplayed = true;
     private boolean isWriteQueryTypeDisplayed = true;
@@ -182,7 +182,7 @@ public class LoggerPane extends JPanel {
             }
         });
         loggerHeaderWestPanel.add(loggerOffButton);
-        statementMatcherButton = new JButton();
+        statementMatcherButton = new JToggleButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Filter16.png")));
         statementMatcherButton.setOpaque(false);
         statementMatcherButton.setFocusable(false);
         statementMatcherButton.setToolTipText("Filter incoming statements");
@@ -190,6 +190,7 @@ public class LoggerPane extends JPanel {
         statementMatcherButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                statementMatcherButton.setSelected(true);
                 new StatementMatchersDialogBox(LoggerPane.this, LoggerPane.this.debugger).setVisible(true);
                 adjustStatementMatcherButton();
             }
@@ -654,11 +655,7 @@ public class LoggerPane extends JPanel {
 
     private void adjustStatementMatcherButton() {
         StatementMatcher[] loggingStatementMatchers = LoggerPane.this.debugger.getLoggingStatementMatchers();
-        if(loggingStatementMatchers != null) {
-            statementMatcherButton.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/FilterOn16.png")));
-        } else {
-            statementMatcherButton.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/FilterOff16.png")));
-        }
+        statementMatcherButton.setSelected(loggingStatementMatchers != null);
     }
 
     private List<QueryDebuggingInfo> queryDebuggingInfoList = new ArrayList<QueryDebuggingInfo>();

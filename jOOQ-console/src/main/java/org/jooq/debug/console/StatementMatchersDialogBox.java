@@ -61,11 +61,11 @@ public class StatementMatchersDialogBox extends JDialog {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         Container contentPane = getContentPane();
         JPanel northPane = new JPanel(new BorderLayout());
-        northPane.setBorder(BorderFactory.createEmptyBorder(2, 2, 0, 2));
+        northPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 2, 5));
         northPane.add(new JLabel("Log statements matching any of these filters:"), BorderLayout.WEST);
         contentPane.add(northPane, BorderLayout.NORTH);
         final StatementMatchersPane statementMatchersPane = new StatementMatchersPane(debugger.getLoggingStatementMatchers());
-        statementMatchersPane.setBorder(BorderFactory.createEmptyBorder(2, 2, 0, 2));
+        statementMatchersPane.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
         contentPane.add(statementMatchersPane, BorderLayout.CENTER);
         JPanel buttonBar = new JPanel(new BorderLayout());
         buttonBar.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -98,6 +98,15 @@ public class StatementMatchersDialogBox extends JDialog {
             }
         });
         rightButtonsPane.add(okButton);
+        JButton applyButton = new JButton("Apply");
+        applyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StatementMatcher[] statementMatchers = statementMatchersPane.getStatementMatchers();
+                debugger.setLoggingStatementMatchers(statementMatchers.length == 0? null: statementMatchers);
+            }
+        });
+        rightButtonsPane.add(applyButton);
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(new ActionListener() {
             @Override

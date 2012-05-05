@@ -39,10 +39,12 @@ package org.jooq.debug.console;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Scrollable;
@@ -91,6 +93,7 @@ public class StatementMatchersPane extends JPanel {
         super(new BorderLayout());
         statementMatcherPanesContainer = new ScrollablePane();
         statementMatcherPanesContainer.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        addDefaultMessageComponent();
         add(new JScrollPane(statementMatcherPanesContainer), BorderLayout.CENTER);
         if(statementMatchers != null) {
             for(StatementMatcher statementMatcher: statementMatchers) {
@@ -100,6 +103,9 @@ public class StatementMatchersPane extends JPanel {
     }
 
     public void addStatementMatcherPane(StatementMatcherPane statementMatcherPane) {
+        if(!(statementMatcherPanesContainer.getComponent(0) instanceof StatementMatcherPane)) {
+            statementMatcherPanesContainer.remove(0);
+        }
         statementMatcherPanesContainer.add(statementMatcherPane);
         statementMatcherPanesContainer.revalidate();
         statementMatcherPanesContainer.repaint();
@@ -108,17 +114,30 @@ public class StatementMatchersPane extends JPanel {
 
     void removeAllStatementMatcherPanes() {
         statementMatcherPanesContainer.removeAll();
+        addDefaultMessageComponent();
         statementMatcherPanesContainer.revalidate();
         statementMatcherPanesContainer.repaint();
     }
 
+    private void addDefaultMessageComponent() {
+        JLabel messageLabel = new JLabel("No statement filters, logging everything.");
+        messageLabel.setFont(messageLabel.getFont().deriveFont(Font.ITALIC));
+        statementMatcherPanesContainer.add(messageLabel);
+    }
+
     void removeStatementMatcherPane(StatementMatcherPane statementMatcherPane) {
         statementMatcherPanesContainer.remove(statementMatcherPane);
+        if(statementMatcherPanesContainer.getComponentCount() == 0) {
+            addDefaultMessageComponent();
+        }
         statementMatcherPanesContainer.revalidate();
         statementMatcherPanesContainer.repaint();
     }
 
     public StatementMatcher[] getStatementMatchers() {
+        if(!(statementMatcherPanesContainer.getComponent(0) instanceof StatementMatcherPane)) {
+            return new StatementMatcher[0];
+        }
         Component[] components = statementMatcherPanesContainer.getComponents();
         StatementMatcher[] statementMatchers = new StatementMatcher[components.length];
         for(int i=0; i<components.length; i++) {

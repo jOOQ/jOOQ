@@ -91,7 +91,7 @@ import javax.swing.event.DocumentListener;
 import org.jooq.debug.Debugger;
 import org.jooq.debug.DebuggerRegistry;
 import org.jooq.debug.LocalDebugger;
-import org.jooq.debug.console.remote.DebuggerClient;
+import org.jooq.debug.console.remote.ClientDebugger;
 
 /**
  * @author Christopher Deckers
@@ -493,7 +493,7 @@ public class Console extends JFrame {
     	}
     	final Debugger debugger;
     	try {
-    	    debugger = new DebuggerClient(args[0], Integer.parseInt(args[1]));
+    	    debugger = new ClientDebugger(args[0], Integer.parseInt(args[1]));
     	} catch(Exception e) {
     		e.printStackTrace();
     		return;

@@ -48,15 +48,15 @@ import org.jooq.debug.console.remote.messaging.CommunicationInterfaceFactory;
 /**
  * @author Christopher Deckers
  */
-public class DebuggerClient implements Debugger {
+public class ClientDebugger implements Debugger {
 
     private CommunicationInterface communicationInterface;
 
-	public DebuggerClient(String ip, int port) throws Exception {
+	public ClientDebugger(String ip, int port) throws Exception {
 	    communicationInterface = CommunicationInterface.openClientCommunicationChannel(new CommunicationInterfaceFactory() {
             @Override
             public CommunicationInterface createCommunicationInterface(int port_) {
-                return new DebuggerCommmunicationInterface(DebuggerClient.this, port_);
+                return new DebuggerCommmunicationInterface(ClientDebugger.this, port_);
             }
         }, ip, port);
 	}
@@ -66,7 +66,7 @@ public class DebuggerClient implements Debugger {
     @Override
     public void setLoggingListener(LoggingListener loggingListener) {
         this.loggingListener = loggingListener;
-        new DebuggerServer.CMS_setLoggingActive().asyncExec(communicationInterface, loggingListener != null);
+        new ServerDebugger.CMS_setLoggingActive().asyncExec(communicationInterface, loggingListener != null);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class DebuggerClient implements Debugger {
     @Override
     public void setLoggingStatementMatchers(StatementMatcher[] loggingStatementMatchers) {
         this.loggingStatementMatchers = loggingStatementMatchers;
-        new DebuggerServer.CMS_setLoggingStatementMatchers().asyncExec(communicationInterface, (Object)loggingStatementMatchers);
+        new ServerDebugger.CMS_setLoggingStatementMatchers().asyncExec(communicationInterface, (Object)loggingStatementMatchers);
     }
 
     @Override

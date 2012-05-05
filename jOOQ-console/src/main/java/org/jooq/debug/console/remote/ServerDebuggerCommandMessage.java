@@ -41,8 +41,8 @@ import org.jooq.debug.console.remote.messaging.CommandMessage;
 @SuppressWarnings("serial")
 abstract class ServerDebuggerCommandMessage extends CommandMessage {
 
-    protected DebuggerServer getDebugger() {
-        return (DebuggerServer)((DebuggerCommmunicationInterface)getCommunicationInterface()).getDebugger();
+    protected ServerDebugger getDebugger() {
+        return (ServerDebugger)((DebuggerCommmunicationInterface)getCommunicationInterface()).getDebugger();
     }
 
 }

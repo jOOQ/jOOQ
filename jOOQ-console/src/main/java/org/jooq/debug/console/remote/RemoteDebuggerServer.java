@@ -60,7 +60,7 @@ public class RemoteDebuggerServer {
                 serverSocket = CommunicationInterface.openServerCommunicationChannel(new CommunicationInterfaceFactory() {
                     @Override
                     public CommunicationInterface createCommunicationInterface(int port_) {
-                        final DebuggerServer serverDebugger = new DebuggerServer(databaseDescriptor);
+                        final ServerDebugger serverDebugger = new ServerDebugger(databaseDescriptor);
                         DebuggerCommmunicationInterface commmunicationInterface = new DebuggerCommmunicationInterface(serverDebugger, port_) {
                             @Override
                             protected void processOpened() {

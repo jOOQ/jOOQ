@@ -44,9 +44,9 @@ import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.DatabaseDescriptor;
 import org.jooq.debug.console.remote.messaging.CommunicationInterface;
 
-class DebuggerServer extends LocalDebugger {
+class ServerDebugger extends LocalDebugger {
 
-    public DebuggerServer(DatabaseDescriptor databaseDescriptor) {
+    public ServerDebugger(DatabaseDescriptor databaseDescriptor) {
         super(databaseDescriptor);
     }
 
@@ -61,11 +61,11 @@ class DebuggerServer extends LocalDebugger {
             setLoggingListener(new LoggingListener() {
                 @Override
                 public void logQueries(QueryLoggingData queryLoggingData) {
-                    new DebuggerClient.CMC_logQueries().asyncExec(communicationInterface, queryLoggingData);
+                    new ClientDebugger.CMC_logQueries().asyncExec(communicationInterface, queryLoggingData);
                 }
                 @Override
                 public void logResultSet(int sqlQueryDebuggerDataID, ResultSetLoggingData resultSetLoggingData) {
-                    new DebuggerClient.CMC_logResultSet().asyncExec(communicationInterface, sqlQueryDebuggerDataID, resultSetLoggingData);
+                    new ClientDebugger.CMC_logResultSet().asyncExec(communicationInterface, sqlQueryDebuggerDataID, resultSetLoggingData);
                 }
             });
         } else {

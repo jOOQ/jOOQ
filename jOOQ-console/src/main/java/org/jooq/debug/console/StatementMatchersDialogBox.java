@@ -46,6 +46,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -59,6 +60,10 @@ public class StatementMatchersDialogBox extends JDialog {
         super(SwingUtilities.getWindowAncestor(parent), "Statement filters", ModalityType.DOCUMENT_MODAL);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         Container contentPane = getContentPane();
+        JPanel northPane = new JPanel(new BorderLayout());
+        northPane.setBorder(BorderFactory.createEmptyBorder(2, 2, 0, 2));
+        northPane.add(new JLabel("Log statements matching any of these filters:"), BorderLayout.WEST);
+        contentPane.add(northPane, BorderLayout.NORTH);
         final StatementMatchersPane statementMatchersPane = new StatementMatchersPane(debugger.getLoggingStatementMatchers());
         statementMatchersPane.setBorder(BorderFactory.createEmptyBorder(2, 2, 0, 2));
         contentPane.add(statementMatchersPane, BorderLayout.CENTER);

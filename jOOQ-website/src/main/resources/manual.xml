@@ -149,7 +149,7 @@ CREATE TABLE t_book_to_book_store (
 								The dialect of your database. This may be any of the currently
 								supported database types</li>
 								<li><reference class="java.sql.Connection"/> :
-								A JDBC Connection that will be re-used for the whole
+								An optional JDBC Connection that will be re-used for the whole
     							lifecycle of your Factory</li>
     							<li><reference class="org.jooq.conf.Settings"/> :
     							An optional runtime configuration.</li>
@@ -767,6 +767,18 @@ create.insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.LAST_NAME)
       .set(T_AUTHOR.LAST_NAME, "Koontz")
       .execute();</java>
 
+							<h3>Example: ON DUPLICATE KEY IGNORE clause</h3>
+							<p>The MySQL database also supports an INSERT IGNORE INTO clause.
+							    This is supported by jOOQ using the more convenient SQL
+							    syntax variant of ON DUPLICATE KEY IGNORE, which can be equally
+							    simulated in other databases using a MERGE statement: </p>
+<java>// Add a new author called "Koontz" with ID 3.
+// If that ID is already present, ignore the INSERT statement
+create.insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.LAST_NAME)
+      .values(3, "Koontz")
+      .onDuplicateKeyIgnore()
+      .execute();</java>
+
       						<h3>Example: INSERT .. RETURNING clause</h3>
 							<p>The Postgres database has native support for an INSERT .. RETURNING
 								clause. This is a very powerful concept that is simulated for all
@@ -1144,6 +1156,58 @@ FROM T_AUTHOR
 WHERE LAST_NAME = :lastName
 </sql>
 							</code-pair>
+
+							<h3>Inlining bind values</h3>
+
+							<p>
+								Sometimes, you may wish to avoid rendering bind
+								variables while still using custom values in SQL.
+								jOOQ refers to that as "inlined" bind values.
+								When bind values are inlined, they render the
+								actual value in SQL rather than a JDBC question mark.
+								Bind value inlining can be achieved in two ways:
+							</p>
+
+							<ol>
+								<li>
+									By using the settings and setting the
+									<reference class="org.jooq.conf.StatementType"/>
+									to STATIC_STATEMENT. This will inline all
+									bind values for SQL statements rendered from
+									such a Factory.
+								</li>
+								<li>
+									By using Factory.inline() methods.
+								</li>
+							</ol>
+
+							<p>
+								In both cases, your inlined bind values will be
+								properly escaped to avoid SQL syntax errors and
+								SQL injection.
+								Some examples:
+							</p>
+
+<java><![CDATA[
+// Use dedicated calls to inline() in order to specify
+// single bind values to be rendered as inline values
+// --------------------------------------------------
+create.select()
+      .from(T_AUTHOR)
+      .where(LAST_NAME.equal(inline("Poe")));
+
+// Or render the whole query with inlined values
+// --------------------------------------------------
+Settings settings = new Settings()
+    .withStatementType(StatementType.STATIC_STATEMENT);
+
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+
+// Run queries that omit rendering schema names
+create.select()
+      .from(T_AUTHOR)
+      .where(LAST_NAME.equal("Poe"));]]></java>
 						</content>
 					</section>
 
@@ -1875,6 +1939,10 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        compatibility and better integration with JPA/Hibernate, etc
        Defaults to false -->
   <jpaAnnotations>false</jpaAnnotations>
+
+  <!-- Annotate POJOs and Records with JSR-303 validation annotations
+       Defaults to false -->
+  <validationAnnotations>false</validationAnnotations>
 </generate>]]></xml>
 						</content>
 					</section>
@@ -3869,6 +3937,11 @@ Field<Object> field(String sql, Object... bindings);
 <T> Field<T> field(String sql, DataType<T> type);
 <T> Field<T> field(String sql, DataType<T> type, Object... bindings);
 
+// A field with a known name (properly escaped)
+Field<Object> fieldByName(String... fieldName);
+<T> Field<T> fieldByName(Class<T> type, String... fieldName);
+<T> Field<T> fieldByName(DataType<T> type, String... fieldName)
+
 // A function
 <T> Field<T> function(String name, Class<T> type, Field<?>... arguments);
 <T> Field<T> function(String name, DataType<T> type, Field<?>... arguments);
@@ -4306,6 +4379,18 @@ create.selectFrom(T_AUTHOR).fetch();</java>
 <sql>-- the schema name is omitted from all SQL constructs.
 SELECT * FROM T_AUTHOR</sql>
 
+                            <p>If you wish not to render any schema name at all, use the
+                                following Settings property for this:</p>
+
+
+<java>Settings settings = new Settings()
+    .withRenderSchema(false);
+
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+
+// Run queries that omit rendering schema names
+create.selectFrom(T_AUTHOR).fetch();</java>
 
 							<h3>Mapping of tables</h3>
 							<p>Not only schemata can be mapped, but also tables. If you are not the

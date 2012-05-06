@@ -92,6 +92,7 @@ function printContent() {
            named org.util.[database].[database]Database. Known values are:
 
            org.jooq.util.ase.ASEDatabase
+           org.jooq.util.cubrid.CUBRIDDatabase
            org.jooq.util.db2.DB2Database
            org.jooq.util.derby.DerbyDatabase
            org.jooq.util.h2.H2Database

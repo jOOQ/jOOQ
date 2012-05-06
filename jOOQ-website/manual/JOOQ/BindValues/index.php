@@ -137,6 +137,61 @@ WHERE LAST_NAME = :lastName
 </td>
 </tr>
 </table>
+
+							<h2>Inlining bind values</h2>
+
+							<p>
+								Sometimes, you may wish to avoid rendering bind
+								variables while still using custom values in SQL.
+								jOOQ refers to that as "inlined" bind values.
+								When bind values are inlined, they render the
+								actual value in SQL rather than a JDBC question mark.
+								Bind value inlining can be achieved in two ways:
+							</p>
+
+							<ol>
+								
+<li>
+									By using the settings and setting the
+									<a href="http://www.jooq.org/javadoc/latest/org/jooq/conf/StatementType.html" title="Internal API reference: org.jooq.conf.StatementType">org.jooq.conf.StatementType</a>
+									to STATIC_STATEMENT. This will inline all
+									bind values for SQL statements rendered from
+									such a Factory.
+								</li>
+								
+<li>
+									By using Factory.inline() methods.
+								</li>
+							
+</ol>
+
+							<p>
+								In both cases, your inlined bind values will be
+								properly escaped to avoid SQL syntax errors and
+								SQL injection.
+								Some examples:
+							</p>
+
+<pre class="prettyprint lang-java">
+// Use dedicated calls to inline() in order to specify
+// single bind values to be rendered as inline values
+// --------------------------------------------------
+create.select()
+      .from(T_AUTHOR)
+      .where(LAST_NAME.equal(inline("Poe")));
+
+// Or render the whole query with inlined values
+// --------------------------------------------------
+Settings settings = new Settings()
+    .withStatementType(StatementType.STATIC_STATEMENT);
+
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+
+// Run queries that omit rendering schema names
+create.select()
+      .from(T_AUTHOR)
+      .where(LAST_NAME.equal("Poe"));</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/BindValues/">Bind values and parameters</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: ResultQuery and fetch() methods" href="<?=$root?>/manual/JOOQ/ResultQuery/">previous</a> : <a title="Next section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">next</a></td>

@@ -46,7 +46,7 @@ function printContent() {
 								
 <li>
 <a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html" title="External API reference: java.sql.Connection">java.sql.Connection</a> :
-								A JDBC Connection that will be re-used for the whole
+								An optional JDBC Connection that will be re-used for the whole
     							lifecycle of your Factory</li>
     							
 <li>

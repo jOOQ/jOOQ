@@ -243,6 +243,18 @@ create.insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.LAST_NAME)
       .set(T_AUTHOR.LAST_NAME, "Koontz")
       .execute();</pre>
 
+							<h2>Example: ON DUPLICATE KEY IGNORE clause</h2>
+							<p>The MySQL database also supports an INSERT IGNORE INTO clause.
+							    This is supported by jOOQ using the more convenient SQL
+							    syntax variant of ON DUPLICATE KEY IGNORE, which can be equally
+							    simulated in other databases using a MERGE statement: </p>
+<pre class="prettyprint lang-java">// Add a new author called "Koontz" with ID 3.
+// If that ID is already present, ignore the INSERT statement
+create.insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.LAST_NAME)
+      .values(3, "Koontz")
+      .onDuplicateKeyIgnore()
+      .execute();</pre>
+
       						<h2>Example: INSERT .. RETURNING clause</h2>
 							<p>The Postgres database has native support for an INSERT .. RETURNING
 								clause. This is a very powerful concept that is simulated for all

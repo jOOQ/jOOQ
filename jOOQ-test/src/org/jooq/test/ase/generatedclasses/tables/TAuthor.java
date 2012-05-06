@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -211136543;
+	private static final long serialVersionUID = -440321269;
 
 	/**
 	 * The singleton instance of dbo.t_author
@@ -18,14 +18,9 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord> __RECORD_TYPE = org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord.class;
 	}
 
 	/**

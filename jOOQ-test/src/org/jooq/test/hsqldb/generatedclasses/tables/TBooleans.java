@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -1464111600;
+	private static final long serialVersionUID = 326300495;
 
 	/**
 	 * The singleton instance of PUBLIC.T_BOOLEANS
@@ -18,14 +18,9 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hs
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.TBooleansRecord> __RECORD_TYPE = org.jooq.test.hsqldb.generatedclasses.tables.records.TBooleansRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.TBooleansRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.hsqldb.generatedclasses.tables.records.TBooleansRecord.class;
 	}
 
 	/**

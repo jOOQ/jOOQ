@@ -8,7 +8,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
  */
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -1763717746;
+	private static final long serialVersionUID = 391580267;
 
 	/**
 	 * The singleton instance of DBA.t_identity
@@ -18,14 +18,9 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.gene
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityRecord> __RECORD_TYPE = org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityRecord.class;
 	}
 
 	/**

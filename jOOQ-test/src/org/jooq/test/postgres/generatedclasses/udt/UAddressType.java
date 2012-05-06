@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.udt;
  */
 public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = 1486738872;
+	private static final long serialVersionUID = 886073861;
 
 	/**
 	 * The singleton instance of public.u_address_type
@@ -18,14 +18,9 @@ public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.g
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> __RECORD_TYPE = org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord.class;
 	}
 
 	/**
@@ -68,5 +63,8 @@ public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.g
 	 */
 	private UAddressType() {
 		super("u_address_type", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+
+		// Initialise data type
+		getDataType();
 	}
 }

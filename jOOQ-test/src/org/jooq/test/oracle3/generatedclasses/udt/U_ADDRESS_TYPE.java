@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt;
  */
 public class U_ADDRESS_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -805498140;
+	private static final long serialVersionUID = -1920477614;
 
 	/**
 	 * The singleton instance of TEST.U_ADDRESS_TYPE
@@ -18,14 +18,9 @@ public class U_ADDRESS_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> __RECORD_TYPE = org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE.class;
 	}
 
 	/**
@@ -73,5 +68,8 @@ public class U_ADDRESS_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.
 	 */
 	private U_ADDRESS_TYPE() {
 		super("U_ADDRESS_TYPE", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+
+		// Initialise data type
+		getDataType();
 	}
 }

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class T_986_1 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 570729836;
+	private static final long serialVersionUID = 429245351;
 
 	/**
 	 * The singleton instance of public.t_986_1
@@ -18,14 +18,9 @@ public class T_986_1 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record> __RECORD_TYPE = org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record.class;
 	}
 
 	/**

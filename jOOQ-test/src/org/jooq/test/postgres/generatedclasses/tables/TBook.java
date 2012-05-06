@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1959463268;
+	private static final long serialVersionUID = -1575269940;
 
 	/**
 	 * The singleton instance of public.t_book
@@ -18,14 +18,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgr
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> __RECORD_TYPE = org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord.class;
 	}
 
 	/**

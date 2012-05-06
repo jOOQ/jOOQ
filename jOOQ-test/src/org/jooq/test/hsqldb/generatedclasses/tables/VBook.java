@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 1964279047;
+	private static final long serialVersionUID = 1852852616;
 
 	/**
 	 * The singleton instance of PUBLIC.V_BOOK
@@ -18,14 +18,9 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generate
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord> __RECORD_TYPE = org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord.class;
 	}
 
 	/**

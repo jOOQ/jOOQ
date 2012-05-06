@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.ase.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -1138187802;
+	private static final long serialVersionUID = 266809394;
 
 	/**
 	 * The singleton instance of dbo.v_library
@@ -18,14 +18,9 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.ase.generate
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.ase.generatedclasses.tables.records.VLibraryRecord> __RECORD_TYPE = org.jooq.test.ase.generatedclasses.tables.records.VLibraryRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.ase.generatedclasses.tables.records.VLibraryRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.ase.generatedclasses.tables.records.VLibraryRecord.class;
 	}
 
 	/**

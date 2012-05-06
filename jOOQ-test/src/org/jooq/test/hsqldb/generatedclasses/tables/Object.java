@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class Object extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> {
 
-	private static final long serialVersionUID = -1757461586;
+	private static final long serialVersionUID = -233956927;
 
 	/**
 	 * The singleton instance of PUBLIC.OBJECT
@@ -18,14 +18,9 @@ public class Object extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generat
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> __RECORD_TYPE = org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord.class;
 	}
 
 	/**

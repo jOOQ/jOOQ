@@ -10,7 +10,7 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1372397316;
+	private static final long serialVersionUID = 1314361076;
 
 	/**
 	 * The singleton instance of PUBLIC.T_BOOK_STORE
@@ -20,14 +20,9 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> __RECORD_TYPE = org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord.class;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses;
  */
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -368897877;
+	private static final long serialVersionUID = -485272170;
 
 	/**
 	 * The singleton instance of public
@@ -20,14 +20,6 @@ public class Public extends org.jooq.impl.SchemaImpl {
 	 */
 	private Public() {
 		super("public");
-	}
-
-	/*
-	 * instance initialiser
-	 */
-	{
-		addMapping("public.u_address_type", org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord.class);
-		addMapping("public.u_street_type", org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord.class);
 	}
 
 	@Override

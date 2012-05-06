@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -781911987;
+	private static final long serialVersionUID = -1530525836;
 
 	/**
 	 * The singleton instance of TEST.X_TEST_CASE_64_69
@@ -18,14 +18,9 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record> __RECORD_TYPE = org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record.class;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = -238269329;
+	private static final long serialVersionUID = 528335642;
 
 	/**
 	 * The singleton instance of TEST.T_658_REF
@@ -18,14 +18,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.derby.genera
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.T_658RefRecord> __RECORD_TYPE = org.jooq.test.derby.generatedclasses.tables.records.T_658RefRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.T_658RefRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.derby.generatedclasses.tables.records.T_658RefRecord.class;
 	}
 
 	/**

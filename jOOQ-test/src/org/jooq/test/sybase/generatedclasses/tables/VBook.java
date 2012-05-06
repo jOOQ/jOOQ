@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 590330164;
+	private static final long serialVersionUID = -341837668;
 
 	/**
 	 * The singleton instance of DBA.v_book
@@ -18,14 +18,9 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generate
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord> __RECORD_TYPE = org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord.class;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class BigDecimal extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord> {
 
-	private static final long serialVersionUID = -1993852709;
+	private static final long serialVersionUID = 291085008;
 
 	/**
 	 * The singleton instance of PUBLIC.BIG_DECIMAL
@@ -18,14 +18,9 @@ public class BigDecimal extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gen
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord> __RECORD_TYPE = org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord.class;
 	}
 
 	/**

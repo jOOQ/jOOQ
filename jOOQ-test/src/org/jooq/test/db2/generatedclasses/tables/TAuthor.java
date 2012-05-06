@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 1840597479;
+	private static final long serialVersionUID = -534500664;
 
 	/**
 	 * The singleton instance of LUKAS.T_AUTHOR
@@ -18,14 +18,9 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord> __RECORD_TYPE = org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord.class;
 	}
 
 	/**

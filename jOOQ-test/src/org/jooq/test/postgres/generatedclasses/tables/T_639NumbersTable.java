@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -1900751603;
+	private static final long serialVersionUID = -1740798611;
 
 	/**
 	 * The singleton instance of public.t_639_numbers_table
@@ -18,14 +18,9 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> __RECORD_TYPE = org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord.class;
 	}
 
 	/**

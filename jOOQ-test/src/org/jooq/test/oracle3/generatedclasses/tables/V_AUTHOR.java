@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class V_AUTHOR extends org.jooq.impl.TableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -537046280;
+	private static final long serialVersionUID = 1394046202;
 
 	/**
 	 * The singleton instance of TEST.V_AUTHOR
@@ -18,14 +18,9 @@ public class V_AUTHOR extends org.jooq.impl.TableImpl<org.jooq.Record> implement
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.Record> __RECORD_TYPE = org.jooq.Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.Record.class;
 	}
 
 	/**

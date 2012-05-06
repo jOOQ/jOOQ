@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class PreparedStatement extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord> {
 
-	private static final long serialVersionUID = 53598964;
+	private static final long serialVersionUID = 630198508;
 
 	/**
 	 * The singleton instance of PUBLIC.PREPARED_STATEMENT
@@ -18,14 +18,9 @@ public class PreparedStatement extends org.jooq.impl.TableImpl<org.jooq.test.hsq
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord> __RECORD_TYPE = org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord.class;
 	}
 
 	/**

@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -370793248;
+	private static final long serialVersionUID = 1864286457;
 
 	/**
 	 * The singleton instance of test.v_library
@@ -20,14 +20,9 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql.genera
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord> __RECORD_TYPE = org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord.class;
 	}
 
 	/**

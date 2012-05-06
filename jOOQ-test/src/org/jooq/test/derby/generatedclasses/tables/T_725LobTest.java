@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 1738735985;
+	private static final long serialVersionUID = -1168791067;
 
 	/**
 	 * The singleton instance of TEST.T_725_LOB_TEST
@@ -18,14 +18,9 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.T_725LobTestRecord> __RECORD_TYPE = org.jooq.test.derby.generatedclasses.tables.records.T_725LobTestRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.T_725LobTestRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.derby.generatedclasses.tables.records.T_725LobTestRecord.class;
 	}
 
 	/**

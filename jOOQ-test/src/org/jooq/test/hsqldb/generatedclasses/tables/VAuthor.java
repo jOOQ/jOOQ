@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 24704307;
+	private static final long serialVersionUID = -1037799282;
 
 	/**
 	 * The singleton instance of PUBLIC.V_AUTHOR
@@ -18,14 +18,9 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.genera
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord> __RECORD_TYPE = org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord.class;
 	}
 
 	/**

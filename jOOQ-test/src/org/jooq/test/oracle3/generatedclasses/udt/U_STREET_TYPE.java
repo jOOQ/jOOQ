@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt;
  */
 public class U_STREET_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -598064775;
+	private static final long serialVersionUID = -818866;
 
 	/**
 	 * The singleton instance of TEST.U_STREET_TYPE
@@ -18,14 +18,9 @@ public class U_STREET_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE> __RECORD_TYPE = org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE.class;
 	}
 
 	/**
@@ -58,5 +53,8 @@ public class U_STREET_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	 */
 	private U_STREET_TYPE() {
 		super("U_STREET_TYPE", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+
+		// Initialise data type
+		getDataType();
 	}
 }

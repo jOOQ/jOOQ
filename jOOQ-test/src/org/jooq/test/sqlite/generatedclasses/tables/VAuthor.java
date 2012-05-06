@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -1087960337;
+	private static final long serialVersionUID = -318321198;
 
 	/**
 	 * The singleton instance of v_author
@@ -18,14 +18,9 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.genera
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord> __RECORD_TYPE = org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord.class;
 	}
 
 	/**

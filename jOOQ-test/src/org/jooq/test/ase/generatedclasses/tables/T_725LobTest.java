@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -263861228;
+	private static final long serialVersionUID = -482042081;
 
 	/**
 	 * The singleton instance of dbo.t_725_lob_test
@@ -18,14 +18,9 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.ase.generatedclasses.tables.records.T_725LobTestRecord> __RECORD_TYPE = org.jooq.test.ase.generatedclasses.tables.records.T_725LobTestRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.ase.generatedclasses.tables.records.T_725LobTestRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.ase.generatedclasses.tables.records.T_725LobTestRecord.class;
 	}
 
 	/**

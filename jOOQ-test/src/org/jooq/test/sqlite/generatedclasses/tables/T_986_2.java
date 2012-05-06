@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = 118579895;
+	private static final long serialVersionUID = 378347374;
 
 	/**
 	 * The singleton instance of t_986_2
@@ -18,14 +18,9 @@ public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record> __RECORD_TYPE = org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record.class;
 	}
 
 	/**

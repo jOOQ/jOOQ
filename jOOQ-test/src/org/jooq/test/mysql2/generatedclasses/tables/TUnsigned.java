@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = -37695588;
+	private static final long serialVersionUID = 1447537595;
 
 	/**
 	 * The singleton instance of test2.t_unsigned
@@ -18,14 +18,9 @@ public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gene
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord> __RECORD_TYPE = org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord.class;
 	}
 
 	/**

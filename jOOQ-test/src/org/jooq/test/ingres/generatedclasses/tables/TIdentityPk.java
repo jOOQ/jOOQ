@@ -8,7 +8,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
  */
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -1467128342;
+	private static final long serialVersionUID = 1094255009;
 
 	/**
 	 * The singleton instance of test.t_identity_pk
@@ -18,14 +18,9 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord> __RECORD_TYPE = org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord.class;
 	}
 
 	/**

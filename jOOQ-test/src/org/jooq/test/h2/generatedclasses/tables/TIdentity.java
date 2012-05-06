@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -259613648;
+	private static final long serialVersionUID = 1986650598;
 
 	/**
 	 * The singleton instance of PUBLIC.T_IDENTITY
@@ -18,14 +18,9 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.h2.generate
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord> __RECORD_TYPE = org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord.class;
 	}
 
 	/**

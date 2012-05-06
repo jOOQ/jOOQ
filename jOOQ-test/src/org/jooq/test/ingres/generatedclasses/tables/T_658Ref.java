@@ -8,7 +8,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
  */
 public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = -612736347;
+	private static final long serialVersionUID = -1523954048;
 
 	/**
 	 * The singleton instance of test.t_658_ref
@@ -18,14 +18,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.ingres.gener
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.ingres.generatedclasses.tables.records.T_658RefRecord> __RECORD_TYPE = org.jooq.test.ingres.generatedclasses.tables.records.T_658RefRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.ingres.generatedclasses.tables.records.T_658RefRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.ingres.generatedclasses.tables.records.T_658RefRecord.class;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1210755002;
+	private static final long serialVersionUID = 196879837;
 
 	/**
 	 * The singleton instance of DBA.x_unused
@@ -18,14 +18,9 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubr
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord> __RECORD_TYPE = org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord.class;
 	}
 
 	/**

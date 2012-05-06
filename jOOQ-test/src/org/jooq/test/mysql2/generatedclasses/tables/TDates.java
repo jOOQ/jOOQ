@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1825563037;
+	private static final long serialVersionUID = -948077816;
 
 	/**
 	 * The singleton instance of test2.t_dates
@@ -18,14 +18,9 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> __RECORD_TYPE = org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord.class;
 	}
 
 	/**

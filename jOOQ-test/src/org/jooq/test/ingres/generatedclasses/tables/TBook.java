@@ -10,7 +10,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1940540674;
+	private static final long serialVersionUID = -1345977093;
 
 	/**
 	 * The singleton instance of test.t_book
@@ -20,14 +20,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> __RECORD_TYPE = org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord.class;
 	}
 
 	/**

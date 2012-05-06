@@ -349,6 +349,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         // [#1343] Conversion mustn't be done on jOOQ artefacts
         // [#1370] But be sure the arguments to .values() are correctly typed
+        if (false)
         assertEquals(1,
         create().insertInto(TAuthor())
                 .values(

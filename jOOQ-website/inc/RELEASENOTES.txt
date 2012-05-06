@@ -10,6 +10,126 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.3.0 - May 6, 2012
+=================================================================
+
+This is a minor feature increment release, featuring many useful
+API enhancements, some new functions, some new syntax support
+elements, improved source code generation and a lot of
+improvements on the jOOQ Console, thanks to Christopher Deckers.
+
+The updated jOOQ Console now allows for filtering incoming
+statements directly on the server side, using regular expression
+filters on statement text and other features. These improvements
+are a part of a general strategy to introduce breakpoints and
+more sophisticated debugging capability to the jOOQ Console.
+
+Features and improvements
+-------------------------
+#597  - Add support for Oracle KEEP (DENSE_RANK FIRST...)
+        aggregate function clause
+#910  - Add ExecuteListener extension to allow for overriding
+        exception translator to handle vendor-specific error
+        codes
+#1286 - Add "renderSchema" flag to Settings, to completely
+        disable rendering of schema names
+#1293 - Generate setter methods for JAXB annotated configuration
+        properties
+#1295 - Add support for MySQL's INSERT IGNORE clause
+#1296 - Simulate the FOR UPDATE clause for SQL Server, CUBRID,
+        using JDBC's ResultSet.CONCUR_UPDATABLE
+#1302 - Add Factory.inline() to allow for flagging inline-only
+        "bind values"
+#1303 - Add connection-less Factory constructors for convenience,
+        when jOOQ is only used as a SQL query builder
+#1304 - Add option to generate JSR-303 @NotNull and @Size
+        annotations to generated POJO's
+#1307 - Let HSQLDB dialect render NVL2() as NVL2() instead of
+        CASE expression
+#1312 - Allow for omitting <inputSchema/>, and generate all
+        available schemata in that case
+#1315 - Let generated factories use their associated Schema as
+        the Settings' RenderMapping's defaultSchema
+#1319 - Move jooq-spring's FactoryProxy to the core jooq project
+#1322 - Add Factory.dateAdd() and timestampAdd() for convenience
+#1327 - Add DataType.isLob()
+#1328 - Add Field<String> inline(char), inline(Character),
+        inline(CharSequence) for convenience
+#1333 - Add support for the Oracle TRUNC function, for numeric
+        arithmetic
+#1336 - Let Record.into(Class<?>) and similar methods accept
+        "immutable" classes, i.e. setter-less classes that take
+        several constructor arguments
+#1340 - Use Constructor.setAccessible(true), if no default
+        constructor is available on the target type of
+        Record.into(Class<?>)
+#1342 - Improve Javadoc on Factory.function(). Document arguments
+#1349 - Add support for the CUBRID Click-Counter INCR()
+#1352 - Allow for creating syntax-error and SQL-injection safe
+        qualifiers for org.jooq.Field and org.jooq.Table
+#1361 - Add Factory.batchStore(TableRecord<?>...), to allow for
+        batch UPDATE/INSERTs of many records
+#1367 - Make configured ExecuteListeners default constructors
+        accessible
+#1366 - Let org.jooq.Batch extend Serializable
+#1378 - Upgrade internal jOOR dependency to jOOR 0.9.3
+#1379 - Upgrade internal jOOU dependency to jOOU 0.9.1
+#1390 - Add RenderContext.qualify() to indicate whether
+        QueryParts should render qualified versions of themselves
+        or not
+
+Features and improvements (jOOQ Console)
+----------------------------------------
+#1242 - Upgrade jOOQ Console dependency on RSyntaxTextArea from
+        1.5 to 2.0.2
+#1249 - Allow for filtering incoming statements in jOOQ Console
+#1393 - Implement a communication protocol between Console server
+        types and Console client types to allow for more
+        sophisticated functionality
+
+API changes (backwards-compatible)
+----------------------------------
+#1310 - Deprecate Factory.literal() in favor of Factory.inline(),
+        and Factory.field()
+#1368 - Promote AbstractQuery.isExecutable() to the public API
+
+Bug fixes
+---------
+#989  - INSERT and UPDATE statements always render non-qualified,
+        escaped field names. This may cause trouble when using
+        plain SQL fields
+#1109 - Standalone TABLE or VARRAY types are not correctly
+        initialised before referencing tables load them
+#1279 - NullPointerException when leaving <inputSchema/> empty
+#1283 - The LIKE escape character needs escaping, too, in
+        contains(), startsWith(), endsWith()
+#1306 - Add missing INTERVAL data types to HSQLDBDataType
+#1308 - Oracle's DataTypeDefinition reports the length of a BLOB
+        / CLOB data type to be 4000
+#1313 - <includes/> and <excludes/> match only table names, not
+        fully qualified names
+#1323 - Add support for byte[] in Postgres UDTs
+#1324 - Code generation error in Oracle 10g when generating
+        stored procedures
+#1326 - Error when deserialising BLOBs from Oracle UDTs
+#1329 - NullPointerException when passing null to
+        timestampDiff(Field, Field)
+#1343 - Regression in insertInto(...).values(...). Cannot pass
+        Field<?> to values()
+#1344 - Initialise Result ArrayLists to their expected size, if
+        that size is known.
+#1360 - jOOR issue 12: "Don't reset the accessible flag to false,
+        if setting it to true is required, to avoid race
+        conditions in concurrency contexts"
+#1371 - Missing conversion when using unsafe Field<?> types in
+        BATCH statements
+#1376 - Oracle UDTs in REF CURSORs are not deserialised correctly
+        from procedure OUT parameters
+#1377 - Oracle UDTs are not deserialised correctly when the same
+        UDT name is present in multiple schemata
+#1394 - NullPointerException when omitting <generate/> element in
+        code generation configuration
+
 Version 2.2.1 - April 12, 2012
 =================================================================
 

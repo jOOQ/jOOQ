@@ -112,6 +112,18 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 <pre class="prettyprint lang-sql">-- the schema name is omitted from all SQL constructs.
 SELECT * FROM T_AUTHOR</pre>
 
+                            <p>If you wish not to render any schema name at all, use the
+                                following Settings property for this:</p>
+
+
+<pre class="prettyprint lang-java">Settings settings = new Settings()
+    .withRenderSchema(false);
+
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+
+// Run queries that omit rendering schema names
+create.selectFrom(T_AUTHOR).fetch();</pre>
 
 							<h2>Mapping of tables</h2>
 							<p>Not only schemata can be mapped, but also tables. If you are not the

@@ -234,6 +234,10 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        compatibility and better integration with JPA/Hibernate, etc
        Defaults to false --&gt;
   &lt;jpaAnnotations&gt;false&lt;/jpaAnnotations&gt;
+
+  &lt;!-- Annotate POJOs and Records with JSR-303 validation annotations
+       Defaults to false --&gt;
+  &lt;validationAnnotations&gt;false&lt;/validationAnnotations&gt;
 &lt;/generate&gt;</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>

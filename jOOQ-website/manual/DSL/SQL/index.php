@@ -80,6 +80,11 @@ Field&lt;Object&gt; field(String sql, Object... bindings);
 &lt;T&gt; Field&lt;T&gt; field(String sql, DataType&lt;T&gt; type);
 &lt;T&gt; Field&lt;T&gt; field(String sql, DataType&lt;T&gt; type, Object... bindings);
 
+// A field with a known name (properly escaped)
+Field&lt;Object&gt; fieldByName(String... fieldName);
+&lt;T&gt; Field&lt;T&gt; fieldByName(Class&lt;T&gt; type, String... fieldName);
+&lt;T&gt; Field&lt;T&gt; fieldByName(DataType&lt;T&gt; type, String... fieldName)
+
 // A function
 &lt;T&gt; Field&lt;T&gt; function(String name, Class&lt;T&gt; type, Field&lt;?&gt;... arguments);
 &lt;T&gt; Field&lt;T&gt; function(String name, DataType&lt;T&gt; type, Field&lt;?&gt;... arguments);

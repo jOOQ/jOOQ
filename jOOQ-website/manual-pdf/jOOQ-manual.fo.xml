@@ -1061,7 +1061,7 @@ CREATE TABLE t_book_to_book_store (
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html')">java.sql.Connection</fo:basic-link> :
-								A JDBC Connection that will be re-used for the whole
+								An optional JDBC Connection that will be re-used for the whole
     							lifecycle of your Factory</fo:block>
 </fo:list-item-body>
 </fo:list-item>
@@ -1909,6 +1909,18 @@ create.insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.LAST_NAME)
       .set(T_AUTHOR.LAST_NAME, "Koontz")
       .execute();</fo:block>
 
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: ON DUPLICATE KEY IGNORE clause</fo:block>
+							<fo:block font-size="11pt">The MySQL database also supports an INSERT IGNORE INTO clause.
+							    This is supported by jOOQ using the more convenient SQL
+							    syntax variant of ON DUPLICATE KEY IGNORE, which can be equally
+							    simulated in other databases using a MERGE statement: </fo:block>
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Add a new author called "Koontz" with ID 3.
+// If that ID is already present, ignore the INSERT statement
+create.insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.LAST_NAME)
+      .values(3, "Koontz")
+      .onDuplicateKeyIgnore()
+      .execute();</fo:block>
+
       						<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: INSERT .. RETURNING clause</fo:block>
 							<fo:block font-size="11pt">The Postgres database has native support for an INSERT .. RETURNING
 								clause. This is a very powerful concept that is simulated for all
@@ -2375,6 +2387,74 @@ WHERE LAST_NAME = :lastName
 </fo:table-row>
 </fo:table-body>
 </fo:table>
+
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Inlining bind values</fo:block>
+
+							<fo:block font-size="11pt">
+								Sometimes, you may wish to avoid rendering bind
+								variables while still using custom values in SQL.
+								jOOQ refers to that as "inlined" bind values.
+								When bind values are inlined, they render the
+								actual value in SQL rather than a JDBC question mark.
+								Bind value inlining can be achieved in two ways:
+							</fo:block>
+
+							<fo:block padding-top="16pt" padding-bottom="16pt">
+<fo:list-block>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">o</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+									By using the settings and setting the
+									<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/conf/StatementType.html')">org.jooq.conf.StatementType</fo:basic-link>
+									to STATIC_STATEMENT. This will inline all
+									bind values for SQL statements rendered from
+									such a Factory.
+								</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">o</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+									By using Factory.inline() methods.
+								</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+							</fo:list-block>
+</fo:block>
+
+							<fo:block font-size="11pt">
+								In both cases, your inlined bind values will be
+								properly escaped to avoid SQL syntax errors and
+								SQL injection.
+								Some examples:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[
+// Use dedicated calls to inline() in order to specify
+// single bind values to be rendered as inline values
+// --------------------------------------------------
+create.select()
+      .from(T_AUTHOR)
+      .where(LAST_NAME.equal(inline("Poe")));
+
+// Or render the whole query with inlined values
+// --------------------------------------------------
+Settings settings = new Settings()
+    .withStatementType(StatementType.STATIC_STATEMENT);
+
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+
+// Run queries that omit rendering schema names
+create.select()
+      .from(T_AUTHOR)
+      .where(LAST_NAME.equal("Poe"));]]></fo:block>
 						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="QueryPart">
 <fo:marker marker-class-name="section">
 <fo:block>1.9. QueryParts and the global architecture</fo:block>
@@ -2697,6 +2777,7 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
            named org.util.[database].[database]Database. Known values are:
 
            org.jooq.util.ase.ASEDatabase
+           org.jooq.util.cubrid.CUBRIDDatabase
            org.jooq.util.db2.DB2Database
            org.jooq.util.derby.DerbyDatabase
            org.jooq.util.h2.H2Database
@@ -3225,6 +3306,10 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        compatibility and better integration with JPA/Hibernate, etc
        Defaults to false -->
   <jpaAnnotations>false</jpaAnnotations>
+
+  <!-- Annotate POJOs and Records with JSR-303 validation annotations
+       Defaults to false -->
+  <validationAnnotations>false</validationAnnotations>
 </generate>]]></fo:block>
 						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SCHEMA">
 <fo:marker marker-class-name="section">
@@ -5335,7 +5420,7 @@ create.select(T_PERSON.NAME)
 							<fo:block font-size="11pt">In order to express a SQL query like this one: </fo:block>
 							<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SELECT ((1 + 2) * (5 - 3) / 2) % 10 FROM DUAL</fo:block>
 							<fo:block font-size="11pt">You can write something like this in jOOQ: </fo:block>
-							<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">create.select(create.val(1).add(2).mul(create.val(5).sub(3)).div(2).mod(10));	</fo:block>
+							<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">create.select(val(1).add(2).mul(val(5).sub(3)).div(2).mod(10));	</fo:block>
 
 							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Datetime arithmetic</fo:block>
 							<fo:block font-size="11pt">jOOQ also supports the Oracle-style syntax for adding days to a Field&lt;? extends java.util.Date&gt; </fo:block>
@@ -5351,7 +5436,7 @@ create.select(T_PERSON.NAME)
 </fo:table-cell>
 <fo:table-cell>
 <fo:block>
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">create.select(create.currentTimestamp().add(3));</fo:block>
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">create.select(currentTimestamp().add(3));</fo:block>
 </fo:block>
 </fo:table-cell>
 </fo:table-row>
@@ -5659,6 +5744,11 @@ Field<Object> field(String sql, Object... bindings);
 <T> Field<T> field(String sql, Class<T> type, Object... bindings);
 <T> Field<T> field(String sql, DataType<T> type);
 <T> Field<T> field(String sql, DataType<T> type, Object... bindings);
+
+// A field with a known name (properly escaped)
+Field<Object> fieldByName(String... fieldName);
+<T> Field<T> fieldByName(Class<T> type, String... fieldName);
+<T> Field<T> fieldByName(DataType<T> type, String... fieldName)
 
 // A function
 <T> Field<T> function(String name, Class<T> type, Field<?>... arguments);
@@ -6175,6 +6265,18 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">-- the schema name is omitted from all SQL constructs.
 SELECT * FROM T_AUTHOR</fo:block>
 
+                            <fo:block font-size="11pt">If you wish not to render any schema name at all, use the
+                                following Settings property for this:</fo:block>
+
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">Settings settings = new Settings()
+    .withRenderSchema(false);
+
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+
+// Run queries that omit rendering schema names
+create.selectFrom(T_AUTHOR).fetch();</fo:block>
 
 							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mapping of tables</fo:block>
 							<fo:block font-size="11pt">Not only schemata can be mapped, but also tables. If you are not the

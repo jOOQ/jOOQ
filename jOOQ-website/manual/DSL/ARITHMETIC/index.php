@@ -33,7 +33,7 @@ function printContent() {
 							<p>In order to express a SQL query like this one: </p>
 							<pre class="prettyprint lang-sql">SELECT ((1 + 2) * (5 - 3) / 2) % 10 FROM DUAL</pre>
 							<p>You can write something like this in jOOQ: </p>
-							<pre class="prettyprint lang-java">create.select(create.val(1).add(2).mul(create.val(5).sub(3)).div(2).mod(10));	</pre>
+							<pre class="prettyprint lang-java">create.select(val(1).add(2).mul(val(5).sub(3)).div(2).mod(10));	</pre>
 
 							<h2>Datetime arithmetic</h2>
 							<p>jOOQ also supports the Oracle-style syntax for adding days to a Field&lt;? extends java.util.Date&gt; </p>
@@ -42,7 +42,7 @@ function printContent() {
 <td class="left" width="50%">
 <pre class="prettyprint lang-sql">SELECT SYSDATE + 3 FROM DUAL;</pre>
 </td><td class="right" width="50%">
-<pre class="prettyprint lang-java">create.select(create.currentTimestamp().add(3));</pre>
+<pre class="prettyprint lang-java">create.select(currentTimestamp().add(3));</pre>
 </td>
 </tr>
 </table>

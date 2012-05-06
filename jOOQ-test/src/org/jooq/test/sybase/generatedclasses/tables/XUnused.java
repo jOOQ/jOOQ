@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1231742908;
+	private static final long serialVersionUID = -1405120457;
 
 	/**
 	 * The singleton instance of DBA.x_unused
@@ -18,14 +18,9 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> __RECORD_TYPE = org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord.class;
 	}
 
 	/**

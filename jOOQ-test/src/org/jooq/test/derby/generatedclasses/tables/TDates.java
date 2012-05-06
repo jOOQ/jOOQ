@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 2140601346;
+	private static final long serialVersionUID = 1310755593;
 
 	/**
 	 * The singleton instance of TEST.T_DATES
@@ -18,14 +18,9 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.TDatesRecord> __RECORD_TYPE = org.jooq.test.derby.generatedclasses.tables.records.TDatesRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.TDatesRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.derby.generatedclasses.tables.records.TDatesRecord.class;
 	}
 
 	/**

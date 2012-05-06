@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 1310095977;
+	private static final long serialVersionUID = 565566914;
 
 	/**
 	 * The singleton instance of PUBLIC.X_TEST_CASE_71
@@ -18,14 +18,9 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record> __RECORD_TYPE = org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record.class;
 	}
 
 	/**

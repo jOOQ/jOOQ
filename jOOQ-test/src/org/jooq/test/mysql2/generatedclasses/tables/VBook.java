@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 1081481447;
+	private static final long serialVersionUID = -327641948;
 
 	/**
 	 * The singleton instance of test2.v_book
@@ -20,14 +20,9 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generate
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> __RECORD_TYPE = org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord.class;
 	}
 
 	/**

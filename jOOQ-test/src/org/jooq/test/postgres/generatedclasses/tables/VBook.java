@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1728984972;
+	private static final long serialVersionUID = 1879696658;
 
 	/**
 	 * The singleton instance of public.v_book
@@ -18,14 +18,9 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.genera
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord> __RECORD_TYPE = org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord.class;
 	}
 
 	/**

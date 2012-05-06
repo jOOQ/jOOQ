@@ -416,17 +416,17 @@ public class jOOQDB2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_VC() {
-        return TBooleans.VC_BOOLEAN;
+        return (TableField) TBooleans.VC_BOOLEAN;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_C() {
-        return TBooleans.C_BOOLEAN;
+        return (TableField) TBooleans.C_BOOLEAN;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_N() {
-        return TBooleans.N_BOOLEAN;
+        return (TableField) TBooleans.N_BOOLEAN;
     }
 
     @Override

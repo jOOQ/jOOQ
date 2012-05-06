@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 1674898846;
+	private static final long serialVersionUID = -2111617811;
 
 	/**
 	 * The singleton instance of PUBLIC.T_785
@@ -18,14 +18,9 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcla
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.h2.generatedclasses.tables.records.T_785Record> __RECORD_TYPE = org.jooq.test.h2.generatedclasses.tables.records.T_785Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.h2.generatedclasses.tables.records.T_785Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.h2.generatedclasses.tables.records.T_785Record.class;
 	}
 
 	/**

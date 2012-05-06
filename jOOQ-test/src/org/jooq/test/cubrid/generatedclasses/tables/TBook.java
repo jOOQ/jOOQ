@@ -8,7 +8,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1669427377;
+	private static final long serialVersionUID = -1682536245;
 
 	/**
 	 * The singleton instance of DBA.t_book
@@ -18,14 +18,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> __RECORD_TYPE = org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord.class;
 	}
 
 	/**

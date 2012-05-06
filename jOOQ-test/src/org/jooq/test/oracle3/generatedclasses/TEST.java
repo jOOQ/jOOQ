@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses;
  */
 public class TEST extends org.jooq.impl.SchemaImpl implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1820895606;
+	private static final long serialVersionUID = -369094864;
 
 	/**
 	 * The singleton instance of TEST
@@ -20,19 +20,6 @@ public class TEST extends org.jooq.impl.SchemaImpl implements java.lang.Cloneabl
 	 */
 	private TEST() {
 		super("TEST");
-	}
-
-	/*
-	 * instance initialiser
-	 */
-	{
-		addMapping("TEST.O_INVALID_TYPE", org.jooq.test.oracle3.generatedclasses.udt.records.O_INVALID_TYPE.class);
-		addMapping("TEST.U_ADDRESS_TYPE", org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE.class);
-		addMapping("TEST.U_AUTHOR_TYPE", org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE.class);
-		addMapping("TEST.U_BOOK_TYPE", org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE.class);
-		addMapping("TEST.U_INVALID_TABLE", org.jooq.test.oracle3.generatedclasses.udt.records.U_INVALID_TABLE.class);
-		addMapping("TEST.U_INVALID_TYPE", org.jooq.test.oracle3.generatedclasses.udt.records.U_INVALID_TYPE.class);
-		addMapping("TEST.U_STREET_TYPE", org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE.class);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt;
  */
 public class U_BOOK_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1588960519;
+	private static final long serialVersionUID = -481432100;
 
 	/**
 	 * The singleton instance of TEST.U_BOOK_TYPE
@@ -18,14 +18,9 @@ public class U_BOOK_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.gen
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> __RECORD_TYPE = org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE.class;
 	}
 
 	/**
@@ -43,5 +38,8 @@ public class U_BOOK_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.gen
 	 */
 	private U_BOOK_TYPE() {
 		super("U_BOOK_TYPE", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+
+		// Initialise data type
+		getDataType();
 	}
 }

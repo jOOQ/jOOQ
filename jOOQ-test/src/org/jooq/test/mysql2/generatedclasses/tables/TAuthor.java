@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 887389400;
+	private static final long serialVersionUID = -77851109;
 
 	/**
 	 * The singleton instance of test2.t_author
@@ -20,14 +20,9 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> __RECORD_TYPE = org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord.class;
 	}
 
 	/**

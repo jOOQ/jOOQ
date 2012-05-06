@@ -8,7 +8,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1862404908;
+	private static final long serialVersionUID = -1470184292;
 
 	/**
 	 * The singleton instance of DBA.v_author
@@ -18,14 +18,9 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.genera
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.cubrid.generatedclasses.tables.records.VAuthorRecord> __RECORD_TYPE = org.jooq.test.cubrid.generatedclasses.tables.records.VAuthorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.cubrid.generatedclasses.tables.records.VAuthorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.cubrid.generatedclasses.tables.records.VAuthorRecord.class;
 	}
 
 	/**

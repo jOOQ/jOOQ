@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1637223352;
+	private static final long serialVersionUID = 1642258719;
 
 	/**
 	 * The singleton instance of test.v_author
@@ -20,14 +20,9 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generat
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.mysql.generatedclasses.tables.records.VAuthorRecord> __RECORD_TYPE = org.jooq.test.mysql.generatedclasses.tables.records.VAuthorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.mysql.generatedclasses.tables.records.VAuthorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.mysql.generatedclasses.tables.records.VAuthorRecord.class;
 	}
 
 	/**

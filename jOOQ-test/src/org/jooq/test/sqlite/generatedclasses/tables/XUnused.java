@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -2083714462;
+	private static final long serialVersionUID = -1366148994;
 
 	/**
 	 * The singleton instance of x_unused
@@ -18,14 +18,9 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> __RECORD_TYPE = org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord.class;
 	}
 
 	/**

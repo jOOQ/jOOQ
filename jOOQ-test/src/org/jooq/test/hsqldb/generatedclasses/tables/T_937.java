@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class T_937 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> {
 
-	private static final long serialVersionUID = 502816630;
+	private static final long serialVersionUID = -1266655986;
 
 	/**
 	 * The singleton instance of PUBLIC.T_937
@@ -18,14 +18,9 @@ public class T_937 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> __RECORD_TYPE = org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record.class;
 	}
 
 	/**

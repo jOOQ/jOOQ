@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -1641852043;
+	private static final long serialVersionUID = 840605408;
 
 	/**
 	 * The singleton instance of TEST.V_LIBRARY
@@ -18,14 +18,9 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.derby.genera
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.VLibraryRecord> __RECORD_TYPE = org.jooq.test.derby.generatedclasses.tables.records.VLibraryRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.VLibraryRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.derby.generatedclasses.tables.records.VLibraryRecord.class;
 	}
 
 	/**

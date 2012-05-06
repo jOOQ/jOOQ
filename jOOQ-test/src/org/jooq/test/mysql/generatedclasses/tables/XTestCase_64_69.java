@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -1834195164;
+	private static final long serialVersionUID = 22321129;
 
 	/**
 	 * The singleton instance of test.x_test_case_64_69
@@ -20,14 +20,9 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record> __RECORD_TYPE = org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record.class;
 	}
 
 	/**

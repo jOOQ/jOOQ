@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 1286485398;
+	private static final long serialVersionUID = -1379657846;
 
 	/**
 	 * The singleton instance of PUBLIC.T_ARRAYS
@@ -18,14 +18,9 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsql
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> __RECORD_TYPE = org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord.class;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables;
  */
 public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = -1576959797;
+	private static final long serialVersionUID = 2126371375;
 
 	/**
 	 * The singleton instance of LUKAS.T_986_1
@@ -18,14 +18,9 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> __RECORD_TYPE = org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record.class;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt;
  */
 public class O_INVALID_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.O_INVALID_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1993818869;
+	private static final long serialVersionUID = -1287331422;
 
 	/**
 	 * The singleton instance of TEST.O_INVALID_TYPE
@@ -18,14 +18,9 @@ public class O_INVALID_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle3.generatedclasses.udt.records.O_INVALID_TYPE> __RECORD_TYPE = org.jooq.test.oracle3.generatedclasses.udt.records.O_INVALID_TYPE.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.oracle3.generatedclasses.udt.records.O_INVALID_TYPE> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.oracle3.generatedclasses.udt.records.O_INVALID_TYPE.class;
 	}
 
 	/**
@@ -33,5 +28,8 @@ public class O_INVALID_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.
 	 */
 	private O_INVALID_TYPE() {
 		super("O_INVALID_TYPE", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+
+		// Initialise data type
+		getDataType();
 	}
 }

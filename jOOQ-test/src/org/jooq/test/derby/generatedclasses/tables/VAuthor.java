@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1773531573;
+	private static final long serialVersionUID = 1974811296;
 
 	/**
 	 * The singleton instance of TEST.V_AUTHOR
@@ -18,14 +18,9 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.derby.generat
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.VAuthorRecord> __RECORD_TYPE = org.jooq.test.derby.generatedclasses.tables.records.VAuthorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.derby.generatedclasses.tables.records.VAuthorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.derby.generatedclasses.tables.records.VAuthorRecord.class;
 	}
 
 	/**

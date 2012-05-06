@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -161813889;
+	private static final long serialVersionUID = 1453064382;
 
 	/**
 	 * The singleton instance of PUBLIC.T_AUTHOR
@@ -18,14 +18,9 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsql
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> __RECORD_TYPE = org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord.class;
 	}
 
 	/**

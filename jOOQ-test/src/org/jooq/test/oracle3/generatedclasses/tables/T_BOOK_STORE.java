@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -401399689;
+	private static final long serialVersionUID = 1926923875;
 
 	/**
 	 * The singleton instance of TEST.T_BOOK_STORE
@@ -20,14 +20,9 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.Reco
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.Record> __RECORD_TYPE = org.jooq.Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.Record.class;
 	}
 
 	/**

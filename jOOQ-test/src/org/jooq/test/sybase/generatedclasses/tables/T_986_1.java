@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = -921462634;
+	private static final long serialVersionUID = 1436042625;
 
 	/**
 	 * The singleton instance of DBA.t_986_1
@@ -18,14 +18,9 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record> __RECORD_TYPE = org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record.class;
 	}
 
 	/**

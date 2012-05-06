@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -594907415;
+	private static final long serialVersionUID = -919355848;
 
 	/**
 	 * The singleton instance of LUKAS.V_LIBRARY
@@ -18,14 +18,9 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.db2.generate
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord> __RECORD_TYPE = org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord.class;
 	}
 
 	/**

@@ -12,7 +12,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 
 	/**
 	 * An uncommented item
-	 *
+	 * 
 	 * PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
@@ -21,7 +21,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 
 	/**
 	 * An uncommented item
-	 *
+	 * 
 	 * PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
@@ -129,42 +129,42 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	public void setVcBoolean(java.lang.Boolean value) {
+	public void setVcBoolean(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TBooleans.VC_BOOLEAN, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public java.lang.Boolean getVcBoolean() {
+	public java.lang.String getVcBoolean() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TBooleans.VC_BOOLEAN);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setCBoolean(java.lang.Boolean value) {
+	public void setCBoolean(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TBooleans.C_BOOLEAN, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public java.lang.Boolean getCBoolean() {
+	public java.lang.String getCBoolean() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TBooleans.C_BOOLEAN);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setNBoolean(java.lang.Boolean value) {
+	public void setNBoolean(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TBooleans.N_BOOLEAN, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public java.lang.Boolean getNBoolean() {
+	public java.lang.Integer getNBoolean() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TBooleans.N_BOOLEAN);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = -163809970;
+	private static final long serialVersionUID = 702265258;
 
 	/**
 	 * The singleton instance of test2.t_959
@@ -18,14 +18,9 @@ public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generate
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record> __RECORD_TYPE = org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record.class;
 	}
 
 	/**

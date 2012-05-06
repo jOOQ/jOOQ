@@ -8,7 +8,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -34246579;
+	private static final long serialVersionUID = -359452509;
 
 	/**
 	 * The singleton instance of DBA.t_author
@@ -18,14 +18,9 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubr
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord> __RECORD_TYPE = org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord.class;
 	}
 
 	/**

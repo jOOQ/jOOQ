@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.udt;
  */
 public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord> {
 
-	private static final long serialVersionUID = -842411288;
+	private static final long serialVersionUID = 593354470;
 
 	/**
 	 * The singleton instance of public.u_street_type
@@ -18,14 +18,9 @@ public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.ge
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord> __RECORD_TYPE = org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord.class;
 	}
 
 	/**
@@ -53,5 +48,8 @@ public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.ge
 	 */
 	private UStreetType() {
 		super("u_street_type", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+
+		// Initialise data type
+		getDataType();
 	}
 }

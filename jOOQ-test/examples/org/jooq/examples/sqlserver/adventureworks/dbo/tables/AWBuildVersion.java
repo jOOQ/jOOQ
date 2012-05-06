@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class AWBuildVersion extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion> {
 
-	private static final long serialVersionUID = -549390538;
+	private static final long serialVersionUID = 693197187;
 
 	/**
 	 * The singleton instance of dbo.AWBuildVersion
@@ -18,14 +18,9 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableTableImpl<org.jooq.ex
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion.class;
 	}
 
 	/**

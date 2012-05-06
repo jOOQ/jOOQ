@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> {
 
-	private static final long serialVersionUID = -458988826;
+	private static final long serialVersionUID = 201805321;
 
 	/**
 	 * The singleton instance of sakila.rental
@@ -18,14 +18,9 @@ public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.m
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> __RECORD_TYPE = org.jooq.examples.mysql.sakila.tables.records.RentalRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.mysql.sakila.tables.records.RentalRecord.class;
 	}
 
 	/**

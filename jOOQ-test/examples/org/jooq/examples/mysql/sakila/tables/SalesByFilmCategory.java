@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class SalesByFilmCategory extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord> {
 
-	private static final long serialVersionUID = 1034750250;
+	private static final long serialVersionUID = -2062450516;
 
 	/**
 	 * The singleton instance of sakila.sales_by_film_category
@@ -20,14 +20,9 @@ public class SalesByFilmCategory extends org.jooq.impl.TableImpl<org.jooq.exampl
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord> __RECORD_TYPE = org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord.class;
 	}
 
 	/**

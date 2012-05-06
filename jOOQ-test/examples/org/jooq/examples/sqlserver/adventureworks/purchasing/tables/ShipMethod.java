@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class ShipMethod extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipMethod> {
 
-	private static final long serialVersionUID = 900283147;
+	private static final long serialVersionUID = 1686611764;
 
 	/**
 	 * The singleton instance of Purchasing.ShipMethod
@@ -18,14 +18,9 @@ public class ShipMethod extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipMethod> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipMethod.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipMethod> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipMethod.class;
 	}
 
 	/**

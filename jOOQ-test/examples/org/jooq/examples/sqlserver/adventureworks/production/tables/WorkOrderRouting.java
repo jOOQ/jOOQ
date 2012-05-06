@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class WorkOrderRouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting> {
 
-	private static final long serialVersionUID = -1027055777;
+	private static final long serialVersionUID = 655356755;
 
 	/**
 	 * The singleton instance of Production.WorkOrderRouting
@@ -18,14 +18,9 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting.class;
 	}
 
 	/**

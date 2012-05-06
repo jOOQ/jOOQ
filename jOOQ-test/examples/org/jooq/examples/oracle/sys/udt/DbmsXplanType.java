@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.udt;
  */
 public class DbmsXplanType extends org.jooq.impl.UDTImpl<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord> {
 
-	private static final long serialVersionUID = -1155864431;
+	private static final long serialVersionUID = 893053116;
 
 	/**
 	 * The singleton instance of SYS.DBMS_XPLAN_TYPE
@@ -18,14 +18,9 @@ public class DbmsXplanType extends org.jooq.impl.UDTImpl<org.jooq.examples.oracl
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord> __RECORD_TYPE = org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord.class;
 	}
 
 	/**
@@ -38,5 +33,8 @@ public class DbmsXplanType extends org.jooq.impl.UDTImpl<org.jooq.examples.oracl
 	 */
 	private DbmsXplanType() {
 		super("DBMS_XPLAN_TYPE", org.jooq.examples.oracle.sys.Sys.SYS);
+
+		// Initialise data type
+		getDataType();
 	}
 }

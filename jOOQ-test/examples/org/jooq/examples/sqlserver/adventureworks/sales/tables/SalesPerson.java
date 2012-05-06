@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class SalesPerson extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson> {
 
-	private static final long serialVersionUID = 495214878;
+	private static final long serialVersionUID = -1237119535;
 
 	/**
 	 * The singleton instance of Sales.SalesPerson
@@ -18,14 +18,9 @@ public class SalesPerson extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson.class;
 	}
 
 	/**

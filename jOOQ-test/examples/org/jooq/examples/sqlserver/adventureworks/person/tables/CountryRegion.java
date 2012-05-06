@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class CountryRegion extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> {
 
-	private static final long serialVersionUID = -1922798317;
+	private static final long serialVersionUID = -87949150;
 
 	/**
 	 * The singleton instance of Person.CountryRegion
@@ -18,14 +18,9 @@ public class CountryRegion extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion.class;
 	}
 
 	/**

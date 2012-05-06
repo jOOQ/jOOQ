@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Shift extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> {
 
-	private static final long serialVersionUID = 14909332;
+	private static final long serialVersionUID = -1652338878;
 
 	/**
 	 * The singleton instance of HumanResources.Shift
@@ -18,14 +18,9 @@ public class Shift extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sq
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift.class;
 	}
 
 	/**

@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class FilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord> {
 
-	private static final long serialVersionUID = -179046730;
+	private static final long serialVersionUID = -645421505;
 
 	/**
 	 * The singleton instance of sakila.film_list
@@ -20,14 +20,9 @@ public class FilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sa
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord> __RECORD_TYPE = org.jooq.examples.mysql.sakila.tables.records.FilmListRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.mysql.sakila.tables.records.FilmListRecord.class;
 	}
 
 	/**

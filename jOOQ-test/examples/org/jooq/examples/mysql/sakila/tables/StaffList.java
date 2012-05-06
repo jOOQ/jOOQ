@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class StaffList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.StaffListRecord> {
 
-	private static final long serialVersionUID = -137774463;
+	private static final long serialVersionUID = -881389626;
 
 	/**
 	 * The singleton instance of sakila.staff_list
@@ -20,14 +20,9 @@ public class StaffList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.s
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.StaffListRecord> __RECORD_TYPE = org.jooq.examples.mysql.sakila.tables.records.StaffListRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.StaffListRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.mysql.sakila.tables.records.StaffListRecord.class;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class vStoreWithDemographics extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics> {
 
-	private static final long serialVersionUID = 1964180686;
+	private static final long serialVersionUID = 1015550707;
 
 	/**
 	 * The singleton instance of Sales.vStoreWithDemographics
@@ -18,14 +18,9 @@ public class vStoreWithDemographics extends org.jooq.impl.TableImpl<org.jooq.exa
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics.class;
 	}
 
 	/**

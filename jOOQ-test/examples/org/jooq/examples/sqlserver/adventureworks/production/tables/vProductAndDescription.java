@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class vProductAndDescription extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription> {
 
-	private static final long serialVersionUID = 645228666;
+	private static final long serialVersionUID = 173998083;
 
 	/**
 	 * The singleton instance of Production.vProductAndDescription
@@ -18,14 +18,9 @@ public class vProductAndDescription extends org.jooq.impl.TableImpl<org.jooq.exa
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription.class;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CityRecord> {
 
-	private static final long serialVersionUID = -729325672;
+	private static final long serialVersionUID = -509762746;
 
 	/**
 	 * The singleton instance of sakila.city
@@ -18,14 +18,9 @@ public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.CityRecord> __RECORD_TYPE = org.jooq.examples.mysql.sakila.tables.records.CityRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.CityRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.mysql.sakila.tables.records.CityRecord.class;
 	}
 
 	/**

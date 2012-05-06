@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class SalesByStore extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> {
 
-	private static final long serialVersionUID = 2040027130;
+	private static final long serialVersionUID = -42835729;
 
 	/**
 	 * The singleton instance of sakila.sales_by_store
@@ -20,14 +20,9 @@ public class SalesByStore extends org.jooq.impl.TableImpl<org.jooq.examples.mysq
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> __RECORD_TYPE = org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord.class;
 	}
 
 	/**

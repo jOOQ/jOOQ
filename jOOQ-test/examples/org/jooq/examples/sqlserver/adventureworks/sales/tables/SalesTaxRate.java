@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class SalesTaxRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTaxRate> {
 
-	private static final long serialVersionUID = -1524887464;
+	private static final long serialVersionUID = -664347107;
 
 	/**
 	 * The singleton instance of Sales.SalesTaxRate
@@ -18,14 +18,9 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTaxRate> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTaxRate.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTaxRate> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTaxRate.class;
 	}
 
 	/**

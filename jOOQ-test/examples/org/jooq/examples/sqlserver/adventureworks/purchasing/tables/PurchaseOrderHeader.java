@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class PurchaseOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> {
 
-	private static final long serialVersionUID = -1357316998;
+	private static final long serialVersionUID = -1265127586;
 
 	/**
 	 * The singleton instance of Purchasing.PurchaseOrderHeader
@@ -18,14 +18,9 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jo
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader.class;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class UnitMeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> {
 
-	private static final long serialVersionUID = 1205735086;
+	private static final long serialVersionUID = 1195936827;
 
 	/**
 	 * The singleton instance of Production.UnitMeasure
@@ -18,14 +18,9 @@ public class UnitMeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure.class;
 	}
 
 	/**

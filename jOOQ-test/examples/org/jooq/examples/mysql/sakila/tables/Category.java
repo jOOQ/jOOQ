@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Category extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> {
 
-	private static final long serialVersionUID = -1434237078;
+	private static final long serialVersionUID = -1360391681;
 
 	/**
 	 * The singleton instance of sakila.category
@@ -18,14 +18,9 @@ public class Category extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> __RECORD_TYPE = org.jooq.examples.mysql.sakila.tables.records.CategoryRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.mysql.sakila.tables.records.CategoryRecord.class;
 	}
 
 	/**

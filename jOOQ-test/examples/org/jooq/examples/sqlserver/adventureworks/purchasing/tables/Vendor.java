@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Vendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor> {
 
-	private static final long serialVersionUID = -418224279;
+	private static final long serialVersionUID = 698258439;
 
 	/**
 	 * The singleton instance of Purchasing.Vendor
@@ -18,14 +18,9 @@ public class Vendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.s
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor.class;
 	}
 
 	/**

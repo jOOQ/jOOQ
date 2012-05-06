@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class vStateProvinceCountryRegion extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion> {
 
-	private static final long serialVersionUID = 772993938;
+	private static final long serialVersionUID = -327074684;
 
 	/**
 	 * The singleton instance of Person.vStateProvinceCountryRegion
@@ -18,14 +18,9 @@ public class vStateProvinceCountryRegion extends org.jooq.impl.TableImpl<org.joo
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion.class;
 	}
 
 	/**

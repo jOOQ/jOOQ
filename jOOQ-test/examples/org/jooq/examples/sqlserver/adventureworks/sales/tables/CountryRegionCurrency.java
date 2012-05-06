@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class CountryRegionCurrency extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> {
 
-	private static final long serialVersionUID = -1868381603;
+	private static final long serialVersionUID = -1002905574;
 
 	/**
 	 * The singleton instance of Sales.CountryRegionCurrency
@@ -18,14 +18,9 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableTableImpl<org.
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency.class;
 	}
 
 	/**

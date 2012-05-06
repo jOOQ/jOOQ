@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Document extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document> {
 
-	private static final long serialVersionUID = 273545870;
+	private static final long serialVersionUID = -290833900;
 
 	/**
 	 * The singleton instance of Production.Document
@@ -18,14 +18,9 @@ public class Document extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document.class;
 	}
 
 	/**

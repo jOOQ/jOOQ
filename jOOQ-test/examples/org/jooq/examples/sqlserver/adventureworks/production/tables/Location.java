@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Location extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Location> {
 
-	private static final long serialVersionUID = 2135751964;
+	private static final long serialVersionUID = 1996677948;
 
 	/**
 	 * The singleton instance of Production.Location
@@ -18,14 +18,9 @@ public class Location extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Location> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.production.tables.records.Location.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Location> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.records.Location.class;
 	}
 
 	/**

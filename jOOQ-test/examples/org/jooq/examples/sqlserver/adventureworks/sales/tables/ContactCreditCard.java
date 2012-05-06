@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class ContactCreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> {
 
-	private static final long serialVersionUID = 1897074008;
+	private static final long serialVersionUID = -358913443;
 
 	/**
 	 * The singleton instance of Sales.ContactCreditCard
@@ -18,14 +18,9 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard.class;
 	}
 
 	/**

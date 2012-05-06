@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Employee extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> {
 
-	private static final long serialVersionUID = -101776693;
+	private static final long serialVersionUID = -1576862283;
 
 	/**
 	 * The singleton instance of HumanResources.Employee
@@ -18,14 +18,9 @@ public class Employee extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee.class;
 	}
 
 	/**

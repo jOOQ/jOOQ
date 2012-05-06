@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class TransactionHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory> {
 
-	private static final long serialVersionUID = -1951887004;
+	private static final long serialVersionUID = 1420176517;
 
 	/**
 	 * The singleton instance of Production.TransactionHistory
@@ -18,14 +18,9 @@ public class TransactionHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory.class;
 	}
 
 	/**

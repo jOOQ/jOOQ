@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Actor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.ActorRecord> {
 
-	private static final long serialVersionUID = 1814781814;
+	private static final long serialVersionUID = 1932902334;
 
 	/**
 	 * The singleton instance of sakila.actor
@@ -18,14 +18,9 @@ public class Actor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.ActorRecord> __RECORD_TYPE = org.jooq.examples.mysql.sakila.tables.records.ActorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.ActorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.mysql.sakila.tables.records.ActorRecord.class;
 	}
 
 	/**

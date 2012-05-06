@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class vAdditionalContactInfo extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo> {
 
-	private static final long serialVersionUID = -772764529;
+	private static final long serialVersionUID = -1865409949;
 
 	/**
 	 * The singleton instance of Person.vAdditionalContactInfo
@@ -18,14 +18,9 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableImpl<org.jooq.exa
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo.class;
 	}
 
 	/**

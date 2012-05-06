@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class ScrapReason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> {
 
-	private static final long serialVersionUID = 1965974990;
+	private static final long serialVersionUID = 884949962;
 
 	/**
 	 * The singleton instance of Production.ScrapReason
@@ -18,14 +18,9 @@ public class ScrapReason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason.class;
 	}
 
 	/**

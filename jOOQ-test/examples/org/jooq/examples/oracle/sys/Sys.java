@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys;
  */
 public class Sys extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 2134291205;
+	private static final long serialVersionUID = -660270111;
 
 	/**
 	 * The singleton instance of SYS
@@ -20,13 +20,6 @@ public class Sys extends org.jooq.impl.SchemaImpl {
 	 */
 	private Sys() {
 		super("SYS");
-	}
-
-	/*
-	 * instance initialiser
-	 */
-	{
-		addMapping("SYS.DBMS_XPLAN_TYPE", org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord.class);
 	}
 
 	@Override

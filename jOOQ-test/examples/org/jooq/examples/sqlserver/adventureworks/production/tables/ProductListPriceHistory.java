@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class ProductListPriceHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory> {
 
-	private static final long serialVersionUID = 1630228129;
+	private static final long serialVersionUID = -1803831660;
 
 	/**
 	 * The singleton instance of Production.ProductListPriceHistory
@@ -18,14 +18,9 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableTableImpl<or
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory.class;
 	}
 
 	/**

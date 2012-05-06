@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> {
 
-	private static final long serialVersionUID = 1934089629;
+	private static final long serialVersionUID = -855815780;
 
 	/**
 	 * The singleton instance of sakila.payment
@@ -18,14 +18,9 @@ public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> __RECORD_TYPE = org.jooq.examples.mysql.sakila.tables.records.PaymentRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.mysql.sakila.tables.records.PaymentRecord.class;
 	}
 
 	/**

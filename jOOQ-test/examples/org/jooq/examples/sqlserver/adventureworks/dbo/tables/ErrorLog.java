@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class ErrorLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog> {
 
-	private static final long serialVersionUID = -26315492;
+	private static final long serialVersionUID = -1919991107;
 
 	/**
 	 * The singleton instance of dbo.ErrorLog
@@ -18,14 +18,9 @@ public class ErrorLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog.class;
 	}
 
 	/**

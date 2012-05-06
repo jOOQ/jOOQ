@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Culture extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture> {
 
-	private static final long serialVersionUID = 95623250;
+	private static final long serialVersionUID = 484343683;
 
 	/**
 	 * The singleton instance of Production.Culture
@@ -18,14 +18,9 @@ public class Culture extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture.class;
 	}
 
 	/**

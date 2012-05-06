@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> {
 
-	private static final long serialVersionUID = 868929398;
+	private static final long serialVersionUID = -1668497777;
 
 	/**
 	 * The singleton instance of sakila.inventory
@@ -18,14 +18,9 @@ public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> __RECORD_TYPE = org.jooq.examples.mysql.sakila.tables.records.InventoryRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.mysql.sakila.tables.records.InventoryRecord.class;
 	}
 
 	/**

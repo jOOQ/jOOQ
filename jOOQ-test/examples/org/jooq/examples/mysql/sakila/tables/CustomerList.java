@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class CustomerList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord> {
 
-	private static final long serialVersionUID = 444395832;
+	private static final long serialVersionUID = -1499269901;
 
 	/**
 	 * The singleton instance of sakila.customer_list
@@ -20,14 +20,9 @@ public class CustomerList extends org.jooq.impl.TableImpl<org.jooq.examples.mysq
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord> __RECORD_TYPE = org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord.class;
 	}
 
 	/**

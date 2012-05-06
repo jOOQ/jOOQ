@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class CurrencyRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate> {
 
-	private static final long serialVersionUID = 1572375373;
+	private static final long serialVersionUID = 2033271196;
 
 	/**
 	 * The singleton instance of Sales.CurrencyRate
@@ -18,14 +18,9 @@ public class CurrencyRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate> __RECORD_TYPE = org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate.class;
 	}
 
 	/**

@@ -54,6 +54,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.swing.UIManager;
+
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
 import org.jooq.ExecuteType;
@@ -74,7 +76,9 @@ import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.debug.DebugListener;
-import org.jooq.debug.console.DatabaseDescriptor;
+import org.jooq.debug.Debugger;
+import org.jooq.debug.console.Console;
+import org.jooq.debug.console.remote.ClientDebugger;
 import org.jooq.debug.console.remote.RemoteDebuggerServer;
 import org.jooq.impl.Factory;
 import org.jooq.test._.TestStatisticsListener;
@@ -420,28 +424,12 @@ public abstract class jOOQAbstractTest<
 
             boolean runConsoleInProcess = false;
             if (runConsoleInProcess) {
-                DatabaseDescriptor descriptor = new DatabaseDescriptor() {
-                    @Override
-                    public Schema getSchema() {
-                        return jOOQAbstractTest.this.schema();
-                    }
-
-                    @Override
-                    public SQLDialect getSQLDialect() {
-                        return SQLDialect.ORACLE;
-                    }
-
-                    @Override
-                    public Connection createConnection() {
-                        return jOOQAbstractTest.this.getConnection();
-                    }
-                };
-
                 try {
-//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//                    Console console = new Console(descriptor, true);
-//                    console.setLoggingActive(true);
-//                    console.setVisible(true);
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    Debugger debugger = new ClientDebugger("127.0.0.1", DEBUGGER_PORT);
+                    Console console = new Console(debugger, true);
+                    console.setLoggingActive(true);
+                    console.setVisible(true);
                 }
                 catch (Exception ignore) {}
             }

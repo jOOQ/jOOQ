@@ -3867,7 +3867,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(Field<T> number, Field<Integer> decimals) {
-        return new Trunc<T>(number, decimals);
+        return new Trunc<T>(nullSafe(number), nullSafe(decimals));
     }
 
     /**

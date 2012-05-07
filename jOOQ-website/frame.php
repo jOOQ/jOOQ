@@ -84,13 +84,13 @@
 	    		<a href="<?=$root?>/" title="jOOQ Home Page">Start</a>
     		</div>
 	        <div class="navigation-item-left <?php if ($menu == 'learn') print 'navigation-item-active'?>">
-	    		<a href="<?=$root?>/learn.php" title="jOOQ Home Page">Learn</a>
+	    		<a href="<?=$root?>/learn.php" title="Learn about jOOQ">Learn</a>
     		</div>
 	        <div class="navigation-item-left <?php if ($menu == 'download') print 'navigation-item-active'?>">
-	    		<a href="<?=$root?>/download.php" title="jOOQ Home Page">Download</a>
+	    		<a href="<?=$root?>/download.php" title="Download jOOQ">Download</a>
     		</div>
 	        <div class="navigation-item-left <?php if ($menu == 'community') print 'navigation-item-active'?>">
-	    		<a href="<?=$root?>/community.php" title="jOOQ Home Page">Community</a>
+	    		<a href="<?=$root?>/community.php" title="See who's behind jOOQ and contribute">Community</a>
     		</div>
 	   	</div>
 	   	</div>

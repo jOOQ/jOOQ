@@ -123,7 +123,7 @@
 			alt="Fork me on GitHub" src="<?=$root?>/img/forkme.png"
 			style="position: absolute; top: 0; right: 0; border: 0;"/> </a>
 		<div style="display: none">
-			<img src="/img/logo.png" title="jOOQ Logo"/>
+			<img src="/img/logo.png" alt="The jOOQ Logo" title="jOOQ Logo"/>
 
 		<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
 	</body>

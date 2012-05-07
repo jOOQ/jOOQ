@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 	<head>
-		<title><?php print preg_replace('%<br/>%', ' - ', getH1()); ?> - jOOQ is a fluent API for typesafe SQL query construction and execution</title>
+		<title>jOOQ is a fluent API for typesafe SQL query construction and execution</title>
 		<meta property="og:title" content="jOOQ" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="http://www.jooq.org" />

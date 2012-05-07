@@ -13,7 +13,7 @@
 		<meta property="og:site_name" content="jOOQ" />
 		<meta property="fb:admins" content="649865547" />
 
-		<meta name="description" content="jOOQ, a fluent API for typesafe SQL query construction and execution. Supported DBs are DB2, Derby, Ingres, H2, HSQLDB, MySQL, Oracle, Postgres, SQLite, SQL Server, Sybase"/>
+		<meta name="description" content="jOOQ, a fluent API for typesafe SQL query construction and execution."/>
 		<meta name="author" content="Lukas Eder"/>
 		<meta name="keywords" content="jOOQ, JDBC, database abstraction, source code generation, SQL, stored procedures, stored functions, UDT, UDF, typesafe, fluentAPI"/>
 

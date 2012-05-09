@@ -46,7 +46,6 @@ import static org.jooq.util.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.util.postgres.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
-import static org.jooq.util.postgres.information_schema.Tables.SCHEMATA;
 import static org.jooq.util.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLE_CONSTRAINTS;
@@ -212,10 +211,12 @@ public class PostgresDatabase extends AbstractDatabase {
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
 
+        // [#1409] Shouldn't select from INFORMATION_SCHEMA.SCHEMATA, as that
+        // would only return schemata of which CURRENT_USER is the owner
         for (String name : create()
-                .select(SCHEMATA.SCHEMA_NAME)
-                .from(SCHEMATA)
-                .fetch(SCHEMATA.SCHEMA_NAME)) {
+                .select(PG_NAMESPACE.NSPNAME)
+                .from(PG_NAMESPACE)
+                .fetch(PG_NAMESPACE.NSPNAME)) {
 
             result.add(new SchemaDefinition(this, name, ""));
         }

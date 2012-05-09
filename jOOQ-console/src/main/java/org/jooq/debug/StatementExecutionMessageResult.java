@@ -39,6 +39,9 @@ package org.jooq.debug;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+/**
+ * @author Christopher Deckers
+ */
 public class StatementExecutionMessageResult implements StatementExecutionResult {
 
     private String message;

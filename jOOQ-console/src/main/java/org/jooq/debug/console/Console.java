@@ -103,7 +103,7 @@ public class Console extends JFrame {
     private JTabbedPane mainTabbedPane;
     private JTabbedPane editorTabbedPane;
 
-    public Console(DatabaseDescriptor editorDatabaseDescriptor, boolean isShowingLoggingTab) {
+    public Console(DatabaseDescriptor editorDatabaseDescriptor, boolean isShowingLoggingTab, boolean isShowingDebugger) {
         debugger = new LocalDebugger(editorDatabaseDescriptor);
         // Local debugger registration is managed by the console since it hides the debugger.
         addWindowListener(new WindowAdapter() {
@@ -116,20 +116,16 @@ public class Console extends JFrame {
                 DebuggerRegistry.removeSqlQueryDebugger(debugger);
             }
         });
-        init(isShowingLoggingTab);
+        init(isShowingLoggingTab, isShowingDebugger);
     }
 
-    public Console(final Debugger debugger, boolean isShowingLoggingTab) {
+    public Console(final Debugger debugger, boolean isShowingLoggingTab, boolean isShowingDebugger) {
         this.debugger = debugger;
         // Local debugger registration is handled externally if needed (e.g.: remote client must not be registered).
-    	init(isShowingLoggingTab);
+    	init(isShowingLoggingTab, isShowingDebugger);
     }
 
-    /**
-     * @param debugger
-     * @param isShowingLoggingTab
-     */
-    private void init(boolean isShowingLoggingTab) {
+    private void init(boolean isShowingLoggingTab, boolean isShowingDebugger) {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     	JMenuBar menuBar = new JMenuBar();
     	JMenu fileMenu = new JMenu("File");
@@ -233,6 +229,9 @@ public class Console extends JFrame {
         if(isShowingLoggingTab) {
             addLoggerTab();
         }
+        if(isShowingDebugger) {
+            addDebuggerTab();
+        }
         getContentPane().add(mainTabbedPane, BorderLayout.CENTER);
         setLocationByPlatform(true);
         setSize(800, 600);
@@ -261,6 +260,14 @@ public class Console extends JFrame {
                 ((EditorPane)editorTabbedPane.getComponentAt(i)).closeLastExecution();
             }
         }
+    }
+
+    private DebuggerPane sqlDebuggerPane;
+
+    private void addDebuggerTab() {
+        sqlDebuggerPane = new DebuggerPane(debugger);
+        mainTabbedPane.addTab("Debugger", sqlDebuggerPane);
+
     }
 
     private LoggerPane sqlLoggerPane;
@@ -407,7 +414,7 @@ public class Console extends JFrame {
 	}
 
     public static void openConsole(DatabaseDescriptor databaseDescriptor, boolean isLoggingActive) {
-        Console sqlConsoleFrame = new Console(databaseDescriptor, true);
+        Console sqlConsoleFrame = new Console(databaseDescriptor, true, true);
     	sqlConsoleFrame.setLoggingActive(isLoggingActive);
     	sqlConsoleFrame.setVisible(true);
     }
@@ -506,7 +513,7 @@ public class Console extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
             public void run() {
-				Console sqlConsoleFrame = new Console(debugger, true);
+				Console sqlConsoleFrame = new Console(debugger, true, true);
 				sqlConsoleFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 				sqlConsoleFrame.setVisible(true);
 			}

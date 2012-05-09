@@ -34,25 +34,51 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console.remote;
+package org.jooq.debug;
 
-import org.jooq.debug.Debugger;
-import org.jooq.debug.console.remote.messaging.CommunicationInterface;
+import java.io.Serializable;
 
 /**
  * @author Christopher Deckers
  */
-class DebuggerCommmunicationInterface extends CommunicationInterface {
+@SuppressWarnings("serial")
+public class BreakpointBeforeExecutionHit implements Serializable {
 
-    private Debugger debugger;
-
-    public DebuggerCommmunicationInterface(Debugger debugger, int port) {
-        super(port);
-        this.debugger = debugger;
+    public static enum ExecutionType {
+        STEP_THROUGH,
+        RUN_OVER,
+        RUN,
     }
 
-    public Debugger getDebugger() {
-        return debugger;
+    private Integer breakpointID;
+    private String sql;
+
+    public BreakpointBeforeExecutionHit(int breakpointID, String sql) {
+        this.breakpointID = breakpointID;
+        this.sql = sql;
+    }
+
+    /**
+     * @return null if the breakpoint was processed and contains an execution type.
+     */
+    public Integer getBreakpointID() {
+        return breakpointID;
+    }
+
+    public String getSql() {
+        return sql;
+    }
+
+    private ExecutionType executionType = ExecutionType.RUN;
+
+    public void setExecutionType(ExecutionType executionType, String sql) {
+        this.breakpointID = null;
+        this.executionType = executionType;
+        this.sql = sql;
+    }
+
+    public ExecutionType getExecutionType() {
+        return executionType;
     }
 
 }

@@ -37,7 +37,9 @@
 package org.jooq.debug;
 
 
-
+/**
+ * @author Christopher Deckers
+ */
 public class StatementExecution {
 
     private long executionDuration;

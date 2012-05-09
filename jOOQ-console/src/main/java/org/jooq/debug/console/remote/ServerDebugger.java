@@ -36,6 +36,10 @@
  */
 package org.jooq.debug.console.remote;
 
+import org.jooq.debug.Breakpoint;
+import org.jooq.debug.BreakpointAfterExecutionHit;
+import org.jooq.debug.BreakpointBeforeExecutionHit;
+import org.jooq.debug.BreakpointHitHandler;
 import org.jooq.debug.LocalDebugger;
 import org.jooq.debug.LoggingListener;
 import org.jooq.debug.QueryLoggingData;
@@ -44,6 +48,9 @@ import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.DatabaseDescriptor;
 import org.jooq.debug.console.remote.messaging.CommunicationInterface;
 
+/**
+ * @author Christopher Deckers
+ */
 class ServerDebugger extends LocalDebugger {
 
     public ServerDebugger(DatabaseDescriptor databaseDescriptor) {
@@ -82,11 +89,49 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
+    private void setBreakpointHitHandlerActive(boolean isActive) {
+        if(isActive) {
+            setBreakpointHitHandler(new BreakpointHitHandler() {
+                @Override
+                public void processBreakpointBeforeExecutionHit(BreakpointBeforeExecutionHit breakpointHit) {
+                    BreakpointBeforeExecutionHit modifiedBreakpointHit = (BreakpointBeforeExecutionHit)new ClientDebugger.CMC_processBreakpointBeforeExecutionHit().syncExec(communicationInterface, breakpointHit);
+                    if(modifiedBreakpointHit != null) {
+                        breakpointHit.setExecutionType(modifiedBreakpointHit.getExecutionType(), modifiedBreakpointHit.getSql());
+                    }
+                }
+                @Override
+                public void processBreakpointAfterExecutionHit(BreakpointAfterExecutionHit breakpointHit) {
+                    new ClientDebugger.CMC_processBreakpointAfterExecutionHit().syncExec(communicationInterface, breakpointHit);
+                }
+            });
+        } else {
+            setBreakpointHitHandler(null);
+        }
+    }
+
     @SuppressWarnings("serial")
     static class CMS_setLoggingStatementMatchers extends ServerDebuggerCommandMessage {
         @Override
         public Object run(Object[] args) {
             getDebugger().setLoggingStatementMatchers((StatementMatcher[])args[0]);
+            return null;
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class CMS_setBreakpoints extends ServerDebuggerCommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            getDebugger().setBreakpoints((Breakpoint[])args[0]);
+            return null;
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class CMS_setBreakpointHitHandlerActive extends ServerDebuggerCommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            getDebugger().setBreakpointHitHandlerActive((Boolean)args[0]);
             return null;
         }
     }

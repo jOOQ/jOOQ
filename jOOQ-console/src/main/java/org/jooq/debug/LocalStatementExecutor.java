@@ -68,6 +68,9 @@ import org.jooq.debug.StatementExecutionResultSetResult.TypeInfo;
 import org.jooq.debug.console.DatabaseDescriptor;
 import org.jooq.debug.console.misc.Utils;
 
+/**
+ * @author Christopher Deckers
+ */
 public class LocalStatementExecutor implements StatementExecutor {
 
     private DatabaseDescriptor databaseDescriptor;

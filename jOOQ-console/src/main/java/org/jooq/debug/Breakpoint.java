@@ -34,25 +34,59 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console.remote;
+package org.jooq.debug;
 
-import org.jooq.debug.Debugger;
-import org.jooq.debug.console.remote.messaging.CommunicationInterface;
+import java.io.Serializable;
 
 /**
  * @author Christopher Deckers
  */
-class DebuggerCommmunicationInterface extends CommunicationInterface {
+@SuppressWarnings("serial")
+public class Breakpoint implements Serializable {
 
-    private Debugger debugger;
+    private int id;
+    private StatementMatcher statementMatcher;
+//    private Integer hitCount;
+    private boolean isBreaking;
+    private StatementProcessor beforeExecutionProcessor;
+    private StatementProcessor replacementExecutionProcessor;
+    private StatementProcessor afterExecutionProcessor;
 
-    public DebuggerCommmunicationInterface(Debugger debugger, int port) {
-        super(port);
-        this.debugger = debugger;
+    public Breakpoint(int id, StatementMatcher statementMatcher, boolean isBreaking, StatementProcessor beforeExecutionProcessor, StatementProcessor replacementExecutionProcessor, StatementProcessor afterExecutionProcessor) {
+        this.id = id;
+        this.statementMatcher = statementMatcher;
+        this.isBreaking = isBreaking;
+        this.beforeExecutionProcessor = beforeExecutionProcessor;
+        this.replacementExecutionProcessor = replacementExecutionProcessor;
+        this.afterExecutionProcessor = afterExecutionProcessor;
     }
 
-    public Debugger getDebugger() {
-        return debugger;
+    public int getID() {
+        return id;
+    }
+
+    public StatementMatcher getStatementMatcher() {
+        return statementMatcher;
+    }
+
+    public boolean matches(StatementInfo statementInfo) {
+        return statementMatcher != null && statementMatcher.matches(statementInfo);
+    }
+
+    public boolean isBreaking() {
+        return isBreaking;
+    }
+
+    public StatementProcessor getBeforeExecutionProcessor() {
+        return beforeExecutionProcessor;
+    }
+
+    public StatementProcessor getReplacementExecutionProcessor() {
+        return replacementExecutionProcessor;
+    }
+
+    public StatementProcessor getAfterExecutionProcessor() {
+        return afterExecutionProcessor;
     }
 
 }

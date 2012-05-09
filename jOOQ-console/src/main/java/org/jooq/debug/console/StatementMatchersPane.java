@@ -51,6 +51,9 @@ import javax.swing.Scrollable;
 
 import org.jooq.debug.StatementMatcher;
 
+/**
+ * @author Christopher Deckers
+ */
 @SuppressWarnings("serial")
 public class StatementMatchersPane extends JPanel {
 

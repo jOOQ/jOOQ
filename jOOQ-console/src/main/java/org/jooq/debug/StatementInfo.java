@@ -38,6 +38,9 @@ package org.jooq.debug;
 
 import java.io.Serializable;
 
+/**
+ * @author Christopher Deckers
+ */
 @SuppressWarnings("serial")
 public class StatementInfo implements Serializable {
 

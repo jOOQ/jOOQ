@@ -34,25 +34,46 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console.remote;
+package org.jooq.debug.console;
 
-import org.jooq.debug.Debugger;
-import org.jooq.debug.console.remote.messaging.CommunicationInterface;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import org.jooq.debug.StatementProcessor;
 
 /**
  * @author Christopher Deckers
  */
-class DebuggerCommmunicationInterface extends CommunicationInterface {
+@SuppressWarnings("serial")
+public class StatementProcessorPane extends JPanel {
 
-    private Debugger debugger;
+    private JComboBox processorTypeComboBox;
+    private JTextField processorTextField;
 
-    public DebuggerCommmunicationInterface(Debugger debugger, int port) {
-        super(port);
-        this.debugger = debugger;
+    public StatementProcessorPane(StatementProcessor statementProcessor) {
+        super(new GridBagLayout());
+        if(statementProcessor == null) {
+            statementProcessor = new StatementProcessor(StatementProcessor.ProcessorExecutionType.STATIC, "");
+        }
+        processorTypeComboBox = new JComboBox(StatementProcessor.ProcessorExecutionType.values());
+        processorTypeComboBox.setSelectedItem(statementProcessor.getType());
+        add(processorTypeComboBox, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        processorTextField = new JTextField(statementProcessor.getText(), 14);
+        add(processorTextField, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
     }
 
-    public Debugger getDebugger() {
-        return debugger;
+    public StatementProcessor getStatementProcessor() {
+        return new StatementProcessor((StatementProcessor.ProcessorExecutionType)processorTypeComboBox.getSelectedItem(), processorTextField.getText());
+    }
+
+    public void setLocked(boolean isLocked) {
+        processorTypeComboBox.setEnabled(!isLocked);
+        processorTextField.setEnabled(!isLocked);
     }
 
 }

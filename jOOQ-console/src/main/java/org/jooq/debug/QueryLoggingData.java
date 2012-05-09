@@ -39,7 +39,6 @@ package org.jooq.debug;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-
 /**
  * @author Christopher Deckers
  */

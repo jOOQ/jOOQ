@@ -53,6 +53,9 @@ import javax.swing.SwingUtilities;
 import org.jooq.debug.Debugger;
 import org.jooq.debug.StatementMatcher;
 
+/**
+ * @author Christopher Deckers
+ */
 @SuppressWarnings("serial")
 public class StatementMatchersDialogBox extends JDialog {
 

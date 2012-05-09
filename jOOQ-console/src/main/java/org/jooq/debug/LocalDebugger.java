@@ -39,6 +39,9 @@ package org.jooq.debug;
 import org.jooq.debug.console.DatabaseDescriptor;
 
 
+/**
+ * @author Christopher Deckers
+ */
 public class LocalDebugger implements Debugger {
 
     private DatabaseDescriptor databaseDescriptor;
@@ -48,27 +51,74 @@ public class LocalDebugger implements Debugger {
     }
 
     private LoggingListener loggingListener;
+    private final Object LOGGING_LISTENER_LOCK = new Object();
 
     @Override
     public void setLoggingListener(LoggingListener loggingListener) {
-        this.loggingListener = loggingListener;
+        synchronized (LOGGING_LISTENER_LOCK) {
+            this.loggingListener = loggingListener;
+        }
     }
 
     @Override
     public LoggingListener getLoggingListener() {
-        return loggingListener;
+        synchronized (LOGGING_LISTENER_LOCK) {
+            return loggingListener;
+        }
     }
 
     private StatementMatcher[] loggingStatementMatchers;
+    private final Object LOGGING_STATEMENT_MATCHERS_LOCK = new Object();
 
     @Override
     public void setLoggingStatementMatchers(StatementMatcher[] loggingStatementMatchers) {
-        this.loggingStatementMatchers = loggingStatementMatchers;
+        synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
+            this.loggingStatementMatchers = loggingStatementMatchers;
+        }
     }
 
     @Override
     public StatementMatcher[] getLoggingStatementMatchers() {
-        return loggingStatementMatchers;
+        synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
+            return loggingStatementMatchers;
+        }
+    }
+
+    private Breakpoint[] breakpoints;
+    private final Object BREAKPOINT_LOCK = new Object();
+
+    @Override
+    public void setBreakpoints(Breakpoint[] breakpoints) {
+        if(breakpoints != null && breakpoints.length == 0) {
+            breakpoints = null;
+        }
+        synchronized (BREAKPOINT_LOCK) {
+            this.breakpoints = breakpoints;
+        }
+    }
+
+    @Override
+    public Breakpoint[] getBreakpoints() {
+        synchronized (BREAKPOINT_LOCK) {
+            return breakpoints;
+        }
+    }
+
+    private BreakpointHitHandler breakpointHitHandler;
+    private final Object BREAKPOINT_HIT_HANDLER_LOCK = new Object();
+
+    @Override
+    public void setBreakpointHitHandler(BreakpointHitHandler breakpointHitHandler) {
+        synchronized (BREAKPOINT_HIT_HANDLER_LOCK) {
+            this.breakpointHitHandler = breakpointHitHandler;
+        }
+    }
+
+    @Override
+    public BreakpointHitHandler getBreakpointHitHandler() {
+        synchronized (BREAKPOINT_HIT_HANDLER_LOCK) {
+            return breakpointHitHandler;
+        }
     }
 
     @Override

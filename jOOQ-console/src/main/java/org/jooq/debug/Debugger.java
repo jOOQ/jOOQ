@@ -37,7 +37,9 @@
 package org.jooq.debug;
 
 
-
+/**
+ * @author Christopher Deckers
+ */
 public interface Debugger {
 
     /**
@@ -50,6 +52,14 @@ public interface Debugger {
     public void setLoggingStatementMatchers(StatementMatcher[] loggingStatementMatchers);
 
     public StatementMatcher[] getLoggingStatementMatchers();
+
+    public void setBreakpoints(Breakpoint[] breakpoints);
+
+    public void setBreakpointHitHandler(BreakpointHitHandler breakpointHitHandler);
+
+    public BreakpointHitHandler getBreakpointHitHandler();
+
+    public Breakpoint[] getBreakpoints();
 
     public boolean isExecutionSupported();
 

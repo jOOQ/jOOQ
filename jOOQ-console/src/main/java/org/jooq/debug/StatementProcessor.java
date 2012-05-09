@@ -34,25 +34,54 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console.remote;
+package org.jooq.debug;
 
-import org.jooq.debug.Debugger;
-import org.jooq.debug.console.remote.messaging.CommunicationInterface;
+import java.io.Serializable;
+
+import org.jooq.debug.console.misc.Utils;
 
 /**
  * @author Christopher Deckers
  */
-class DebuggerCommmunicationInterface extends CommunicationInterface {
+@SuppressWarnings("serial")
+public class StatementProcessor implements Serializable {
 
-    private Debugger debugger;
-
-    public DebuggerCommmunicationInterface(Debugger debugger, int port) {
-        super(port);
-        this.debugger = debugger;
+    public static enum ProcessorExecutionType {
+        STATIC("Static SQL"),
+        SED_LIKE_REG_EXP("Sed-like Reg. Exp."),
+        ;
+        private String name;
+        private ProcessorExecutionType(String name) {
+            this.name = name;
+        }
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 
-    public Debugger getDebugger() {
-        return debugger;
+    private ProcessorExecutionType type;
+    private String text;
+
+    public StatementProcessor(ProcessorExecutionType type, String text) {
+        this.type = type;
+        this.text = text;
+    }
+
+    public ProcessorExecutionType getType() {
+        return type;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String processSQL(String sql) {
+        switch(type) {
+            case STATIC: return text;
+            case SED_LIKE_REG_EXP: return Utils.applySedRegularExpression(sql, text);
+        }
+        throw new IllegalStateException();
     }
 
 }

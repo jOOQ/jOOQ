@@ -39,6 +39,9 @@ package org.jooq.debug.console.misc;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
+/**
+ * @author Christopher Deckers
+ */
 @SuppressWarnings("serial")
 public class TextMatcher implements Serializable {
 

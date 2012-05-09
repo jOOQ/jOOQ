@@ -39,20 +39,26 @@ package org.jooq.debug;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
+import org.jooq.debug.BreakpointBeforeExecutionHit.ExecutionType;
 import org.jooq.impl.DefaultExecuteListener;
+import org.jooq.impl.Factory;
 
+/**
+ * @author Christopher Deckers
+ */
 public class DebugListener extends DefaultExecuteListener {
 
-	private boolean isLogging;
+	private boolean hasDebuggers;
 
 	@Override
 	public void renderStart(ExecuteContext ctx) {
-		isLogging = !DebuggerRegistry.getDebuggerList().isEmpty();
+		hasDebuggers = !DebuggerRegistry.getDebuggerList().isEmpty();
 		startPreparationTime = 0;
 		aggregatedPreparationDuration = 0;
 		startBindTime = 0;
@@ -66,7 +72,7 @@ public class DebugListener extends DefaultExecuteListener {
 
 	@Override
 	public void prepareStart(ExecuteContext ctx) {
-		if(!isLogging) {
+		if(!hasDebuggers) {
 			return;
 		}
 		startPreparationTime = System.currentTimeMillis();
@@ -74,7 +80,7 @@ public class DebugListener extends DefaultExecuteListener {
 
 	@Override
 	public void prepareEnd(ExecuteContext ctx) {
-		if(!isLogging) {
+		if(!hasDebuggers) {
 			return;
 		}
 		aggregatedPreparationDuration += System.currentTimeMillis() - startPreparationTime;
@@ -91,7 +97,7 @@ public class DebugListener extends DefaultExecuteListener {
 
 	@Override
 	public void bindStart(ExecuteContext ctx) {
-		if(!isLogging) {
+		if(!hasDebuggers) {
 			return;
 		}
 		startBindTime = System.currentTimeMillis();
@@ -99,7 +105,7 @@ public class DebugListener extends DefaultExecuteListener {
 
 	@Override
 	public void bindEnd(ExecuteContext ctx) {
-		if(!isLogging) {
+		if(!hasDebuggers) {
 			return;
 		}
 		endBindTime = System.currentTimeMillis();
@@ -107,80 +113,241 @@ public class DebugListener extends DefaultExecuteListener {
 
 	private long startExecutionTime;
 	private long endExecutionTime;
+	private String matchingSQL;
+	private String effectiveSQL;
+	private Breakpoint matchingBreakpoint;
+    private BreakpointHitHandler matchingBreakpointHitHandler;
 
 	@Override
 	public void executeStart(ExecuteContext ctx) {
-		if(!isLogging) {
-			return;
-		}
+	    BreakpointHitHandler breakpointHitHandler = null;
+        List<Debugger> debuggerList = DebuggerRegistry.getDebuggerList();
+        if(!debuggerList.isEmpty()) {
+            StatementInfo statementInfo = null;
+            bp: for(Debugger debugger: debuggerList) {
+                Breakpoint[] breakpoints = debugger.getBreakpoints();
+                if(breakpoints != null) {
+                    for(Breakpoint breakpoint: breakpoints) {
+                        if(statementInfo == null) {
+                            String[] sql = ctx.batchSQL();
+                            SqlQueryType sqlQueryType = SqlQueryType.detectType(sql[0]);
+                            String parameterDescription = null;
+                            if(sql.length == 1) {
+                                matchingSQL = sql[0];
+                                PreparedStatement statement = ctx.statement();
+                                if(statement instanceof UsageTrackingPreparedStatement) {
+                                    parameterDescription = ((UsageTrackingPreparedStatement) statement).getParameterDescription();
+                                }
+                            } else {
+                                StringBuilder sb = new StringBuilder();
+                                for(int i=0; i<sql.length; i++) {
+                                    if(i > 0) {
+                                        sb.append('\n');
+                                    }
+                                    sb.append(sql[i]);
+                                }
+                                matchingSQL = sb.toString();
+                            }
+                            statementInfo = new StatementInfo(sqlQueryType, sql, parameterDescription);
+                        }
+                        if(breakpoint.matches(statementInfo)) {
+                            matchingBreakpoint = breakpoint;
+                            if(breakpoint.isBreaking()) {
+                                breakpointHitHandler = debugger.getBreakpointHitHandler();
+                            }
+                            break bp;
+                        }
+                    }
+                }
+            }
+        }
+        // We consider raw SQL (not the parameters). If we want to match on parameters, this should be a separate matcher.
+        // For batched execution of in-lined statements, we aggregate the statements as a multiple-line one for matching purposes.
+        if(matchingBreakpoint != null) {
+            StatementProcessor beforeExecutionProcessor = matchingBreakpoint.getBeforeExecutionProcessor();
+            if(beforeExecutionProcessor != null) {
+                String sql = beforeExecutionProcessor.processSQL(matchingSQL);
+                long subStartExecutionTime = System.currentTimeMillis();
+                executeSQL(ctx, sql);
+                long subEndExecutionTime = System.currentTimeMillis();
+                // Log result of pre-processing.
+                for(Debugger listener: debuggerList) {
+                    LoggingListener loggingListener = listener.getLoggingListener();
+                    if(loggingListener != null) {
+                        SqlQueryType sqlQueryType = SqlQueryType.detectType(sql);
+                        QueryLoggingData queryLoggingData = new QueryLoggingData(sqlQueryType, new String[] {sql}, null, null, null, subEndExecutionTime - subStartExecutionTime);
+                        StatementMatcher[] loggingStatementMatchers = listener.getLoggingStatementMatchers();
+                        if(loggingStatementMatchers == null) {
+                            loggingListener.logQueries(queryLoggingData);
+                        } else for(StatementMatcher statementMatcher: loggingStatementMatchers) {
+                            if(statementMatcher.matches(queryLoggingData)) {
+                                loggingListener.logQueries(queryLoggingData);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            String mainSQL = null;
+            StatementProcessor replacementExecutionProcessor = matchingBreakpoint.getReplacementExecutionProcessor();
+            if(replacementExecutionProcessor != null) {
+                mainSQL = replacementExecutionProcessor.processSQL(matchingSQL);
+                try {
+                    ctx.statement().close();
+                    ctx.sql(mainSQL);
+                    ctx.statement(ctx.getConnection().prepareStatement(mainSQL));
+                } catch(Exception e) {
+                    // TODO: how to process properly breakpoint errors??
+                    throw new RuntimeException(e);
+                }
+            }
+            ExecutionType executionType = BreakpointBeforeExecutionHit.ExecutionType.RUN;
+            if(breakpointHitHandler != null) {
+                effectiveSQL = mainSQL != null? mainSQL: matchingSQL;
+                // TODO: find a way for the handler to replace the statement (not just step over).
+                BreakpointBeforeExecutionHit breakpointBeforeExecutionHit = new BreakpointBeforeExecutionHit(matchingBreakpoint.getID(), effectiveSQL);
+                breakpointHitHandler.processBreakpointBeforeExecutionHit(breakpointBeforeExecutionHit);
+                executionType = breakpointBeforeExecutionHit.getExecutionType();
+            }
+            switch(executionType) {
+                case STEP_THROUGH: {
+                    matchingBreakpointHitHandler = breakpointHitHandler;
+                    break;
+                }
+                case RUN_OVER: {
+                    try {
+                        ctx.statement().close();
+                        // Better return possibility? Based on originating query?
+                        String sql = new Factory(ctx.getDialect()).selectZero().where("1 = 2").getSQL();
+                        ctx.sql(sql);
+                        ctx.statement(ctx.getConnection().prepareStatement(sql));
+                    } catch(Exception e) {
+                        // TODO: how to process properly breakpoint errors??
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                }
+            }
+        }
+        if(!hasDebuggers) {
+            return;
+        }
 		startExecutionTime = System.currentTimeMillis();
 	}
 
+    private void executeSQL(ExecuteContext ctx, String sql) {
+        Statement statement = null;
+        try {
+            statement = ctx.getConnection().createStatement();
+            statement.execute(sql);
+        } catch(Exception e) {
+            // TODO: how to process properly breakpoint errors??
+            throw new RuntimeException(e);
+        } finally {
+            if(statement != null) {
+                try {
+                    statement.close();
+                } catch(Exception e) {
+                    // No error for closing problems.
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 	@Override
 	public void executeEnd(ExecuteContext ctx) {
-		if(!isLogging) {
+		if(!hasDebuggers) {
 			return;
 		}
 		endExecutionTime = System.currentTimeMillis();
-		List<Debugger> debuggerList = DebuggerRegistry.getDebuggerList();
-		if(debuggerList.isEmpty()) {
-			return;
+		if(matchingBreakpointHitHandler != null) {
+            matchingBreakpointHitHandler.processBreakpointAfterExecutionHit(new BreakpointAfterExecutionHit(matchingBreakpoint.getID(), effectiveSQL));
 		}
-		boolean hasListener = false;
-        for(Debugger listener: debuggerList) {
-            LoggingListener loggingListener = listener.getLoggingListener();
-            if(loggingListener != null) {
-                hasListener = true;
-                break;
-            }
-        }
-        if(!hasListener) {
-            return;
-        }
-		ResultSet resultSet = ctx.resultSet();
-		String[] sql = ctx.batchSQL();
-		SqlQueryType sqlQueryType = SqlQueryType.detectType(sql[0]);
-		String parameterDescription = null;
-		if(sql.length == 1) {
-		    PreparedStatement statement = ctx.statement();
-		    if(statement instanceof UsageTrackingPreparedStatement) {
-		        parameterDescription = ((UsageTrackingPreparedStatement) statement).getParameterDescription();
+        List<Debugger> debuggerList = DebuggerRegistry.getDebuggerList();
+		if(!debuggerList.isEmpty()) {
+		    boolean hasListener = false;
+		    for(Debugger debugger: debuggerList) {
+		        LoggingListener loggingListener = debugger.getLoggingListener();
+		        if(loggingListener != null) {
+		            hasListener = true;
+		            break;
+		        }
 		    }
-		}
-		QueryLoggingData queryLoggingData = new QueryLoggingData(sqlQueryType, sql, parameterDescription, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
-		final List<LoggingListener> loggingListenerList = new ArrayList<LoggingListener>(debuggerList.size());
-		for(Debugger listener: debuggerList) {
-		    LoggingListener loggingListener = listener.getLoggingListener();
-		    if(loggingListener != null) {
-		        StatementMatcher[] loggingStatementMatchers = listener.getLoggingStatementMatchers();
-		        if(loggingStatementMatchers == null) {
-		            loggingListenerList.add(loggingListener);
-		            loggingListener.logQueries(queryLoggingData);
-		        } else for(StatementMatcher statementMatcher: loggingStatementMatchers) {
-		            if(statementMatcher.matches(queryLoggingData)) {
-		                loggingListenerList.add(loggingListener);
-		                loggingListener.logQueries(queryLoggingData);
-		                break;
+		    if(hasListener) {
+		        String[] sql = ctx.batchSQL();
+		        SqlQueryType sqlQueryType = SqlQueryType.detectType(sql[0]);
+		        String parameterDescription = null;
+		        if(sql.length == 1) {
+		            PreparedStatement statement = ctx.statement();
+		            if(statement instanceof UsageTrackingPreparedStatement) {
+		                parameterDescription = ((UsageTrackingPreparedStatement) statement).getParameterDescription();
 		            }
+		        }
+		        QueryLoggingData queryLoggingData = new QueryLoggingData(sqlQueryType, sql, parameterDescription, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
+		        final List<LoggingListener> loggingListenerList = new ArrayList<LoggingListener>(debuggerList.size());
+		        for(Debugger listener: debuggerList) {
+		            LoggingListener loggingListener = listener.getLoggingListener();
+		            if(loggingListener != null) {
+		                StatementMatcher[] loggingStatementMatchers = listener.getLoggingStatementMatchers();
+		                if(loggingStatementMatchers == null) {
+		                    loggingListenerList.add(loggingListener);
+		                    loggingListener.logQueries(queryLoggingData);
+		                } else for(StatementMatcher statementMatcher: loggingStatementMatchers) {
+		                    if(statementMatcher.matches(queryLoggingData)) {
+		                        loggingListenerList.add(loggingListener);
+		                        loggingListener.logQueries(queryLoggingData);
+		                        break;
+		                    }
+		                }
+		            }
+		        }
+		        ResultSet resultSet = ctx.resultSet();
+		        if(resultSet != null && !loggingListenerList.isEmpty()) {
+		            final int queryLoggingDataID = queryLoggingData.getID();
+		            ResultSet newResultSet = new UsageTrackingResultSet(resultSet) {
+		                @Override
+		                protected void notifyData(long lifeTime, int readRows, int readCount, int writeCount) {
+		                    ResultSetLoggingData resultSetLoggingData = null;
+		                    for(LoggingListener loggingListener: loggingListenerList) {
+		                        if(resultSetLoggingData == null) {
+		                            resultSetLoggingData = new ResultSetLoggingData(lifeTime, readRows, readCount, writeCount);
+		                        }
+		                        loggingListener.logResultSet(queryLoggingDataID, resultSetLoggingData);
+		                    }
+		                }
+		            };
+		            ctx.resultSet(newResultSet);
 		        }
 		    }
 		}
-		if(resultSet != null && !loggingListenerList.isEmpty()) {
-			final int queryLoggingDataID = queryLoggingData.getID();
-			ResultSet newResultSet = new UsageTrackingResultSet(resultSet) {
-				@Override
-				protected void notifyData(long lifeTime, int readRows, int readCount, int writeCount) {
-                    ResultSetLoggingData resultSetLoggingData = null;
-					for(LoggingListener loggingListener: loggingListenerList) {
-			            if(resultSetLoggingData == null) {
-			                resultSetLoggingData = new ResultSetLoggingData(lifeTime, readRows, readCount, writeCount);
-			            }
-			            loggingListener.logResultSet(queryLoggingDataID, resultSetLoggingData);
-					}
-				}
-			};
-			ctx.resultSet(newResultSet);
-		}
+        if(matchingBreakpoint != null) {
+            StatementProcessor afterExecutionProcessor = matchingBreakpoint.getAfterExecutionProcessor();
+            matchingBreakpoint = null;
+            if(afterExecutionProcessor != null) {
+                String sql = afterExecutionProcessor.processSQL(matchingSQL);
+                long subStartExecutionTime = System.currentTimeMillis();
+                executeSQL(ctx, sql);
+                long subEndExecutionTime = System.currentTimeMillis();
+                // Log result of pre-processing.
+                for(Debugger listener: debuggerList) {
+                    LoggingListener loggingListener = listener.getLoggingListener();
+                    if(loggingListener != null) {
+                        SqlQueryType sqlQueryType = SqlQueryType.detectType(sql);
+                        QueryLoggingData queryLoggingData = new QueryLoggingData(sqlQueryType, new String[] {sql}, null, null, null, subEndExecutionTime - subStartExecutionTime);
+                        StatementMatcher[] loggingStatementMatchers = listener.getLoggingStatementMatchers();
+                        if(loggingStatementMatchers == null) {
+                            loggingListener.logQueries(queryLoggingData);
+                        } else for(StatementMatcher statementMatcher: loggingStatementMatchers) {
+                            if(statementMatcher.matches(queryLoggingData)) {
+                                loggingListener.logQueries(queryLoggingData);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	}
 
 //	private long startFetchTime;

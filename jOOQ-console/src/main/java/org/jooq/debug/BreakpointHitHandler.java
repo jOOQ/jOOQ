@@ -34,25 +34,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console.remote;
-
-import org.jooq.debug.Debugger;
-import org.jooq.debug.console.remote.messaging.CommunicationInterface;
+package org.jooq.debug;
 
 /**
  * @author Christopher Deckers
  */
-class DebuggerCommmunicationInterface extends CommunicationInterface {
+public interface BreakpointHitHandler {
 
-    private Debugger debugger;
+    public void processBreakpointBeforeExecutionHit(BreakpointBeforeExecutionHit breakpointHit);
 
-    public DebuggerCommmunicationInterface(Debugger debugger, int port) {
-        super(port);
-        this.debugger = debugger;
-    }
-
-    public Debugger getDebugger() {
-        return debugger;
-    }
+    public void processBreakpointAfterExecutionHit(BreakpointAfterExecutionHit breakpointHit);
 
 }

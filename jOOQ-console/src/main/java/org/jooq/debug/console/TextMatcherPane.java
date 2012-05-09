@@ -49,6 +49,9 @@ import org.jooq.debug.console.misc.TextMatcher;
 import org.jooq.debug.console.misc.TextMatcher.TextMatchingType;
 
 
+/**
+ * @author Christopher Deckers
+ */
 @SuppressWarnings("serial")
 public class TextMatcherPane extends JPanel {
 
@@ -61,7 +64,7 @@ public class TextMatcherPane extends JPanel {
         matcherTypeComboBox = new JComboBox(TextMatchingType.values());
         add(matcherTypeComboBox, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         textField = new JTextField(14);
-        add(textField, new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
+        add(textField, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 0, 0), 0, 0));
         caseSensitiveCheckBox = new JCheckBox("Case sensitive");
         add(caseSensitiveCheckBox, new GridBagConstraints(2, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
         if(textMatcher != null) {

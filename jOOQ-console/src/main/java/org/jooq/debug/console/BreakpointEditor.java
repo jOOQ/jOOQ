@@ -36,6 +36,7 @@
  */
 package org.jooq.debug.console;
 
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -49,23 +50,30 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
+import javax.swing.JRadioButton;
 
+import org.jooq.debug.Breakpoint;
 import org.jooq.debug.SqlQueryType;
 import org.jooq.debug.StatementMatcher;
+import org.jooq.debug.StatementProcessor;
 import org.jooq.debug.console.misc.TextMatcher;
 
 /**
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class StatementMatcherPane extends JPanel {
+public class BreakpointEditor extends JPanel {
 
-    private JCheckBox activeCheckBox;
+    private static final String BREAK = "Break on match";
+    private static final String PROCESS = "Process on match";
+
+    private int id;
     private JCheckBox threadNameTextMatcherCheckBox;
     private TextMatcherPane threadNameTextMatcherPane;
     private JCheckBox statementTextMatcherCheckBox;
@@ -76,37 +84,25 @@ public class StatementMatcherPane extends JPanel {
     private JCheckBox statementTypeInsertCheckBox;
     private JCheckBox statementTypeDeleteCheckBox;
     private JCheckBox statementTypeOtherCheckBox;
+    private JComboBox breakpointTypeComboBox;
+    private JPanel processorPane;
+    private JCheckBox beforeExecutionCheckBox;
+    private StatementProcessorPane beforeExecutionProcessorPane;
+    private JRadioButton executeRadioButton;
+//    private JRadioButton doNotExecuteRadioButton;
+    private JRadioButton replaceExecutionRadioButton;
+    private StatementProcessorPane replacementExecutionProcessorPane;
+    private JCheckBox afterExecutionCheckBox;
+    private StatementProcessorPane afterExecutionProcessorPane;
 
-    public StatementMatcherPane(final StatementMatchersPane statementMatchersPane, StatementMatcher statementMatcher) {
+    public BreakpointEditor(final DebuggerPane debuggerPane, Breakpoint breakpoint) {
         super(new GridBagLayout());
-        setBorder(BorderFactory.createLineBorder(getBackground().darker()));
+        StatementMatcher statementMatcher = breakpoint.getStatementMatcher();
+        id = breakpoint.getID();
         if(statementMatcher == null) {
             statementMatcher = new StatementMatcher(null, null, null, true);
         }
         int y = 0;
-        JPanel northPane = new JPanel(new GridBagLayout());
-        activeCheckBox = new JCheckBox("Active", statementMatcher.isActive());
-        activeCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                adjustStates();
-            }
-        });
-        northPane.add(activeCheckBox, new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        JToolBar closeButtonPane = new JToolBar();
-        closeButtonPane.setFloatable(false);
-        JButton closeButton = new JButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/TabCloseActive14.png")));
-        closeButton.setFocusable(false);
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                statementMatchersPane.removeStatementMatcherPane(StatementMatcherPane.this);
-            }
-        });
-        closeButtonPane.add(closeButton);
-        northPane.add(closeButtonPane, new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
-        add(northPane, new GridBagConstraints(0, y, 2, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        y++;
         TextMatcher statementTextMatcher = statementMatcher.getStatementTextMatcher();
         statementTextMatcherCheckBox = new JCheckBox("Statement", statementTextMatcher != null);
         statementTextMatcherCheckBox.addItemListener(new ItemListener() {
@@ -152,11 +148,100 @@ public class StatementMatcherPane extends JPanel {
         add(threadNameTextMatcherCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         threadNameTextMatcherPane = new TextMatcherPane(threadNameTextMatcher);
         add(threadNameTextMatcherPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
+        y++;
+        breakpointTypeComboBox = new JComboBox(new Object[] {BREAK, PROCESS});
+        breakpointTypeComboBox.setSelectedItem(breakpoint.isBreaking()? BREAK: PROCESS);
+        breakpointTypeComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                adjustStates();
+            }
+        });
+        add(breakpointTypeComboBox, new GridBagConstraints(0, y, 2, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        y++;
+        processorPane = new JPanel(new GridBagLayout());
+        populateProcessorPane(breakpoint);
+        add(processorPane, new GridBagConstraints(0, y, 2, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 20, 0, 0), 0, 0));
+        y++;
+        JPanel buttonPane = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(20, 5, 5, 5));
+        JButton applyButton = new JButton("Apply changes");
+        applyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                debuggerPane.modifyBreakpoint(getBreakpoint());
+            }
+        });
+        buttonPane.add(applyButton);
+        add(buttonPane, new GridBagConstraints(0, y, 2, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 20, 0, 0), 0, 0));
+        add(Box.createGlue(), new GridBagConstraints(0, Short.MAX_VALUE, 1, 1, 0, 1, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         adjustStates();
     }
 
+    private void populateProcessorPane(Breakpoint breakpoint) {
+        int y = 0;
+        StatementProcessor beforeExecutionProcessor = breakpoint.getBeforeExecutionProcessor();
+        beforeExecutionCheckBox = new JCheckBox("Execute before: ");
+        beforeExecutionCheckBox.setSelected(beforeExecutionProcessor != null);
+        beforeExecutionCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                adjustStates();
+            }
+        });
+        processorPane.add(beforeExecutionCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        beforeExecutionProcessorPane = new StatementProcessorPane(beforeExecutionProcessor);
+        processorPane.add(beforeExecutionProcessorPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
+        y++;
+        ButtonGroup executionButtonGroup = new ButtonGroup();
+        StatementProcessor replacementExecutionProcessor = breakpoint.getReplacementExecutionProcessor();
+        executeRadioButton = new JRadioButton("Execute");
+        executionButtonGroup.add(executeRadioButton);
+        processorPane.add(executeRadioButton, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        y++;
+//        doNotExecuteRadioButton = new JRadioButton("Do not execute");
+//        executionButtonGroup.add(doNotExecuteRadioButton);
+//        processorPane.add(doNotExecuteRadioButton, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+//        y++;
+        replaceExecutionRadioButton = new JRadioButton("Replace with: ");
+        executionButtonGroup.add(replaceExecutionRadioButton);
+        if(replacementExecutionProcessor != null) {
+            replaceExecutionRadioButton.setSelected(true);
+        } else {
+            executeRadioButton.setSelected(true);
+        }
+        processorPane.add(replaceExecutionRadioButton, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        replacementExecutionProcessorPane = new StatementProcessorPane(breakpoint.getReplacementExecutionProcessor());
+        processorPane.add(replacementExecutionProcessorPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
+        executeRadioButton.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                adjustStates();
+            }
+        });
+        replaceExecutionRadioButton.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                adjustStates();
+            }
+        });
+        y++;
+        StatementProcessor afterExecutionProcessor = breakpoint.getAfterExecutionProcessor();
+        afterExecutionCheckBox = new JCheckBox("Execute after: ");
+        afterExecutionCheckBox.setSelected(afterExecutionProcessor != null);
+        afterExecutionCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                adjustStates();
+            }
+        });
+        processorPane.add(afterExecutionCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        afterExecutionProcessorPane = new StatementProcessorPane(afterExecutionProcessor);
+        processorPane.add(afterExecutionProcessorPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
+    }
+
     private void adjustStates() {
-        boolean isActive = activeCheckBox.isSelected();
+        boolean isActive = true;
         statementTextMatcherCheckBox.setEnabled(isActive);
         statementTypeCheckBox.setEnabled(isActive);
         threadNameTextMatcherCheckBox.setEnabled(isActive);
@@ -167,10 +252,20 @@ public class StatementMatcherPane extends JPanel {
         statementTypeDeleteCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
         statementTypeOtherCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
         threadNameTextMatcherPane.setLocked(!isActive || !threadNameTextMatcherCheckBox.isSelected());
+        breakpointTypeComboBox.setEnabled(isActive && (statementTextMatcherCheckBox.isSelected() || statementTypeCheckBox.isSelected() || threadNameTextMatcherCheckBox.isSelected()));
+        processorPane.setVisible(isActive && breakpointTypeComboBox.getSelectedItem() == PROCESS);
+        beforeExecutionCheckBox.setEnabled(isActive);
+        beforeExecutionProcessorPane.setLocked(!isActive || !beforeExecutionCheckBox.isSelected());
+        executeRadioButton.setEnabled(isActive);
+        replaceExecutionRadioButton.setEnabled(isActive);
+//        doNotExecuteRadioButton;
+        replacementExecutionProcessorPane.setLocked(!isActive || !replaceExecutionRadioButton.isSelected());
+        afterExecutionCheckBox.setEnabled(isActive);
+        afterExecutionProcessorPane.setLocked(!isActive || !afterExecutionCheckBox.isSelected());
     }
 
     public StatementMatcher getStatementMatcher() {
-        boolean isActive = activeCheckBox.isSelected();
+        boolean isActive = true;//activeCheckBox.isSelected();
         TextMatcher threadNameTextMatcher = threadNameTextMatcherCheckBox.isSelected()? threadNameTextMatcherPane.getTextMatcher(): null;
         TextMatcher statementTextMatcher = statementTextMatcherCheckBox.isSelected()? statementTextMatcherPane.getTextMatcher(): null;
         Set<SqlQueryType> queryTypeSet;
@@ -196,6 +291,21 @@ public class StatementMatcherPane extends JPanel {
             queryTypeSet = null;
         }
         return new StatementMatcher(threadNameTextMatcher, statementTextMatcher, queryTypeSet, isActive);
+    }
+
+    public Breakpoint getBreakpoint() {
+        StatementMatcher statementMatcher = getStatementMatcher();
+//      Integer hitCount;
+        boolean isBreaking = breakpointTypeComboBox.getSelectedItem() == BREAK;
+        StatementProcessor beforeExecutionProcessor = null;
+        StatementProcessor replacementExecutionProcessor = null;
+        StatementProcessor afterExecutionProcessor = null;
+        if(!isBreaking) {
+            beforeExecutionProcessor = beforeExecutionCheckBox.isSelected()? beforeExecutionProcessorPane.getStatementProcessor(): null;
+            replacementExecutionProcessor = replaceExecutionRadioButton.isSelected()? replacementExecutionProcessorPane.getStatementProcessor(): null;
+            afterExecutionProcessor = afterExecutionCheckBox.isSelected()? afterExecutionProcessorPane.getStatementProcessor(): null;
+        }
+        return new Breakpoint(id, statementMatcher, isBreaking, beforeExecutionProcessor, replacementExecutionProcessor, afterExecutionProcessor);
     }
 
 }

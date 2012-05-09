@@ -34,25 +34,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console.remote;
+package org.jooq.debug;
 
-import org.jooq.debug.Debugger;
-import org.jooq.debug.console.remote.messaging.CommunicationInterface;
+import java.io.Serializable;
 
 /**
  * @author Christopher Deckers
  */
-class DebuggerCommmunicationInterface extends CommunicationInterface {
+@SuppressWarnings("serial")
+public class BreakpointAfterExecutionHit implements Serializable {
 
-    private Debugger debugger;
+    private int breakpointID;
+    private String sql;
 
-    public DebuggerCommmunicationInterface(Debugger debugger, int port) {
-        super(port);
-        this.debugger = debugger;
+    public BreakpointAfterExecutionHit(int breakpointID, String sql) {
+        this.breakpointID = breakpointID;
+        this.sql = sql;
     }
 
-    public Debugger getDebugger() {
-        return debugger;
+    public int getBreakpointID() {
+        return breakpointID;
+    }
+
+    public String getSql() {
+        return sql;
     }
 
 }

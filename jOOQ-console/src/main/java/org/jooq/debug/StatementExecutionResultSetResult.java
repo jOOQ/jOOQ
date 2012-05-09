@@ -42,6 +42,9 @@ import java.sql.SQLException;
 
 import org.jooq.debug.console.misc.Utils;
 
+/**
+ * @author Christopher Deckers
+ */
 public class StatementExecutionResultSetResult implements StatementExecutionResult {
 
     public static class TypeInfo {

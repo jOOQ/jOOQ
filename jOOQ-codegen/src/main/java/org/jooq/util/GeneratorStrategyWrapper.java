@@ -46,6 +46,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.Record;
+import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -155,6 +156,11 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             else {
                 reserved = reservedColumns(TableRecordImpl.class);
             }
+        }
+
+        // [#1406] Disambiguate also procedure parameters
+        else if (definition instanceof ParameterDefinition) {
+            reserved = reservedColumns(AbstractRoutine.class);
         }
 
         if (reserved != null) {

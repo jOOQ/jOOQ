@@ -36,18 +36,17 @@
  */
 package org.jooq.debug;
 
-import java.sql.ResultSet;
+import java.io.Serializable;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-
-import org.jooq.debug.console.misc.Utils;
 
 /**
  * @author Christopher Deckers
  */
-public class StatementExecutionResultSetResult implements StatementExecutionResult {
+public interface StatementExecutionResultSetResult extends StatementExecutionResult {
 
-    public static class TypeInfo {
+    @SuppressWarnings("serial")
+    public static class TypeInfo implements Serializable {
 
         private String columnName;
         private int precision;
@@ -80,101 +79,27 @@ public class StatementExecutionResultSetResult implements StatementExecutionResu
 
     }
 
-    private ResultSet rs;
-    private String[] columnNames;
-    private TypeInfo[] typeInfos;
-    private Class<?>[] columnClasses;
-    private Object[][] rowData;
-    private int rowCount;
-    private long resultSetParsingDuration;
-    private int retainParsedRSDataRowCountThreshold;
-    private boolean isReadOnly;
+    public String[] getColumnNames();
 
-    public StatementExecutionResultSetResult(ResultSet rs, String[] columnNames, TypeInfo[] typeInfos, Class<?>[] columnClasses, Object[][] rowData, int rowCount, long resultSetParsingDuration, int retainParsedRSDataRowCountThreshold, boolean isReadOnly) {
-        this.rs = rs;
-        this.columnNames = columnNames;
-        this.typeInfos = typeInfos;
-        this.columnClasses = columnClasses;
-        this.rowData = rowData;
-        this.rowCount = rowCount;
-        this.resultSetParsingDuration = resultSetParsingDuration;
-        this.retainParsedRSDataRowCountThreshold = retainParsedRSDataRowCountThreshold;
-        this.isReadOnly = isReadOnly;
-    }
+    public TypeInfo[] getTypeInfos();
 
-    public String[] getColumnNames() {
-        return columnNames;
-    }
-
-    public TypeInfo[] getTypeInfos() {
-        return typeInfos;
-    }
-
-    public Class<?>[] getColumnClasses() {
-        return columnClasses;
-    }
+    public Class<?>[] getColumnClasses();
 
     /**
      * @return the data or an empty array of arrays if <code>rowCount</code> is over <code>retainParsedRSDataRowCountThreshold</code>.
      */
-    public Object[][] getRowData() {
-        return rowData;
-    }
+    public Object[][] getRowData();
 
-    public int getRowCount() {
-        return rowCount;
-    }
+    public int getRowCount();
 
-    public long getResultSetParsingDuration() {
-        return resultSetParsingDuration;
-    }
+    public long getResultSetParsingDuration();
 
-    public int getRetainParsedRSDataRowCountThreshold() {
-        return retainParsedRSDataRowCountThreshold;
-    }
+    public int getRetainParsedRSDataRowCountThreshold();
 
-    public boolean deleteRow(int row) {
-        try {
-            rs.absolute(row);
-            rs.deleteRow();
-            Object[][] newRowData = new Object[rowData.length - 1][];
-            System.arraycopy(rowData, 0, newRowData, 0, row);
-            System.arraycopy(rowData, row + 1, newRowData, row, newRowData.length - row - 1);
-            rowData = newRowData;
-            return true;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return false;
-    }
+    public boolean deleteRow(int row);
 
-    public boolean setValueAt(Object o, int row, int col) {
-        if(Utils.equals(o, rowData[row][col])) {
-            return false;
-        }
-        try {
-            rs.absolute(row + 1);
-            rs.updateObject(col + 1, o);
-            rs.updateRow();
-            rowData[row][col] = o;
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                rs.cancelRowUpdates();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return false;
-    }
+    public boolean setValueAt(Object o, int row, int col);
 
-    public boolean isEditable() {
-        try {
-            return rs.getConcurrency() == ResultSet.CONCUR_UPDATABLE && !isReadOnly;
-        } catch (SQLException e) {
-        }
-        return false;
-    }
+    public boolean isEditable();
 
 }

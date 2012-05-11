@@ -34,32 +34,33 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug;
+package org.jooq.debug.console.remote;
 
-import java.io.Serializable;
-
+import org.jooq.debug.LocalStatementExecutionResultSetResult;
+import org.jooq.debug.StatementExecution;
+import org.jooq.debug.StatementExecutionResult;
 
 /**
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class StatementExecution implements Serializable {
+class ClientStatementExecution extends StatementExecution {
 
-    private long executionDuration;
-
-    private StatementExecutionResult[] results;
-
-    public StatementExecution(long executionDuration, StatementExecutionResult... results) {
-        this.executionDuration = executionDuration;
-        this.results = results;
+    public ClientStatementExecution(StatementExecution statementExecution) {
+        super(statementExecution.getExecutionDuration(), convertResults(statementExecution));
     }
 
-    public StatementExecutionResult[] getResults() {
-        return results;
-    }
-
-    public long getExecutionDuration() {
-        return executionDuration;
+    private static StatementExecutionResult[] convertResults(StatementExecution statementExecution) {
+        StatementExecutionResult[] results = statementExecution.getResults();
+        StatementExecutionResult[] clientResults = new StatementExecutionResult[results.length];
+        // TODO: improve? For now, basic implementation: ALL data to be sent in a message.
+        for(int i=0; i<results.length; i++) {
+            clientResults[i] = results[i];
+            if(clientResults[i] instanceof LocalStatementExecutionResultSetResult) {
+                clientResults[i] = new ClientStatementExecutionResultSetResult((LocalStatementExecutionResultSetResult)clientResults[i]);
+            }
+        }
+        return clientResults;
     }
 
 }

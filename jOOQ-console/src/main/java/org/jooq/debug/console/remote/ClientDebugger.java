@@ -65,6 +65,10 @@ public class ClientDebugger implements Debugger {
         }, ip, port);
 	}
 
+    CommunicationInterface getCommunicationInterface() {
+        return communicationInterface;
+    }
+
     private LoggingListener loggingListener;
     private final Object LOGGING_LISTENER_LOCK = new Object();
 
@@ -146,16 +150,22 @@ public class ClientDebugger implements Debugger {
         }
     }
 
+    private Boolean isEditionSupported;
+    private final Object IS_EDITION_SUPPORTED_LOCK = new Object();
+
     @Override
     public boolean isExecutionSupported() {
-        // TODO: implement
-        return false;
+        synchronized (IS_EDITION_SUPPORTED_LOCK) {
+            if(isEditionSupported == null) {
+                isEditionSupported = (Boolean)new ServerDebugger.CMS_isExecutionSupported().syncExec(communicationInterface);
+            }
+        }
+        return Boolean.TRUE.equals(isEditionSupported);
     }
 
     @Override
     public StatementExecutor createStatementExecutor() {
-        // TODO: implement
-        return null;
+        return new ClientStatementExecutor(this);
     }
 
     @SuppressWarnings("serial")

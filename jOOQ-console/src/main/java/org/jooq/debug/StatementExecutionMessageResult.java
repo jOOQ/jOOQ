@@ -37,12 +37,14 @@
 package org.jooq.debug;
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.io.StringWriter;
 
 /**
  * @author Christopher Deckers
  */
-public class StatementExecutionMessageResult implements StatementExecutionResult {
+@SuppressWarnings("serial")
+public class StatementExecutionMessageResult implements StatementExecutionResult, Serializable {
 
     private String message;
     private boolean isError;

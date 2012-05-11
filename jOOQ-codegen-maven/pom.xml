@@ -6,12 +6,12 @@
 		<version>7</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>org.jooq</groupId>
 	<artifactId>jooq-codegen-maven</artifactId>
 	<version>2.3.1</version>
 	<packaging>maven-plugin</packaging>
-	
+
 	<name>jOOQ Codegen Maven</name>
 	<description>jOOQ effectively combines complex SQL, typesafety, source code generation, active records, stored procedures, advanced data types, and Java in a fluent, intuitive DSL.</description>
 	<url>http://www.jooq.org</url>
@@ -35,7 +35,7 @@
 		<system>Trac</system>
 		<url>https://sourceforge.net/apps/trac/jooq/report/6</url>
 	</issueManagement>
-	
+
 	<developers>
 		<developer>
 			<name>Lukas Eder</name>
@@ -46,7 +46,7 @@
 			<email>sander.plas@gmail.com</email>
 		</developer>
 	</developers>
-	
+
 	<build>
 		<defaultGoal>deploy</defaultGoal>
 		<finalName>${project.artifactId}-${project.version}</finalName>
@@ -66,7 +66,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -133,7 +133,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>

@@ -40,6 +40,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Truncate<R extends TableRecord<R>> extends Query {
+public interface Truncate<R extends Record> extends Query {
 
 }

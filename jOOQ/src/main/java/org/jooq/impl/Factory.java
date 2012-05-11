@@ -1489,7 +1489,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table) {
+    public final <R extends Record> Truncate<R> truncate(Table<R> table) {
         return new TruncateImpl<R>(this, table);
     }
 

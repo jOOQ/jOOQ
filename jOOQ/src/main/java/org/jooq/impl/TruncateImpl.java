@@ -40,16 +40,16 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 import org.jooq.Truncate;
 
 /**
  * @author Lukas Eder
  */
-class TruncateImpl<R extends TableRecord<R>> extends AbstractQuery implements Truncate<R> {
+class TruncateImpl<R extends Record> extends AbstractQuery implements Truncate<R> {
 
     /**
      * Generated UID

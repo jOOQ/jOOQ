@@ -688,7 +688,7 @@ public interface FactoryOperations extends Configuration {
      * is omitted for future extensibility of this command.
      */
     @Support
-    <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table);
+    <R extends Record> Truncate<R> truncate(Table<R> table);
 
     // -------------------------------------------------------------------------
     // XXX Other queries for identities and sequences

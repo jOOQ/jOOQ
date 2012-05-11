@@ -460,6 +460,15 @@ public interface ExecuteListener {
      * </li>
      * </ul>
      * <p>
+     * Overridable attributes in <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#statement(PreparedStatement)}: The
+     * <code>Statement</code>, <code>PreparedStatement</code>, or
+     * <code>CallableStatement</code> that is about to be executed. You can
+     * modify this statement freely, or wrap {@link ExecuteContext#statement()}
+     * with your enriched statement wrapper</li>
+     * </ul>
+     * <p>
      * Note that this method is not called when executing queries of type
      * {@link StatementType#STATIC_STATEMENT}
      */
@@ -496,6 +505,15 @@ public interface ExecuteListener {
      * jOOQ <code>Routine</code></li>
      * </ul>
      * </li>
+     * </ul>
+     * <p>
+     * Overridable attributes in <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#statement(PreparedStatement)}: The
+     * <code>Statement</code>, <code>PreparedStatement</code>, or
+     * <code>CallableStatement</code> that is about to be executed. You can
+     * modify this statement freely, or wrap {@link ExecuteContext#statement()}
+     * with your enriched statement wrapper</li>
      * </ul>
      */
     void executeStart(ExecuteContext ctx);

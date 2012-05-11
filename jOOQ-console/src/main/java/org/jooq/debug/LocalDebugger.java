@@ -127,7 +127,7 @@ public class LocalDebugger implements Debugger {
     }
 
     @Override
-    public StatementExecutor createStatementExecutor() {
+    public LocalStatementExecutor createStatementExecutor() {
         return new LocalStatementExecutor(databaseDescriptor);
     }
 

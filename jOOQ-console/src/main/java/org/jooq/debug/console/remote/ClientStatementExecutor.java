@@ -34,32 +34,49 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug;
+package org.jooq.debug.console.remote;
 
-import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import org.jooq.debug.StatementExecution;
+import org.jooq.debug.StatementExecutor;
 
 /**
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
-public class StatementExecution implements Serializable {
+public class ClientStatementExecutor implements StatementExecutor {
 
-    private long executionDuration;
+    private static AtomicInteger nextID = new AtomicInteger();
 
-    private StatementExecutionResult[] results;
+    private ClientDebugger debugger;
+    private int id;
 
-    public StatementExecution(long executionDuration, StatementExecutionResult... results) {
-        this.executionDuration = executionDuration;
-        this.results = results;
+    public ClientStatementExecutor(ClientDebugger debugger) {
+        id = nextID.incrementAndGet();
+        this.debugger = debugger;
+        new ServerDebugger.CMS_createServerStatementExecutor().asyncExec(debugger.getCommunicationInterface(), id);
     }
 
-    public StatementExecutionResult[] getResults() {
-        return results;
+    @Override
+    public StatementExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
+        return (StatementExecution)new ServerDebugger.CMS_doStatementExecutorExecution().syncExec(debugger.getCommunicationInterface(), id, sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
     }
 
-    public long getExecutionDuration() {
-        return executionDuration;
+    @Override
+    public void stopExecution() {
+        new ServerDebugger.CMS_stopStatementExecutorExecution().asyncExec(debugger.getCommunicationInterface(), id);
+    }
+
+    @Override
+    public String[] getTableNames() {
+        String[] tableNames = (String[])new ServerDebugger.CMS_getStatementExecutorTableNames().syncExec(debugger.getCommunicationInterface(), id);
+        return tableNames == null? new String[0]: tableNames;
+    }
+
+    @Override
+    public String[] getTableColumnNames() {
+        String[] tableColumnNames = (String[])new ServerDebugger.CMS_getStatementExecutorTableColumnNames().syncExec(debugger.getCommunicationInterface(), id);
+        return tableColumnNames == null? new String[0]: tableColumnNames;
     }
 
 }

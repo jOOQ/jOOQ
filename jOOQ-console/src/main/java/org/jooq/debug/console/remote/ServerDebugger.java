@@ -36,6 +36,9 @@
  */
 package org.jooq.debug.console.remote;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jooq.debug.Breakpoint;
 import org.jooq.debug.BreakpointAfterExecutionHit;
 import org.jooq.debug.BreakpointBeforeExecutionHit;
@@ -44,6 +47,8 @@ import org.jooq.debug.LocalDebugger;
 import org.jooq.debug.LoggingListener;
 import org.jooq.debug.QueryLoggingData;
 import org.jooq.debug.ResultSetLoggingData;
+import org.jooq.debug.StatementExecution;
+import org.jooq.debug.StatementExecutor;
 import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.DatabaseDescriptor;
 import org.jooq.debug.console.remote.messaging.CommunicationInterface;
@@ -133,6 +138,93 @@ class ServerDebugger extends LocalDebugger {
         public Object run(Object[] args) {
             getDebugger().setBreakpointHitHandlerActive((Boolean)args[0]);
             return null;
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class CMS_isExecutionSupported extends ServerDebuggerCommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            return getDebugger().isExecutionSupported();
+        }
+    }
+
+    private Map<Integer, StatementExecutor> idToStatementExecutorMap = new HashMap<Integer, StatementExecutor>();
+
+    private void createStatementExecutor(int id) {
+        synchronized (idToStatementExecutorMap) {
+            idToStatementExecutorMap.put(id, createStatementExecutor());
+        }
+    }
+
+    private StatementExecutor getStatementExecutor(int id) {
+        synchronized (idToStatementExecutorMap) {
+            return idToStatementExecutorMap.get(id);
+        }
+    }
+
+    private StatementExecutor removeStatementExecutor(int id) {
+        synchronized (idToStatementExecutorMap) {
+            return idToStatementExecutorMap.remove(id);
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class CMS_createServerStatementExecutor extends ServerDebuggerCommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            int id = (Integer)args[0];
+            getDebugger().createStatementExecutor(id);
+            return null;
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class CMS_doStatementExecutorExecution extends ServerDebuggerCommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            int id = (Integer)args[0];
+            String sql = (String)args[1];
+            int maxRSRowsParsing = (Integer)args[2];
+            int retainParsedRSDataRowCountThreshold = (Integer)args[3];
+            StatementExecution statementExecution = getDebugger().getStatementExecutor(id).execute(sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
+            return new ClientStatementExecution(statementExecution);
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class CMS_stopStatementExecutorExecution extends ServerDebuggerCommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            int id = (Integer)args[0];
+            getDebugger().removeStatementExecutor(id).stopExecution();
+            return null;
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class CMS_getStatementExecutorTableNames extends ServerDebuggerCommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            int id = (Integer)args[0];
+            return getDebugger().getStatementExecutor(id).getTableNames();
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class CMS_getStatementExecutorTableColumnNames extends ServerDebuggerCommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            int id = (Integer)args[0];
+            return getDebugger().getStatementExecutor(id).getTableColumnNames();
+        }
+    }
+
+    void cleanup() {
+        synchronized (idToStatementExecutorMap) {
+            for(StatementExecutor executor: idToStatementExecutorMap.values()) {
+                executor.stopExecution();
+            }
         }
     }
 

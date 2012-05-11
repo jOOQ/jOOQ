@@ -244,7 +244,7 @@ public class LocalStatementExecutor implements StatementExecutor {
                         }
                     }
                     final long resultSetParsingDuration = System.currentTimeMillis() - rsStart;
-                    statementExecutionResult = new StatementExecutionResultSetResult(rs, columnNames, typeInfos, columnClasses, rowDataList.toArray(new Object[0][]), rowCount, resultSetParsingDuration, retainParsedRSDataRowCountThreshold, databaseDescriptor.isReadOnly());
+                    statementExecutionResult = new LocalStatementExecutionResultSetResult(rs, columnNames, typeInfos, columnClasses, rowDataList.toArray(new Object[0][]), rowCount, resultSetParsingDuration, retainParsedRSDataRowCountThreshold, databaseDescriptor.isReadOnly());
                 } else {
                     final int updateCount = stmt.getUpdateCount();
                     statementExecutionResult = new StatementExecutionMessageResult(Utils.formatDuration(executionDuration) + "> " + updateCount + " row(s) affected.", false);

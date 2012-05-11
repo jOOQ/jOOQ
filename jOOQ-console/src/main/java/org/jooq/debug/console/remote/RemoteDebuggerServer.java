@@ -52,9 +52,11 @@ public class RemoteDebuggerServer {
     private final Object LOCK = new Object();
     private ServerSocket serverSocket;
 
-	public RemoteDebuggerServer(final int port) {
-	    // TODO: pass databaseDescriptor.
-	    final DatabaseDescriptor databaseDescriptor = null;
+    public RemoteDebuggerServer(final int port) {
+        this(port, null);
+    }
+
+	public RemoteDebuggerServer(final int port, final DatabaseDescriptor databaseDescriptor) {
         try {
             synchronized(LOCK) {
                 serverSocket = CommunicationInterface.openServerCommunicationChannel(new CommunicationInterfaceFactory() {
@@ -70,6 +72,7 @@ public class RemoteDebuggerServer {
                             @Override
                             protected void processClosed() {
                                 DebuggerRegistry.removeSqlQueryDebugger(serverDebugger);
+                                serverDebugger.cleanup();
                             }
                         };
                         serverDebugger.setCommunicationInterface(commmunicationInterface);

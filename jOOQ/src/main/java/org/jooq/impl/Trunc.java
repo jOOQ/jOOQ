@@ -35,12 +35,15 @@
  */
 package org.jooq.impl;
 
+import static java.math.BigDecimal.TEN;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.zero;
+import static org.jooq.impl.Util.extractVal;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -82,10 +85,18 @@ class Trunc<T> extends AbstractFunction<T> {
     private final Field<T> getNumericFunction(Configuration configuration) {
         switch (configuration.getDialect()) {
             case ASE:
-
-            // This calculation is inaccurate for Derby
             case DERBY: {
-                Field<BigDecimal> power = Factory.power(inline(new BigDecimal("10.0")), decimals);
+                Field<BigDecimal> power;
+
+                // [#1334] if possible, calculate the power in Java to prevent
+                // inaccurate arithmetics in the Derby database
+                Integer decimalsVal = extractVal(decimals);
+                if (decimalsVal != null) {
+                    power = inline(TEN.pow(decimalsVal, MathContext.DECIMAL128));
+                }
+                else {
+                    power = Factory.power(inline(TEN), decimals);
+                }
 
                 return Factory.decode()
                     .when(field.sign().greaterOrEqual(zero()),

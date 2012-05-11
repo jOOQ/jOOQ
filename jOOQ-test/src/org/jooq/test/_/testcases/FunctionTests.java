@@ -603,6 +603,15 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         Field<Double> f3d = floor(-2.0);
         Field<Double> f4d = ceil(-2.0);
 
+        Field<Float> f1e = round(0.0f);
+        Field<Float> f2e = round(0.0f, 2);
+        Field<Float> f3e = floor(0.0f);
+        Field<Float> f4e = ceil(0.0f);
+        Field<Float> f1f = round(0.0f);
+        Field<Float> f2f = round(0.0f, 2);
+        Field<Float> f3f = floor(0.0f);
+        Field<Float> f4f = ceil(0.0f);
+
         // Some arbitrary checks on having multiple select clauses
         Record record =
         create().select(f1a)
@@ -611,7 +620,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 .select(f5a, f6a, f7a)
                 .select(f1b, f2b, f3b, f4b, f6b, f6b, f7b)
                 .select(f1c, f2c, f3c, f4c)
-                .select(f1d, f2d, f3d, f4d).fetchOne();
+                .select(f1d, f2d, f3d, f4d)
+                .select(f1e, f2e, f3e, f4e)
+                .select(f1f, f2f, f3f, f4f)
+                .fetchOne();
 
         assertNotNull(record);
         assertEquals("1.0", record.getValueAsString(f1a));
@@ -639,6 +651,16 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals("-2.0", record.getValueAsString(f2d));
         assertEquals("-2.0", record.getValueAsString(f3d));
         assertEquals("-2.0", record.getValueAsString(f4d));
+
+        assertEquals("0.0", record.getValueAsString(f1e));
+        assertEquals("0.0", record.getValueAsString(f2e));
+        assertEquals("0.0", record.getValueAsString(f3e));
+        assertEquals("0.0", record.getValueAsString(f4e));
+
+        assertEquals("0.0", record.getValueAsString(f1f));
+        assertEquals("0.0", record.getValueAsString(f2f));
+        assertEquals("0.0", record.getValueAsString(f3f));
+        assertEquals("0.0", record.getValueAsString(f4f));
 
         // Greatest and least
         record = create().select(

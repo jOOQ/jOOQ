@@ -136,6 +136,7 @@ public class PostgresDataType<T> extends AbstractDataType<T> {
     public static final PostgresDataType<Timestamp>  TIMESTAMPWITHTIMEZONE      = new PostgresDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp with time zone");
     public static final PostgresDataType<Timestamp>  TIMESTAMPTZ                = new PostgresDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamptz");
     public static final PostgresDataType<Result<Record>> REFCURSOR              = new PostgresDataType<Result<Record>>(SQLDataType.RESULT, "refcursor");
+    public static final PostgresDataType<Object>     ANY                        = new PostgresDataType<Object>(SQLDataType.OTHER, "any");
 
     // Meta-table types
     public static final PostgresDataType<Long>       OID                        = new PostgresDataType<Long>(SQLDataType.BIGINT, "oid");

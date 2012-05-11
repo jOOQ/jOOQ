@@ -64,6 +64,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -102,6 +103,7 @@ import org.jooq.debug.QueryLoggingData;
 import org.jooq.debug.ResultSetLoggingData;
 import org.jooq.debug.SqlQueryType;
 import org.jooq.debug.StatementMatcher;
+import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.JTableX;
 import org.jooq.debug.console.misc.RichTextTransferable;
 import org.jooq.debug.console.misc.Utils;
@@ -151,6 +153,7 @@ public class LoggerPane extends JPanel {
 
     public LoggerPane(Debugger debugger) {
         super(new BorderLayout());
+        setBorder(BorderFactory.createEmptyBorder(2, 5, 0, 5));
         this.debugger = debugger;
         setOpaque(false);
         JPanel loggerHeaderPanel = new JPanel(new BorderLayout());
@@ -633,7 +636,7 @@ public class LoggerPane extends JPanel {
             }
         });
         textArea = new SqlTextArea();
-        final JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, new JScrollPane(table), new JScrollPane(textArea));
+        final JSplitPane splitPane = new InvisibleSplitPane(JSplitPane.VERTICAL_SPLIT, true, new JScrollPane(table), new JScrollPane(textArea));
         splitPane.setResizeWeight(1);
         SwingUtilities.invokeLater(new Runnable() {
             @Override

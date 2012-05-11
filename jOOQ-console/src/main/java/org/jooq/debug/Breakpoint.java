@@ -37,6 +37,7 @@
 package org.jooq.debug;
 
 import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Christopher Deckers
@@ -46,14 +47,18 @@ public class Breakpoint implements Serializable {
 
     private int id;
     private StatementMatcher statementMatcher;
-//    private Integer hitCount;
+    private Integer hitCount;
     private boolean isBreaking;
     private StatementProcessor beforeExecutionProcessor;
     private StatementProcessor replacementExecutionProcessor;
     private StatementProcessor afterExecutionProcessor;
 
-    public Breakpoint(int id, StatementMatcher statementMatcher, boolean isBreaking, StatementProcessor beforeExecutionProcessor, StatementProcessor replacementExecutionProcessor, StatementProcessor afterExecutionProcessor) {
+    public Breakpoint(int id, Integer hitCount, StatementMatcher statementMatcher, boolean isBreaking, StatementProcessor beforeExecutionProcessor, StatementProcessor replacementExecutionProcessor, StatementProcessor afterExecutionProcessor) {
         this.id = id;
+        this.hitCount = hitCount;
+        if(hitCount != null) {
+            currentHitCount = new AtomicInteger(hitCount);
+        }
         this.statementMatcher = statementMatcher;
         this.isBreaking = isBreaking;
         this.beforeExecutionProcessor = beforeExecutionProcessor;
@@ -69,8 +74,38 @@ public class Breakpoint implements Serializable {
         return statementMatcher;
     }
 
-    public boolean matches(StatementInfo statementInfo) {
-        return statementMatcher != null && statementMatcher.matches(statementInfo);
+    private AtomicInteger currentHitCount;
+
+    public boolean matches(StatementInfo statementInfo, boolean trackHitCount) {
+        if(trackHitCount && hitCount != null && currentHitCount.get() <= 0) {
+            // No need to match if hit count was already reached.
+            return false;
+        }
+        boolean hasMatcher = false;
+        if(statementMatcher != null) {
+            if(!statementMatcher.matches(statementInfo)) {
+                return false;
+            }
+            hasMatcher = true;
+        }
+        if(trackHitCount) {
+            if(hitCount != null) {
+                int currentHitCount_ = currentHitCount.decrementAndGet();
+                if(currentHitCount_ > 0) {
+                    return false;
+                }
+                if(currentHitCount_ < 0) {
+                    currentHitCount.set(0);
+                    return false;
+                }
+                hasMatcher = true;
+            }
+        }
+        return hasMatcher;
+    }
+
+    public Integer getHitCount() {
+        return hitCount;
     }
 
     public boolean isBreaking() {

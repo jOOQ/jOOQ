@@ -1,6 +1,7 @@
 package org.jooq.debug.console.misc;
 
 import java.awt.Component;
+import java.awt.Rectangle;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
@@ -17,10 +18,11 @@ import javax.swing.tree.TreePath;
  */
 public class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor {
 
-    private CheckBoxNodeRenderer renderer = new CheckBoxNodeRenderer();
+    private CheckBoxNodeRenderer renderer;
     private JTree tree;
 
     public CheckBoxNodeEditor(JTree tree) {
+        renderer = new CheckBoxNodeRenderer(tree);
         this.tree = tree;
     }
 
@@ -32,27 +34,42 @@ public class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEd
 
     @Override
     public boolean isCellEditable(EventObject event) {
-        boolean returnValue = false;
         if (event instanceof MouseEvent) {
             MouseEvent mouseEvent = (MouseEvent) event;
             TreePath path = tree.getPathForLocation(mouseEvent.getX(), mouseEvent.getY());
             if (path != null) {
                 Object node = path.getLastPathComponent();
-                returnValue = node instanceof CheckBoxNode;
+                if(node instanceof CheckBoxNode) {
+                    int row = tree.getRowForPath(path);
+                    Component editor = renderer.getTreeCellRendererComponent(tree, node, true, false, true, row, true);
+                    Rectangle rowBounds = tree.getRowBounds(row);
+                    int x = mouseEvent.getX() - rowBounds.x;
+                    int y = mouseEvent.getY() - rowBounds.y;
+                    // editor always selected / focused
+                    if (editor instanceof CheckBoxNodeRenderer.CheckBoxEditor) {
+                        editor.setSize(rowBounds.getSize());
+                        editor.validate();
+                        editor.doLayout();
+                        return ((CheckBoxNodeRenderer.CheckBoxEditor)editor).findComponentAt(x, y) instanceof JCheckBox;
+                    }
+                }
             }
         }
-        return returnValue;
+        return false;
     }
 
     @Override
     public Component getTreeCellEditorComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row) {
         Component editor = renderer.getTreeCellRendererComponent(tree, value, true, expanded, leaf, row, true);
         // editor always selected / focused
-        if (editor instanceof JCheckBox) {
-            ((JCheckBox) editor).addItemListener(new ItemListener() {
+        if (editor instanceof CheckBoxNodeRenderer.CheckBoxEditor) {
+            final JCheckBox checkBox = ((CheckBoxNodeRenderer.CheckBoxEditor)editor).getCheckBox();
+            editor = new CheckBoxNodeRenderer.CheckBoxEditor(checkBox, renderer.getNonCheckBoxRenderer().getTreeCellRendererComponent(tree, value, true, expanded, leaf, row, true));
+            checkBox.addItemListener(new ItemListener() {
                 @Override
                 public void itemStateChanged(ItemEvent itemEvent) {
                     if (stopCellEditing()) {
+                        checkBox.removeItemListener(this);
                         fireEditingStopped();
                     }
                 }

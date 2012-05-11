@@ -10,7 +10,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.UIManager;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 
 /**
@@ -20,7 +19,7 @@ public class CheckBoxNodeRenderer implements TreeCellRenderer {
 
     private JCheckBox checkBoxRenderer;
 
-    private DefaultTreeCellRenderer nonCheckBoxRenderer = new DefaultTreeCellRenderer();
+    private TreeCellRenderer nonCheckBoxRenderer;
 
     Color selectionBorderColor, selectionForeground, selectionBackground, textForeground, textBackground;
 
@@ -28,7 +27,12 @@ public class CheckBoxNodeRenderer implements TreeCellRenderer {
         return checkBoxRenderer;
     }
 
-    public CheckBoxNodeRenderer() {
+    public TreeCellRenderer getNonCheckBoxRenderer() {
+        return nonCheckBoxRenderer;
+    }
+
+    public CheckBoxNodeRenderer(JTree tree) {
+        nonCheckBoxRenderer = tree.getCellRenderer();
         checkBoxRenderer = new JCheckBox();
         checkBoxRenderer.setMargin(new Insets(0, 0, 0, 0));
         Font fontValue = UIManager.getFont("Tree.font");
@@ -44,13 +48,24 @@ public class CheckBoxNodeRenderer implements TreeCellRenderer {
         textBackground = UIManager.getColor("Tree.textBackground");
     }
 
+    public static class CheckBoxEditor extends JPanel {
+        private JCheckBox checkBoxRenderer;
+        public CheckBoxEditor(JCheckBox checkBoxRenderer, Component c) {
+            super(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            setOpaque(false);
+            this.checkBoxRenderer = checkBoxRenderer;
+            add(checkBoxRenderer);
+            add(c);
+        }
+        public JCheckBox getCheckBox() {
+            return checkBoxRenderer;
+        }
+    }
+
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-        Object usedValue = value;// stringValue = tree.convertValueToText(value, selected, expanded, leaf, row, false);
-        if (value instanceof CheckBoxNode) {
-            usedValue = ((CheckBoxNode) value).getText();
-        }
-        Component c = nonCheckBoxRenderer.getTreeCellRendererComponent(tree, usedValue, selected, expanded, leaf, row, hasFocus);
+//        Object value = // stringValue = tree.convertValueToText(value, selected, expanded, leaf, row, false);
+        Component c = nonCheckBoxRenderer.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
         if (value instanceof CheckBoxNode) {
 //            checkBoxRenderer.setText(stringValue);
             checkBoxRenderer.setSelected(false);
@@ -66,11 +81,7 @@ public class CheckBoxNodeRenderer implements TreeCellRenderer {
             CheckBoxNode node = (CheckBoxNode) value;
 //            checkBoxRenderer.setText(node.getText());
             checkBoxRenderer.setSelected(node.isSelected());
-            JPanel pane = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-            pane.setOpaque(false);
-            pane.add(checkBoxRenderer);
-            pane.add(c);
-            c = pane;
+            c = new CheckBoxEditor(checkBoxRenderer, c);
         }
         return c;
     }

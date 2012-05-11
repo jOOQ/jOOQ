@@ -29,4 +29,9 @@ public class CheckBoxNode extends DefaultMutableTreeNode {
         selected = newValue;
     }
 
+    @Override
+    public String toString() {
+        return text;
+    }
+
 }

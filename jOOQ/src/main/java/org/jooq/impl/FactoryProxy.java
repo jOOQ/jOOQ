@@ -344,7 +344,7 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
-    public final <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table) {
+    public final <R extends Record> Truncate<R> truncate(Table<R> table) {
         return getDelegate().truncate(table);
     }
 

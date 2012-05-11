@@ -36,12 +36,16 @@
  */
 package org.jooq.debug.console;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import org.jooq.debug.StatementProcessor;
@@ -54,17 +58,43 @@ public class StatementProcessorPane extends JPanel {
 
     private JComboBox processorTypeComboBox;
     private JTextField processorTextField;
+    private JScrollPane processorStaticScrollPane;
 
     public StatementProcessorPane(StatementProcessor statementProcessor) {
         super(new GridBagLayout());
+        setOpaque(false);
         if(statementProcessor == null) {
             statementProcessor = new StatementProcessor(StatementProcessor.ProcessorExecutionType.STATIC, "");
         }
         processorTypeComboBox = new JComboBox(StatementProcessor.ProcessorExecutionType.values());
         processorTypeComboBox.setSelectedItem(statementProcessor.getType());
-        add(processorTypeComboBox, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        processorTextField = new JTextField(statementProcessor.getText(), 14);
+        processorTypeComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                adjustStates();
+            }
+        });
+        add(processorTypeComboBox, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        boolean isStatic = statementProcessor.getType() == StatementProcessor.ProcessorExecutionType.STATIC;
+        processorTextField = new JTextField(isStatic? "": statementProcessor.getText(), 14);
         add(processorTextField, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
+        SqlTextArea processorStaticSQLTextArea = new SqlTextArea();
+        if(isStatic) {
+            processorStaticSQLTextArea.setText(statementProcessor.getText());
+            processorStaticSQLTextArea.setCaretPosition(0);
+        }
+        processorStaticScrollPane = new JScrollPane(processorStaticSQLTextArea);
+        processorStaticScrollPane.setPreferredSize(new Dimension(100, 100));
+        add(processorStaticScrollPane, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
+        adjustStates();
+    }
+
+    private void adjustStates() {
+        boolean isStatic = processorTypeComboBox.getSelectedItem() == StatementProcessor.ProcessorExecutionType.STATIC;
+        processorStaticScrollPane.setVisible(isStatic);
+        processorTextField.setVisible(!isStatic);
+        revalidate();
+        repaint();
     }
 
     public StatementProcessor getStatementProcessor() {

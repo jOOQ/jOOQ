@@ -71,6 +71,9 @@ public class ClientDebugger implements Debugger {
     @Override
     public void setLoggingListener(LoggingListener loggingListener) {
         synchronized (LOGGING_LISTENER_LOCK) {
+            if(this.loggingListener == loggingListener) {
+                return;
+            }
             this.loggingListener = loggingListener;
         }
         new ServerDebugger.CMS_setLoggingActive().asyncExec(communicationInterface, loggingListener != null);
@@ -128,6 +131,9 @@ public class ClientDebugger implements Debugger {
     @Override
     public void setBreakpointHitHandler(BreakpointHitHandler breakpointHitHandler) {
         synchronized (BREAKPOINT_HIT_HANDLER_LOCK) {
+            if(this.breakpointHitHandler == breakpointHitHandler) {
+                return;
+            }
             this.breakpointHitHandler = breakpointHitHandler;
         }
         new ServerDebugger.CMS_setBreakpointHitHandlerActive().asyncExec(communicationInterface, breakpointHitHandler != null);

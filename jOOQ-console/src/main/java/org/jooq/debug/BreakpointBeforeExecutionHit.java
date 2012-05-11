@@ -52,10 +52,14 @@ public class BreakpointBeforeExecutionHit implements Serializable {
 
     private Integer breakpointID;
     private String sql;
+    private String threadName;
+    private StackTraceElement[] callerStackTraceElements;
 
     public BreakpointBeforeExecutionHit(int breakpointID, String sql) {
         this.breakpointID = breakpointID;
         this.sql = sql;
+        this.threadName = Thread.currentThread().getName();
+        this.callerStackTraceElements = new Exception().getStackTrace();
     }
 
     /**
@@ -67,6 +71,14 @@ public class BreakpointBeforeExecutionHit implements Serializable {
 
     public String getSql() {
         return sql;
+    }
+
+    public String getThreadName() {
+        return threadName;
+    }
+
+    public StackTraceElement[] getCallerStackTraceElements() {
+        return callerStackTraceElements;
     }
 
     private ExecutionType executionType = ExecutionType.RUN;

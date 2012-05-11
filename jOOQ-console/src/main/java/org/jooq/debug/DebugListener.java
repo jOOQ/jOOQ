@@ -150,7 +150,7 @@ public class DebugListener extends DefaultExecuteListener {
                             }
                             statementInfo = new StatementInfo(sqlQueryType, sql, parameterDescription);
                         }
-                        if(breakpoint.matches(statementInfo)) {
+                        if(breakpoint.matches(statementInfo, true)) {
                             matchingBreakpoint = breakpoint;
                             if(breakpoint.isBreaking()) {
                                 breakpointHitHandler = debugger.getBreakpointHitHandler();
@@ -207,7 +207,22 @@ public class DebugListener extends DefaultExecuteListener {
                 // TODO: find a way for the handler to replace the statement (not just step over).
                 BreakpointBeforeExecutionHit breakpointBeforeExecutionHit = new BreakpointBeforeExecutionHit(matchingBreakpoint.getID(), effectiveSQL);
                 breakpointHitHandler.processBreakpointBeforeExecutionHit(breakpointBeforeExecutionHit);
-                executionType = breakpointBeforeExecutionHit.getExecutionType();
+                // Breakpoint has an answer.
+                if(breakpointBeforeExecutionHit.getBreakpointID() == null) {
+                    executionType = breakpointBeforeExecutionHit.getExecutionType();
+                    String sql = breakpointBeforeExecutionHit.getSql();
+                    if(sql != null) {
+                        effectiveSQL = sql;
+                        try {
+                            ctx.statement().close();
+                            ctx.sql(effectiveSQL);
+                            ctx.statement(ctx.getConnection().prepareStatement(effectiveSQL));
+                        } catch(Exception e) {
+                            // TODO: how to process properly breakpoint errors??
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
             }
             switch(executionType) {
                 case STEP_THROUGH: {

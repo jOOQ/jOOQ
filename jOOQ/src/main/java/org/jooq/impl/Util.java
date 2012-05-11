@@ -1028,4 +1028,23 @@ final class Util {
             return field.cast(String.class);
         }
     }
+
+    /**
+     * Utility method to check whether a field is a {@link Param}
+     */
+    static final boolean isVal(Field<?> field) {
+        return field instanceof Param;
+    }
+
+    /**
+     * Utility method to extract a value from a field
+     */
+    static final <T> T extractVal(Field<T> field) {
+        if (isVal(field)) {
+            return ((Param<T>) field).getValue();
+        }
+        else {
+            return null;
+        }
+    }
 }

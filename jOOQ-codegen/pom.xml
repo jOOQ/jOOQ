@@ -10,7 +10,7 @@
 
 	<groupId>org.jooq</groupId>
 	<artifactId>jooq-codegen</artifactId>
-	<version>2.3.0</version>
+	<version>2.4.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>jOOQ Codegen</name>
@@ -118,7 +118,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -134,7 +134,7 @@
 		<system>Trac</system>
 		<url>https://sourceforge.net/apps/trac/jooq/report/6</url>
 	</issueManagement>
-	
+
 	<developers>
 		<developer>
 			<name>Lukas Eder</name>
@@ -150,14 +150,14 @@
 		<dependency>
 			<groupId>org.jooq</groupId>
 			<artifactId>jooq</artifactId>
-			<version>2.3.0</version>
+			<version>2.4.0-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jooq</groupId>
 			<artifactId>jooq-meta</artifactId>
-			<version>2.3.0</version>
+			<version>2.4.0-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>

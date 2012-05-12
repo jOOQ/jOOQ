@@ -91,6 +91,7 @@ import javax.swing.event.DocumentListener;
 import org.jooq.debug.Debugger;
 import org.jooq.debug.DebuggerRegistry;
 import org.jooq.debug.LocalDebugger;
+import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.remote.ClientDebugger;
 
 /**
@@ -127,6 +128,8 @@ public class Console extends JFrame {
 
     private void init(boolean isShowingLoggingTab, boolean isShowingDebugger) {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        JPanel contentPane = new JPanel(new BorderLayout());
+        contentPane.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
     	JMenuBar menuBar = new JMenuBar();
     	JMenu fileMenu = new JMenu("File");
     	fileMenu.setMnemonic('F');
@@ -232,7 +235,7 @@ public class Console extends JFrame {
         if(isShowingDebugger) {
             addDebuggerTab();
         }
-        getContentPane().add(mainTabbedPane, BorderLayout.CENTER);
+        contentPane.add(mainTabbedPane, BorderLayout.CENTER);
         setLocationByPlatform(true);
         setSize(800, 600);
         addNotify();
@@ -249,6 +252,7 @@ public class Console extends JFrame {
                 }
             }
         });
+        setContentPane(contentPane);
     }
 
     private void performCleanup() {
@@ -279,6 +283,8 @@ public class Console extends JFrame {
 
 	private void addEditorTab() {
 		JPanel editorsPane = new JPanel(new BorderLayout());
+		editorsPane.setBorder(BorderFactory.createEmptyBorder(2, 5, 5, 5));
+		editorsPane.setOpaque(false);
         final String[] tableNames = debugger.createStatementExecutor().getTableNames();
         final JList tableNamesJList = new JList(tableNames);
         tableNamesJList.addMouseListener(new MouseAdapter() {
@@ -304,6 +310,10 @@ public class Console extends JFrame {
             }
         });
         JPanel tableNamePane = new JPanel(new BorderLayout());
+        tableNamePane.setOpaque(false);
+        JPanel tableNameFilterPane = new JPanel(new BorderLayout());
+        tableNameFilterPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 2, 0));
+        tableNameFilterPane.setOpaque(false);
         final JTextField tableNameFilterTextField = new JTextField();
         tableNameFilterTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -405,9 +415,11 @@ public class Console extends JFrame {
         		}
         	}
 		});
-        tableNamePane.add(tableNameFilterTextField, BorderLayout.NORTH);
+        tableNameFilterPane.add(tableNameFilterTextField, BorderLayout.CENTER);
+        tableNamePane.add(tableNameFilterPane, BorderLayout.NORTH);
         tableNamePane.add(new JScrollPane(tableNamesJList), BorderLayout.CENTER);
-        JSplitPane horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, tableNamePane, editorTabbedPane);
+        JSplitPane horizontalSplitPane = new InvisibleSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, tableNamePane, editorTabbedPane);
+        horizontalSplitPane.setOpaque(false);
         addSQLEditorPane();
         editorsPane.add(horizontalSplitPane, BorderLayout.CENTER);
         mainTabbedPane.addTab("Editor", editorsPane);
@@ -434,6 +446,7 @@ public class Console extends JFrame {
         isAdjusting = true;
         int index = editorTabbedPane.getTabCount() - 1;
         final EditorPane sqlEditorPane = new EditorPane(debugger);
+        sqlEditorPane.setBorder(BorderFactory.createEmptyBorder(2, 5, 0, 5));
         String title = "Context " + contextCount++;
         editorTabbedPane.insertTab(title, null, sqlEditorPane, null, index);
         final JPanel tabComponent = new JPanel(new BorderLayout());

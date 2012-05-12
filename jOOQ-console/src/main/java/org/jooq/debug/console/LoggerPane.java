@@ -109,6 +109,8 @@ import org.jooq.debug.console.misc.RichTextTransferable;
 import org.jooq.debug.console.misc.Utils;
 import org.jooq.debug.console.misc.XTableColumnModel;
 
+import org.fife.ui.rtextarea.RTextScrollPane;
+
 
 /**
  * @author Christopher Deckers
@@ -636,7 +638,7 @@ public class LoggerPane extends JPanel {
             }
         });
         textArea = new SqlTextArea();
-        final JSplitPane splitPane = new InvisibleSplitPane(JSplitPane.VERTICAL_SPLIT, true, new JScrollPane(table), new JScrollPane(textArea));
+        final JSplitPane splitPane = new InvisibleSplitPane(JSplitPane.VERTICAL_SPLIT, true, new JScrollPane(table), new RTextScrollPane(textArea));
         splitPane.setResizeWeight(1);
         SwingUtilities.invokeLater(new Runnable() {
             @Override

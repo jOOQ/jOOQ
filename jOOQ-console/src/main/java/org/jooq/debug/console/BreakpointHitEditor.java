@@ -58,6 +58,8 @@ import org.jooq.debug.BreakpointBeforeExecutionHit;
 import org.jooq.debug.BreakpointBeforeExecutionHit.ExecutionType;
 import org.jooq.debug.console.DebuggerPane.BreakpointBeforeExecutionHitNode;
 
+import org.fife.ui.rtextarea.RTextScrollPane;
+
 /**
  * @author Christopher Deckers
  */
@@ -76,7 +78,7 @@ public class BreakpointHitEditor extends JPanel {
         SqlTextArea sqlTextArea = new SqlTextArea();
         sqlTextArea.setText(breakpointHit.getSql() + "\n");
         sqlTextArea.setCaretPosition(0);
-        add(new JScrollPane(sqlTextArea), new GridBagConstraints(0, y++, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        add(new RTextScrollPane(sqlTextArea), new GridBagConstraints(0, y++, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         replaceStatementCheckBox = new JCheckBox("Replace with statement");
         replaceStatementCheckBox.setOpaque(false);
         replaceStatementCheckBox.addItemListener(new ItemListener() {
@@ -87,7 +89,7 @@ public class BreakpointHitEditor extends JPanel {
         });
         add(replaceStatementCheckBox, new GridBagConstraints(0, y++, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 0, 0));
         final SqlTextArea replacementSQLTextArea = new SqlTextArea();
-        replacementSQLTextAreaScrollPane = new JScrollPane(replacementSQLTextArea);
+        replacementSQLTextAreaScrollPane = new RTextScrollPane(replacementSQLTextArea);
         add(replacementSQLTextAreaScrollPane, new GridBagConstraints(0, y++, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(2, 20, 0, 0), 0, 0));
         JPanel executionTypePane = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         // For now, this choice is not exposed.

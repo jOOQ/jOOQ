@@ -50,6 +50,8 @@ import javax.swing.JTextField;
 
 import org.jooq.debug.StatementProcessor;
 
+import org.fife.ui.rtextarea.RTextScrollPane;
+
 /**
  * @author Christopher Deckers
  */
@@ -84,7 +86,7 @@ public class StatementProcessorPane extends JPanel {
             processorStaticSQLTextArea.setText(statementProcessor.getText());
             processorStaticSQLTextArea.setCaretPosition(0);
         }
-        processorStaticScrollPane = new JScrollPane(processorStaticSQLTextArea);
+        processorStaticScrollPane = new RTextScrollPane(processorStaticSQLTextArea);
         processorStaticScrollPane.setPreferredSize(new Dimension(100, 100));
         add(processorStaticScrollPane, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
         adjustStates();

@@ -43,8 +43,15 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +60,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
@@ -70,8 +79,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.jooq.debug.Breakpoint;
-import org.jooq.debug.BreakpointAfterExecutionHit;
-import org.jooq.debug.BreakpointBeforeExecutionHit;
+import org.jooq.debug.BreakpointHit;
 import org.jooq.debug.BreakpointHitHandler;
 import org.jooq.debug.Debugger;
 import org.jooq.debug.console.misc.CheckBoxNode;
@@ -87,7 +95,8 @@ public class DebuggerPane extends JPanel {
 
     private final ImageIcon BREAKPOINT_ON_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/BreakpointOn16.png"));
     private final ImageIcon BREAKPOINT_OFF_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/BreakpointOff16.png"));
-    private final ImageIcon BREAKPOINT_HIT_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/BreakpointHit16.png"));
+    private final ImageIcon BREAKPOINT_HIT_BEFORE_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/BreakpointHit16.png"));
+    private final ImageIcon BREAKPOINT_HIT_AFTER_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/BreakpointHitAfter16.png"));
     private final ImageIcon STACK_TRACE_ELEMENT_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/StackTraceElement16.png"));
 
     private Debugger debugger;
@@ -168,8 +177,12 @@ public class DebuggerPane extends JPanel {
                     Icon icon = null;
                     if(value instanceof CheckBoxNode) {
                         icon = ((CheckBoxNode) value).isSelected()? BREAKPOINT_ON_ICON: BREAKPOINT_OFF_ICON;
-                    } else if(value instanceof BreakpointBeforeExecutionHitNode) {
-                        icon = BREAKPOINT_HIT_ICON;
+                    } else if(value instanceof BreakpointHitNode) {
+                        if(((BreakpointHitNode) value).getUserObject().isBeforeExecution()) {
+                            icon = BREAKPOINT_HIT_BEFORE_ICON;
+                        } else {
+                            icon = BREAKPOINT_HIT_AFTER_ICON;
+                        }
                     } else if(value instanceof StackTraceElementNode) {
                         icon = STACK_TRACE_ELEMENT_ICON;
                     }
@@ -205,7 +218,7 @@ public class DebuggerPane extends JPanel {
                     }
                 }
                 if(isValid) {
-                    List<BreakpointBeforeExecutionHitNode> beforeExecutionHitNodeList = new ArrayList<DebuggerPane.BreakpointBeforeExecutionHitNode>();
+                    List<BreakpointHitNode> breakpointHitNodeList = new ArrayList<DebuggerPane.BreakpointHitNode>();
                     // TODO: list of after exec
                     breakpointTree.cancelEditing();
                     for(int i=0; i<paths.length; i++) {
@@ -213,10 +226,8 @@ public class DebuggerPane extends JPanel {
                         int childCount = childNode.getChildCount();
                         for(int j=0; j<childCount; j++) {
                             TreeNode node = childNode.getChildAt(j);
-                            if(node instanceof BreakpointBeforeExecutionHitNode) {
-                                beforeExecutionHitNodeList.add((BreakpointBeforeExecutionHitNode)node);
-                            } else {
-                                // TODO: implement
+                            if(node instanceof BreakpointHitNode) {
+                                breakpointHitNodeList.add((BreakpointHitNode)node);
                             }
                         }
                         int index = rootNode.getIndex(childNode);
@@ -224,7 +235,7 @@ public class DebuggerPane extends JPanel {
                         breakpointTreeModel.nodesWereRemoved(rootNode, new int[] {index}, new Object[] {childNode});
                     }
                     commitBreakpoints();
-                    for(BreakpointBeforeExecutionHitNode node: beforeExecutionHitNodeList) {
+                    for(BreakpointHitNode node: breakpointHitNodeList) {
                         synchronized (node) {
                             node.proceed();
                         }
@@ -247,6 +258,52 @@ public class DebuggerPane extends JPanel {
                 }
                 removeBreakpointButton.setEnabled(isValid);
                 processTreeSelection();
+            }
+        });
+        breakpointTree.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                maybeShowPopup(e);
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                maybeShowPopup(e);
+            }
+            private void maybeShowPopup(MouseEvent e) {
+                if(e.isPopupTrigger()) {
+                    TreePath[] selectionPaths = breakpointTree.getSelectionPaths();
+                    if(selectionPaths != null && selectionPaths.length == 1) {
+                        Object o = selectionPaths[0].getLastPathComponent();
+                        if(o instanceof BreakpointHitNode) {
+                            final BreakpointHit breakpointHit = ((BreakpointHitNode) o).getUserObject();
+                            JPopupMenu popupMenu = new JPopupMenu();
+                            JMenuItem copyStackToClipboardMenuItem = new JMenuItem("Copy Call Stack to Clipboard");
+                            copyStackToClipboardMenuItem.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    StringWriter sw = new StringWriter();
+                                    Throwable throwable = new Exception("Statement Stack trace");
+                                    throwable.setStackTrace(breakpointHit.getCallerStackTraceElements());
+                                    throwable.printStackTrace(new PrintWriter(sw));
+                                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                                    clipboard.setContents(new StringSelection(sw.toString()), null);
+                                }
+                            });
+                            popupMenu.add(copyStackToClipboardMenuItem);
+                            JMenuItem dumpStackToConsoleMenuItem = new JMenuItem("Dump Call Stack");
+                            dumpStackToConsoleMenuItem.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    Throwable throwable = new Exception("Statement Stack trace");
+                                    throwable.setStackTrace(breakpointHit.getCallerStackTraceElements());
+                                    throwable.printStackTrace();
+                                }
+                            });
+                            popupMenu.add(dumpStackToConsoleMenuItem);
+                            popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                        }
+                    }
+                }
             }
         });
         breakpointRemovePane.add(removeBreakpointButton);
@@ -288,10 +345,10 @@ public class DebuggerPane extends JPanel {
             super(stackTraceElement);
             String className = stackTraceElement.getClassName();
             className = className.substring(className.lastIndexOf('.') + 1);
-            name = className + '.' + stackTraceElement.getMethodName() + "()";
-            if(stackTraceElement.getLineNumber() >= 0) {
-                name += " line " + stackTraceElement.getLineNumber();
-            }
+            String fileName = stackTraceElement.getFileName();
+            int lineNumber = stackTraceElement.getLineNumber();
+            String fileInfo = fileName != null && lineNumber >= 0? fileName + ":" + lineNumber: "";
+            name = className + '.' + stackTraceElement.getMethodName() + "(" + fileInfo + ")";
         }
         @Override
         public String toString() {
@@ -299,13 +356,17 @@ public class DebuggerPane extends JPanel {
         }
     }
 
-    class BreakpointBeforeExecutionHitNode extends DefaultMutableTreeNode {
-        public BreakpointBeforeExecutionHitNode(BreakpointBeforeExecutionHit breakpointHit) {
+    class BreakpointHitNode extends DefaultMutableTreeNode {
+        public BreakpointHitNode(BreakpointHit breakpointHit) {
             super(breakpointHit);
             StackTraceElement[] callerStackTraceElements = breakpointHit.getCallerStackTraceElements();
             for(StackTraceElement stackTraceElement: callerStackTraceElements) {
                 add(new StackTraceElementNode(stackTraceElement));
             }
+        }
+        @Override
+        public BreakpointHit getUserObject() {
+            return (BreakpointHit)super.getUserObject();
         }
         private boolean isLocked = true;
         public void proceed() {
@@ -321,11 +382,11 @@ public class DebuggerPane extends JPanel {
         }
         @Override
         public String toString() {
-            return "Thread [" + ((BreakpointBeforeExecutionHit)getUserObject()).getThreadName() + "]";
+            return "Thread [" + getUserObject().getThreadName() + "]";
         }
     }
 
-    void proceedBreakpointHit(BreakpointBeforeExecutionHitNode breakpointHitNode) {
+    void proceedBreakpointHit(BreakpointHitNode breakpointHitNode) {
         CheckBoxNode parentNode = (CheckBoxNode)breakpointHitNode.getParent();
         int index = parentNode.getIndex(breakpointHitNode);
         parentNode.remove(index);
@@ -335,11 +396,23 @@ public class DebuggerPane extends JPanel {
 
     private BreakpointHitHandler breakpointHitHandler = new BreakpointHitHandler() {
         @Override
-        public void processBreakpointBeforeExecutionHit(final BreakpointBeforeExecutionHit breakpointHit) {
+        public void processBreakpointBeforeExecutionHit(final BreakpointHit breakpointHit) {
             if(SwingUtilities.isEventDispatchThread()) {
                 new IllegalStateException("Breakpoint triggered from UI thread: cannot break because the debugger needs a live UI thread!").printStackTrace();
+                return;
             }
-            final BreakpointBeforeExecutionHitNode node = new BreakpointBeforeExecutionHitNode(breakpointHit);
+            handleBreakpoint(breakpointHit);
+        }
+        @Override
+        public void processBreakpointAfterExecutionHit(BreakpointHit breakpointHit) {
+            if(SwingUtilities.isEventDispatchThread()) {
+                new IllegalStateException("Breakpoint triggered from UI thread: cannot break because the debugger needs a live UI thread!").printStackTrace();
+                return;
+            }
+            handleBreakpoint(breakpointHit);
+        }
+        private void handleBreakpoint(final BreakpointHit breakpointHit) {
+            final BreakpointHitNode node = new BreakpointHitNode(breakpointHit);
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -373,9 +446,6 @@ public class DebuggerPane extends JPanel {
                 }
             }
         }
-        @Override
-        public void processBreakpointAfterExecutionHit(BreakpointAfterExecutionHit breakpointHit) {
-        }
     };
 
     private void commitBreakpoints() {
@@ -405,8 +475,8 @@ public class DebuggerPane extends JPanel {
             if(node instanceof CheckBoxNode) {
                 Object o = node.getUserObject();
                 eastPane.add(new BreakpointEditor(this, (Breakpoint)o));
-            } else if(node instanceof BreakpointBeforeExecutionHitNode) {
-                eastPane.add(new BreakpointHitEditor(this, (BreakpointBeforeExecutionHitNode)node));
+            } else if(node instanceof BreakpointHitNode) {
+                eastPane.add(new BreakpointHitEditor(debugger, this, (BreakpointHitNode)node));
             }
         }
         eastPane.revalidate();

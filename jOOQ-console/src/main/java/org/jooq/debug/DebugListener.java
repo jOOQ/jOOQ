@@ -41,11 +41,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
-import org.jooq.debug.BreakpointBeforeExecutionHit.ExecutionType;
+import org.jooq.debug.BreakpointHit.ExecutionType;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.Factory;
 
@@ -116,12 +117,12 @@ public class DebugListener extends DefaultExecuteListener {
 	private String matchingSQL;
 	private String effectiveSQL;
 	private Breakpoint matchingBreakpoint;
-    private BreakpointHitHandler matchingBreakpointHitHandler;
+    private Debugger matchingDebugger = null;
 
 	@Override
 	public void executeStart(ExecuteContext ctx) {
-	    BreakpointHitHandler breakpointHitHandler = null;
         List<Debugger> debuggerList = DebuggerRegistry.getDebuggerList();
+        boolean hasBreakpointHitHandler = false;
         if(!debuggerList.isEmpty()) {
             StatementInfo statementInfo = null;
             bp: for(Debugger debugger: debuggerList) {
@@ -151,9 +152,10 @@ public class DebugListener extends DefaultExecuteListener {
                             statementInfo = new StatementInfo(sqlQueryType, sql, parameterDescription);
                         }
                         if(breakpoint.matches(statementInfo, true)) {
+                            matchingDebugger = debugger;
                             matchingBreakpoint = breakpoint;
                             if(breakpoint.isBreaking()) {
-                                breakpointHitHandler = debugger.getBreakpointHitHandler();
+                                hasBreakpointHitHandler = debugger.getBreakpointHitHandler() != null;
                             }
                             break bp;
                         }
@@ -171,12 +173,12 @@ public class DebugListener extends DefaultExecuteListener {
                 executeSQL(ctx, sql);
                 long subEndExecutionTime = System.currentTimeMillis();
                 // Log result of pre-processing.
-                for(Debugger listener: debuggerList) {
-                    LoggingListener loggingListener = listener.getLoggingListener();
+                for(Debugger debugger: debuggerList) {
+                    LoggingListener loggingListener = debugger.getLoggingListener();
                     if(loggingListener != null) {
                         SqlQueryType sqlQueryType = SqlQueryType.detectType(sql);
                         QueryLoggingData queryLoggingData = new QueryLoggingData(sqlQueryType, new String[] {sql}, null, null, null, subEndExecutionTime - subStartExecutionTime);
-                        StatementMatcher[] loggingStatementMatchers = listener.getLoggingStatementMatchers();
+                        StatementMatcher[] loggingStatementMatchers = debugger.getLoggingStatementMatchers();
                         if(loggingStatementMatchers == null) {
                             loggingListener.logQueries(queryLoggingData);
                         } else for(StatementMatcher statementMatcher: loggingStatementMatchers) {
@@ -201,16 +203,21 @@ public class DebugListener extends DefaultExecuteListener {
                     throw new RuntimeException(e);
                 }
             }
-            ExecutionType executionType = BreakpointBeforeExecutionHit.ExecutionType.RUN;
-            if(breakpointHitHandler != null) {
+            ExecutionType executionType = BreakpointHit.ExecutionType.RUN;
+            if(hasBreakpointHitHandler) {
                 effectiveSQL = mainSQL != null? mainSQL: matchingSQL;
                 // TODO: find a way for the handler to replace the statement (not just step over).
-                BreakpointBeforeExecutionHit breakpointBeforeExecutionHit = new BreakpointBeforeExecutionHit(matchingBreakpoint.getID(), effectiveSQL);
-                breakpointHitHandler.processBreakpointBeforeExecutionHit(breakpointBeforeExecutionHit);
+                Thread currentThread = Thread.currentThread();
+                long threadID = currentThread.getId();
+                String threadName = currentThread.getName();
+                StackTraceElement[] callerStackTraceElements = currentThread.getStackTrace();
+                callerStackTraceElements = Arrays.copyOfRange(callerStackTraceElements, 2, callerStackTraceElements.length);
+                BreakpointHit breakpointHit = new BreakpointHit(matchingBreakpoint.getID(), effectiveSQL, threadID, threadName, callerStackTraceElements, true);
+                matchingDebugger.processBreakpointBeforeExecutionHit(ctx, breakpointHit);
                 // Breakpoint has an answer.
-                if(breakpointBeforeExecutionHit.getBreakpointID() == null) {
-                    executionType = breakpointBeforeExecutionHit.getExecutionType();
-                    String sql = breakpointBeforeExecutionHit.getSql();
+                if(breakpointHit.getBreakpointID() == null) {
+                    executionType = breakpointHit.getExecutionType();
+                    String sql = breakpointHit.getSql();
                     if(sql != null) {
                         effectiveSQL = sql;
                         try {
@@ -224,11 +231,10 @@ public class DebugListener extends DefaultExecuteListener {
                     }
                 }
             }
+            if(executionType != ExecutionType.STEP_THROUGH) {
+                matchingDebugger = null;
+            }
             switch(executionType) {
-                case STEP_THROUGH: {
-                    matchingBreakpointHitHandler = breakpointHitHandler;
-                    break;
-                }
                 case RUN_OVER: {
                     try {
                         ctx.statement().close();
@@ -276,9 +282,6 @@ public class DebugListener extends DefaultExecuteListener {
 			return;
 		}
 		endExecutionTime = System.currentTimeMillis();
-		if(matchingBreakpointHitHandler != null) {
-            matchingBreakpointHitHandler.processBreakpointAfterExecutionHit(new BreakpointAfterExecutionHit(matchingBreakpoint.getID(), effectiveSQL));
-		}
         List<Debugger> debuggerList = DebuggerRegistry.getDebuggerList();
 		if(!debuggerList.isEmpty()) {
 		    boolean hasListener = false;
@@ -336,6 +339,14 @@ public class DebugListener extends DefaultExecuteListener {
 		        }
 		    }
 		}
+        if(matchingDebugger != null) {
+            Thread currentThread = Thread.currentThread();
+            long threadID = currentThread.getId();
+            String threadName = currentThread.getName();
+            StackTraceElement[] callerStackTraceElements = currentThread.getStackTrace();
+            callerStackTraceElements = Arrays.copyOfRange(callerStackTraceElements, 2, callerStackTraceElements.length);
+            matchingDebugger.processBreakpointAfterExecutionHit(ctx, new BreakpointHit(matchingBreakpoint.getID(), effectiveSQL, threadID, threadName, callerStackTraceElements, false));
+        }
         if(matchingBreakpoint != null) {
             StatementProcessor afterExecutionProcessor = matchingBreakpoint.getAfterExecutionProcessor();
             matchingBreakpoint = null;

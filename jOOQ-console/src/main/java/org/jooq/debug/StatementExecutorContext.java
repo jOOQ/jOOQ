@@ -36,28 +36,25 @@
  */
 package org.jooq.debug;
 
-import java.io.Serializable;
+import java.sql.Connection;
+
+import org.jooq.SQLDialect;
 
 /**
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
-public class BreakpointAfterExecutionHit implements Serializable {
+public interface StatementExecutorContext {
 
-    private int breakpointID;
-    private String sql;
+    public boolean isReadOnly();
 
-    public BreakpointAfterExecutionHit(int breakpointID, String sql) {
-        this.breakpointID = breakpointID;
-        this.sql = sql;
-    }
+    public Connection getConnection();
 
-    public int getBreakpointID() {
-        return breakpointID;
-    }
+    public void releaseConnection(Connection connection);
 
-    public String getSql() {
-        return sql;
-    }
+    public SQLDialect getSQLDialect();
+
+    public String[] getTableNames();
+
+    public String[] getTableColumnNames();
 
 }

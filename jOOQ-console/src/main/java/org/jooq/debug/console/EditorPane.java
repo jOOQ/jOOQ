@@ -599,6 +599,13 @@ public class EditorPane extends JPanel {
         }
     }
 
+    @Override
+    public void removeNotify() {
+        super.removeNotify();
+        // TODO: if we want to recycle screens, should we do this?
+        closeLastExecution();
+    }
+
     private void setMessage(JPanel messageContentPanel, String message, boolean isError) {
         JTextArea textArea = new JTextArea(message);
         Font editorFont = textArea.getFont().deriveFont(UIManager.getFont("TextField.font").getSize2D());

@@ -42,7 +42,7 @@ import java.io.Serializable;
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class BreakpointBeforeExecutionHit implements Serializable {
+public class BreakpointHit implements Serializable {
 
     public static enum ExecutionType {
         STEP_THROUGH,
@@ -50,16 +50,24 @@ public class BreakpointBeforeExecutionHit implements Serializable {
         RUN,
     }
 
+    private boolean isBeforeExecution;
     private Integer breakpointID;
     private String sql;
+    private long threadID;
     private String threadName;
     private StackTraceElement[] callerStackTraceElements;
 
-    public BreakpointBeforeExecutionHit(int breakpointID, String sql) {
+    public BreakpointHit(int breakpointID, String sql, long threadID, String threadName, StackTraceElement[] callerStackTraceElements, boolean isBeforeExecution) {
+        this.isBeforeExecution = isBeforeExecution;
         this.breakpointID = breakpointID;
         this.sql = sql;
-        this.threadName = Thread.currentThread().getName();
-        this.callerStackTraceElements = new Exception().getStackTrace();
+        this.threadID = threadID;
+        this.threadName = threadName;
+        this.callerStackTraceElements = callerStackTraceElements;
+    }
+
+    public boolean isBeforeExecution() {
+        return isBeforeExecution;
     }
 
     /**
@@ -71,6 +79,10 @@ public class BreakpointBeforeExecutionHit implements Serializable {
 
     public String getSql() {
         return sql;
+    }
+
+    public long getThreadID() {
+        return threadID;
     }
 
     public String getThreadName() {

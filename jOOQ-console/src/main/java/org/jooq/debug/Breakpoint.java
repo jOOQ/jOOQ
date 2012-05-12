@@ -74,7 +74,7 @@ public class Breakpoint implements Serializable {
         return statementMatcher;
     }
 
-    private AtomicInteger currentHitCount;
+    private transient AtomicInteger currentHitCount;
 
     public boolean matches(StatementInfo statementInfo, boolean trackHitCount) {
         if(trackHitCount && hitCount != null && currentHitCount.get() <= 0) {
@@ -102,6 +102,15 @@ public class Breakpoint implements Serializable {
             }
         }
         return hasMatcher;
+    }
+
+    /**
+     * Reset internal state like hit count tracking.
+     */
+    public void reset() {
+        if(hitCount != null) {
+            currentHitCount = new AtomicInteger(hitCount);
+        }
     }
 
     public Integer getHitCount() {

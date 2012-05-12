@@ -113,6 +113,65 @@ public class LocalDebugger implements Debugger {
     }
 
     @Override
+    public void addBreakpoint(Breakpoint breakpoint) {
+        synchronized (BREAKPOINT_LOCK) {
+            if(this.breakpoints == null) {
+                this.breakpoints = new Breakpoint[] {breakpoint};
+                return;
+            }
+            for(int i=0; i<breakpoints.length; i++) {
+                if(breakpoints[i].getID() == breakpoint.getID()) {
+                    breakpoints[i] = breakpoint;
+                    return;
+                }
+            }
+            Breakpoint[] newBreakpoints = new Breakpoint[breakpoints.length + 1];
+            System.arraycopy(breakpoints, 0, newBreakpoints, 0, breakpoints.length);
+            newBreakpoints[breakpoints.length] = breakpoint;
+            breakpoints = newBreakpoints;
+        }
+    }
+
+    @Override
+    public void modifyBreakpoint(Breakpoint breakpoint) {
+        synchronized (BREAKPOINT_LOCK) {
+            if(this.breakpoints == null) {
+                addBreakpoint(breakpoint);
+                return;
+            }
+            for(int i=0; i<breakpoints.length; i++) {
+                if(breakpoints[i].getID() == breakpoint.getID()) {
+                    breakpoints[i] = breakpoint;
+                    return;
+                }
+            }
+            addBreakpoint(breakpoint);
+        }
+    }
+
+    @Override
+    public void removeBreakpoint(Breakpoint breakpoint) {
+        synchronized (BREAKPOINT_LOCK) {
+            if(this.breakpoints == null) {
+                return;
+            }
+            for(int i=0; i<breakpoints.length; i++) {
+                if(breakpoints[i].getID() == breakpoint.getID()) {
+                    if(breakpoints.length == 1) {
+                        breakpoints = null;
+                    } else {
+                        Breakpoint[] newBreakpoints = new Breakpoint[breakpoints.length - 1];
+                        System.arraycopy(breakpoints, 0, newBreakpoints, 0, i);
+                        System.arraycopy(breakpoints, i + 1, newBreakpoints, i, newBreakpoints.length - i);
+                        breakpoints = newBreakpoints;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
     public Breakpoint[] getBreakpoints() {
         synchronized (BREAKPOINT_LOCK) {
             return breakpoints;

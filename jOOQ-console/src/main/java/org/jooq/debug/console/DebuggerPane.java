@@ -160,9 +160,19 @@ public class DebuggerPane extends JPanel {
             public void valueForPathChanged(TreePath path, Object newValue) {
                 if(newValue instanceof CheckBoxNode) {
                     CheckBoxNode node = (CheckBoxNode)path.getLastPathComponent();
-                    node.setSelected(((CheckBoxNode) newValue).isSelected());
-                    super.valueForPathChanged(path, node.getUserObject());
-                    commitBreakpoints();
+                    boolean isSelected = ((CheckBoxNode) newValue).isSelected();
+                    node.setSelected(isSelected);
+                    Breakpoint breakpoint = (Breakpoint)node.getUserObject();
+                    super.valueForPathChanged(path, breakpoint);
+                    if(isSelected) {
+                        DebuggerPane.this.debugger.setBreakpointHitHandler(breakpointHitHandler);
+                        DebuggerPane.this.debugger.addBreakpoint(breakpoint);
+                    } else {
+                        DebuggerPane.this.debugger.removeBreakpoint(breakpoint);
+                        if(DebuggerPane.this.debugger.getBreakpoints() == null) {
+                            DebuggerPane.this.debugger.setBreakpointHitHandler(null);
+                        }
+                    }
                 }
             }
         };
@@ -218,11 +228,13 @@ public class DebuggerPane extends JPanel {
                     }
                 }
                 if(isValid) {
+                    List<Breakpoint> breakpointList = new ArrayList<Breakpoint>();
                     List<BreakpointHitNode> breakpointHitNodeList = new ArrayList<DebuggerPane.BreakpointHitNode>();
                     // TODO: list of after exec
                     breakpointTree.cancelEditing();
                     for(int i=0; i<paths.length; i++) {
                         CheckBoxNode childNode = (CheckBoxNode)paths[i].getLastPathComponent();
+                        breakpointList.add((Breakpoint)childNode.getUserObject());
                         int childCount = childNode.getChildCount();
                         for(int j=0; j<childCount; j++) {
                             TreeNode node = childNode.getChildAt(j);
@@ -234,7 +246,12 @@ public class DebuggerPane extends JPanel {
                         rootNode.remove(index);
                         breakpointTreeModel.nodesWereRemoved(rootNode, new int[] {index}, new Object[] {childNode});
                     }
-                    commitBreakpoints();
+                    for(Breakpoint breakpoint: breakpointList) {
+                        DebuggerPane.this.debugger.removeBreakpoint(breakpoint);
+                    }
+                    if(DebuggerPane.this.debugger.getBreakpoints() == null) {
+                        DebuggerPane.this.debugger.setBreakpointHitHandler(null);
+                    }
                     for(BreakpointHitNode node: breakpointHitNodeList) {
                         synchronized (node) {
                             node.proceed();
@@ -322,7 +339,8 @@ public class DebuggerPane extends JPanel {
         rootNode.add(breakpointNode);
         breakpointTreeModel.nodesWereInserted(rootNode, new int[] {rootNode.getIndex(breakpointNode)});
         breakpointTree.expandPath(new TreePath(rootNode));
-        commitBreakpoints();
+        debugger.addBreakpoint(breakpoint);
+        DebuggerPane.this.debugger.setBreakpointHitHandler(breakpointHitHandler);
         breakpointTree.setSelectionPath(new TreePath(new Object[] {rootNode, breakpointNode}));
     }
 
@@ -333,7 +351,9 @@ public class DebuggerPane extends JPanel {
             Breakpoint breakpoint_ = (Breakpoint)checkBoxNode.getUserObject();
             if(breakpoint_.getID() == breakpoint.getID()) {
                 checkBoxNode.setUserObject(breakpoint);
-                commitBreakpoints();
+                if(checkBoxNode.isSelected()) {
+                    debugger.modifyBreakpoint(breakpoint);
+                }
                 break;
             }
         }
@@ -447,24 +467,6 @@ public class DebuggerPane extends JPanel {
             }
         }
     };
-
-    private void commitBreakpoints() {
-        List<Breakpoint> breakpointList = new ArrayList<Breakpoint>();
-        int childCount = rootNode.getChildCount();
-        for(int i=0; i<childCount; i++) {
-            CheckBoxNode node = (CheckBoxNode)rootNode.getChildAt(i);
-            if(node.isSelected()) {
-                breakpointList.add((Breakpoint)node.getUserObject());
-            }
-        }
-        Breakpoint[] breakpoints = breakpointList.toArray(new Breakpoint[0]);
-        if(breakpoints.length == 0) {
-            debugger.setBreakpointHitHandler(null);
-        } else {
-            debugger.setBreakpointHitHandler(breakpointHitHandler);
-        }
-        debugger.setBreakpoints(breakpoints);
-    }
 
     private void processTreeSelection() {
         TreePath[] paths = breakpointTree.getSelectionPaths();

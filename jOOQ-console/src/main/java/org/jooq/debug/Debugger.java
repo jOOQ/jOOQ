@@ -57,6 +57,12 @@ public interface Debugger extends StatementExecutorCreator {
 
     public void setBreakpoints(Breakpoint[] breakpoints);
 
+    public void addBreakpoint(Breakpoint breakpoint);
+
+    public void modifyBreakpoint(Breakpoint breakpoint);
+
+    public void removeBreakpoint(Breakpoint breakpoint);
+
     public void setBreakpointHitHandler(BreakpointHitHandler breakpointHitHandler);
 
     public BreakpointHitHandler getBreakpointHitHandler();

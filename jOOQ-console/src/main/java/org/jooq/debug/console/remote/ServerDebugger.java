@@ -129,7 +129,47 @@ class ServerDebugger extends LocalDebugger {
     static class CMS_setBreakpoints extends ServerDebuggerCommandMessage {
         @Override
         public Object run(Object[] args) {
-            getDebugger().setBreakpoints((Breakpoint[])args[0]);
+            Breakpoint[] breakpoints = (Breakpoint[])args[0];
+            if(breakpoints != null) {
+                for(Breakpoint breakpoint: breakpoints) {
+                    // Serialization has a cache, assuming objects are immutable. We have to reset our internal states.
+                    breakpoint.reset();
+                }
+            }
+            getDebugger().setBreakpoints(breakpoints);
+            return null;
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class CMS_addBreakpoint extends ServerDebuggerCommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            Breakpoint breakpoint = (Breakpoint)args[0];
+            // Serialization has a cache, assuming objects are immutable. We have to reset our internal states.
+            breakpoint.reset();
+            getDebugger().addBreakpoint(breakpoint);
+            return null;
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class CMS_modifyBreakpoint extends ServerDebuggerCommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            Breakpoint breakpoint = (Breakpoint)args[0];
+            // Serialization has a cache, assuming objects are immutable. We have to reset our internal states.
+            breakpoint.reset();
+            getDebugger().modifyBreakpoint(breakpoint);
+            return null;
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class CMS_removeBreakpoint extends ServerDebuggerCommandMessage {
+        @Override
+        public Object run(Object[] args) {
+            getDebugger().removeBreakpoint((Breakpoint)args[0]);
             return null;
         }
     }

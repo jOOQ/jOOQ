@@ -51,21 +51,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jooq.Field;
-import org.jooq.Record;
 import org.jooq.SQLDialect;
-import org.jooq.Table;
 import org.jooq.debug.StatementExecutionResultSetResult.TypeInfo;
-import org.jooq.debug.console.DatabaseDescriptor;
 import org.jooq.debug.console.misc.Utils;
 
 /**
@@ -73,10 +65,10 @@ import org.jooq.debug.console.misc.Utils;
  */
 public class LocalStatementExecutor implements StatementExecutor {
 
-    private DatabaseDescriptor databaseDescriptor;
+    private StatementExecutorContext executorContext;
 
-    public LocalStatementExecutor(DatabaseDescriptor databaseDescriptor) {
-        this.databaseDescriptor = databaseDescriptor;
+    public LocalStatementExecutor(StatementExecutorContext executorContext) {
+        this.executorContext = executorContext;
     }
 
     private volatile Connection conn;
@@ -87,7 +79,7 @@ public class LocalStatementExecutor implements StatementExecutor {
     @Override
     public StatementExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
         boolean isAllowed = true;
-        if(databaseDescriptor.isReadOnly()) {
+        if(executorContext.isReadOnly()) {
             String simplifiedSql = sql.replaceAll("'[^']*'", "");
             Matcher matcher = Pattern.compile("[a-zA-Z_0-9\\$]+").matcher(simplifiedSql);
             boolean isFirst = true;
@@ -122,9 +114,9 @@ public class LocalStatementExecutor implements StatementExecutor {
         evaluationThread = Thread.currentThread();
         long start = System.currentTimeMillis();
         try {
-            conn = databaseDescriptor.createConnection();
+            conn = executorContext.getConnection();
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            // If no error, adjust start to begining of actual execution.
+            // If no error, adjust start to beginning of actual execution.
             start = System.currentTimeMillis();
             if(evaluationThread != Thread.currentThread()) {
                 long executionDuration = System.currentTimeMillis() - start;
@@ -244,12 +236,12 @@ public class LocalStatementExecutor implements StatementExecutor {
                         }
                     }
                     final long resultSetParsingDuration = System.currentTimeMillis() - rsStart;
-                    statementExecutionResult = new LocalStatementExecutionResultSetResult(rs, columnNames, typeInfos, columnClasses, rowDataList.toArray(new Object[0][]), rowCount, resultSetParsingDuration, retainParsedRSDataRowCountThreshold, databaseDescriptor.isReadOnly());
+                    statementExecutionResult = new LocalStatementExecutionResultSetResult(rs, columnNames, typeInfos, columnClasses, rowDataList.toArray(new Object[0][]), rowCount, resultSetParsingDuration, retainParsedRSDataRowCountThreshold, executorContext.isReadOnly());
                 } else {
                     final int updateCount = stmt.getUpdateCount();
                     statementExecutionResult = new StatementExecutionMessageResult(Utils.formatDuration(executionDuration) + "> " + updateCount + " row(s) affected.", false);
                 }
-                if(databaseDescriptor.getSQLDialect() == SQLDialect.SQLSERVER) {
+                if(executorContext.getSQLDialect() == SQLDialect.SQLSERVER) {
                     try {
                         executeResult = stmt.getMoreResults(Statement.KEEP_CURRENT_RESULT);
                     } catch(Exception e) {
@@ -265,7 +257,7 @@ public class LocalStatementExecutor implements StatementExecutor {
             long executionDuration = System.currentTimeMillis() - start;
             return new StatementExecution(executionDuration, new StatementExecutionMessageResult(e));
         } finally {
-            if(databaseDescriptor.isReadOnly()) {
+            if(executorContext.isReadOnly()) {
                 closeConnection();
             }
         }
@@ -284,10 +276,7 @@ public class LocalStatementExecutor implements StatementExecutor {
                 }
             }
             stmt = null;
-            try {
-                conn.close();
-            } catch (Exception e) {
-            }
+            executorContext.releaseConnection(conn);
             conn = null;
         }
     }
@@ -302,28 +291,12 @@ public class LocalStatementExecutor implements StatementExecutor {
 
     @Override
     public String[] getTableNames() {
-        List<Table<?>> tableList = databaseDescriptor.getSchema().getTables();
-        List<String> tableNameList = new ArrayList<String>();
-        for(Table<? extends Record> table: tableList) {
-            String tableName = table.getName();
-            tableNameList.add(tableName);
-        }
-        Collections.sort(tableNameList, String.CASE_INSENSITIVE_ORDER);
-        return tableNameList.toArray(new String[0]);
+        return executorContext.getTableNames();
     }
 
     @Override
     public String[] getTableColumnNames() {
-        Set<String> columnNameSet = new HashSet<String>();
-        for(Table<?> table: databaseDescriptor.getSchema().getTables()) {
-            for(Field<?> field: table.getFields()) {
-                String columnName = field.getName();
-                columnNameSet.add(columnName);
-            }
-        }
-        String[] columnNames = columnNameSet.toArray(new String[0]);
-        Arrays.sort(columnNames, String.CASE_INSENSITIVE_ORDER);
-        return columnNames;
+        return executorContext.getTableColumnNames();
     }
 
 }

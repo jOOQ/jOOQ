@@ -72,6 +72,7 @@ import org.jooq.debug.console.misc.InvisibleSplitPane;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 public class EditorsPane extends JPanel {
 
     private StatementExecutorCreator statementExecutorCreator;

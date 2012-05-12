@@ -36,14 +36,16 @@
  */
 package org.jooq.debug.console.remote;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jooq.debug.Breakpoint;
-import org.jooq.debug.BreakpointAfterExecutionHit;
-import org.jooq.debug.BreakpointBeforeExecutionHit;
+import org.jooq.debug.BreakpointHit;
 import org.jooq.debug.BreakpointHitHandler;
 import org.jooq.debug.LocalDebugger;
+import org.jooq.debug.LocalStatementExecutor;
 import org.jooq.debug.LoggingListener;
 import org.jooq.debug.QueryLoggingData;
 import org.jooq.debug.ResultSetLoggingData;
@@ -98,14 +100,14 @@ class ServerDebugger extends LocalDebugger {
         if(isActive) {
             setBreakpointHitHandler(new BreakpointHitHandler() {
                 @Override
-                public void processBreakpointBeforeExecutionHit(BreakpointBeforeExecutionHit breakpointHit) {
-                    BreakpointBeforeExecutionHit modifiedBreakpointHit = (BreakpointBeforeExecutionHit)new ClientDebugger.CMC_processBreakpointBeforeExecutionHit().syncExec(communicationInterface, breakpointHit);
+                public void processBreakpointBeforeExecutionHit(BreakpointHit breakpointHit) {
+                    BreakpointHit modifiedBreakpointHit = (BreakpointHit)new ClientDebugger.CMC_processBreakpointBeforeExecutionHit().syncExec(communicationInterface, breakpointHit);
                     if(modifiedBreakpointHit != null) {
                         breakpointHit.setExecutionType(modifiedBreakpointHit.getExecutionType(), modifiedBreakpointHit.getSql());
                     }
                 }
                 @Override
-                public void processBreakpointAfterExecutionHit(BreakpointAfterExecutionHit breakpointHit) {
+                public void processBreakpointAfterExecutionHit(BreakpointHit breakpointHit) {
                     new ClientDebugger.CMC_processBreakpointAfterExecutionHit().syncExec(communicationInterface, breakpointHit);
                 }
             });
@@ -151,9 +153,15 @@ class ServerDebugger extends LocalDebugger {
 
     private Map<Integer, StatementExecutor> idToStatementExecutorMap = new HashMap<Integer, StatementExecutor>();
 
-    private void createStatementExecutor(int id) {
+    private void createStatementExecutor(int id, Long breakpointHitThreadID) {
+        LocalStatementExecutor statementExecutor;
+        if(breakpointHitThreadID == null) {
+            statementExecutor = createStatementExecutor();
+        } else {
+            statementExecutor = createBreakpointHitStatementExecutor(breakpointHitThreadID);
+        }
         synchronized (idToStatementExecutorMap) {
-            idToStatementExecutorMap.put(id, createStatementExecutor());
+            idToStatementExecutorMap.put(id, statementExecutor);
         }
     }
 
@@ -174,7 +182,8 @@ class ServerDebugger extends LocalDebugger {
         @Override
         public Object run(Object[] args) {
             int id = (Integer)args[0];
-            getDebugger().createStatementExecutor(id);
+            Long breakpointHitThreadID = (Long)args[1];
+            getDebugger().createStatementExecutor(id, breakpointHitThreadID);
             return null;
         }
     }
@@ -226,6 +235,35 @@ class ServerDebugger extends LocalDebugger {
                 executor.stopExecution();
             }
             idToStatementExecutorMap.clear();
+        }
+    }
+
+    private Map<Long, List<StatementExecutor>> threadIDToStatementExecutorList = new HashMap<Long, List<StatementExecutor>>();
+
+    @Override
+    public LocalStatementExecutor createBreakpointHitStatementExecutor(long threadID) {
+        LocalStatementExecutor statementExecutor = super.createBreakpointHitStatementExecutor(threadID);
+        synchronized (threadIDToStatementExecutorList) {
+            List<StatementExecutor> list = threadIDToStatementExecutorList.get(threadID);
+            if(list == null) {
+                list = new ArrayList<StatementExecutor>();
+                threadIDToStatementExecutorList.put(threadID, list);
+            }
+            list.add(statementExecutor);
+        }
+        return statementExecutor;
+    }
+
+    @Override
+    protected void performThreadDataCleanup(long threadID) {
+        List<StatementExecutor> list;
+        synchronized (threadIDToStatementExecutorList) {
+            list = threadIDToStatementExecutorList.remove(threadID);
+        }
+        if(list != null) {
+            for(StatementExecutor statementExecutor: list) {
+                statementExecutor.stopExecution();
+            }
         }
     }
 

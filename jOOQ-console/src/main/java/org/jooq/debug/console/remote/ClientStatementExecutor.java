@@ -51,10 +51,13 @@ public class ClientStatementExecutor implements StatementExecutor {
     private ClientDebugger debugger;
     private int id;
 
-    public ClientStatementExecutor(ClientDebugger debugger) {
+    /**
+     * @param breakpointHitThreadID null if not in a breakpoint hit.
+     */
+    public ClientStatementExecutor(ClientDebugger debugger, Long breakpointHitThreadID) {
         id = nextID.incrementAndGet();
         this.debugger = debugger;
-        new ServerDebugger.CMS_createServerStatementExecutor().asyncExec(debugger.getCommunicationInterface(), id);
+        new ServerDebugger.CMS_createServerStatementExecutor().asyncExec(debugger.getCommunicationInterface(), id, breakpointHitThreadID);
     }
 
     @Override

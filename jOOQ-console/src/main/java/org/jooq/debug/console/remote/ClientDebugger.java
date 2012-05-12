@@ -36,9 +36,14 @@
  */
 package org.jooq.debug.console.remote;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.jooq.ExecuteContext;
 import org.jooq.debug.Breakpoint;
-import org.jooq.debug.BreakpointAfterExecutionHit;
-import org.jooq.debug.BreakpointBeforeExecutionHit;
+import org.jooq.debug.BreakpointHit;
 import org.jooq.debug.BreakpointHitHandler;
 import org.jooq.debug.Debugger;
 import org.jooq.debug.LoggingListener;
@@ -165,7 +170,7 @@ public class ClientDebugger implements Debugger {
 
     @Override
     public StatementExecutor createStatementExecutor() {
-        return new ClientStatementExecutor(this);
+        return new ClientStatementExecutor(this, null);
     }
 
     @SuppressWarnings("serial")
@@ -198,11 +203,11 @@ public class ClientDebugger implements Debugger {
         public Object run(Object[] args) {
             BreakpointHitHandler breakpointHitHandler = getDebugger().getBreakpointHitHandler();
             if(breakpointHitHandler != null) {
-                BreakpointBeforeExecutionHit breakpointHit = (BreakpointBeforeExecutionHit)args[0];
+                BreakpointHit breakpointHit = (BreakpointHit)args[0];
                 breakpointHitHandler.processBreakpointBeforeExecutionHit(breakpointHit);
                 if(breakpointHit.getBreakpointID() != null) {
                     // The breakpoint was not processed, so we process it here.
-                    breakpointHit.setExecutionType(BreakpointBeforeExecutionHit.ExecutionType.RUN, null);
+                    breakpointHit.setExecutionType(BreakpointHit.ExecutionType.RUN, null);
                 }
                 return breakpointHit;
             }
@@ -216,10 +221,81 @@ public class ClientDebugger implements Debugger {
         public Object run(Object[] args) {
             BreakpointHitHandler breakpointHitHandler = getDebugger().getBreakpointHitHandler();
             if(breakpointHitHandler != null) {
-                BreakpointAfterExecutionHit breakpointHit = (BreakpointAfterExecutionHit)args[0];
+                BreakpointHit breakpointHit = (BreakpointHit)args[0];
                 breakpointHitHandler.processBreakpointAfterExecutionHit(breakpointHit);
             }
             return null;
+        }
+    }
+
+    private Map<Long, ExecuteContext> threadIDToExecuteContextMap = new HashMap<Long, ExecuteContext>();
+
+    @Override
+    public void processBreakpointBeforeExecutionHit(ExecuteContext ctx, BreakpointHit breakpointHit) {
+        BreakpointHitHandler handler = getBreakpointHitHandler();
+        if(handler == null) {
+            return;
+        }
+        long threadID = breakpointHit.getThreadID();
+        synchronized (threadIDToExecuteContextMap) {
+            threadIDToExecuteContextMap.put(threadID, ctx);
+        }
+        try {
+            handler.processBreakpointBeforeExecutionHit(breakpointHit);
+        } finally {
+            synchronized (threadIDToExecuteContextMap) {
+                threadIDToExecuteContextMap.remove(threadID);
+            }
+            performThreadDataCleanup(threadID);
+        }
+    }
+
+    @Override
+    public void processBreakpointAfterExecutionHit(ExecuteContext ctx, BreakpointHit breakpointHit) {
+        BreakpointHitHandler handler = getBreakpointHitHandler();
+        if(handler == null) {
+            return;
+        }
+        long threadID = breakpointHit.getThreadID();
+        synchronized (threadIDToExecuteContextMap) {
+            threadIDToExecuteContextMap.put(threadID, ctx);
+        }
+        try {
+            handler.processBreakpointAfterExecutionHit(breakpointHit);
+        } finally {
+            synchronized (threadIDToExecuteContextMap) {
+                threadIDToExecuteContextMap.remove(threadID);
+            }
+            performThreadDataCleanup(threadID);
+        }
+    }
+
+    private Map<Long, List<StatementExecutor>> threadIDToStatementExecutorList = new HashMap<Long, List<StatementExecutor>>();
+
+    @Override
+    public StatementExecutor createBreakpointHitStatementExecutor(long threadID) {
+        ClientStatementExecutor statementExecutor = new ClientStatementExecutor(this, threadID);
+        synchronized (threadIDToStatementExecutorList) {
+            List<StatementExecutor> list = threadIDToStatementExecutorList.get(threadID);
+            if(list == null) {
+                list = new ArrayList<StatementExecutor>();
+                threadIDToStatementExecutorList.put(threadID, list);
+            }
+            list.add(statementExecutor);
+        }
+        return statementExecutor;
+    }
+
+
+    private void performThreadDataCleanup(long threadID) {
+        List<StatementExecutor> list;
+        synchronized (threadIDToStatementExecutorList) {
+            list = threadIDToStatementExecutorList.remove(threadID);
+        }
+        if(list != null) {
+            for(StatementExecutor statementExecutor: list) {
+                statementExecutor.stopExecution();
+            }
         }
     }
 

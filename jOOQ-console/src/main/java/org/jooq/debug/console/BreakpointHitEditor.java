@@ -36,6 +36,7 @@
  */
 package org.jooq.debug.console;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -53,10 +54,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 
-import org.jooq.debug.BreakpointBeforeExecutionHit;
-import org.jooq.debug.BreakpointBeforeExecutionHit.ExecutionType;
-import org.jooq.debug.console.DebuggerPane.BreakpointBeforeExecutionHitNode;
+import org.jooq.debug.BreakpointHit;
+import org.jooq.debug.BreakpointHit.ExecutionType;
+import org.jooq.debug.Debugger;
+import org.jooq.debug.StatementExecutor;
+import org.jooq.debug.StatementExecutorCreator;
+import org.jooq.debug.console.DebuggerPane.BreakpointHitNode;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
 
@@ -66,34 +71,43 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 @SuppressWarnings("serial")
 public class BreakpointHitEditor extends JPanel {
 
+    private BreakpointHit breakpointHit;
     private JCheckBox replaceStatementCheckBox;
     private JScrollPane replacementSQLTextAreaScrollPane;
+    private SqlTextArea replacementSQLTextArea;
 
-    public BreakpointHitEditor(final DebuggerPane debuggerPane, final BreakpointBeforeExecutionHitNode breakpointHitNode) {
-        super(new GridBagLayout());
+    public BreakpointHitEditor(final Debugger debugger, final DebuggerPane debuggerPane, final BreakpointHitNode breakpointHitNode) {
+        super(new BorderLayout());
         setOpaque(false);
-        final BreakpointBeforeExecutionHit breakpointHit = (BreakpointBeforeExecutionHit)breakpointHitNode.getUserObject();
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setOpaque(false);
+        JPanel breakpointHitExecutionPane = new JPanel(new GridBagLayout());
+        breakpointHitExecutionPane.setBorder(BorderFactory.createEmptyBorder(2, 5, 5, 5));
+        breakpointHitExecutionPane.setOpaque(false);
+        breakpointHit = breakpointHitNode.getUserObject();
         int y = 0;
-        add(new JLabel("Statement:"), new GridBagConstraints(0, y++, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        breakpointHitExecutionPane.add(new JLabel("Statement:"), new GridBagConstraints(0, y++, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         SqlTextArea sqlTextArea = new SqlTextArea();
         sqlTextArea.setText(breakpointHit.getSql() + "\n");
         sqlTextArea.setCaretPosition(0);
-        add(new RTextScrollPane(sqlTextArea), new GridBagConstraints(0, y++, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        replaceStatementCheckBox = new JCheckBox("Replace with statement");
-        replaceStatementCheckBox.setOpaque(false);
-        replaceStatementCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                adjustStates();
-            }
-        });
-        add(replaceStatementCheckBox, new GridBagConstraints(0, y++, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 0, 0));
-        final SqlTextArea replacementSQLTextArea = new SqlTextArea();
-        replacementSQLTextAreaScrollPane = new RTextScrollPane(replacementSQLTextArea);
-        add(replacementSQLTextAreaScrollPane, new GridBagConstraints(0, y++, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(2, 20, 0, 0), 0, 0));
+        breakpointHitExecutionPane.add(new RTextScrollPane(sqlTextArea), new GridBagConstraints(0, y++, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        if(breakpointHit.isBeforeExecution()) {
+            replaceStatementCheckBox = new JCheckBox("Replace with statement");
+            replaceStatementCheckBox.setOpaque(false);
+            replaceStatementCheckBox.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    adjustStates();
+                }
+            });
+            breakpointHitExecutionPane.add(replaceStatementCheckBox, new GridBagConstraints(0, y++, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 0, 0));
+            replacementSQLTextArea = new SqlTextArea();
+            replacementSQLTextAreaScrollPane = new RTextScrollPane(replacementSQLTextArea);
+            breakpointHitExecutionPane.add(replacementSQLTextAreaScrollPane, new GridBagConstraints(0, y++, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(2, 20, 0, 0), 0, 0));
+        }
         JPanel executionTypePane = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         // For now, this choice is not exposed.
-        executionTypePane.setVisible(false);
+        executionTypePane.setVisible(breakpointHit.isBeforeExecution());
         executionTypePane.setOpaque(false);
         ButtonGroup executionTypeGroup = new ButtonGroup();
         final JRadioButton executeTypeNoneRadioButton = new JRadioButton("Execute");
@@ -105,28 +119,42 @@ public class BreakpointHitEditor extends JPanel {
         executeTypeBreakRadioButton.setOpaque(false);
         executionTypeGroup.add(executeTypeBreakRadioButton);
         executionTypePane.add(executeTypeBreakRadioButton);
-        add(executionTypePane, new GridBagConstraints(0, y++, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 0, 0));
+        breakpointHitExecutionPane.add(executionTypePane, new GridBagConstraints(0, y++, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 0, 0));
         JPanel buttonPane = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         buttonPane.setOpaque(false);
-        buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         JButton applyButton = new JButton("Proceed");
         applyButton.setOpaque(false);
         applyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                breakpointHit.setExecutionType(executeTypeNoneRadioButton.isSelected()? ExecutionType.RUN: ExecutionType.STEP_THROUGH, replaceStatementCheckBox.isSelected()? replacementSQLTextArea.getText(): null);
+                if(breakpointHit.isBeforeExecution()) {
+                    breakpointHit.setExecutionType(executeTypeNoneRadioButton.isSelected()? ExecutionType.RUN: ExecutionType.STEP_THROUGH, replaceStatementCheckBox.isSelected()? replacementSQLTextArea.getText(): null);
+                } else {
+                    breakpointHit.setExecutionType(ExecutionType.RUN, null);
+                }
                 debuggerPane.proceedBreakpointHit(breakpointHitNode);
             }
         });
         buttonPane.add(applyButton);
-        add(buttonPane, new GridBagConstraints(0, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        breakpointHitExecutionPane.add(buttonPane, new GridBagConstraints(0, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         adjustStates();
+        tabbedPane.addTab("Execution", breakpointHitExecutionPane);
+        tabbedPane.addTab("Editor", new EditorsPane(new StatementExecutorCreator() {
+            @Override
+            public StatementExecutor createStatementExecutor() {
+                return debugger.createBreakpointHitStatementExecutor(breakpointHit.getThreadID());
+            }
+        }, false));
+        add(tabbedPane);
     }
 
     private void adjustStates() {
-        replacementSQLTextAreaScrollPane.setVisible(replaceStatementCheckBox.isSelected());
-        revalidate();
-        repaint();
+        if(breakpointHit.isBeforeExecution()) {
+            replacementSQLTextAreaScrollPane.setVisible(replaceStatementCheckBox.isSelected());
+            revalidate();
+            repaint();
+        }
     }
 
 }

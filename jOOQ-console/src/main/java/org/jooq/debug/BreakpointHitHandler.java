@@ -41,8 +41,8 @@ package org.jooq.debug;
  */
 public interface BreakpointHitHandler {
 
-    public void processBreakpointBeforeExecutionHit(BreakpointBeforeExecutionHit breakpointHit);
+    public void processBreakpointBeforeExecutionHit(BreakpointHit breakpointHit);
 
-    public void processBreakpointAfterExecutionHit(BreakpointAfterExecutionHit breakpointHit);
+    public void processBreakpointAfterExecutionHit(BreakpointHit breakpointHit);
 
 }

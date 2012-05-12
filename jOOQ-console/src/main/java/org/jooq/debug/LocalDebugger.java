@@ -36,6 +36,21 @@
  */
 package org.jooq.debug;
 
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.jooq.ExecuteContext;
+import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.SQLDialect;
+import org.jooq.Table;
 import org.jooq.debug.console.DatabaseDescriptor;
 
 
@@ -128,7 +143,141 @@ public class LocalDebugger implements Debugger {
 
     @Override
     public LocalStatementExecutor createStatementExecutor() {
-        return new LocalStatementExecutor(databaseDescriptor);
+        return new LocalStatementExecutor(new StatementExecutorContext() {
+            @Override
+            public boolean isReadOnly() {
+                return databaseDescriptor.isReadOnly();
+            }
+            @Override
+            public Connection getConnection() {
+                return databaseDescriptor.createConnection();
+            }
+            @Override
+            public void releaseConnection(Connection connection) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                }
+            }
+            @Override
+            public SQLDialect getSQLDialect() {
+                return databaseDescriptor.getSQLDialect();
+            }
+            @Override
+            public String[] getTableNames() {
+                return LocalDebugger.this.getTableNames();
+            }
+            @Override
+            public String[] getTableColumnNames() {
+                return LocalDebugger.this.getTableColumnNames();
+            }
+        });
+    }
+
+    private String[] getTableNames() {
+        List<Table<?>> tableList = databaseDescriptor.getSchema().getTables();
+        List<String> tableNameList = new ArrayList<String>();
+        for(Table<? extends Record> table: tableList) {
+            String tableName = table.getName();
+            tableNameList.add(tableName);
+        }
+        Collections.sort(tableNameList, String.CASE_INSENSITIVE_ORDER);
+        return tableNameList.toArray(new String[0]);
+    }
+
+    private String[] getTableColumnNames() {
+        Set<String> columnNameSet = new HashSet<String>();
+        for(Table<?> table: databaseDescriptor.getSchema().getTables()) {
+            for(Field<?> field: table.getFields()) {
+                String columnName = field.getName();
+                columnNameSet.add(columnName);
+            }
+        }
+        String[] columnNames = columnNameSet.toArray(new String[0]);
+        Arrays.sort(columnNames, String.CASE_INSENSITIVE_ORDER);
+        return columnNames;
+    }
+
+    private Map<Long, ExecuteContext> threadIDToExecuteContextMap = new HashMap<Long, ExecuteContext>();
+
+    @Override
+    public void processBreakpointBeforeExecutionHit(ExecuteContext ctx, BreakpointHit breakpointHit) {
+        BreakpointHitHandler handler = getBreakpointHitHandler();
+        if(handler == null) {
+            return;
+        }
+        long threadID = breakpointHit.getThreadID();
+        synchronized (threadIDToExecuteContextMap) {
+            threadIDToExecuteContextMap.put(threadID, ctx);
+        }
+        try {
+            handler.processBreakpointBeforeExecutionHit(breakpointHit);
+        } finally {
+            synchronized (threadIDToExecuteContextMap) {
+                threadIDToExecuteContextMap.remove(threadID);
+            }
+            performThreadDataCleanup(threadID);
+        }
+    }
+
+    protected void performThreadDataCleanup(long threadID) {
+    }
+
+    @Override
+    public void processBreakpointAfterExecutionHit(ExecuteContext ctx, BreakpointHit breakpointHit) {
+        BreakpointHitHandler handler = getBreakpointHitHandler();
+        if(handler == null) {
+            return;
+        }
+        long threadID = breakpointHit.getThreadID();
+        synchronized (threadIDToExecuteContextMap) {
+            threadIDToExecuteContextMap.put(threadID, ctx);
+        }
+        try {
+            handler.processBreakpointAfterExecutionHit(breakpointHit);
+        } finally {
+            synchronized (threadIDToExecuteContextMap) {
+                threadIDToExecuteContextMap.remove(threadID);
+            }
+            performThreadDataCleanup(threadID);
+        }
+    }
+
+    @Override
+    public LocalStatementExecutor createBreakpointHitStatementExecutor(long threadID) {
+        final ExecuteContext ctx;
+        synchronized (threadIDToExecuteContextMap) {
+            ctx = threadIDToExecuteContextMap.get(threadID);
+            if(ctx == null) {
+                return null;
+            }
+        }
+        return new LocalStatementExecutor(new StatementExecutorContext() {
+            @Override
+            public boolean isReadOnly() {
+                return false;
+            }
+            @Override
+            public Connection getConnection() {
+                return ctx.getConnection();
+            }
+            @Override
+            public void releaseConnection(Connection connection) {
+                // We don't want to alter the connection.
+            }
+            @Override
+            public SQLDialect getSQLDialect() {
+                return ctx.getDialect();
+            }
+            @Override
+            public String[] getTableNames() {
+                return LocalDebugger.this.getTableNames();
+            }
+            @Override
+            public String[] getTableColumnNames() {
+                return LocalDebugger.this.getTableColumnNames();
+            }
+        });
     }
 
 }

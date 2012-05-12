@@ -36,6 +36,8 @@
  */
 package org.jooq.debug;
 
+import org.jooq.ExecuteContext;
+
 
 /**
  * @author Christopher Deckers
@@ -62,5 +64,11 @@ public interface Debugger extends StatementExecutorCreator {
     public Breakpoint[] getBreakpoints();
 
     public boolean isExecutionSupported();
+
+    public void processBreakpointBeforeExecutionHit(ExecuteContext ctx, BreakpointHit breakpointHit);
+
+    public void processBreakpointAfterExecutionHit(ExecuteContext ctx, BreakpointHit breakpointHit);
+
+    public StatementExecutor createBreakpointHitStatementExecutor(long threadID);
 
 }

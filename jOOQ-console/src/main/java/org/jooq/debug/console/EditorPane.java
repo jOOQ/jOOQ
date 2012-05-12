@@ -102,12 +102,13 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.BadLocationException;
 
-import org.jooq.debug.Debugger;
 import org.jooq.debug.StatementExecution;
 import org.jooq.debug.StatementExecutionMessageResult;
 import org.jooq.debug.StatementExecutionResult;
 import org.jooq.debug.StatementExecutionResultSetResult;
 import org.jooq.debug.StatementExecutor;
+import org.jooq.debug.StatementExecutorCreator;
+import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.JTableX;
 import org.jooq.debug.console.misc.Utils;
 
@@ -124,15 +125,16 @@ public class EditorPane extends JPanel {
     private JFormattedTextField displayedRowCountField;
 
     private SqlTextArea editorTextArea;
-    private JPanel southPanel = new JPanel(new BorderLayout());
-    private Debugger debugger;
+    private JPanel southPanel;
+    private StatementExecutorCreator statementExecutorCreator;
+    private final Object STATEMENT_EXECUTOR_CREATOR_LOCK = new Object();
     private StatementExecutor lastStatementExecutor;
     private JButton startButton;
     private JButton stopButton;
 
-    EditorPane(Debugger debugger) {
+    EditorPane(StatementExecutorCreator statementExecutorCreator) {
         super(new BorderLayout());
-        this.debugger = debugger;
+        this.statementExecutorCreator = statementExecutorCreator;
         setOpaque(false);
         JPanel northPanel = new JPanel(new BorderLayout());
         northPanel.setOpaque(false);
@@ -185,7 +187,6 @@ public class EditorPane extends JPanel {
         northEastPanel.add(displayedRowCountField);
         northPanel.add(northEastPanel, BorderLayout.CENTER);
         add(northPanel, BorderLayout.NORTH);
-//        editorTextArea = new JTextArea();
         editorTextArea = new SqlTextArea();
         editorTextArea.addKeyListener(new KeyAdapter() {
             @Override
@@ -214,7 +215,10 @@ public class EditorPane extends JPanel {
             }
         });
         RTextScrollPane editorTextAreaScrollPane = new RTextScrollPane(editorTextArea);
-        JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, editorTextAreaScrollPane, southPanel);
+        southPanel = new JPanel(new BorderLayout());
+        southPanel.setOpaque(false);
+        JSplitPane verticalSplitPane = new InvisibleSplitPane(JSplitPane.VERTICAL_SPLIT, true, editorTextAreaScrollPane, southPanel);
+        verticalSplitPane.setOpaque(false);
         add(verticalSplitPane, BorderLayout.CENTER);
         verticalSplitPane.setDividerLocation(150);
     }
@@ -268,8 +272,8 @@ public class EditorPane extends JPanel {
             }
         });
         StatementExecutor statementExecutor;
-        synchronized (debugger) {
-            statementExecutor = debugger.createStatementExecutor();
+        synchronized (STATEMENT_EXECUTOR_CREATOR_LOCK) {
+            statementExecutor = statementExecutorCreator.createStatementExecutor();
             lastStatementExecutor = statementExecutor;
         }
         StatementExecution statementExecution;
@@ -310,7 +314,8 @@ public class EditorPane extends JPanel {
         final JLabel label = new JLabel(" " + rowCount + " rows");
         FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 0, 0);
         flowLayout.setAlignOnBaseline(true);
-        JPanel statusCountPane = new JPanel(flowLayout);
+        JPanel statusPane = new JPanel(flowLayout);
+        statusPane.setOpaque(false);
         if(rowCount <= resultSetResult.getRetainParsedRSDataRowCountThreshold()) {
             final JTableX table = new ResultTable(resultSetResult);
             JTableHeader tableHeader = new JTableHeader(table.getColumnModel()) {
@@ -456,7 +461,9 @@ public class EditorPane extends JPanel {
                 }
             });
             final JPanel filterPane = new JPanel(flowLayout);
+            filterPane.setOpaque(false);
             final JToggleButton filterToggleButton = new JToggleButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Search16.png")));
+            filterToggleButton.setOpaque(false);
             filterToggleButton.setToolTipText("Filter (" + KeyEvent.getKeyModifiersText(InputEvent.CTRL_MASK) + "+" + KeyEvent.getKeyText(KeyEvent.VK_F) + ")");
             filterToggleButton.setMargin(new Insets(0, 0, 0, 0));
             filterPane.add(filterToggleButton);
@@ -517,17 +524,18 @@ public class EditorPane extends JPanel {
                     }
                 }
             });
-            statusCountPane.add(filterPane);
+            statusPane.add(filterPane);
         }
-        JPanel southPanel = new JPanel(new BorderLayout());
+        JPanel southResultPanel = new JPanel(new BorderLayout());
+        southResultPanel.setOpaque(false);
         if(isUsingMaxRowCount && rowCount == MAX_ROW_COUNT) {
             label.setForeground(Color.RED);
         }
-        statusCountPane.add(label);
-        southPanel.add(statusCountPane, BorderLayout.WEST);
-        southPanel.add(new JLabel(Utils.formatDuration(duration) + " - " + Utils.formatDuration(resultSetResult.getResultSetParsingDuration())), BorderLayout.EAST);
-        resultPane.add(southPanel, BorderLayout.SOUTH);
-        southPanel.setToolTipText(sql);
+        statusPane.add(label);
+        southResultPanel.add(statusPane, BorderLayout.WEST);
+        southResultPanel.add(new JLabel(Utils.formatDuration(duration) + " - " + Utils.formatDuration(resultSetResult.getResultSetParsingDuration())), BorderLayout.EAST);
+        resultPane.add(southResultPanel, BorderLayout.SOUTH);
+        southResultPanel.setToolTipText(sql);
         resultPane.revalidate();
         resultPane.repaint();
     }
@@ -557,6 +565,7 @@ public class EditorPane extends JPanel {
 
     private JPanel addResultPane() {
         JPanel resultPane = new JPanel(new BorderLayout());
+        resultPane.setOpaque(false);
         int componentCount = southPanel.getComponentCount();
         if(componentCount == 0) {
             southPanel.add(resultPane, BorderLayout.CENTER);
@@ -582,7 +591,7 @@ public class EditorPane extends JPanel {
     }
 
     void closeLastExecution() {
-        synchronized (debugger) {
+        synchronized (STATEMENT_EXECUTOR_CREATOR_LOCK) {
             if(lastStatementExecutor != null) {
                 lastStatementExecutor.stopExecution();
                 lastStatementExecutor = null;
@@ -829,13 +838,14 @@ public class EditorPane extends JPanel {
         List<CompletionCandidate> candidateList = new ArrayList<CompletionCandidate>();
         // Here can add more candidates depending on magic word start.
         if(candidateList.isEmpty()) {
-            StatementExecutor statementExecutor = debugger.createStatementExecutor();
+            StatementExecutor statementExecutor = statementExecutorCreator.createStatementExecutor();
             for(String s: statementExecutor.getTableNames()) {
                 candidateList.add(new CompletionCandidate(KeyWordType.TABLE, s));
             }
             for(String s: statementExecutor.getTableColumnNames()) {
                 candidateList.add(new CompletionCandidate(KeyWordType.TABLE_COlUMN, s));
             }
+            statementExecutor.stopExecution();
             for(String s: new String[] {
                     "ALTER",
                     "ASC",

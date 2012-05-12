@@ -36,31 +36,11 @@
  */
 package org.jooq.debug;
 
-
 /**
  * @author Christopher Deckers
  */
-public interface Debugger extends StatementExecutorCreator {
+public interface StatementExecutorCreator {
 
-    /**
-     * @param loggingListener a listener, or null to stop logging.
-     */
-    public void setLoggingListener(LoggingListener loggingListener);
-
-    public LoggingListener getLoggingListener();
-
-    public void setLoggingStatementMatchers(StatementMatcher[] loggingStatementMatchers);
-
-    public StatementMatcher[] getLoggingStatementMatchers();
-
-    public void setBreakpoints(Breakpoint[] breakpoints);
-
-    public void setBreakpointHitHandler(BreakpointHitHandler breakpointHitHandler);
-
-    public BreakpointHitHandler getBreakpointHitHandler();
-
-    public Breakpoint[] getBreakpoints();
-
-    public boolean isExecutionSupported();
+    public StatementExecutor createStatementExecutor();
 
 }

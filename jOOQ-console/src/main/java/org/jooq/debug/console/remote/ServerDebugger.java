@@ -225,6 +225,7 @@ class ServerDebugger extends LocalDebugger {
             for(StatementExecutor executor: idToStatementExecutorMap.values()) {
                 executor.stopExecution();
             }
+            idToStatementExecutorMap.clear();
         }
     }
 

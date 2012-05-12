@@ -59,6 +59,7 @@ public class StatementProcessorPane extends JPanel {
     private JComboBox processorTypeComboBox;
     private JTextField processorTextField;
     private JScrollPane processorStaticScrollPane;
+    private SqlTextArea processorStaticSQLTextArea;
 
     public StatementProcessorPane(StatementProcessor statementProcessor) {
         super(new GridBagLayout());
@@ -78,7 +79,7 @@ public class StatementProcessorPane extends JPanel {
         boolean isStatic = statementProcessor.getType() == StatementProcessor.ProcessorExecutionType.STATIC;
         processorTextField = new JTextField(isStatic? "": statementProcessor.getText(), 14);
         add(processorTextField, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
-        SqlTextArea processorStaticSQLTextArea = new SqlTextArea();
+        processorStaticSQLTextArea = new SqlTextArea();
         if(isStatic) {
             processorStaticSQLTextArea.setText(statementProcessor.getText());
             processorStaticSQLTextArea.setCaretPosition(0);
@@ -98,7 +99,8 @@ public class StatementProcessorPane extends JPanel {
     }
 
     public StatementProcessor getStatementProcessor() {
-        return new StatementProcessor((StatementProcessor.ProcessorExecutionType)processorTypeComboBox.getSelectedItem(), processorTextField.getText());
+        StatementProcessor.ProcessorExecutionType type = (StatementProcessor.ProcessorExecutionType)processorTypeComboBox.getSelectedItem();
+        return new StatementProcessor(type, type == StatementProcessor.ProcessorExecutionType.STATIC? processorStaticSQLTextArea.getText(): processorTextField.getText());
     }
 
     public void setLocked(boolean isLocked) {

@@ -38,7 +38,6 @@ package org.jooq.debug.console;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Desktop;
@@ -49,49 +48,31 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.font.TextAttribute;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import org.jooq.debug.Debugger;
 import org.jooq.debug.DebuggerRegistry;
 import org.jooq.debug.LocalDebugger;
-import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.remote.ClientDebugger;
 
 /**
@@ -102,7 +83,8 @@ public class Console extends JFrame {
 
     private Debugger debugger;
     private JTabbedPane mainTabbedPane;
-    private JTabbedPane editorTabbedPane;
+    private EditorsPane editorsPane;
+
 
     public Console(DatabaseDescriptor editorDatabaseDescriptor, boolean isShowingLoggingTab, boolean isShowingDebugger) {
         debugger = new LocalDebugger(editorDatabaseDescriptor);
@@ -240,7 +222,7 @@ public class Console extends JFrame {
         setSize(800, 600);
         addNotify();
         if(debugger.isExecutionSupported()) {
-        	getFocusedEditorPane().adjustDefaultFocus();
+        	editorsPane.adjustDefaultFocus();
         }
         addWindowListener(new WindowAdapter() {
             @Override
@@ -259,10 +241,8 @@ public class Console extends JFrame {
         if(sqlLoggerPane != null) {
             sqlLoggerPane.setLogging(false);
         }
-        if(editorTabbedPane != null) {
-            for(int i=editorTabbedPane.getTabCount()-2; i>=0; i--) {
-                ((EditorPane)editorTabbedPane.getComponentAt(i)).closeLastExecution();
-            }
+        if(editorsPane != null) {
+            editorsPane.performCleanup();
         }
     }
 
@@ -281,150 +261,6 @@ public class Console extends JFrame {
 		mainTabbedPane.addTab("Logger", sqlLoggerPane);
 	}
 
-	private void addEditorTab() {
-		JPanel editorsPane = new JPanel(new BorderLayout());
-		editorsPane.setBorder(BorderFactory.createEmptyBorder(2, 5, 5, 5));
-		editorsPane.setOpaque(false);
-        final String[] tableNames = debugger.createStatementExecutor().getTableNames();
-        final JList tableNamesJList = new JList(tableNames);
-        tableNamesJList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
-                    Object[] values = tableNamesJList.getSelectedValues();
-                    if(values.length == 1) {
-                        getFocusedEditorPane().evaluate("SELECT * FROM " + values[0]);
-                    }
-                }
-            }
-        });
-        editorTabbedPane = new JTabbedPane();
-        editorTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-        editorTabbedPane.addTab("New...", new JPanel());
-        editorTabbedPane.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                if(!isAdjusting && editorTabbedPane.getSelectedIndex() == editorTabbedPane.getTabCount() - 1) {
-                    addSQLEditorPane();
-                }
-            }
-        });
-        JPanel tableNamePane = new JPanel(new BorderLayout());
-        tableNamePane.setOpaque(false);
-        JPanel tableNameFilterPane = new JPanel(new BorderLayout());
-        tableNameFilterPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 2, 0));
-        tableNameFilterPane.setOpaque(false);
-        final JTextField tableNameFilterTextField = new JTextField();
-        tableNameFilterTextField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                filter();
-            }
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                filter();
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                filter();
-            }
-            private void filter() {
-                String filterText = tableNameFilterTextField.getText();
-                final List<String> tableNameList = new ArrayList<String>(tableNames.length);
-                if(filterText == null || filterText.length() == 0) {
-                    tableNameList.addAll(Arrays.asList(tableNames));
-                } else {
-                    String[] filterTexts = filterText.split(" ");
-                    for(String tableName: tableNames) {
-                        boolean isAccepted = true;
-                        int lastIndex = 0;
-                        for(int j=0; j<filterTexts.length; j++) {
-                            String filter = filterTexts[j];
-                            boolean isCaseSensitive = false;
-                            for(int i=filter.length()-1; i>=0; i--) {
-                                if(Character.isUpperCase(filter.charAt(i))) {
-                                    isCaseSensitive = true;
-                                    break;
-                                }
-                            }
-                            int index;
-                            if(isCaseSensitive) {
-                                index = tableName.indexOf(filter, lastIndex);
-                            } else {
-                                index = tableName.toLowerCase(Locale.ENGLISH).indexOf(filter.toLowerCase(Locale.ENGLISH), lastIndex);
-                            }
-                            if(index < 0) {
-                                isAccepted = false;
-                                break;
-                            }
-                            lastIndex = index + filter.length() + 1;
-                        }
-                        if(isAccepted) {
-                            tableNameList.add(tableName);
-                        }
-                    }
-                }
-                tableNamesJList.setModel(new AbstractListModel() {
-                    @Override
-                    public int getSize() { return tableNameList.size(); }
-                    @Override
-                    public String getElementAt(int i) { return tableNameList.get(i); }
-                });
-            }
-        });
-        tableNameFilterTextField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ListModel model = tableNamesJList.getModel();
-                if(model.getSize() >= 1) {
-                	Object selectedValue = tableNamesJList.getSelectedValue();
-                    getFocusedEditorPane().evaluate("SELECT * FROM " + (selectedValue == null? model.getElementAt(0): selectedValue));
-                }
-            }
-        });
-        tableNameFilterTextField.addKeyListener(new KeyAdapter() {
-        	@Override
-        	public void keyPressed(KeyEvent e) {
-        		if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    ListModel model = tableNamesJList.getModel();
-                    if(model.getSize() >= 1) {
-                    	tableNamesJList.setSelectedIndex(0);
-                    	tableNamesJList.requestFocus();
-                    }
-        		}
-        	}
-		});
-        tableNamesJList.addKeyListener(new KeyAdapter() {
-        	@Override
-        	public void keyPressed(KeyEvent e) {
-        		switch(e.getKeyCode()) {
-        			case KeyEvent.VK_UP: {
-            			if(tableNamesJList.getSelectedIndex() == 0) {
-            				tableNamesJList.clearSelection();
-            				tableNameFilterTextField.requestFocus();
-            			}
-        				break;
-        			}
-        			case KeyEvent.VK_ENTER: {
-                    	Object selectedValue = tableNamesJList.getSelectedValue();
-                    	if(selectedValue != null) {
-                    		getFocusedEditorPane().evaluate("SELECT * FROM " + selectedValue);
-                    	}
-        				break;
-        			}
-        		}
-        	}
-		});
-        tableNameFilterPane.add(tableNameFilterTextField, BorderLayout.CENTER);
-        tableNamePane.add(tableNameFilterPane, BorderLayout.NORTH);
-        tableNamePane.add(new JScrollPane(tableNamesJList), BorderLayout.CENTER);
-        JSplitPane horizontalSplitPane = new InvisibleSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, tableNamePane, editorTabbedPane);
-        horizontalSplitPane.setOpaque(false);
-        addSQLEditorPane();
-        editorsPane.add(horizontalSplitPane, BorderLayout.CENTER);
-        mainTabbedPane.addTab("Editor", editorsPane);
-	}
-
     public static void openConsole(DatabaseDescriptor databaseDescriptor, boolean isLoggingActive) {
         Console sqlConsoleFrame = new Console(databaseDescriptor, true, true);
     	sqlConsoleFrame.setLoggingActive(isLoggingActive);
@@ -439,70 +275,10 @@ public class Console extends JFrame {
         }
     }
 
-    private boolean isAdjusting;
-    private int contextCount = 1;
-
-    private void addSQLEditorPane() {
-        isAdjusting = true;
-        int index = editorTabbedPane.getTabCount() - 1;
-        final EditorPane sqlEditorPane = new EditorPane(debugger);
-        sqlEditorPane.setBorder(BorderFactory.createEmptyBorder(2, 5, 0, 5));
-        String title = "Context " + contextCount++;
-        editorTabbedPane.insertTab(title, null, sqlEditorPane, null, index);
-        final JPanel tabComponent = new JPanel(new BorderLayout());
-        tabComponent.setOpaque(false);
-        tabComponent.add(new JLabel(title), BorderLayout.CENTER);
-        final JLabel closeLabel = new JLabel(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/TabCloseInactive14.png")));
-        closeLabel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 0));
-        closeLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if(!closeLabel.contains(e.getPoint())) {
-                    return;
-                }
-                isAdjusting = true;
-                if(editorTabbedPane.getTabCount() > 2) {
-                    for(int i=editorTabbedPane.getTabCount()-1; i>=0; i--) {
-                        if(editorTabbedPane.getTabComponentAt(i) == tabComponent) {
-                            ((EditorPane)editorTabbedPane.getComponentAt(i)).closeLastExecution();
-                            editorTabbedPane.removeTabAt(i);
-                            if(i == editorTabbedPane.getTabCount() - 1) {
-                                editorTabbedPane.setSelectedIndex(i - 1);
-                            }
-                            break;
-                        }
-                    }
-                }
-                isAdjusting = false;
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                if(editorTabbedPane.getTabCount() > 2) {
-                    closeLabel.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/TabCloseActive14.png")));
-                }
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                closeLabel.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/TabCloseInactive14.png")));
-            }
-        });
-        editorTabbedPane.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int selectedIndex = editorTabbedPane.getSelectedIndex();
-                Component tabComponent2 = editorTabbedPane.getTabComponentAt(selectedIndex);
-                closeLabel.setVisible(tabComponent2 == tabComponent && editorTabbedPane.getTabCount() > 2);
-            }
-        });
-        tabComponent.add(closeLabel, BorderLayout.EAST);
-        editorTabbedPane.setTabComponentAt(index, tabComponent);
-        editorTabbedPane.setSelectedIndex(index);
-        isAdjusting = false;
-        sqlEditorPane.adjustDefaultFocus();
-    }
-
-    private EditorPane getFocusedEditorPane() {
-        return (EditorPane)editorTabbedPane.getSelectedComponent();
+    private void addEditorTab() {
+        editorsPane = new EditorsPane(debugger, true);
+        editorsPane.setBorder(BorderFactory.createEmptyBorder(2, 5, 5, 5));
+        mainTabbedPane.addTab("Editor", editorsPane);
     }
 
     public static void main(String[] args) {

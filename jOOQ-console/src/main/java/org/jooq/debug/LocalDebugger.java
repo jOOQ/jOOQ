@@ -234,6 +234,9 @@ public class LocalDebugger implements Debugger {
     }
 
     private String[] getTableNames() {
+        if(databaseDescriptor == null) {
+            return new String[0];
+        }
         List<Table<?>> tableList = databaseDescriptor.getSchema().getTables();
         List<String> tableNameList = new ArrayList<String>();
         for(Table<? extends Record> table: tableList) {
@@ -245,6 +248,9 @@ public class LocalDebugger implements Debugger {
     }
 
     private String[] getTableColumnNames() {
+        if(databaseDescriptor == null) {
+            return new String[0];
+        }
         Set<String> columnNameSet = new HashSet<String>();
         for(Table<?> table: databaseDescriptor.getSchema().getTables()) {
             for(Field<?> field: table.getFields()) {

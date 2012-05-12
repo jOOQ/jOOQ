@@ -115,6 +115,7 @@ public class DebugListener extends DefaultExecuteListener {
 	private long startExecutionTime;
 	private long endExecutionTime;
 	private String matchingSQL;
+	private String matchingParameterDescription;
 	private String effectiveSQL;
 	private Breakpoint matchingBreakpoint;
     private Debugger matchingDebugger = null;
@@ -129,12 +130,13 @@ public class DebugListener extends DefaultExecuteListener {
                 Breakpoint[] breakpoints = debugger.getBreakpoints();
                 if(breakpoints != null) {
                     for(Breakpoint breakpoint: breakpoints) {
+                        String sql_ = null;
+                        String parameterDescription = null;
                         if(statementInfo == null) {
                             String[] sql = ctx.batchSQL();
                             SqlQueryType sqlQueryType = SqlQueryType.detectType(sql[0]);
-                            String parameterDescription = null;
                             if(sql.length == 1) {
-                                matchingSQL = sql[0];
+                                sql_ = sql[0];
                                 PreparedStatement statement = ctx.statement();
                                 if(statement instanceof UsageTrackingPreparedStatement) {
                                     parameterDescription = ((UsageTrackingPreparedStatement) statement).getParameterDescription();
@@ -147,11 +149,13 @@ public class DebugListener extends DefaultExecuteListener {
                                     }
                                     sb.append(sql[i]);
                                 }
-                                matchingSQL = sb.toString();
+                                sql_ = sb.toString();
                             }
                             statementInfo = new StatementInfo(sqlQueryType, sql, parameterDescription);
                         }
                         if(breakpoint.matches(statementInfo, true)) {
+                            matchingSQL = sql_;
+                            matchingParameterDescription = parameterDescription;
                             matchingDebugger = debugger;
                             matchingBreakpoint = breakpoint;
                             if(breakpoint.isBreaking()) {
@@ -194,6 +198,7 @@ public class DebugListener extends DefaultExecuteListener {
             StatementProcessor replacementExecutionProcessor = matchingBreakpoint.getReplacementExecutionProcessor();
             if(replacementExecutionProcessor != null) {
                 mainSQL = replacementExecutionProcessor.processSQL(matchingSQL);
+                matchingParameterDescription = null;
                 try {
                     ctx.statement().close();
                     ctx.sql(mainSQL);
@@ -212,7 +217,7 @@ public class DebugListener extends DefaultExecuteListener {
                 String threadName = currentThread.getName();
                 StackTraceElement[] callerStackTraceElements = currentThread.getStackTrace();
                 callerStackTraceElements = Arrays.copyOfRange(callerStackTraceElements, 2, callerStackTraceElements.length);
-                BreakpointHit breakpointHit = new BreakpointHit(matchingBreakpoint.getID(), effectiveSQL, threadID, threadName, callerStackTraceElements, true);
+                BreakpointHit breakpointHit = new BreakpointHit(matchingBreakpoint.getID(), effectiveSQL, matchingParameterDescription, threadID, threadName, callerStackTraceElements, true);
                 matchingDebugger.processBreakpointBeforeExecutionHit(ctx, breakpointHit);
                 // Breakpoint has an answer.
                 if(breakpointHit.getBreakpointID() == null) {
@@ -220,6 +225,7 @@ public class DebugListener extends DefaultExecuteListener {
                     String sql = breakpointHit.getSql();
                     if(sql != null) {
                         effectiveSQL = sql;
+                        matchingParameterDescription = null;
                         try {
                             ctx.statement().close();
                             ctx.sql(effectiveSQL);
@@ -345,7 +351,7 @@ public class DebugListener extends DefaultExecuteListener {
             String threadName = currentThread.getName();
             StackTraceElement[] callerStackTraceElements = currentThread.getStackTrace();
             callerStackTraceElements = Arrays.copyOfRange(callerStackTraceElements, 2, callerStackTraceElements.length);
-            matchingDebugger.processBreakpointAfterExecutionHit(ctx, new BreakpointHit(matchingBreakpoint.getID(), effectiveSQL, threadID, threadName, callerStackTraceElements, false));
+            matchingDebugger.processBreakpointAfterExecutionHit(ctx, new BreakpointHit(matchingBreakpoint.getID(), effectiveSQL, matchingParameterDescription, threadID, threadName, callerStackTraceElements, false));
         }
         if(matchingBreakpoint != null) {
             StatementProcessor afterExecutionProcessor = matchingBreakpoint.getAfterExecutionProcessor();

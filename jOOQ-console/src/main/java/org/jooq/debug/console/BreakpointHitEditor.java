@@ -88,7 +88,12 @@ public class BreakpointHitEditor extends JPanel {
         int y = 0;
         breakpointHitExecutionPane.add(new JLabel("Statement:"), new GridBagConstraints(0, y++, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         SqlTextArea sqlTextArea = new SqlTextArea();
-        sqlTextArea.setText(breakpointHit.getSql() + "\n");
+        String sql = breakpointHit.getSql();
+        String parameterDescription = breakpointHit.getParameterDescription();
+        if(parameterDescription != null) {
+            sql += "\n -> " + parameterDescription;
+        }
+        sqlTextArea.setText(sql + "\n");
         sqlTextArea.setCaretPosition(0);
         breakpointHitExecutionPane.add(new RTextScrollPane(sqlTextArea), new GridBagConstraints(0, y++, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         if(breakpointHit.isBeforeExecution()) {

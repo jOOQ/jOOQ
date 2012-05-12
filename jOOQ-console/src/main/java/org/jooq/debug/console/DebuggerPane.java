@@ -280,6 +280,12 @@ public class DebuggerPane extends JPanel {
         breakpointTree.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON3) {
+                    int row = breakpointTree.getRowForLocation(e.getX(), e.getY());
+                    if(row >= 0 && !breakpointTree.isRowSelected(row)) {
+                        breakpointTree.setSelectionRow(row);
+                    }
+                }
                 maybeShowPopup(e);
             }
             @Override
@@ -289,34 +295,61 @@ public class DebuggerPane extends JPanel {
             private void maybeShowPopup(MouseEvent e) {
                 if(e.isPopupTrigger()) {
                     TreePath[] selectionPaths = breakpointTree.getSelectionPaths();
-                    if(selectionPaths != null && selectionPaths.length == 1) {
-                        Object o = selectionPaths[0].getLastPathComponent();
-                        if(o instanceof BreakpointHitNode) {
-                            final BreakpointHit breakpointHit = ((BreakpointHitNode) o).getUserObject();
-                            JPopupMenu popupMenu = new JPopupMenu();
-                            JMenuItem copyStackToClipboardMenuItem = new JMenuItem("Copy Call Stack to Clipboard");
-                            copyStackToClipboardMenuItem.addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    StringWriter sw = new StringWriter();
-                                    Throwable throwable = new Exception("Statement Stack trace");
-                                    throwable.setStackTrace(breakpointHit.getCallerStackTraceElements());
-                                    throwable.printStackTrace(new PrintWriter(sw));
-                                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                                    clipboard.setContents(new StringSelection(sw.toString()), null);
+                    if(selectionPaths != null && selectionPaths.length > 0) {
+                        JPopupMenu popupMenu = new JPopupMenu();
+                        {
+                            final List<BreakpointHitNode> nodeList = new ArrayList<DebuggerPane.BreakpointHitNode>();
+                            for(TreePath selectionPath: selectionPaths) {
+                                Object o = selectionPath.getLastPathComponent();
+                                if(!(o instanceof BreakpointHitNode)) {
+                                    nodeList.clear();
+                                    break;
                                 }
-                            });
-                            popupMenu.add(copyStackToClipboardMenuItem);
-                            JMenuItem dumpStackToConsoleMenuItem = new JMenuItem("Dump Call Stack");
-                            dumpStackToConsoleMenuItem.addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    Throwable throwable = new Exception("Statement Stack trace");
-                                    throwable.setStackTrace(breakpointHit.getCallerStackTraceElements());
-                                    throwable.printStackTrace();
-                                }
-                            });
-                            popupMenu.add(dumpStackToConsoleMenuItem);
+                                nodeList.add((BreakpointHitNode)o);
+                            }
+                            if(!nodeList.isEmpty()) {
+                                JMenuItem proceedMenuItem = new JMenuItem("Proceed");
+                                proceedMenuItem.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        for(BreakpointHitNode node: nodeList) {
+                                            proceedBreakpointHit(node);
+                                        }
+                                    }
+                                });
+                                popupMenu.add(proceedMenuItem);
+                            }
+                        }
+                        if(selectionPaths.length == 1) {
+                            Object o = selectionPaths[0].getLastPathComponent();
+                            if(o instanceof BreakpointHitNode) {
+                                final BreakpointHit breakpointHit = ((BreakpointHitNode) o).getUserObject();
+                                JMenuItem copyStackToClipboardMenuItem = new JMenuItem("Copy Call Stack to Clipboard");
+                                copyStackToClipboardMenuItem.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        StringWriter sw = new StringWriter();
+                                        Throwable throwable = new Exception("Statement Stack trace");
+                                        throwable.setStackTrace(breakpointHit.getCallerStackTraceElements());
+                                        throwable.printStackTrace(new PrintWriter(sw));
+                                        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                                        clipboard.setContents(new StringSelection(sw.toString()), null);
+                                    }
+                                });
+                                popupMenu.add(copyStackToClipboardMenuItem);
+                                JMenuItem dumpStackToConsoleMenuItem = new JMenuItem("Dump Call Stack");
+                                dumpStackToConsoleMenuItem.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        Throwable throwable = new Exception("Statement Stack trace");
+                                        throwable.setStackTrace(breakpointHit.getCallerStackTraceElements());
+                                        throwable.printStackTrace();
+                                    }
+                                });
+                                popupMenu.add(dumpStackToConsoleMenuItem);
+                            }
+                        }
+                        if(popupMenu.getComponentCount() > 0) {
                             popupMenu.show(e.getComponent(), e.getX(), e.getY());
                         }
                     }

@@ -530,6 +530,50 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition like(String value, char escape);
 
     /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition likeIgnoreCase(Field<String> value);
+
+    /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition likeIgnoreCase(Field<String> value, char escape);
+
+    /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition likeIgnoreCase(String value);
+
+    /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition likeIgnoreCase(String value, char escape);
+
+    /**
      * Create a condition to pattern-check this field against a value
      * <p>
      * SQL: <code>this not like value</code>
@@ -560,6 +604,50 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support
     Condition notLike(String value, char escape);
+
+    /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this not ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition notLikeIgnoreCase(Field<String> value);
+
+    /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this not ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition notLikeIgnoreCase(Field<String> value, char escape);
+
+    /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this not ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition notLikeIgnoreCase(String value);
+
+    /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this not ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition notLikeIgnoreCase(String value, char escape);
 
     /**
      * Convenience method for {@link #like(String, char)} including proper

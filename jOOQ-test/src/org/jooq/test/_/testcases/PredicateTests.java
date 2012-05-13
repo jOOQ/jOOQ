@@ -267,6 +267,17 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         assertEquals(1, books.size());
         assertEquals(asList(3), books.getValues(TBook_ID()));
+
+        // [#1423] Add checks for the ILIKE operator
+        // -----------------------------------------
+        books =
+        create().selectFrom(TBook())
+                .where(TBook_TITLE().likeIgnoreCase("%IM%"))
+                .and(TBook_TITLE().notLikeIgnoreCase("%o%"))
+                .fetch();
+
+        assertEquals(1, books.size());
+        assertEquals(asList(2), books.getValues(TBook_ID()));
     }
 
     @Test

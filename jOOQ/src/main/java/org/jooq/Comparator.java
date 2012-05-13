@@ -65,7 +65,15 @@ public enum Comparator {
     LIKE("like"),
 
     @Support
-    NOT_LIKE("not like");
+    NOT_LIKE("not like"),
+
+    @Support
+    LIKE_IGNORE_CASE("ilike"),
+
+    @Support
+    NOT_LIKE_IGNORE_CASE("not ilike"),
+
+    ;
 
     private final String sql;
 

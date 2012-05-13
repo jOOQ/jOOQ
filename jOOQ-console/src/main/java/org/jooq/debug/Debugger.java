@@ -36,9 +36,13 @@
  */
 package org.jooq.debug;
 
+import org.jooq.ExecuteContext;
 
 
-public interface Debugger {
+/**
+ * @author Christopher Deckers
+ */
+public interface Debugger extends StatementExecutorCreator {
 
     /**
      * @param loggingListener a listener, or null to stop logging.
@@ -51,8 +55,26 @@ public interface Debugger {
 
     public StatementMatcher[] getLoggingStatementMatchers();
 
+    public void setBreakpoints(Breakpoint[] breakpoints);
+
+    public void addBreakpoint(Breakpoint breakpoint);
+
+    public void modifyBreakpoint(Breakpoint breakpoint);
+
+    public void removeBreakpoint(Breakpoint breakpoint);
+
+    public void setBreakpointHitHandler(BreakpointHitHandler breakpointHitHandler);
+
+    public BreakpointHitHandler getBreakpointHitHandler();
+
+    public Breakpoint[] getBreakpoints();
+
     public boolean isExecutionSupported();
 
-    public StatementExecutor createStatementExecutor();
+    public void processBreakpointBeforeExecutionHit(ExecuteContext ctx, BreakpointHit breakpointHit);
+
+    public void processBreakpointAfterExecutionHit(ExecuteContext ctx, BreakpointHit breakpointHit);
+
+    public StatementExecutor createBreakpointHitStatementExecutor(long threadID);
 
 }

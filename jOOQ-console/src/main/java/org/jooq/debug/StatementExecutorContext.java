@@ -34,25 +34,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console.remote;
+package org.jooq.debug;
 
-import org.jooq.debug.Debugger;
-import org.jooq.debug.console.remote.messaging.CommunicationInterface;
+import java.sql.Connection;
+
+import org.jooq.SQLDialect;
 
 /**
  * @author Christopher Deckers
  */
-class DebuggerCommmunicationInterface extends CommunicationInterface {
+public interface StatementExecutorContext {
 
-    private Debugger debugger;
+    public boolean isReadOnly();
 
-    public DebuggerCommmunicationInterface(Debugger debugger, int port) {
-        super(port);
-        this.debugger = debugger;
-    }
+    public Connection getConnection();
 
-    public Debugger getDebugger() {
-        return debugger;
-    }
+    public void releaseConnection(Connection connection);
+
+    public SQLDialect getSQLDialect();
+
+    public String[] getTableNames();
+
+    public String[] getTableColumnNames();
 
 }

@@ -37,69 +37,51 @@
 package org.jooq.debug;
 
 import java.io.Serializable;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+
+import org.jooq.debug.console.misc.Utils;
 
 /**
  * @author Christopher Deckers
  */
-public interface StatementExecutionResultSetResult extends StatementExecutionResult {
+@SuppressWarnings("serial")
+public class StatementProcessor implements Serializable {
 
-    @SuppressWarnings("serial")
-    public static class TypeInfo implements Serializable {
-
-        private String columnName;
-        private int precision;
-        private int scale;
-        private int nullable = ResultSetMetaData.columnNullableUnknown;
-
-        TypeInfo(ResultSetMetaData metaData, int column) {
-            try {
-                columnName = metaData.getColumnTypeName(column + 1);
-                precision = metaData.getPrecision(column + 1);
-                scale = metaData.getScale(column + 1);
-                nullable = metaData.isNullable(column + 1);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    public static enum ProcessorExecutionType {
+        STATIC("Static SQL"),
+        SED_LIKE_REG_EXP("Sed-like Reg. Exp."),
+        ;
+        private String name;
+        private ProcessorExecutionType(String name) {
+            this.name = name;
         }
-
         @Override
         public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append(columnName);
-            if(precision != 0) {
-                sb.append(" (" + precision + (scale != 0? ", " + scale: "") + ")");
-            }
-            if(nullable != ResultSetMetaData.columnNullableUnknown) {
-                sb.append(nullable == ResultSetMetaData.columnNoNulls? " not null": " null");
-            }
-            return sb.toString();
+            return name;
         }
-
     }
 
-    public String[] getColumnNames();
+    private ProcessorExecutionType type;
+    private String text;
 
-    public TypeInfo[] getTypeInfos();
+    public StatementProcessor(ProcessorExecutionType type, String text) {
+        this.type = type;
+        this.text = text;
+    }
 
-    public Class<?>[] getColumnClasses();
+    public ProcessorExecutionType getType() {
+        return type;
+    }
 
-    /**
-     * @return the data or an empty array of arrays if <code>rowCount</code> is over <code>retainParsedRSDataRowCountThreshold</code>.
-     */
-    public Object[][] getRowData();
+    public String getText() {
+        return text;
+    }
 
-    public int getRowCount();
-
-    public long getResultSetParsingDuration();
-
-    public int getRetainParsedRSDataRowCountThreshold();
-
-    public boolean deleteRow(int row);
-
-    public boolean setValueAt(Object o, int row, int col);
-
-    public boolean isEditable();
+    public String processSQL(String sql) {
+        switch(type) {
+            case STATIC: return text;
+            case SED_LIKE_REG_EXP: return Utils.applySedRegularExpression(sql, text);
+        }
+        throw new IllegalStateException();
+    }
 
 }

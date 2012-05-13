@@ -37,6 +37,9 @@
 package org.jooq.debug.console.remote.messaging;
 
 
+/**
+ * @author Christopher Deckers
+ */
 public interface CommunicationInterfaceFactory {
 
     public CommunicationInterface createCommunicationInterface(int port);

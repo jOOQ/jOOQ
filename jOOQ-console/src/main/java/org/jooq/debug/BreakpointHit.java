@@ -37,69 +37,78 @@
 package org.jooq.debug;
 
 import java.io.Serializable;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 
 /**
  * @author Christopher Deckers
  */
-public interface StatementExecutionResultSetResult extends StatementExecutionResult {
+@SuppressWarnings("serial")
+public class BreakpointHit implements Serializable {
 
-    @SuppressWarnings("serial")
-    public static class TypeInfo implements Serializable {
-
-        private String columnName;
-        private int precision;
-        private int scale;
-        private int nullable = ResultSetMetaData.columnNullableUnknown;
-
-        TypeInfo(ResultSetMetaData metaData, int column) {
-            try {
-                columnName = metaData.getColumnTypeName(column + 1);
-                precision = metaData.getPrecision(column + 1);
-                scale = metaData.getScale(column + 1);
-                nullable = metaData.isNullable(column + 1);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append(columnName);
-            if(precision != 0) {
-                sb.append(" (" + precision + (scale != 0? ", " + scale: "") + ")");
-            }
-            if(nullable != ResultSetMetaData.columnNullableUnknown) {
-                sb.append(nullable == ResultSetMetaData.columnNoNulls? " not null": " null");
-            }
-            return sb.toString();
-        }
-
+    public static enum ExecutionType {
+        STEP_THROUGH,
+        RUN_OVER,
+        RUN,
     }
 
-    public String[] getColumnNames();
+    private boolean isBeforeExecution;
+    private Integer breakpointID;
+    private String sql;
+    private String parameterDescription;
+    private long threadID;
+    private String threadName;
+    private StackTraceElement[] callerStackTraceElements;
 
-    public TypeInfo[] getTypeInfos();
+    public BreakpointHit(int breakpointID, String sql, String parameterDescription, long threadID, String threadName, StackTraceElement[] callerStackTraceElements, boolean isBeforeExecution) {
+        this.isBeforeExecution = isBeforeExecution;
+        this.breakpointID = breakpointID;
+        this.sql = sql;
+        this.parameterDescription = parameterDescription;
+        this.threadID = threadID;
+        this.threadName = threadName;
+        this.callerStackTraceElements = callerStackTraceElements;
+    }
 
-    public Class<?>[] getColumnClasses();
+    public boolean isBeforeExecution() {
+        return isBeforeExecution;
+    }
 
     /**
-     * @return the data or an empty array of arrays if <code>rowCount</code> is over <code>retainParsedRSDataRowCountThreshold</code>.
+     * @return null if the breakpoint was processed and contains an execution type.
      */
-    public Object[][] getRowData();
+    public Integer getBreakpointID() {
+        return breakpointID;
+    }
 
-    public int getRowCount();
+    public String getSql() {
+        return sql;
+    }
 
-    public long getResultSetParsingDuration();
+    public String getParameterDescription() {
+        return parameterDescription;
+    }
 
-    public int getRetainParsedRSDataRowCountThreshold();
+    public long getThreadID() {
+        return threadID;
+    }
 
-    public boolean deleteRow(int row);
+    public String getThreadName() {
+        return threadName;
+    }
 
-    public boolean setValueAt(Object o, int row, int col);
+    public StackTraceElement[] getCallerStackTraceElements() {
+        return callerStackTraceElements;
+    }
 
-    public boolean isEditable();
+    private ExecutionType executionType = ExecutionType.RUN;
+
+    public void setExecutionType(ExecutionType executionType, String sql) {
+        this.breakpointID = null;
+        this.executionType = executionType;
+        this.sql = sql;
+    }
+
+    public ExecutionType getExecutionType() {
+        return executionType;
+    }
 
 }

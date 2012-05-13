@@ -36,9 +36,27 @@
  */
 package org.jooq.debug;
 
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.jooq.ExecuteContext;
+import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.SQLDialect;
+import org.jooq.Table;
 import org.jooq.debug.console.DatabaseDescriptor;
 
 
+/**
+ * @author Christopher Deckers
+ */
 public class LocalDebugger implements Debugger {
 
     private DatabaseDescriptor databaseDescriptor;
@@ -48,27 +66,133 @@ public class LocalDebugger implements Debugger {
     }
 
     private LoggingListener loggingListener;
+    private final Object LOGGING_LISTENER_LOCK = new Object();
 
     @Override
     public void setLoggingListener(LoggingListener loggingListener) {
-        this.loggingListener = loggingListener;
+        synchronized (LOGGING_LISTENER_LOCK) {
+            this.loggingListener = loggingListener;
+        }
     }
 
     @Override
     public LoggingListener getLoggingListener() {
-        return loggingListener;
+        synchronized (LOGGING_LISTENER_LOCK) {
+            return loggingListener;
+        }
     }
 
     private StatementMatcher[] loggingStatementMatchers;
+    private final Object LOGGING_STATEMENT_MATCHERS_LOCK = new Object();
 
     @Override
     public void setLoggingStatementMatchers(StatementMatcher[] loggingStatementMatchers) {
-        this.loggingStatementMatchers = loggingStatementMatchers;
+        synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
+            this.loggingStatementMatchers = loggingStatementMatchers;
+        }
     }
 
     @Override
     public StatementMatcher[] getLoggingStatementMatchers() {
-        return loggingStatementMatchers;
+        synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
+            return loggingStatementMatchers;
+        }
+    }
+
+    private Breakpoint[] breakpoints;
+    private final Object BREAKPOINT_LOCK = new Object();
+
+    @Override
+    public void setBreakpoints(Breakpoint[] breakpoints) {
+        if(breakpoints != null && breakpoints.length == 0) {
+            breakpoints = null;
+        }
+        synchronized (BREAKPOINT_LOCK) {
+            this.breakpoints = breakpoints;
+        }
+    }
+
+    @Override
+    public void addBreakpoint(Breakpoint breakpoint) {
+        synchronized (BREAKPOINT_LOCK) {
+            if(this.breakpoints == null) {
+                this.breakpoints = new Breakpoint[] {breakpoint};
+                return;
+            }
+            for(int i=0; i<breakpoints.length; i++) {
+                if(breakpoints[i].getID() == breakpoint.getID()) {
+                    breakpoints[i] = breakpoint;
+                    return;
+                }
+            }
+            Breakpoint[] newBreakpoints = new Breakpoint[breakpoints.length + 1];
+            System.arraycopy(breakpoints, 0, newBreakpoints, 0, breakpoints.length);
+            newBreakpoints[breakpoints.length] = breakpoint;
+            breakpoints = newBreakpoints;
+        }
+    }
+
+    @Override
+    public void modifyBreakpoint(Breakpoint breakpoint) {
+        synchronized (BREAKPOINT_LOCK) {
+            if(this.breakpoints == null) {
+                addBreakpoint(breakpoint);
+                return;
+            }
+            for(int i=0; i<breakpoints.length; i++) {
+                if(breakpoints[i].getID() == breakpoint.getID()) {
+                    breakpoints[i] = breakpoint;
+                    return;
+                }
+            }
+            addBreakpoint(breakpoint);
+        }
+    }
+
+    @Override
+    public void removeBreakpoint(Breakpoint breakpoint) {
+        synchronized (BREAKPOINT_LOCK) {
+            if(this.breakpoints == null) {
+                return;
+            }
+            for(int i=0; i<breakpoints.length; i++) {
+                if(breakpoints[i].getID() == breakpoint.getID()) {
+                    if(breakpoints.length == 1) {
+                        breakpoints = null;
+                    } else {
+                        Breakpoint[] newBreakpoints = new Breakpoint[breakpoints.length - 1];
+                        System.arraycopy(breakpoints, 0, newBreakpoints, 0, i);
+                        System.arraycopy(breakpoints, i + 1, newBreakpoints, i, newBreakpoints.length - i);
+                        breakpoints = newBreakpoints;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public Breakpoint[] getBreakpoints() {
+        synchronized (BREAKPOINT_LOCK) {
+            return breakpoints;
+        }
+    }
+
+    private BreakpointHitHandler breakpointHitHandler;
+    private final Object BREAKPOINT_HIT_HANDLER_LOCK = new Object();
+
+    @Override
+    public void setBreakpointHitHandler(BreakpointHitHandler breakpointHitHandler) {
+        synchronized (BREAKPOINT_HIT_HANDLER_LOCK) {
+            this.breakpointHitHandler = breakpointHitHandler;
+        }
+    }
+
+    @Override
+    public BreakpointHitHandler getBreakpointHitHandler() {
+        synchronized (BREAKPOINT_HIT_HANDLER_LOCK) {
+            return breakpointHitHandler;
+        }
     }
 
     @Override
@@ -77,8 +201,148 @@ public class LocalDebugger implements Debugger {
     }
 
     @Override
-    public StatementExecutor createStatementExecutor() {
-        return new LocalStatementExecutor(databaseDescriptor);
+    public LocalStatementExecutor createStatementExecutor() {
+        return new LocalStatementExecutor(new StatementExecutorContext() {
+            @Override
+            public boolean isReadOnly() {
+                return databaseDescriptor.isReadOnly();
+            }
+            @Override
+            public Connection getConnection() {
+                return databaseDescriptor.createConnection();
+            }
+            @Override
+            public void releaseConnection(Connection connection) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                }
+            }
+            @Override
+            public SQLDialect getSQLDialect() {
+                return databaseDescriptor.getSQLDialect();
+            }
+            @Override
+            public String[] getTableNames() {
+                return LocalDebugger.this.getTableNames();
+            }
+            @Override
+            public String[] getTableColumnNames() {
+                return LocalDebugger.this.getTableColumnNames();
+            }
+        });
+    }
+
+    private String[] getTableNames() {
+        if(databaseDescriptor == null) {
+            return new String[0];
+        }
+        List<Table<?>> tableList = databaseDescriptor.getSchema().getTables();
+        List<String> tableNameList = new ArrayList<String>();
+        for(Table<? extends Record> table: tableList) {
+            String tableName = table.getName();
+            tableNameList.add(tableName);
+        }
+        Collections.sort(tableNameList, String.CASE_INSENSITIVE_ORDER);
+        return tableNameList.toArray(new String[0]);
+    }
+
+    private String[] getTableColumnNames() {
+        if(databaseDescriptor == null) {
+            return new String[0];
+        }
+        Set<String> columnNameSet = new HashSet<String>();
+        for(Table<?> table: databaseDescriptor.getSchema().getTables()) {
+            for(Field<?> field: table.getFields()) {
+                String columnName = field.getName();
+                columnNameSet.add(columnName);
+            }
+        }
+        String[] columnNames = columnNameSet.toArray(new String[0]);
+        Arrays.sort(columnNames, String.CASE_INSENSITIVE_ORDER);
+        return columnNames;
+    }
+
+    private Map<Long, ExecuteContext> threadIDToExecuteContextMap = new HashMap<Long, ExecuteContext>();
+
+    @Override
+    public void processBreakpointBeforeExecutionHit(ExecuteContext ctx, BreakpointHit breakpointHit) {
+        BreakpointHitHandler handler = getBreakpointHitHandler();
+        if(handler == null) {
+            return;
+        }
+        long threadID = breakpointHit.getThreadID();
+        synchronized (threadIDToExecuteContextMap) {
+            threadIDToExecuteContextMap.put(threadID, ctx);
+        }
+        try {
+            handler.processBreakpointBeforeExecutionHit(breakpointHit);
+        } finally {
+            synchronized (threadIDToExecuteContextMap) {
+                threadIDToExecuteContextMap.remove(threadID);
+            }
+            performThreadDataCleanup(threadID);
+        }
+    }
+
+    protected void performThreadDataCleanup(long threadID) {
+    }
+
+    @Override
+    public void processBreakpointAfterExecutionHit(ExecuteContext ctx, BreakpointHit breakpointHit) {
+        BreakpointHitHandler handler = getBreakpointHitHandler();
+        if(handler == null) {
+            return;
+        }
+        long threadID = breakpointHit.getThreadID();
+        synchronized (threadIDToExecuteContextMap) {
+            threadIDToExecuteContextMap.put(threadID, ctx);
+        }
+        try {
+            handler.processBreakpointAfterExecutionHit(breakpointHit);
+        } finally {
+            synchronized (threadIDToExecuteContextMap) {
+                threadIDToExecuteContextMap.remove(threadID);
+            }
+            performThreadDataCleanup(threadID);
+        }
+    }
+
+    @Override
+    public LocalStatementExecutor createBreakpointHitStatementExecutor(long threadID) {
+        final ExecuteContext ctx;
+        synchronized (threadIDToExecuteContextMap) {
+            ctx = threadIDToExecuteContextMap.get(threadID);
+            if(ctx == null) {
+                return null;
+            }
+        }
+        return new LocalStatementExecutor(new StatementExecutorContext() {
+            @Override
+            public boolean isReadOnly() {
+                return false;
+            }
+            @Override
+            public Connection getConnection() {
+                return ctx.getConnection();
+            }
+            @Override
+            public void releaseConnection(Connection connection) {
+                // We don't want to alter the connection.
+            }
+            @Override
+            public SQLDialect getSQLDialect() {
+                return ctx.getDialect();
+            }
+            @Override
+            public String[] getTableNames() {
+                return LocalDebugger.this.getTableNames();
+            }
+            @Override
+            public String[] getTableColumnNames() {
+                return LocalDebugger.this.getTableColumnNames();
+            }
+        });
     }
 
 }

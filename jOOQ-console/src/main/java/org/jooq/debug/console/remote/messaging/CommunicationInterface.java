@@ -42,7 +42,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * The native interface, which establishes the link between a peer VM and this local side.
+ * The communication interface, which establishes the link between a peer VM and this local side.
  * @author Christopher Deckers
  */
 public class CommunicationInterface {

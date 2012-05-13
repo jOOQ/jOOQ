@@ -58,6 +58,9 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
 
+/**
+ * @author Christopher Deckers
+ */
 abstract class UsageTrackingResultSet implements ResultSet {
 
     private ResultSet resultSet;

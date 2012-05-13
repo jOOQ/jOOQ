@@ -36,9 +36,14 @@
  */
 package org.jooq.debug;
 
+import java.io.Serializable;
 
 
-public class StatementExecution {
+/**
+ * @author Christopher Deckers
+ */
+@SuppressWarnings("serial")
+public class StatementExecution implements Serializable {
 
     private long executionDuration;
 

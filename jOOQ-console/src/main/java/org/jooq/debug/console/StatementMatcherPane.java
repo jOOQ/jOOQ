@@ -59,6 +59,9 @@ import org.jooq.debug.SqlQueryType;
 import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.misc.TextMatcher;
 
+/**
+ * @author Christopher Deckers
+ */
 @SuppressWarnings("serial")
 public class StatementMatcherPane extends JPanel {
 
@@ -114,7 +117,7 @@ public class StatementMatcherPane extends JPanel {
         });
         add(statementTextMatcherCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         statementTextMatcherPane = new TextMatcherPane(statementTextMatcher);
-        add(statementTextMatcherPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
+        add(statementTextMatcherPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
         y++;
         Set<SqlQueryType> queryTypeSet = statementMatcher.getQueryTypeSet();
         statementTypeCheckBox = new JCheckBox("Type", queryTypeSet != null);

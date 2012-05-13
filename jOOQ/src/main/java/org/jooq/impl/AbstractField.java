@@ -342,6 +342,26 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition likeIgnoreCase(String value) {
+        return likeIgnoreCase(val(value, String.class));
+    }
+
+    @Override
+    public final Condition likeIgnoreCase(String value, char escape) {
+        return likeIgnoreCase(val(value, String.class), escape);
+    }
+
+    @Override
+    public final Condition likeIgnoreCase(Field<String> value) {
+        return new CompareCondition(this, nullSafe(value), Comparator.LIKE_IGNORE_CASE);
+    }
+
+    @Override
+    public final Condition likeIgnoreCase(Field<String> value, char escape) {
+        return new CompareCondition(this, nullSafe(value), Comparator.LIKE_IGNORE_CASE, escape);
+    }
+
+    @Override
     public final Condition notLike(String value) {
         return notLike(val(value, String.class));
     }
@@ -359,6 +379,26 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition notLike(Field<String> value, char escape) {
         return new CompareCondition(this, nullSafe(value), Comparator.NOT_LIKE, escape);
+    }
+
+    @Override
+    public final Condition notLikeIgnoreCase(String value) {
+        return notLikeIgnoreCase(val(value, String.class));
+    }
+
+    @Override
+    public final Condition notLikeIgnoreCase(String value, char escape) {
+        return notLikeIgnoreCase(val(value, String.class), escape);
+    }
+
+    @Override
+    public final Condition notLikeIgnoreCase(Field<String> value) {
+        return new CompareCondition(this, nullSafe(value), Comparator.NOT_LIKE_IGNORE_CASE);
+    }
+
+    @Override
+    public final Condition notLikeIgnoreCase(Field<String> value, char escape) {
+        return new CompareCondition(this, nullSafe(value), Comparator.NOT_LIKE_IGNORE_CASE, escape);
     }
 
     @Override

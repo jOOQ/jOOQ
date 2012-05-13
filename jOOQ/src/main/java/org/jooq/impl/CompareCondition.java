@@ -39,8 +39,10 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.LIKE;
+import static org.jooq.Comparator.LIKE_IGNORE_CASE;
 import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.Comparator.NOT_LIKE;
+import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
@@ -97,22 +99,34 @@ class CompareCondition extends AbstractCondition {
     public final void toSQL(RenderContext context) {
         SQLDialect dialect = context.getDialect();
         Field<?> lhs = field1;
+        Field<?> rhs = field2;
+        Comparator op = comparator;
 
         // [#1159] Some dialects cannot auto-convert the LHS operand to a
         // VARCHAR when applying a LIKE predicate
         // [#293] TODO: This could apply to other operators, too
-        if ((comparator == LIKE || comparator == NOT_LIKE)
+        if ((op == LIKE || op == NOT_LIKE)
                 && field1.getType() != String.class
                 && asList(ASE, DERBY, POSTGRES).contains(dialect)) {
 
             lhs = lhs.cast(String.class);
         }
 
+        // [#1423] Only Postgres knows a true ILIKE operator. Other dialects
+        // need to simulate this as LOWER(lhs) LIKE LOWER(rhs)
+        else if ((op == LIKE_IGNORE_CASE || op == NOT_LIKE_IGNORE_CASE)
+                && POSTGRES != dialect) {
+
+            lhs = lhs.lower();
+            rhs = rhs.lower();
+            op = (op == LIKE_IGNORE_CASE ? LIKE : NOT_LIKE);
+        }
+
         context.sql(lhs)
                .sql(" ");
 
-        if (field2.isNullLiteral()) {
-            switch (comparator) {
+        if (rhs.isNullLiteral()) {
+            switch (op) {
                 case EQUALS:
                     context.keyword("is null");
                     return;
@@ -126,12 +140,12 @@ class CompareCondition extends AbstractCondition {
         // [#1131] Some weird DB2 issue stops "LIKE" from working with a
         // concatenated search expression, if the expression is more than 4000
         // characters long
-        boolean castRhs = (dialect == DB2 && field2 instanceof Concat);
+        boolean castRhs = (dialect == DB2 && rhs instanceof Concat);
 
-        context.keyword(comparator.toSQL())
+        context.keyword(op.toSQL())
                .sql(" ")
                .keyword(castRhs ? "cast(" : "")
-               .sql(field2)
+               .sql(rhs)
                .keyword(castRhs ? " as varchar(4000))" : "");
 
         if (escape != null) {

@@ -427,7 +427,7 @@ public abstract class jOOQAbstractTest<
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     Debugger debugger = new ClientDebugger("127.0.0.1", DEBUGGER_PORT);
-                    Console console = new Console(debugger, true);
+                    Console console = new Console(debugger, true, true);
                     console.setLoggingActive(true);
                     console.setVisible(true);
                 }

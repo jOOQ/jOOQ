@@ -49,6 +49,9 @@ import org.jooq.debug.console.misc.TextMatcher;
 import org.jooq.debug.console.misc.TextMatcher.TextMatchingType;
 
 
+/**
+ * @author Christopher Deckers
+ */
 @SuppressWarnings("serial")
 public class TextMatcherPane extends JPanel {
 
@@ -57,12 +60,14 @@ public class TextMatcherPane extends JPanel {
     private JCheckBox caseSensitiveCheckBox;
 
     public TextMatcherPane(TextMatcher textMatcher) {
-        setLayout(new GridBagLayout());
+        super(new GridBagLayout());
+        setOpaque(false);
         matcherTypeComboBox = new JComboBox(TextMatchingType.values());
         add(matcherTypeComboBox, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         textField = new JTextField(14);
-        add(textField, new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
+        add(textField, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 0, 0), 0, 0));
         caseSensitiveCheckBox = new JCheckBox("Case sensitive");
+        caseSensitiveCheckBox.setOpaque(false);
         add(caseSensitiveCheckBox, new GridBagConstraints(2, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
         if(textMatcher != null) {
             matcherTypeComboBox.setSelectedItem(textMatcher.getType());

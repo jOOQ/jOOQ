@@ -37,6 +37,9 @@
 package org.jooq.debug;
 
 
+/**
+ * @author Christopher Deckers
+ */
 public interface StatementExecutor {
 
     public StatementExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold);

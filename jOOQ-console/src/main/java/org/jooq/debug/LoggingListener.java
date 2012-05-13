@@ -37,6 +37,9 @@
 package org.jooq.debug;
 
 
+/**
+ * @author Christopher Deckers
+ */
 public interface LoggingListener {
 
     public void logQueries(QueryLoggingData queryLoggingData);

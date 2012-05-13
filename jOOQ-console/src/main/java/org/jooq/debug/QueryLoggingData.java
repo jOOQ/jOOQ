@@ -39,7 +39,6 @@ package org.jooq.debug;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-
 /**
  * @author Christopher Deckers
  */
@@ -57,7 +56,7 @@ public class QueryLoggingData extends StatementInfo {
     public QueryLoggingData(SqlQueryType queryType, String[] queries, String parameterDescription, Long preparationDuration, Long bindingDuration, long executionDuration) {
         super(queryType, queries, parameterDescription);
         this.id = nextID.getAndIncrement();
-        this.callerStackTraceElements = new Exception().getStackTrace();
+        this.callerStackTraceElements = Thread.currentThread().getStackTrace();
         this.preparationDuration = preparationDuration;
         this.bindingDuration = bindingDuration;
         this.executionDuration = executionDuration;

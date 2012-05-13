@@ -42,6 +42,9 @@ import java.util.Set;
 
 import org.jooq.debug.console.misc.TextMatcher;
 
+/**
+ * @author Christopher Deckers
+ */
 @SuppressWarnings("serial")
 public class StatementMatcher implements Serializable {
 

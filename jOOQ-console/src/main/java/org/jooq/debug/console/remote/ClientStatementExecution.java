@@ -36,23 +36,31 @@
  */
 package org.jooq.debug.console.remote;
 
-import org.jooq.debug.Debugger;
-import org.jooq.debug.console.remote.messaging.CommunicationInterface;
+import org.jooq.debug.LocalStatementExecutionResultSetResult;
+import org.jooq.debug.StatementExecution;
+import org.jooq.debug.StatementExecutionResult;
 
 /**
  * @author Christopher Deckers
  */
-class DebuggerCommmunicationInterface extends CommunicationInterface {
+@SuppressWarnings("serial")
+class ClientStatementExecution extends StatementExecution {
 
-    private Debugger debugger;
-
-    public DebuggerCommmunicationInterface(Debugger debugger, int port) {
-        super(port);
-        this.debugger = debugger;
+    public ClientStatementExecution(StatementExecution statementExecution) {
+        super(statementExecution.getExecutionDuration(), convertResults(statementExecution));
     }
 
-    public Debugger getDebugger() {
-        return debugger;
+    private static StatementExecutionResult[] convertResults(StatementExecution statementExecution) {
+        StatementExecutionResult[] results = statementExecution.getResults();
+        StatementExecutionResult[] clientResults = new StatementExecutionResult[results.length];
+        // TODO: improve? For now, basic implementation: ALL data to be sent in a message.
+        for(int i=0; i<results.length; i++) {
+            clientResults[i] = results[i];
+            if(clientResults[i] instanceof LocalStatementExecutionResultSetResult) {
+                clientResults[i] = new ClientStatementExecutionResultSetResult((LocalStatementExecutionResultSetResult)clientResults[i]);
+            }
+        }
+        return clientResults;
     }
 
 }

@@ -38,6 +38,9 @@ package org.jooq.debug.console.remote;
 
 import org.jooq.debug.console.remote.messaging.CommandMessage;
 
+/**
+ * @author Christopher Deckers
+ */
 @SuppressWarnings("serial")
 abstract class ClientDebuggerCommandMessage extends CommandMessage {
 

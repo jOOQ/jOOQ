@@ -73,6 +73,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
 import javax.xml.bind.JAXB;
 
 import org.jooq.AggregateFunction;
@@ -175,6 +176,7 @@ public class Factory implements FactoryOperations {
     private static final Factory[]       DEFAULT_INSTANCES = new Factory[SQLDialect.values().length];
 
     private transient Connection         connection;
+    private transient DataSource         datasource;
     private final SQLDialect             dialect;
 
     @SuppressWarnings("deprecation")
@@ -187,31 +189,42 @@ public class Factory implements FactoryOperations {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a factory with a connection and a dialect configured
+     * Create a factory with a connection and a dialect configured.
      *
      * @param connection The connection to use with objects created from this
      *            factory
      * @param dialect The dialect to use with objects created from this factory
      */
     public Factory(Connection connection, SQLDialect dialect) {
-        this(connection, dialect, null, null, null);
+        this(null, connection, dialect, null, null, null);
     }
 
     /**
-     * Create a factory with a dialect configured
+     * Create a factory with a data source and a dialect configured.
+     *
+     * @param datasource The data source to use with objects created from this
+     *            factory
+     * @param dialect The dialect to use with objects created from this factory
+     */
+    public Factory(DataSource datasource, SQLDialect dialect) {
+        this(datasource, null, dialect, null, null, null);
+    }
+
+    /**
+     * Create a factory with a dialect configured.
      * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
+     * Without a connection or data source, this factory cannot execute queries.
+     * Use it to render SQL only.
      *
      * @param dialect The dialect to use with objects created from this factory
      */
     public Factory(SQLDialect dialect) {
-        this(null, dialect, null, null, null);
+        this(null, null, dialect, null, null, null);
     }
 
     /**
      * Create a factory with a connection, a dialect and a schema mapping
-     * configured
+     * configured.
      *
      * @param connection The connection to use with objects created from this
      *            factory
@@ -223,11 +236,11 @@ public class Factory implements FactoryOperations {
      */
     @Deprecated
     public Factory(Connection connection, SQLDialect dialect, org.jooq.SchemaMapping mapping) {
-        this(connection, dialect, null, null, null);
+        this(null, connection, dialect, null, null, null);
     }
 
     /**
-     * Create a factory with a connection, a dialect and settings configured
+     * Create a factory with a connection, a dialect and settings configured.
      *
      * @param connection The connection to use with objects created from this
      *            factory
@@ -237,14 +250,28 @@ public class Factory implements FactoryOperations {
      */
     @SuppressWarnings("deprecation")
     public Factory(Connection connection, SQLDialect dialect, Settings settings) {
-        this(connection, dialect, settings, new org.jooq.SchemaMapping(settings), null);
+        this(null, connection, dialect, settings, new org.jooq.SchemaMapping(settings), null);
+    }
+
+    /**
+     * Create a factory with a data source, a dialect and settings configured.
+     *
+     * @param datasource The data source to use with objects created from this
+     *            factory
+     * @param dialect The dialect to use with objects created from this factory
+     * @param settings The runtime settings to apply to objects created from
+     *            this factory
+     */
+    @SuppressWarnings("deprecation")
+    public Factory(DataSource datasource, SQLDialect dialect, Settings settings) {
+        this(datasource, null, dialect, settings, new org.jooq.SchemaMapping(settings), null);
     }
 
     /**
      * Create a factory with a dialect and settings configured
      * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
+     * Without a connection or data source, this factory cannot execute queries.
+     * Use it to render SQL only.
      *
      * @param dialect The dialect to use with objects created from this factory
      * @param settings The runtime settings to apply to objects created from
@@ -252,15 +279,16 @@ public class Factory implements FactoryOperations {
      */
     @SuppressWarnings("deprecation")
     public Factory(SQLDialect dialect, Settings settings) {
-        this(null, dialect, settings, new org.jooq.SchemaMapping(settings), null);
+        this(null, null, dialect, settings, new org.jooq.SchemaMapping(settings), null);
     }
 
     /**
      * Do the instanciation
      */
     @SuppressWarnings("deprecation")
-    private Factory(Connection connection, SQLDialect dialect, Settings settings, org.jooq.SchemaMapping mapping, Map<String, Object> data) {
+    private Factory(DataSource datasource, Connection connection, SQLDialect dialect, Settings settings, org.jooq.SchemaMapping mapping, Map<String, Object> data) {
         this.connection = connection;
+        this.datasource = datasource;
         this.dialect = dialect;
         this.settings = settings != null ? settings : SettingsTools.defaultSettings();
         this.mapping = mapping != null ? mapping : new org.jooq.SchemaMapping(this.settings);
@@ -283,15 +311,47 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    public final DataSource getDataSource() {
+        return datasource;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setDataSource(DataSource datasource) {
+        this.datasource = datasource;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final Connection getConnection() {
-        if (connection == null) {
+
+        // SQL-builder only Factory
+        if (connection == null && datasource == null) {
             return null;
         }
+
+        // [#1424] DataSource-enabled Factory with no Connection yet
+        else if (connection == null && datasource != null) {
+            return new DataSourceConnection(datasource, null, settings);
+        }
+
+        // Factory clone
+        else if (connection.getClass() == DataSourceConnection.class) {
+            return connection;
+        }
+
+        // Factory clone
         else if (connection.getClass() == ConnectionProxy.class) {
             return connection;
         }
+
+        // [#1424] Connection-based Factory
         else {
-            return new ConnectionProxy(connection, settings);
+            return new DataSourceConnection(null, new ConnectionProxy(connection, settings), settings);
         }
     }
 
@@ -5642,7 +5702,7 @@ public class Factory implements FactoryOperations {
 
     static {
         for (SQLDialect dialect : SQLDialect.values()) {
-            Factory.DEFAULT_INSTANCES[dialect.ordinal()] = new Factory(null, dialect);
+            Factory.DEFAULT_INSTANCES[dialect.ordinal()] = new Factory(dialect);
         }
     }
 
@@ -5670,6 +5730,7 @@ public class Factory implements FactoryOperations {
         }
         else {
             return new Factory(
+                configuration.getDataSource(),
                 configuration.getConnection(),
                 configuration.getDialect(),
                 configuration.getSettings(),

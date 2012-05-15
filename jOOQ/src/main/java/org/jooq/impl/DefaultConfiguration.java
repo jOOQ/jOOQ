@@ -39,6 +39,8 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
@@ -62,6 +64,14 @@ final class DefaultConfiguration implements Configuration {
     public final SQLDialect getDialect() {
         return SQLDialect.SQL99;
     }
+
+    @Override
+    public final DataSource getDataSource() {
+        return null;
+    }
+
+    @Override
+    public void setDataSource(DataSource datasource) {}
 
     @Override
     public final Connection getConnection() {

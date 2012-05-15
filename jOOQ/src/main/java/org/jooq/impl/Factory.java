@@ -941,7 +941,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a qualified field, given its field name
+     * Create a qualified field, given its (qualified) field name.
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
      * will render the field name according to your
@@ -967,7 +967,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a qualified field, given its field name
+     * Create a qualified field, given its (qualified) field name.
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
      * will render the field name according to your
@@ -994,7 +994,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a qualified field, given its field name
+     * Create a qualified field, given its (qualified) field name.
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
      * will render the field name according to your

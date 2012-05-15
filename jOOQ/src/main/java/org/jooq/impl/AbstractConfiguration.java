@@ -38,6 +38,8 @@ package org.jooq.impl;
 import java.sql.Connection;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
@@ -64,6 +66,16 @@ abstract class AbstractConfiguration implements Configuration {
     @Override
     public final SQLDialect getDialect() {
         return configuration.getDialect();
+    }
+
+    @Override
+    public final DataSource getDataSource() {
+        return configuration.getDataSource();
+    }
+
+    @Override
+    public final void setDataSource(DataSource datasource) {
+        configuration.setDataSource(datasource);
     }
 
     @Override

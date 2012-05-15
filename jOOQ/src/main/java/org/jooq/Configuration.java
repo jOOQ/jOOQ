@@ -39,6 +39,8 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.jooq.conf.Settings;
 
 /**
@@ -52,6 +54,16 @@ public interface Configuration extends Serializable {
      * Retrieve the configured dialect
      */
     SQLDialect getDialect();
+
+    /**
+     * Retrieve the configured data source
+     */
+    DataSource getDataSource();
+
+    /**
+     * Set the configured data source
+     */
+    void setDataSource(DataSource datasource);
 
     /**
      * Retrieve the configured connection

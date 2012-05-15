@@ -587,6 +587,10 @@ final class Util {
 
                 // If the connection is wrapped by jOOQ, extract the underlying
                 // connection
+                if (connection.getClass() == DataSourceConnection.class) {
+                    connection = ((DataSourceConnection) connection).getDelegate();
+                }
+
                 if (connection.getClass() == ConnectionProxy.class) {
                     connection = ((ConnectionProxy) connection).getDelegate();
                 }

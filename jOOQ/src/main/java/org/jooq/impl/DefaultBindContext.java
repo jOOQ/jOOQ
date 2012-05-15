@@ -40,7 +40,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.util.postgres.PGIntervalConverter.toPGInterval;
+import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

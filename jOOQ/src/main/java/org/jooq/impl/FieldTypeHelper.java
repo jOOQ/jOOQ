@@ -192,19 +192,19 @@ public final class FieldTypeHelper {
         }
         else if (type == UByte.class) {
             String string = stream.readString();
-            return (T) (string == null ? null : new UByte(string));
+            return (T) (string == null ? null : UByte.valueOf(string));
         }
         else if (type == UShort.class) {
             String string = stream.readString();
-            return (T) (string == null ? null : new UShort(string));
+            return (T) (string == null ? null : UShort.valueOf(string));
         }
         else if (type == UInteger.class) {
             String string = stream.readString();
-            return (T) (string == null ? null : new UInteger(string));
+            return (T) (string == null ? null : UInteger.valueOf(string));
         }
         else if (type == ULong.class) {
             String string = stream.readString();
-            return (T) (string == null ? null : new ULong(string));
+            return (T) (string == null ? null : ULong.valueOf(string));
         }
 
         // The type byte[] is handled earlier. byte[][] can be handled here
@@ -472,19 +472,19 @@ public final class FieldTypeHelper {
         }
         else if (type == UByte.class) {
             String string = rs.getString(index);
-            return (T) (string == null ? null : new UByte(string));
+            return (T) (string == null ? null : UByte.valueOf(string));
         }
         else if (type == UShort.class) {
             String string = rs.getString(index);
-            return (T) (string == null ? null : new UShort(string));
+            return (T) (string == null ? null : UShort.valueOf(string));
         }
         else if (type == UInteger.class) {
             String string = rs.getString(index);
-            return (T) (string == null ? null : new UInteger(string));
+            return (T) (string == null ? null : UInteger.valueOf(string));
         }
         else if (type == ULong.class) {
             String string = rs.getString(index);
-            return (T) (string == null ? null : new ULong(string));
+            return (T) (string == null ? null : ULong.valueOf(string));
         }
 
         // The type byte[] is handled earlier. byte[][] can be handled here
@@ -800,19 +800,19 @@ public final class FieldTypeHelper {
         }
         else if (type == UByte.class) {
             String string = stmt.getString(index);
-            return (T) (string == null ? null : new UByte(string));
+            return (T) (string == null ? null : UByte.valueOf(string));
         }
         else if (type == UShort.class) {
             String string = stmt.getString(index);
-            return (T) (string == null ? null : new UShort(string));
+            return (T) (string == null ? null : UShort.valueOf(string));
         }
         else if (type == UInteger.class) {
             String string = stmt.getString(index);
-            return (T) (string == null ? null : new UInteger(string));
+            return (T) (string == null ? null : UInteger.valueOf(string));
         }
         else if (type == ULong.class) {
             String string = stmt.getString(index);
-            return (T) (string == null ? null : new ULong(string));
+            return (T) (string == null ? null : ULong.valueOf(string));
         }
 
         // The type byte[] is handled earlier. byte[][] can be handled here
@@ -1033,16 +1033,16 @@ public final class FieldTypeHelper {
             return (T) new Timestamp(pgParseDate(string, f).getTime());
         }
         else if (type == UByte.class) {
-            return (T) new UByte(string);
+            return (T) UByte.valueOf(string);
         }
         else if (type == UShort.class) {
-            return (T) new UShort(string);
+            return (T) UShort.valueOf(string);
         }
         else if (type == UInteger.class) {
-            return (T) new UInteger(string);
+            return (T) UInteger.valueOf(string);
         }
         else if (type == ULong.class) {
-            return (T) new ULong(string);
+            return (T) ULong.valueOf(string);
         }
         else if (type.isArray()) {
             return (T) pgNewArray(type, string);

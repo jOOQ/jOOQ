@@ -45,9 +45,50 @@
 			<name>Sander Plas</name>
 			<email>sander.plas@gmail.com</email>
 		</developer>
+        <developer>
+            <name>Sergey Epik</name>
+            <email>sergey.epik@gmail.com</email>
+        </developer>
 	</developers>
 
 	<dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>3.0.6.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>3.0.6.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>3.0.6.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>3.0.6.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2.2</version>
+            <scope>test</scope>
+        </dependency>
+
 		<dependency>
 			<groupId>org.jooq</groupId>
 			<artifactId>jooq</artifactId>
@@ -62,6 +103,14 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.2.6</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -108,6 +157,38 @@
 				<artifactId>jooq-codegen-maven</artifactId>
 				<version>2.4.0-SNAPSHOT</version>
 				<executions>
+					<execution>
+						<id>exec0</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<jdbc>
+								<driver>org.hsqldb.jdbcDriver</driver>
+								<url>jdbc:hsqldb:hsql://localhost</url>
+                                <user>sa</user>
+                                <password/>
+							</jdbc>
+							<generator>
+                                <name>org.jooq.util.DefaultGenerator</name>
+                                <database>
+                                    <name>org.jooq.util.hsqldb.HSQLDBDatabase</name>
+                                    <includes>.*</includes>
+                                    <excludes/>
+                                    <inputSchema>PUBLIC</inputSchema>
+                                </database>
+                                <generate>
+                                    <relations>true</relations>
+                                    <deprecated>false</deprecated>
+                                </generate>
+                                <target>
+									<packageName>org.jooq.util.maven.example.hsqldb</packageName>
+									<directory>target/generated-sources/jooq-hsqldb</directory>
+								</target>
+                            </generator>
+						</configuration>
+					</execution>
+
 					<execution>
 						<id>exec1</id>
 						<goals>
@@ -284,6 +365,11 @@
 					</execution>
 				</executions>
 				<dependencies>
+			        <dependency>
+			            <groupId>org.hsqldb</groupId>
+			            <artifactId>hsqldb</artifactId>
+			            <version>2.2.6</version>
+			        </dependency>
 					<dependency>
 				  		<groupId>net.sourceforge.jtds</groupId>
 				  		<artifactId>jtds</artifactId>

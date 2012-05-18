@@ -77,6 +77,8 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.AbstractKeys;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.ArrayRecordImpl;
+import org.jooq.impl.DAOImpl;
+import org.jooq.impl.Factory;
 import org.jooq.impl.FieldTypeHelper;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
@@ -114,8 +116,9 @@ public class DefaultGenerator implements Generator {
     private boolean                  generateNavigationMethods     = true;
     private boolean                  generateInstanceFields        = true;
     private boolean                  generateGeneratedAnnotation   = true;
-    private boolean                  generatePojos                 = false;
     private boolean                  generateRecords               = true;
+    private boolean                  generatePojos                 = false;
+    private boolean                  generateDaos                  = false;
     private boolean                  generateJPAAnnotations        = false;
     private boolean                  generateValidationAnnotations = false;
 
@@ -182,6 +185,16 @@ public class DefaultGenerator implements Generator {
     }
 
     @Override
+    public boolean generateRecords() {
+        return generateRecords;
+    }
+
+    @Override
+    public void setGenerateRecords(boolean generateRecords) {
+        this.generateRecords = generateRecords;
+    }
+
+    @Override
     public boolean generatePojos() {
         return generatePojos;
     }
@@ -192,13 +205,13 @@ public class DefaultGenerator implements Generator {
     }
 
     @Override
-    public boolean generateRecords() {
-        return generateRecords;
+    public boolean generateDaos() {
+        return generateDaos;
     }
 
     @Override
-    public void setGenerateRecords(boolean generateRecords) {
-        this.generateRecords = generateRecords;
+    public void setGenerateDaos(boolean generateDaos) {
+        this.generateDaos = generateDaos;
     }
 
     @Override
@@ -246,47 +259,48 @@ public class DefaultGenerator implements Generator {
     // ----
 
     @Override
-	public void generate(Database database) throws IOException {
+    public void generate(Database database) throws IOException {
         StopWatch watch = new StopWatch();
 
         log.info("Database parameters");
-	    log.info("----------------------------------------------------------");
-	    log.info("  dialect", database.getDialect());
-	    log.info("  target dir", getTargetDirectory());
-	    log.info("  target package", getTargetPackage());
-	    log.info("----------------------------------------------------------");
-	    log.info("");
-	    log.info("Generation parameters");
-	    log.info("----------------------------------------------------------");
-	    log.info("  strategy", strategy.delegate.getClass());
-	    log.info("  deprecated", generateDeprecated());
-	    log.info("  generated annotation", generateGeneratedAnnotation());
-	    log.info("  instance fields", generateInstanceFields());
-	    log.info("  JPA annotations", generateJPAAnnotations());
-	    log.info("  validation annotations", generateValidationAnnotations());
-	    log.info("  navigation methods", generateNavigationMethods());
-	    log.info("  records", generateRecords());
-	    log.info("  pojos", generatePojos());
-	    log.info("  relations", generateRelations());
+        log.info("----------------------------------------------------------");
+        log.info("  dialect", database.getDialect());
+        log.info("  target dir", getTargetDirectory());
+        log.info("  target package", getTargetPackage());
+        log.info("----------------------------------------------------------");
+        log.info("");
+        log.info("Generation parameters");
+        log.info("----------------------------------------------------------");
+        log.info("  strategy", strategy.delegate.getClass());
+        log.info("  deprecated", generateDeprecated());
+        log.info("  generated annotation", generateGeneratedAnnotation());
+        log.info("  instance fields", generateInstanceFields());
+        log.info("  JPA annotations", generateJPAAnnotations());
+        log.info("  validation annotations", generateValidationAnnotations());
+        log.info("  navigation methods", generateNavigationMethods());
+        log.info("  records", generateRecords());
+        log.info("  pojos", generatePojos());
+        log.info("  daos", generateDaos());
+        log.info("  relations", generateRelations());
 
-	    log.info("----------------------------------------------------------");
+        log.info("----------------------------------------------------------");
 
-		String targetPackage = getTargetPackage();
+        String targetPackage = getTargetPackage();
         File targetPackageDir = new File(getTargetDirectory() + File.separator + targetPackage.replace('.', File.separatorChar));
 
-		// ----------------------------------------------------------------------
-		// XXX Initialising
-		// ----------------------------------------------------------------------
-		log.info("Emptying", targetPackageDir.getCanonicalPath());
-		empty(targetPackageDir);
+        // ----------------------------------------------------------------------
+        // XXX Initialising
+        // ----------------------------------------------------------------------
+        log.info("Emptying", targetPackageDir.getCanonicalPath());
+        empty(targetPackageDir);
 
         // ----------------------------------------------------------------------
         // XXX Generating schemas
         // ----------------------------------------------------------------------
-		log.info("Generating schemata", "Total: " + database.getSchemata().size());
-		for (SchemaDefinition schema : database.getSchemata()) {
-		    generate(database, schema, watch);
-		}
+        log.info("Generating schemata", "Total: " + database.getSchemata().size());
+        for (SchemaDefinition schema : database.getSchemata()) {
+            generate(database, schema, watch);
+        }
     }
 
     private void generate(
@@ -296,42 +310,42 @@ public class DefaultGenerator implements Generator {
 
         File targetSchemaDir = strategy.getFile(schema).getParentFile();
 
-		GenerationWriter outS = null;
-		GenerationWriter outF = null;
+        GenerationWriter outS = null;
+        GenerationWriter outF = null;
 
-		if (!schema.isDefaultSchema()) {
+        if (!schema.isDefaultSchema()) {
 
-			// Generating the schema
-			// -----------------------------------------------------------------
-			log.info("Generating schema", strategy.getFileName(schema));
-			log.info("----------------------------------------------------------");
+            // Generating the schema
+            // -----------------------------------------------------------------
+            log.info("Generating schema", strategy.getFileName(schema));
+            log.info("----------------------------------------------------------");
 
-			outS = new GenerationWriter(strategy.getFile(schema));
-			printHeader(outS, schema);
-			printClassJavadoc(outS, schema);
+            outS = new GenerationWriter(strategy.getFile(schema));
+            printHeader(outS, schema);
+            printClassJavadoc(outS, schema);
 
-			outS.print("public class ");
-			outS.print(strategy.getJavaClassName(schema));
-			outS.print(" extends ");
-			outS.print(SchemaImpl.class);
-			printImplements(outS, schema, Mode.DEFAULT);
-			outS.println(" {");
-			outS.printSerial();
-			outS.println();
-			outS.println("\t/**");
-			outS.println("\t * The singleton instance of " + schema.getQualifiedOutputName());
-			outS.println("\t */");
-			outS.println("\tpublic static final " + strategy.getJavaClassName(schema) + " " + strategy.getJavaIdentifier(schema) + " = new " + strategy.getJavaClassName(schema) + "();");
+            outS.print("public class ");
+            outS.print(strategy.getJavaClassName(schema));
+            outS.print(" extends ");
+            outS.print(SchemaImpl.class);
+            printImplements(outS, schema, Mode.DEFAULT);
+            outS.println(" {");
+            outS.printSerial();
+            outS.println();
+            outS.println("\t/**");
+            outS.println("\t * The singleton instance of " + schema.getQualifiedOutputName());
+            outS.println("\t */");
+            outS.println("\tpublic static final " + strategy.getJavaClassName(schema) + " " + strategy.getJavaIdentifier(schema) + " = new " + strategy.getJavaClassName(schema) + "();");
 
-			outS.println();
-			printNoFurtherInstancesAllowedJavadoc(outS);
-			outS.println("\tprivate " + strategy.getJavaClassName(schema) + "() {");
-			outS.println("\t\tsuper(\"" + schema.getOutputName() + "\");");
-			outS.println("\t}");
+            outS.println();
+            printNoFurtherInstancesAllowedJavadoc(outS);
+            outS.println("\tprivate " + strategy.getJavaClassName(schema) + "() {");
+            outS.println("\t\tsuper(\"" + schema.getOutputName() + "\");");
+            outS.println("\t}");
 
-			outS.printInitialisationStatementsPlaceholder();
+            outS.printInitialisationStatementsPlaceholder();
 
-			// Generating the factory
+            // Generating the factory
             // -----------------------------------------------------------------
             log.info("Generating factory", strategy.getFileName(schema, Mode.FACTORY));
 
@@ -423,13 +437,13 @@ public class DefaultGenerator implements Generator {
             outF.println("\t}");
 
             watch.splitInfo("Schema generated");
-		}
+        }
 
         // ----------------------------------------------------------------------
         // XXX Generating sequences
         // ----------------------------------------------------------------------
-		if (database.getSequences(schema).size() > 0) {
-		    log.info("Generating sequences");
+        if (database.getSequences(schema).size() > 0) {
+            log.info("Generating sequences");
 
             GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Sequences.java"));
             printHeader(out, schema);
@@ -477,7 +491,7 @@ public class DefaultGenerator implements Generator {
 
             registerInSchema(outS, database.getSequences(schema), Sequence.class, true);
             watch.splitInfo("Sequences generated");
-		}
+        }
 
         // ---------------------------------------------------------------------
         // XXX Generating master data tables
@@ -603,85 +617,85 @@ public class DefaultGenerator implements Generator {
             watch.splitInfo("Master data generated");
         }
 
-		// ----------------------------------------------------------------------
-		// XXX Generating tables
-		// ----------------------------------------------------------------------
-		if (database.getTables(schema).size() > 0) {
-		    log.info("Generating tables");
+        // ----------------------------------------------------------------------
+        // XXX Generating tables
+        // ----------------------------------------------------------------------
+        if (database.getTables(schema).size() > 0) {
+            log.info("Generating tables");
 
-    		for (TableDefinition table : database.getTables(schema)) {
-    		    try {
-        			log.info("Generating table", strategy.getFileName(table));
+            for (TableDefinition table : database.getTables(schema)) {
+                try {
+                    log.info("Generating table", strategy.getFileName(table));
 
-        			GenerationWriter out = new GenerationWriter(strategy.getFile(table));
-        			printHeader(out, table);
-        			printClassJavadoc(out, table);
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(table));
+                    printHeader(out, table);
+                    printClassJavadoc(out, table);
 
-        			Class<?> baseClass;
-        			if (generateRelations() && table.getMainUniqueKey() != null) {
-        				baseClass = UpdatableTableImpl.class;
-        			} else {
-        				baseClass = TableImpl.class;
-        			}
+                    Class<?> baseClass;
+                    if (generateRelations() && table.getMainUniqueKey() != null) {
+                        baseClass = UpdatableTableImpl.class;
+                    } else {
+                        baseClass = TableImpl.class;
+                    }
 
-        			out.print("public class ");
-        			out.print(strategy.getJavaClassName(table));
-        			out.print(" extends ");
-        			out.print(baseClass);
-        			out.print("<");
-    			    out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
-        			out.print(">");
-        			printImplements(out, table, Mode.RECORD);
-        			out.println(" {");
-        			out.printSerial();
-        			printSingletonInstance(table, out);
-        			printRecordTypeMethod(table, out);
+                    out.print("public class ");
+                    out.print(strategy.getJavaClassName(table));
+                    out.print(" extends ");
+                    out.print(baseClass);
+                    out.print("<");
+                    out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
+                    out.print(">");
+                    printImplements(out, table, Mode.RECORD);
+                    out.println(" {");
+                    out.printSerial();
+                    printSingletonInstance(table, out);
+                    printRecordTypeMethod(table, out);
 
-        			for (ColumnDefinition column : table.getColumns()) {
-        				printTableColumn(out, column, table);
-        			}
+                    for (ColumnDefinition column : table.getColumns()) {
+                        printTableColumn(out, column, table);
+                    }
 
-        			// [#1255] With instance fields, the table constructor may
-        			// be public, as tables are no longer singletons
-        			out.println();
-        			if (generateInstanceFields()) {
-        			    out.print("\tpublic ");
-        			}
-        			else {
-        			    printNoFurtherInstancesAllowedJavadoc(out);
-        			    out.print("\tprivate ");
-        			}
-        			out.println(strategy.getJavaClassName(table) + "() {");
+                    // [#1255] With instance fields, the table constructor may
+                    // be public, as tables are no longer singletons
+                    out.println();
+                    if (generateInstanceFields()) {
+                        out.print("\tpublic ");
+                    }
+                    else {
+                        printNoFurtherInstancesAllowedJavadoc(out);
+                        out.print("\tprivate ");
+                    }
+                    out.println(strategy.getJavaClassName(table) + "() {");
 
-        			if (!schema.isDefaultSchema()) {
-        			    out.println("\t\tsuper(\"" + table.getOutputName() + "\", " + strategy.getFullJavaIdentifier(schema) + ");");
-        			} else {
-        			    out.println("\t\tsuper(\"" + table.getOutputName() + "\");");
-        			}
+                    if (!schema.isDefaultSchema()) {
+                        out.println("\t\tsuper(\"" + table.getOutputName() + "\", " + strategy.getFullJavaIdentifier(schema) + ");");
+                    } else {
+                        out.println("\t\tsuper(\"" + table.getOutputName() + "\");");
+                    }
 
-        			out.println("\t}");
+                    out.println("\t}");
 
-        			// [#117] With instance fields, it makes sense to create a
-        			// type-safe table alias
-        			// [#1255] With instance fields, the table constructor may
-        			// be public, as tables are no longer singletons
-        			if (generateInstanceFields()) {
+                    // [#117] With instance fields, it makes sense to create a
+                    // type-safe table alias
+                    // [#1255] With instance fields, the table constructor may
+                    // be public, as tables are no longer singletons
+                    if (generateInstanceFields()) {
                         out.println();
-            			out.print("\tpublic ");
-            			out.print(strategy.getJavaClassName(table));
-            			out.print("(");
-            			out.print(String.class);
-            			out.println(" alias) {");
+                        out.print("\tpublic ");
+                        out.print(strategy.getJavaClassName(table));
+                        out.print("(");
+                        out.print(String.class);
+                        out.println(" alias) {");
 
-            			out.print("\t\tsuper(alias, ");
-            			out.print(strategy.getFullJavaIdentifier(schema));
-            			out.print(", ");
-            			out.print(strategy.getFullJavaIdentifier(table));
-            	        out.println(");");
-            			out.println("\t}");
-        			}
+                        out.print("\t\tsuper(alias, ");
+                        out.print(strategy.getFullJavaIdentifier(schema));
+                        out.print(", ");
+                        out.print(strategy.getFullJavaIdentifier(table));
+                        out.println(");");
+                        out.println("\t}");
+                    }
 
-        			// Add primary / unique / foreign key information
+                    // Add primary / unique / foreign key information
                     if (generateRelations()) {
                         ColumnDefinition identity = table.getIdentity();
 
@@ -828,23 +842,24 @@ public class DefaultGenerator implements Generator {
                         out.println("\t}");
                     }
 
-        			out.printStaticInitialisationStatementsPlaceholder();
-        			out.println("}");
-        			out.close();
-    		    }
-    		    catch (Exception e) {
-    		        log.error("Error while generating table " + table, e);
-    		    }
-    		}
+                    out.printStaticInitialisationStatementsPlaceholder();
+                    out.println("}");
+                    out.close();
+                }
+                catch (Exception e) {
+                    log.error("Error while generating table " + table, e);
+                }
+            }
 
-    		registerInSchema(outS, database.getTables(schema), Table.class, true);
-    		watch.splitInfo("Tables generated");
-		}
+            registerInSchema(outS, database.getTables(schema), Table.class, true);
+            watch.splitInfo("Tables generated");
+        }
 
         // ----------------------------------------------------------------------
         // XXX Generating table POJOs (courtesy of Marcel Bichon)
         // ----------------------------------------------------------------------
-        if (generatePojos() && database.getTables(schema).size() > 0) {
+
+        if ((generateDaos() || generatePojos()) && database.getTables(schema).size() > 0) {
             log.info("Generating table POJOs");
 
             for (TableDefinition table : database.getTables(schema)) {
@@ -926,11 +941,121 @@ public class DefaultGenerator implements Generator {
             watch.splitInfo("Table POJOs generated");
         }
 
+        // ----------------------------------------------------------------------
+        // XXX Generating table DAOs
+        // ----------------------------------------------------------------------
+
+        if (generateDaos() && database.getTables(schema).size() > 0) {
+            log.info("Generating DAOs");
+
+            for (TableDefinition table : database.getTables(schema)) {
+                try {
+                    String tType = "Void";
+                    String pType = strategy.getFullJavaClassName(table, Mode.POJO);
+
+                    UniqueKeyDefinition key = table.getMainUniqueKey();
+                    ColumnDefinition keyColumn = null;
+
+                    if (key != null) {
+                        List<ColumnDefinition> columns = key.getKeyColumns();
+
+                        if (columns.size() == 1) {
+                            keyColumn = columns.get(0);
+                            tType = getJavaType(keyColumn.getType());
+                        }
+                    }
+
+                    // Skip DAOs for tables that don't have 1-column-PKs (for now)
+                    if (keyColumn == null) {
+                        log.info("Skipping DAO generation", strategy.getFileName(table, Mode.DAO));
+                        continue;
+                    }
+                    else {
+                        log.info("Generating DAO", strategy.getFileName(table, Mode.DAO));
+                    }
+
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(table, Mode.DAO));
+                    printHeader(out, table, Mode.DAO);
+                    printClassJavadoc(out, table);
+
+                    out.print("public class ");
+                    out.print(strategy.getJavaClassName(table, Mode.DAO));
+                    // printExtends(out, table, Mode.DAO);
+                    // printImplements(out, table, Mode.DAO);
+                    out.print(" extends ");
+                    out.print(DAOImpl.class);
+                    out.print("<");
+                    out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
+                    out.print(", ");
+                    out.print(pType);
+                    out.print(", ");
+                    out.print(tType);
+                    out.println("> {");
+                    out.println();
+
+                    // Default constructor
+                    // -------------------
+                    printJavadoc(out, "Create a new "
+                        + strategy.getJavaClassName(table, Mode.DAO)
+                        + " without any factory");
+                    out.print("\tpublic ");
+                    out.print(strategy.getJavaClassName(table, Mode.DAO));
+                    out.println("() {");
+                    out.print("\t\tsuper(");
+                    out.print(strategy.getFullJavaIdentifier(table));
+                    out.print(", ");
+                    out.print(strategy.getFullJavaClassName(table, Mode.POJO));
+                    out.println(".class);");
+                    out.println("\t}");
+                    out.println();
+
+                    // Initialising constructor
+                    // ------------------------
+                    printJavadoc(out, "Create a new "
+                        + strategy.getJavaClassName(table, Mode.DAO)
+                        + " with an attached factory");
+                    out.print("\tpublic ");
+                    out.print(strategy.getJavaClassName(table, Mode.DAO));
+                    out.print("(");
+                    out.print(Factory.class);
+                    out.println(" factory) {");
+                    out.print("\t\tsuper(");
+                    out.print(strategy.getFullJavaIdentifier(table));
+                    out.print(", ");
+                    out.print(strategy.getFullJavaClassName(table, Mode.POJO));
+                    out.println(".class, factory);");
+                    out.println("\t}");
+                    out.println();
+
+                    // Template method implementations
+                    // -------------------------------
+                    printOverride(out);
+                    out.print("\tprotected ");
+                    out.print(tType);
+                    out.print(" getId(");
+                    out.print(strategy.getFullJavaClassName(table, Mode.POJO));
+                    out.println(" object) {");
+                    out.print("\t\treturn object.");
+                    out.print(strategy.getJavaGetterName(keyColumn, Mode.POJO));
+                    out.println("();");
+                    out.println("\t}");
+
+                    out.println("}");
+                    out.close();
+                }
+                catch (Exception e) {
+                    log.error("Error while generating table DAO " + table, e);
+                }
+            }
+
+            watch.splitInfo("Table DAOs generated");
+        }
 
         // ----------------------------------------------------------------------
         // XXX Generating central static table access
         // ----------------------------------------------------------------------
-		if (database.getTables(schema).size() > 0) {
+
+        if (database.getTables(schema).size() > 0) {
             log.info("Generating table references");
 
             GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Tables.java"));
@@ -965,13 +1090,13 @@ public class DefaultGenerator implements Generator {
             out.close();
 
             watch.splitInfo("Table references generated");
-		}
+        }
 
         // ----------------------------------------------------------------------
         // XXX Generating relations
         // ----------------------------------------------------------------------
-		if (generateRelations() && database.getTables(schema).size() > 0) {
-		    log.info("Generating Keys");
+        if (generateRelations() && database.getTables(schema).size() > 0) {
+            log.info("Generating Keys");
 
             GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Keys.java"));
             printHeader(out, schema);
@@ -1014,7 +1139,7 @@ public class DefaultGenerator implements Generator {
             out.println("\t// UNIQUE and PRIMARY KEY definitions");
 
             for (TableDefinition table : database.getTables(schema)) {
-		        try {
+                try {
                     List<UniqueKeyDefinition> uniqueKeys = table.getUniqueKeys();
 
                     if (uniqueKeys.size() > 0) {
@@ -1039,11 +1164,11 @@ public class DefaultGenerator implements Generator {
                             out.println(");");
                         }
                     }
-		        }
-		        catch (Exception e) {
-		            log.error("Error while generating table " + table, e);
-		        }
-		    }
+                }
+                catch (Exception e) {
+                    log.error("Error while generating table " + table, e);
+                }
+            }
 
             // Foreign keys
             out.println();
@@ -1102,65 +1227,65 @@ public class DefaultGenerator implements Generator {
             out.println("}");
             out.close();
 
-		    watch.splitInfo("Keys generated");
-		}
+            watch.splitInfo("Keys generated");
+        }
 
         // ----------------------------------------------------------------------
         // XXX Generating table records
         // ----------------------------------------------------------------------
-		if  (generateRecords() && database.getTables(schema).size() > 0) {
-		    log.info("Generating records");
+        if ((generateDaos() || generateRecords()) && database.getTables(schema).size() > 0) {
+            log.info("Generating records");
 
-    		for (TableDefinition table : database.getTables(schema)) {
-    		    try {
-        			log.info("Generating record", strategy.getFileName(table, Mode.RECORD));
+            for (TableDefinition table : database.getTables(schema)) {
+                try {
+                    log.info("Generating record", strategy.getFileName(table, Mode.RECORD));
 
-        			GenerationWriter out = new GenerationWriter(strategy.getFile(table, Mode.RECORD));
-        			printHeader(out, table, Mode.RECORD);
-        			printClassJavadoc(out, table);
-        			printTableJPAAnnotation(out, table);
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(table, Mode.RECORD));
+                    printHeader(out, table, Mode.RECORD);
+                    printClassJavadoc(out, table);
+                    printTableJPAAnnotation(out, table);
 
-        			Class<?> baseClass;
+                    Class<?> baseClass;
 
-        			if (generateRelations() && table.getMainUniqueKey() != null) {
-        				baseClass = UpdatableRecordImpl.class;
-        			} else {
-        				baseClass = TableRecordImpl.class;
-        			}
+                    if (generateRelations() && table.getMainUniqueKey() != null) {
+                        baseClass = UpdatableRecordImpl.class;
+                    } else {
+                        baseClass = TableRecordImpl.class;
+                    }
 
-        			out.print("public class ");
-        			out.print(strategy.getJavaClassName(table, Mode.RECORD));
-        			out.print(" extends ");
-        			out.print(baseClass);
-        			out.print("<");
-        			out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
-        			out.print(">");
-        			printImplements(out, table, Mode.RECORD);
-        		    out.println(" {");
-        			out.printSerial();
+                    out.print("public class ");
+                    out.print(strategy.getJavaClassName(table, Mode.RECORD));
+                    out.print(" extends ");
+                    out.print(baseClass);
+                    out.print("<");
+                    out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
+                    out.print(">");
+                    printImplements(out, table, Mode.RECORD);
+                    out.println(" {");
+                    out.printSerial();
 
-        			for (ColumnDefinition column : table.getColumns()) {
-        				printGetterAndSetter(out, column);
-        			}
+                    for (ColumnDefinition column : table.getColumns()) {
+                        printGetterAndSetter(out, column);
+                    }
 
-        			out.println();
-        			out.println("\t/**");
-        			out.println("\t * Create a detached " + strategy.getJavaClassName(table, Mode.RECORD));
-        			out.println("\t */");
+                    out.println();
+                    out.println("\t/**");
+                    out.println("\t * Create a detached " + strategy.getJavaClassName(table, Mode.RECORD));
+                    out.println("\t */");
                     out.println("\tpublic " + strategy.getJavaClassName(table, Mode.RECORD) + "() {");
                     out.print("\t\tsuper(");
                     out.print(strategy.getFullJavaIdentifier(table));
                     out.println(");");
                     out.println("\t}");
-        			out.println("}");
-        			out.close();
-    		    } catch (Exception e) {
-    		        log.error("Error while generating table record " + table, e);
-    		    }
-    		}
+                    out.println("}");
+                    out.close();
+                } catch (Exception e) {
+                    log.error("Error while generating table record " + table, e);
+                }
+            }
 
-    		watch.splitInfo("Table records generated");
-		}
+            watch.splitInfo("Table records generated");
+        }
 
         // ----------------------------------------------------------------------
         // XXX Generating UDTs
@@ -1559,8 +1684,8 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating packages
         // ----------------------------------------------------------------------
-		if (database.getPackages(schema).size() > 0) {
-		    log.info("Generating packages");
+        if (database.getPackages(schema).size() > 0) {
+            log.info("Generating packages");
 
             for (PackageDefinition pkg : database.getPackages(schema)) {
                 try {
@@ -1624,7 +1749,7 @@ public class DefaultGenerator implements Generator {
             }
 
             watch.splitInfo("Packages generated");
-		}
+        }
 
         // Finalise schema
         if (outS != null) {
@@ -1640,7 +1765,7 @@ public class DefaultGenerator implements Generator {
 
         // XXX [#651] Refactoring-cursor
         watch.splitInfo("GENERATION FINISHED!");
-	}
+    }
 
     private void printExtends(GenerationWriter out, Definition definition, Mode mode) {
         String superclass = strategy.getJavaClassExtends(definition, mode);
@@ -1872,7 +1997,7 @@ public class DefaultGenerator implements Generator {
         out.println();
 
         for (ParameterDefinition parameter : routine.getAllParameters()) {
-        	printParameter(out, parameter, routine);
+            printParameter(out, parameter, routine);
         }
 
         out.println();
@@ -1901,22 +2026,22 @@ public class DefaultGenerator implements Generator {
         }
 
         for (ParameterDefinition parameter : routine.getAllParameters()) {
-        	out.print("\t\t");
+            out.print("\t\t");
 
-        	if (parameter.equals(routine.getReturnValue())) {
-        	    out.println("setReturnParameter(" + strategy.getJavaIdentifier(parameter) + ");");
-        	}
-        	else if (routine.getInParameters().contains(parameter)) {
-        		if (routine.getOutParameters().contains(parameter)) {
-        			out.println("addInOutParameter(" + strategy.getJavaIdentifier(parameter) + ");");
-        		}
-        		else {
-        			out.println("addInParameter(" + strategy.getJavaIdentifier(parameter) + ");");
-        		}
-        	}
-        	else {
-        		out.println("addOutParameter(" + strategy.getJavaIdentifier(parameter) + ");");
-        	}
+            if (parameter.equals(routine.getReturnValue())) {
+                out.println("setReturnParameter(" + strategy.getJavaIdentifier(parameter) + ");");
+            }
+            else if (routine.getInParameters().contains(parameter)) {
+                if (routine.getOutParameters().contains(parameter)) {
+                    out.println("addInOutParameter(" + strategy.getJavaIdentifier(parameter) + ");");
+                }
+                else {
+                    out.println("addInParameter(" + strategy.getJavaIdentifier(parameter) + ");");
+                }
+            }
+            else {
+                out.println("addOutParameter(" + strategy.getJavaIdentifier(parameter) + ");");
+            }
         }
 
         if (routine.getOverload() != null) {
@@ -1926,11 +2051,11 @@ public class DefaultGenerator implements Generator {
         out.println("\t}");
 
         for (ParameterDefinition parameter : routine.getInParameters()) {
-        	out.println();
+            out.println();
             out.println("\t/**");
             out.println("\t * Set the <code>" + parameter.getOutputName() + "</code> parameter to the routine");
             out.println("\t */");
-        	out.print("\tpublic void ");
+            out.print("\tpublic void ");
             out.print(strategy.getJavaSetterName(parameter, Mode.DEFAULT));
             out.print("(");
             printNumberType(out, parameter.getType());
@@ -1946,10 +2071,10 @@ public class DefaultGenerator implements Generator {
             out.print("(");
             out.print(strategy.getJavaIdentifier(parameter));
             out.println(", value);");
-        	out.println("\t}");
+            out.println("\t}");
 
-        	if (routine.isSQLUsable()) {
-        	    out.println();
+            if (routine.isSQLUsable()) {
+                out.println();
                 out.println("\t/**");
                 out.println("\t * Set the <code>" + parameter.getOutputName() + "</code> parameter to the function");
                 out.println("\t * <p>");
@@ -1978,7 +2103,7 @@ public class DefaultGenerator implements Generator {
                 out.print(strategy.getJavaIdentifier(parameter));
                 out.println(", field);");
                 out.println("\t}");
-        	}
+            }
         }
 
         for (ParameterDefinition parameter : routine.getAllParameters()) {
@@ -2348,76 +2473,76 @@ public class DefaultGenerator implements Generator {
         }
     }
 
-	private void printOverride(GenerationWriter out) {
-		out.println("\t@Override");
-	}
+    private void printOverride(GenerationWriter out) {
+        out.println("\t@Override");
+    }
 
-	/**
-	 * If file is a directory, recursively empty its children.
-	 * If file is a file, delete it
-	 */
-	private void empty(File file) {
-		if (file != null) {
-			if (file.isDirectory()) {
-				File[] children = file.listFiles();
+    /**
+     * If file is a directory, recursively empty its children.
+     * If file is a file, delete it
+     */
+    private void empty(File file) {
+        if (file != null) {
+            if (file.isDirectory()) {
+                File[] children = file.listFiles();
 
-				if (children != null) {
-					for (File child : children) {
-						empty(child);
-					}
-				}
-			} else {
-				if (file.getName().endsWith(".java")) {
-					file.delete();
-				}
-			}
-		}
-	}
+                if (children != null) {
+                    for (File child : children) {
+                        empty(child);
+                    }
+                }
+            } else {
+                if (file.getName().endsWith(".java")) {
+                    file.delete();
+                }
+            }
+        }
+    }
 
-	private void printGetterAndSetter(GenerationWriter out, TypedElementDefinition<?> element) {
-		printFieldJavaDoc(out, element);
-		out.println("\tpublic void " + strategy.getJavaSetterName(element, Mode.DEFAULT) + "(" + getJavaType(element.getType()) + " value) {");
-		out.println("\t\tsetValue(" + strategy.getFullJavaIdentifier(element) + ", value);");
-		out.println("\t}");
+    private void printGetterAndSetter(GenerationWriter out, TypedElementDefinition<?> element) {
+        printFieldJavaDoc(out, element);
+        out.println("\tpublic void " + strategy.getJavaSetterName(element, Mode.DEFAULT) + "(" + getJavaType(element.getType()) + " value) {");
+        out.println("\t\tsetValue(" + strategy.getFullJavaIdentifier(element) + ", value);");
+        out.println("\t}");
 
-		printFieldJavaDoc(out, element);
-		if (element instanceof ColumnDefinition) {
-		    printColumnJPAAnnotation(out, (ColumnDefinition) element);
-		}
+        printFieldJavaDoc(out, element);
+        if (element instanceof ColumnDefinition) {
+            printColumnJPAAnnotation(out, (ColumnDefinition) element);
+        }
 
-		out.println("\tpublic " + getJavaType(element.getType()) + " " + strategy.getJavaGetterName(element, Mode.DEFAULT) + "() {");
-		out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifier(element) + ");");
-		out.println("\t}");
+        out.println("\tpublic " + getJavaType(element.getType()) + " " + strategy.getJavaGetterName(element, Mode.DEFAULT) + "() {");
+        out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifier(element) + ");");
+        out.println("\t}");
 
-		if (generateRelations() &&
-		    generateNavigationMethods() &&
-		    element instanceof ColumnDefinition) {
+        if (generateRelations() &&
+            generateNavigationMethods() &&
+            element instanceof ColumnDefinition) {
 
-		    ColumnDefinition column = (ColumnDefinition) element;
+            ColumnDefinition column = (ColumnDefinition) element;
 
-			List<UniqueKeyDefinition> uniqueKeys = column.getUniqueKeys();
+            List<UniqueKeyDefinition> uniqueKeys = column.getUniqueKeys();
 
             // Print references from this column's unique keys to all
             // corresponding foreign keys.
 
             // e.g. in TAuthorRecord, print getTBooks()
-			// -----------------------------------------------------------------
-			Set<String> fetchMethodNames = new HashSet<String>();
-			for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
-			    if (out.printOnlyOnce(uniqueKey)) {
-	                foreignKeyLoop: for (ForeignKeyDefinition foreignKey : uniqueKey.getForeignKeys()) {
+            // -----------------------------------------------------------------
+            Set<String> fetchMethodNames = new HashSet<String>();
+            for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
+                if (out.printOnlyOnce(uniqueKey)) {
+                    foreignKeyLoop: for (ForeignKeyDefinition foreignKey : uniqueKey.getForeignKeys()) {
 
-	                    // #64 - If the foreign key does not match the referenced key, it
-	                    // is most likely because it references a non-primary unique key
-	                    // Skip code generation for this foreign key
+                        // #64 - If the foreign key does not match the referenced key, it
+                        // is most likely because it references a non-primary unique key
+                        // Skip code generation for this foreign key
 
-	                    // #69 - Should resolve this issue more thoroughly.
-	                    if (foreignKey.getReferencedColumns().size() != foreignKey.getKeyColumns().size()) {
-	                        log.warn("Foreign key mismatch", foreignKey.getName() + " does not match its primary key! No code is generated for this key. See trac tickets #64 and #69");
-	                        continue foreignKeyLoop;
-	                    }
+                        // #69 - Should resolve this issue more thoroughly.
+                        if (foreignKey.getReferencedColumns().size() != foreignKey.getKeyColumns().size()) {
+                            log.warn("Foreign key mismatch", foreignKey.getName() + " does not match its primary key! No code is generated for this key. See trac tickets #64 and #69");
+                            continue foreignKeyLoop;
+                        }
 
-	                    TableDefinition referencing = foreignKey.getKeyTable();
+                        TableDefinition referencing = foreignKey.getKeyTable();
 
                         StringBuilder fetchMethodName = new StringBuilder();
                         fetchMethodName.append("fetch");
@@ -2481,16 +2606,16 @@ public class DefaultGenerator implements Generator {
 
                         out.println("\t\t\t.fetch();");
                         out.println("\t}");
-	                }
-	            }
-			}
+                    }
+                }
+            }
 
-			// Print references from this foreign key to its related primary key
-			// E.g. in TBookRecord print getTAuthor()
-			// -----------------------------------------------------------------
-			ForeignKeyDefinition foreignKey = column.getForeignKey();
-			if (foreignKey != null && out.printOnlyOnce(foreignKey)) {
-			    boolean skipGeneration = false;
+            // Print references from this foreign key to its related primary key
+            // E.g. in TBookRecord print getTAuthor()
+            // -----------------------------------------------------------------
+            ForeignKeyDefinition foreignKey = column.getForeignKey();
+            if (foreignKey != null && out.printOnlyOnce(foreignKey)) {
+                boolean skipGeneration = false;
 
                 // #64 - If the foreign key does not match the referenced key, it
                 // is most likely because it references a non-primary unique key
@@ -2554,9 +2679,9 @@ public class DefaultGenerator implements Generator {
                     out.println("\t\t\t.fetchOne();");
                     out.println("\t}");
                 }
-			}
-		}
-	}
+            }
+        }
+    }
 
     private void printUDTColumn(GenerationWriter out, AttributeDefinition attribute, Definition table) {
         Class<?> declaredMemberClass = UDTField.class;
@@ -2568,143 +2693,143 @@ public class DefaultGenerator implements Generator {
         printColumnDefinition(out, column, table, declaredMemberClass);
     }
 
-	private void printParameter(GenerationWriter out, ParameterDefinition parameter, Definition proc) {
-		printColumnDefinition(out, parameter, proc, Parameter.class);
-	}
+    private void printParameter(GenerationWriter out, ParameterDefinition parameter, Definition proc) {
+        printColumnDefinition(out, parameter, proc, Parameter.class);
+    }
 
-	private void printColumnDefinition(GenerationWriter out, TypedElementDefinition<?> column, Definition type, Class<?> declaredMemberClass) {
-		printFieldJavaDoc(out, column);
+    private void printColumnDefinition(GenerationWriter out, TypedElementDefinition<?> column, Definition type, Class<?> declaredMemberClass) {
+        printFieldJavaDoc(out, column);
 
-		boolean hasType =
-		    type instanceof TableDefinition ||
-		    type instanceof UDTDefinition;
+        boolean hasType =
+            type instanceof TableDefinition ||
+            type instanceof UDTDefinition;
 
-		boolean isDefaulted =
-		    column instanceof ParameterDefinition &&
-		    ((ParameterDefinition) column).isDefaulted();
+        boolean isDefaulted =
+            column instanceof ParameterDefinition &&
+            ((ParameterDefinition) column).isDefaulted();
 
-		if (type instanceof TableDefinition) {
-		    if (generateInstanceFields()) {
-		        out.print("\tpublic final ");
-		    }
-		    else {
-		        out.print("\tpublic static final ");
-		    }
-		}
-		else {
-		    out.print("\tpublic static final ");
-		}
-		out.print(declaredMemberClass);
-		out.print("<");
+        if (type instanceof TableDefinition) {
+            if (generateInstanceFields()) {
+                out.print("\tpublic final ");
+            }
+            else {
+                out.print("\tpublic static final ");
+            }
+        }
+        else {
+            out.print("\tpublic static final ");
+        }
+        out.print(declaredMemberClass);
+        out.print("<");
 
-		if (hasType) {
-		    out.print(strategy.getFullJavaClassName(type, Mode.RECORD));
-		    out.print(", ");
-		}
+        if (hasType) {
+            out.print(strategy.getFullJavaClassName(type, Mode.RECORD));
+            out.print(", ");
+        }
 
-		out.print(getJavaType(column.getType()));
-		out.print("> ");
-		out.print(strategy.getJavaIdentifier(column));
+        out.print(getJavaType(column.getType()));
+        out.print("> ");
+        out.print(strategy.getJavaIdentifier(column));
 
-		if (declaredMemberClass == TableField.class) {
-		    out.print(" = createField");
-		}
-		else if (declaredMemberClass == UDTField.class) {
-		    out.print(" = createField");
-		}
-		else {
+        if (declaredMemberClass == TableField.class) {
+            out.print(" = createField");
+        }
+        else if (declaredMemberClass == UDTField.class) {
+            out.print(" = createField");
+        }
+        else {
             out.print(" = createParameter");
-		}
+        }
 
-		out.print("(\"");
-		out.print(column.getName());
-		out.print("\", ");
-		out.print(getJavaTypeReference(column.getDatabase(), column.getType()));
+        out.print("(\"");
+        out.print(column.getName());
+        out.print("\", ");
+        out.print(getJavaTypeReference(column.getDatabase(), column.getType()));
 
-		if (hasType) {
-			if (type instanceof TableDefinition) {
-			    if (generateInstanceFields()) {
-			        out.print(", this");
-			    }
-			    else {
-			        out.print(", " + strategy.getJavaIdentifier(type));
-			    }
-			}
-			else {
-			    out.print(", " + strategy.getJavaIdentifier(type));
-			}
-		}
+        if (hasType) {
+            if (type instanceof TableDefinition) {
+                if (generateInstanceFields()) {
+                    out.print(", this");
+                }
+                else {
+                    out.print(", " + strategy.getJavaIdentifier(type));
+                }
+            }
+            else {
+                out.print(", " + strategy.getJavaIdentifier(type));
+            }
+        }
 
-		if (isDefaulted) {
-		    out.print(", true");
-		}
+        if (isDefaulted) {
+            out.print(", true");
+        }
 
-		out.println(");");
-	}
+        out.println(");");
+    }
 
-	private void printFieldJavaDoc(GenerationWriter out, TypedElementDefinition<?> element) {
-	    printFieldJavaDoc(out, element, null);
-	}
+    private void printFieldJavaDoc(GenerationWriter out, TypedElementDefinition<?> element) {
+        printFieldJavaDoc(out, element, null);
+    }
 
     private void printFieldJavaDoc(GenerationWriter out, TypedElementDefinition<?> element, String deprecation) {
-		out.println();
-		out.println("\t/**");
+        out.println();
+        out.println("\t/**");
 
-		String comment = element.getComment();
+        String comment = element.getComment();
 
-		if (comment != null && comment.length() > 0) {
-			out.println("\t * " + comment);
-		} else {
-			out.println("\t * An uncommented item");
-		}
+        if (comment != null && comment.length() > 0) {
+            out.println("\t * " + comment);
+        } else {
+            out.println("\t * An uncommented item");
+        }
 
-		if (getJavaType(element.getType()).startsWith("java.lang.Object")) {
-		    String t = element.getType().getType();
+        if (getJavaType(element.getType()).startsWith("java.lang.Object")) {
+            String t = element.getType().getType();
             String u = element.getType().getUserType();
             String combined = t.equalsIgnoreCase(u) ? t : t + ", " + u;
 
-		    out.println("\t * ");
-		    out.print("\t * The SQL type of this item (");
-		    out.print(combined);
-		    out.println(") could not be mapped.<br/>");
-		    out.println("\t * Deserialising this field might not work!");
+            out.println("\t * ");
+            out.print("\t * The SQL type of this item (");
+            out.print(combined);
+            out.println(") could not be mapped.<br/>");
+            out.println("\t * Deserialising this field might not work!");
 
-		    log.warn("Unknown type", element.getQualifiedName() + " (" + combined + ")");
-		}
+            log.warn("Unknown type", element.getQualifiedName() + " (" + combined + ")");
+        }
 
-		if (element instanceof ColumnDefinition) {
-		    ColumnDefinition column = (ColumnDefinition) element;
+        if (element instanceof ColumnDefinition) {
+            ColumnDefinition column = (ColumnDefinition) element;
 
-	        UniqueKeyDefinition primaryKey = column.getPrimaryKey();
-	        ForeignKeyDefinition foreignKey = column.getForeignKey();
+            UniqueKeyDefinition primaryKey = column.getPrimaryKey();
+            ForeignKeyDefinition foreignKey = column.getForeignKey();
 
-	        if (primaryKey != null) {
-	            out.println("\t * ");
-	            out.print("\t * PRIMARY KEY");
-	            out.println();
-	        }
+            if (primaryKey != null) {
+                out.println("\t * ");
+                out.print("\t * PRIMARY KEY");
+                out.println();
+            }
 
-	        if (foreignKey != null) {
-	            out.println("\t * <p>");
-	            out.println("\t * <code><pre>");
+            if (foreignKey != null) {
+                out.println("\t * <p>");
+                out.println("\t * <code><pre>");
 
-	            out.print("\t * CONSTRAINT ");
-	            out.println(foreignKey.getOutputName());
-	            out.print("\t * FOREIGN KEY (");
+                out.print("\t * CONSTRAINT ");
+                out.println(foreignKey.getOutputName());
+                out.print("\t * FOREIGN KEY (");
 
-	            String separator = "";
-	            for (ColumnDefinition fkColumn : foreignKey.getKeyColumns()) {
-	                out.print(separator);
-	                out.print(fkColumn.getOutputName());
-	                separator = ", ";
-	            }
+                String separator = "";
+                for (ColumnDefinition fkColumn : foreignKey.getKeyColumns()) {
+                    out.print(separator);
+                    out.print(fkColumn.getOutputName());
+                    separator = ", ";
+                }
 
-	            out.println(")");
-	            out.print("\t * REFERENCES ");
-	            out.print(foreignKey.getReferencedTable().getQualifiedOutputName());
-	            out.print(" (");
+                out.println(")");
+                out.print("\t * REFERENCES ");
+                out.print(foreignKey.getReferencedTable().getQualifiedOutputName());
+                out.print(" (");
 
-	            separator = "";
+                separator = "";
                 for (ColumnDefinition fkColumn : foreignKey.getReferencedColumns()) {
                     out.print(separator);
                     out.print(fkColumn.getOutputName());
@@ -2712,24 +2837,24 @@ public class DefaultGenerator implements Generator {
                 }
 
                 out.println(")");
-	            out.println("\t * </pre></code>");
-	        }
-		}
+                out.println("\t * </pre></code>");
+            }
+        }
 
-		printDeprecation(out, deprecation);
+        printDeprecation(out, deprecation);
 
-		out.println("\t */");
+        out.println("\t */");
 
-		if (deprecation != null) {
-		    out.println("\t@Deprecated");
-		}
-	}
+        if (deprecation != null) {
+            out.println("\t@Deprecated");
+        }
+    }
 
     private void printDeprecation(GenerationWriter out, String deprecation) {
         if (deprecation != null) {
-		    out.println("\t *");
+            out.println("\t *");
 
-		    String[] strings = deprecation.split("[\n\r]+");
+            String[] strings = deprecation.split("[\n\r]+");
             for (int i = 0; i < strings.length; i++) {
                 if (i == 0) {
                     out.println("\t * @deprecated " + strings[i]);
@@ -2737,12 +2862,17 @@ public class DefaultGenerator implements Generator {
                 else {
                     out.println("\t *             " + strings[i]);
                 }
-		    }
-		}
+            }
+        }
     }
 
     private void printNoFurtherInstancesAllowedJavadoc(GenerationWriter out) {
         printJavadoc(out, "No further instances allowed");
+    }
+
+    private void printInheritDoc(GenerationWriter out) {
+        printJavadoc(out, "{@inheritDoc}");
+        printOverride(out);
     }
 
     private void printJavadoc(GenerationWriter out, String doc) {
@@ -2792,13 +2922,13 @@ public class DefaultGenerator implements Generator {
         printHeader(out, definition, Mode.DEFAULT);
     }
 
-	private void printHeader(GenerationWriter out, Definition definition, Mode mode) {
-		out.println("/**");
-		out.println(" * This class is generated by jOOQ");
-		out.println(" */");
-		out.println("package " + strategy.getJavaPackageName(definition, mode) + ";");
-		out.println();
-	}
+    private void printHeader(GenerationWriter out, Definition definition, Mode mode) {
+        out.println("/**");
+        out.println(" * This class is generated by jOOQ");
+        out.println(" */");
+        out.println("package " + strategy.getJavaPackageName(definition, mode) + ";");
+        out.println();
+    }
 
     private void printExtendsNumberType(GenerationWriter out, DataTypeDefinition type) {
         printNumberType(out, type, "? extends ");
@@ -2818,7 +2948,7 @@ public class DefaultGenerator implements Generator {
         }
     }
 
-	private String getSimpleJavaType(DataTypeDefinition type) {
+    private String getSimpleJavaType(DataTypeDefinition type) {
         return GenerationUtil.getSimpleJavaType(getJavaType(type));
     }
 

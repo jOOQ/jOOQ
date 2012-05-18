@@ -662,6 +662,15 @@ public interface FactoryOperations extends Configuration {
      */
     Batch batchStore(UpdatableRecord<?>... records);
 
+    /**
+     * Execute a set of <code>INSERT</code> and <code>UPDATE</code> queries in
+     * batch mode (with bind values).
+     *
+     * @see #batchStore(UpdatableRecord...)
+     * @see Statement#executeBatch()
+     */
+    Batch batchStore(Collection<? extends UpdatableRecord<?>> records);
+
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------

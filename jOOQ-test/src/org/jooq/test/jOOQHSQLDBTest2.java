@@ -107,6 +107,7 @@ import org.jooq.util.hsqldb.HSQLDBFactory;
  */
 public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

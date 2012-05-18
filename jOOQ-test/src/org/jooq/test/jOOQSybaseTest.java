@@ -102,6 +102,7 @@ import org.jooq.util.sybase.SybaseFactory;
  */
 public class jOOQSybaseTest extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

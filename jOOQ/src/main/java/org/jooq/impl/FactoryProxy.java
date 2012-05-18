@@ -98,7 +98,7 @@ import org.jooq.exception.DataAccessException;
  * Spring. Note that this implementation of a <code>FactoryProxy</code> might be
  * re-designed in jOOQ 3.0. Please consider this functionality as being
  * EXPERIMENTAL
- * 
+ *
  * @author Sergey Epik
  * @author Lukas Eder
  * @deprecated - Use the newly {@link DataSource}-enabled {@link Factory}
@@ -130,6 +130,7 @@ public final class FactoryProxy implements FactoryOperations {
         this.settings = settings;
     }
 
+    @Override
     public final void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -346,6 +347,11 @@ public final class FactoryProxy implements FactoryOperations {
 
     @Override
     public final Batch batchStore(UpdatableRecord<?>... records) {
+        return getDelegate().batchStore(records);
+    }
+
+    @Override
+    public final Batch batchStore(Collection<? extends UpdatableRecord<?>> records) {
         return getDelegate().batchStore(records);
     }
 

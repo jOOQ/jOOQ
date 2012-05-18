@@ -108,6 +108,7 @@ import org.jooq.util.cubrid.CUBRIDFactory;
  */
 public class jOOQCUBRIDTest extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

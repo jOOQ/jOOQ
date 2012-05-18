@@ -35,12 +35,18 @@
  */
 package org.jooq.test._.testcases;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static org.jooq.tools.reflect.Reflect.on;
+
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
-public class Template<
+import org.junit.Test;
+
+public class DaoTests<
     A    extends UpdatableRecord<A>,
     AP,
     B    extends UpdatableRecord<B>,
@@ -62,7 +68,43 @@ public class Template<
     T785 extends TableRecord<T785>>
 extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> {
 
-    public Template(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    public DaoTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         super(delegate);
+    }
+
+    @Test
+    public void testDAOMethods() throws Exception {
+        if (TAuthorDao() == null) {
+            log.info("SKIPPING", "DAO tests");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        Class<AP> type = TAuthorDao().getType();
+
+        assertEquals(2, TAuthorDao().count());
+        assertEquals(2, TAuthorDao().findAll().size());
+        assertEquals(1, on(TAuthorDao().findById(1)).get("id"));
+        assertEquals("George", on(TAuthorDao().findById(1)).get("firstName"));
+        assertEquals("Orwell", on(TAuthorDao().findById(1)).get("lastName"));
+        assertTrue(TAuthorDao().exists(on(type).create().set("id", 1).<AP>get()));
+        assertTrue(TAuthorDao().existsById(1));
+
+        AP author =
+        on(type).create().set("id", 3)
+                         .set("lastName", "Hesse").<AP>get();
+        TAuthorDao().add(author);
+        assertEquals(3, TAuthorDao().count());
+        assertEquals(3, on(TAuthorDao().findById(3)).get("id"));
+        assertEquals(null, on(TAuthorDao().findById(3)).get("firstName"));
+        assertEquals("Hesse", on(TAuthorDao().findById(3)).get("lastName"));
+
+        author = on(author).set("firstName", "Hermann").<AP>get();
+        TAuthorDao().save(author);
+        assertEquals(3, TAuthorDao().count());
+        assertEquals(3, on(TAuthorDao().findById(3)).get("id"));
+        assertEquals("Hermann", on(TAuthorDao().findById(3)).get("firstName"));
+        assertEquals("Hesse", on(TAuthorDao().findById(3)).get("lastName"));
     }
 }

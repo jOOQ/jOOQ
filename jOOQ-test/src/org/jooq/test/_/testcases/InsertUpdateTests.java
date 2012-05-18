@@ -79,6 +79,7 @@ import org.junit.Test;
 
 public class InsertUpdateTests<
     A    extends UpdatableRecord<A>,
+    AP,
     B    extends UpdatableRecord<B>,
     S    extends UpdatableRecord<S>,
     B2S  extends UpdatableRecord<B2S>,
@@ -96,9 +97,9 @@ public class InsertUpdateTests<
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>>
-extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> {
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> {
 
-    public InsertUpdateTests(jOOQAbstractTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    public InsertUpdateTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         super(delegate);
     }
 

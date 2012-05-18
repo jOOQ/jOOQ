@@ -112,6 +112,7 @@ import org.jooq.util.h2.H2Factory;
  */
 public class jOOQH2Test extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

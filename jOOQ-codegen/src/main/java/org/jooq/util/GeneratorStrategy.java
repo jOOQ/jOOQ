@@ -326,6 +326,12 @@ public interface GeneratorStrategy {
         POJO,
 
         /**
+         * The dao mode. This is used when a {@link TableDefinition}'s dao
+         * class is being rendered
+         */
+        DAO,
+
+        /**
          * The enum mode. This is used when a {@link EnumDefinition}'s class is
          * being rendered
          */

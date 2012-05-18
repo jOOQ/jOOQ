@@ -111,6 +111,7 @@ import org.jooq.util.db2.DB2Factory;
  */
 public class jOOQDB2Test extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

@@ -1541,6 +1541,14 @@ public class Factory implements FactoryOperations {
         return new BatchStore(this, records);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Batch batchStore(Collection<? extends UpdatableRecord<?>> records) {
+        return batchStore(records.toArray(new UpdatableRecord[records.size()]));
+    }
+
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------

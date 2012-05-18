@@ -108,6 +108,7 @@ import org.jooq.util.ingres.IngresFactory;
  */
 public class jOOQIngresTest extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

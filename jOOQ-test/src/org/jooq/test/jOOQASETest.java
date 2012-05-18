@@ -104,6 +104,7 @@ import org.jooq.util.ase.ASEFactory;
  */
 public class jOOQASETest extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

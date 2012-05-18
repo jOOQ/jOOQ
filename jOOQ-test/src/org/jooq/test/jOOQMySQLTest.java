@@ -67,6 +67,7 @@ import java.sql.Date;
 import java.util.List;
 
 import org.jooq.ArrayRecord;
+import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -100,6 +101,7 @@ import org.jooq.test.mysql.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.mysql.generatedclasses.tables.T_785;
 import org.jooq.test.mysql.generatedclasses.tables.T_959;
 import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
+import org.jooq.test.mysql.generatedclasses.tables.daos.TAuthorDao;
 import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord;
@@ -130,6 +132,7 @@ import org.junit.Test;
  */
 public class jOOQMySQLTest extends jOOQAbstractTest<
         TAuthorRecord,
+        org.jooq.test.mysql.generatedclasses.tables.pojos.TAuthor,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,
@@ -151,6 +154,11 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
     @Override
     protected MySQLFactory create(Settings settings) {
         return new MySQLFactory(getConnection(), settings);
+    }
+
+    @Override
+    protected DAO<TAuthorRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.TAuthor, Integer> TAuthorDao() {
+        return new TAuthorDao(create());
     }
 
     @Override

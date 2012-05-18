@@ -47,6 +47,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.ArrayRecord;
+import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QueryPart;
@@ -83,6 +84,9 @@ public abstract class BaseTest<
 
     // T_AUTHOR table
     A extends UpdatableRecord<A>,
+
+    // T_AUTHOR pojo
+    AP,
 
     // T_BOOK table
     B extends UpdatableRecord<B>,
@@ -141,9 +145,9 @@ public abstract class BaseTest<
 
     protected static final JooqLogger      log                = JooqLogger.getLogger(jOOQAbstractTest.class);
 
-    protected final jOOQAbstractTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate;
+    protected final jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate;
 
-    protected BaseTest(jOOQAbstractTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    protected BaseTest(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         this.delegate = delegate;
     }
 
@@ -365,6 +369,10 @@ public abstract class BaseTest<
 
     protected TableField<X, ? extends ArrayRecord<Date>> TArrays_DATE_R() {
         return delegate.TArrays_DATE_R();
+    }
+
+    protected DAO<A, AP, Integer> TAuthorDao() {
+        return delegate.TAuthorDao();
     }
 
     protected UpdatableTable<A> TAuthor() {

@@ -102,6 +102,7 @@ import org.jooq.util.sqlite.SQLiteFactory;
  */
 public class jOOQSQLiteTest extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

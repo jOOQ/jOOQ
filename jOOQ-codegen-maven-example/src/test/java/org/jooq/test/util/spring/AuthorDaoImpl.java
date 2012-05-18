@@ -29,8 +29,11 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public Author findById(Integer id) {
-        TAuthorRecord authorRecord = factory.selectFrom(T_AUTHOR)
-                .where(T_AUTHOR.ID.equal(id)).fetchOne();
+        TAuthorRecord authorRecord = factory
+            .selectFrom(T_AUTHOR)
+            .where(T_AUTHOR.ID.equal(id))
+            .fetchOne();
+
         return authorRecord == null ? null : authorRecord.into(Author.class);
     }
 
@@ -42,11 +45,13 @@ public class AuthorDaoImpl implements AuthorDao {
     @Override
     public Integer add(Author author) {
         Integer id = factory.nextval(S_AUTHOR_ID);
+
         factory.insertInto(T_AUTHOR)
-                .set(T_AUTHOR.ID, id)
-                .set(T_AUTHOR.FIRST_NAME, author.getFirstName())
-                .set(T_AUTHOR.LAST_NAME, author.getLastName())
-                .execute();
+               .set(T_AUTHOR.ID, id)
+               .set(T_AUTHOR.FIRST_NAME, author.getFirstName())
+               .set(T_AUTHOR.LAST_NAME, author.getLastName())
+               .execute();
+
         return id;
     }
 
@@ -54,28 +59,30 @@ public class AuthorDaoImpl implements AuthorDao {
     public void addBatch(List<Author> authors) {
         BatchBindStep step = factory.batch(
                 factory.insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
-                        .values(param("id"), param("first"), param("last")));
+                       .values(param("id"), param("first"), param("last")));
+
         for (Author author : authors) {
             Integer id = factory.nextval(S_AUTHOR_ID).intValue();
             step = step.bind(id, author.getFirstName(), author.getLastName());
         }
+
         step.execute();
     }
 
     @Override
     public void save(Author author) {
         factory.update(T_AUTHOR)
-                .set(T_AUTHOR.FIRST_NAME, author.getFirstName())
-                .set(T_AUTHOR.LAST_NAME, author.getLastName())
-                .where(T_AUTHOR.ID.equal(author.getId()))
-                .execute();
+               .set(T_AUTHOR.FIRST_NAME, author.getFirstName())
+               .set(T_AUTHOR.LAST_NAME, author.getLastName())
+               .where(T_AUTHOR.ID.equal(author.getId()))
+               .execute();
     }
 
     @Override
     public void delete(Author author) {
         factory.delete(T_AUTHOR)
-                .where(T_AUTHOR.ID.equal(author.getId()))
-                .execute();
+               .where(T_AUTHOR.ID.equal(author.getId()))
+               .execute();
     }
 
     @Override
@@ -86,9 +93,11 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public long countDistinctForLastName(String name) {
-        return factory.select(Factory.countDistinct(T_AUTHOR.LAST_NAME)).from(T_AUTHOR)
-                .where(T_AUTHOR.LAST_NAME.like(name + "%"))
-                .fetchOne().getValue(0, Long.class);
+        return factory.select(Factory.countDistinct(T_AUTHOR.LAST_NAME))
+                      .from(T_AUTHOR)
+                      .where(T_AUTHOR.LAST_NAME.like(name + "%"))
+                      .fetchOne()
+                      .getValue(0, Long.class);
     }
 
     @Override
@@ -98,7 +107,8 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public boolean authorExists(Author author) {
-        return factory.selectFrom(T_AUTHOR).where(T_AUTHOR.ID.equal(author.getId()))
-                .fetchOne() != null;
+        return factory.selectFrom(T_AUTHOR)
+                      .where(T_AUTHOR.ID.equal(author.getId()))
+                      .fetchOne() != null;
     }
 }

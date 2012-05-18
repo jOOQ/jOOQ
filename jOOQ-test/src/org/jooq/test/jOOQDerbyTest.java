@@ -107,6 +107,7 @@ import org.jooq.util.derby.DerbyFactory;
  */
 public class jOOQDerbyTest extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

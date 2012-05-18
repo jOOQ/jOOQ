@@ -103,6 +103,7 @@ import org.jooq.util.mysql.MySQLFactory;
  */
 public class jOOQMySQLTestSchemaRewrite extends jOOQAbstractTest<
         TAuthorRecord,
+        org.jooq.test.mysql2.generatedclasses.tables.pojos.TAuthor,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

@@ -118,11 +118,11 @@ public class GenerationTool {
     		    // TODO [#1201] Add better error handling here
     		    xml = xml.replaceAll(
     		        "<(\\w+:)?configuration xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-codegen-\\d+\\.\\d+\\.\\d+.xsd\">",
-    		        "<$1configuration xmlns$2=\"http://www.jooq.org/xsd/jooq-codegen-2.3.0.xsd\">");
+    		        "<$1configuration xmlns$2=\"http://www.jooq.org/xsd/jooq-codegen-2.4.0.xsd\">");
 
     		    xml = xml.replace(
     		        "<configuration>",
-    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.3.0.xsd\">");
+    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.4.0.xsd\">");
 
     		    main(JAXB.unmarshal(new StringReader(xml), Configuration.class));
     		}
@@ -218,8 +218,9 @@ public class GenerationTool {
 	    generate.setDeprecated(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.deprecated")));
 	    generate.setInstanceFields(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.instance-fields")));
 	    generate.setGeneratedAnnotation(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.generated-annotation")));
-	    generate.setPojos("true".equalsIgnoreCase(properties.getProperty("generator.generate.pojos")));
 	    generate.setRecords(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.records")));
+	    generate.setPojos("true".equalsIgnoreCase(properties.getProperty("generator.generate.pojos")));
+	    generate.setDaos("true".equalsIgnoreCase(properties.getProperty("generator.generate.daos")));
 	    generate.setJpaAnnotations("true".equalsIgnoreCase(properties.getProperty("generator.generate.jpa-annotations")));
 
 	    org.jooq.util.jaxb.Generator generator = new org.jooq.util.jaxb.Generator();
@@ -380,10 +381,12 @@ public class GenerationTool {
                 generator.setGenerateInstanceFields(g.getGenerate().isInstanceFields());
             if (g.getGenerate().isGeneratedAnnotation() != null)
                 generator.setGenerateGeneratedAnnotation(g.getGenerate().isGeneratedAnnotation());
-            if (g.getGenerate().isPojos() != null)
-                generator.setGeneratePojos(g.getGenerate().isPojos());
             if (g.getGenerate().isRecords() != null)
                 generator.setGenerateRecords(g.getGenerate().isRecords());
+            if (g.getGenerate().isPojos() != null)
+                generator.setGeneratePojos(g.getGenerate().isPojos());
+            if (g.getGenerate().isDaos() != null)
+                generator.setGenerateDaos(g.getGenerate().isDaos());
             if (g.getGenerate().isJpaAnnotations() != null)
                 generator.setGenerateJPAAnnotations(g.getGenerate().isJpaAnnotations());
             if (g.getGenerate().isValidationAnnotations() != null)

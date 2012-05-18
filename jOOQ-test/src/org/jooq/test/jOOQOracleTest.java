@@ -158,6 +158,7 @@ import org.junit.Test;
  */
 public class jOOQOracleTest extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

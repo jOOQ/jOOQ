@@ -103,6 +103,7 @@ import org.jooq.util.sqlserver.SQLServerFactory;
  */
 public class jOOQSQLServerTest extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

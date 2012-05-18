@@ -123,7 +123,8 @@
             <deprecated>true</deprecated>
             <instanceFields>true</instanceFields>
             <generatedAnnotation>false</generatedAnnotation>
-            <pojos>true</pojos>
+            <pojos>false</pojos>
+            <daos>true</daos>
             <jpaAnnotations>true</jpaAnnotations>
             <validationAnnotations>true</validationAnnotations>
         </generate>

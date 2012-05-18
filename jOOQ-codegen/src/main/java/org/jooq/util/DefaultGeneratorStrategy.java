@@ -41,6 +41,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.DAO;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -124,6 +125,22 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         if (mode == Mode.POJO) {
             result.add(Serializable.class.getName());
         }
+        else if (mode == Mode.DAO) {
+            TableDefinition table = (TableDefinition) definition;
+            List<ColumnDefinition> keyColumns = table.getMainUniqueKey().getKeyColumns();
+
+            String name = DAO.class.getName();
+
+            name += "<";
+            name += getFullJavaClassName(table, Mode.POJO);
+            name += ", ";
+            name += keyColumns.size() == 1
+                        ? "Void" // keyColumns.get(0).getType()
+                        : "Void";
+            name += ">";
+
+            result.add(name);
+        }
 
         return result;
     }
@@ -161,6 +178,11 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             sb.append(".pojos");
         }
 
+        // DAOs too
+        else if (mode == Mode.DAO) {
+            sb.append(".daos");
+        }
+
         return sb.toString();
     }
 
@@ -185,6 +207,9 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         }
         else if (mode == Mode.FACTORY) {
             result.append("Factory");
+        }
+        else if (mode == Mode.DAO) {
+            result.append("Dao");
         }
 
         if (!StringUtils.isBlank(definition.getOverload())) {

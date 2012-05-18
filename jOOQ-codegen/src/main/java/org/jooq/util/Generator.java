@@ -113,6 +113,16 @@ public interface Generator {
     void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation);
 
     /**
+     * Whether TableRecords should be generated in addition to tables
+     */
+    boolean generateRecords();
+
+    /**
+     * Whether TableRecords should be generated in addition to tables
+     */
+    void setGenerateRecords(boolean generateRecords);
+
+    /**
      * Whether POJO's should be generated in addition to records
      */
     boolean generatePojos();
@@ -123,14 +133,14 @@ public interface Generator {
     void setGeneratePojos(boolean generatePojos);
 
     /**
-     * Whether TableRecords should be generated in addition to tables
+     * Whether DAO's should be generated in addition to pojos
      */
-    boolean generateRecords();
+    boolean generateDaos();
 
     /**
-     * Whether TableRecords should be generated in addition to tables
+     * Whether DAO's should be generated in addition to pojos
      */
-    void setGenerateRecords(boolean generateRecords);
+    void setGenerateDaos(boolean generateDaos);
 
     /**
      * Whether POJO's and records should be annotated with JPA annotations

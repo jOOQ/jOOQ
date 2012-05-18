@@ -115,6 +115,7 @@ import org.junit.Test;
  */
 public class jOOQPostgresTest extends jOOQAbstractTest<
         TAuthorRecord,
+        Object,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,

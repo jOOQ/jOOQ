@@ -57,6 +57,7 @@ import java.util.Properties;
 import javax.swing.UIManager;
 
 import org.jooq.ArrayRecord;
+import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.ExecuteType;
 import org.jooq.Field;
@@ -91,6 +92,7 @@ import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test._.testcases.AggregateWindowFunctionTests;
 import org.jooq.test._.testcases.CRUDTests;
+import org.jooq.test._.testcases.DaoTests;
 import org.jooq.test._.testcases.DataTypeTests;
 import org.jooq.test._.testcases.EnumTests;
 import org.jooq.test._.testcases.ExecuteListenerTests;
@@ -140,6 +142,9 @@ public abstract class jOOQAbstractTest<
 
         // T_AUTHOR table
         A extends UpdatableRecord<A>,
+
+        // T_AUTHOR pojo
+        AP,
 
         // T_BOOK table
         B extends UpdatableRecord<B>,
@@ -570,6 +575,10 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<X, ? extends ArrayRecord<Long>> TArrays_NUMBER_LONG_R();
     protected abstract TableField<X, ? extends ArrayRecord<Date>> TArrays_DATE_R();
 
+    protected DAO<A, AP, Integer> TAuthorDao() {
+        return null;
+    }
+
     protected abstract UpdatableTable<A> TAuthor();
     protected abstract TableField<A, String> TAuthor_LAST_NAME();
     protected abstract TableField<A, String> TAuthor_FIRST_NAME();
@@ -759,6 +768,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testFetchArray() throws Exception {
         new FetchTests(this).testFetchArray();
+    }
+
+    @Test
+    public void testDAOMethods() throws Exception {
+        new DaoTests(this).testDAOMethods();
     }
 
     @Test

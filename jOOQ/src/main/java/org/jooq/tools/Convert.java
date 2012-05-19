@@ -68,8 +68,8 @@ import org.jooq.tools.unsigned.UShort;
  * <p>
  * This class provides less type-safety than the general jOOQ API methods. For
  * instance, it accepts arbitrary {@link Converter} objects in methods like
- * {@link #convert(List, Converter)} and {@link #convert(Object, Class)}, trying
- * to retrofit the <code>Object</code> argument to the type provided in
+ * {@link #convert(Collection, Converter)} and {@link #convert(Object, Class)},
+ * trying to retrofit the <code>Object</code> argument to the type provided in
  * {@link Converter#fromType()} before performing the actual conversion.
  *
  * @author Lukas Eder

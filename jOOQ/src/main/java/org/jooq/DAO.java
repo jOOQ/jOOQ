@@ -57,8 +57,6 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * Performs an <code>INSERT</code> statement for a given POJO
      *
      * @param object The POJO to be inserted
-     * @return The generated key or <code>null</code> if no generated key could
-     *         be fetched.
      * @throws DataAccessException if something went wrong executing the query
      */
     void insert(P object) throws DataAccessException;
@@ -68,7 +66,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *
      * @param objects The POJOs to be inserted
      * @throws DataAccessException if something went wrong executing the query
-     * @see #add(Collection)
+     * @see #insert(Collection)
      */
     void insert(P... objects) throws DataAccessException;
 
@@ -77,7 +75,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *
      * @param objects The POJOs to be inserted
      * @throws DataAccessException if something went wrong executing the query
-     * @see #add(Object...)
+     * @see #insert(Object...)
      */
     void insert(Collection<P> objects) throws DataAccessException;
 
@@ -94,7 +92,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *
      * @param objects The POJOs to be updated
      * @throws DataAccessException if something went wrong executing the query
-     * @see #save(Collection)
+     * @see #update(Collection)
      */
     void update(P... objects) throws DataAccessException;
 
@@ -103,7 +101,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *
      * @param objects The POJOs to be updated
      * @throws DataAccessException if something went wrong executing the query
-     * @see #save(Object...)
+     * @see #update(Object...)
      */
     void update(Collection<P> objects) throws DataAccessException;
 

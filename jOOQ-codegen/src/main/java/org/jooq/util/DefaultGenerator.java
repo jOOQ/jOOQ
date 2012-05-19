@@ -186,7 +186,9 @@ public class DefaultGenerator implements Generator {
 
     @Override
     public boolean generateRecords() {
-        return generateRecords;
+
+        // [#1280] When DAOs are generated, Records must be generated, too
+        return generateRecords || generateDaos;
     }
 
     @Override
@@ -196,7 +198,9 @@ public class DefaultGenerator implements Generator {
 
     @Override
     public boolean generatePojos() {
-        return generatePojos;
+
+        // [#1280] When DAOs are generated, POJOs must be generated, too
+        return generatePojos || generateDaos;
     }
 
     @Override
@@ -278,11 +282,12 @@ public class DefaultGenerator implements Generator {
         log.info("  JPA annotations", generateJPAAnnotations());
         log.info("  validation annotations", generateValidationAnnotations());
         log.info("  navigation methods", generateNavigationMethods());
-        log.info("  records", generateRecords());
-        log.info("  pojos", generatePojos());
+        log.info("  records", generateRecords()
+            + ((!generateRecords && generateDaos) ? " (forced to true because of <daos/>)" : ""));
+        log.info("  pojos", generatePojos()
+            + ((!generatePojos && generateDaos) ? " (forced to true because of <daos/>)" : ""));
         log.info("  daos", generateDaos());
         log.info("  relations", generateRelations());
-
         log.info("----------------------------------------------------------");
 
         String targetPackage = getTargetPackage();
@@ -859,7 +864,7 @@ public class DefaultGenerator implements Generator {
         // XXX Generating table POJOs (courtesy of Marcel Bichon)
         // ----------------------------------------------------------------------
 
-        if ((generateDaos() || generatePojos()) && database.getTables(schema).size() > 0) {
+        if (generatePojos() && database.getTables(schema).size() > 0) {
             log.info("Generating table POJOs");
 
             for (TableDefinition table : database.getTables(schema)) {
@@ -1233,7 +1238,7 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating table records
         // ----------------------------------------------------------------------
-        if ((generateDaos() || generateRecords()) && database.getTables(schema).size() > 0) {
+        if (generateRecords() && database.getTables(schema).size() > 0) {
             log.info("Generating records");
 
             for (TableDefinition table : database.getTables(schema)) {

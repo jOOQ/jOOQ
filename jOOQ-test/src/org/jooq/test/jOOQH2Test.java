@@ -49,6 +49,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 
 import org.jooq.ArrayRecord;
+import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -82,6 +83,7 @@ import org.jooq.test.h2.generatedclasses.tables.T_658Ref;
 import org.jooq.test.h2.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.h2.generatedclasses.tables.T_785;
 import org.jooq.test.h2.generatedclasses.tables.VLibrary;
+import org.jooq.test.h2.generatedclasses.tables.daos.TAuthorDao;
 import org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TBookRecord;
@@ -112,7 +114,7 @@ import org.jooq.util.h2.H2Factory;
  */
 public class jOOQH2Test extends jOOQAbstractTest<
         TAuthorRecord,
-        Object,
+        org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,
@@ -134,6 +136,11 @@ public class jOOQH2Test extends jOOQAbstractTest<
     @Override
     protected Factory create(Settings settings) {
         return new H2Factory(getConnection(), settings);
+    }
+
+    @Override
+    protected DAO<TAuthorRecord, org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor, Integer> TAuthorDao() {
+        return new TAuthorDao(create());
     }
 
     @Override

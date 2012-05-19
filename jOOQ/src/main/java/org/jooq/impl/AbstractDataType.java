@@ -48,7 +48,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jooq.ArrayRecord;
@@ -376,6 +378,16 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     @Override
     public /* final */ T convert(Object object) {
         return Convert.convert(object, type);
+    }
+
+    @Override
+    public final T[] convert(Object... objects) {
+        return (T[]) Convert.convertArray(objects, type);
+    }
+
+    @Override
+    public final List<T> convert(Collection<?> objects) {
+        return Convert.convert(objects, type);
     }
 
     protected static DataType<Object> getDefaultDataType(SQLDialect dialect, String typeName) {

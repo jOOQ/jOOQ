@@ -81,7 +81,7 @@ public class F {
         String sql = create(connection)
             .select()
             .from(T_BOOK)
-            .where(TBook.ID.in(INTEGER.getArrayDataType().convert(bookIds)))
+            .where(TBook.ID.in(INTEGER.convert(bookIds)))
             .orderBy(TBook.ID.asc())
             .getSQL();
 

@@ -37,7 +37,10 @@ package org.jooq;
 
 import java.io.Serializable;
 import java.sql.Types;
+import java.util.Collection;
+import java.util.List;
 
+import org.jooq.exception.DataTypeException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
@@ -156,10 +159,27 @@ public interface DataType<T> extends Serializable {
      *
      * @param object The object to be converted
      * @return The converted object
-     * @throws RuntimeException An undisclosed unchecked exception, if
-     *             conversion fails.
+     * @throws DataTypeException If conversion fails.
      */
     T convert(Object object);
+
+    /**
+     * Convert an arbitrary set of objects into <code>&lt;T&gt;</code>
+     *
+     * @param objects The objects to be converted
+     * @return The converted objects
+     * @throws DataTypeException If conversion fails.
+     */
+    T[] convert(Object... objects);
+
+    /**
+     * Convert an arbitrary set of objects into <code>&lt;T&gt;</code>
+     *
+     * @param objects The objects to be converted
+     * @return The converted objects
+     * @throws DataTypeException If conversion fails.
+     */
+    List<T> convert(Collection<?> objects);
 
     /**
      * Whether this data type is any numeric data type.

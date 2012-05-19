@@ -791,23 +791,42 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
     @Test
     public void testConversion() throws Exception {
-        assertEquals(null, SQLDataType.TINYINT.convert(null));
-        assertEquals(null, SQLDataType.TINYINTUNSIGNED.convert(null));
-        assertEquals(null, SQLDataType.SMALLINT.convert(null));
-        assertEquals(null, SQLDataType.SMALLINTUNSIGNED.convert(null));
-        assertEquals(null, SQLDataType.INTEGER.convert(null));
-        assertEquals(null, SQLDataType.INTEGERUNSIGNED.convert(null));
-        assertEquals(null, SQLDataType.BIGINT.convert(null));
-        assertEquals(null, SQLDataType.BIGINTUNSIGNED.convert(null));
-        assertEquals(null, SQLDataType.REAL.convert(null));
-        assertEquals(null, SQLDataType.DOUBLE.convert(null));
-        assertEquals(null, SQLDataType.DECIMAL_INTEGER.convert(null));
-        assertEquals(null, SQLDataType.NUMERIC.convert(null));
-        assertEquals(null, SQLDataType.BOOLEAN.convert(null));
-        assertEquals(null, SQLDataType.VARCHAR.convert(null));
-        assertEquals(null, SQLDataType.DATE.convert(null));
-        assertEquals(null, SQLDataType.TIME.convert(null));
-        assertEquals(null, SQLDataType.TIMESTAMP.convert(null));
+        assertEquals(null, SQLDataType.TINYINT.convert((Object) null));
+        assertEquals(null, SQLDataType.TINYINTUNSIGNED.convert((Object) null));
+        assertEquals(null, SQLDataType.SMALLINT.convert((Object) null));
+        assertEquals(null, SQLDataType.SMALLINTUNSIGNED.convert((Object) null));
+        assertEquals(null, SQLDataType.INTEGER.convert((Object) null));
+        assertEquals(null, SQLDataType.INTEGERUNSIGNED.convert((Object) null));
+        assertEquals(null, SQLDataType.BIGINT.convert((Object) null));
+        assertEquals(null, SQLDataType.BIGINTUNSIGNED.convert((Object) null));
+        assertEquals(null, SQLDataType.REAL.convert((Object) null));
+        assertEquals(null, SQLDataType.DOUBLE.convert((Object) null));
+        assertEquals(null, SQLDataType.DECIMAL_INTEGER.convert((Object) null));
+        assertEquals(null, SQLDataType.NUMERIC.convert((Object) null));
+        assertEquals(null, SQLDataType.BOOLEAN.convert((Object) null));
+        assertEquals(null, SQLDataType.VARCHAR.convert((Object) null));
+        assertEquals(null, SQLDataType.DATE.convert((Object) null));
+        assertEquals(null, SQLDataType.TIME.convert((Object) null));
+        assertEquals(null, SQLDataType.TIMESTAMP.convert((Object) null));
+
+        List<Object> list = asList(null, null, null);
+        assertEquals(list, asList(SQLDataType.TINYINT.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.TINYINTUNSIGNED.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.SMALLINT.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.SMALLINTUNSIGNED.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.INTEGER.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.INTEGERUNSIGNED.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.BIGINT.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.BIGINTUNSIGNED.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.REAL.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.DOUBLE.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.DECIMAL_INTEGER.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.NUMERIC.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.BOOLEAN.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.VARCHAR.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.DATE.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.TIME.convert(null, null, null)));
+        assertEquals(list, asList(SQLDataType.TIMESTAMP.convert(null, null, null)));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert('1'));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert('1'));
@@ -853,6 +872,46 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(new BigDecimal("1"), SQLDataType.NUMERIC.convert("  1"));
         assertEquals(Boolean.TRUE, SQLDataType.BOOLEAN.convert("  1"));
         assertEquals("  1", SQLDataType.VARCHAR.convert("  1"));
+
+        assertEquals(
+            asList(Byte.valueOf("1"), Byte.valueOf("2"), Byte.valueOf("3")),
+            asList(SQLDataType.TINYINT.convert('1', "2", 3)));
+        assertEquals(
+            asList(UByte.valueOf("1"), UByte.valueOf("2"), UByte.valueOf("3")),
+            asList(SQLDataType.TINYINTUNSIGNED.convert('1', "2", 3)));
+        assertEquals(
+            asList(Short.valueOf("1"), Short.valueOf("2"), Short.valueOf("3")),
+            asList(SQLDataType.SMALLINT.convert('1', "2", 3)));
+        assertEquals(
+            asList(UShort.valueOf("1"), UShort.valueOf("2"), UShort.valueOf("3")),
+            asList(SQLDataType.SMALLINTUNSIGNED.convert('1', "2", 3)));
+        assertEquals(
+            asList(Integer.valueOf("1"), Integer.valueOf("2"), Integer.valueOf("3")),
+            asList(SQLDataType.INTEGER.convert('1', "2", 3)));
+        assertEquals(
+            asList(UInteger.valueOf("1"), UInteger.valueOf("2"), UInteger.valueOf("3")),
+            asList(SQLDataType.INTEGERUNSIGNED.convert('1', "2", 3)));
+        assertEquals(
+            asList(Long.valueOf("1"), Long.valueOf("2"), Long.valueOf("3")),
+            asList(SQLDataType.BIGINT.convert('1', "2", 3)));
+        assertEquals(
+            asList(ULong.valueOf("1"), ULong.valueOf("2"), ULong.valueOf("3")),
+            asList(SQLDataType.BIGINTUNSIGNED.convert('1', "2", 3)));
+        assertEquals(
+            asList(Float.valueOf("1"), Float.valueOf("2"), Float.valueOf("3")),
+            asList(SQLDataType.REAL.convert('1', "2", 3)));
+        assertEquals(
+            asList(Double.valueOf("1"), Double.valueOf("2"), Double.valueOf("3")),
+            asList(SQLDataType.DOUBLE.convert('1', "2", 3)));
+        assertEquals(
+            asList(new BigInteger("1"), new BigInteger("2"), new BigInteger("3")),
+            asList(SQLDataType.DECIMAL_INTEGER.convert('1', "2", 3)));
+        assertEquals(
+            asList(new BigDecimal("1"), new BigDecimal("2"), new BigDecimal("3")),
+            asList(SQLDataType.NUMERIC.convert('1', "2", 3)));
+        assertEquals(
+            asList("1", "2", "3"),
+            asList(SQLDataType.VARCHAR.convert('1', "2", 3)));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert((byte) 1));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert((byte) 1));

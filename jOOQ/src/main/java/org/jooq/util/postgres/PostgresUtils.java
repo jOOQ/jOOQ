@@ -58,6 +58,7 @@ import org.jooq.types.YearToMonth;
  * implementations. This class should fill those gaps.
  *
  * @author Lukas Eder
+ * @author Peter Ertl
  */
 public class PostgresUtils {
 
@@ -73,9 +74,6 @@ public class PostgresUtils {
 
     /**
      * Parse a Postgres-encoded <code>bytea</code> string
-     * <p>
-     *
-     * @author Peter Ertl
      */
     public static byte[] toBytes(final String string) {
 

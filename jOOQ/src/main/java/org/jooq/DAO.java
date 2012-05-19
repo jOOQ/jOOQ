@@ -38,6 +38,8 @@ package org.jooq;
 import java.util.Collection;
 import java.util.List;
 
+import org.jooq.exception.DataAccessException;
+
 /**
  * A generic DAO interface for a pojo and a primary key type.
  * <p>
@@ -57,109 +59,123 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @param object The POJO to be inserted
      * @return The generated key or <code>null</code> if no generated key could
      *         be fetched.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    void add(P object);
+    void insert(P object) throws DataAccessException;
 
     /**
      * Performs a batch <code>INSERT</code> statement for a given set of POJOs
      *
      * @param objects The POJOs to be inserted
+     * @throws DataAccessException if something went wrong executing the query
      * @see #add(Collection)
      */
-    void add(P... objects);
+    void insert(P... objects) throws DataAccessException;
 
     /**
      * Performs a batch <code>INSERT</code> statement for a given set of POJOs
      *
      * @param objects The POJOs to be inserted
+     * @throws DataAccessException if something went wrong executing the query
      * @see #add(Object...)
      */
-    void add(Collection<P> objects);
+    void insert(Collection<P> objects) throws DataAccessException;
 
     /**
      * Performs an <code>UPDATE</code> statement for a given POJO
      *
      * @param object The POJO to be updated
+     * @throws DataAccessException if something went wrong executing the query
      */
-    void save(P object);
+    void update(P object) throws DataAccessException;
 
     /**
      * Performs a batch <code>UPDATE</code> statement for a given set of POJOs
      *
      * @param objects The POJOs to be updated
+     * @throws DataAccessException if something went wrong executing the query
      * @see #save(Collection)
      */
-    void save(P... objects);
+    void update(P... objects) throws DataAccessException;
 
     /**
      * Performs a batch <code>UPDATE</code> statement for a given set of POJOs
      *
      * @param objects The POJOs to be updated
+     * @throws DataAccessException if something went wrong executing the query
      * @see #save(Object...)
      */
-    void save(Collection<P> objects);
+    void update(Collection<P> objects) throws DataAccessException;
 
     /**
      * Performs a <code>DELETE</code> statement for a given set of POJOs
      *
      * @param objects The POJOs to be deleted
+     * @throws DataAccessException if something went wrong executing the query
      * @see #delete(Collection)
      */
-    void delete(P... objects);
+    void delete(P... objects) throws DataAccessException;
 
     /**
      * Performs a <code>DELETE</code> statement for a given set of POJOs
      *
      * @param objects The POJOs to be deleted
+     * @throws DataAccessException if something went wrong executing the query
      * @see #delete(Object...)
      */
-    void delete(Collection<P> objects);
+    void delete(Collection<P> objects) throws DataAccessException;
 
     /**
      * Performs a <code>DELETE</code> statement for a given set of IDs
      *
      * @param ids The IDs to be deleted
+     * @throws DataAccessException if something went wrong executing the query
      * @see #delete(Collection)
      */
-    void deleteById(T... ids);
+    void deleteById(T... ids) throws DataAccessException;
 
     /**
      * Performs a <code>DELETE</code> statement for a given set of IDs
      *
      * @param ids The IDs to be deleted
+     * @throws DataAccessException if something went wrong executing the query
      * @see #delete(Object...)
      */
-    void deleteById(Collection<T> ids);
+    void deleteById(Collection<T> ids) throws DataAccessException;
 
     /**
      * Checks if a given POJO exists
      *
      * @param object The POJO whose existence is checked
      * @return Whether the POJO already exists
+     * @throws DataAccessException if something went wrong executing the query
      */
-    boolean exists(P object);
+    boolean exists(P object) throws DataAccessException;
 
     /**
      * Checks if a given ID exists
      *
      * @param id The ID whose existence is checked
      * @return Whether the ID already exists
+     * @throws DataAccessException if something went wrong executing the query
      */
-    boolean existsById(T id);
+    boolean existsById(T id) throws DataAccessException;
 
     /**
      * Count all records of the underlying table.
      *
      * @return The number of records of the underlying table
+     * @throws DataAccessException if something went wrong executing the query
      */
-    long count();
+    long count() throws DataAccessException;
 
     /**
      * Find all records of the underlying table.
      *
      * @return All records of the underlying table
+     * @throws DataAccessException if something went wrong executing the query
      */
-    List<P> findAll();
+    List<P> findAll() throws DataAccessException;
 
     /**
      * Find a record of the underlying table by ID.
@@ -167,8 +183,9 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @param id The ID of a record in the underlying table
      * @return A record of the underlying table given its ID, or
      *         <code>null</code> if no record was found.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    P findById(T id);
+    P findById(T id) throws DataAccessException;
 
     /**
      * Get the underlying table

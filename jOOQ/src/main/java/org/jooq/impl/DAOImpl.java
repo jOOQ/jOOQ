@@ -87,52 +87,50 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     // -------------------------------------------------------------------------
 
     @Override
-    public final void add(P object) {
-        add(singletonList(object));
+    public final void insert(P object) {
+        insert(singletonList(object));
     }
 
     @Override
-    public final void add(P... objects) {
-        add(asList(objects));
+    public final void insert(P... objects) {
+        insert(asList(objects));
     }
 
     @Override
-    public final void add(Collection<P> objects) {
+    public final void insert(Collection<P> objects) {
 
         // Execute a batch INSERT
         if (objects.size() > 1) {
-            create.batchStore(records(objects));
+            create.batchStore(records(objects, false)).execute();
         }
 
         // Execute a regular INSERT
         else if (objects.size() == 1) {
-            R record = records(objects).get(0);
-            record.store();
+            records(objects, false).get(0).store();
         }
     }
 
     @Override
-    public final void save(P object) {
-        save(singletonList(object));
+    public final void update(P object) {
+        update(singletonList(object));
     }
 
     @Override
-    public final void save(P... objects) {
-        save(asList(objects));
+    public final void update(P... objects) {
+        update(asList(objects));
     }
 
     @Override
-    public final void save(Collection<P> objects) {
+    public final void update(Collection<P> objects) {
 
         // Execute a batch UPDATE
         if (objects.size() > 1) {
-            create.batchStore(records(objects));
+            create.batchStore(records(objects, true)).execute();
         }
 
         // Execute a regular UPDATE
         else if (objects.size() == 1) {
-            R record = records(objects).get(0);
-            record.store();
+            records(objects, true).get(0).store();
         }
     }
 
@@ -158,7 +156,13 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    public final void deleteById(Collection<T> ids) {}
+    public final void deleteById(Collection<T> ids) {
+        Field<?> pk = pk();
+
+        if (pk != null) {
+            create.delete(table).where(equal(pk, ids)).execute();
+        }
+    }
 
     @Override
     public final boolean exists(P object) {
@@ -197,16 +201,15 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     @Override
     public final P findById(T id) {
         Field<?> pk = pk();
+        R record = null;
 
         if (pk != null) {
-            return create.selectFrom(table)
-                         .where(equal(pk, id))
-                         .fetchOne()
-                         .into(type);
+            record = create.selectFrom(table)
+                           .where(equal(pk, id))
+                           .fetchOne();
         }
-        else {
-            return null;
-        }
+
+        return record == null ? null : record.into(type);
     }
 
     @Override
@@ -233,6 +236,15 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return pk.equal(pk.getDataType().convert(id));
     }
 
+    private final <U> Condition equal(Field<U> pk, Collection<T> ids) {
+        if (ids.size() == 1) {
+            return equal(pk, ids.iterator().next());
+        }
+        else {
+            return pk.in(pk.getDataType().convert(ids));
+        }
+    }
+
     private final Field<?> pk() {
         if (table instanceof UpdatableTable) {
             UpdatableTable<?> updatable = (UpdatableTable<?>) table;
@@ -246,11 +258,18 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return null;
     }
 
-    private final List<R> records(Collection<P> objects) {
+    private final List<R> records(Collection<P> objects, boolean forUpdate) {
         List<R> result = new ArrayList<R>();
+        Field<?> pk = pk();
 
         for (P object : objects) {
-            result.add(create.newRecord(table, object));
+            R record = create.newRecord(table, object);
+
+            if (forUpdate && pk != null) {
+                ((AbstractRecord) record).getValue0(pk).setChanged(false);
+            }
+
+            result.add(record);
         }
 
         return result;

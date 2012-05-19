@@ -117,8 +117,9 @@
             <deprecated>true</deprecated>
             <instanceFields>false</instanceFields>
             <generatedAnnotation>false</generatedAnnotation>
-            <records>true</records>
+            <records>false</records>
             <pojos>false</pojos>
+            <daos>true</daos>
             <jpaAnnotations>false</jpaAnnotations>
         </generate>
         <target>

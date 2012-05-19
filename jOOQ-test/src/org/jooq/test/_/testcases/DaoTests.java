@@ -35,9 +35,13 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.tools.reflect.Reflect.on;
+
+import java.util.List;
 
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -72,6 +76,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         super(delegate);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testDAOMethods() throws Exception {
         if (TAuthorDao() == null) {
@@ -83,28 +88,75 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         Class<AP> type = TAuthorDao().getType();
 
+        // Selection
+        // ---------
         assertEquals(2, TAuthorDao().count());
         assertEquals(2, TAuthorDao().findAll().size());
-        assertEquals(1, on(TAuthorDao().findById(1)).get("id"));
-        assertEquals("George", on(TAuthorDao().findById(1)).get("firstName"));
-        assertEquals("Orwell", on(TAuthorDao().findById(1)).get("lastName"));
+
+        AP id1 = TAuthorDao().findById(1);
+        assertEquals(1, on(id1).get("id"));
+        assertEquals("George", on(id1).get("firstName"));
+        assertEquals("Orwell", on(id1).get("lastName"));
         assertTrue(TAuthorDao().exists(on(type).create().set("id", 1).<AP>get()));
         assertTrue(TAuthorDao().existsById(1));
+        assertNull(TAuthorDao().findById(17));
 
+        // Single insertion
+        // ----------------
         AP author =
         on(type).create().set("id", 3)
                          .set("lastName", "Hesse").<AP>get();
-        TAuthorDao().add(author);
+        TAuthorDao().insert(author);
         assertEquals(3, TAuthorDao().count());
-        assertEquals(3, on(TAuthorDao().findById(3)).get("id"));
-        assertEquals(null, on(TAuthorDao().findById(3)).get("firstName"));
-        assertEquals("Hesse", on(TAuthorDao().findById(3)).get("lastName"));
+        AP id3 = TAuthorDao().findById(3);
+        assertEquals(3, on(id3).get("id"));
+        assertEquals(null, on(id3).get("firstName"));
+        assertEquals("Hesse", on(id3).get("lastName"));
 
         author = on(author).set("firstName", "Hermann").<AP>get();
-        TAuthorDao().save(author);
+        TAuthorDao().update(author);
+        id3 = TAuthorDao().findById(3);
         assertEquals(3, TAuthorDao().count());
-        assertEquals(3, on(TAuthorDao().findById(3)).get("id"));
-        assertEquals("Hermann", on(TAuthorDao().findById(3)).get("firstName"));
-        assertEquals("Hesse", on(TAuthorDao().findById(3)).get("lastName"));
+        assertEquals(3, on(id3).get("id"));
+        assertEquals("Hermann", on(id3).get("firstName"));
+        assertEquals("Hesse", on(id3).get("lastName"));
+
+        TAuthorDao().delete(author);
+        assertEquals(2, TAuthorDao().count());
+
+        // Batch insertion
+        // ---------------
+        List<AP> authors = asList(
+            on(type).create().set("id", 4)
+                             .set("lastName", "Koontz").<AP>get(),
+            on(type).create().set("id", 5)
+                             .set("lastName", "Hitchcock").<AP>get()
+        );
+        TAuthorDao().insert(authors);
+        AP id4 = TAuthorDao().findById(4);
+        AP id5 = TAuthorDao().findById(5);
+
+        assertEquals(4, TAuthorDao().count());
+        assertEquals(4, on(id4).get("id"));
+        assertEquals(null, on(id4).get("firstName"));
+        assertEquals("Koontz", on(id4).get("lastName"));
+        assertEquals(5, on(id5).get("id"));
+        assertEquals(null, on(id5).get("firstName"));
+        assertEquals("Hitchcock", on(id5).get("lastName"));
+
+        id4 = on(id4).set("firstName", "Dean").<AP>get();
+        id5 = on(id5).set("firstName", "Alfred").<AP>get();
+        TAuthorDao().update(id4, id5);
+
+        id4 = TAuthorDao().findById(4);
+        id5 = TAuthorDao().findById(5);
+
+        assertEquals(4, TAuthorDao().count());
+        assertEquals(4, on(id4).get("id"));
+        assertEquals("Dean", on(id4).get("firstName"));
+        assertEquals("Koontz", on(id4).get("lastName"));
+        assertEquals(5, on(id5).get("id"));
+        assertEquals("Alfred", on(id5).get("firstName"));
+        assertEquals("Hitchcock", on(id5).get("lastName"));
     }
 }

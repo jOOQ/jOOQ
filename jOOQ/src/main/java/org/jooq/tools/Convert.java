@@ -49,6 +49,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -259,41 +260,41 @@ public final class Convert {
     }
 
     /**
-     * Convert a list of objects to a list of <code>T</code>, using
+     * Convert a collection of objects to a list of <code>T</code>, using
      * {@link #convert(Object, Class)}
      *
-     * @param list The list of objects
+     * @param collection The list of objects
      * @param type The target type
      * @return The list of converted objects
      * @throws DataTypeException - When the conversion is not possible
      * @see #convert(Object, Class)
      */
-    public static <T> List<T> convert(List<?> list, Class<? extends T> type) throws DataTypeException {
-        return convert(list, new ConvertAll<T>(type));
+    public static <T> List<T> convert(Collection<?> collection, Class<? extends T> type) throws DataTypeException {
+        return convert(collection, new ConvertAll<T>(type));
     }
 
     /**
-     * Convert a list of objects to a list of <code>T</code>, using
+     * Convert a collection of objects to a list of <code>T</code>, using
      * {@link #convert(Object, Converter)}
      *
-     * @param list The list of objects
+     * @param collection The collection of objects
      * @param converter The data type converter
      * @return The list of converted objects
      * @throws DataTypeException - When the conversion is not possible
      * @see #convert(Object, Converter)
      */
-    public static <U> List<U> convert(List<?> list, Converter<?, U> converter) throws DataTypeException {
-        return convert0(list, converter);
+    public static <U> List<U> convert(Collection<?> collection, Converter<?, U> converter) throws DataTypeException {
+        return convert0(collection, converter);
     }
 
     /**
      * Type safe conversion
      */
-    private static <T, U> List<U> convert0(List<?> list, Converter<T, U> converter) throws DataTypeException {
+    private static <T, U> List<U> convert0(Collection<?> collection, Converter<T, U> converter) throws DataTypeException {
         ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
-        List<U> result = new ArrayList<U>(list.size());
+        List<U> result = new ArrayList<U>(collection.size());
 
-        for (Object o : list) {
+        for (Object o : collection) {
             result.add(convert(all.from(o), converter));
         }
 

@@ -24,7 +24,7 @@
             </schemata>
         </database>
         <target>
-            <directory>./src/org/jooq/test/_/information_schema/oracle</directory>
+            <directory>./information_schema/oracle</directory>
         </target>
     </generator>
 </configuration>

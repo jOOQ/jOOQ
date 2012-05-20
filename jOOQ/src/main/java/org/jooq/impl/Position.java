@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
 
 import org.jooq.Configuration;
@@ -77,7 +78,7 @@ class Position extends AbstractFunction<Integer> {
                 return function("charindex", SQLDataType.INTEGER, search, in);
 
             default:
-                return new SQLClause<Integer>("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
+                return field("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
         }
     }
 }

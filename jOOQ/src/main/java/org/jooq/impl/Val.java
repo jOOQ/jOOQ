@@ -76,7 +76,7 @@ import org.jooq.types.Interval;
 /**
  * @author Lukas Eder
  */
-class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
+class Val<T> extends AbstractField<T> implements Param<T> {
 
     private static final long serialVersionUID = 6807729087019209084L;
 
@@ -551,14 +551,5 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
 
     private final boolean isInline(RenderContext context) {
         return isInline() || context.inline();
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: BindingProvider API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final List<Param<?>> getBindings() {
-        return Arrays.<Param<?>>asList(this);
     }
 }

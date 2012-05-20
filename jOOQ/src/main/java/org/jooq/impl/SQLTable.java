@@ -40,7 +40,7 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Param;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
@@ -48,18 +48,18 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class SQLTable extends AbstractTable<Record> implements BindingProvider {
+class SQLTable extends AbstractTable<Record> {
 
-    private static final long    serialVersionUID = -5122023013463718796L;
+    private static final long     serialVersionUID = -5122023013463718796L;
 
-    private final String         sql;
-    private final List<Param<?>> bindings;
+    private final String          sql;
+    private final List<QueryPart> substitutes;
 
-    public SQLTable(String sql, Object[] bindings) {
+    public SQLTable(String sql, Object[] substitutes) {
         super("sql");
 
         this.sql = sql;
-        this.bindings = Util.bindings(bindings);
+        this.substitutes = Util.queryParts(substitutes);
     }
 
     // ------------------------------------------------------------------------
@@ -83,25 +83,16 @@ class SQLTable extends AbstractTable<Record> implements BindingProvider {
 
     @Override
     public final void toSQL(RenderContext context) {
-        Util.toSQLReference(context, sql, bindings);
+        Util.toSQLReference(context, sql, substitutes);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(bindings);
+        context.bind(substitutes);
     }
 
     @Override
     protected final FieldList getFieldList() {
         return new FieldList();
-    }
-
-    // ------------------------------------------------------------------------
-    // QueryPart API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final List<Param<?>> getBindings() {
-        return bindings;
     }
 }

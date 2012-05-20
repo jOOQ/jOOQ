@@ -344,69 +344,96 @@ final class Util {
     /**
      * Create SQL
      */
-    static final void toSQLReference(RenderContext context, String sql, List<Param<?>> bindings) {
+    static final void toSQLReference(RenderContext context, String sql, List<QueryPart> substitutes) {
+        int bindIndex = 0;
+        char[] sqlChars = sql.toCharArray();
+        boolean stringLiteral = false;
 
-        // Replace bind variables by their associated bind values
-        if (context.inline()) {
+        for (int i = 0; i < sqlChars.length; i++) {
 
             // [#1031] [#1032] Skip ? inside of string literals, e.g.
             // insert into x values ('Hello? Anybody out there?');
-            int bindIndex = 0;
-            char[] sqlChars = sql.toCharArray();
-            boolean stringLiteral = false;
+            if (sqlChars[i] == '\'') {
 
-            for (int i = 0; i < sqlChars.length; i++) {
+                // Delimiter is actually an escaping apostrophe
+                if (i + 1 < sqlChars.length && sqlChars[i + 1] == '\'') {
 
-                // String literal delimiter
-                if (sqlChars[i] == '\'') {
-
-                    // Delimiter is actually an escaping apostrophe
-                    if (i + 1 < sqlChars.length && sqlChars[i + 1] == '\'') {
-
-                        // Skip subsequent character
-                        context.sql(sqlChars[i++]);
-                        context.sql(sqlChars[i]);
-                    }
-
-                    else {
-                        stringLiteral = !stringLiteral;
-                        context.sql(sqlChars[i]);
-                    }
+                    // Skip subsequent character
+                    context.sql(sqlChars[i++]);
+                    context.sql(sqlChars[i]);
                 }
 
-                // Replace bind variables only outside of string literals
-                else if (sqlChars[i] == '?' && !stringLiteral && bindIndex < bindings.size()) {
-                    context.sql(bindings.get(bindIndex++));
-                }
-
-                // Any other character
                 else {
+                    stringLiteral = !stringLiteral;
                     context.sql(sqlChars[i]);
                 }
             }
-        }
 
-        // If not inlining, just append the plain SQL the way it is
-        else {
-            context.sql(sql);
+            // TODO: This case should be mutually exclusive with the next one
+            // Inline bind variables only outside of string literals
+            else if (sqlChars[i] == '?' && context.inline() && !stringLiteral && bindIndex < substitutes.size()) {
+                context.sql(substitutes.get(bindIndex++));
+            }
+
+            // TODO: This case should be mutually exclusive with the previous one
+            // [#1432] Inline substitues for {numbered placeholders} outside of string literals
+            else if (sqlChars[i] == '{' && !stringLiteral && bindIndex < substitutes.size()) {
+
+                // Consume the whole token
+                int start = ++i;
+                for (; i < sqlChars.length && sqlChars[i] != '}'; i++);
+                int end = i;
+
+                String token = sql.substring(start, end);
+
+                // Be careful not to replace any JDBC escape syntax
+                if ("(fn|d|t|ts)\\b)[\\w\\s]+".matches(token)) {
+                    context.sql(token);
+                }
+
+                // Try getting the {numbered placeholder}
+                else {
+                    try {
+                        int substituteIndex = Integer.valueOf(token);
+                        context.sql(substitutes.get(substituteIndex));
+                    }
+
+                    // If this failed, then we're dealing with a {keyword}
+                    catch (NumberFormatException e) {
+                        context.keyword(token);
+                    }
+                }
+            }
+
+            // Any other character
+            else {
+                context.sql(sqlChars[i]);
+            }
         }
     }
 
     /**
-     * Create {@link Param} objects from bind values
+     * Create {@link QueryPart} objects from bind values or substitutes
      */
-    static final List<Param<?>> bindings(Object... bindings) {
+    static final List<QueryPart> queryParts(Object... substitutes) {
         // [#724] When bindings is null, this is probably due to API-misuse
         // The user probably meant new Object[] { null }
-        if (bindings == null) {
-            return bindings(new Object[] { null });
+        if (substitutes == null) {
+            return queryParts(new Object[] { null });
         }
         else {
-            List<Param<?>> result = new ArrayList<Param<?>>();
+            List<QueryPart> result = new ArrayList<QueryPart>();
 
-            for (Object binding : bindings) {
-                Class<?> type = binding != null ? binding.getClass() : Object.class;
-                result.add(new Val<Object>(binding, Factory.getDataType(type)));
+            for (Object substitute : substitutes) {
+
+                // [#1432] Distinguish between QueryParts and other objects
+                if (substitute instanceof QueryPart) {
+                    result.add((QueryPart) substitute);
+                }
+                else {
+                    Class<?> type = substitute != null ? substitute.getClass() : Object.class;
+                    result.add(new Val<Object>(substitute, Factory.getDataType(type)));
+                }
             }
 
             return result;
@@ -418,9 +445,9 @@ final class Util {
      *
      * @see #toSQLReference(RenderContext, String, List)
      */
-    static final void toSQLReferenceWithParentheses(RenderContext context, String sql, List<Param<?>> bindings) {
+    static final void toSQLReferenceWithParentheses(RenderContext context, String sql, List<QueryPart> substitutes) {
         context.sql("(");
-        toSQLReference(context, sql, bindings);
+        toSQLReference(context, sql, substitutes);
         context.sql(")");
     }
 

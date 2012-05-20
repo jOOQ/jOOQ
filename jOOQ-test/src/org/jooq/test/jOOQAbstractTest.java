@@ -821,6 +821,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testPlainSQLWithQueryParts() throws Exception {
+        new PlainSQLTests(this).testPlainSQLWithQueryParts();
+    }
+
+    @Test
     public void testPlainSQLResultQuery() throws Exception {
         new PlainSQLTests(this).testPlainSQLResultQuery();
     }

@@ -40,26 +40,26 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Param;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
-class SQLCondition extends AbstractCondition implements BindingProvider {
+class SQLCondition extends AbstractCondition {
 
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID = -7661748411414898501L;
+    private static final long     serialVersionUID = -7661748411414898501L;
 
-    private final String         sql;
-    private final List<Param<?>> bindings;
+    private final String          sql;
+    private final List<QueryPart> substitutes;
 
-    SQLCondition(String sql, Object[] bindings) {
+    SQLCondition(String sql, Object[] substitutes) {
         this.sql = sql;
-        this.bindings = Util.bindings(bindings);
+        this.substitutes = Util.queryParts(substitutes);
     }
 
     // ------------------------------------------------------------------------
-    // Condition API
+    // QueryPart API
     // ------------------------------------------------------------------------
 
     @Override
@@ -72,20 +72,11 @@ class SQLCondition extends AbstractCondition implements BindingProvider {
         // We have no control over the plain SQL content, hence we MUST put it
         // in parentheses to ensure correct semantics
 
-        Util.toSQLReferenceWithParentheses(context, sql, bindings);
+        Util.toSQLReferenceWithParentheses(context, sql, substitutes);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(bindings);
-    }
-
-    // ------------------------------------------------------------------------
-    // QueryPart API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final List<Param<?>> getBindings() {
-        return bindings;
+        context.bind(substitutes);
     }
 }

@@ -73,18 +73,15 @@ class ParamCollector extends AbstractBindContext {
 
     @Override
     protected final void bindInternal(QueryPartInternal internal) {
-        if (internal instanceof BindingProvider) {
-            BindingProvider provider = (BindingProvider) internal;
+        if (internal instanceof Param) {
+            Param<?> param = (Param<?>) internal;
+            String i = String.valueOf(nextIndex());
 
-            for (Param<?> param : provider.getBindings()) {
-                String i = String.valueOf(nextIndex());
-
-                if (StringUtils.isBlank(param.getParamName())) {
-                    result.put(i, param);
-                }
-                else {
-                    result.put(param.getParamName(), param);
-                }
+            if (StringUtils.isBlank(param.getParamName())) {
+                result.put(i, param);
+            }
+            else {
+                result.put(param.getParamName(), param);
             }
         }
         else {

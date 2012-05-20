@@ -160,7 +160,7 @@ public interface FactoryOperations extends Configuration {
     Query query(String sql);
 
     /**
-     * Create a new query holding plain SQL. There must be as many binding
+     * Create a new query holding plain SQL. There must be as many bind
      * variables contained in the SQL, as passed in the bindings parameter
      * <p>
      * Example:
@@ -179,6 +179,35 @@ public interface FactoryOperations extends Configuration {
      */
     @Support
     Query query(String sql, Object... bindings);
+
+    /**
+     * Create a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #query(String, Object...)}, the SQL passed to this method
+     * should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * query("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will render this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link Factory#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return A query wrapping the plain SQL
+     */
+    @Support
+    Query query(String sql, QueryPart... parts);
 
     // -------------------------------------------------------------------------
     // XXX JDBC convenience methods
@@ -839,8 +868,8 @@ public interface FactoryOperations extends Configuration {
      * @param table The table holding records of type &lt;R&gt;
      * @param source The source to be used to fill the new record
      * @return The new record
-     * @throws MappingException wrapping any reflection or data type conversion exception that might
-     *             have occurred while mapping records
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
      * @see Record#from(Object)
      * @see Record#into(Class)
      */
@@ -1015,7 +1044,7 @@ public interface FactoryOperations extends Configuration {
     Result<Record> fetch(String sql) throws DataAccessException;
 
     /**
-     * Execute a new query holding plain SQL. There must be as many binding
+     * Execute a new query holding plain SQL. There must be as many bind
      * variables contained in the SQL, as passed in the bindings parameter
      * <p>
      * Example (Postgres):
@@ -1041,6 +1070,36 @@ public interface FactoryOperations extends Configuration {
      */
     @Support
     Result<Record> fetch(String sql, Object... bindings) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #fetch(String, Object...)}, the SQL passed to this method
+     * should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * fetch("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link Factory#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
@@ -1076,7 +1135,43 @@ public interface FactoryOperations extends Configuration {
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
-     * result. There must be as many binding variables contained in the SQL, as
+     * result.
+     * <p>
+     * The returned {@link Cursor} holds a reference to the executed
+     * {@link PreparedStatement} and the associated {@link ResultSet}. Data can
+     * be fetched (or iterated over) lazily, fetching records from the
+     * {@link ResultSet} one by one.
+     * <p>
+     * Unlike {@link #fetchLazy(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link Factory#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL and "lazily" return the generated
+     * result. There must be as many bind variables contained in the SQL, as
      * passed in the bindings parameter
      * <p>
      * The returned {@link Cursor} holds a reference to the executed
@@ -1133,7 +1228,7 @@ public interface FactoryOperations extends Configuration {
 
     /**
      * Execute a new query holding plain SQL, possibly returning several result
-     * sets. There must be as many binding variables contained in the SQL, as
+     * sets. There must be as many bind variables contained in the SQL, as
      * passed in the bindings parameter
      * <p>
      * Example (Sybase ASE):
@@ -1155,6 +1250,37 @@ public interface FactoryOperations extends Configuration {
      */
     @Support
     List<Result<Record>> fetchMany(String sql, Object... bindings) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL, possibly returning several result
+     * sets.
+     * <p>
+     * Unlike {@link #fetchMany(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * fetchMany("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link Factory#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    List<Result<Record>> fetchMany(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -1183,7 +1309,7 @@ public interface FactoryOperations extends Configuration {
     Record fetchOne(String sql) throws DataAccessException;
 
     /**
-     * Execute a new query holding plain SQL. There must be as many binding
+     * Execute a new query holding plain SQL. There must be as many bind
      * variables contained in the SQL, as passed in the bindings parameter
      * <p>
      * Example (Postgres):
@@ -1202,13 +1328,43 @@ public interface FactoryOperations extends Configuration {
      *
      * @param sql The SQL
      * @param bindings The bindings
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The results from the executed query. This may be
+     *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
     Record fetchOne(String sql, Object... bindings) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #fetchOne(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link Factory#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query. This may be
+     *         <code>null</code> if the database returned no records
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    Record fetchOne(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Execute a query holding plain SQL.
@@ -1226,9 +1382,8 @@ public interface FactoryOperations extends Configuration {
     int execute(String sql) throws DataAccessException;
 
     /**
-     * Execute a new query holding plain SQL. There must be as many binding
+     * Execute a new query holding plain SQL. There must be as many bind
      * variables contained in the SQL, as passed in the bindings parameter
-     * <p>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1242,6 +1397,36 @@ public interface FactoryOperations extends Configuration {
      */
     @Support
     int execute(String sql, Object... bindings) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #execute(String, Object...)}, the SQL passed to this method
+     * should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * execute("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link Factory#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    int execute(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Create a new query holding plain SQL. There must not be any binding
@@ -1292,7 +1477,7 @@ public interface FactoryOperations extends Configuration {
     ResultQuery<Record> resultQuery(String sql) throws DataAccessException;
 
     /**
-     * Create a new query holding plain SQL. There must be as many binding
+     * Create a new query holding plain SQL. There must be as many bind
      * variables contained in the SQL, as passed in the bindings parameter
      * <p>
      * Use this method, when you want to take advantage of the many ways to
@@ -1334,9 +1519,37 @@ public interface FactoryOperations extends Configuration {
      *
      * @param sql The SQL
      * @param bindings The bindings
-     * @return An executable query
-     * @throws DataAccessException if something went wrong executing the query
+     * @return A query wrapping the plain SQL
      */
     @Support
-    ResultQuery<Record> resultQuery(String sql, Object... bindings) throws DataAccessException;
+    ResultQuery<Record> resultQuery(String sql, Object... bindings);
+
+    /**
+     * Create a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #resultQuery(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * resultQuery("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will render this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link Factory#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return A query wrapping the plain SQL
+     */
+    @Support
+    ResultQuery<Record> resultQuery(String sql, QueryPart... parts);
 }

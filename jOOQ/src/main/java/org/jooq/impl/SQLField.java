@@ -41,24 +41,24 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
-import org.jooq.Param;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
-class SQLField<T> extends AbstractField<T> implements BindingProvider {
+class SQLField<T> extends AbstractField<T> {
 
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID = 6937002867156868761L;
+    private static final long     serialVersionUID = 6937002867156868761L;
 
-    private final String         sql;
-    private final List<Param<?>> bindings;
+    private final String          sql;
+    private final List<QueryPart> substitutes;
 
-    SQLField(String sql, DataType<T> type, Object[] bindings) {
+    SQLField(String sql, DataType<T> type, Object[] substitutes) {
         super(sql, type);
 
         this.sql = sql;
-        this.bindings = Util.bindings(bindings);
+        this.substitutes = Util.queryParts(substitutes);
     }
 
     // ------------------------------------------------------------------------
@@ -72,25 +72,16 @@ class SQLField<T> extends AbstractField<T> implements BindingProvider {
 
     @Override
     public final void toSQL(RenderContext context) {
-        Util.toSQLReference(context, sql, bindings);
+        Util.toSQLReference(context, sql, substitutes);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(bindings);
+        context.bind(substitutes);
     }
 
     @Override
     public final boolean isNullLiteral() {
         return "null".equalsIgnoreCase(("" + sql).trim());
-    }
-
-    // ------------------------------------------------------------------------
-    // QueryPart API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final List<Param<?>> getBindings() {
-        return bindings;
     }
 }

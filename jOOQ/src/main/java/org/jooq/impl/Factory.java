@@ -771,7 +771,8 @@ public class Factory implements FactoryOperations {
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link #fieldByName(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -801,7 +802,8 @@ public class Factory implements FactoryOperations {
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link #fieldByName(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -832,7 +834,8 @@ public class Factory implements FactoryOperations {
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link #fieldByName(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -1017,6 +1020,16 @@ public class Factory implements FactoryOperations {
      * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
      * </pre></code>
+     * <p>
+     * Another example:
+     * <code><pre>
+     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
+     *       .from(tableByName("T_BOOK"))
+     *       .fetch();
+     *
+     * // ... will execute this SQL on SQL Server:
+     * select length([TITLE]) from [T_BOOK]
+     * </pre></code>
      *
      * @param fieldName The various parts making up your field's reference name.
      * @return A field referenced by <code>fieldName</code>
@@ -1042,6 +1055,16 @@ public class Factory implements FactoryOperations {
      *
      * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     * <p>
+     * Another example:
+     * <code><pre>
+     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
+     *       .from(tableByName("T_BOOK"))
+     *       .fetch();
+     *
+     * // ... will execute this SQL on SQL Server:
+     * select length([TITLE]) from [T_BOOK]
      * </pre></code>
      *
      * @param fieldName The various parts making up your field's reference name.
@@ -1069,6 +1092,16 @@ public class Factory implements FactoryOperations {
      *
      * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     * <p>
+     * Another example:
+     * <code><pre>
+     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
+     *       .from(tableByName("T_BOOK"))
+     *       .fetch();
+     *
+     * // ... will execute this SQL on SQL Server:
+     * select length([TITLE]) from [T_BOOK]
      * </pre></code>
      *
      * @param fieldName The various parts making up your field's reference name.

@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+  xmlns:tns="http://www.jooq.org/xsd/information-schema-2.4.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/information-schema-2.4.0.xsd"
+  elementFormDefault="qualified">
+
+  <!--
+    Global domain objects and types
+    -->
+
+  <simpleType name="YesOrNoType">
+    <restriction base="string">
+      <enumeration value="YES"/>
+      <enumeration value="NO"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="DataType">
+    <restriction base="string">
+      <enumeration value="CHARACTER"/>
+      <enumeration value="CHARACTER VARYING"/>
+      <enumeration value="CHARACTER LARGE OBJECT"/>
+      <enumeration value="BINARY"/>
+      <enumeration value="BINARY VARYING"/>
+      <enumeration value="BINARY LARGE OBJECT"/>
+      <enumeration value="TINYINT"/>
+      <enumeration value="SMALLINT"/>
+      <enumeration value="INTEGER"/>
+      <enumeration value="BIGINT"/>
+      <enumeration value="NUMERIC"/>
+      <enumeration value="DECIMAL"/>
+      <enumeration value="REAL"/>
+      <enumeration value="DOUBLE PRECISION"/>
+      <enumeration value="FLOAT"/>
+      <enumeration value="DATE"/>
+      <enumeration value="TIME"/>
+      <enumeration value="TIMESTAMP"/>
+      <enumeration value="TIME WITH TIME ZONE"/>
+      <enumeration value="TIMESTAMP WITH TIME ZONE"/>
+      <enumeration value="INTERVAL"/>
+      <enumeration value="BOOLEAN"/>
+      <enumeration value="USER-DEFINED"/>
+      <enumeration value="REF"/>
+      <enumeration value="ARRAY"/>
+      <enumeration value="MULTISET"/>
+      <enumeration value="ROW"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="IntervalType">
+    <restriction base="string">
+      <enumeration value="YEAR"/>
+      <enumeration value="MONTH"/>
+      <enumeration value="DAY"/>
+      <enumeration value="HOUR"/>
+      <enumeration value="MINUTE"/>
+      <enumeration value="SECOND"/>
+
+      <enumeration value="YEAR TO MONTH"/>
+      <enumeration value="DAY TO HOUR"/>
+      <enumeration value="DAY TO MINUTE"/>
+      <enumeration value="DAY TO SECOND"/>
+      <enumeration value="HOUR TO MINUTE"/>
+      <enumeration value="HOUR TO SECOND"/>
+      <enumeration value="MINUTE TO SECOND"/>
+    </restriction>
+  </simpleType>
+
+  <!--
+    The root element
+    -->
+
+  <element name="INFORMATION_SCHEMA" type="tns:InformationSchemaType"/>
+
+  <complexType name="InformationSchemaType">
+    <sequence>
+      <element name="COLUMNS" type="tns:ColumnsType" minOccurs="0" maxOccurs="1"/>
+      <element name="KEY_COLUMN_USAGE" type="tns:KeyColumnUsageType" minOccurs="0" maxOccurs="1"/>
+      <element name="PARAMETERS" type="tns:ParametersType" minOccurs="0" maxOccurs="1"/>
+      <element name="REFERENTIAL_CONSTRAINTS" type="tns:ReferentialConstraintsType" minOccurs="0" maxOccurs="1"/>
+      <element name="ROUTINES" type="tns:RoutinesType" minOccurs="0" maxOccurs="1"/>
+      <element name="SCHEMATA" type="tns:SchemataType" minOccurs="0" maxOccurs="1"/>
+      <element name="SEQUENCES" type="tns:SequencesType" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_CONSTRAINTS" type="tns:TableConstraintsType" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLES" type="tns:TablesType" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+
+  <!--
+    INFORMATION_SCHEMA.COLUMNS and related objects
+    -->
+
+  <complexType name="ColumnsType">
+    <sequence>
+      <element name="record" type="tns:ColumnsRecordType" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="ColumnsRecordType">
+    <sequence>
+      <element name="TABLE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="COLUMN_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="ORDINAL_POSITION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="COLUMN_DEFAULT" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_NULLABLE" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="DATA_TYPE" type="tns:DataType" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_MAXIMUM_LENGTH" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_OCTET_LENGTH" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_PRECISION_RADIX" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_SCALE" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="DATETIME_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="INTERVAL_TYPE" type="tns:IntervalType" minOccurs="0" maxOccurs="1"/>
+      <element name="INTERVAL_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_SET_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_SET_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_SET_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="COLLATION_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="COLLATION_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="COLLATION_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="DOMAIN_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="DOMAIN_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="DOMAIN_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="USER_DEFINED_TYPE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="USER_DEFINED_TYPE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="USER_DEFINED_TYPE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCOPE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCOPE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCOPE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="MAXIMUM_CARDINALITY" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="DTD_IDENTIFIER" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_SELF_REFERENCING" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_IDENTITY" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="IDENTITY_GENERATION" type="tns:IdentityGenerationType" minOccurs="0" maxOccurs="1"/>
+      <element name="IDENTITY_START" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="IDENTITY_INCREMENT" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="IDENTITY_MAXIMUM" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="IDENTITY_MINIMUM" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="IDENTITY_CYCLE" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_GENERATED" type="tns:IsGeneratedType" minOccurs="0" maxOccurs="1"/>
+      <element name="GENERATION_EXPRESSION" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_UPDATABLE" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+
+  <simpleType name="IdentityGenerationType">
+    <restriction base="string">
+      <enumeration value="ALWAYS"/>
+      <enumeration value="BY DEFAULT"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="IsGeneratedType">
+    <restriction base="string">
+      <enumeration value="NEVER"/>
+      <enumeration value="ALWAYS"/>
+    </restriction>
+  </simpleType>
+
+  <!--
+    INFORMATION_SCHEMA.KEY_COLUMN_USAGE and related objects
+    -->
+
+  <complexType name="KeyColumnUsageType">
+    <sequence>
+      <element name="record" type="tns:KeyColumnUsageRecordType" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="KeyColumnUsageRecordType">
+    <sequence>
+      <element name="CONSTRAINT_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CONSTRAINT_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CONSTRAINT_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="COLUMN_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="ORDINAL_POSITION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="POSITION_IN_UNIQUE_CONSTRAINT" type="int" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+
+  <!--
+    INFORMATION_SCHEMA.PARAMETERS and related objects
+    -->
+
+  <complexType name="ParametersType">
+    <sequence>
+      <element name="record" type="tns:ParametersRecordType" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="ParametersRecordType">
+    <sequence>
+      <element name="SPECIFIC_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SPECIFIC_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SPECIFIC_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="ORDINAL_POSITION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="PARAMETER_MODE" type="tns:ParameterModeType" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_RESULT" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="AS_LOCATOR" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="PARAMETER_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="FROM_SQL_SPECIFIC_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="FROM_SQL_SPECIFIC_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="FROM_SQL_SPECIFIC_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TO_SQL_SPECIFIC_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TO_SQL_SPECIFIC_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TO_SQL_SPECIFIC_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="DATA_TYPE" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_MAXIMUM_LENGTH" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_OCTET_LENGTH" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_SET_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_SET_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_SET_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="COLLATION_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="COLLATION_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="COLLATION_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_PRECISION_RADIX" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_SCALE" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="DATETIME_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="INTERVAL_TYPE" type="tns:IntervalType" minOccurs="0" maxOccurs="1"/>
+      <element name="INTERVAL_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="UDT_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="UDT_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="UDT_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCOPE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCOPE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCOPE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="MAXIMUM_CARDINALITY" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="DTD_IDENTIFIER" type="string" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+
+  <simpleType name="ParameterModeType">
+    <restriction base="string">
+      <enumeration value="IN"/>
+      <enumeration value="OUT"/>
+      <enumeration value="INOUT"/>
+    </restriction>
+  </simpleType>
+
+  <!--
+    INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS and related objects
+    -->
+
+  <complexType name="ReferentialConstraintsType">
+    <sequence>
+      <element name="record" type="tns:ReferentialConstraintsRecordType" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="ReferentialConstraintsRecordType">
+    <sequence>
+      <element name="CONSTRAINT_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CONSTRAINT_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CONSTRAINT_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="UNIQUE_CONSTRAINT_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="UNIQUE_CONSTRAINT_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="UNIQUE_CONSTRAINT_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="MATCH_OPTION" type="tns:MatchOptionType" minOccurs="0" maxOccurs="1"/>
+      <element name="UPDATE_RULE" type="tns:UpdateRuleType" minOccurs="0" maxOccurs="1"/>
+      <element name="DELETE_RULE" type="tns:DeleteRuleType" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+
+  <simpleType name="MatchOptionType">
+    <restriction base="string">
+      <enumeration value="NONE"/>
+      <enumeration value="PARTIAL"/>
+      <enumeration value="FULL"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="UpdateRuleType">
+    <restriction base="string">
+      <enumeration value="CASCADE"/>
+      <enumeration value="SET NULL"/>
+      <enumeration value="SET DEFAULT"/>
+      <enumeration value="RESTRICT"/>
+      <enumeration value="NO ACTION"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="DeleteRuleType">
+    <restriction base="string">
+      <enumeration value="CASCADE"/>
+      <enumeration value="SET NULL"/>
+      <enumeration value="SET DEFAULT"/>
+      <enumeration value="RESTRICT"/>
+      <enumeration value="NO ACTION"/>
+    </restriction>
+  </simpleType>
+
+  <!--
+    INFORMATION_SCHEMA.ROUTINES and related objects
+    -->
+
+  <complexType name="RoutinesType">
+    <sequence>
+      <element name="record" type="tns:RoutinesRecordType" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="RoutinesRecordType">
+    <sequence>
+      <element name="SPECIFIC_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SPECIFIC_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SPECIFIC_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="ROUTINE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="ROUTINE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="ROUTINE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="ROUTINE_TYPE" type="tns:RoutineType" minOccurs="0" maxOccurs="1"/>
+      <element name="MODULE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="MODULE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="MODULE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="UDT_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="UDT_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="UDT_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="DATA_TYPE" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_MAXIMUM_LENGTH" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_OCTET_LENGTH" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_SET_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_SET_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CHARACTER_SET_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="COLLATION_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="COLLATION_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="COLLATION_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_PRECISION_RADIX" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_SCALE" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="DATETIME_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="INTERVAL_TYPE" type="tns:IntervalType" minOccurs="0" maxOccurs="1"/>
+      <element name="INTERVAL_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="TYPE_UDT_CATALOG" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="TYPE_UDT_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TYPE_UDT_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCOPE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCOPE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCOPE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="MAXIMUM_CARDINALITY" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="DTD_IDENTIFIER" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="ROUTINE_BODY" type="tns:RoutineBodyType" minOccurs="0" maxOccurs="1"/>
+      <element name="ROUTINE_DEFINITION" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="EXTERNAL_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="EXTERNAL_LANGUAGE" type="tns:ExternalLanguageType" minOccurs="0" maxOccurs="1"/>
+      <element name="PARAMETER_STYLE" type="tns:ParameterStyleType" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_DETERMINISTIC" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="SQL_DATA_ACCESS" type="tns:SQLDataAccessType" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_NULL_CALL" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="SQL_PATH" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCHEMA_LEVEL_ROUTINE" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="MAX_DYNAMIC_RESULT_SETS" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_USER_DEFINED_CAST" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_IMPLICITLY_INVOCABLE" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="SECURITY_TYPE" type="tns:SecurityType" minOccurs="0" maxOccurs="1"/>
+      <element name="TO_SQL_SPECIFIC_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TO_SQL_SPECIFIC_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TO_SQL_SPECIFIC_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="AS_LOCATOR" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="CREATED" type="dateTime" minOccurs="0" maxOccurs="1"/>
+      <element name="LAST_ALTERED" type="dateTime" minOccurs="0" maxOccurs="1"/>
+      <element name="NEW_SAVEPOINT_LEVEL" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_UDT_DEPENDENT" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_FROM_DATA_TYPE" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_AS_LOCATOR" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_CHAR_MAX_LENGTH" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_CHAR_OCTET_LENGTH" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_CHAR_SET_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_CHAR_SET_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_CHARACTER_SET_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_COLLATION_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_COLLATION_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_COLLATION_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_NUMERIC_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_NUMERIC_RADIX" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_NUMERIC_SCALE" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_DATETIME_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_INTERVAL_TYPE" type="tns:IntervalType" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_INTERVAL_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_TYPE_UDT_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_TYPE_UDT_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_TYPE_UDT_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_SCOPE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_SCOPE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_SCOPE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="RESULT_CAST_DTD_IDENTIFIER" type="int" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+
+  <simpleType name="RoutineType">
+  	<restriction base="string">
+  	  <enumeration value="PROCEDURE"/>
+  	  <enumeration value="FUNCTION"/>
+  	  <enumeration value="INSTANCE METHOD"/>
+  	  <enumeration value="STATIC METHOD"/>
+  	  <enumeration value="CONSTRUCTOR METHOD"/>
+  	</restriction>
+  </simpleType>
+
+  <simpleType name="RoutineBodyType">
+  	<restriction base="string">
+  	  <enumeration value="SQL"/>
+  	  <enumeration value="EXTERNAL"/>
+  	</restriction>
+  </simpleType>
+
+  <simpleType name="ExternalLanguageType">
+  	<restriction base="string">
+  	  <enumeration value="ADA"/>
+  	  <enumeration value="C"/>
+  	  <enumeration value="COBOL"/>
+  	  <enumeration value="FORTRAN"/>
+  	  <enumeration value="MUMPS"/>
+  	  <enumeration value="PASCAL"/>
+  	  <enumeration value="PLI"/>
+  	</restriction>
+  </simpleType>
+
+  <simpleType name="ParameterStyleType">
+  	<restriction base="string">
+  	  <enumeration value="SQL"/>
+  	  <enumeration value="GENERAL"/>
+  	</restriction>
+  </simpleType>
+
+  <simpleType name="SQLDataAccessType">
+  	<restriction base="string">
+  	  <enumeration value="NO SQL"/>
+  	  <enumeration value="CONTAINS SQL"/>
+  	  <enumeration value="READS SQL DATA"/>
+  	  <enumeration value="MODIFIES SQL DATA"/>
+  	</restriction>
+  </simpleType>
+
+  <simpleType name="SecurityType">
+  	<restriction base="string">
+  	  <enumeration value="DEFINER"/>
+  	  <enumeration value="INVOKER"/>
+  	  <enumeration value="IMPLEMENTATION DEFINED"/>
+  	</restriction>
+  </simpleType>
+
+  <!--
+    INFORMATION_SCHEMA.SCHEMATA and related objects
+    -->
+
+  <complexType name="SchemataType">
+    <sequence>
+      <element name="record" type="tns:SchemataRecordType" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="SchemataRecordType">
+    <sequence>
+      <element name="CATALOG_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCHEMA_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SCHEMA_OWNER" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="DEFAULT_CHARACTER_SET_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="DEFAULT_CHARACTER_SET_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="DEFAULT_CHARACTER_SET_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SQL_PATH" type="string" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+
+  <!--
+    INFORMATION_SCHEMA.SEQUENCES and related objects
+    -->
+
+  <complexType name="SequencesType">
+    <sequence>
+      <element name="record" type="tns:SequencesRecordType" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="SequencesRecordType">
+    <sequence>
+      <element name="SEQUENCE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SEQUENCE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="SEQUENCE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="DATA_TYPE" type="tns:DataType" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_PRECISION" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_PRECISION_RADIX" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="NUMERIC_SCALE" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="MAXIMUM_VALUE" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="MINIMUM_VALUE" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="INCREMENT" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CYCLE_OPTION" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+
+  <!--
+    INFORMATION_SCHEMA.TABLE_CONSTRAINTS and related objects
+    -->
+
+  <complexType name="TableConstraintsType">
+    <sequence>
+      <element name="record" type="tns:TableConstraintsRecordType" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="TableConstraintsRecordType">
+    <sequence>
+      <element name="CONSTRAINT_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CONSTRAINT_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CONSTRAINT_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="CONSTRAINT_TYPE" type="tns:ConstraintType" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_DEFERRABLE" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="INITIALLY_DEFERRED" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+
+  <simpleType name="ConstraintType">
+  	<restriction base="string">
+  	  <enumeration value="UNIQUE"/>
+  	  <enumeration value="PRIMARY KEY"/>
+  	  <enumeration value="FOREIGN KEY"/>
+  	  <enumeration value="CHECK"/>
+  	</restriction>
+  </simpleType>
+
+  <!--
+    INFORMATION_SCHEMA.TABLES and related objects
+    -->
+
+  <complexType name="TablesType">
+    <sequence>
+      <element name="record" type="tns:TablesRecordType" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="TablesRecordType">
+    <sequence>
+      <element name="TABLE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="TABLE_TYPE" type="tns:TableType" minOccurs="0" maxOccurs="1"/>
+      <element name="SELF_REFERENCING_COLUMN_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="REFERENCE_GENERATION" type="tns:ReferenceGenerationType" minOccurs="0" maxOccurs="1"/>
+      <element name="USER_DEFINED_TYPE_CATALOG" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="USER_DEFINED_TYPE_SCHEMA" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="USER_DEFINED_TYPE_NAME" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_INSERTABLE_INTO" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="IS_TYPED" type="tns:YesOrNoType" minOccurs="0" maxOccurs="1"/>
+      <element name="COMMIT_ACTION" type="tns:CommitActionType" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+
+  <simpleType name="TableType">
+    <restriction base="string">
+      <enumeration value="BASE TABLE"/>
+      <enumeration value="VIEW"/>
+      <enumeration value="GLOBAL TEMPORARY"/>
+      <enumeration value="LOCAL TEMPORARY"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="ReferenceGenerationType">
+    <restriction base="string">
+      <enumeration value="SYSTEM GENERATED"/>
+      <enumeration value="USER GENERATED"/>
+      <enumeration value="DERIVED"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="CommitActionType">
+    <restriction base="string">
+      <enumeration value="DELETE"/>
+      <enumeration value="PRESERVE"/>
+    </restriction>
+  </simpleType>
+
+</schema>

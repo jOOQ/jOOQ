@@ -78,7 +78,7 @@ public class DefaultRelations implements Relations {
         UniqueKeyDefinition key = uniqueKeys.get(key(column, keyName));
 
         if (key == null) {
-            key = new DefaultUniqueKeyDefinition(column.getSchema(), keyName, column.getContainer());
+            key = new DefaultUniqueKeyDefinition(column.getSchema(), keyName, column.getContainer(), isPK);
             uniqueKeys.put(key(column, keyName), key);
 
             if (isPK) {

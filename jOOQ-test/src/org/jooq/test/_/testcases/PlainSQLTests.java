@@ -318,11 +318,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         // Mix {keywords} with {numbered placeholders}
         String sql = "{select} {0}, a.{1} {from} {2} a {where} {3} = {4}";
         QueryPart[] parts = {
-            val(1), name(TAuthor_ID().getName()), name(TAuthor().getName()), name(TAuthor_ID().getName()), inline(1)
+            val("a"), name(TAuthor_LAST_NAME().getName()), name(TAuthor().getName()), name(TAuthor_ID().getName()), inline(1)
         };
 
         Record author = create()
-                .select(val(1), TAuthor_ID())
+                .select(val("a"), TAuthor_LAST_NAME())
                 .from(TAuthor())
                 .where(TAuthor_ID().equal(1))
                 .fetchOne();
@@ -330,12 +330,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         Record record = create().fetchOne(sql, parts);
         Result<Record> result = create().fetch(sql, parts);
         Cursor<Record> cursor = create().fetchLazy(sql, parts);
-        List<Result<Record>> many = create().fetchMany(sql, parts);
 
         assertEquals(author, record);
         assertEquals(author, result.get(0));
         assertEquals(author, cursor.fetchOne());
-        assertEquals(author, many.get(0).get(0));
     }
 
     @Test

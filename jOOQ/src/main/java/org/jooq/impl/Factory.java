@@ -813,7 +813,7 @@ public class Factory implements FactoryOperations {
      * @return A field wrapping the plain SQL
      */
     public static Field<Object> field(String sql, QueryPart... parts) {
-        return new SQLClause<Object>(sql, SQLDataType.OTHER, parts);
+        return new SQLField<Object>(sql, SQLDataType.OTHER, parts);
     }
 
     /**
@@ -847,7 +847,7 @@ public class Factory implements FactoryOperations {
      * @return A field wrapping the plain SQL
      */
     public static <T> Field<T> field(String sql, Class<T> type, QueryPart... parts) {
-        return new SQLClause<T>(sql, getDataType(type), parts);
+        return new SQLField<T>(sql, getDataType(type), parts);
     }
 
     /**
@@ -881,7 +881,7 @@ public class Factory implements FactoryOperations {
      * @return A field wrapping the plain SQL
      */
     public static <T> Field<T> field(String sql, DataType<T> type, QueryPart... parts) {
-        return new SQLClause<T>(sql, type, parts);
+        return new SQLField<T>(sql, type, parts);
     }
 
     /**

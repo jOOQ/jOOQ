@@ -42,6 +42,8 @@ import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.inline;
+import static org.jooq.impl.Factory.name;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.tableByName;
@@ -56,6 +58,7 @@ import org.jooq.Condition;
 import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.FutureResult;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RenderContext;
@@ -182,7 +185,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             .join("t_book b").on("a.id = b.author_id")
             .where("b.title != 'Brida'")
             .groupBy(LAST_NAME)
-            .having("count(*) = ?", 1).fetch();
+            .having("{count}(*) = ?", 1).fetch();
 
         assertEquals(1, result.size());
         assertEquals("Coelho", result.getValue(0, LAST_NAME));
@@ -308,6 +311,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .from(table)
                 .where(id.in(10, 11))
                 .fetchOne(0));
+    }
+
+    @Test
+    public void testPlainSQLWithQueryParts() throws Exception {
+        // Mix {keywords} with {numbered placeholders}
+        String sql = "{select} {0}, a.{1} {from} {2} a {where} {3} = {4}";
+        QueryPart[] parts = {
+            val(1), name(TAuthor_ID().getName()), name(TAuthor().getName()), name(TAuthor_ID().getName()), inline(1)
+        };
+
+        Record author = create()
+                .select(val(1), TAuthor_ID())
+                .from(TAuthor())
+                .where(TAuthor_ID().equal(1))
+                .fetchOne();
+
+        Record record = create().fetchOne(sql, parts);
+        Result<Record> result = create().fetch(sql, parts);
+        Cursor<Record> cursor = create().fetchLazy(sql, parts);
+        List<Result<Record>> many = create().fetchMany(sql, parts);
+
+        assertEquals(author, record);
+        assertEquals(author, result.get(0));
+        assertEquals(author, cursor.fetchOne());
+        assertEquals(author, many.get(0).get(0));
     }
 
     @Test

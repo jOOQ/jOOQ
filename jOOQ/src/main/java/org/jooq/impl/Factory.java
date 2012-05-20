@@ -797,17 +797,19 @@ public class Factory implements FactoryOperations {
      *       </pre></code>
      * <p>
      * The above MySQL function can be expressed as such: <code><pre>
-     * clause("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
+     * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link #fieldByName(String...)} and similar methods
+     * literals is to use {@link #name(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
      * @return A field wrapping the plain SQL
      */
     public static Field<Object> field(String sql, QueryPart... parts) {
@@ -828,18 +830,20 @@ public class Factory implements FactoryOperations {
      *       </pre></code>
      * <p>
      * The above MySQL function can be expressed as such: <code><pre>
-     * clause("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
+     * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link #fieldByName(String...)} and similar methods
+     * literals is to use {@link #name(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
      * @param type The field type
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
      * @return A field wrapping the plain SQL
      */
     public static <T> Field<T> field(String sql, Class<T> type, QueryPart... parts) {
@@ -860,18 +864,20 @@ public class Factory implements FactoryOperations {
      *       </pre></code>
      * <p>
      * The above MySQL function can be expressed as such: <code><pre>
-     * clause("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
+     * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link #fieldByName(String...)} and similar methods
+     * literals is to use {@link #name(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
      * @param type The field type
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
      * @return A field wrapping the plain SQL
      */
     public static <T> Field<T> field(String sql, DataType<T> type, QueryPart... parts) {
@@ -1244,7 +1250,15 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Result<Record> fetch(String sql) {
+    public final Query query(String sql, QueryPart... parts) {
+        return new SQLQuery(this, sql, parts);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Result<Record> fetch(String sql) throws DataAccessException {
         return resultQuery(sql).fetch();
     }
 
@@ -1252,8 +1266,16 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Result<Record> fetch(String sql, Object... bindings) {
+    public final Result<Record> fetch(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetch();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException {
+        return resultQuery(sql, parts).fetch();
     }
 
     /**
@@ -1276,7 +1298,15 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final List<Result<Record>> fetchMany(String sql) {
+    public final Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException {
+        return resultQuery(sql, parts).fetchLazy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final List<Result<Record>> fetchMany(String sql) throws DataAccessException {
         return resultQuery(sql).fetchMany();
     }
 
@@ -1284,7 +1314,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final List<Result<Record>> fetchMany(String sql, Object... bindings) {
+    public final List<Result<Record>> fetchMany(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetchMany();
     }
 
@@ -1292,7 +1322,15 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Record fetchOne(String sql) {
+    public final List<Result<Record>> fetchMany(String sql, QueryPart... parts) throws DataAccessException {
+        return resultQuery(sql, parts).fetchMany();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Record fetchOne(String sql) throws DataAccessException {
         return resultQuery(sql).fetchOne();
     }
 
@@ -1300,8 +1338,16 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Record fetchOne(String sql, Object... bindings) {
+    public final Record fetchOne(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetchOne();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Record fetchOne(String sql, QueryPart... parts) throws DataAccessException {
+        return resultQuery(sql, parts).fetchOne();
     }
 
     /**
@@ -1324,7 +1370,15 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final ResultQuery<Record> resultQuery(String sql) throws DataAccessException {
+    public final int execute(String sql, QueryPart... parts) throws DataAccessException {
+        return query(sql, parts).execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final ResultQuery<Record> resultQuery(String sql) {
         return resultQuery(sql, new Object[0]);
     }
 
@@ -1332,8 +1386,16 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final ResultQuery<Record> resultQuery(String sql, Object... bindings) throws DataAccessException {
+    public final ResultQuery<Record> resultQuery(String sql, Object... bindings) {
         return new SQLResultQuery(this, sql, bindings);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final ResultQuery<Record> resultQuery(String sql, QueryPart... parts) {
+        return new SQLResultQuery(this, sql, parts);
     }
 
     // -------------------------------------------------------------------------
@@ -2894,26 +2956,44 @@ public class Factory implements FactoryOperations {
     // [#470] TRUNC(datetime) will be implemented in a future release
     // -------------------------------------------------------------------------
 
+    /**
+     * This is not yet implemented
+     */
     static Field<Date> trunc(Date date) {
         return trunc(date, DatePart.DAY);
     }
 
+    /**
+     * This is not yet implemented
+     */
     static Field<Date> trunc(Date date, DatePart part) {
         return trunc(val(date), part);
     }
 
+    /**
+     * This is not yet implemented
+     */
     static Field<Timestamp> trunc(Timestamp timestamp) {
         return trunc(timestamp, DatePart.DAY);
     }
 
+    /**
+     * This is not yet implemented
+     */
     static Field<Timestamp> trunc(Timestamp timestamp, DatePart part) {
         return trunc(val(timestamp), part);
     }
 
+    /**
+     * This is not yet implemented
+     */
     static <T extends java.util.Date> Field<T> trunc(Field<T> date) {
         return trunc(date, DatePart.DAY);
     }
 
+    /**
+     * This is not yet implemented
+     */
     static <T extends java.util.Date> Field<T> trunc(Field<T> date, DatePart part) {
         throw new UnsupportedOperationException("This is not yet implemented");
     }

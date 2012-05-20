@@ -43,7 +43,7 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.Param;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 
@@ -52,21 +52,21 @@ import org.jooq.RenderContext;
  *
  * @author Lukas Eder
  */
-class SQLResultQuery extends AbstractResultQuery<Record> implements BindingProvider {
+class SQLResultQuery extends AbstractResultQuery<Record> {
 
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID = 1740879770879469220L;
+    private static final long     serialVersionUID = 1740879770879469220L;
 
-    private final String         sql;
-    private final List<Param<?>> bindings;
+    private final String          sql;
+    private final List<QueryPart> substitutes;
 
-    public SQLResultQuery(Configuration configuration, String sql, Object[] bindings) {
+    public SQLResultQuery(Configuration configuration, String sql, Object[] substitutes) {
         super(configuration);
 
         this.sql = sql;
-        this.bindings = Util.bindings(bindings);
+        this.substitutes = Util.queryParts(substitutes);
     }
 
     // ------------------------------------------------------------------------
@@ -75,12 +75,12 @@ class SQLResultQuery extends AbstractResultQuery<Record> implements BindingProvi
 
     @Override
     public final void toSQL(RenderContext context) {
-        Util.toSQLReference(context, sql, bindings);
+        Util.toSQLReference(context, sql, substitutes);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(bindings);
+        context.bind(substitutes);
     }
 
     @Override
@@ -107,14 +107,5 @@ class SQLResultQuery extends AbstractResultQuery<Record> implements BindingProvi
     @Override
     final boolean isForUpdate() {
         return false;
-    }
-
-    // ------------------------------------------------------------------------
-    // QueryPart API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final List<Param<?>> getBindings() {
-        return bindings;
     }
 }

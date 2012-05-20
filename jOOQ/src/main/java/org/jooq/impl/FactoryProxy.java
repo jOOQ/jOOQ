@@ -230,6 +230,11 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
+    public final Query query(String sql, QueryPart... parts) {
+        return getDelegate().query(sql, parts);
+    }
+
+    @Override
     public final <R extends Record> SimpleSelectWhereStep<R> selectFrom(Table<R> table) {
         return getDelegate().selectFrom(table);
     }
@@ -391,6 +396,11 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
+    public final Result<Record> fetch(String sql, QueryPart... parts) {
+        return getDelegate().fetch(sql, parts);
+    }
+
+    @Override
     public final Cursor<Record> fetchLazy(String sql) throws DataAccessException {
         return getDelegate().fetchLazy(sql);
     }
@@ -398,6 +408,11 @@ public final class FactoryProxy implements FactoryOperations {
     @Override
     public final Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException {
         return getDelegate().fetchLazy(sql, bindings);
+    }
+
+    @Override
+    public final Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException {
+        return getDelegate().fetchLazy(sql, parts);
     }
 
     @Override
@@ -411,6 +426,11 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
+    public final List<Result<Record>> fetchMany(String sql, QueryPart... parts) {
+        return getDelegate().fetchMany(sql, parts);
+    }
+
+    @Override
     public final Record fetchOne(String sql) {
         return getDelegate().fetchOne(sql);
     }
@@ -418,6 +438,11 @@ public final class FactoryProxy implements FactoryOperations {
     @Override
     public final Record fetchOne(String sql, Object... bindings) {
         return getDelegate().fetchOne(sql, bindings);
+    }
+
+    @Override
+    public final Record fetchOne(String sql, QueryPart... parts) {
+        return getDelegate().fetchOne(sql, parts);
     }
 
     @Override
@@ -431,6 +456,11 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
+    public final int execute(String sql, QueryPart... parts) throws DataAccessException {
+        return getDelegate().execute(sql, parts);
+    }
+
+    @Override
     public final ResultQuery<Record> resultQuery(String sql) throws DataAccessException {
         return getDelegate().resultQuery(sql);
     }
@@ -438,6 +468,11 @@ public final class FactoryProxy implements FactoryOperations {
     @Override
     public final ResultQuery<Record> resultQuery(String sql, Object... bindings) throws DataAccessException {
         return getDelegate().resultQuery(sql, bindings);
+    }
+
+    @Override
+    public final ResultQuery<Record> resultQuery(String sql, QueryPart... parts) {
+        return getDelegate().resultQuery(sql, parts);
     }
 
     @Override

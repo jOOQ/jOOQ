@@ -48,6 +48,11 @@ import java.util.List;
 public interface UniqueKeyDefinition extends Definition {
 
     /**
+     * Whether this unique key is the primary key
+     */
+    boolean isPrimaryKey();
+
+    /**
      * The list of columns making up the primary key.
      */
     List<ColumnDefinition> getKeyColumns();

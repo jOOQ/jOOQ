@@ -44,13 +44,20 @@ public class DefaultUniqueKeyDefinition extends AbstractDefinition implements Un
     private final List<ForeignKeyDefinition> foreignKeys;
     private final List<ColumnDefinition>     keyColumns;
     private final TableDefinition            table;
+    private final boolean                    isPrimaryKey;
 
-    public DefaultUniqueKeyDefinition(SchemaDefinition schema, String name, TableDefinition table) {
+    public DefaultUniqueKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, boolean isPrimaryKey) {
         super(schema.getDatabase(), schema, name, null);
 
         this.foreignKeys = new ArrayList<ForeignKeyDefinition>();
         this.keyColumns = new ArrayList<ColumnDefinition>();
         this.table = table;
+        this.isPrimaryKey = isPrimaryKey;
+    }
+
+    @Override
+    public boolean isPrimaryKey() {
+        return isPrimaryKey;
     }
 
     @Override

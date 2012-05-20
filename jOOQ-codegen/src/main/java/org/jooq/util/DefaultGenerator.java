@@ -99,168 +99,19 @@ import org.jooq.util.GeneratorStrategy.Mode;
 
 
 /**
- * A default implementation for code generation. Replace this code with your own
- * logic, if you need your database schema represented in a different way.
+ * A default implementation for code generation.
+ * <p>
+ * Replace this code with your own logic, if you need your database schema
+ * represented in a different way.
  * <p>
  * Note that you can also extend this class to generate POJO's or other stuff
  * entirely independent of jOOQ.
  *
  * @author Lukas Eder
  */
-public class DefaultGenerator implements Generator {
+public class DefaultGenerator extends AbstractGenerator {
 
-    private static final JooqLogger  log                           = JooqLogger.getLogger(DefaultGenerator.class);
-
-    private boolean                  generateDeprecated            = true;
-    private boolean                  generateRelations             = false;
-    private boolean                  generateNavigationMethods     = true;
-    private boolean                  generateInstanceFields        = true;
-    private boolean                  generateGeneratedAnnotation   = true;
-    private boolean                  generateRecords               = true;
-    private boolean                  generatePojos                 = false;
-    private boolean                  generateDaos                  = false;
-    private boolean                  generateJPAAnnotations        = false;
-    private boolean                  generateValidationAnnotations = false;
-
-    private GeneratorStrategyWrapper strategy;
-
-    @Override
-    public void setStrategy(GeneratorStrategy strategy) {
-        this.strategy = new GeneratorStrategyWrapper(this, strategy);
-    }
-
-    @Override
-    public GeneratorStrategy getStrategy() {
-        return strategy;
-    }
-
-    @Override
-    public boolean generateDeprecated() {
-        return generateDeprecated;
-    }
-
-    @Override
-    public void setGenerateDeprecated(boolean generateDeprecated) {
-        this.generateDeprecated = generateDeprecated;
-    }
-
-    @Override
-    public boolean generateRelations() {
-        return generateRelations;
-    }
-
-    @Override
-    public void setGenerateRelations(boolean generateRelations) {
-        this.generateRelations = generateRelations;
-    }
-
-    @Override
-    public boolean generateInstanceFields() {
-        return generateInstanceFields;
-    }
-
-    @Override
-    public boolean generateNavigationMethods() {
-        return generateNavigationMethods;
-    }
-
-    @Override
-    public void setGenerateNavigationMethods(boolean generateNavigationMethods) {
-        this.generateNavigationMethods = generateNavigationMethods;
-    }
-
-    @Override
-    public void setGenerateInstanceFields(boolean generateInstanceFields) {
-        this.generateInstanceFields = generateInstanceFields;
-    }
-
-    @Override
-    public boolean generateGeneratedAnnotation() {
-        return generateGeneratedAnnotation;
-    }
-
-    @Override
-    public void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation) {
-        this.generateGeneratedAnnotation = generateGeneratedAnnotation;
-    }
-
-    @Override
-    public boolean generateRecords() {
-
-        // [#1280] When DAOs are generated, Records must be generated, too
-        return generateRecords || generateDaos;
-    }
-
-    @Override
-    public void setGenerateRecords(boolean generateRecords) {
-        this.generateRecords = generateRecords;
-    }
-
-    @Override
-    public boolean generatePojos() {
-
-        // [#1280] When DAOs are generated, POJOs must be generated, too
-        return generatePojos || generateDaos;
-    }
-
-    @Override
-    public void setGeneratePojos(boolean generatePojos) {
-        this.generatePojos = generatePojos;
-    }
-
-    @Override
-    public boolean generateDaos() {
-        return generateDaos;
-    }
-
-    @Override
-    public void setGenerateDaos(boolean generateDaos) {
-        this.generateDaos = generateDaos;
-    }
-
-    @Override
-    public boolean generateJPAAnnotations() {
-        return generateJPAAnnotations;
-    }
-
-    @Override
-    public void setGenerateJPAAnnotations(boolean generateJPAAnnotations) {
-        this.generateJPAAnnotations = generateJPAAnnotations;
-    }
-
-    @Override
-    public boolean generateValidationAnnotations() {
-        return generateValidationAnnotations;
-    }
-
-    @Override
-    public void setGenerateValidationAnnotations(boolean generateValidationAnnotations) {
-        this.generateValidationAnnotations = generateValidationAnnotations;
-    }
-
-    // ----
-
-    @Override
-    public void setTargetDirectory(String directory) {
-        strategy.setTargetDirectory(directory);
-    }
-
-    @Override
-    public String getTargetDirectory() {
-        return strategy.getTargetDirectory();
-    }
-
-    @Override
-    public void setTargetPackage(String packageName) {
-        strategy.setTargetPackage(packageName);
-    }
-
-    @Override
-    public String getTargetPackage() {
-        return strategy.getTargetPackage();
-    }
-
-    // ----
+    private static final JooqLogger log = JooqLogger.getLogger(DefaultGenerator.class);
 
     @Override
     public void generate(Database database) throws IOException {
@@ -273,7 +124,7 @@ public class DefaultGenerator implements Generator {
         log.info("  target package", getTargetPackage());
         log.info("----------------------------------------------------------");
         log.info("");
-        log.info("Generation parameters");
+        log.info("DefaultGenerator parameters");
         log.info("----------------------------------------------------------");
         log.info("  strategy", strategy.delegate.getClass());
         log.info("  deprecated", generateDeprecated());

@@ -102,6 +102,7 @@ import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
 import org.jooq.LoaderOptionsStep;
 import org.jooq.MergeUsingStep;
+import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.Param;
 import org.jooq.Query;
@@ -661,6 +662,37 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
+    // XXX SQL identifiers
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a new SQL identifier using a qualified name.
+     * <p>
+     * Use this method to construct syntax-safe, SQL-injection-safe SQL
+     * identifiers for use in plain SQL where {@link QueryPart} objects are
+     * accepted. For instance, this can be used with any of these methods:
+     * <ul>
+     * <li> {@link #field(String, QueryPart...)}</li>
+     * <li> {@link #field(String, Class, QueryPart...)}</li>
+     * <li> {@link #field(String, DataType, QueryPart...)}</li>
+     * </ul>
+     * <p>
+     * An example: <code><pre>
+     * // This qualified name here
+     * name("book", "title");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [book].[title]
+     * </pre></code>
+     *
+     * @param qualifiedName The SQL identifier's qualified name parts
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    public static Name name(String... qualifiedName) {
+        return new NameImpl(qualifiedName);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX Plain SQL object factory
     // -------------------------------------------------------------------------
 
@@ -734,8 +766,7 @@ public class Factory implements FactoryOperations {
      * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
      * injection.
      * <p>
-     * Example:
-     * <code><pre>
+     * Example: <code><pre>
      * // This table...
      * tableName("MY_SCHEMA", "MY_TABLE");
      *
@@ -743,12 +774,13 @@ public class Factory implements FactoryOperations {
      * [MY_SCHEMA].[MY_TABLE]
      * </pre></code>
      *
-     * @param tableName The various parts making up your table's reference name.
+     * @param qualifiedName The various parts making up your table's reference
+     *            name.
      * @return A table referenced by <code>tableName</code>
      */
     @Support
-    public static Table<Record> tableByName(String... tableName) {
-        return new QualifiedTable(tableName);
+    public static Table<Record> tableByName(String... qualifiedName) {
+        return new QualifiedTable(qualifiedName);
     }
 
     /**
@@ -1012,8 +1044,7 @@ public class Factory implements FactoryOperations {
      * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
      * injection.
      * <p>
-     * Example:
-     * <code><pre>
+     * Example: <code><pre>
      * // This field...
      * fieldName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
      *
@@ -1021,8 +1052,7 @@ public class Factory implements FactoryOperations {
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
      * </pre></code>
      * <p>
-     * Another example:
-     * <code><pre>
+     * Another example: <code><pre>
      * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
      *       .from(tableByName("T_BOOK"))
      *       .fetch();
@@ -1031,12 +1061,13 @@ public class Factory implements FactoryOperations {
      * select length([TITLE]) from [T_BOOK]
      * </pre></code>
      *
-     * @param fieldName The various parts making up your field's reference name.
+     * @param qualifiedName The various parts making up your field's reference
+     *            name.
      * @return A field referenced by <code>fieldName</code>
      */
     @Support
-    public static Field<Object> fieldByName(String... fieldName) {
-        return fieldByName(Object.class, fieldName);
+    public static Field<Object> fieldByName(String... qualifiedName) {
+        return fieldByName(Object.class, qualifiedName);
     }
 
     /**
@@ -1048,8 +1079,7 @@ public class Factory implements FactoryOperations {
      * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
      * injection.
      * <p>
-     * Example:
-     * <code><pre>
+     * Example: <code><pre>
      * // This field...
      * fieldName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
      *
@@ -1057,8 +1087,7 @@ public class Factory implements FactoryOperations {
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
      * </pre></code>
      * <p>
-     * Another example:
-     * <code><pre>
+     * Another example: <code><pre>
      * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
      *       .from(tableByName("T_BOOK"))
      *       .fetch();
@@ -1067,13 +1096,14 @@ public class Factory implements FactoryOperations {
      * select length([TITLE]) from [T_BOOK]
      * </pre></code>
      *
-     * @param fieldName The various parts making up your field's reference name.
+     * @param qualifiedName The various parts making up your field's reference
+     *            name.
      * @param type The type of the returned field
      * @return A field referenced by <code>fieldName</code>
      */
     @Support
-    public static <T> Field<T> fieldByName(Class<T> type, String... fieldName) {
-        return fieldByName(getDataType(type), fieldName);
+    public static <T> Field<T> fieldByName(Class<T> type, String... qualifiedName) {
+        return fieldByName(getDataType(type), qualifiedName);
     }
 
     /**
@@ -1085,8 +1115,7 @@ public class Factory implements FactoryOperations {
      * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
      * injection.
      * <p>
-     * Example:
-     * <code><pre>
+     * Example: <code><pre>
      * // This field...
      * fieldName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
      *
@@ -1094,8 +1123,7 @@ public class Factory implements FactoryOperations {
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
      * </pre></code>
      * <p>
-     * Another example:
-     * <code><pre>
+     * Another example: <code><pre>
      * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
      *       .from(tableByName("T_BOOK"))
      *       .fetch();
@@ -1104,13 +1132,14 @@ public class Factory implements FactoryOperations {
      * select length([TITLE]) from [T_BOOK]
      * </pre></code>
      *
-     * @param fieldName The various parts making up your field's reference name.
+     * @param qualifiedName The various parts making up your field's reference
+     *            name.
      * @param type The type of the returned field
      * @return A field referenced by <code>fieldName</code>
      */
     @Support
-    public static <T> Field<T> fieldByName(DataType<T> type, String... fieldName) {
-        return new QualifiedField<T>(type, fieldName);
+    public static <T> Field<T> fieldByName(DataType<T> type, String... qualifiedName) {
+        return new QualifiedField<T>(type, qualifiedName);
     }
 
     /**

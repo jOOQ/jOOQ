@@ -225,6 +225,62 @@ public interface FactoryOperations extends Configuration {
     @Support
     Result<Record> fetch(ResultSet rs) throws DataAccessException;
 
+    /**
+     * Fetch all data from a CSV string.
+     * <p>
+     * This is the same as calling <code>fetchFromCSV(string, ',')</code> and
+     * the inverse of calling {@link Result#formatCSV()}. The first row of the
+     * CSV data is required to hold field name information. Subsequent rows may
+     * contain data, which is interpreted as {@link String}. Use the various
+     * conversion methods to retrieve other data types from the
+     * <code>Result</code>:
+     * <ul>
+     * <li> {@link Result#getValues(Field, Class)}</li>
+     * <li> {@link Result#getValues(int, Class)}</li>
+     * <li> {@link Result#getValues(String, Class)}</li>
+     * <li> {@link Result#getValues(Field, Converter)}</li>
+     * <li> {@link Result#getValues(int, Converter)}</li>
+     * <li> {@link Result#getValues(String, Converter)}</li>
+     * </ul>
+     * <p>
+     * Missing values result in <code>null</code>. Empty values result in empty
+     * <code>Strings</code>
+     *
+     * @param string The CSV string
+     * @return The transformed result
+     * @throws DataAccessException If anything went wrong parsing the CSV file
+     * @see #fetchFromCSV(String, char)
+     */
+    Result<Record> fetchFromCSV(String string) throws DataAccessException;
+
+    /**
+     * Fetch all data from a CSV string.
+     * <p>
+     * This is inverse of calling {@link Result#formatCSV(char)}. The first row
+     * of the CSV data is required to hold field name information. Subsequent
+     * rows may contain data, which is interpreted as {@link String}. Use the
+     * various conversion methods to retrieve other data types from the
+     * <code>Result</code>:
+     * <ul>
+     * <li> {@link Result#getValues(Field, Class)}</li>
+     * <li> {@link Result#getValues(int, Class)}</li>
+     * <li> {@link Result#getValues(String, Class)}</li>
+     * <li> {@link Result#getValues(Field, Converter)}</li>
+     * <li> {@link Result#getValues(int, Converter)}</li>
+     * <li> {@link Result#getValues(String, Converter)}</li>
+     * </ul>
+     * <p>
+     * Missing values result in <code>null</code>. Empty values result in empty
+     * <code>Strings</code>
+     *
+     * @param string The CSV string
+     * @param delimiter The delimiter to expect between records
+     * @return The transformed result
+     * @throws DataAccessException If anything went wrong parsing the CSV file
+     * @see #fetchFromCSV(String)
+     */
+    Result<Record> fetchFromCSV(String string, char delimiter) throws DataAccessException;
+
     // -------------------------------------------------------------------------
     // XXX Global Query factory
     // -------------------------------------------------------------------------

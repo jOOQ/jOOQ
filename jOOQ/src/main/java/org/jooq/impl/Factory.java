@@ -55,6 +55,7 @@ import static org.jooq.impl.Util.combine;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -138,6 +139,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.csv.CSVReader;
 import org.jooq.types.DayToSecond;
 
 /**
@@ -1425,6 +1427,57 @@ public class Factory implements FactoryOperations {
             ctx.sqlException(e);
             listener.exception(ctx);
             throw ctx.exception();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Result<Record> fetchFromCSV(String string) {
+        return fetchFromCSV(string, ',');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Result<Record> fetchFromCSV(String string, char delimiter) {
+        CSVReader reader = new CSVReader(new StringReader(string), delimiter);
+        List<String[]> all = null;
+
+        try {
+            all = reader.readAll();
+        }
+        catch (IOException e) {
+            throw new DataAccessException("Could not read the CSV string", e);
+        }
+
+        FieldList fields = new FieldList();
+
+        if (all.size() == 0) {
+            return new ResultImpl<Record>(this, fields);
+        }
+        else {
+            for (String name : all.get(0)) {
+                fields.add(fieldByName(String.class, name));
+            }
+
+            Result<Record> result = new ResultImpl<Record>(this, fields);
+
+            if (all.size() > 1) {
+                for (String[] values : all.subList(1, all.size())) {
+                    Record record = new RecordImpl(fields);
+
+                    for (int i = 0; i < Math.min(values.length, fields.size()); i++) {
+                        Util.setValue(record, fields.get(i), values[i]);
+                    }
+
+                    result.add(record);
+                }
+            }
+
+            return result;
         }
     }
 

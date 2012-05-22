@@ -386,6 +386,16 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
+    public final Result<Record> fetchFromCSV(String string) {
+        return null;
+    }
+
+    @Override
+    public final Result<Record> fetchFromCSV(String string, char delimiter) {
+        return null;
+    }
+
+    @Override
     public final Result<Record> fetch(String sql) {
         return getDelegate().fetch(sql);
     }

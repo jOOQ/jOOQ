@@ -7,7 +7,7 @@
         <password>TEST</password>
     </jdbc>
     <generator>
-        <name>org.jooq.util.XMLGenerator</name>
+        <name>org.jooq.util.CSVGenerator</name>
         <database>
             <name>org.jooq.util.oracle.OracleDatabase</name>
             <includes>.*</includes>

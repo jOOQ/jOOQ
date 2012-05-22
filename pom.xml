@@ -47,12 +47,49 @@
 		<developer>
 			<name>Lukas Eder</name>
 			<email>lukas.eder@gmail.com</email>
+			<roles>
+			    <role>architect</role>
+			    <role>developer</role>
+			</roles>
 		</developer>
 		<developer>
 			<name>Espen Stromsnes</name>
 			<email>estromsnes@gmail.com</email>
+			<roles>
+			    <role>developer</role>
+			</roles>
 		</developer>
+		<developer>
+            <name>Christopher Deckers</name>
+            <email>chrriis@gmail.com</email>
+			<roles>
+			    <role>developer</role>
+			</roles>
+        </developer>
 	</developers>
+
+	<contributors>
+		<contributor>
+            <name>Sander Plas</name>
+            <email>sander.plas@gmail.com</email>
+			<roles>
+				<role>maven-support</role>
+			</roles>
+        </contributor>
+        <contributor>
+            <name>Sergey Epik</name>
+            <email>sergey.epik@gmail.com</email>
+			<roles>
+				<role>spring-support</role>
+			</roles>
+        </contributor>
+		<contributor>
+            <name>Peter Ertl</name>
+			<roles>
+				<role>maven-support</role>
+			</roles>
+        </contributor>
+	</contributors>
 
 	<modules>
 		<module>jOOQ</module>

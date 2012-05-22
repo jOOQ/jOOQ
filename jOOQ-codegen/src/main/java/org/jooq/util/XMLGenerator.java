@@ -312,12 +312,16 @@ public class XMLGenerator extends AbstractGenerator {
             is.getROUTINES().add(rec);
         }
 
+        store(is);
+        watch.splitInfo("GENERATION FINISHED!");
+    }
+
+    protected void store(InformationSchemaType is) throws IOException {
         GenerationWriter out = new GenerationWriter(new File(getTargetDirectory(), "INFORMATION_SCHEMA.xml"));
         StringWriter writer = new StringWriter();
         JAXB.marshal(is, writer);
         out.print(writer.toString());
         out.close();
-        watch.splitInfo("GENERATION FINISHED!");
     }
 
     private YesOrNoType yn(boolean value) {

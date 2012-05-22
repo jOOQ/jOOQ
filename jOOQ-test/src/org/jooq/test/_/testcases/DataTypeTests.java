@@ -40,7 +40,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -81,7 +80,6 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
-import org.jooq.exception.DataTypeException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -1100,26 +1098,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         author2.setValue(TAuthor_ID(), 12);
         author2.setValue(TAuthor_LAST_NAME(), "ab");
-        try {
-            author2.getValue(TAuthor_ID(), Character.class);
-            fail();
-        }
-        catch (DataTypeException expected) {}
-        try {
-            author2.getValue(TAuthor_ID(), char.class);
-            fail();
-        }
-        catch (DataTypeException expected) {}
-        try {
-            author2.getValue(TAuthor_LAST_NAME(), Character.class);
-            fail();
-        }
-        catch (DataTypeException expected) {}
-        try {
-            author2.getValue(TAuthor_LAST_NAME(), char.class);
-            fail();
-        }
-        catch (DataTypeException expected) {}
+        assertEquals('1', (char) author2.getValue(TAuthor_ID(), Character.class));
+        assertEquals('1', (char) author2.getValue(TAuthor_ID(), char.class));
+        assertEquals('a', (char) author2.getValue(TAuthor_LAST_NAME(), Character.class));
+        assertEquals('a', (char) author2.getValue(TAuthor_LAST_NAME(), char.class));
     }
 
     @Test

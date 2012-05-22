@@ -377,54 +377,114 @@ public final class Convert {
 
                 // Various number types are converted between each other via String
                 else if (toClass == Byte.class || toClass == byte.class) {
-                    return (U) Byte.valueOf(new BigDecimal(from.toString().trim()).byteValue());
+                    try {
+                        return (U) Byte.valueOf(new BigDecimal(from.toString().trim()).byteValue());
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
                 else if (toClass == Short.class || toClass == short.class) {
-                    return (U) Short.valueOf(new BigDecimal(from.toString().trim()).shortValue());
+                    try {
+                        return (U) Short.valueOf(new BigDecimal(from.toString().trim()).shortValue());
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
                 else if (toClass == Integer.class || toClass == int.class) {
-                    return (U) Integer.valueOf(new BigDecimal(from.toString().trim()).intValue());
+                    try {
+                        return (U) Integer.valueOf(new BigDecimal(from.toString().trim()).intValue());
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
                 else if (toClass == Long.class || toClass == long.class) {
                     if (java.util.Date.class.isAssignableFrom(fromClass)) {
                         return (U) Long.valueOf(((java.util.Date) from).getTime());
                     }
                     else {
-                        return (U) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
+                        try {
+                            return (U) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
+                        }
+                        catch (NumberFormatException e) {
+                            return null;
+                        }
                     }
                 }
 
                 // ... this also includes unsigned number types
                 else if (toClass == UByte.class) {
-                    return (U) ubyte(new BigDecimal(from.toString().trim()).shortValue());
+                    try {
+                        return (U) ubyte(new BigDecimal(from.toString().trim()).shortValue());
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
                 else if (toClass == UShort.class) {
-                    return (U) ushort(new BigDecimal(from.toString().trim()).intValue());
+                    try {
+                        return (U) ushort(new BigDecimal(from.toString().trim()).intValue());
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
                 else if (toClass == UInteger.class) {
-                    return (U) uint(new BigDecimal(from.toString().trim()).longValue());
+                    try {
+                        return (U) uint(new BigDecimal(from.toString().trim()).longValue());
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
                 else if (toClass == ULong.class) {
                     if (java.util.Date.class.isAssignableFrom(fromClass)) {
                         return (U) ulong(((java.util.Date) from).getTime());
                     }
                     else {
-                        return (U) ulong(new BigDecimal(from.toString().trim()).toBigInteger().toString());
+                        try {
+                            return (U) ulong(new BigDecimal(from.toString().trim()).toBigInteger().toString());
+                        }
+                        catch (NumberFormatException e) {
+                            return null;
+                        }
                     }
                 }
 
                 // ... and floating point / fixed point types
                 else if (toClass == Float.class || toClass == float.class) {
-                    return (U) Float.valueOf(from.toString().trim());
+                    try {
+                        return (U) Float.valueOf(from.toString().trim());
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
                 else if (toClass == Double.class || toClass == double.class) {
-                    return (U) Double.valueOf(from.toString().trim());
+                    try {
+                        return (U) Double.valueOf(from.toString().trim());
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
                 else if (toClass == BigDecimal.class) {
-                    return (U) new BigDecimal(from.toString().trim());
+                    try {
+                        return (U) new BigDecimal(from.toString().trim());
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
                 else if (toClass == BigInteger.class) {
-                    return (U) new BigDecimal(from.toString().trim()).toBigInteger();
+                    try {
+                        return (U) new BigDecimal(from.toString().trim()).toBigInteger();
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
                 else if (toClass == Boolean.class || toClass == boolean.class) {
                     String s = from.toString().toLowerCase().trim();
@@ -440,8 +500,8 @@ public final class Convert {
                     }
                 }
                 else if (toClass == Character.class || toClass == char.class) {
-                    if (from.toString().length() != 1) {
-                        throw fail(from, toClass);
+                    if (from.toString().length() < 1) {
+                        return null;
                     }
 
                     return (U) Character.valueOf(from.toString().charAt(0));

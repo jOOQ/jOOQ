@@ -35,6 +35,7 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
@@ -122,6 +123,46 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                           xp.evaluate("/table/tbody/tr[" + (j + 1) + "]/td[" + (i + 1) + "]/text()", doc));
             }
         }
+    }
+
+    @Test
+    public void testFetchFromCSV() throws Exception {
+        Result<Record> result1 = create().fetchFromCSV(
+            "A,B,\"C\",\"\"\"D\"\n" +
+            "1,,a,b\n" +
+            "1,2,a\n" +
+            "1,2,a,b,c");
+
+        // Check meta data
+        assertEquals(4, result1.getFields().size());
+        assertEquals(3, result1.size());
+        assertEquals("A", result1.getField(0).getName());
+        assertEquals("B", result1.getField(1).getName());
+        assertEquals("C", result1.getField(2).getName());
+        assertEquals("\"D", result1.getField(3).getName());
+
+        // Check column correctness
+        assertEquals(asList("1", "1", "1"), result1.getValues(0));
+        assertEquals(asList(1, 1, 1), result1.getValues(0, Integer.class));
+        assertEquals(asList("", "2", "2"), result1.getValues(1));
+        assertEquals(asList(null, 2, 2), result1.getValues(1, Integer.class));
+        assertEquals(asList("a", "a", "a"), result1.getValues(2));
+        assertEquals(asList("b", null, "b"), result1.getValues(3));
+
+        // Check row correctness
+        assertEquals(asList("1", "", "a", "b"), asList(result1.get(0).intoArray()));
+        assertEquals(asList("1", "2", "a", null), asList(result1.get(1).intoArray()));
+        assertEquals(asList("1", "2", "a", "b"), asList(result1.get(2).intoArray()));
+
+        // Factory.fetchFromCSV() should be the inverse of Result.formatCSV()
+        // ... apart from the loss of type information
+        String csv = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch().formatCSV();
+        Result<Record> result2 = create().fetchFromCSV(csv);
+
+        assertEquals(4, result2.size());
+        assertEquals(BOOK_IDS, result2.getValues(TBook_ID(), Integer.class));
+        assertEquals(BOOK_AUTHOR_IDS, result2.getValues(TBook_AUTHOR_ID(), Integer.class));
+        assertEquals(BOOK_TITLES, result2.getValues(TBook_TITLE()));
     }
 
     @Test

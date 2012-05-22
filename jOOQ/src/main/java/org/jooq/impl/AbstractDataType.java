@@ -377,7 +377,17 @@ public abstract class AbstractDataType<T> implements DataType<T> {
 
     @Override
     public /* final */ T convert(Object object) {
-        return Convert.convert(object, type);
+
+        // [#1441] Avoid unneeded type conversions to improve performance
+        if (object == null) {
+            return null;
+        }
+        else if (object.getClass() == type) {
+            return (T) object;
+        }
+        else {
+            return Convert.convert(object, type);
+        }
     }
 
     @Override

@@ -89,6 +89,13 @@
 				<role>maven-support</role>
 			</roles>
         </contributor>
+		<contributor>
+            <name>Robin Stocker</name>
+			<email>robin@nibor.org</email>
+			<roles>
+				<role>git-support</role>
+			</roles>
+        </contributor>
 	</contributors>
 
 	<modules>

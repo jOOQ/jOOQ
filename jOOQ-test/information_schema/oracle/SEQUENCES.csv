@@ -1,7 +1,0 @@
-"SEQUENCE_CATALOG","SEQUENCE_SCHEMA","SEQUENCE_NAME","DATA_TYPE","NUMERIC_PRECISION","NUMERIC_PRECISION_RADIX","NUMERIC_SCALE","MAXIMUM_VALUE","MINIMUM_VALUE","INCREMENT","CYCLE_OPTION"
-"","TEST","S_AUTHOR_ID","","","","","","","",""
-"","TEST","S_961_BIG_INTEGER","","","","","","","",""
-"","TEST","S_961_BYTE","","","","","","","",""
-"","TEST","S_961_INT","","","","","","","",""
-"","TEST","S_961_LONG","","","","","","","",""
-"","TEST","S_961_SHORT","","","","","","","",""

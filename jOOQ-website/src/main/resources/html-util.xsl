@@ -54,14 +54,14 @@
 							</xsl:when>
 
 							<xsl:when test="@class and starts-with(@class, 'org.jooq.test')">
-								<xsl:text>https://github.com/lukaseder/jOOQ/blob/master/jOOQ-test/src/</xsl:text>
+								<xsl:text>https://github.com/jOOQ/jOOQ/blob/master/jOOQ-test/src/</xsl:text>
 								<xsl:value-of select="translate(@class, '.', '/')"/>
 								<xsl:text>.java</xsl:text>
 								<xsl:value-of select="@anchor"/>
 							</xsl:when>
 
 							<xsl:when test="@class and starts-with(@class, 'org.jooq.debug')">
-								<xsl:text>https://github.com/lukaseder/jOOQ/blob/master/jOOQ-console/src/</xsl:text>
+								<xsl:text>https://github.com/jOOQ/jOOQ/blob/master/jOOQ-console/src/main/java/</xsl:text>
 								<xsl:value-of select="translate(@class, '.', '/')"/>
 								<xsl:text>.java</xsl:text>
 								<xsl:value-of select="@anchor"/>

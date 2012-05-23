@@ -855,8 +855,8 @@ Result&lt;Record&gt; result = create.select()
 							<p>
 								In the above example, some generated artefacts are used for querying.
 								In this case, T_AUTHOR and T_BOOK are instances of types
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-test/src/org/jooq/test/oracle/generatedclasses/tables/TAuthor.java" title="Internal API reference: org.jooq.test.oracle.generatedclasses.tables.TAuthor">TAuthor</a> and
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-test/src/org/jooq/test/oracle/generatedclasses/tables/TBook.java" title="Internal API reference: org.jooq.test.oracle.generatedclasses.tables.TBook">TBook</a> respectively.
+								<a href="https://github.com/jOOQ/jOOQ/blob/master/jOOQ-test/src/org/jooq/test/oracle/generatedclasses/test/tables/TAuthor.java" title="Internal API reference: org.jooq.test.oracle.generatedclasses.test.tables.TAuthor">TAuthor</a> and
+								<a href="https://github.com/jOOQ/jOOQ/blob/master/jOOQ-test/src/org/jooq/test/oracle/generatedclasses/test/tables/TBook.java" title="Internal API reference: org.jooq.test.oracle.generatedclasses.test.tables.TBook">TBook</a> respectively.
 								Their full qualification would read TAuthor.T_AUTHOR and TBook.T_BOOK, but in many cases,
 								it's useful to static import elements involved with queries, in order to decrease verbosity:
 								<pre class="prettyprint lang-java">import static com.example.jooq.Tables.*;</pre>
@@ -4861,7 +4861,7 @@ for (ExecuteType type : ExecuteType.values()) {
 
 							<p>
 								Both modes will require that you set the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-console/src/org/jooq/debug/DebugListener.java" title="Internal API reference: org.jooq.debug.DebugListener">org.jooq.debug.DebugListener</a>
+								<a href="https://github.com/jOOQ/jOOQ/blob/master/jOOQ-console/src/main/java/org/jooq/debug/DebugListener.java" title="Internal API reference: org.jooq.debug.DebugListener">org.jooq.debug.DebugListener</a>
 								in the Factory's settings. When using XML settings:
 							</p>
 

@@ -146,7 +146,7 @@ for (ExecuteType type : ExecuteType.values()) {
 
 							<p>
 								Both modes will require that you set the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-console/src/org/jooq/debug/DebugListener.java" title="Internal API reference: org.jooq.debug.DebugListener">org.jooq.debug.DebugListener</a>
+								<a href="https://github.com/jOOQ/jOOQ/blob/master/jOOQ-console/src/main/java/org/jooq/debug/DebugListener.java" title="Internal API reference: org.jooq.debug.DebugListener">org.jooq.debug.DebugListener</a>
 								in the Factory's settings. When using XML settings:
 							</p>
 

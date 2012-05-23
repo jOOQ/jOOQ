@@ -649,8 +649,8 @@ Result&lt;Record&gt; result = create.select()
 							<p>
 								In the above example, some generated artefacts are used for querying.
 								In this case, T_AUTHOR and T_BOOK are instances of types
-								<reference class="org.jooq.test.oracle.generatedclasses.tables.TAuthor" title="TAuthor"/> and
-								<reference class="org.jooq.test.oracle.generatedclasses.tables.TBook" title="TBook"/> respectively.
+								<reference class="org.jooq.test.oracle.generatedclasses.test.tables.TAuthor" title="TAuthor"/> and
+								<reference class="org.jooq.test.oracle.generatedclasses.test.tables.TBook" title="TBook"/> respectively.
 								Their full qualification would read TAuthor.T_AUTHOR and TBook.T_BOOK, but in many cases,
 								it's useful to static import elements involved with queries, in order to decrease verbosity:
 								<java>import static com.example.jooq.Tables.*;</java>

@@ -51,9 +51,11 @@
 					data-text="#jOOQ - A nice database abstraction library for Java"
 					data-count="horizontal" data-via="JavaOOQ">Tweet</a>
 				<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+				&nbsp;
 			</div>
 			<div class="tweet-item">
 				<g:plusone size="medium" href="http://www.jooq.org"></g:plusone>
+				&nbsp;
 			</div>
 			<div class="tweet-item">
 				<div id="fb-root"></div>
@@ -71,10 +73,13 @@
 					data-width="450"
 					data-show-faces="true"
 					data-font="verdana"></div>
+					&nbsp;
 			</div>
 			<div class="tweet-item">
-				<a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.jooq.org&media=http%3A%2F%2Fwww.jooq.org%2Fimg%2Flogo.png&description=jOOQ%20%3A%20A%20peace%20treaty%20between%20SQL%20and%20Java" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>			</div>
+				<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+				<script type="IN/Share" data-url="http://www.jooq.org" data-counter="right"></script>
 			</div>
+		</div>
 
 	    <div id="menu">
 	        <?php

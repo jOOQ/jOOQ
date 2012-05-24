@@ -516,6 +516,14 @@ public final class Convert {
                 else if ((fromClass == Long.class || fromClass == long.class) && java.util.Date.class.isAssignableFrom(toClass)) {
                     return toDate((Long) from, toClass);
                 }
+
+                else if ((fromClass == String.class) && java.lang.Enum.class.isAssignableFrom(toClass)) {
+                    try {
+                        return java.lang.Enum.valueOf(toClass, (String) from);
+                    } catch (java.lang.IllegalArgumentException e) {
+                        throw fail(from, toClass);
+                    }
+                }
             }
 
             throw fail(from, toClass);

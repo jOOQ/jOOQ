@@ -517,11 +517,16 @@ public final class Convert {
                     return toDate((Long) from, toClass);
                 }
 
+                // [#1448] Some users may find it useful to convert string
+                // literals to Enum values without a Converter
                 else if ((fromClass == String.class) && java.lang.Enum.class.isAssignableFrom(toClass)) {
                     try {
-                        return java.lang.Enum.valueOf(toClass, (String) from);
-                    } catch (java.lang.IllegalArgumentException e) {
-                        throw fail(from, toClass);
+                        @SuppressWarnings("rawtypes")
+                        Class raw = toClass;
+                        return (U) java.lang.Enum.valueOf(raw, (String) from);
+                    }
+                    catch (java.lang.IllegalArgumentException e) {
+                        return null;
                     }
                 }
             }

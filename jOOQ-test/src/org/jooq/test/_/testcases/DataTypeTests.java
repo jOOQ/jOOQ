@@ -83,6 +83,8 @@ import org.jooq.UpdatableRecord;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+import org.jooq.test._.converters.Boolean_YES_NO_LC;
+import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
@@ -1102,6 +1104,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals('1', (char) author2.getValue(TAuthor_ID(), char.class));
         assertEquals('a', (char) author2.getValue(TAuthor_LAST_NAME(), Character.class));
         assertEquals('a', (char) author2.getValue(TAuthor_LAST_NAME(), char.class));
+
+        // [#1448] Check conversion from String to Enum
+        Record record =
+        create().select(inline("YES"), inline("NO"))
+                .fetchOne();
+
+        assertEquals(Boolean_YES_NO_UC.YES, record.getValue(0, Boolean_YES_NO_UC.class));
+        assertEquals(Boolean_YES_NO_UC.NO, record.getValue(1, Boolean_YES_NO_UC.class));
+
+        assertNull(record.getValue(0, Boolean_YES_NO_LC.class));
+        assertNull(record.getValue(1, Boolean_YES_NO_LC.class));
     }
 
     @Test

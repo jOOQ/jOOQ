@@ -22,7 +22,7 @@ function printContent() {
 
 	for ($i = 0; $i < count($contents); $i++) {
 		if ($i + 1 < count($contents) && substr($contents[$i + 1], 0, 3) == '===') {
-			print '<h2>';
+			print '<h2 id="' . preg_replace('%Version (\d+\.\d+\.\d+).*\n?%', '$1', $contents[$i]) . '">';
 			print $contents[$i];
 			print '</h2>';
 		}

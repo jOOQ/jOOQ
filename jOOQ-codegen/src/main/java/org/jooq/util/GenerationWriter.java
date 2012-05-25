@@ -73,6 +73,10 @@ public class GenerationWriter {
         initialisationStatements.add(statement);
     }
 
+    public void print(char value) {
+        sb.append(value);
+    }
+
     public void print(int value) {
         sb.append(value);
     }

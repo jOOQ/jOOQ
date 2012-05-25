@@ -1525,7 +1525,10 @@ public void bind(BindContext context) throws DataAccessException;</java>
 
       <!-- The schema that is used locally as a source for meta information.
            This could be your development schema or the production schema, etc
-           This cannot be combined with the schemata element. -->
+           This cannot be combined with the schemata element.
+
+           If left empty, jOOQ will generate all available schemata. See the
+           manual's next section to learn how to generate several schemata -->
       <inputSchema>[your database schema / owner / name]</inputSchema>
     </database>
 

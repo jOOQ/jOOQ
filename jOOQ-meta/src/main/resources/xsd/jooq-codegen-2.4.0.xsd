@@ -157,6 +157,7 @@
         The schema that is used locally as a source for meta information.
         This could be your development schema or the production schema, etc
         This cannot be combined with the schemata element.
+        If left empty (and without any schemata element), jOOQ will generate all available schemata.
         For backwards compatibility, this defaults to jdbc/schema
         -->
       <element name="inputSchema" type="string" default="" minOccurs="0" maxOccurs="1" />

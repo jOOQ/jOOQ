@@ -16,7 +16,7 @@
             <unsignedTypes>true</unsignedTypes>
             <schemata>
                 <schema>
-                	<inputSchema>TEST</inputSchema>
+                	<inputSchema>test</inputSchema>
                 </schema>
                 <schema>
                 	<inputSchema>MULTI_SCHEMA</inputSchema>

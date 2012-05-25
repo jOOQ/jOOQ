@@ -123,7 +123,7 @@ public class OracleDatabase extends AbstractDatabase {
                 .and(ALL_CONS_COLUMNS.CONSTRAINT_NAME.equal(ALL_CONSTRAINTS.CONSTRAINT_NAME)))
             .where(ALL_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType)
                 .and(ALL_CONSTRAINTS.CONSTRAINT_NAME.notLike("BIN$%"))
-                .and(ALL_CONS_COLUMNS.OWNER.in(getInputSchemata())))
+                .and(ALL_CONS_COLUMNS.OWNER.upper().in(getInputSchemata())))
             .orderBy(
                 ALL_CONS_COLUMNS.OWNER,
                 ALL_CONS_COLUMNS.CONSTRAINT_NAME,
@@ -149,7 +149,7 @@ public class OracleDatabase extends AbstractDatabase {
                     .and(ALL_CONSTRAINTS.TABLE_NAME.equal(ALL_CONS_COLUMNS.TABLE_NAME))
                     .and(ALL_CONSTRAINTS.CONSTRAINT_NAME.equal(ALL_CONS_COLUMNS.CONSTRAINT_NAME)))
                 .where(ALL_CONSTRAINTS.CONSTRAINT_TYPE.equal("R"))
-                .and(ALL_CONSTRAINTS.OWNER.in(getInputSchemata()))
+                .and(ALL_CONSTRAINTS.OWNER.upper().in(getInputSchemata()))
                 .orderBy(
                     ALL_CONS_COLUMNS.OWNER,
                     ALL_CONS_COLUMNS.TABLE_NAME,
@@ -200,7 +200,7 @@ public class OracleDatabase extends AbstractDatabase {
                     ALL_SEQUENCES.SEQUENCE_NAME,
                     ALL_SEQUENCES.MAX_VALUE)
                 .from(ALL_SEQUENCES)
-                .where(ALL_SEQUENCES.SEQUENCE_OWNER.in(getInputSchemata()))
+                .where(ALL_SEQUENCES.SEQUENCE_OWNER.upper().in(getInputSchemata()))
                 .orderBy(
                     ALL_SEQUENCES.SEQUENCE_OWNER,
                     ALL_SEQUENCES.SEQUENCE_NAME)
@@ -232,7 +232,7 @@ public class OracleDatabase extends AbstractDatabase {
                 ALL_TAB_COMMENTS.TABLE_NAME,
                 ALL_TAB_COMMENTS.COMMENTS)
             .from(ALL_TAB_COMMENTS)
-            .where(ALL_TAB_COMMENTS.OWNER.in(getInputSchemata()))
+            .where(ALL_TAB_COMMENTS.OWNER.upper().in(getInputSchemata()))
             .and(ALL_TAB_COMMENTS.TABLE_NAME.notLike("%$%"))
             .orderBy(
                 ALL_TAB_COMMENTS.OWNER,
@@ -270,7 +270,7 @@ public class OracleDatabase extends AbstractDatabase {
                 ALL_TYPES.OWNER,
                 ALL_TYPES.TYPE_NAME)
             .from(ALL_TYPES)
-            .where(ALL_TYPES.OWNER.in(getInputSchemata()))
+            .where(ALL_TYPES.OWNER.upper().in(getInputSchemata()))
             .and(ALL_TYPES.TYPECODE.equal("OBJECT"))
             .orderBy(
                 ALL_TYPES.OWNER,
@@ -301,7 +301,7 @@ public class OracleDatabase extends AbstractDatabase {
                 ALL_COLL_TYPES.PRECISION,
                 ALL_COLL_TYPES.SCALE)
             .from(ALL_COLL_TYPES)
-            .where(ALL_COLL_TYPES.OWNER.in(getInputSchemata()))
+            .where(ALL_COLL_TYPES.OWNER.upper().in(getInputSchemata()))
             .and(ALL_COLL_TYPES.COLL_TYPE.in("VARYING ARRAY", "TABLE"))
             .orderBy(
                 ALL_COLL_TYPES.OWNER,
@@ -335,7 +335,7 @@ public class OracleDatabase extends AbstractDatabase {
                     ALL_OBJECTS.OBJECT_NAME,
                     ALL_OBJECTS.OBJECT_ID)
                 .from(ALL_OBJECTS)
-                .where(ALL_OBJECTS.OWNER.in(getInputSchemata())
+                .where(ALL_OBJECTS.OWNER.upper().in(getInputSchemata())
                 .and(ALL_OBJECTS.OBJECT_TYPE.in("FUNCTION", "PROCEDURE")))
                 .orderBy(
                     ALL_OBJECTS.OWNER,
@@ -365,7 +365,7 @@ public class OracleDatabase extends AbstractDatabase {
         		    ALL_OBJECTS.OBJECT_NAME,
         		    ALL_OBJECTS.OBJECT_ID)
                 .from(ALL_OBJECTS)
-                .where(ALL_OBJECTS.OWNER.in(getInputSchemata())
+                .where(ALL_OBJECTS.OWNER.upper().in(getInputSchemata())
                 .and(ALL_OBJECTS.OBJECT_TYPE.equal("PACKAGE")))
                 .orderBy(
                     ALL_OBJECTS.OWNER,

@@ -38,7 +38,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.one;
 
 import java.util.Arrays;
@@ -778,7 +778,7 @@ implements
         Field<?>[] fields = new Field[fieldIndexes.length];
 
         for (int i = 0; i < fieldIndexes.length; i++) {
-            fields[i] = literal(fieldIndexes[i]);
+            fields[i] = inline(fieldIndexes[i]);
         }
 
         addOrderBy(fields);

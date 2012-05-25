@@ -36,7 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.inline;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -67,7 +67,7 @@ class Substring extends AbstractFunction<String> {
                     return function(functionName,
                         SQLDataType.VARCHAR, getArguments()[0],
                         getArguments()[1],
-                        literal(Integer.MAX_VALUE));
+                        inline(Integer.MAX_VALUE));
                 }
 
                 // Default behaviour

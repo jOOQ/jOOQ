@@ -277,8 +277,11 @@ class Limit extends AbstractQueryPart {
             // Oracle knows no LIMIT or TOP clause, limits are always bound
             // ------------------------------------------------------------
             case ORACLE: {
-                context.bind(getLowerRownum());
+
+                // [#1020] With the ROWNUM filtering improvement, the upper
+                // limit is bound before the lower limit
                 context.bind(getUpperRownum());
+                context.bind(getLowerRownum());
                 break;
             }
         }

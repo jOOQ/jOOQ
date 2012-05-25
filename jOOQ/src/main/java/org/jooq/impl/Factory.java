@@ -4626,8 +4626,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ CUBRID, ORACLE })
     public static Field<String> sysConnectByPath(Field<?> field, String separator) {
-        String escaped = "'" + separator.replace("'", "''") + "'";
-        return function("sys_connect_by_path", String.class, field, literal(escaped));
+        return function("sys_connect_by_path", String.class, field, inline(separator));
     }
 
     /**
@@ -4873,8 +4872,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
-        Field<String> literal = literal("'" + separator.replace("'", "''") + "'");
-        return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), literal);
+        return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), inline(separator));
     }
 
     /**
@@ -5038,7 +5036,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
-        return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), literal(offset));
+        return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), inline(offset));
     }
 
     /**
@@ -5064,7 +5062,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
-        return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), literal(offset), nullSafe(defaultValue));
+        return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), inline(offset), nullSafe(defaultValue));
     }
 
     /**
@@ -5086,7 +5084,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
-        return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), literal(offset));
+        return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), inline(offset));
     }
 
     /**
@@ -5112,7 +5110,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
-        return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), literal(offset), nullSafe(defaultValue));
+        return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), inline(offset), nullSafe(defaultValue));
     }
 
     // -------------------------------------------------------------------------

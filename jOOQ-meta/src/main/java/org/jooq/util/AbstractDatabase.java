@@ -132,6 +132,10 @@ public abstract class AbstractDatabase implements Database {
                     it.remove();
                 }
             }
+
+            if (schemata.isEmpty()) {
+                log.warn("No schemata were loaded", "Please check your connection settings and the case-sensitivity in your configured <inputSchema/> elements : " + inputSchemata);
+            }
         }
 
         return schemata;

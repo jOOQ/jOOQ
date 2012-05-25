@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 460829462;
+	private static final long serialVersionUID = 1879079724;
 
 	/**
 	 * The singleton instance of dbo.t_785
@@ -18,14 +18,9 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gener
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record> __RECORD_TYPE = org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record.class;
 	}
 
 	/**

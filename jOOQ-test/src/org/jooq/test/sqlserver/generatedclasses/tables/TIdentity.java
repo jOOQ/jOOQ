@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 2079238306;
+	private static final long serialVersionUID = -765139815;
 
 	/**
 	 * The singleton instance of dbo.t_identity
@@ -18,14 +18,9 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.g
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> __RECORD_TYPE = org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord.class;
 	}
 
 	/**

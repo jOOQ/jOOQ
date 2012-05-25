@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -663568395;
+	private static final long serialVersionUID = -1420545077;
 
 	/**
 	 * The singleton instance of dbo.v_author
@@ -18,14 +18,9 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gen
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord> __RECORD_TYPE = org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord.class;
 	}
 
 	/**

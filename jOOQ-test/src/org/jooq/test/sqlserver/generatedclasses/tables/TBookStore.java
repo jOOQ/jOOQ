@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1556231344;
+	private static final long serialVersionUID = 1740813465;
 
 	/**
 	 * The singleton instance of dbo.t_book_store
@@ -18,14 +18,9 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.s
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> __RECORD_TYPE = org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord.class;
 	}
 
 	/**

@@ -55,13 +55,19 @@ import org.jooq.tools.StopWatchListener;
  * profilers, data collectors that can be hooked into a jOOQ {@link Factory}
  * using the {@link Settings#getExecuteListeners()} property, passing
  * <code>Settings</code> to
- * {@link Factory#Factory(java.sql.Connection, SQLDialect, Settings)}. Advanced
- * <code>ExecuteListeners</code> can also provide custom implementations of
- * {@link Connection}, {@link PreparedStatement}, {@link ResultSet},
- * {@link SQLException} or {@link RuntimeException} to jOOQ in apropriate
- * methods. For convenience, consider extending {@link DefaultExecuteListener}
- * instead of implementing this interface. This will prevent compilation errors
- * in future versions of jOOQ, when this interface might get new methods.
+ * {@link Factory#Factory(java.sql.Connection, SQLDialect, Settings)}. jOOQ will
+ * use those settings at the beginning of a query execution event to instanciate
+ * all the provided listeners. In other words, listeners have the same lifetime
+ * as a single query execution, and can thus be used to store state between the
+ * moment when a query execution starts, and the moment when a query execution
+ * finishes. Advanced <code>ExecuteListeners</code> can also provide custom
+ * implementations of {@link Connection}, {@link PreparedStatement},
+ * {@link ResultSet}, {@link SQLException} or {@link RuntimeException} to jOOQ
+ * in apropriate methods.
+ * <p>
+ * For convenience, consider extending {@link DefaultExecuteListener} instead of
+ * implementing this interface. This will prevent compilation errors in future
+ * versions of jOOQ, when this interface might get new methods.
  * <p>
  * The following table explains how every type of statement / operation invokes
  * callback methods in the correct order for all registered
@@ -920,7 +926,8 @@ public interface ExecuteListener {
      * <li> {@link ExecuteContext#exception()}: The {@link RuntimeException} that
      * is about to be thrown</li>
      * <li> {@link ExecuteContext#sqlException()}: The {@link SQLException} that
-     * was thrown by the database</li> </ul>
+     * was thrown by the database</li>
+     * </ul>
      */
     void exception(ExecuteContext ctx);
 }

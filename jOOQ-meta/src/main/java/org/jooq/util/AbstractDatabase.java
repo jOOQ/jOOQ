@@ -55,6 +55,7 @@ import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
 import org.jooq.util.jaxb.MasterDataTable;
 import org.jooq.util.jaxb.Schema;
+import org.jooq.util.oracle.OracleDatabase;
 
 /**
  * A base implementation for all types of databases.
@@ -166,7 +167,14 @@ public abstract class AbstractDatabase implements Database {
             }
             else {
                 for (Schema schema : configuredSchemata) {
-                    inputSchemata.add(schema.getInputSchema());
+
+                    // [#1418] Oracle has case-insensitive schema names.
+                    if (this instanceof OracleDatabase) {
+                        inputSchemata.add(schema.getInputSchema().toUpperCase());
+                    }
+                    else {
+                        inputSchemata.add(schema.getInputSchema());
+                    }
                 }
             }
         }

@@ -91,6 +91,7 @@ import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UDT;
 import org.jooq.UpdatableRecord;
+import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DetachedException;
@@ -639,6 +640,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(TAuthor_ID(), TAuthor().getMainKey().getFields().get(0));
 
         if (supportsReferences()) {
+
+            // Without aliasing
             assertEquals(0, TAuthor().getReferences().size());
             assertEquals(2, TAuthor().getMainKey().getReferences().size());
             assertEquals(TBook(), TAuthor().getMainKey().getReferences().get(0).getTable());
@@ -647,6 +650,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             assertTrue(TBook().getReferences().containsAll(TAuthor().getReferencesFrom(TBook())));
             assertTrue(TBook().getReferences().containsAll(TBook().getReferencesFrom(TAuthor())));
             assertEquals(TBook().getReferencesTo(TAuthor()), TAuthor().getReferencesFrom(TBook()));
+
+            // [#1460] With aliasing
+            Table<A> a = TAuthor().as("a");
+            Table<B> b = TBook().as("b");
+
+            assertEquals(0, a.getReferences().size());
+            assertEquals(Arrays.asList(), a.getReferencesTo(b));
+
+            // Only with a non-static meta model
+            if (a instanceof UpdatableTable && b instanceof UpdatableTable) {
+                UpdatableTable<A> ua = (UpdatableTable<A>) a;
+                UpdatableTable<B> ub = (UpdatableTable<B>) b;
+
+                assertEquals(2, ua.getMainKey().getReferences().size());
+                assertEquals(b, ua.getMainKey().getReferences().get(0).getTable());
+                assertEquals(b, ua.getMainKey().getReferences().get(1).getTable());
+                assertTrue(b.getReferences().containsAll(ua.getReferencesFrom(b)));
+                assertTrue(b.getReferences().containsAll(ub.getReferencesFrom(a)));
+                assertEquals(b.getReferencesTo(a), ua.getReferencesFrom(b));
+            }
         }
         else {
             log.info("SKIPPING", "References tests");

@@ -379,26 +379,26 @@ final class Util {
             // [#1432] Inline substitues for {numbered placeholders} outside of string literals
             else if (sqlChars[i] == '{' && !stringLiteral && bindIndex < substitutes.size()) {
 
-                // Consume the whole token
-                int start = ++i;
-                for (; i < sqlChars.length && sqlChars[i] != '}'; i++);
-                int end = i;
-
-                String token = sql.substring(start, end);
-
-                // Be careful not to replace any JDBC escape syntax
-                if ("(fn|d|t|ts)\\b)[\\w\\s]+".matches(token)) {
-                    context.sql(token);
+                // [#1461] Be careful not to match any JDBC escape syntax
+                if (sql.substring(i).matches("\\{(fn|d|t|ts)\\b.*")) {
+                    context.sql(sqlChars[i]);
                 }
 
-                // Try getting the {numbered placeholder}
+                // Consume the whole token
                 else {
+                    int start = ++i;
+                    for (; i < sqlChars.length && sqlChars[i] != '}'; i++);
+                    int end = i;
+
+                    String token = sql.substring(start, end);
+
+                    // Try getting the {numbered placeholder}
                     try {
                         int substituteIndex = Integer.valueOf(token);
                         context.sql(substitutes.get(substituteIndex));
                     }
 
-                    // If this failed, then we're dealing with a {keyword}
+                    // If the above failed, then we're dealing with a {keyword}
                     catch (NumberFormatException e) {
                         context.keyword(token);
                     }

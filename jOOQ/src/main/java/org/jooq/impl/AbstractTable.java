@@ -121,6 +121,25 @@ abstract class AbstractTable<R extends Record> extends AbstractType<R> implement
             if (other.equals(reference.getKey().getTable())) {
                 result.add((ForeignKey<R, O>) reference);
             }
+
+            // TODO: Refactor the following two blocks and make things more OO
+            // [#1460] In case the other table was aliased using
+            else if (other instanceof TableImpl) {
+                Table<O> aliased = ((TableImpl<O>) other).getAliasedTable();
+
+                if (aliased != null && aliased.equals(reference.getKey().getTable())) {
+                    result.add((ForeignKey<R, O>) reference);
+                }
+            }
+
+            // [#1460] In case the other table was aliased using
+            else if (other instanceof TableAlias) {
+                Table<O> aliased = ((TableAlias<O>) other).getAliasedTable();
+
+                if (aliased != null && aliased.equals(reference.getKey().getTable())) {
+                    result.add((ForeignKey<R, O>) reference);
+                }
+            }
         }
 
         return Collections.unmodifiableList(result);

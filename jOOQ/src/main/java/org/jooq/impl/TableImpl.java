@@ -80,6 +80,17 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         }
     }
 
+    /**
+     * Get the aliased table wrapped by this table
+     */
+    Table<R> getAliasedTable() {
+        if (alias != null) {
+            return alias.getAliasProvider();
+        }
+
+        return null;
+    }
+
     @Override
     public final List<Attachable> getAttachables0() {
         if (alias != null) {

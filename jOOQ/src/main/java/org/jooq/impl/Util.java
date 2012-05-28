@@ -57,6 +57,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -110,6 +111,11 @@ final class Util {
      * A cache for {@link ExecuteListener} classes
      */
     private static final Map<String, Class<?>> EXECUTE_LISTENERS = new ConcurrentHashMap<String, Class<?>>();
+
+    /**
+     * A pattern for the JDBC escape syntax
+     */
+    private static final Pattern               JDBC_ESCAPE_PATTERN = Pattern.compile("\\{(fn|d|t|ts)\\b.*");
 
     /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}
@@ -380,7 +386,7 @@ final class Util {
             else if (sqlChars[i] == '{' && !stringLiteral && bindIndex < substitutes.size()) {
 
                 // [#1461] Be careful not to match any JDBC escape syntax
-                if (sql.substring(i).matches("\\{(fn|d|t|ts)\\b.*")) {
+                if (JDBC_ESCAPE_PATTERN.matcher(sql.substring(i)).matches()) {
                     context.sql(sqlChars[i]);
                 }
 

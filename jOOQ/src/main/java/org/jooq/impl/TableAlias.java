@@ -66,6 +66,17 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
         this.aliasProvider = new AliasProviderImpl<Table<R>>(table, alias, wrapInParentheses);
     }
 
+    /**
+     * Get the aliased table wrapped by this table
+     */
+    Table<R> getAliasedTable() {
+        if (aliasProvider != null) {
+            return aliasProvider.getAliasProvider();
+        }
+
+        return null;
+    }
+
     @Override
     public final List<ForeignKey<R, ?>> getReferences() {
         return aliasProvider.getAliasProvider().getReferences();

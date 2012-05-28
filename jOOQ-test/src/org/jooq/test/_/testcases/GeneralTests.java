@@ -658,17 +658,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             assertEquals(0, a.getReferences().size());
             assertEquals(Arrays.asList(), a.getReferencesTo(b));
 
+            // This should work with both types of meta-models (static, non-static)
+            assertEquals(TBook().getReferencesTo(TAuthor()), TBook().getReferencesTo(a));
+            assertEquals(TBook().getReferencesTo(TAuthor()), b.getReferencesTo(a));
+            assertEquals(TBook().getReferencesTo(TAuthor()), b.getReferencesTo(TAuthor()));
+
             // Only with a non-static meta model
             if (a instanceof UpdatableTable && b instanceof UpdatableTable) {
                 UpdatableTable<A> ua = (UpdatableTable<A>) a;
                 UpdatableTable<B> ub = (UpdatableTable<B>) b;
 
                 assertEquals(2, ua.getMainKey().getReferences().size());
-                assertEquals(b, ua.getMainKey().getReferences().get(0).getTable());
-                assertEquals(b, ua.getMainKey().getReferences().get(1).getTable());
+                assertEquals(TBook(), ua.getMainKey().getReferences().get(0).getTable());
+                assertEquals(TBook(), ua.getMainKey().getReferences().get(1).getTable());
                 assertTrue(b.getReferences().containsAll(ua.getReferencesFrom(b)));
                 assertTrue(b.getReferences().containsAll(ub.getReferencesFrom(a)));
                 assertEquals(b.getReferencesTo(a), ua.getReferencesFrom(b));
+                assertEquals(TBook().getReferencesTo(a), ua.getReferencesFrom(b));
+                assertEquals(b.getReferencesTo(a), TAuthor().getReferencesFrom(b));
             }
         }
         else {

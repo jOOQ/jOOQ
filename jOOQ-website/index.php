@@ -1,4 +1,5 @@
 <?php
+$home = true;
 require 'frame.php';
 function getH1() {
 	return 'jOOQ : A peace treaty between SQL and Java';

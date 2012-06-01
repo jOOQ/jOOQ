@@ -8,16 +8,18 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  *
  * A book store
  */
-public class TBookStore implements java.io.Serializable {
+public class TBookStore implements java.io.Serializable, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = -1508892654;
+	private static final long serialVersionUID = 108963560;
 
 	private java.lang.String name;
 
+	@Override
 	public java.lang.String getName() {
 		return this.name;
 	}
 
+	@Override
 	public void setName(java.lang.String name) {
 		this.name = name;
 	}

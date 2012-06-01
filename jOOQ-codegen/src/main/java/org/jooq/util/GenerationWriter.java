@@ -35,6 +35,7 @@ public class GenerationWriter {
     private static final String INITIALISATION_STATEMENT        = "__INITIALISATION_STATEMENT__";
     private static final String SERIAL_STATEMENT                = "__SERIAL_STATEMENT__";
 
+    private final File          file;
     private final PrintWriter   writer;
     private final StringBuilder sb;
     private final List<String>  staticInitialisationStatements;
@@ -45,6 +46,7 @@ public class GenerationWriter {
     public GenerationWriter(File file) throws FileNotFoundException {
         file.getParentFile().mkdirs();
 
+        this.file = file;
         this.writer = new PrintWriter(file);
         this.sb = new StringBuilder();
         this.staticInitialisationStatements = new ArrayList<String>();
@@ -280,5 +282,10 @@ public class GenerationWriter {
 
     public void suppressWarnings(String string) {
         suppressWarnings.add(string);
+    }
+
+    @Override
+    public String toString() {
+        return "GenerationWriter [" + file + "]";
     }
 }

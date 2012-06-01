@@ -8,9 +8,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
-public class T_BOOLEANS_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable {
+public class T_BOOLEANS_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTERFACE {
 
-	private static final long serialVersionUID = 1812480675;
+	private static final long serialVersionUID = -393890397;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer ONE_ZERO;
@@ -26,100 +26,122 @@ public class T_BOOLEANS_POJO extends java.lang.ThreadDeath implements java.lang.
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@Override
 	public java.lang.Integer getID() {
 		return this.ID;
 	}
 
+	@Override
 	public void setID(java.lang.Integer ID) {
 		this.ID = ID;
 	}
 
 	@javax.persistence.Column(name = "ONE_ZERO", precision = 7)
+	@Override
 	public java.lang.Integer getONE_ZERO() {
 		return this.ONE_ZERO;
 	}
 
+	@Override
 	public void setONE_ZERO(java.lang.Integer ONE_ZERO) {
 		this.ONE_ZERO = ONE_ZERO;
 	}
 
 	@javax.persistence.Column(name = "TRUE_FALSE_LC", length = 5)
+	@Override
 	public java.lang.String getTRUE_FALSE_LC() {
 		return this.TRUE_FALSE_LC;
 	}
 
+	@Override
 	public void setTRUE_FALSE_LC(java.lang.String TRUE_FALSE_LC) {
 		this.TRUE_FALSE_LC = TRUE_FALSE_LC;
 	}
 
 	@javax.persistence.Column(name = "TRUE_FALSE_UC", length = 5)
+	@Override
 	public java.lang.String getTRUE_FALSE_UC() {
 		return this.TRUE_FALSE_UC;
 	}
 
+	@Override
 	public void setTRUE_FALSE_UC(java.lang.String TRUE_FALSE_UC) {
 		this.TRUE_FALSE_UC = TRUE_FALSE_UC;
 	}
 
 	@javax.persistence.Column(name = "YES_NO_LC", length = 3)
+	@Override
 	public java.lang.String getYES_NO_LC() {
 		return this.YES_NO_LC;
 	}
 
+	@Override
 	public void setYES_NO_LC(java.lang.String YES_NO_LC) {
 		this.YES_NO_LC = YES_NO_LC;
 	}
 
 	@javax.persistence.Column(name = "YES_NO_UC", length = 3)
+	@Override
 	public java.lang.String getYES_NO_UC() {
 		return this.YES_NO_UC;
 	}
 
+	@Override
 	public void setYES_NO_UC(java.lang.String YES_NO_UC) {
 		this.YES_NO_UC = YES_NO_UC;
 	}
 
 	@javax.persistence.Column(name = "Y_N_LC", length = 1)
+	@Override
 	public java.lang.String getY_N_LC() {
 		return this.Y_N_LC;
 	}
 
+	@Override
 	public void setY_N_LC(java.lang.String Y_N_LC) {
 		this.Y_N_LC = Y_N_LC;
 	}
 
 	@javax.persistence.Column(name = "Y_N_UC", length = 1)
+	@Override
 	public java.lang.String getY_N_UC() {
 		return this.Y_N_UC;
 	}
 
+	@Override
 	public void setY_N_UC(java.lang.String Y_N_UC) {
 		this.Y_N_UC = Y_N_UC;
 	}
 
 	@javax.persistence.Column(name = "VC_BOOLEAN", length = 1)
+	@Override
 	public java.lang.String getVC_BOOLEAN() {
 		return this.VC_BOOLEAN;
 	}
 
+	@Override
 	public void setVC_BOOLEAN(java.lang.String VC_BOOLEAN) {
 		this.VC_BOOLEAN = VC_BOOLEAN;
 	}
 
 	@javax.persistence.Column(name = "C_BOOLEAN", length = 1)
+	@Override
 	public java.lang.String getC_BOOLEAN() {
 		return this.C_BOOLEAN;
 	}
 
+	@Override
 	public void setC_BOOLEAN(java.lang.String C_BOOLEAN) {
 		this.C_BOOLEAN = C_BOOLEAN;
 	}
 
 	@javax.persistence.Column(name = "N_BOOLEAN", precision = 7)
+	@Override
 	public java.lang.Integer getN_BOOLEAN() {
 		return this.N_BOOLEAN;
 	}
 
+	@Override
 	public void setN_BOOLEAN(java.lang.Integer N_BOOLEAN) {
 		this.N_BOOLEAN = N_BOOLEAN;
 	}

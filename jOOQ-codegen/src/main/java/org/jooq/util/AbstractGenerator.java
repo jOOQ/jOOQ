@@ -50,6 +50,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                  generateGeneratedAnnotation   = true;
     boolean                  generateRecords               = true;
     boolean                  generatePojos                 = false;
+    boolean                  generateInterfaces            = false;
     boolean                  generateDaos                  = false;
     boolean                  generateJPAAnnotations        = false;
     boolean                  generateValidationAnnotations = false;
@@ -138,6 +139,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGeneratePojos(boolean generatePojos) {
         this.generatePojos = generatePojos;
+    }
+
+    @Override
+    public boolean generateInterfaces() {
+        return generateInterfaces;
+    }
+
+    @Override
+    public void setGenerateInterfaces(boolean generateInterfaces) {
+        this.generateInterfaces = generateInterfaces;
     }
 
     @Override

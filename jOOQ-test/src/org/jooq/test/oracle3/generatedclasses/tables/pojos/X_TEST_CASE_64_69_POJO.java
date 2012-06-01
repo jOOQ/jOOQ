@@ -8,28 +8,32 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @javax.persistence.Entity
 @javax.persistence.Table(name = "X_TEST_CASE_64_69", schema = "TEST")
-public class X_TEST_CASE_64_69_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable {
+public class X_TEST_CASE_64_69_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_64_69_INTERFACE {
 
-	private static final long serialVersionUID = -1333623784;
+	private static final long serialVersionUID = 1017657793;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer UNUSED_ID;
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@Override
 	public java.lang.Integer getID() {
 		return this.ID;
 	}
 
+	@Override
 	public void setID(java.lang.Integer ID) {
 		this.ID = ID;
 	}
 
 	@javax.persistence.Column(name = "UNUSED_ID", precision = 7)
+	@Override
 	public java.lang.Integer getUNUSED_ID() {
 		return this.UNUSED_ID;
 	}
 
+	@Override
 	public void setUNUSED_ID(java.lang.Integer UNUSED_ID) {
 		this.UNUSED_ID = UNUSED_ID;
 	}

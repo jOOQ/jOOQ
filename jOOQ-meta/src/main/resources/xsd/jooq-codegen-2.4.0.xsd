@@ -341,6 +341,11 @@
       <element name="pojos" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
       <!--
+        Generate interfaces that will be implemented by records and/or pojos
+        -->
+      <element name="interfaces" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+
+      <!--
         Generate DAOs in addition to POJO classes
         -->
       <element name="daos" type="boolean" default="false" minOccurs="0" maxOccurs="1" />

@@ -8,15 +8,16 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  *
  * An entity holding books
  */
-public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> {
+public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -1133478228;
+	private static final long serialVersionUID = -2140253297;
 
 	/**
 	 * The book ID
 	 * 
 	 * PRIMARY KEY
 	 */
+	@Override
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.ID, value);
 	}
@@ -26,6 +27,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * 
 	 * PRIMARY KEY
 	 */
+	@Override
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.ID);
 	}
@@ -51,6 +53,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
+	@Override
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID, value);
 	}
@@ -64,6 +67,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
+	@Override
 	public java.lang.Integer getAuthorId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID);
 	}
@@ -93,6 +97,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
+	@Override
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID, value);
 	}
@@ -106,6 +111,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
+	@Override
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID);
 	}
@@ -129,6 +135,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
+	@Override
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.DETAILS_ID, value);
 	}
@@ -136,6 +143,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
+	@Override
 	public java.lang.Integer getDetailsId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.DETAILS_ID);
 	}
@@ -143,6 +151,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * The book's title
 	 */
+	@Override
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.TITLE, value);
 	}
@@ -150,6 +159,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * The book's title
 	 */
+	@Override
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.TITLE);
 	}
@@ -157,6 +167,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * The year the book was published in
 	 */
+	@Override
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.PUBLISHED_IN, value);
 	}
@@ -164,6 +175,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * The year the book was published in
 	 */
+	@Override
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.PUBLISHED_IN);
 	}
@@ -177,6 +189,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
+	@Override
 	public void setLanguageId(org.jooq.test.h2.generatedclasses.enums.TLanguage value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID, value);
 	}
@@ -190,6 +203,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
+	@Override
 	public org.jooq.test.h2.generatedclasses.enums.TLanguage getLanguageId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID);
 	}
@@ -197,6 +211,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Some textual content of the book
 	 */
+	@Override
 	public void setContentText(java.lang.String value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_TEXT, value);
 	}
@@ -204,6 +219,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Some textual content of the book
 	 */
+	@Override
 	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_TEXT);
 	}
@@ -211,6 +227,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Some binary content of the book
 	 */
+	@Override
 	public void setContentPdf(byte[] value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_PDF, value);
 	}
@@ -218,6 +235,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Some binary content of the book
 	 */
+	@Override
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_PDF);
 	}

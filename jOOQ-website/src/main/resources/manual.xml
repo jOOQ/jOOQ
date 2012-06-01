@@ -1968,6 +1968,10 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to false -->
   <pojos>false</pojos>
 
+  <!-- Generate interfaces that will be implemented by records and/or pojos
+       Defaults to false -->
+  <interfaces>false</interfaces>
+
   <!-- Annotate POJOs and Records with JPA annotations for increased
        compatibility and better integration with JPA/Hibernate, etc
        Defaults to false -->

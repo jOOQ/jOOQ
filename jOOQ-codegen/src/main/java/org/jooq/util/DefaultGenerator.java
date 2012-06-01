@@ -506,7 +506,7 @@ public class DefaultGenerator extends AbstractGenerator {
                     out.print("<");
                     out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
                     out.print(">");
-                    printImplements(out, table, Mode.RECORD);
+                    printImplements(out, table, Mode.DEFAULT);
                     out.println(" {");
                     out.printSerial();
                     printSingletonInstance(table, out);

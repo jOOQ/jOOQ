@@ -2827,11 +2827,6 @@ public class DefaultGenerator extends AbstractGenerator {
         printJavadoc(out, "No further instances allowed");
     }
 
-    private void printInheritDoc(GenerationWriter out) {
-        printJavadoc(out, "{@inheritDoc}");
-        printOverride(out);
-    }
-
     private void printJavadoc(GenerationWriter out, String doc) {
         out.println("\t/**");
         out.println("\t * " + doc);

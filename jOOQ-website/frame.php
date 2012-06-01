@@ -39,6 +39,24 @@
 		  })();
 
 		</script>
+		<!-- Start of Woopra Code -->
+		<script type="text/javascript">
+		function woopraReady(tracker) {
+			tracker.setDomain('jooq.org');
+			tracker.setIdleTimeout(300000);
+			tracker.track();
+			return false;
+		}
+		(function() {
+			var wsc = document.createElement('script');
+			wsc.src = document.location.protocol+'//static.woopra.com/js/woopra.js';
+			wsc.type = 'text/javascript';
+			wsc.async = true;
+			var ssc = document.getElementsByTagName('script')[0];
+			ssc.parentNode.insertBefore(wsc, ssc);
+		})();
+		</script>
+		<!-- End of Woopra Code -->
 	</head>
 	<body onload="prettyPrint()">
 	    <div id="navigation">
@@ -142,7 +160,5 @@
 			style="position: absolute; top: 0; right: 0; border: 0;"/> </a>
 		<div style="display: none">
 			<img src="/img/logo.png" alt="The jOOQ Logo" title="jOOQ Logo"/>
-
-		<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
 	</body>
 </html>

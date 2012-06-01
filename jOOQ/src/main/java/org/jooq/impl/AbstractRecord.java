@@ -55,6 +55,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.jooq.ArrayRecord;
@@ -619,9 +620,18 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
         // If a default, no argument constructor is present, use that one.
         try {
+            T result;
+
+            // [#1470] Return a proxy if the supplied type is an interface
+            if (Modifier.isAbstract(type.getModifiers())) {
+                result = Reflect.on(HashMap.class).create().as(type);
+            }
 
             // [#1340] Allow for using non-public default constructors
-            T result = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
+            else {
+                result = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
+            }
+
             return intoMutablePOJO(type, result);
         }
 

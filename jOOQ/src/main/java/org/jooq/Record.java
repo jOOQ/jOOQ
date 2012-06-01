@@ -37,17 +37,20 @@
 package org.jooq;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Proxy;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.HashMap;
 
 import javax.persistence.Column;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
+import org.jooq.tools.reflect.Reflect;
 
 /**
  * A wrapper for database result records returned by
@@ -1170,6 +1173,12 @@ public interface Record extends FieldProvider, Store<Object> {
      * chosen (as reported by {@link Class#getDeclaredConstructors()}</li>
      * <li>When invoking the "matching"
      * </ul>
+     * <h3>If the supplied type is an interface or an abstract class</h3>
+     * Abstract types are instanciated using Java reflection {@link Proxy}
+     * mechanisms. The returned proxy will wrap a {@link HashMap} containing
+     * properties mapped by getters and setters of the supplied type. Methods
+     * (even JPA-annotated ones) other than standard POJO getters and setters
+     * are not supported. Details can be seen in {@link Reflect#as(Class)}.
      * <h3>Other restrictions</h3>
      * <ul>
      * <li><code>type</code> must provide a default or a "matching" constructor.

@@ -67,6 +67,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.Result;
+import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -83,6 +84,8 @@ import org.jooq.test._.CharWithAnnotations;
 import org.jooq.test._.DatesWithAnnotations;
 import org.jooq.test._.FinalWithAnnotations;
 import org.jooq.test._.FinalWithoutAnnotations;
+import org.jooq.test._.IBookWithAnnotations;
+import org.jooq.test._.IBookWithoutAnnotations;
 import org.jooq.test._.ImmutableAuthor;
 import org.jooq.test._.StaticWithAnnotations;
 import org.jooq.test._.StaticWithoutAnnotations;
@@ -296,7 +299,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 return;
         }
 
-        List<BookWithAnnotations> result =
+        Select<?> select =
         create().select(
                     TBook_ID(),
                     TBook_TITLE(),
@@ -305,60 +308,73 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                     TAuthor_DATE_OF_BIRTH())
                 .from(TBook())
                 .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
-                .orderBy(TBook_ID())
-                .fetchInto(BookWithAnnotations.class);
+                .orderBy(TBook_ID());
 
-        assertEquals(4, result.size());
+        List<BookWithAnnotations> result1 = select.fetchInto(BookWithAnnotations.class);
+        List<IBookWithAnnotations> result2 = select.fetchInto(IBookWithAnnotations.class);
 
-        assertEquals(1, (int) result.get(0).id);
-        assertEquals(2, (int) result.get(1).id);
-        assertEquals(3, (int) result.get(2).id);
-        assertEquals(4, (int) result.get(3).id);
+        assertEquals(4, result1.size());
+        assertEquals(4, result2.size());
 
-        assertEquals(1, result.get(0).id2);
-        assertEquals(2, result.get(1).id2);
-        assertEquals(3, result.get(2).id2);
-        assertEquals(4, result.get(3).id2);
+        assertEquals(1, (int) result1.get(0).id);
+        assertEquals(2, (int) result1.get(1).id);
+        assertEquals(3, (int) result1.get(2).id);
+        assertEquals(4, (int) result1.get(3).id);
 
-        assertEquals(1, result.get(0).id3);
-        assertEquals(2, result.get(1).id3);
-        assertEquals(3, result.get(2).id3);
-        assertEquals(4, result.get(3).id3);
+        assertEquals(1, result1.get(0).id2);
+        assertEquals(2, result1.get(1).id2);
+        assertEquals(3, result1.get(2).id2);
+        assertEquals(4, result1.get(3).id2);
 
-        assertEquals(Long.valueOf(1), result.get(0).id4);
-        assertEquals(Long.valueOf(2), result.get(1).id4);
-        assertEquals(Long.valueOf(3), result.get(2).id4);
-        assertEquals(Long.valueOf(4), result.get(3).id4);
+        assertEquals(1, result1.get(0).id3);
+        assertEquals(2, result1.get(1).id3);
+        assertEquals(3, result1.get(2).id3);
+        assertEquals(4, result1.get(3).id3);
 
-        assertEquals(1L, result.get(0).id5);
-        assertEquals(2L, result.get(1).id5);
-        assertEquals(3L, result.get(2).id5);
-        assertEquals(4L, result.get(3).id5);
+        assertEquals(Long.valueOf(1), result1.get(0).id4);
+        assertEquals(Long.valueOf(2), result1.get(1).id4);
+        assertEquals(Long.valueOf(3), result1.get(2).id4);
+        assertEquals(Long.valueOf(4), result1.get(3).id4);
 
-        assertEquals("1984", result.get(0).title);
-        assertEquals("Animal Farm", result.get(1).title);
-        assertEquals("O Alquimista", result.get(2).title);
-        assertEquals("Brida", result.get(3).title);
+        assertEquals(1L, result1.get(0).id5);
+        assertEquals(2L, result1.get(1).id5);
+        assertEquals(3L, result1.get(2).id5);
+        assertEquals(4L, result1.get(3).id5);
 
-        assertEquals("George", result.get(0).firstName);
-        assertEquals("George", result.get(1).firstName);
-        assertEquals("Paulo", result.get(2).firstName);
-        assertEquals("Paulo", result.get(3).firstName);
+        assertEquals(1, (int) result2.get(0).getId());
+        assertEquals(2, (int) result2.get(1).getId());
+        assertEquals(3, (int) result2.get(2).getId());
+        assertEquals(4, (int) result2.get(3).getId());
 
-        assertEquals("George", result.get(0).firstName2);
-        assertEquals("George", result.get(1).firstName2);
-        assertEquals("Paulo", result.get(2).firstName2);
-        assertEquals("Paulo", result.get(3).firstName2);
+        assertEquals("1984", result1.get(0).title);
+        assertEquals("Animal Farm", result1.get(1).title);
+        assertEquals("O Alquimista", result1.get(2).title);
+        assertEquals("Brida", result1.get(3).title);
 
-        assertEquals("Orwell", result.get(0).lastName);
-        assertEquals("Orwell", result.get(1).lastName);
-        assertEquals("Coelho", result.get(2).lastName);
-        assertEquals("Coelho", result.get(3).lastName);
+        assertEquals("George", result1.get(0).firstName);
+        assertEquals("George", result1.get(1).firstName);
+        assertEquals("Paulo", result1.get(2).firstName);
+        assertEquals("Paulo", result1.get(3).firstName);
 
-        assertEquals("Orwell", result.get(0).lastName2);
-        assertEquals("Orwell", result.get(1).lastName2);
-        assertEquals("Coelho", result.get(2).lastName2);
-        assertEquals("Coelho", result.get(3).lastName2);
+        assertEquals("George", result1.get(0).firstName2);
+        assertEquals("George", result1.get(1).firstName2);
+        assertEquals("Paulo", result1.get(2).firstName2);
+        assertEquals("Paulo", result1.get(3).firstName2);
+
+        assertEquals("Orwell", result1.get(0).lastName);
+        assertEquals("Orwell", result1.get(1).lastName);
+        assertEquals("Coelho", result1.get(2).lastName);
+        assertEquals("Coelho", result1.get(3).lastName);
+
+        assertEquals("Orwell", result1.get(0).lastName2);
+        assertEquals("Orwell", result1.get(1).lastName2);
+        assertEquals("Coelho", result1.get(2).lastName2);
+        assertEquals("Coelho", result1.get(3).lastName2);
+
+        assertEquals("Orwell", result2.get(0).getLAST_NAME());
+        assertEquals("Orwell", result2.get(1).getLAST_NAME());
+        assertEquals("Coelho", result2.get(2).getLAST_NAME());
+        assertEquals("Coelho", result2.get(3).getLAST_NAME());
 
         try {
             // Cannot instanciate an abstract class
@@ -447,7 +463,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 return;
         }
 
-        List<BookWithoutAnnotations> result =
+        Select<?> select =
         create().select(
                     TBook_ID(),
                     TBook_TITLE(),
@@ -456,55 +472,68 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                     TAuthor_DATE_OF_BIRTH())
                 .from(TBook())
                 .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
-                .orderBy(TBook_ID())
-                .fetchInto(BookWithoutAnnotations.class);
+                .orderBy(TBook_ID());
 
-        assertEquals(4, result.size());
+        List<BookWithoutAnnotations> result1 = select.fetchInto(BookWithoutAnnotations.class);
+        List<IBookWithoutAnnotations> result2 = select.fetchInto(IBookWithoutAnnotations.class);
 
-        assertEquals(1, (int) result.get(0).id);
-        assertEquals(2, (int) result.get(1).id);
-        assertEquals(3, (int) result.get(2).id);
-        assertEquals(4, (int) result.get(3).id);
+        assertEquals(4, result1.size());
+        assertEquals(4, result2.size());
 
-        assertEquals(1, result.get(0).id2);
-        assertEquals(2, result.get(1).id2);
-        assertEquals(3, result.get(2).id2);
-        assertEquals(4, result.get(3).id2);
+        assertEquals(1, (int) result1.get(0).id);
+        assertEquals(2, (int) result1.get(1).id);
+        assertEquals(3, (int) result1.get(2).id);
+        assertEquals(4, (int) result1.get(3).id);
 
-        assertEquals(1, result.get(0).ID);
-        assertEquals(2, result.get(1).ID);
-        assertEquals(3, result.get(2).ID);
-        assertEquals(4, result.get(3).ID);
+        assertEquals(1, result1.get(0).id2);
+        assertEquals(2, result1.get(1).id2);
+        assertEquals(3, result1.get(2).id2);
+        assertEquals(4, result1.get(3).id2);
 
-        assertEquals("1984", result.get(0).title);
-        assertEquals("Animal Farm", result.get(1).title);
-        assertEquals("O Alquimista", result.get(2).title);
-        assertEquals("Brida", result.get(3).title);
+        assertEquals(1, result1.get(0).ID);
+        assertEquals(2, result1.get(1).ID);
+        assertEquals(3, result1.get(2).ID);
+        assertEquals(4, result1.get(3).ID);
 
-        assertEquals("George", result.get(0).firstName);
-        assertEquals("George", result.get(1).firstName);
-        assertEquals("Paulo", result.get(2).firstName);
-        assertEquals("Paulo", result.get(3).firstName);
+        assertEquals(1, (int) result2.get(0).getId());
+        assertEquals(2, (int) result2.get(1).getId());
+        assertEquals(3, (int) result2.get(2).getId());
+        assertEquals(4, (int) result2.get(3).getId());
 
-        assertEquals("George", result.get(0).firstName2);
-        assertEquals("George", result.get(1).firstName2);
-        assertEquals("Paulo", result.get(2).firstName2);
-        assertEquals("Paulo", result.get(3).firstName2);
+        assertEquals("1984", result1.get(0).title);
+        assertEquals("Animal Farm", result1.get(1).title);
+        assertEquals("O Alquimista", result1.get(2).title);
+        assertEquals("Brida", result1.get(3).title);
 
-        assertEquals("Orwell", result.get(0).lastName);
-        assertEquals("Orwell", result.get(1).lastName);
-        assertEquals("Coelho", result.get(2).lastName);
-        assertEquals("Coelho", result.get(3).lastName);
+        assertEquals("George", result1.get(0).firstName);
+        assertEquals("George", result1.get(1).firstName);
+        assertEquals("Paulo", result1.get(2).firstName);
+        assertEquals("Paulo", result1.get(3).firstName);
 
-        assertEquals("Orwell", result.get(0).lastName2);
-        assertEquals("Orwell", result.get(1).lastName2);
-        assertEquals("Coelho", result.get(2).lastName2);
-        assertEquals("Coelho", result.get(3).lastName2);
+        assertEquals("George", result1.get(0).firstName2);
+        assertEquals("George", result1.get(1).firstName2);
+        assertEquals("Paulo", result1.get(2).firstName2);
+        assertEquals("Paulo", result1.get(3).firstName2);
 
-        assertEquals("Orwell", result.get(0).LAST_NAME);
-        assertEquals("Orwell", result.get(1).LAST_NAME);
-        assertEquals("Coelho", result.get(2).LAST_NAME);
-        assertEquals("Coelho", result.get(3).LAST_NAME);
+        assertEquals("Orwell", result1.get(0).lastName);
+        assertEquals("Orwell", result1.get(1).lastName);
+        assertEquals("Coelho", result1.get(2).lastName);
+        assertEquals("Coelho", result1.get(3).lastName);
+
+        assertEquals("Orwell", result1.get(0).lastName2);
+        assertEquals("Orwell", result1.get(1).lastName2);
+        assertEquals("Coelho", result1.get(2).lastName2);
+        assertEquals("Coelho", result1.get(3).lastName2);
+
+        assertEquals("Orwell", result1.get(0).LAST_NAME);
+        assertEquals("Orwell", result1.get(1).LAST_NAME);
+        assertEquals("Coelho", result1.get(2).LAST_NAME);
+        assertEquals("Coelho", result1.get(3).LAST_NAME);
+
+        assertEquals("Orwell", result2.get(0).getLAST_NAME());
+        assertEquals("Orwell", result2.get(1).getLAST_NAME());
+        assertEquals("Coelho", result2.get(2).getLAST_NAME());
+        assertEquals("Coelho", result2.get(3).getLAST_NAME());
     }
 
     @Test

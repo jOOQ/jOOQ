@@ -5,7 +5,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 	<head>
-		<title>jOOQ is a fluent API for typesafe SQL query construction and execution</title>
+		<title><?php
+		if (isset($home)) {
+		  print "jOOQ is a fluent API for typesafe SQL query construction and execution";
+		} else {
+		  print getH1();
+		}
+		?></title>
 		<meta property="og:title" content="jOOQ" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="http://www.jooq.org" />

@@ -37,6 +37,7 @@
 package org.jooq.util;
 
 
+import static java.util.Arrays.asList;
 import static org.jooq.util.GenerationUtil.convertToJavaIdentifier;
 
 import java.io.File;
@@ -137,6 +138,7 @@ public class DefaultGenerator extends AbstractGenerator {
             + ((!generateRecords && generateDaos) ? " (forced to true because of <daos/>)" : ""));
         log.info("  pojos", generatePojos()
             + ((!generatePojos && generateDaos) ? " (forced to true because of <daos/>)" : ""));
+        log.info("  interfaces", generateInterfaces());
         log.info("  daos", generateDaos());
         log.info("  relations", generateRelations());
         log.info("----------------------------------------------------------");
@@ -762,6 +764,11 @@ public class DefaultGenerator extends AbstractGenerator {
                         // Getter
                         out.println();
                         printColumnJPAAnnotation(out, column);
+
+                        if (generateInterfaces()) {
+                            printOverride(out);
+                        }
+
                         out.print("\tpublic ");
                         out.print(getJavaType(column.getType()));
                         out.print(" ");
@@ -775,6 +782,11 @@ public class DefaultGenerator extends AbstractGenerator {
 
                         // Setter
                         out.println();
+
+                        if (generateInterfaces()) {
+                            printOverride(out);
+                        }
+
                         out.print("\tpublic void ");
                         out.print(strategy.getJavaSetterName(column, Mode.POJO));
                         out.print("(");
@@ -1138,6 +1150,40 @@ public class DefaultGenerator extends AbstractGenerator {
                     out.print(strategy.getFullJavaIdentifier(table));
                     out.println(");");
                     out.println("\t}");
+                    out.println("}");
+                    out.close();
+                } catch (Exception e) {
+                    log.error("Error while generating table record " + table, e);
+                }
+            }
+
+            watch.splitInfo("Table records generated");
+        }
+
+        // ----------------------------------------------------------------------
+        // XXX Generating table interfaces
+        // ----------------------------------------------------------------------
+        if (generateInterfaces() && database.getTables(schema).size() > 0) {
+            log.info("Generating interfaces");
+
+            for (TableDefinition table : database.getTables(schema)) {
+                try {
+                    log.info("Generating interface", strategy.getFileName(table, Mode.INTERFACE));
+
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(table, Mode.INTERFACE));
+                    printHeader(out, table, Mode.INTERFACE);
+                    printClassJavadoc(out, table);
+                    printTableJPAAnnotation(out, table);
+
+                    out.print("public interface ");
+                    out.print(strategy.getJavaClassName(table, Mode.INTERFACE));
+                    printImplements(out, table, Mode.INTERFACE);
+                    out.println(" {");
+
+                    for (ColumnDefinition column : table.getColumns()) {
+                        printGetterAndSetter(out, column, false);
+                    }
+
                     out.println("}");
                     out.close();
                 } catch (Exception e) {
@@ -1643,8 +1689,22 @@ public class DefaultGenerator extends AbstractGenerator {
         interfaces = new ArrayList<String>(interfaces == null ? Collections.<String>emptyList() : interfaces);
         interfaces.addAll(Arrays.asList(forcedInterfaces));
 
+        if (generateInterfaces() &&
+            asList(Mode.POJO, Mode.RECORD).contains(mode) &&
+            definition instanceof TableDefinition) {
+
+            interfaces.add(strategy.getFullJavaClassName(definition, Mode.INTERFACE));
+        }
+
         if (!interfaces.isEmpty()) {
-            String glue = " implements ";
+            String glue;
+
+            if (mode == Mode.INTERFACE) {
+                glue = " extends ";
+            }
+            else {
+                glue = " implements ";
+            }
 
             // Avoid duplicates
             for (String i : new LinkedHashSet<String>(interfaces)) {
@@ -2361,21 +2421,57 @@ public class DefaultGenerator extends AbstractGenerator {
     }
 
     private void printGetterAndSetter(GenerationWriter out, TypedElementDefinition<?> element) {
+        printGetterAndSetter(out, element, true);
+    }
+
+    private void printGetterAndSetter(GenerationWriter out, TypedElementDefinition<?> element, boolean printBody) {
         printFieldJavaDoc(out, element);
-        out.println("\tpublic void " + strategy.getJavaSetterName(element, Mode.DEFAULT) + "(" + getJavaType(element.getType()) + " value) {");
-        out.println("\t\tsetValue(" + strategy.getFullJavaIdentifier(element) + ", value);");
-        out.println("\t}");
+
+        if (printBody && generateInterfaces() && element instanceof ColumnDefinition) {
+            printOverride(out);
+        }
+
+        out.print("\tpublic void ");
+        out.print(strategy.getJavaSetterName(element, Mode.DEFAULT));
+        out.print("(");
+        out.print(getJavaType(element.getType()));
+        out.print(" value)");
+
+        if (printBody) {
+            out.println(" {");
+            out.println("\t\tsetValue(" + strategy.getFullJavaIdentifier(element) + ", value);");
+            out.println("\t}");
+        }
+        else {
+            out.println(";");
+        }
 
         printFieldJavaDoc(out, element);
         if (element instanceof ColumnDefinition) {
             printColumnJPAAnnotation(out, (ColumnDefinition) element);
         }
 
-        out.println("\tpublic " + getJavaType(element.getType()) + " " + strategy.getJavaGetterName(element, Mode.DEFAULT) + "() {");
-        out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifier(element) + ");");
-        out.println("\t}");
+        if (printBody && generateInterfaces() && element instanceof ColumnDefinition) {
+            printOverride(out);
+        }
 
-        if (generateRelations() &&
+        out.print("\tpublic ");
+        out.print(getJavaType(element.getType()));
+        out.print(" ");
+        out.print(strategy.getJavaGetterName(element, Mode.DEFAULT));
+        out.print("()");
+
+        if (printBody) {
+            out.println(" {");
+            out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifier(element) + ");");
+            out.println("\t}");
+        }
+        else {
+            out.println(";");
+        }
+
+        if (printBody &&
+            generateRelations() &&
             generateNavigationMethods() &&
             element instanceof ColumnDefinition) {
 

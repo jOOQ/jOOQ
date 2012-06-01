@@ -8,9 +8,9 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  *
  * An m:n relation between books and book stores
  */
-public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> {
+public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = 2046362821;
+	private static final long serialVersionUID = 1173644631;
 
 	/**
 	 * The book store name
@@ -23,6 +23,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
 	 * </pre></code>
 	 */
+	@Override
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value);
 	}
@@ -38,6 +39,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
 	 * </pre></code>
 	 */
+	@Override
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
 	}
@@ -71,6 +73,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * REFERENCES PUBLIC.T_BOOK (ID)
 	 * </pre></code>
 	 */
+	@Override
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID, value);
 	}
@@ -86,6 +89,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * REFERENCES PUBLIC.T_BOOK (ID)
 	 * </pre></code>
 	 */
+	@Override
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID);
 	}
@@ -111,6 +115,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	/**
 	 * The number of books on stock
 	 */
+	@Override
 	public void setStock(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.STOCK, value);
 	}
@@ -118,6 +123,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	/**
 	 * The number of books on stock
 	 */
+	@Override
 	public java.lang.Integer getStock() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.STOCK);
 	}

@@ -133,6 +133,18 @@ public interface Generator {
     void setGeneratePojos(boolean generatePojos);
 
     /**
+     * Whether interfaces should be generated to be implemented by records and
+     * POJO's
+     */
+    boolean generateInterfaces();
+
+    /**
+     * Whether interfaces should be generated to be implemented by records and
+     * POJO's
+     */
+    void setGenerateInterfaces(boolean generateInterfaces);
+
+    /**
      * Whether DAO's should be generated in addition to pojos
      */
     boolean generateDaos();

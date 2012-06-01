@@ -8,13 +8,14 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  *
  * A book store
  */
-public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> {
+public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = 774347581;
+	private static final long serialVersionUID = -737848707;
 
 	/**
 	 * The books store name
 	 */
+	@Override
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBookStore.NAME, value);
 	}
@@ -22,6 +23,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * The books store name
 	 */
+	@Override
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBookStore.NAME);
 	}

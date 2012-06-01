@@ -8,9 +8,9 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  *
  * An entity holding books
  */
-public class TBook implements java.io.Serializable {
+public class TBook implements java.io.Serializable, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -1465448700;
+	private static final long serialVersionUID = 990916023;
 
 	private java.lang.Integer                                 id;
 	private java.lang.Integer                                 authorId;
@@ -22,74 +22,92 @@ public class TBook implements java.io.Serializable {
 	private java.lang.String                                  contentText;
 	private byte[]                                            contentPdf;
 
+	@Override
 	public java.lang.Integer getId() {
 		return this.id;
 	}
 
+	@Override
 	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 
+	@Override
 	public java.lang.Integer getAuthorId() {
 		return this.authorId;
 	}
 
+	@Override
 	public void setAuthorId(java.lang.Integer authorId) {
 		this.authorId = authorId;
 	}
 
+	@Override
 	public java.lang.Integer getCoAuthorId() {
 		return this.coAuthorId;
 	}
 
+	@Override
 	public void setCoAuthorId(java.lang.Integer coAuthorId) {
 		this.coAuthorId = coAuthorId;
 	}
 
+	@Override
 	public java.lang.Integer getDetailsId() {
 		return this.detailsId;
 	}
 
+	@Override
 	public void setDetailsId(java.lang.Integer detailsId) {
 		this.detailsId = detailsId;
 	}
 
+	@Override
 	public java.lang.String getTitle() {
 		return this.title;
 	}
 
+	@Override
 	public void setTitle(java.lang.String title) {
 		this.title = title;
 	}
 
+	@Override
 	public java.lang.Integer getPublishedIn() {
 		return this.publishedIn;
 	}
 
+	@Override
 	public void setPublishedIn(java.lang.Integer publishedIn) {
 		this.publishedIn = publishedIn;
 	}
 
+	@Override
 	public org.jooq.test.h2.generatedclasses.enums.TLanguage getLanguageId() {
 		return this.languageId;
 	}
 
+	@Override
 	public void setLanguageId(org.jooq.test.h2.generatedclasses.enums.TLanguage languageId) {
 		this.languageId = languageId;
 	}
 
+	@Override
 	public java.lang.String getContentText() {
 		return this.contentText;
 	}
 
+	@Override
 	public void setContentText(java.lang.String contentText) {
 		this.contentText = contentText;
 	}
 
+	@Override
 	public byte[] getContentPdf() {
 		return this.contentPdf;
 	}
 
+	@Override
 	public void setContentPdf(byte[] contentPdf) {
 		this.contentPdf = contentPdf;
 	}

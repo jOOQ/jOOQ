@@ -8,9 +8,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @javax.persistence.Entity
 @javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
-public class X_TEST_CASE_85_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable {
+public class X_TEST_CASE_85_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_85_INTERFACE {
 
-	private static final long serialVersionUID = 1834506106;
+	private static final long serialVersionUID = 2030531158;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer X_UNUSED_ID;
@@ -18,28 +18,34 @@ public class X_TEST_CASE_85_POJO extends java.lang.ThreadDeath implements java.l
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@Override
 	public java.lang.Integer getID() {
 		return this.ID;
 	}
 
+	@Override
 	public void setID(java.lang.Integer ID) {
 		this.ID = ID;
 	}
 
 	@javax.persistence.Column(name = "X_UNUSED_ID", precision = 7)
+	@Override
 	public java.lang.Integer getX_UNUSED_ID() {
 		return this.X_UNUSED_ID;
 	}
 
+	@Override
 	public void setX_UNUSED_ID(java.lang.Integer X_UNUSED_ID) {
 		this.X_UNUSED_ID = X_UNUSED_ID;
 	}
 
 	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
+	@Override
 	public java.lang.String getX_UNUSED_NAME() {
 		return this.X_UNUSED_NAME;
 	}
 
+	@Override
 	public void setX_UNUSED_NAME(java.lang.String X_UNUSED_NAME) {
 		this.X_UNUSED_NAME = X_UNUSED_NAME;
 	}

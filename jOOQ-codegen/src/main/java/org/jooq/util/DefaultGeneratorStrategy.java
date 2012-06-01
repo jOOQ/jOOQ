@@ -183,6 +183,11 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             sb.append(".daos");
         }
 
+        // Interfaces too
+        else if (mode == Mode.INTERFACE) {
+            sb.append(".interfaces");
+        }
+
         return sb.toString();
     }
 
@@ -210,6 +215,9 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         }
         else if (mode == Mode.DAO) {
             result.append("Dao");
+        }
+        else if (mode == Mode.INTERFACE) {
+            result.insert(0, "I");
         }
 
         return result.toString();

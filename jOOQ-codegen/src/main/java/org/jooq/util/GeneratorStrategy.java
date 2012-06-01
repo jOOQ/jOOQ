@@ -333,6 +333,12 @@ public interface GeneratorStrategy {
         POJO,
 
         /**
+         * the interface mode. This is used when a {@link TableDefinition}'s
+         * interface is being rendered
+         */
+        INTERFACE,
+
+        /**
          * The dao mode. This is used when a {@link TableDefinition}'s dao
          * class is being rendered
          */

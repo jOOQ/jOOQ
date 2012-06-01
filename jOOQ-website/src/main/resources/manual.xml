@@ -1764,7 +1764,7 @@ public void bind(BindContext context) throws DataAccessException;</java>
 								camel case:
 							</p>
 
-<java>/**
+<java><![CDATA[/**
  * It is recommended that you extend the DefaultGeneratorStrategy. Most of the
  * GeneratorStrategy API is already declared final. You only need to override any
  * of the following methods, for whatever generation behaviour you'd like to achieve
@@ -1840,7 +1840,25 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
     public String getJavaMemberName(Definition definition, Mode mode) {
         return definition.getOutputName();
     }
-}</java>
+
+    /**
+     * Override this method to define the base class for those artefacts that
+     * allow for custom base classes
+     */
+    @Override
+    public String getJavaClassExtends(Definition definition, Mode mode) {
+        return Object.class.getName();
+    }
+
+    /**
+     * Override this method to define the interfaces to be implemented by those
+     * artefacts that allow for custom interface implementation
+     */
+    @Override
+    public List<String> getJavaClassImplements(Definition definition, Mode mode) {
+        return Arrays.asList(Serializable.class.getName(), Cloneable.class.getName());
+    }
+}]]></java>
 
                             <h3>jooq-meta configuration</h3>
 							<p>

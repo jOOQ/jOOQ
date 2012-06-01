@@ -303,6 +303,13 @@ public interface GeneratorStrategy {
     File getFile(Definition definition, Mode mode);
 
     /**
+     * @return The overload suffix to be applied when generating overloaded
+     *         routine artefacts, e.g.
+     *         <code>"_OverloadIndex_" + overloadIndex</code>
+     */
+    String getOverloadSuffix(Definition definition, Mode mode, String overloadIndex);
+
+    /**
      * The "mode" by which an artefact should be named
      */
     enum Mode {

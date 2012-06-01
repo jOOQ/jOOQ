@@ -122,4 +122,9 @@ public class Oracle3Strategy extends DefaultGeneratorStrategy {
     public String getJavaMemberName(Definition definition, Mode mode) {
         return definition.getOutputName();
     }
+
+    @Override
+    public String getOverloadSuffix(Definition definition, Mode mode, String overloadIndex) {
+        return "______ABC_" + overloadIndex;
+    }
 }

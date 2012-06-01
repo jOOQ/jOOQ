@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.packages;
  */
 public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = 277161264;
+	private static final long serialVersionUID = -1707209763;
 
 	/**
 	 * The singleton instance of TEST.LIBRARY
@@ -23,8 +23,8 @@ public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.
 	 * @param AUTHOR_NAME
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.math.BigDecimal call_PKG_F_AUTHOR_EXISTS(org.jooq.Configuration configuration, java.lang.String AUTHOR_NAME) {
-		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS();
+	public static java.math.BigDecimal call_PKG_F_AUTHOR_EXISTS______ABC_1(org.jooq.Configuration configuration, java.lang.String AUTHOR_NAME) {
+		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_1 f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_1();
 		f.setAUTHOR_NAME(AUTHOR_NAME);
 
 		f.execute(configuration);
@@ -36,8 +36,8 @@ public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.
 	 *
 	 * @param AUTHOR_NAME
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> call_PKG_F_AUTHOR_EXISTS(java.lang.String AUTHOR_NAME) {
-		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS();
+	public static org.jooq.Field<java.math.BigDecimal> call_PKG_F_AUTHOR_EXISTS______ABC_1(java.lang.String AUTHOR_NAME) {
+		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_1 f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_1();
 		f.setAUTHOR_NAME(AUTHOR_NAME);
 
 		return f.asField();
@@ -48,8 +48,8 @@ public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.
 	 *
 	 * @param AUTHOR_NAME
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> call_PKG_F_AUTHOR_EXISTS(org.jooq.Field<java.lang.String> AUTHOR_NAME) {
-		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS();
+	public static org.jooq.Field<java.math.BigDecimal> call_PKG_F_AUTHOR_EXISTS______ABC_1(org.jooq.Field<java.lang.String> AUTHOR_NAME) {
+		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_1 f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_1();
 		f.setAUTHOR_NAME(AUTHOR_NAME);
 
 		return f.asField();
@@ -62,8 +62,8 @@ public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.
 	 * @param UNUSED
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.math.BigDecimal call_PKG_F_AUTHOR_EXISTS(org.jooq.Configuration configuration, java.lang.String AUTHOR_NAME, java.lang.Number UNUSED) {
-		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS();
+	public static java.math.BigDecimal call_PKG_F_AUTHOR_EXISTS______ABC_2(org.jooq.Configuration configuration, java.lang.String AUTHOR_NAME, java.lang.Number UNUSED) {
+		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_2 f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_2();
 		f.setAUTHOR_NAME(AUTHOR_NAME);
 		f.setUNUSED(UNUSED);
 
@@ -77,8 +77,8 @@ public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.
 	 * @param AUTHOR_NAME
 	 * @param UNUSED
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> call_PKG_F_AUTHOR_EXISTS(java.lang.String AUTHOR_NAME, java.lang.Number UNUSED) {
-		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS();
+	public static org.jooq.Field<java.math.BigDecimal> call_PKG_F_AUTHOR_EXISTS______ABC_2(java.lang.String AUTHOR_NAME, java.lang.Number UNUSED) {
+		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_2 f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_2();
 		f.setAUTHOR_NAME(AUTHOR_NAME);
 		f.setUNUSED(UNUSED);
 
@@ -91,8 +91,8 @@ public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.
 	 * @param AUTHOR_NAME
 	 * @param UNUSED
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> call_PKG_F_AUTHOR_EXISTS(org.jooq.Field<java.lang.String> AUTHOR_NAME, org.jooq.Field<? extends java.lang.Number> UNUSED) {
-		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS();
+	public static org.jooq.Field<java.math.BigDecimal> call_PKG_F_AUTHOR_EXISTS______ABC_2(org.jooq.Field<java.lang.String> AUTHOR_NAME, org.jooq.Field<? extends java.lang.Number> UNUSED) {
+		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_2 f = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_AUTHOR_EXISTS______ABC_2();
 		f.setAUTHOR_NAME(AUTHOR_NAME);
 		f.setUNUSED(UNUSED);
 
@@ -146,8 +146,8 @@ public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.
 	 * @param RESULT OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.math.BigDecimal call_PKG_P_AUTHOR_EXISTS(org.jooq.Configuration configuration, java.lang.String AUTHOR_NAME) {
-		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_P_AUTHOR_EXISTS p = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_P_AUTHOR_EXISTS();
+	public static java.math.BigDecimal call_PKG_P_AUTHOR_EXISTS______ABC_1(org.jooq.Configuration configuration, java.lang.String AUTHOR_NAME) {
+		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_P_AUTHOR_EXISTS______ABC_1 p = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_P_AUTHOR_EXISTS______ABC_1();
 		p.setAUTHOR_NAME(AUTHOR_NAME);
 
 		p.execute(configuration);
@@ -162,8 +162,8 @@ public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.
 	 * @param UNUSED IN OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.packages.library.PKG_P_AUTHOR_EXISTS call_PKG_P_AUTHOR_EXISTS(org.jooq.Configuration configuration, java.lang.String AUTHOR_NAME, java.lang.Number UNUSED) {
-		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_P_AUTHOR_EXISTS p = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_P_AUTHOR_EXISTS();
+	public static org.jooq.test.oracle3.generatedclasses.packages.library.PKG_P_AUTHOR_EXISTS______ABC_2 call_PKG_P_AUTHOR_EXISTS______ABC_2(org.jooq.Configuration configuration, java.lang.String AUTHOR_NAME, java.lang.Number UNUSED) {
+		org.jooq.test.oracle3.generatedclasses.packages.library.PKG_P_AUTHOR_EXISTS______ABC_2 p = new org.jooq.test.oracle3.generatedclasses.packages.library.PKG_P_AUTHOR_EXISTS______ABC_2();
 		p.setAUTHOR_NAME(AUTHOR_NAME);
 		p.setUNUSED(UNUSED);
 

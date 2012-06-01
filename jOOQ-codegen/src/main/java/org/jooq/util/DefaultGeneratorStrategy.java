@@ -212,10 +212,6 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             result.append("Dao");
         }
 
-        if (!StringUtils.isBlank(definition.getOverload())) {
-            result.append(definition.getOverload());
-        }
-
         return result.toString();
     }
 
@@ -256,5 +252,10 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
         // Default always to the main package
         return "";
+    }
+
+    @Override
+    public String getOverloadSuffix(Definition definition, Mode mode, String overloadIndex) {
+        return overloadIndex;
     }
 }

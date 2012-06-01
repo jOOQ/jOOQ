@@ -135,8 +135,24 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
-        return disambiguateMethod(definition,
-            convertToJavaIdentifier(delegate.getJavaMethodName(definition, mode)));
+        String methodName;
+
+        methodName = delegate.getJavaMethodName(definition, mode);
+        methodName = overload(definition, mode, methodName);
+        methodName = convertToJavaIdentifier(methodName);
+
+        return disambiguateMethod(definition, methodName);
+    }
+
+    /**
+     * [#1358] Add an overload suffix if needed
+     */
+    private String overload(Definition definition, Mode mode, String identifier) {
+        if (!StringUtils.isBlank(definition.getOverload())) {
+            identifier += getOverloadSuffix(definition, mode, definition.getOverload());
+        }
+
+        return identifier;
     }
 
     /**
@@ -237,7 +253,11 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             return Record.class.getSimpleName();
         }
 
-        String className = convertToJavaIdentifier(delegate.getJavaClassName(definition, mode));
+        String className;
+
+        className = delegate.getJavaClassName(definition, mode);
+        className = overload(definition, mode, className);
+        className = convertToJavaIdentifier(className);
 
         if (mode == Mode.FACTORY) {
             String alternative = convertToJavaIdentifier(delegate.getJavaClassName(definition, Mode.DEFAULT));
@@ -271,5 +291,10 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     @Override
     public String getJavaMemberName(Definition definition, Mode mode) {
         return convertToJavaIdentifier(delegate.getJavaMemberName(definition, mode));
+    }
+
+    @Override
+    public String getOverloadSuffix(Definition definition, Mode mode, String overloadIndex) {
+        return delegate.getOverloadSuffix(definition, mode, overloadIndex);
     }
 }

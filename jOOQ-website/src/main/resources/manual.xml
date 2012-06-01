@@ -1858,6 +1858,18 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
         return Arrays.asList(Serializable.class.getName(), Cloneable.class.getName());
     }
+
+    /**
+     * Override this method to define the suffix to apply to routines when
+     * they are overloaded.
+     *
+     * Use this to resolve compile-time conflicts in generated source code, in
+     * case you make heavy use of procedure overloading
+     */
+    @Override
+    public String getOverloadSuffix(Definition definition, Mode mode, String overloadIndex) {
+        return "_OverloadIndex_" + overloadIndex;
+    }
 }]]></java>
 
                             <h3>jooq-meta configuration</h3>

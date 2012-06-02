@@ -144,7 +144,7 @@ public class DefaultMasterDataTableDefinition extends AbstractDefinition impleme
     }
 
     @Override
-    public ColumnDefinition getIdentity() {
+    public IdentityDefinition getIdentity() {
         return delegate.getIdentity();
     }
 

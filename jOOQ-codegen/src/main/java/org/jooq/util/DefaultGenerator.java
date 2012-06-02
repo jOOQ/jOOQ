@@ -560,7 +560,7 @@ public class DefaultGenerator extends AbstractGenerator {
 
                     // Add primary / unique / foreign key information
                     if (generateRelations()) {
-                        ColumnDefinition identity = table.getIdentity();
+                        IdentityDefinition identity = table.getIdentity();
 
                         // The identity column
                         if (identity != null) {
@@ -572,13 +572,13 @@ public class DefaultGenerator extends AbstractGenerator {
                             out.print("<");
                             out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
                             out.print(", ");
-                            out.print(getJavaType(table.getIdentity().getType()));
+                            out.print(getJavaType(identity.getColumn().getType()));
                             out.println("> getIdentity() {");
 
                             out.print("\t\treturn ");
                             out.print(strategy.getJavaPackageName(schema));
                             out.print(".Keys.IDENTITY_");
-                            out.print(strategy.getJavaIdentifier(identity.getContainer()));
+                            out.print(strategy.getJavaIdentifier(identity.getColumn().getContainer()));
                             out.println(";");
 
                             out.println("\t}");
@@ -973,7 +973,9 @@ public class DefaultGenerator extends AbstractGenerator {
 
             GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Keys.java"));
             printHeader(out, schema);
-            printClassJavadoc(out, "A class modelling foreign key relationships between tables of the <code>" + schema.getOutputName() + "</code> schema");
+            printClassJavadoc(out,
+                "A class modelling foreign key relationships between tables of the <code>" + schema.getOutputName() + "</code> schema",
+                "2.4.0 - [#1459] - The Keys.java class's static initialiser can become too large for big databases. Use constraint definitions in table meta classes instead");
 
             out.suppressWarnings("unchecked");
             out.print("public class Keys extends ");
@@ -984,21 +986,21 @@ public class DefaultGenerator extends AbstractGenerator {
 
             for (TableDefinition table : database.getTables(schema)) {
                 try {
-                    ColumnDefinition identity = table.getIdentity();
+                    IdentityDefinition identity = table.getIdentity();
 
                     if (identity != null) {
                         out.print("\tpublic static final ");
                         out.print(Identity.class);
                         out.print("<");
-                        out.print(strategy.getFullJavaClassName(identity.getContainer(), Mode.RECORD));
+                        out.print(strategy.getFullJavaClassName(identity.getColumn().getContainer(), Mode.RECORD));
                         out.print(", ");
-                        out.print(getJavaType(identity.getType()));
+                        out.print(getJavaType(identity.getColumn().getType()));
                         out.print("> IDENTITY_");
-                        out.print(strategy.getJavaIdentifier(identity.getContainer()));
+                        out.print(strategy.getJavaIdentifier(identity.getColumn().getContainer()));
                         out.print(" = createIdentity(");
-                        out.print(strategy.getFullJavaIdentifier(identity.getContainer()));
+                        out.print(strategy.getFullJavaIdentifier(identity.getColumn().getContainer()));
                         out.print(", ");
-                        out.print(strategy.getFullJavaIdentifier(identity));
+                        out.print(strategy.getFullJavaIdentifier(identity.getColumn()));
                         out.println(");");
                     }
                 }
@@ -2852,7 +2854,7 @@ public class DefaultGenerator extends AbstractGenerator {
 
         if (deprecation != null && deprecation.length() > 0) {
             out.println(" *");
-            out.println(" * @deprecated : " + deprecation);
+            printJavadocParagraph(out, "@deprecated : " + deprecation, "");
         }
 
         out.println(" */");

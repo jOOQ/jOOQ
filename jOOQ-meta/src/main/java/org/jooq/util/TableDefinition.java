@@ -87,7 +87,7 @@ public interface TableDefinition extends Definition {
      * Get the <code>IDENTITY</code> column of this table, or <code>null</code>,
      * if no such column exists.
      */
-    ColumnDefinition getIdentity();
+    IdentityDefinition getIdentity();
 
     /**
      * This TableDefinition as a {@link Table}

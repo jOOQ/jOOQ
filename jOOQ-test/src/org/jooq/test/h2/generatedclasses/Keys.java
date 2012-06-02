@@ -8,7 +8,12 @@ package org.jooq.test.h2.generatedclasses;
  *
  * A class modelling foreign key relationships between tables of the <code>PUBLIC</code> 
  * schema
+ *
+ * @deprecated : 2.4.0 - [#1459] - The Keys.java class's static initialiser 
+ * can become too large for big databases. Use constraint definitions in table 
+ * meta classes instead
  */
+@Deprecated
 @SuppressWarnings({"unchecked"})
 public class Keys extends org.jooq.impl.AbstractKeys {
 

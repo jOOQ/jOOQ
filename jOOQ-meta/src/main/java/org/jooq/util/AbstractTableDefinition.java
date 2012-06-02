@@ -58,7 +58,7 @@ implements TableDefinition {
     private boolean                    mainUniqueKeyLoaded;
     private UniqueKeyDefinition        mainUniqueKey;
     private boolean                    identityLoaded;
-    private ColumnDefinition           identity;
+    private IdentityDefinition         identity;
 
     public AbstractTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
@@ -110,13 +110,13 @@ implements TableDefinition {
     }
 
     @Override
-    public final ColumnDefinition getIdentity() {
+    public final IdentityDefinition getIdentity() {
         if (!identityLoaded) {
             identityLoaded = true;
 
             for (ColumnDefinition column : getColumns()) {
                 if (column.isIdentity()) {
-                    identity = column;
+                    identity = new DefaultIdentityDefinition(column);
                     break;
                 }
             }

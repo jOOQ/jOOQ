@@ -77,6 +77,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.AbstractKeys;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.ArrayRecordImpl;
+import org.jooq.impl.Factory;
 import org.jooq.impl.FieldTypeHelper;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
@@ -337,7 +338,12 @@ public class DefaultGenerator implements Generator {
 
             outF = new GenerationWriter(strategy.getFile(schema, Mode.FACTORY));
             printHeader(outF, schema);
-            printClassJavadoc(outF, schema);
+            printClassJavadoc(outF,
+                "A Factory for specific use with the <code>" + schema.getOutputName() +
+                "</code> schema.<p>This Factory will not render the <code>" + schema.getOutputName() +
+                "</code> schema's schema name in rendered SQL (assuming that you use it as the default schema on your connection!). Use the more generic {@link " +
+                database.getDialect().getFactory().getName() +
+                "} or the {@link " + Factory.class.getName() + "} instead, if you want to fully qualify tables, routines, etc.");
 
             outF.print("public class ");
             outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));

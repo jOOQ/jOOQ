@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -2036971501;
+	private static final long serialVersionUID = -1284374237;
 
 	/**
 	 * The singleton instance of dbo.t_booleans
@@ -18,14 +18,9 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sq
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.sqlserver.generatedclasses.tables.records.TBooleansRecord> __RECORD_TYPE = org.jooq.test.sqlserver.generatedclasses.tables.records.TBooleansRecord.class;
-
-	/**
-	 * The class holding records for this type
-	 */
 	@Override
 	public java.lang.Class<org.jooq.test.sqlserver.generatedclasses.tables.records.TBooleansRecord> getRecordType() {
-		return __RECORD_TYPE;
+		return org.jooq.test.sqlserver.generatedclasses.tables.records.TBooleansRecord.class;
 	}
 
 	/**

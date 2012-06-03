@@ -327,7 +327,7 @@ public class DefaultGenerator implements Generator {
             printHeader(outF, schema);
             printClassJavadoc(outF,
                 "A Factory for specific use with the <code>" + schema.getOutputName() +
-                "</code> schema.<p>This Factory will not render the <code>" + schema.getOutputName() +
+                "</code> schema.\n<p>\nThis Factory will not render the <code>" + schema.getOutputName() +
                 "</code> schema's schema name in rendered SQL (assuming that you use it as the default schema on your connection!). Use the more generic {@link " +
                 database.getDialect().getFactory().getName() +
                 "} or the {@link " + Factory.class.getName() + "} instead, if you want to fully qualify tables, routines, etc.");
@@ -945,7 +945,7 @@ public class DefaultGenerator implements Generator {
 
             GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Keys.java"));
             printHeader(out, schema);
-            printClassJavadoc(out, "A class modelling foreign key relationships between tables of the " + schema.getOutputName() + " schema");
+            printClassJavadoc(out, "A class modelling foreign key relationships between tables of the <code>" + schema.getOutputName() + "</code> schema");
 
             out.suppressWarnings("unchecked");
             out.print("public class Keys extends ");
@@ -2725,7 +2725,7 @@ public class DefaultGenerator implements Generator {
 
         if (comment != null && comment.length() > 0) {
             out.println(" *");
-            out.println(" * " + comment);
+            printJavadocParagraph(out, comment, "");
         }
 
         if (deprecation != null && deprecation.length() > 0) {
@@ -2746,6 +2746,40 @@ public class DefaultGenerator implements Generator {
         }
 
         out.printSuppressWarningsPlaceholder();
+    }
+
+    /**
+     * This method is used to add line breaks in lengthy javadocs
+     */
+    private void printJavadocParagraph(GenerationWriter out, String comment, String indent) {
+        boolean newLine = true;
+        int lineLength = 0;
+
+        for (int i = 0; i < comment.length(); i++) {
+            if (newLine) {
+                out.print(indent);
+                out.print(" * ");
+
+                newLine = false;
+            }
+
+            out.print(comment.charAt(i));
+            lineLength++;
+
+            if (comment.charAt(i) == '\n') {
+                lineLength = 0;
+                newLine = true;
+            }
+            else if (lineLength > 70 && Character.isWhitespace(comment.charAt(i))) {
+                out.println();
+                lineLength = 0;
+                newLine = true;
+            }
+        }
+
+        if (!newLine) {
+            out.println();
+        }
     }
 
     private void printHeader(GenerationWriter out, Definition definition) {

@@ -197,11 +197,6 @@ public class Reflect {
             catch (Exception e2) {
                 throw new ReflectException(e2);
             }
-            finally {
-                if (field != null && !accessible) {
-                    field.setAccessible(false);
-                }
-            }
         }
     }
 
@@ -260,11 +255,6 @@ public class Reflect {
             }
             catch (Exception e2) {
                 throw new ReflectException(e2);
-            }
-            finally {
-                if (field != null && !accessible) {
-                    field.setAccessible(false);
-                }
             }
         }
     }

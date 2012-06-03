@@ -630,18 +630,18 @@ public class DefaultGenerator implements Generator {
         				baseClass = TableImpl.class;
         			}
 
-        			out.print("public class ");
-        			out.print(strategy.getJavaClassName(table));
-        			out.print(" extends ");
-        			out.print(baseClass);
-        			out.print("<");
-    			    out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
-        			out.print(">");
-        			printImplements(out, table, Mode.RECORD);
-        			out.println(" {");
-        			out.printSerial();
-        			printSingletonInstance(table, out);
-        			printRecordTypeMethod(table, out);
+                    out.print("public class ");
+                    out.print(strategy.getJavaClassName(table));
+                    out.print(" extends ");
+                    out.print(baseClass);
+                    out.print("<");
+                    out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
+                    out.print(">");
+                    printImplements(out, table, Mode.DEFAULT);
+                    out.println(" {");
+                    out.printSerial();
+                    printSingletonInstance(table, out);
+                    printRecordTypeMethod(table, out);
 
         			for (ColumnDefinition column : table.getColumns()) {
         				printTableColumn(out, column, table);

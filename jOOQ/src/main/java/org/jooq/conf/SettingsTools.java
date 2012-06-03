@@ -38,10 +38,12 @@ package org.jooq.conf;
 import static org.jooq.conf.StatementType.PREPARED_STATEMENT;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
@@ -151,8 +153,29 @@ public final class SettingsTools {
      * Clone some settings
      */
     public static final Settings clone(Settings settings) {
-        StringWriter xml = new StringWriter();
-        JAXB.marshal(settings, xml);
-        return JAXB.unmarshal(new StringReader(xml.toString()), Settings.class);
+        // [#1483] Benchmarks showed that this is 10x faster
+        // return (Settings) settings.clone();
+
+        // ... than this, which is in turn 5x faster
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            ObjectOutputStream o = new ObjectOutputStream(out);
+            o.writeObject(settings);
+            o.flush();
+
+            ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+            ObjectInputStream i = new ObjectInputStream(in);
+            return (Settings) i.readObject();
+        }
+        catch (Exception ignore) {
+            throw new RuntimeException(ignore);
+        }
+
+        // ... than this:
+        // StringWriter xml = new StringWriter();
+        // JAXB.marshal(settings, xml);
+        // return JAXB.unmarshal(new StringReader(xml.toString()), Settings.class);
+
+        // TODO [#1483] [#1484] Let Settings implement Cloneable for even more speed!
     }
 }

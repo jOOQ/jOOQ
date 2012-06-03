@@ -2961,14 +2961,14 @@ public class DefaultGenerator implements Generator {
                 // Mostly because of unsupported data types
                 catch (SQLDialectNotSupportedException e) {
                     sb.append("getDefaultDataType(\"");
-                    sb.append(t);
+                    sb.append(t.replace("\"", "\\\""));
                     sb.append("\")");
                 }
 
                 // More unsupported data types
                 catch (ReflectException e) {
                     sb.append("getDefaultDataType(\"");
-                    sb.append(t);
+                    sb.append(t.replace("\"", "\\\""));
                     sb.append("\")");
                 }
             }

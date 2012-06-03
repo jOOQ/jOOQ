@@ -10,6 +10,27 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.3.2 - June 3, 2012
+=================================================================
+This is a minor patch release with some useful fixes for the 2.3
+branch
+
+Bug fixes
+---------
+#1441 - Performance issue with AbstractDataType.convert(Object).
+        Avoid conversions when they're obviously unneeded
+#1449 - Generate some meaningful Javadoc into the generated
+        [schema-name]Factory classes
+#1454 - Add line breaks to generated Javadoc where appropriate
+#1465 - Custom generator strategy's printImplements() is called
+        with Mode == RECORD for tables
+#1483 - Inefficient cloning of default settings using JAXB
+        unmarshalling leads to non-negligible overall overhead.
+        Use serialisation instead (short of a useful XJC clone
+        plugin)
+#1478 - Caching SQLDialect in AbstractDatabase heavily improves
+        code generation performance
+
 Version 2.3.1 - May 11, 2012
 =================================================================
 This is an important patch release fixing some regressions in the

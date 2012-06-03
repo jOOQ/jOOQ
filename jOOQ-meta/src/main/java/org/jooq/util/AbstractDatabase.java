@@ -69,6 +69,7 @@ public abstract class AbstractDatabase implements Database {
     // Configuration elements
     // -------------------------------------------------------------------------
 
+    private SQLDialect                      dialect;
     private Connection                      connection;
     private String[]                        excludes;
     private String[]                        includes;
@@ -100,7 +101,11 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final SQLDialect getDialect() {
-        return create().getDialect();
+        if (dialect == null) {
+            dialect = create().getDialect();
+        }
+
+        return dialect;
     }
 
     @Override

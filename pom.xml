@@ -203,7 +203,7 @@
 
 	<profiles>
 	    <!-- The release profile is used only for releasing jOOQ to
-		     the Sonatype Maven repository or to Maven central 
+		     the Sonatype Maven repository or to Maven central
 			 lengthy or annoying operations for everyday use by users
 			 building jOOQ themselves are put here -->
 		<profile>

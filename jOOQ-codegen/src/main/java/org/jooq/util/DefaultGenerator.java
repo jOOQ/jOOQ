@@ -483,6 +483,7 @@ public class DefaultGenerator extends AbstractGenerator {
         // ----------------------------------------------------------------------
         // XXX Generating tables
         // ----------------------------------------------------------------------
+
         if (database.getTables(schema).size() > 0) {
             log.info("Generating tables");
 
@@ -576,9 +577,7 @@ public class DefaultGenerator extends AbstractGenerator {
                             out.println("> getIdentity() {");
 
                             out.print("\t\treturn ");
-                            out.print(strategy.getJavaPackageName(schema));
-                            out.print(".Keys.IDENTITY_");
-                            out.print(strategy.getJavaIdentifier(identity.getColumn().getContainer()));
+                            out.print(strategy.getFullJavaIdentifier(identity));
                             out.println(";");
 
                             out.println("\t}");
@@ -598,9 +597,7 @@ public class DefaultGenerator extends AbstractGenerator {
                             out.println("> getMainKey() {");
 
                             out.print("\t\treturn ");
-                            out.print(strategy.getJavaPackageName(schema));
-                            out.print(".Keys.");
-                            out.print(strategy.getJavaIdentifier(mainKey));
+                            out.print(strategy.getFullJavaIdentifier(mainKey));
                             out.println(";");
 
                             out.println("\t}");
@@ -632,9 +629,7 @@ public class DefaultGenerator extends AbstractGenerator {
                             String separator = "";
                             for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
                                 out.print(separator);
-                                out.print(strategy.getJavaPackageName(schema));
-                                out.print(".Keys.");
-                                out.print(strategy.getJavaIdentifier(uniqueKey));
+                                out.print(strategy.getFullJavaIdentifier(uniqueKey));
 
                                 separator = ", ";
                             }
@@ -676,9 +671,7 @@ public class DefaultGenerator extends AbstractGenerator {
                                 }
 
                                 out.print(separator);
-                                out.print(strategy.getJavaPackageName(schema));
-                                out.print(".Keys.");
-                                out.print(strategy.getJavaIdentifier(foreignKey));
+                                out.print(strategy.getFullJavaIdentifier(foreignKey));
 
                                 separator = ", ";
                             }
@@ -974,15 +967,17 @@ public class DefaultGenerator extends AbstractGenerator {
             GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Keys.java"));
             printHeader(out, schema);
             printClassJavadoc(out,
-                "A class modelling foreign key relationships between tables of the <code>" + schema.getOutputName() + "</code> schema",
-                "2.4.0 - [#1459] - The Keys.java class's static initialiser can become too large for big databases. Use constraint definitions in table meta classes instead");
+                "A class modelling foreign key relationships between tables of the <code>" + schema.getOutputName() + "</code> schema");
 
-            out.suppressWarnings("unchecked");
-            out.print("public class Keys extends ");
-            out.print(AbstractKeys.class);
-            out.println(" {");
+            out.println("public class Keys {");
             out.println();
             out.println("\t// IDENTITY definitions");
+
+            // [#1459] Prevent large static initialisers by splitting nested classes
+            final int INITIALISER_SIZE = 500;
+            List<IdentityDefinition> allIdentities = new ArrayList<IdentityDefinition>();
+            List<UniqueKeyDefinition> allUniqueKeys = new ArrayList<UniqueKeyDefinition>();
+            List<ForeignKeyDefinition> allForeignKeys = new ArrayList<ForeignKeyDefinition>();
 
             for (TableDefinition table : database.getTables(schema)) {
                 try {
@@ -997,11 +992,13 @@ public class DefaultGenerator extends AbstractGenerator {
                         out.print(getJavaType(identity.getColumn().getType()));
                         out.print("> IDENTITY_");
                         out.print(strategy.getJavaIdentifier(identity.getColumn().getContainer()));
-                        out.print(" = createIdentity(");
-                        out.print(strategy.getFullJavaIdentifier(identity.getColumn().getContainer()));
-                        out.print(", ");
-                        out.print(strategy.getFullJavaIdentifier(identity.getColumn()));
-                        out.println(");");
+                        out.print(" = Identities");
+                        out.print(allIdentities.size() / INITIALISER_SIZE);
+                        out.print(".IDENTITY_");
+                        out.print(strategy.getJavaIdentifier(identity.getColumn().getContainer()));
+                        out.println(";");
+
+                        allIdentities.add(identity);
                     }
                 }
                 catch (Exception e) {
@@ -1017,27 +1014,20 @@ public class DefaultGenerator extends AbstractGenerator {
                 try {
                     List<UniqueKeyDefinition> uniqueKeys = table.getUniqueKeys();
 
-                    if (uniqueKeys.size() > 0) {
-                        for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
-                            out.print("\tpublic static final ");
-                            out.print(UniqueKey.class);
-                            out.print("<");
-                            out.print(strategy.getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
-                            out.print("> ");
-                            out.print(strategy.getJavaIdentifier(uniqueKey));
-                            out.print(" = createUniqueKey(");
-                            out.print(strategy.getFullJavaIdentifier(uniqueKey.getTable()));
-                            out.print(", ");
+                    for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
+                        out.print("\tpublic static final ");
+                        out.print(UniqueKey.class);
+                        out.print("<");
+                        out.print(strategy.getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
+                        out.print("> ");
+                        out.print(strategy.getJavaIdentifier(uniqueKey));
+                        out.print(" = UniqueKeys");
+                        out.print(allUniqueKeys.size() / INITIALISER_SIZE);
+                        out.print(".");
+                        out.print(strategy.getJavaIdentifier(uniqueKey));
+                        out.println(";");
 
-                            String separator = "";
-                            for (ColumnDefinition column : uniqueKey.getKeyColumns()) {
-                                out.print(separator);
-                                out.print(strategy.getFullJavaIdentifier(column));
-                                separator = ", ";
-                            }
-
-                            out.println(");");
-                        }
+                        allUniqueKeys.add(uniqueKey);
                     }
                 }
                 catch (Exception e) {
@@ -1053,44 +1043,28 @@ public class DefaultGenerator extends AbstractGenerator {
                 try {
                     List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
 
-                    if (foreignKeys.size() > 0) {
-                        for (ForeignKeyDefinition foreignKey : foreignKeys) {
+                    for (ForeignKeyDefinition foreignKey : foreignKeys) {
 
-                            // Skip master data foreign keys
-                            if (foreignKey.getReferencedTable() instanceof MasterDataTableDefinition) {
-                                continue;
-                            }
-
-                            out.print("\tpublic static final ");
-                            out.print(ForeignKey.class);
-                            out.print("<");
-                            out.print(strategy.getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD));
-                            out.print(", ");
-                            out.print(strategy.getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD));
-                            out.print("> ");
-                            out.print(strategy.getJavaIdentifier(foreignKey));
-                            out.print(" = createForeignKey(");
-
-                            // Beware of cross-schema referencing foreign keys
-                            if (!foreignKey.getSchema().equals(foreignKey.getReferencedKey().getSchema())) {
-                                out.print(strategy.getJavaPackageName(foreignKey.getReferencedKey().getSchema()));
-                                out.print(".Keys.");
-                            }
-
-                            out.print(strategy.getJavaIdentifier(foreignKey.getReferencedKey()));
-                            out.print(", ");
-                            out.print(strategy.getFullJavaIdentifier(foreignKey.getKeyTable()));
-                            out.print(", ");
-
-                            String separator = "";
-                            for (ColumnDefinition column : foreignKey.getKeyColumns()) {
-                                out.print(separator);
-                                out.print(strategy.getFullJavaIdentifier(column));
-                                separator = ", ";
-                            }
-
-                            out.println(");");
+                        // Skip master data foreign keys
+                        if (foreignKey.getReferencedTable() instanceof MasterDataTableDefinition) {
+                            continue;
                         }
+
+                        out.print("\tpublic static final ");
+                        out.print(ForeignKey.class);
+                        out.print("<");
+                        out.print(strategy.getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD));
+                        out.print(", ");
+                        out.print(strategy.getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD));
+                        out.print("> ");
+                        out.print(strategy.getJavaIdentifier(foreignKey));
+                        out.print(" = ForeignKeys");
+                        out.print(allForeignKeys.size() / INITIALISER_SIZE);
+                        out.print(".");
+                        out.print(strategy.getJavaIdentifier(foreignKey));
+                        out.println(";");
+
+                        allForeignKeys.add(foreignKey);
                     }
                 }
                 catch (Exception e) {
@@ -1099,6 +1073,150 @@ public class DefaultGenerator extends AbstractGenerator {
             }
 
             printPrivateConstructor(out, "Keys");
+
+            // [#1459] Print nested classes for actual static field initialisations
+            // keeping top-level initialiser small
+            int identityCounter = 0;
+            int uniqueKeyCounter = 0;
+            int foreignKeyCounter = 0;
+
+            // Identities
+            // ----------
+
+            for (IdentityDefinition identity : allIdentities) {
+
+                // Print new nested class
+                if (identityCounter % INITIALISER_SIZE == 0) {
+                    if (identityCounter > 0) {
+                        out.println("\t}");
+                    }
+
+                    out.println();
+                    out.println("\t@SuppressWarnings(\"hiding\")");
+                    out.print("\tprivate static class Identities");
+                    out.print(identityCounter / INITIALISER_SIZE);
+                    out.print(" extends ");
+                    out.print(AbstractKeys.class);
+                    out.println(" {");
+                }
+
+                out.print("\t\tpublic static ");
+                out.print(Identity.class);
+                out.print("<");
+                out.print(strategy.getFullJavaClassName(identity.getTable(), Mode.RECORD));
+                out.print(", ");
+                out.print(getJavaType(identity.getColumn().getType()));
+                out.print("> ");
+                out.print(strategy.getJavaIdentifier(identity));
+                out.print(" = createIdentity(");
+                out.print(strategy.getFullJavaIdentifier(identity.getColumn().getContainer()));
+                out.print(", ");
+                out.print(strategy.getFullJavaIdentifier(identity.getColumn()));
+                out.println(");");
+
+                identityCounter++;
+            }
+
+            if (identityCounter > 0) {
+                out.println("\t}");
+            }
+
+            // UniqueKeys
+            // ----------
+
+            for (UniqueKeyDefinition uniqueKey : allUniqueKeys) {
+
+                // Print new nested class
+                if (uniqueKeyCounter % INITIALISER_SIZE == 0) {
+                    if (uniqueKeyCounter > 0) {
+                        out.println("\t}");
+                    }
+
+                    out.println();
+                    out.println("\t@SuppressWarnings({\"hiding\", \"unchecked\"})");
+                    out.print("\tprivate static class UniqueKeys");
+                    out.print(uniqueKeyCounter / INITIALISER_SIZE);
+                    out.print(" extends ");
+                    out.print(AbstractKeys.class);
+                    out.println(" {");
+                }
+
+                out.print("\t\tpublic static final ");
+                out.print(UniqueKey.class);
+                out.print("<");
+                out.print(strategy.getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
+                out.print("> ");
+                out.print(strategy.getJavaIdentifier(uniqueKey));
+                out.print(" = createUniqueKey(");
+                out.print(strategy.getFullJavaIdentifier(uniqueKey.getTable()));
+                out.print(", ");
+
+                String separator = "";
+                for (ColumnDefinition column : uniqueKey.getKeyColumns()) {
+                    out.print(separator);
+                    out.print(strategy.getFullJavaIdentifier(column));
+                    separator = ", ";
+                }
+
+                out.println(");");
+
+                uniqueKeyCounter++;
+            }
+
+            if (uniqueKeyCounter > 0) {
+                out.println("\t}");
+            }
+
+            // ForeignKeys
+            // -----------
+
+            for (ForeignKeyDefinition foreignKey : allForeignKeys) {
+
+                // Print new nested class
+                if (foreignKeyCounter % INITIALISER_SIZE == 0) {
+                    if (foreignKeyCounter > 0) {
+                        out.println("\t}");
+                    }
+
+                    out.println();
+                    out.println("\t@SuppressWarnings({\"hiding\", \"unchecked\"})");
+                    out.print("\tprivate static class ForeignKeys");
+                    out.print(foreignKeyCounter / INITIALISER_SIZE);
+                    out.print(" extends ");
+                    out.print(AbstractKeys.class);
+                    out.println(" {");
+                }
+
+                out.print("\t\tpublic static final ");
+                out.print(ForeignKey.class);
+                out.print("<");
+                out.print(strategy.getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD));
+                out.print(", ");
+                out.print(strategy.getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD));
+                out.print("> ");
+                out.print(strategy.getJavaIdentifier(foreignKey));
+                out.print(" = createForeignKey(");
+                out.print(strategy.getFullJavaIdentifier(foreignKey.getReferencedKey()));
+                out.print(", ");
+                out.print(strategy.getFullJavaIdentifier(foreignKey.getKeyTable()));
+                out.print(", ");
+
+                String separator = "";
+                for (ColumnDefinition column : foreignKey.getKeyColumns()) {
+                    out.print(separator);
+                    out.print(strategy.getFullJavaIdentifier(column));
+                    separator = ", ";
+                }
+
+                out.println(");");
+
+                foreignKeyCounter++;
+            }
+
+            if (foreignKeyCounter > 0) {
+                out.println("\t}");
+            }
+
             out.println("}");
             out.close();
 

@@ -9,13 +9,12 @@ package org.jooq.test.oracle2.generatedclasses;
  * A class modelling foreign key relationships between tables of the <code>TEST</code> 
  * schema
  */
-@SuppressWarnings({"unchecked"})
-public class Keys extends org.jooq.impl.AbstractKeys {
+public class Keys {
 
 	// IDENTITY definitions
 
 	// UNIQUE and PRIMARY KEY definitions
-	public static final org.jooq.UniqueKey<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> DATE_AS_TIMESTAMP_PK_T_976 = createUniqueKey(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976, org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_ID);
+	public static final org.jooq.UniqueKey<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> DATE_AS_TIMESTAMP_PK_T_976 = UniqueKeys0.DATE_AS_TIMESTAMP_PK_T_976;
 
 	// FOREIGN KEY definitions
 
@@ -23,4 +22,9 @@ public class Keys extends org.jooq.impl.AbstractKeys {
 	 * No instances
 	 */
 	private Keys() {}
+
+	@SuppressWarnings({"hiding", "unchecked"})
+	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> DATE_AS_TIMESTAMP_PK_T_976 = createUniqueKey(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976, org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_ID);
+	}
 }

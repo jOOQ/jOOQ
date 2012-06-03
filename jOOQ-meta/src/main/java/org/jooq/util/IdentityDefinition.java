@@ -43,6 +43,11 @@ package org.jooq.util;
 public interface IdentityDefinition extends Definition {
 
     /**
+     * The <code>IDENTITY</code> column's table
+     */
+    TableDefinition getTable();
+
+    /**
      * The <code>IDENTITY</code> column
      */
     ColumnDefinition getColumn();

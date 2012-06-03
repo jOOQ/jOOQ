@@ -58,6 +58,11 @@ public class DefaultIdentityDefinition extends AbstractDefinition implements Ide
     }
 
     @Override
+    public final TableDefinition getTable() {
+        return getColumn().getContainer();
+    }
+
+    @Override
     public ColumnDefinition getColumn() {
         return column;
     }

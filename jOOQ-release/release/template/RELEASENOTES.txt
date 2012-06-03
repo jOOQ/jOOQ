@@ -9,6 +9,40 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.2.3 - June 03, 2012
+=================================================================
+
+This is a minor patch release, fixing some issues
+
+Bug fixes
+---------
+#1109 - Standalone TABLE or VARRAY types are not correctly
+        initialised before referencing tables load them
+#1360 - jOOR issue 12: "Don't reset the accessible flag to false,
+        if setting it to true is required, to avoid race
+        conditions in concurrency contexts"
+#1394 - NullPointerException when omitting <generate/> element in
+        code generation configuration
+#1403 - Documentation bug: ctx.statement() can be replaced in
+        executeStart(). This is not documented
+#1406 - Compilation errors in generated source code when Postgres
+        stored procedure parameter is called "NAME"
+#1407 - Compilation errors in generated source code when Postgres
+        data-type is "any" (with quotes!)
+#1441 - Performance issue with AbstractDataType.convert(Object).
+        Avoid conversions when they're obviously unneeded
+#1449 - Generate some meaningful Javadoc into the generated
+        [schema-name]Factory classes
+#1454 - Add line breaks to generated Javadoc where appropriate
+#1465 - Custom generator strategy's printImplements() is called
+        with Mode == RECORD for tables
+#1478 - Caching SQLDialect in AbstractDatabase heavily improves
+        code generation performance
+#1483 - Inefficient cloning of default settings using JAXB
+        unmarshalling leads to non-negligible overall overhead.
+        Use serialisation instead (short of a useful XJC clone
+        plugin)
+
 Version 2.2.2 - April 22, 2012
 =================================================================
 

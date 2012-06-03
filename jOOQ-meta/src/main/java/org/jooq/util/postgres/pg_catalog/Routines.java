@@ -57,6 +57,24 @@ public final class Routines {
 	}
 
 	/**
+	 * Call pg_catalog.pg_cursor
+	 *
+	 * @param name OUT parameter
+	 * @param statement OUT parameter
+	 * @param isHoldable OUT parameter
+	 * @param isBinary OUT parameter
+	 * @param isScrollable OUT parameter
+	 * @param creationTime OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.util.postgres.pg_catalog.routines.PgCursor pgCursor(org.jooq.Configuration configuration) {
+		org.jooq.util.postgres.pg_catalog.routines.PgCursor p = new org.jooq.util.postgres.pg_catalog.routines.PgCursor();
+
+		p.execute(configuration);
+		return p;
+	}
+
+	/**
 	 * No instances
 	 */
 	private Routines() {}

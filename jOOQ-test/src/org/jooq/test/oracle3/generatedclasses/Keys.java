@@ -9,42 +9,74 @@ package org.jooq.test.oracle3.generatedclasses;
  * A class modelling foreign key relationships between tables of the <code>TEST</code> 
  * schema
  */
-@SuppressWarnings({"unchecked"})
-public class Keys extends org.jooq.impl.AbstractKeys {
+public class Keys {
 
 	// IDENTITY definitions
 
 	// UNIQUE and PRIMARY KEY definitions
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_ARRAYS = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS, org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS.ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_AUTHOR = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR, org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_BOOK = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> UK_T_BOOK_STORE_NAME = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE.NAME);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_B2BS = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_BOOLEANS = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS, org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_DATES = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES, org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_DIRECTORY = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY, org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_TRIGGERS = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS, org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS.ID_GENERATED);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE, org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST, org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_TEST_CASE_64_69 = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69.ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_TEST_CASE_71 = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71.ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_TEST_CASE_85 = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.ID);
-	public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_UNUSED = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME);
-	public static final org.jooq.UniqueKey<org.jooq.Record> UK_X_UNUSED_ID = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID);
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_ARRAYS = UniqueKeys0.PK_T_ARRAYS;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_BOOK = UniqueKeys0.PK_T_BOOK;
+	public static final org.jooq.UniqueKey<org.jooq.Record> UK_T_BOOK_STORE_NAME = UniqueKeys0.UK_T_BOOK_STORE_NAME;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_B2BS = UniqueKeys0.PK_B2BS;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_BOOLEANS = UniqueKeys0.PK_T_BOOLEANS;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_DATES = UniqueKeys0.PK_T_DATES;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_DIRECTORY = UniqueKeys0.PK_T_DIRECTORY;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_TRIGGERS = UniqueKeys0.PK_T_TRIGGERS;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_639_NUMBERS_TABLE = UniqueKeys0.PK_T_639_NUMBERS_TABLE;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_725_LOB_TEST = UniqueKeys0.PK_T_725_LOB_TEST;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_TEST_CASE_64_69 = UniqueKeys0.PK_X_TEST_CASE_64_69;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_TEST_CASE_71 = UniqueKeys0.PK_X_TEST_CASE_71;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_TEST_CASE_85 = UniqueKeys0.PK_X_TEST_CASE_85;
+	public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_UNUSED = UniqueKeys0.PK_X_UNUSED;
+	public static final org.jooq.UniqueKey<org.jooq.Record> UK_X_UNUSED_ID = UniqueKeys0.UK_X_UNUSED_ID;
 
 	// FOREIGN KEY definitions
-	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_T_BOOK_AUTHOR_ID = createForeignKey(PK_T_AUTHOR, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.AUTHOR_ID);
-	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(PK_T_AUTHOR, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CO_AUTHOR_ID);
-	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_B2BS_BS_NAME = createForeignKey(UK_T_BOOK_STORE_NAME, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
-	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_B2BS_B_ID = createForeignKey(PK_T_BOOK, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_ID);
-	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> PK_T_DIRECTORY_SELF = createForeignKey(PK_T_DIRECTORY, org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY, org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID);
-	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_TEST_CASE_64_69A = createForeignKey(UK_X_UNUSED_ID, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69.UNUSED_ID);
-	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_TEST_CASE_71 = createForeignKey(PK_X_TEST_CASE_64_69, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
-	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_TEST_CASE_85 = createForeignKey(PK_X_UNUSED, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_ID, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_NAME);
-	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_UNUSED_SELF = createForeignKey(PK_X_UNUSED, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID_REF, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME_REF);
+	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_T_BOOK_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_AUTHOR_ID;
+	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_T_BOOK_CO_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_CO_AUTHOR_ID;
+	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_B2BS_BS_NAME = ForeignKeys0.FK_B2BS_BS_NAME;
+	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_B2BS_B_ID = ForeignKeys0.FK_B2BS_B_ID;
+	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> PK_T_DIRECTORY_SELF = ForeignKeys0.PK_T_DIRECTORY_SELF;
+	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_TEST_CASE_64_69A = ForeignKeys0.FK_X_TEST_CASE_64_69A;
+	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_TEST_CASE_71 = ForeignKeys0.FK_X_TEST_CASE_71;
+	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_TEST_CASE_85 = ForeignKeys0.FK_X_TEST_CASE_85;
+	public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_UNUSED_SELF = ForeignKeys0.FK_X_UNUSED_SELF;
 
 	/**
 	 * No instances
 	 */
 	private Keys() {}
+
+	@SuppressWarnings({"hiding", "unchecked"})
+	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_ARRAYS = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS, org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS.ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_AUTHOR = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR, org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_BOOK = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> UK_T_BOOK_STORE_NAME = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE.NAME);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_B2BS = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_BOOLEANS = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS, org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_DATES = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES, org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_DIRECTORY = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY, org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_TRIGGERS = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS, org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS.ID_GENERATED);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE, org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST, org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_TEST_CASE_64_69 = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69.ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_TEST_CASE_71 = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71.ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_TEST_CASE_85 = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.ID);
+		public static final org.jooq.UniqueKey<org.jooq.Record> PK_X_UNUSED = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME);
+		public static final org.jooq.UniqueKey<org.jooq.Record> UK_X_UNUSED_ID = createUniqueKey(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID);
+	}
+
+	@SuppressWarnings({"hiding", "unchecked"})
+	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_T_BOOK_AUTHOR_ID = createForeignKey(org.jooq.test.oracle3.generatedclasses.Keys.PK_T_AUTHOR, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.AUTHOR_ID);
+		public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(org.jooq.test.oracle3.generatedclasses.Keys.PK_T_AUTHOR, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CO_AUTHOR_ID);
+		public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_B2BS_BS_NAME = createForeignKey(org.jooq.test.oracle3.generatedclasses.Keys.UK_T_BOOK_STORE_NAME, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
+		public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_B2BS_B_ID = createForeignKey(org.jooq.test.oracle3.generatedclasses.Keys.PK_T_BOOK, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+		public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> PK_T_DIRECTORY_SELF = createForeignKey(org.jooq.test.oracle3.generatedclasses.Keys.PK_T_DIRECTORY, org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY, org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID);
+		public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_TEST_CASE_64_69A = createForeignKey(org.jooq.test.oracle3.generatedclasses.Keys.UK_X_UNUSED_ID, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69.UNUSED_ID);
+		public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_TEST_CASE_71 = createForeignKey(org.jooq.test.oracle3.generatedclasses.Keys.PK_X_TEST_CASE_64_69, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
+		public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_TEST_CASE_85 = createForeignKey(org.jooq.test.oracle3.generatedclasses.Keys.PK_X_UNUSED, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_ID, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_NAME);
+		public static final org.jooq.ForeignKey<org.jooq.Record, org.jooq.Record> FK_X_UNUSED_SELF = createForeignKey(org.jooq.test.oracle3.generatedclasses.Keys.PK_X_UNUSED, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID_REF, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME_REF);
+	}
 }

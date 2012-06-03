@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 
 import org.jooq.tools.StringUtils;
@@ -41,7 +40,6 @@ public class GenerationWriter {
     private final List<String>  staticInitialisationStatements;
     private final List<String>  initialisationStatements;
     private final Set<Object>   alreadyPrinted;
-    private final Set<String>   suppressWarnings;
 
     public GenerationWriter(File file) throws FileNotFoundException {
         file.getParentFile().mkdirs();
@@ -52,7 +50,6 @@ public class GenerationWriter {
         this.staticInitialisationStatements = new ArrayList<String>();
         this.initialisationStatements = new ArrayList<String>();
         this.alreadyPrinted = new HashSet<Object>();
-        this.suppressWarnings = new TreeSet<String>();
     }
 
     public void printStaticInitialisationStatementsPlaceholder() {
@@ -175,22 +172,6 @@ public class GenerationWriter {
             inits.append("\t}\n");
         }
 
-        if (!suppressWarnings.isEmpty()) {
-            warnings.append("@SuppressWarnings({");
-
-            String separator = "";
-            for (String warning : suppressWarnings) {
-                warnings.append(separator);
-                warnings.append("\"");
-                warnings.append(warning);
-                warnings.append("\"");
-
-                separator = ", ";
-            }
-
-            warnings.append("})\n");
-        }
-
         string = string.replaceAll(STATIC_INITIALISATION_STATEMENT + "\\n",
             Matcher.quoteReplacement(staticInits.toString()));
         string = string.replaceAll(INITIALISATION_STATEMENT + "\\n",
@@ -278,10 +259,6 @@ public class GenerationWriter {
         else {
             return false;
         }
-    }
-
-    public void suppressWarnings(String string) {
-        suppressWarnings.add(string);
     }
 
     @Override

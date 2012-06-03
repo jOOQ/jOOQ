@@ -105,6 +105,12 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
+
+        // [#1473] Identity identifiers should not be renamed by custom strategies
+        if (definition instanceof IdentityDefinition) {
+            return "IDENTITY_" + getJavaIdentifier(((IdentityDefinition) definition).getColumn().getContainer());
+        }
+
         String identifier = convertToJavaIdentifier(delegate.getJavaIdentifier(definition));
 
         // [#1212] Don't trust custom strategies and disambiguate identifiers here

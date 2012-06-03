@@ -45,7 +45,7 @@ public final class Constants {
     /**
      * The latest jOOQ version
      */
-    public static final String VERSION = "2.4.0";
+    public static final String VERSION = "2.3.2";
 
     /**
      * No further instances

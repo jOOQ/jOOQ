@@ -114,9 +114,10 @@ public class DefaultGenerator extends AbstractGenerator {
 
     private static final JooqLogger log = JooqLogger.getLogger(DefaultGenerator.class);
 
+    StopWatch watch = new StopWatch();
+
     @Override
     public void generate(Database database) throws IOException {
-        StopWatch watch = new StopWatch();
 
         log.info("Database parameters");
         log.info("----------------------------------------------------------");
@@ -157,14 +158,13 @@ public class DefaultGenerator extends AbstractGenerator {
         // ----------------------------------------------------------------------
         log.info("Generating schemata", "Total: " + database.getSchemata().size());
         for (SchemaDefinition schema : database.getSchemata()) {
-            generate(database, schema, watch);
+            generate(database, schema);
         }
     }
 
     private void generate(
             Database database,
-            SchemaDefinition schema,
-            StopWatch watch) throws IOException {
+            SchemaDefinition schema) throws IOException {
 
         File targetSchemaDir = strategy.getFile(schema).getParentFile();
 

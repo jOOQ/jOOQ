@@ -2675,9 +2675,7 @@ public class DefaultGenerator extends AbstractGenerator {
 
             ColumnDefinition column = (ColumnDefinition) element;
 
-            List<UniqueKeyDefinition> uniqueKeys = column.getUniqueKeys();
-
-            generateNavigateMethods(out, column, uniqueKeys);
+            generateNavigateMethods(out, column);
         }
     }
 
@@ -2715,8 +2713,10 @@ public class DefaultGenerator extends AbstractGenerator {
         }
     }
 
-    protected void generateNavigateMethods(GenerationWriter out, ColumnDefinition column,
-        List<UniqueKeyDefinition> uniqueKeys) {
+    protected void generateNavigateMethods(GenerationWriter out, ColumnDefinition column) {
+
+        List<UniqueKeyDefinition> uniqueKeys = column.getUniqueKeys();
+
         // Print references from this column's unique keys to all
         // corresponding foreign keys.
 
@@ -2758,7 +2758,14 @@ public class DefaultGenerator extends AbstractGenerator {
             return;
         }
 
+        printFetchMethod(out, column, foreignKey, referenced);
+    }
+
+    protected void printFetchMethod(GenerationWriter out, ColumnDefinition column, ForeignKeyDefinition foreignKey,
+        TableDefinition referenced) {
+
         printFieldJavaDoc(out, column);
+
         out.print("\tpublic ");
         out.print(strategy.getFullJavaClassName(referenced, Mode.RECORD));
         out.print(" fetch");

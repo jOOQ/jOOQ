@@ -456,7 +456,9 @@ public class DefaultGenerator extends AbstractGenerator {
             }
 
             out.println();
-            out.println("\t@SuppressWarnings({\"hiding\", \"unchecked\"})");
+            out.print("\t@SuppressWarnings({");
+            generateUniqueKeySuppressHidingWarning( out, uniqueKey );
+            out.println("\"unchecked\"})");
             out.print("\tprivate static class UniqueKeys");
             out.print(uniqueKeyCounter / INITIALISER_SIZE);
             out.print(" extends ");
@@ -484,6 +486,10 @@ public class DefaultGenerator extends AbstractGenerator {
         out.println(");");
     }
 
+    protected void generateUniqueKeySuppressHidingWarning(GenerationWriter out, UniqueKeyDefinition uniqueKey) {
+        out.print("\"hiding\", ");
+    }
+
     protected void generateForeignKey(GenerationWriter out, final int INITIALISER_SIZE, int foreignKeyCounter,
         ForeignKeyDefinition foreignKey) {
         // Print new nested class
@@ -493,7 +499,9 @@ public class DefaultGenerator extends AbstractGenerator {
             }
 
             out.println();
-            out.println("\t@SuppressWarnings({\"hiding\", \"unchecked\"})");
+            out.print("\t@SuppressWarnings({");
+            generateForeignKeySuppressHidingWarning(out, foreignKey);
+            out.println("\"unchecked\"})");
             out.print("\tprivate static class ForeignKeys");
             out.print(foreignKeyCounter / INITIALISER_SIZE);
             out.print(" extends ");
@@ -523,6 +531,10 @@ public class DefaultGenerator extends AbstractGenerator {
         }
 
         out.println(");");
+    }
+
+    protected void generateForeignKeySuppressHidingWarning(GenerationWriter out, ForeignKeyDefinition foreignKey) {
+        out.print("\"hiding\", ");
     }
 
     protected void generateRecords(SchemaDefinition schema) {

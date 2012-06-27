@@ -124,6 +124,16 @@ class PreparedStatementProxy implements PreparedStatement {
         this.columnNames = columnNames;
     }
 
+    @Override
+    public void closeOnCompletion() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isCloseOnCompletion() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Utilities
     // ------------------------------------------------------------------------
@@ -140,7 +150,8 @@ class PreparedStatementProxy implements PreparedStatement {
         SQL,
 
         /**
-         * Corresponds to {@link Connection#prepareStatement(String, int, int)         */
+         * Corresponds to {@link Connection#prepareStatement(String, int, int)
+         */
         SQL_RST_RSC,
 
         /**

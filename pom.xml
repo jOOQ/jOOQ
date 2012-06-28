@@ -2,214 +2,237 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<artifactId>oss-parent</artifactId>
-		<groupId>org.sonatype.oss</groupId>
-		<version>7</version>
-	</parent>
+    <parent>
+        <artifactId>oss-parent</artifactId>
+        <groupId>org.sonatype.oss</groupId>
+        <version>7</version>
+    </parent>
 
-	<groupId>org.jooq</groupId>
-	<artifactId>jooq-parent</artifactId>
-	<version>2.4.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <groupId>org.jooq</groupId>
+    <artifactId>jooq-parent</artifactId>
+    <version>2.4.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<name>jOOQ Parent</name>
+    <name>jOOQ Parent</name>
 
-	<description>
-		jOOQ effectively combines complex SQL, typesafety, source code generation, active records,
-		stored procedures, advanced data types, and Java in a fluent, intuitive DSL.
-	</description>
+    <description>
+        jOOQ effectively combines complex SQL, typesafety, source code generation, active records,
+        stored procedures, advanced data types, and Java in a fluent, intuitive DSL.
+    </description>
 
-	<url>http://www.jooq.org</url>
+    <url>http://www.jooq.org</url>
 
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.jooq.org/inc/LICENSE.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.jooq.org/inc/LICENSE.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-	<scm>
-		<developerConnection>scm:svn:https://jooq.svn.sourceforge.net/svnroot/jooq</developerConnection>
-		<url>https://jooq.svn.sourceforge.net/svnroot/jooq</url>
-		<connection>scm:svn:https://jooq.svn.sourceforge.net/svnroot/jooq</connection>
-	</scm>
+    <scm>
+        <developerConnection>scm:svn:https://jooq.svn.sourceforge.net/svnroot/jooq</developerConnection>
+        <url>https://jooq.svn.sourceforge.net/svnroot/jooq</url>
+        <connection>scm:svn:https://jooq.svn.sourceforge.net/svnroot/jooq</connection>
+    </scm>
 
-	<issueManagement>
-		<system>Trac</system>
-		<url>https://sourceforge.net/apps/trac/jooq/report/6</url>
-	</issueManagement>
+    <issueManagement>
+        <system>Trac</system>
+        <url>https://sourceforge.net/apps/trac/jooq/report/6</url>
+    </issueManagement>
 
-	<developers>
-		<developer>
-			<name>Lukas Eder</name>
-			<email>lukas.eder@gmail.com</email>
-			<roles>
-			    <role>architect</role>
-			    <role>developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Espen Stromsnes</name>
-			<email>estromsnes@gmail.com</email>
-			<roles>
-			    <role>developer</role>
-			</roles>
-		</developer>
-		<developer>
+    <developers>
+        <developer>
+            <name>Lukas Eder</name>
+            <email>lukas.eder@gmail.com</email>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Espen Stromsnes</name>
+            <email>estromsnes@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
             <name>Christopher Deckers</name>
             <email>chrriis@gmail.com</email>
-			<roles>
-			    <role>developer</role>
-			</roles>
+            <roles>
+                <role>developer</role>
+            </roles>
         </developer>
-	</developers>
+    </developers>
 
-	<contributors>
-		<contributor>
+    <contributors>
+        <contributor>
             <name>Sander Plas</name>
             <email>sander.plas@gmail.com</email>
-			<roles>
-				<role>maven-support</role>
-			</roles>
+            <roles>
+                <role>maven-support</role>
+            </roles>
         </contributor>
         <contributor>
             <name>Sergey Epik</name>
             <email>sergey.epik@gmail.com</email>
-			<roles>
-				<role>spring-support</role>
-			</roles>
+            <roles>
+                <role>spring-support</role>
+            </roles>
         </contributor>
-		<contributor>
+        <contributor>
             <name>Peter Ertl</name>
-			<roles>
-				<role>maven-support</role>
-			</roles>
+            <roles>
+                <role>maven-support</role>
+            </roles>
         </contributor>
-		<contributor>
+        <contributor>
             <name>Robin Stocker</name>
-			<email>robin@nibor.org</email>
-			<roles>
-				<role>git-support</role>
-			</roles>
+            <email>robin@nibor.org</email>
+            <roles>
+                <role>git-support</role>
+            </roles>
         </contributor>
-	</contributors>
+    </contributors>
 
-	<modules>
-		<module>jOOQ</module>
-		<module>jOOQ-codegen</module>
-		<module>jOOQ-codegen-maven</module>
-		<!--<module>jOOQ-codegen-maven-example</module>-->
-		<module>jOOQ-console</module>
-		<module>jOOQ-meta</module>
-	</modules>
+    <modules>
+        <module>jOOQ</module>
+        <module>jOOQ-codegen</module>
+        <module>jOOQ-codegen-maven</module>
+        <!--<module>jOOQ-codegen-maven-example</module>-->
+        <module>jOOQ-console</module>
+        <module>jOOQ-meta</module>
+    </modules>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.jooq</groupId>
-				<artifactId>jooq</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jooq</groupId>
-				<artifactId>jooq-codegen</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jooq</groupId>
-				<artifactId>jooq-codegen-maven</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jooq</groupId>
-				<artifactId>jooq-codegen-maven-example</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jooq</groupId>
-				<artifactId>jooq-console</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jooq</groupId>
-				<artifactId>jooq-meta</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven-example</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-console</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-meta</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-	<build>
-		<defaultGoal>deploy</defaultGoal>
-		<finalName>${project.artifactId}-${project.version}</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<fork>true</fork>
-					<maxmem>512m</maxmem>
-					<meminitial>256m</meminitial>
-					<encoding>UTF-8</encoding>
-					<source>1.6</source>
-					<target>1.6</target>
-					<debug>true</debug>
-					<debuglevel>lines,vars,source</debuglevel>
-				</configuration>
-			</plugin>
+    <build>
+        <defaultGoal>deploy</defaultGoal>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <fork>true</fork>
+                    <maxmem>512m</maxmem>
+                    <meminitial>256m</meminitial>
+                    <encoding>UTF-8</encoding>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <debug>true</debug>
+                    <debuglevel>lines,vars,source</debuglevel>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<inherited>true</inherited>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<excludeResources>true</excludeResources>
-					<useDefaultExcludes>true</useDefaultExcludes>
-				</configuration>
-			</plugin>
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludeResources>true</excludeResources>
+                    <useDefaultExcludes>true</useDefaultExcludes>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.8</version>
-				<configuration>
-					<downloadSources>true</downloadSources>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <downloadSources>true</downloadSources>
+                </configuration>
+            </plugin>
 
-	<profiles>
-	    <!-- The release profile is used only for releasing jOOQ to
-		     the Sonatype Maven repository or to Maven central
-			 lengthy or annoying operations for everyday use by users
-			 building jOOQ themselves are put here -->
-		<profile>
-			<id>release</id>
-			<build>
-				<plugins>
+            <!-- If this plugin produces an error, make sure you are running
+                 Maven with Java 6. This section was contributed by user digulla
+                 See details here: https://github.com/jOOQ/jOOQ/issues/17 -->
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+
+                <executions>
+                    <execution>
+                        <id>enforce-java</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>[1.6.0,1.7.0)</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- The release profile is used only for releasing jOOQ to
+             the Sonatype Maven repository or to Maven central
+             lengthy or annoying operations for everyday use by users
+             building jOOQ themselves are put here -->
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -224,30 +247,30 @@
                             </execution>
                         </executions>
                     </plugin>
-					<plugin>
-						<inherited>true</inherited>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.7</version>
-						<executions>
-							<execution>
-								<id>bundle-sources</id>
-								<phase>package</phase>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<maxmemory>512</maxmemory>
-							<encoding>UTF-8</encoding>
-							<show>protected</show>
-							<notree>true</notree>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+                    <plugin>
+                        <inherited>true</inherited>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.7</version>
+                        <executions>
+                            <execution>
+                                <id>bundle-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <maxmemory>512</maxmemory>
+                            <encoding>UTF-8</encoding>
+                            <show>protected</show>
+                            <notree>true</notree>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

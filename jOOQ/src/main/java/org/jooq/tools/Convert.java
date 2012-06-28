@@ -517,13 +517,33 @@ public final class Convert {
                     return toDate((Long) from, toClass);
                 }
 
-                // Strings can be converted to java.sql.Date
-                else if((fromClass== String.class) && toClass == java.sql.Date.class){
+                // [#1501] Strings can be converted to java.sql.Date
+                else if ((fromClass == String.class) && toClass == java.sql.Date.class) {
                     try {
                         return (U) java.sql.Date.valueOf((String) from);
                     }
                     catch (IllegalArgumentException e) {
-                        throw fail(from, java.sql.Date.class);
+                        return null;
+                    }
+                }
+
+                // [#1501] Strings can be converted to java.sql.Date
+                else if ((fromClass == String.class) && toClass == java.sql.Time.class) {
+                    try {
+                        return (U) java.sql.Time.valueOf((String) from);
+                    }
+                    catch (IllegalArgumentException e) {
+                        return null;
+                    }
+                }
+
+                // [#1501] Strings can be converted to java.sql.Date
+                else if ((fromClass == String.class) && toClass == java.sql.Timestamp.class) {
+                    try {
+                        return (U) java.sql.Timestamp.valueOf((String) from);
+                    }
+                    catch (IllegalArgumentException e) {
+                        return null;
                     }
                 }
 

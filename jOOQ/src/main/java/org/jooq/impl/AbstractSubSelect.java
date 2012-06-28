@@ -433,12 +433,14 @@ implements
         // SELECT clause
         // -------------
         context.keyword("select ");
-        if (distinct) {
-            context.keyword("distinct ");
-        }
 
+        // [#1493] Oracle hints come directly after the SELECT keyword
         if (!StringUtils.isBlank(hint)) {
             context.sql(hint).sql(" ");
+        }
+
+        if (distinct) {
+            context.keyword("distinct ");
         }
 
         // Sybase and SQL Server have leading TOP clauses

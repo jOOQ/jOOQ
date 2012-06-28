@@ -12,6 +12,7 @@
     <groupId>org.jooq</groupId>
     <artifactId>jooq-codegen-maven</artifactId>
     <name>jOOQ Codegen Maven</name>
+    <packaging>maven-plugin</packaging>
 
     <profiles>
         <profile>

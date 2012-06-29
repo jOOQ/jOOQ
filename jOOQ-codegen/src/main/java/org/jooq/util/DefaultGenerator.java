@@ -110,11 +110,27 @@ import org.jooq.util.GeneratorStrategy.Mode;
  */
 public class DefaultGenerator extends AbstractGenerator {
 
-    private static final JooqLogger log = JooqLogger.getLogger(DefaultGenerator.class);
+    private static final JooqLogger log   = JooqLogger.getLogger(DefaultGenerator.class);
 
-    StopWatch watch = new StopWatch();
+    /**
+     * An overall stop watch to measure the speed of source code generation
+     */
+    private final StopWatch         watch = new StopWatch();
 
-    Database database;
+    /**
+     * The underlying database of this generator
+     */
+    private Database                database;
+
+    /**
+     * The global generated schema file
+     */
+    private GenerationWriter        outS  = null;
+
+    /**
+     * The global generated factory file
+     */
+    private GenerationWriter        outF  = null;
 
     @Override
     public void generate(Database db) {
@@ -168,9 +184,6 @@ public class DefaultGenerator extends AbstractGenerator {
             }
         }
     }
-
-    GenerationWriter outS = null;
-    GenerationWriter outF = null;
 
     protected void generate(SchemaDefinition schema) {
 

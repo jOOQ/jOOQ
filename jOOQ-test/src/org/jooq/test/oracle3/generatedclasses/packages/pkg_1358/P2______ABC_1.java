@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.packages.pkg_1358;
  */
 public class P2______ABC_1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1152730725;
+	private static final long serialVersionUID = -434011575;
 
 
 	/**
@@ -30,6 +30,6 @@ public class P2______ABC_1 extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Set the <code>I</code> parameter to the routine
 	 */
 	public void setI(java.lang.String value) {
-		setValue(I, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P2______ABC_1.I, value);
 	}
 }

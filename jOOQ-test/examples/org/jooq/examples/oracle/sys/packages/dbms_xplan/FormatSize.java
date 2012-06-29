@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class FormatSize extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 354110061;
+	private static final long serialVersionUID = -503679533;
 
 
 	/**
@@ -35,7 +35,7 @@ public class FormatSize extends org.jooq.impl.AbstractRoutine<java.lang.String> 
 	 * Set the <code>NUM</code> parameter to the routine
 	 */
 	public void setNum(java.lang.Number value) {
-		setNumber(NUM, value);
+		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize.NUM, value);
 	}
 
 	/**

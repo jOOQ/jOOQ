@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class FArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Object[]> {
 
-	private static final long serialVersionUID = 1575400205;
+	private static final long serialVersionUID = -1537113282;
 
 
 	/**
@@ -41,7 +41,7 @@ public class FArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Object[]> 
 	 * Set the <code>P1</code> parameter to the routine
 	 */
 	public void setP1(java.lang.Object[] value) {
-		setValue(P1, value);
+		setValue(org.jooq.test.h2.generatedclasses.routines.FArrays2.P1, value);
 	}
 
 	/**

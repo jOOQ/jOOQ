@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.routines;
  */
 public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 627542082;
+	private static final long serialVersionUID = 626426770;
 
 
 	/**
@@ -55,7 +55,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Set the <code>p1</code> parameter to the routine
 	 */
 	public void setP1(java.lang.Integer value) {
-		setValue(P1, value);
+		setValue(org.jooq.test.mysql.generatedclasses.routines.F317.P1, value);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Set the <code>p2</code> parameter to the routine
 	 */
 	public void setP2(java.lang.Integer value) {
-		setValue(P2, value);
+		setValue(org.jooq.test.mysql.generatedclasses.routines.F317.P2, value);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Set the <code>p3</code> parameter to the routine
 	 */
 	public void setP3(java.lang.Integer value) {
-		setValue(P3, value);
+		setValue(org.jooq.test.mysql.generatedclasses.routines.F317.P3, value);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Set the <code>p4</code> parameter to the routine
 	 */
 	public void setP4(java.lang.Integer value) {
-		setValue(P4, value);
+		setValue(org.jooq.test.mysql.generatedclasses.routines.F317.P4, value);
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = -497121026;
+	private static final long serialVersionUID = -488952548;
 
 
 	/**
@@ -74,7 +74,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	 * Set the <code>TABLE_NAME</code> parameter to the routine
 	 */
 	public void setTableName(java.lang.String value) {
-		setValue(TABLE_NAME, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.TABLE_NAME, value);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	 * Set the <code>STATEMENT_ID</code> parameter to the routine
 	 */
 	public void setStatementId(java.lang.String value) {
-		setValue(STATEMENT_ID, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.STATEMENT_ID, value);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	 * Set the <code>PLAN_ID</code> parameter to the routine
 	 */
 	public void setPlanId(java.lang.Number value) {
-		setNumber(PLAN_ID, value);
+		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.PLAN_ID, value);
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	 * Set the <code>FORMAT</code> parameter to the routine
 	 */
 	public void setFormat(java.lang.String value) {
-		setValue(FORMAT, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.FORMAT, value);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	 * Set the <code>FILTER_PREDS</code> parameter to the routine
 	 */
 	public void setFilterPreds(java.lang.String value) {
-		setValue(FILTER_PREDS, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.FILTER_PREDS, value);
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	 * Set the <code>PLAN_TAG</code> parameter to the routine
 	 */
 	public void setPlanTag(java.lang.String value) {
-		setValue(PLAN_TAG, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.PLAN_TAG, value);
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	 * Set the <code>REPORT_REF</code> parameter to the routine
 	 */
 	public void setReportRef(java.lang.String value) {
-		setValue(REPORT_REF, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.REPORT_REF, value);
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_ARRAYS1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -202715951;
+	private static final long serialVersionUID = -2098203945;
 
 
 	/**
@@ -35,7 +35,7 @@ public class P_ARRAYS1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> imp
 	 * Set the <code>IN_ARRAY</code> parameter to the routine
 	 */
 	public void setIN_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY value) {
-		setValue(IN_ARRAY, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS1.IN_ARRAY, value);
 	}
 
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY getOUT_ARRAY() {

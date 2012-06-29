@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_AUTHOR_EXISTS extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -772391527;
+	private static final long serialVersionUID = 1995379622;
 
 
 	/**
@@ -35,7 +35,7 @@ public class P_AUTHOR_EXISTS extends org.jooq.impl.AbstractRoutine<java.lang.Voi
 	 * Set the <code>AUTHOR_NAME</code> parameter to the routine
 	 */
 	public void setAUTHOR_NAME(java.lang.String value) {
-		setValue(AUTHOR_NAME, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_AUTHOR_EXISTS.AUTHOR_NAME, value);
 	}
 
 	public java.math.BigDecimal getRESULT() {

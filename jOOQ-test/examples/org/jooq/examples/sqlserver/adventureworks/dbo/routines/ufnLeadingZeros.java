@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class ufnLeadingZeros extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 499090239;
+	private static final long serialVersionUID = 1145180694;
 
 
 	/**
@@ -35,7 +35,7 @@ public class ufnLeadingZeros extends org.jooq.impl.AbstractRoutine<java.lang.Str
 	 * Set the <code>Value</code> parameter to the routine
 	 */
 	public void setValue(java.lang.Integer value) {
-		setValue(Value, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnLeadingZeros.Value, value);
 	}
 
 	/**

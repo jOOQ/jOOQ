@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.routines;
  */
 public class uspUpdateEmployeeLogin extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 940022256;
+	private static final long serialVersionUID = -154471100;
 
 
 	/**
@@ -59,41 +59,41 @@ public class uspUpdateEmployeeLogin extends org.jooq.impl.AbstractRoutine<java.l
 	 * Set the <code>EmployeeID</code> parameter to the routine
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
-		setValue(EmployeeID, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.EmployeeID, value);
 	}
 
 	/**
 	 * Set the <code>ManagerID</code> parameter to the routine
 	 */
 	public void setManagerID(java.lang.Integer value) {
-		setValue(ManagerID, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.ManagerID, value);
 	}
 
 	/**
 	 * Set the <code>LoginID</code> parameter to the routine
 	 */
 	public void setLoginID(java.lang.String value) {
-		setValue(LoginID, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.LoginID, value);
 	}
 
 	/**
 	 * Set the <code>Title</code> parameter to the routine
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(Title, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.Title, value);
 	}
 
 	/**
 	 * Set the <code>HireDate</code> parameter to the routine
 	 */
 	public void setHireDate(java.sql.Timestamp value) {
-		setValue(HireDate, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.HireDate, value);
 	}
 
 	/**
 	 * Set the <code>CurrentFlag</code> parameter to the routine
 	 */
 	public void setCurrentFlag(java.lang.Boolean value) {
-		setValue(CurrentFlag, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.CurrentFlag, value);
 	}
 }

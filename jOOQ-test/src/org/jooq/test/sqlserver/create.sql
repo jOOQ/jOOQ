@@ -18,6 +18,7 @@ DROP PROCEDURE p_create_author_by_name/
 DROP PROCEDURE p_author_exists/
 DROP PROCEDURE p391/
 DROP PROCEDURE p_default/
+DROP PROCEDURE p1490/
 DROP FUNCTION f_many_parameters/
 DROP FUNCTION f_author_exists/
 DROP FUNCTION f_one/
@@ -587,6 +588,13 @@ BEGIN
   SET @p_out_number = @p_in_number;
   SET @p_out_varchar = @p_in_varchar;
   SET @p_out_date = @p_in_date;
+END;
+/
+
+
+CREATE PROCEDURE p1490 (@value int) AS
+BEGIN
+	RETURN;
 END;
 /
 

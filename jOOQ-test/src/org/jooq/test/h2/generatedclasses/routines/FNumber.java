@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -819593599;
+	private static final long serialVersionUID = 1080721949;
 
 
 	/**
@@ -35,7 +35,7 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Set the <code>P1</code> parameter to the routine
 	 */
 	public void setP1(java.lang.Integer value) {
-		setValue(P1, value);
+		setValue(org.jooq.test.h2.generatedclasses.routines.FNumber.P1, value);
 	}
 
 	/**

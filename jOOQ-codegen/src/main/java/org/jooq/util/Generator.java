@@ -36,8 +36,6 @@
 
 package org.jooq.util;
 
-import java.io.IOException;
-
 import javax.annotation.Generated;
 
 /**
@@ -50,7 +48,7 @@ public interface Generator {
 	/**
 	 * Do the code generation
 	 */
-	void generate(Database database) throws IOException;
+	void generate(Database database);
 
 	/**
 	 * Set a naming strategy to this generator

@@ -51,8 +51,10 @@ import static org.jooq.impl.Factory.upper;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.tools.reflect.Reflect.on;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
@@ -302,6 +304,16 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 assertEquals(3, (int) create().select(count)
                     .from(TBook())
                     .where(TBook_ID().notIn(Collections.nCopies(1950, 1)))
+                    .fetchOne(count));
+
+                // [#1515] Check correct splitting of NOT IN
+                List<Integer> list = new ArrayList<Integer>();
+                list.addAll(Collections.nCopies(1000, 1));
+                list.addAll(Collections.nCopies(1000, 2));
+
+                assertEquals(2, (int) create().select(count)
+                    .from(TBook())
+                    .where(TBook_ID().notIn(list))
                     .fetchOne(count));
 
                 break;

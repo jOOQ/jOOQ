@@ -1193,6 +1193,16 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         public final void updateNClob(String columnLabel, Reader reader) throws SQLException {
             ctx.resultSet().updateNClob(columnLabel, reader);
         }
+
+        @Override
+        public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
     }
 
     /**

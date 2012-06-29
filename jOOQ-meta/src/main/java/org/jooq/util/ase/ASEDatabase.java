@@ -35,7 +35,6 @@
  */
 package org.jooq.util.ase;
 
-import java.math.BigDecimal;
 import static java.util.Arrays.asList;
 import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.field;
@@ -263,6 +262,7 @@ public class ASEDatabase extends AbstractDatabase {
         return result;
     }
 
+    @SuppressWarnings("unused")
     private List<Record> fetchRoutines() {
         List<Record> result = new ArrayList<Record>();
 
@@ -280,12 +280,15 @@ public class ASEDatabase extends AbstractDatabase {
     @Override
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
-        
-        for (Record record : fetchRoutines()) {
-            SchemaDefinition schema = getSchema(record.getValueAsString("Owner"));
-            String name = record.getValueAsString("Name");
-            result.add(new ASERoutineDefinition(schema, null, name, "", null, null, null));
-        }
+
+        // [#1507] This was contributed by Mark. It will be correctly
+        // implemented at a later stage
+
+//        for (Record record : fetchRoutines()) {
+//            SchemaDefinition schema = getSchema(record.getValueAsString("Owner"));
+//            String name = record.getValueAsString("Name");
+//            result.add(new ASERoutineDefinition(schema, null, name, null, null, null));
+//        }
 
         return result;
     }

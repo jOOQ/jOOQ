@@ -35,12 +35,21 @@ import java.util.List;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.tools.StringUtils;
-import org.jooq.util.*;
+import org.jooq.util.AbstractRoutineDefinition;
+import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DataTypeDefinition;
+import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.DefaultParameterDefinition;
+import org.jooq.util.InOutDefinition;
+import org.jooq.util.ParameterDefinition;
+import org.jooq.util.SchemaDefinition;
 
 /**
- * @author
+ * [#1507] This was contributed by user Mark. It will be correctly implemented at a later stage
+ *
+ * @author Mark
  */
-public class ASERoutineDefinition extends AbstractRoutineDefinition {
+class ASERoutineDefinition extends AbstractRoutineDefinition {
 
     public ASERoutineDefinition(SchemaDefinition schema, String name, String dataType, Number length, Number precision, Number scale) {
         super(schema, null, name, null, null);
@@ -57,7 +66,7 @@ public class ASERoutineDefinition extends AbstractRoutineDefinition {
         if(fetchMany.size() < 2) {
             return;
         }
-        
+
         for (Record record : fetchMany.get(1)) {
             String n = record.getValueAsString("Parameter_name");
             String l = record.getValueAsString("Length");

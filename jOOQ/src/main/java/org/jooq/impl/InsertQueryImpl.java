@@ -228,7 +228,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Some dialects can't really handle this clause. Simulation
                 // should be done in two steps
                 case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.getDialect());
                 }
 
                 // Some databases allow for simulating this clause using a
@@ -243,7 +243,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.getDialect());
             }
         }
 

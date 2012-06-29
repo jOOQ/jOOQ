@@ -41,11 +41,16 @@ public class GenerationWriter {
     private final List<String>  initialisationStatements;
     private final Set<Object>   alreadyPrinted;
 
-    public GenerationWriter(File file) throws FileNotFoundException {
+    public GenerationWriter(File file) {
         file.getParentFile().mkdirs();
 
         this.file = file;
-        this.writer = new PrintWriter(file);
+        try {
+            this.writer = new PrintWriter(file);
+        }
+        catch (FileNotFoundException e) {
+            throw new GeneratorException("Error writing "+file.getAbsolutePath());
+        }
         this.sb = new StringBuilder();
         this.staticInitialisationStatements = new ArrayList<String>();
         this.initialisationStatements = new ArrayList<String>();

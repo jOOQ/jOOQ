@@ -65,7 +65,7 @@ import java.util.Calendar;
  *
  * @author Lukas Eder
  */
-class PreparedStatementProxy implements PreparedStatement {
+class PreparedStatementProxy extends JDBC41Statement implements PreparedStatement {
 
     private final Connection connection;
     private final Statement  delegate;
@@ -122,16 +122,6 @@ class PreparedStatementProxy implements PreparedStatement {
         this(connection, sql, MethodType.SQL_CN);
 
         this.columnNames = columnNames;
-    }
-
-    @Override
-    public void closeOnCompletion() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean isCloseOnCompletion() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // ------------------------------------------------------------------------

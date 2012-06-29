@@ -68,7 +68,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-class DataSourceConnection implements Connection {
+class DataSourceConnection extends JDBC41Connection {
 
     private final DataSource datasource;
     private final Settings   settings;

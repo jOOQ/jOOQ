@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -1281873839;
+	private static final long serialVersionUID = 1640384731;
 
 
 	/**
@@ -59,7 +59,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	 * Set the <code>SQLSET_NAME</code> parameter to the routine
 	 */
 	public void setSqlsetName(java.lang.String value) {
-		setValue(SQLSET_NAME, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset.SQLSET_NAME, value);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	 * Set the <code>SQL_ID</code> parameter to the routine
 	 */
 	public void setSqlId(java.lang.String value) {
-		setValue(SQL_ID, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset.SQL_ID, value);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	 * Set the <code>PLAN_HASH_VALUE</code> parameter to the routine
 	 */
 	public void setPlanHashValue(java.math.BigInteger value) {
-		setValue(PLAN_HASH_VALUE, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset.PLAN_HASH_VALUE, value);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	 * Set the <code>FORMAT</code> parameter to the routine
 	 */
 	public void setFormat(java.lang.String value) {
-		setValue(FORMAT, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset.FORMAT, value);
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	 * Set the <code>SQLSET_OWNER</code> parameter to the routine
 	 */
 	public void setSqlsetOwner(java.lang.String value) {
-		setValue(SQLSET_OWNER, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset.SQLSET_OWNER, value);
 	}
 
 	/**

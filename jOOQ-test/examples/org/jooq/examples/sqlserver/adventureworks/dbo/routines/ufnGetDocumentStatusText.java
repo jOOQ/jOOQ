@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class ufnGetDocumentStatusText extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 1541722634;
+	private static final long serialVersionUID = -2016926148;
 
 
 	/**
@@ -35,7 +35,7 @@ public class ufnGetDocumentStatusText extends org.jooq.impl.AbstractRoutine<java
 	 * Set the <code>Status</code> parameter to the routine
 	 */
 	public void setStatus(java.lang.Byte value) {
-		setValue(Status, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText.Status, value);
 	}
 
 	/**

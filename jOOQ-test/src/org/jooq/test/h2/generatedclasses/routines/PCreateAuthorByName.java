@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1676101580;
+	private static final long serialVersionUID = 610187724;
 
 
 	/**
@@ -35,13 +35,13 @@ public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang
 	 * Set the <code>P2</code> parameter to the routine
 	 */
 	public void setP2(java.lang.String value) {
-		setValue(P2, value);
+		setValue(org.jooq.test.h2.generatedclasses.routines.PCreateAuthorByName.P2, value);
 	}
 
 	/**
 	 * Set the <code>P3</code> parameter to the routine
 	 */
 	public void setP3(java.lang.String value) {
-		setValue(P3, value);
+		setValue(org.jooq.test.h2.generatedclasses.routines.PCreateAuthorByName.P3, value);
 	}
 }

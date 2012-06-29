@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class ufnGetContactInformation extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 183074089;
+	private static final long serialVersionUID = 978853107;
 
 
 	/**
@@ -38,7 +38,7 @@ public class ufnGetContactInformation extends org.jooq.impl.AbstractRoutine<java
 	 * Set the <code>ContactID</code> parameter to the routine
 	 */
 	public void setContactID(java.lang.Integer value) {
-		setValue(ContactID, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation.ContactID, value);
 	}
 
 	/**

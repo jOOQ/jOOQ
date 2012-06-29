@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DiffPlanAwr extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -990539502;
+	private static final long serialVersionUID = 1249208854;
 
 
 	/**
@@ -47,7 +47,7 @@ public class DiffPlanAwr extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	 * Set the <code>SQL_ID</code> parameter to the routine
 	 */
 	public void setSqlId(java.lang.String value) {
-		setValue(SQL_ID, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr.SQL_ID, value);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class DiffPlanAwr extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	 * Set the <code>PLAN_HASH_VALUE1</code> parameter to the routine
 	 */
 	public void setPlanHashValue1(java.lang.Number value) {
-		setNumber(PLAN_HASH_VALUE1, value);
+		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr.PLAN_HASH_VALUE1, value);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class DiffPlanAwr extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	 * Set the <code>PLAN_HASH_VALUE2</code> parameter to the routine
 	 */
 	public void setPlanHashValue2(java.lang.Number value) {
-		setNumber(PLAN_HASH_VALUE2, value);
+		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr.PLAN_HASH_VALUE2, value);
 	}
 
 	/**

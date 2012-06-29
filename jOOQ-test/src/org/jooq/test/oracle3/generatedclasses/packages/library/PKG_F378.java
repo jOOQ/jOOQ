@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.packages.library;
  */
 public class PKG_F378 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1256183155;
+	private static final long serialVersionUID = -1726224667;
 
 
 	/**
@@ -47,14 +47,14 @@ public class PKG_F378 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal
 	 * Set the <code>I</code> parameter to the routine
 	 */
 	public void setI(java.lang.Number value) {
-		setNumber(I, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F378.I, value);
 	}
 
 	/**
 	 * Set the <code>IO</code> parameter to the routine
 	 */
 	public void setIO(java.lang.Number value) {
-		setNumber(IO, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F378.IO, value);
 	}
 
 	public java.math.BigDecimal getIO() {

@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_DEFAULT extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 2037862521;
+	private static final long serialVersionUID = -740089435;
 
 
 	/**
@@ -59,21 +59,21 @@ public class P_DEFAULT extends org.jooq.impl.AbstractRoutine<java.lang.Void> imp
 	 * Set the <code>P_IN_NUMBER</code> parameter to the routine
 	 */
 	public void setP_IN_NUMBER(java.lang.Number value) {
-		setNumber(P_IN_NUMBER, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.routines.P_DEFAULT.P_IN_NUMBER, value);
 	}
 
 	/**
 	 * Set the <code>P_IN_VARCHAR</code> parameter to the routine
 	 */
 	public void setP_IN_VARCHAR(java.lang.String value) {
-		setValue(P_IN_VARCHAR, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_DEFAULT.P_IN_VARCHAR, value);
 	}
 
 	/**
 	 * Set the <code>P_IN_DATE</code> parameter to the routine
 	 */
 	public void setP_IN_DATE(java.sql.Date value) {
-		setValue(P_IN_DATE, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_DEFAULT.P_IN_DATE, value);
 	}
 
 	public java.math.BigDecimal getP_OUT_NUMBER() {

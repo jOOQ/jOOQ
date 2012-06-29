@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
  */
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -636372750;
+	private static final long serialVersionUID = 1613524976;
 
 
 	/**
@@ -35,13 +35,13 @@ public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang
 	 * Set the <code>FIRST_NAME</code> parameter to the routine
 	 */
 	public void setFirstName(java.lang.String value) {
-		setValue(FIRST_NAME, value);
+		setValue(org.jooq.test.hsqldb.generatedclasses.routines.PCreateAuthorByName.FIRST_NAME, value);
 	}
 
 	/**
 	 * Set the <code>LAST_NAME</code> parameter to the routine
 	 */
 	public void setLastName(java.lang.String value) {
-		setValue(LAST_NAME, value);
+		setValue(org.jooq.test.hsqldb.generatedclasses.routines.PCreateAuthorByName.LAST_NAME, value);
 	}
 }

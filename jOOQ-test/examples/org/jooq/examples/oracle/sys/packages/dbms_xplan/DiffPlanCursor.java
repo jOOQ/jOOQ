@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DiffPlanCursor extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 1728883494;
+	private static final long serialVersionUID = -61987936;
 
 
 	/**
@@ -47,7 +47,7 @@ public class DiffPlanCursor extends org.jooq.impl.AbstractRoutine<java.lang.Stri
 	 * Set the <code>SQL_ID</code> parameter to the routine
 	 */
 	public void setSqlId(java.lang.String value) {
-		setValue(SQL_ID, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor.SQL_ID, value);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class DiffPlanCursor extends org.jooq.impl.AbstractRoutine<java.lang.Stri
 	 * Set the <code>CURSOR_CHILD_NUM1</code> parameter to the routine
 	 */
 	public void setCursorChildNum1(java.lang.Number value) {
-		setNumber(CURSOR_CHILD_NUM1, value);
+		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor.CURSOR_CHILD_NUM1, value);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class DiffPlanCursor extends org.jooq.impl.AbstractRoutine<java.lang.Stri
 	 * Set the <code>CURSOR_CHILD_NUM2</code> parameter to the routine
 	 */
 	public void setCursorChildNum2(java.lang.Number value) {
-		setNumber(CURSOR_CHILD_NUM2, value);
+		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor.CURSOR_CHILD_NUM2, value);
 	}
 
 	/**

@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.routines;
  */
 public class RewardsReport extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1300386401;
+	private static final long serialVersionUID = -835189535;
 
 
 	/**
@@ -43,14 +43,14 @@ public class RewardsReport extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Set the <code>min_monthly_purchases</code> parameter to the routine
 	 */
 	public void setMinMonthlyPurchases(java.lang.Byte value) {
-		setValue(MIN_MONTHLY_PURCHASES, value);
+		setValue(org.jooq.examples.mysql.sakila.routines.RewardsReport.MIN_MONTHLY_PURCHASES, value);
 	}
 
 	/**
 	 * Set the <code>min_dollar_amount_purchased</code> parameter to the routine
 	 */
 	public void setMinDollarAmountPurchased(java.math.BigDecimal value) {
-		setValue(MIN_DOLLAR_AMOUNT_PURCHASED, value);
+		setValue(org.jooq.examples.mysql.sakila.routines.RewardsReport.MIN_DOLLAR_AMOUNT_PURCHASED, value);
 	}
 
 	public java.lang.Integer getCountRewardees() {

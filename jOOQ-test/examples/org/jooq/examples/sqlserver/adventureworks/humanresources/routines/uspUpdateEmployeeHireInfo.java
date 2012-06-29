@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.routines;
  */
 public class uspUpdateEmployeeHireInfo extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -956049043;
+	private static final long serialVersionUID = 2089133676;
 
 
 	/**
@@ -65,48 +65,48 @@ public class uspUpdateEmployeeHireInfo extends org.jooq.impl.AbstractRoutine<jav
 	 * Set the <code>EmployeeID</code> parameter to the routine
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
-		setValue(EmployeeID, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.EmployeeID, value);
 	}
 
 	/**
 	 * Set the <code>Title</code> parameter to the routine
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(Title, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.Title, value);
 	}
 
 	/**
 	 * Set the <code>HireDate</code> parameter to the routine
 	 */
 	public void setHireDate(java.sql.Timestamp value) {
-		setValue(HireDate, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.HireDate, value);
 	}
 
 	/**
 	 * Set the <code>RateChangeDate</code> parameter to the routine
 	 */
 	public void setRateChangeDate(java.sql.Timestamp value) {
-		setValue(RateChangeDate, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.RateChangeDate, value);
 	}
 
 	/**
 	 * Set the <code>Rate</code> parameter to the routine
 	 */
 	public void setRate(java.math.BigDecimal value) {
-		setValue(Rate, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.Rate, value);
 	}
 
 	/**
 	 * Set the <code>PayFrequency</code> parameter to the routine
 	 */
 	public void setPayFrequency(java.lang.Byte value) {
-		setValue(PayFrequency, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.PayFrequency, value);
 	}
 
 	/**
 	 * Set the <code>CurrentFlag</code> parameter to the routine
 	 */
 	public void setCurrentFlag(java.lang.Boolean value) {
-		setValue(CurrentFlag, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.CurrentFlag, value);
 	}
 }

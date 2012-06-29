@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1556250220;
+	private static final long serialVersionUID = 27271685;
 
 
 	/**
@@ -35,7 +35,7 @@ public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integ
 	 * Set the <code>author_name</code> parameter to the routine
 	 */
 	public void setAuthorName(java.lang.String value) {
-		setValue(AUTHOR_NAME, value);
+		setValue(org.jooq.test.postgres.generatedclasses.routines.FAuthorExists.AUTHOR_NAME, value);
 	}
 
 	/**

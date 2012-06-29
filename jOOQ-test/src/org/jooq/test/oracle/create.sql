@@ -74,6 +74,7 @@ DROP PROCEDURE p_create_author/
 DROP PROCEDURE p_create_author_by_name/
 DROP PROCEDURE p_author_exists/
 DROP PROCEDURE p391/
+DROP PROCEDURE p1490/
 DROP FUNCTION f_author_exists/
 DROP FUNCTION f_one/
 DROP FUNCTION f_number/
@@ -1111,6 +1112,12 @@ BEGIN
   o2 := io2;
   io2 := i2;
 END p391;
+/
+
+CREATE OR REPLACE PROCEDURE p1490 ("value" NUMBER) IS
+BEGIN
+  NULL;
+END p1490;
 /
 
 CREATE OR REPLACE PACKAGE library_types AS

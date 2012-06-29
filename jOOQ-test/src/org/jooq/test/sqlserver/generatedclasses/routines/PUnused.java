@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
  */
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -252045178;
+	private static final long serialVersionUID = -989423526;
 
 
 	/**
@@ -41,21 +41,21 @@ public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>in1</code> parameter to the routine
 	 */
 	public void setIn1(java.lang.String value) {
-		setValue(IN1, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PUnused.IN1, value);
 	}
 
 	/**
 	 * Set the <code>out1</code> parameter to the routine
 	 */
 	public void setOut1(java.lang.Integer value) {
-		setValue(OUT1, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PUnused.OUT1, value);
 	}
 
 	/**
 	 * Set the <code>out2</code> parameter to the routine
 	 */
 	public void setOut2(java.lang.Integer value) {
-		setValue(OUT2, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PUnused.OUT2, value);
 	}
 
 	public java.lang.Integer getOut1() {

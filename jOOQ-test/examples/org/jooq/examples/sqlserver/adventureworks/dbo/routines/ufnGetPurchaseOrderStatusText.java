@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class ufnGetPurchaseOrderStatusText extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 52488376;
+	private static final long serialVersionUID = -14545454;
 
 
 	/**
@@ -35,7 +35,7 @@ public class ufnGetPurchaseOrderStatusText extends org.jooq.impl.AbstractRoutine
 	 * Set the <code>Status</code> parameter to the routine
 	 */
 	public void setStatus(java.lang.Byte value) {
-		setValue(Status, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText.Status, value);
 	}
 
 	/**

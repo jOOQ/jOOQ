@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.routines;
  */
 public class FilmNotInStock extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 136011591;
+	private static final long serialVersionUID = -1766991465;
 
 
 	/**
@@ -41,14 +41,14 @@ public class FilmNotInStock extends org.jooq.impl.AbstractRoutine<java.lang.Void
 	 * Set the <code>p_film_id</code> parameter to the routine
 	 */
 	public void setPFilmId(java.lang.Integer value) {
-		setValue(P_FILM_ID, value);
+		setValue(org.jooq.examples.mysql.sakila.routines.FilmNotInStock.P_FILM_ID, value);
 	}
 
 	/**
 	 * Set the <code>p_store_id</code> parameter to the routine
 	 */
 	public void setPStoreId(java.lang.Integer value) {
-		setValue(P_STORE_ID, value);
+		setValue(org.jooq.examples.mysql.sakila.routines.FilmNotInStock.P_STORE_ID, value);
 	}
 
 	public java.lang.Integer getPFilmCount() {

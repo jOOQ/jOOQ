@@ -2239,7 +2239,7 @@ public class DefaultGenerator extends AbstractGenerator {
                 out.print("Value");
             }
             out.print("(");
-            out.print(strategy.getJavaIdentifier(parameter));
+            out.print(strategy.getFullJavaIdentifier(parameter));
             out.println(", value);");
             out.println("\t}");
 

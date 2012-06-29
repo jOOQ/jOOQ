@@ -35,6 +35,11 @@
  */
 package org.jooq.util;
 
+/**
+ * An unchecked <code>Exception</code> to wrap all fatal generator exceptions.
+ *
+ * @author Aaron Digulla
+ */
 public class GeneratorException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
@@ -46,5 +51,4 @@ public class GeneratorException extends RuntimeException {
     public GeneratorException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

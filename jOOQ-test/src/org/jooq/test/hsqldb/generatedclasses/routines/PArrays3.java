@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
  */
 public class PArrays3 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1238344562;
+	private static final long serialVersionUID = -1729547612;
 
 
 	/**
@@ -35,7 +35,7 @@ public class PArrays3 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>IN_ARRAY</code> parameter to the routine
 	 */
 	public void setInArray(java.lang.String[] value) {
-		setValue(IN_ARRAY, value);
+		setValue(org.jooq.test.hsqldb.generatedclasses.routines.PArrays3.IN_ARRAY, value);
 	}
 
 	public java.lang.String[] getOutArray() {

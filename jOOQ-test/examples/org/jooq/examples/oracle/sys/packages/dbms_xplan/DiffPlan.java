@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DiffPlan extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -704709381;
+	private static final long serialVersionUID = -1968584309;
 
 
 	/**
@@ -47,7 +47,7 @@ public class DiffPlan extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 	 * Set the <code>SQL_TEXT</code> parameter to the routine
 	 */
 	public void setSqlText(java.lang.String value) {
-		setValue(SQL_TEXT, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlan.SQL_TEXT, value);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class DiffPlan extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 	 * Set the <code>OUTLINE</code> parameter to the routine
 	 */
 	public void setOutline(java.lang.String value) {
-		setValue(OUTLINE, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlan.OUTLINE, value);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class DiffPlan extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 	 * Set the <code>USER_NAME</code> parameter to the routine
 	 */
 	public void setUserName(java.lang.String value) {
-		setValue(USER_NAME, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlan.USER_NAME, value);
 	}
 
 	/**

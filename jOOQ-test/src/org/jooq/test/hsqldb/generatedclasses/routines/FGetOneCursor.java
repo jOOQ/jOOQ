@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
  */
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = 1899645387;
+	private static final long serialVersionUID = 1172620148;
 
 
 	/**
@@ -35,7 +35,7 @@ public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result
 	 * Set the <code>BOOK_IDS</code> parameter to the routine
 	 */
 	public void setBookIds(java.lang.Integer[] value) {
-		setValue(BOOK_IDS, value);
+		setValue(org.jooq.test.hsqldb.generatedclasses.routines.FGetOneCursor.BOOK_IDS, value);
 	}
 
 	/**

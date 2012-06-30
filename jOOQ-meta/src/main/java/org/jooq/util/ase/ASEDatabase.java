@@ -262,9 +262,34 @@ public class ASEDatabase extends AbstractDatabase {
         return result;
     }
 
+    @SuppressWarnings("unused")
+    private List<Record> fetchRoutines() {
+        List<Record> result = new ArrayList<Record>();
+
+        for (Record record : create().fetch("sp_help")) {
+            if (asList("stored procedure").contains(record.getValueAsString("Object_type"))) {
+                if (getInputSchemata().contains(record.getValueAsString("Owner"))) {
+                    result.add(record);
+                }
+            }
+        }
+
+        return result;
+    }
+
     @Override
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
+
+        // [#1507] This was contributed by Mark. It will be correctly
+        // implemented at a later stage
+
+//        for (Record record : fetchRoutines()) {
+//            SchemaDefinition schema = getSchema(record.getValueAsString("Owner"));
+//            String name = record.getValueAsString("Name");
+//            result.add(new ASERoutineDefinition(schema, null, name, null, null, null));
+//        }
+
         return result;
     }
 

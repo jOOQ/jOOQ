@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PEnhanceAddress3 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1611614310;
+	private static final long serialVersionUID = -1802307858;
 
 
 	/**
@@ -29,7 +29,7 @@ public class PEnhanceAddress3 extends org.jooq.impl.AbstractRoutine<java.lang.Vo
 	 * Set the <code>ADDRESS</code> parameter to the routine
 	 */
 	public void setAddress(org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord value) {
-		setValue(ADDRESS, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.routines.PEnhanceAddress3.ADDRESS, value);
 	}
 
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord getAddress() {

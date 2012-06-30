@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_TABLES2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1555172778;
+	private static final long serialVersionUID = 1282235546;
 
 
 	/**
@@ -35,7 +35,7 @@ public class P_TABLES2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> imp
 	 * Set the <code>IN_TABLE</code> parameter to the routine
 	 */
 	public void setIN_TABLE(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE value) {
-		setValue(IN_TABLE, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_TABLES2.IN_TABLE, value);
 	}
 
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE getOUT_TABLE() {

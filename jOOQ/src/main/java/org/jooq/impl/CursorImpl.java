@@ -231,7 +231,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     /**
      * A wrapper for the underlying JDBC {@link ResultSet} and {@link Statement}
      */
-    private final class CursorResultSet implements ResultSet {
+    private final class CursorResultSet extends JDBC41ResultSet {
 
         private final boolean keepStatementOpen;
 

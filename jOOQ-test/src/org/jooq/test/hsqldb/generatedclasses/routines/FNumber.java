@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
  */
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1078683710;
+	private static final long serialVersionUID = 2076513558;
 
 
 	/**
@@ -35,7 +35,7 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Set the <code>N</code> parameter to the routine
 	 */
 	public void setN(java.lang.Integer value) {
-		setValue(N, value);
+		setValue(org.jooq.test.hsqldb.generatedclasses.routines.FNumber.N, value);
 	}
 
 	/**

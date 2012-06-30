@@ -113,7 +113,7 @@ class GenerationUtil {
      * collisions have to be generally reviewed again, when allowing for more
      * control over generated source code, as of [#408][#911]
      */
-    static String convertToJavaIdentifier(String literal) {
+    public static String convertToJavaIdentifier(String literal) {
         if (JAVA_KEYWORDS.contains(literal)) {
             return literal + "_";
         }

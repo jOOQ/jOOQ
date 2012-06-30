@@ -517,6 +517,36 @@ public final class Convert {
                     return toDate((Long) from, toClass);
                 }
 
+                // [#1501] Strings can be converted to java.sql.Date
+                else if ((fromClass == String.class) && toClass == java.sql.Date.class) {
+                    try {
+                        return (U) java.sql.Date.valueOf((String) from);
+                    }
+                    catch (IllegalArgumentException e) {
+                        return null;
+                    }
+                }
+
+                // [#1501] Strings can be converted to java.sql.Date
+                else if ((fromClass == String.class) && toClass == java.sql.Time.class) {
+                    try {
+                        return (U) java.sql.Time.valueOf((String) from);
+                    }
+                    catch (IllegalArgumentException e) {
+                        return null;
+                    }
+                }
+
+                // [#1501] Strings can be converted to java.sql.Date
+                else if ((fromClass == String.class) && toClass == java.sql.Timestamp.class) {
+                    try {
+                        return (U) java.sql.Timestamp.valueOf((String) from);
+                    }
+                    catch (IllegalArgumentException e) {
+                        return null;
+                    }
+                }
+
                 // [#1448] Some users may find it useful to convert string
                 // literals to Enum values without a Converter
                 else if ((fromClass == String.class) && java.lang.Enum.class.isAssignableFrom(toClass)) {

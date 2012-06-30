@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.routines;
  */
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 2000983117;
+	private static final long serialVersionUID = 2126269691;
 
 
 	/**
@@ -41,14 +41,14 @@ public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>in1</code> parameter to the routine
 	 */
 	public void setIn1(java.lang.String value) {
-		setValue(IN1, value);
+		setValue(org.jooq.test.sybase.generatedclasses.routines.PUnused.IN1, value);
 	}
 
 	/**
 	 * Set the <code>out2</code> parameter to the routine
 	 */
 	public void setOut2(java.lang.Integer value) {
-		setValue(OUT2, value);
+		setValue(org.jooq.test.sybase.generatedclasses.routines.PUnused.OUT2, value);
 	}
 
 	public java.lang.Integer getOut1() {

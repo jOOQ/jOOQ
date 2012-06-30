@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class PreparePlanXmlQuery extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -1208991009;
+	private static final long serialVersionUID = 110969148;
 
 
 	/**
@@ -35,7 +35,7 @@ public class PreparePlanXmlQuery extends org.jooq.impl.AbstractRoutine<java.lang
 	 * Set the <code>PLAN_QUERY</code> parameter to the routine
 	 */
 	public void setPlanQuery(java.lang.String value) {
-		setValue(PLAN_QUERY, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.PreparePlanXmlQuery.PLAN_QUERY, value);
 	}
 
 	/**

@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.routines;
  */
 public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1464524599;
+	private static final long serialVersionUID = -398927905;
 
 
 	/**
@@ -61,28 +61,28 @@ public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>i1</code> parameter to the routine
 	 */
 	public void setI1(java.lang.Integer value) {
-		setValue(I1, value);
+		setValue(org.jooq.test.mysql2.generatedclasses.routines.P391.I1, value);
 	}
 
 	/**
 	 * Set the <code>io1</code> parameter to the routine
 	 */
 	public void setIo1(java.lang.Integer value) {
-		setValue(IO1, value);
+		setValue(org.jooq.test.mysql2.generatedclasses.routines.P391.IO1, value);
 	}
 
 	/**
 	 * Set the <code>io2</code> parameter to the routine
 	 */
 	public void setIo2(java.lang.Integer value) {
-		setValue(IO2, value);
+		setValue(org.jooq.test.mysql2.generatedclasses.routines.P391.IO2, value);
 	}
 
 	/**
 	 * Set the <code>i2</code> parameter to the routine
 	 */
 	public void setI2(java.lang.Integer value) {
-		setValue(I2, value);
+		setValue(org.jooq.test.mysql2.generatedclasses.routines.P391.I2, value);
 	}
 
 	public java.lang.Integer getIo1() {

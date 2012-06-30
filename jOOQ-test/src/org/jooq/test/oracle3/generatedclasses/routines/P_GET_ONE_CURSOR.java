@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_GET_ONE_CURSOR extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1799166685;
+	private static final long serialVersionUID = -629726700;
 
 
 	/**
@@ -41,7 +41,7 @@ public class P_GET_ONE_CURSOR extends org.jooq.impl.AbstractRoutine<java.lang.Vo
 	 * Set the <code>BOOK_IDS</code> parameter to the routine
 	 */
 	public void setBOOK_IDS(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY value) {
-		setValue(BOOK_IDS, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_GET_ONE_CURSOR.BOOK_IDS, value);
 	}
 
 	public java.math.BigDecimal getTOTAL() {

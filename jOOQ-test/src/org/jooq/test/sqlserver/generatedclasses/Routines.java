@@ -249,6 +249,19 @@ public final class Routines {
 	}
 
 	/**
+	 * Call dbo.p1490
+	 *
+	 * @param value IN parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static void p1490(org.jooq.Configuration configuration, java.lang.Integer value) {
+		org.jooq.test.sqlserver.generatedclasses.routines.P1490 p = new org.jooq.test.sqlserver.generatedclasses.routines.P1490();
+		p.setValue(value);
+
+		p.execute(configuration);
+	}
+
+	/**
 	 * Call dbo.p391
 	 *
 	 * @param i1 IN parameter

@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = -1815405672;
+	private static final long serialVersionUID = 1791608477;
 
 
 	/**
@@ -38,7 +38,7 @@ public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result
 	 * Set the <code>P2</code> parameter to the routine
 	 */
 	public void setP2(java.lang.Object[] value) {
-		setValue(P2, value);
+		setValue(org.jooq.test.h2.generatedclasses.routines.FGetOneCursor.P2, value);
 	}
 
 	/**

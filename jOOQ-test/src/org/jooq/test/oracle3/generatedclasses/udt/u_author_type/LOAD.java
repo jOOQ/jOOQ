@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt.u_author_type;
  */
 public class LOAD extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -793108144;
+	private static final long serialVersionUID = 39822906;
 
 
 	/**
@@ -29,7 +29,7 @@ public class LOAD extends org.jooq.impl.AbstractRoutine<java.lang.Void> implemen
 	 * Set the <code>SELF</code> parameter to the routine
 	 */
 	public void setSELF(org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE value) {
-		setValue(SELF, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.udt.u_author_type.LOAD.SELF, value);
 	}
 
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE getSELF() {

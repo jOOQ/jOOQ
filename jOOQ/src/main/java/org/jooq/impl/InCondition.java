@@ -94,8 +94,16 @@ class InCondition<T> extends AbstractCondition {
 
                     for (int i = 0; i < list.size(); i += IN_LIMIT) {
                         if (i > 0) {
-                            context.keyword(" or ")
-                                   .formatSeparator();
+                            // [#1515] The connector depends on the IN / NOT IN
+                            // operator
+                            if (operator == InOperator.IN) {
+                                context.keyword(" or");
+                            }
+                            else {
+                                context.keyword(" and");
+                            }
+
+                            context.formatSeparator();
                         }
 
                         toSQLSubValues(context, list.subList(i, Math.min(i + IN_LIMIT, list.size())));

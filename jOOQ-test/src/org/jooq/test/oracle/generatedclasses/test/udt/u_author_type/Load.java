@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.u_author_type;
  */
 public class Load extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 126306547;
+	private static final long serialVersionUID = 50476532;
 
 
 	/**
@@ -29,7 +29,7 @@ public class Load extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>SELF</code> parameter to the routine
 	 */
 	public void setSelf(org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord value) {
-		setValue(SELF, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.Load.SELF, value);
 	}
 
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord getSelf() {

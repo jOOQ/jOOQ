@@ -8,7 +8,7 @@ package org.jooq.test.oracle2.generatedclasses.routines;
  */
 public class DateAsTimestampP_976 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -206106253;
+	private static final long serialVersionUID = 1278722807;
 
 
 	/**
@@ -35,7 +35,7 @@ public class DateAsTimestampP_976 extends org.jooq.impl.AbstractRoutine<java.lan
 	 * Set the <code>I</code> parameter to the routine
 	 */
 	public void setI(java.sql.Timestamp value) {
-		setValue(DATE_AS_TIMESTAMP_I, value);
+		setValue(org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampP_976.DATE_AS_TIMESTAMP_I, value);
 	}
 
 	public java.sql.Timestamp getO() {

@@ -49,7 +49,7 @@ import javax.sql.DataSource;
  * @author Lukas Eder
  * @see DataSourceConnection
  */
-class DataSourceStatement implements Statement {
+class DataSourceStatement extends JDBC41Statement {
 
     private final DataSourceConnection connection;
     private final Statement statement;

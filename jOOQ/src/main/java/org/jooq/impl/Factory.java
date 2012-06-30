@@ -65,6 +65,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -358,6 +359,9 @@ public class Factory implements FactoryOperations {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void setConnection(Connection connection) {
         this.connection = connection;
@@ -402,6 +406,166 @@ public class Factory implements FactoryOperations {
     @Override
     public final Object setData(String key, Object value) {
         return data.put(key, value);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Convenience methods accessing the underlying Connection
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void commit() throws DataAccessException {
+        try {
+            getConnection().commit();
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot commit transaction", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void rollback() throws DataAccessException {
+        try {
+            getConnection().rollback();
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot rollback transaction", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void rollback(Savepoint savepoint) throws DataAccessException {
+        try {
+            getConnection().rollback(savepoint);
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot rollback transaction", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Savepoint setSavepoint() throws DataAccessException {
+        try {
+            return getConnection().setSavepoint();
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot set savepoint", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Savepoint setSavepoint(String name) throws DataAccessException {
+        try {
+            return getConnection().setSavepoint(name);
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot set savepoint", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void releaseSavepoint(Savepoint savepoint) throws DataAccessException {
+        try {
+            getConnection().releaseSavepoint(savepoint);
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot release savepoint", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void setAutoCommit(boolean autoCommit) throws DataAccessException {
+        try {
+            getConnection().setAutoCommit(autoCommit);
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot set autoCommit", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final boolean getAutoCommit() throws DataAccessException {
+        try {
+            return getConnection().getAutoCommit();
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot get autoCommit", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void setHoldability(int holdability) throws DataAccessException {
+        try {
+            getConnection().setHoldability(holdability);
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot set holdability", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final int getHoldability() throws DataAccessException {
+        try {
+            return getConnection().getHoldability();
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot get holdability", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void setTransactionIsolation(int level) throws DataAccessException {
+        try {
+            getConnection().setTransactionIsolation(level);
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot set transactionIsolation", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final int getTransactionIsolation() throws DataAccessException {
+        try {
+            return getConnection().getTransactionIsolation();
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot get transactionIsolation", e);
+        }
     }
 
     // -------------------------------------------------------------------------

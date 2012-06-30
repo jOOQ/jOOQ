@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.packages.library;
  */
 public class PkgF378 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1115353395;
+	private static final long serialVersionUID = 2006168205;
 
 
 	/**
@@ -47,14 +47,14 @@ public class PkgF378 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal>
 	 * Set the <code>I</code> parameter to the routine
 	 */
 	public void setI(java.lang.Number value) {
-		setNumber(I, value);
+		setNumber(org.jooq.test.oracle.generatedclasses.test.packages.library.PkgF378.I, value);
 	}
 
 	/**
 	 * Set the <code>IO</code> parameter to the routine
 	 */
 	public void setIo(java.lang.Number value) {
-		setNumber(IO, value);
+		setNumber(org.jooq.test.oracle.generatedclasses.test.packages.library.PkgF378.IO, value);
 	}
 
 	public java.math.BigDecimal getIo() {

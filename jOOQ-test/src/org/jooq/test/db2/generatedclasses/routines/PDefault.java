@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.routines;
  */
 public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -140946464;
+	private static final long serialVersionUID = -763679678;
 
 
 	/**
@@ -59,21 +59,21 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>P_IN_NUMBER</code> parameter to the routine
 	 */
 	public void setPInNumber(java.lang.Integer value) {
-		setValue(P_IN_NUMBER, value);
+		setValue(org.jooq.test.db2.generatedclasses.routines.PDefault.P_IN_NUMBER, value);
 	}
 
 	/**
 	 * Set the <code>P_IN_VARCHAR</code> parameter to the routine
 	 */
 	public void setPInVarchar(java.lang.String value) {
-		setValue(P_IN_VARCHAR, value);
+		setValue(org.jooq.test.db2.generatedclasses.routines.PDefault.P_IN_VARCHAR, value);
 	}
 
 	/**
 	 * Set the <code>P_IN_DATE</code> parameter to the routine
 	 */
 	public void setPInDate(java.sql.Date value) {
-		setValue(P_IN_DATE, value);
+		setValue(org.jooq.test.db2.generatedclasses.routines.PDefault.P_IN_DATE, value);
 	}
 
 	public java.lang.Integer getPOutNumber() {

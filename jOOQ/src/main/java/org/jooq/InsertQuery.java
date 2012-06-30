@@ -232,6 +232,10 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * must assure transactional integrity between the two statements.</li>
      * </ul>
      *
+     * @return The returned value as specified by any of the
+     *         {@link #setReturning()} methods. This may return
+     *         <code>null</code> in case jOOQ could not retrieve any generated
+     *         keys from the JDBC driver.
      * @see #getReturnedRecords()
      */
     @Support
@@ -257,8 +261,15 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * other fields are requested, a second statement is issued. Client code
      * must assure transactional integrity between the two statements.</li>
      * </ul>
-     * <p>
-     * This currently only works well for DB2, HSQLDB, MySQL, and Postgres
+     *
+     * @return The returned values as specified by any of the
+     *         {@link #setReturning()} methods. Note:
+     *         <ul>
+     *         <li>Not all databases / JDBC drivers support returning several
+     *         values on multi-row inserts!</li><li>This may return an empty
+     *         <code>Result</code> in case jOOQ could not retrieve any generated
+     *         keys from the JDBC driver.</li>
+     *         </ul>
      */
     @Support
     Result<R> getReturnedRecords();

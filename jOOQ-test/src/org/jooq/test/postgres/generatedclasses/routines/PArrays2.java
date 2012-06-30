@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class PArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1740132702;
+	private static final long serialVersionUID = 890463434;
 
 
 	/**
@@ -36,7 +36,7 @@ public class PArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>in_array</code> parameter to the routine
 	 */
 	public void setInArray(java.lang.Long[] value) {
-		setValue(IN_ARRAY, value);
+		setValue(org.jooq.test.postgres.generatedclasses.routines.PArrays2.IN_ARRAY, value);
 	}
 
 	public java.lang.Long[] getOutArray() {

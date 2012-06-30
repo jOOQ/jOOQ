@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1070582946;
+	private static final long serialVersionUID = 1645473537;
 
 
 	/**
@@ -35,7 +35,7 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Set the <code>n</code> parameter to the routine
 	 */
 	public void setN(java.lang.Integer value) {
-		setValue(N, value);
+		setValue(org.jooq.test.postgres.generatedclasses.routines.FNumber.N, value);
 	}
 
 	/**

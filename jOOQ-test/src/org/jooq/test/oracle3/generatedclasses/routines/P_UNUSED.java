@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_UNUSED extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1445117337;
+	private static final long serialVersionUID = -474409179;
 
 
 	/**
@@ -41,14 +41,14 @@ public class P_UNUSED extends org.jooq.impl.AbstractRoutine<java.lang.Void> impl
 	 * Set the <code>IN1</code> parameter to the routine
 	 */
 	public void setIN1(java.lang.String value) {
-		setValue(IN1, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_UNUSED.IN1, value);
 	}
 
 	/**
 	 * Set the <code>OUT2</code> parameter to the routine
 	 */
 	public void setOUT2(java.lang.Number value) {
-		setNumber(OUT2, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.routines.P_UNUSED.OUT2, value);
 	}
 
 	public java.math.BigDecimal getOUT1() {

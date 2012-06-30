@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.routines;
  */
 public class InventoryHeldByCustomer extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1873033922;
+	private static final long serialVersionUID = 1505012236;
 
 
 	/**
@@ -35,7 +35,7 @@ public class InventoryHeldByCustomer extends org.jooq.impl.AbstractRoutine<java.
 	 * Set the <code>p_inventory_id</code> parameter to the routine
 	 */
 	public void setPInventoryId(java.lang.Integer value) {
-		setValue(P_INVENTORY_ID, value);
+		setValue(org.jooq.examples.mysql.sakila.routines.InventoryHeldByCustomer.P_INVENTORY_ID, value);
 	}
 
 	/**

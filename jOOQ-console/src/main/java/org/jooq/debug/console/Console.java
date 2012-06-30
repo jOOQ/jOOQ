@@ -75,6 +75,7 @@ import javax.swing.UIManager;
 import org.jooq.debug.Debugger;
 import org.jooq.debug.DebuggerRegistry;
 import org.jooq.debug.LocalDebugger;
+import org.jooq.debug.console.misc.JSedRegExBuilder;
 import org.jooq.debug.console.remote.ClientDebugger;
 
 /**
@@ -117,6 +118,21 @@ public class Console extends JFrame {
     	JMenuBar menuBar = new JMenuBar();
     	JMenu fileMenu = new JMenu("File");
     	fileMenu.setMnemonic('F');
+    	JMenuItem regExpEditorMenuItem = new JMenuItem("Reg. Exp. Editor");
+    	regExpEditorMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialog dialog = new JDialog(Console.this, "Reg. Exp Editor");
+                JPanel contentPane = new JPanel(new BorderLayout());
+                contentPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+                contentPane.add(new JSedRegExBuilder("/foo/bar/gi", "axFooax\nbxfoobx"), BorderLayout.CENTER);
+                dialog.add(contentPane, BorderLayout.CENTER);
+                dialog.setSize(600, 400);
+                dialog.setVisible(true);
+                dialog.setLocationRelativeTo(Console.this);
+            }
+        });
+    	fileMenu.add(regExpEditorMenuItem);
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.setMnemonic('x');
         exitMenuItem.addActionListener(new ActionListener() {

@@ -8,13 +8,13 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
  */
 public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -632144942;
+	private static final long serialVersionUID = 769908690;
 
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> VALUE = createParameter("VALUE", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> VALUE = createParameter("value", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
 	 * Create a new routine call instance
@@ -26,7 +26,7 @@ public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	}
 
 	/**
-	 * Set the <code>VALUE</code> parameter to the routine
+	 * Set the <code>value</code> parameter to the routine
 	 */
 	public void setValue(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.routines.P1490.VALUE, value);

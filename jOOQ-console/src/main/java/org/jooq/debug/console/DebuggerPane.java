@@ -112,16 +112,18 @@ public class DebuggerPane extends JPanel {
         setOpaque(false);
         this.debugger = debugger;
         JPanel westPane = new JPanel(new BorderLayout());
+        westPane.setBorder(BorderFactory.createTitledBorder("Breakpoints"));
         westPane.setOpaque(false);
         JPanel breakpointAddPane = new JPanel(new GridBagLayout());
         breakpointAddPane.setOpaque(false);
         breakpointAddPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 2, 0));
+        breakpointAddPane.add(new JLabel("Name "), new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         final JTextField addBreakpointTextField = new JTextField(7);
-        breakpointAddPane.add(addBreakpointTextField, new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        breakpointAddPane.add(addBreakpointTextField, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 0, 0), 0, 0));
         final JButton addBreakpointButton = new JButton("Add");
         addBreakpointButton.setOpaque(false);
         addBreakpointButton.setEnabled(false);
-        breakpointAddPane.add(addBreakpointButton, new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 0, 0), 0, 0));
+        breakpointAddPane.add(addBreakpointButton, new GridBagConstraints(2, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 0, 0), 0, 0));
         addBreakpointTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void removeUpdate(DocumentEvent e) {
@@ -511,9 +513,19 @@ public class DebuggerPane extends JPanel {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode)paths[0].getLastPathComponent();
             if(node instanceof CheckBoxNode) {
                 Object o = node.getUserObject();
-                eastPane.add(new BreakpointEditor(this, (Breakpoint)o));
+                JPanel contentPane = new JPanel(new BorderLayout());
+                contentPane.setBorder(BorderFactory.createTitledBorder("Breakpoint configuration"));
+                contentPane.setOpaque(false);
+                BreakpointEditor c = new BreakpointEditor(this, (Breakpoint)o);
+                contentPane.add(c);
+                eastPane.add(contentPane);
             } else if(node instanceof BreakpointHitNode) {
-                eastPane.add(new BreakpointHitEditor(debugger, this, (BreakpointHitNode)node));
+                JPanel contentPane = new JPanel(new BorderLayout());
+                contentPane.setBorder(BorderFactory.createTitledBorder("Breakpoint hit details"));
+                contentPane.setOpaque(false);
+                BreakpointHitEditor c = new BreakpointHitEditor(debugger, this, (BreakpointHitNode)node);
+                contentPane.add(c);
+                eastPane.add(contentPane);
             }
         }
         eastPane.revalidate();

@@ -439,13 +439,13 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</java>
 								by providing a very simple API. Some sample methods are:
 							</p>
 <java>// Check whether there are any more records to be fetched
-boolean hasNext() throws SQLException;
+boolean hasNext() throws DataAccessException;
 
 // Fetch the next record from the underlying JDBC ResultSet
-R fetchOne() throws SQLException;
+R fetchOne() throws DataAccessException;
 
 // Close the underlying JDBC ResultSet. Don't forget to call this, before disposing the Cursor.
-void close() throws SQLException;</java>
+void close() throws DataAccessException;</java>
 
 							<h3>The Record</h3>
 							<p>
@@ -1248,7 +1248,7 @@ JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
 							<p>This is how jOOQ implements such a condition: </p>
 
 <java><![CDATA[@Override
-public final void bind(BindContext context) throws SQLException {
+public final void bind(BindContext context) throws DataAccessException {
     // The CompareCondition itself does not bind any variables.
     // But the two fields involved in the condition might do so...
     context.bind(field1).bind(field2);
@@ -5067,7 +5067,7 @@ List<LoaderError> errors = loader.errors();
 LoaderError error = errors.get(0);
 
 // The exception that caused the error
-SQLException exception = error.exception();
+DataAccessException exception = error.exception();
 
 // The row that caused the error
 int rowIndex = error.rowIndex();

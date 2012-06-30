@@ -48,6 +48,7 @@ public class BreakpointHit implements Serializable {
         STEP_THROUGH,
         RUN_OVER,
         RUN,
+        FAIL,
     }
 
     private boolean isBeforeExecution;

@@ -1174,7 +1174,7 @@ public class DefaultGenerator extends AbstractGenerator {
 
         out.println("\t */");
 
-        out.print("\tpublic static ");
+        out.print("\tpublic static final ");
         out.print(strategy.getFullJavaClassName(table));
         out.print(" ");
         out.print(strategy.getJavaIdentifier(table));

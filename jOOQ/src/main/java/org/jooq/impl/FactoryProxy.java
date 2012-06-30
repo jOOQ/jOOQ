@@ -39,6 +39,7 @@ import java.lang.reflect.Constructor;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Savepoint;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -580,7 +581,67 @@ public final class FactoryProxy implements FactoryOperations {
         return getDelegate().executeDeleteOne(table, condition);
     }
 
-    private Factory getDelegate() {
+    @Override
+    public final int getTransactionIsolation() throws DataAccessException {
+        return getDelegate().getTransactionIsolation();
+    }
+
+    @Override
+    public final void setTransactionIsolation(int level) throws DataAccessException {
+        getDelegate().setTransactionIsolation(level);
+    }
+
+    @Override
+    public final int getHoldability() throws DataAccessException {
+        return getDelegate().getHoldability();
+    }
+
+    @Override
+    public final void setHoldability(int holdability) throws DataAccessException {
+        getDelegate().setHoldability(holdability);
+    }
+
+    @Override
+    public final boolean getAutoCommit() throws DataAccessException {
+        return getDelegate().getAutoCommit();
+    }
+
+    @Override
+    public final void setAutoCommit(boolean autoCommit) throws DataAccessException {
+        getDelegate().setAutoCommit(autoCommit);
+    }
+
+    @Override
+    public final void releaseSavepoint(Savepoint savepoint) throws DataAccessException {
+        getDelegate().releaseSavepoint(savepoint);
+    }
+
+    @Override
+    public final Savepoint setSavepoint(String name) throws DataAccessException {
+        return getDelegate().setSavepoint(name);
+    }
+
+    @Override
+    public final Savepoint setSavepoint() throws DataAccessException {
+        return getDelegate().setSavepoint();
+    }
+
+    @Override
+    public final void rollback(Savepoint savepoint) throws DataAccessException {
+        getDelegate().rollback(savepoint);
+    }
+
+    @Override
+    public final void rollback() throws DataAccessException {
+        getDelegate().rollback();
+    }
+
+    @Override
+    public final void commit() throws DataAccessException {
+        getDelegate().commit();
+    }
+
+    private FactoryOperations getDelegate() {
         if (dataSource == null || dialect == null) {
             throw new DataAccessException("Both dataSource and dialect properties should be set");
         }

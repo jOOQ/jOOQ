@@ -53,6 +53,7 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
@@ -1608,4 +1609,68 @@ public interface FactoryOperations extends Configuration {
      */
     @Support
     ResultQuery<Record> resultQuery(String sql, QueryPart... parts);
+
+    // -------------------------------------------------------------------------
+    // XXX Convenience methods accessing the underlying Connection
+    // -------------------------------------------------------------------------
+
+    /**
+     * Convenience method to access {@link Connection#getTransactionIsolation()}
+     */
+    int getTransactionIsolation() throws DataAccessException;
+
+    /**
+     * Convenience method to access {@link Connection#setTransactionIsolation(int)}
+     */
+    void setTransactionIsolation(int level) throws DataAccessException;
+
+    /**
+     * Convenience method to access {@link Connection#getHoldability()}
+     */
+    int getHoldability() throws DataAccessException;
+
+    /**
+     * Convenience method to access {@link Connection#setHoldability(int)}
+     */
+    void setHoldability(int holdability) throws DataAccessException;
+
+    /**
+     * Convenience method to access {@link Connection#getAutoCommit()}
+     */
+    boolean getAutoCommit() throws DataAccessException;
+
+    /**
+     * Convenience method to access {@link Connection#setAutoCommit(boolean)}
+     */
+    void setAutoCommit(boolean autoCommit) throws DataAccessException;
+
+    /**
+     * Convenience method to access {@link Connection#releaseSavepoint(Savepoint)}
+     */
+    void releaseSavepoint(Savepoint savepoint) throws DataAccessException;
+
+    /**
+     * Convenience method to access {@link Connection#setSavepoint(String)}
+     */
+    Savepoint setSavepoint(String name) throws DataAccessException;
+
+    /**
+     * Convenience method to access {@link Connection#setSavepoint()}
+     */
+    Savepoint setSavepoint() throws DataAccessException;
+
+    /**
+     * Convenience method to access {@link Connection#rollback(Savepoint)}
+     */
+    void rollback(Savepoint savepoint) throws DataAccessException;
+
+    /**
+     * Convenience method to access {@link Connection#rollback()}
+     */
+    void rollback() throws DataAccessException;
+
+    /**
+     * Convenience method to access {@link Connection#commit()}
+     */
+    void commit() throws DataAccessException;
 }

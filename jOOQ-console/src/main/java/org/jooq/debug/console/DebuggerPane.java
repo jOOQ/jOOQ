@@ -86,6 +86,7 @@ import org.jooq.debug.console.misc.CheckBoxNode;
 import org.jooq.debug.console.misc.CheckBoxNodeEditor;
 import org.jooq.debug.console.misc.CheckBoxNodeRenderer;
 import org.jooq.debug.console.misc.InvisibleSplitPane;
+import org.jooq.debug.console.misc.TreeDataTip;
 
 /**
  * @author Christopher Deckers
@@ -205,6 +206,7 @@ public class DebuggerPane extends JPanel {
         breakpointTree.setCellEditor(new CheckBoxNodeEditor(breakpointTree));
         breakpointTree.setCellRenderer(new CheckBoxNodeRenderer(breakpointTree));
         breakpointTree.setEditable(true);
+        TreeDataTip.activate(breakpointTree);
         JScrollPane breakpointTreeScrollPane = new JScrollPane(breakpointTree);
         breakpointTreeScrollPane.setPreferredSize(new Dimension(200, 200));
         westPane.add(breakpointTreeScrollPane, BorderLayout.CENTER);

@@ -66,7 +66,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -153,15 +155,17 @@ public class Console extends JFrame {
                 final JDialog aboutDialog = new JDialog(Console.this, "About jOOQ Console", ModalityType.APPLICATION_MODAL);
                 aboutDialog.setResizable(false);
                 Container contentPane = aboutDialog.getContentPane();
-                JPanel centerPane = new JPanel(new GridBagLayout());
-                centerPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-                centerPane.add(new JLabel("jOOQ library: "), new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-                centerPane.add(new JLabel("Lukas Eder"), new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-                centerPane.add(new JLabel("jOOQ Console: "), new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
-                centerPane.add(new JLabel("Christopher Deckers"), new GridBagConstraints(1, 1, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
-                centerPane.add(new JLabel("License: "), new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
-                centerPane.add(new JLabel("Apache License, Version 2.0"), new GridBagConstraints(1, 2, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
-                centerPane.add(new JLabel("Web site: "), new GridBagConstraints(0, 3, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                JTabbedPane tabbedPane = new JTabbedPane();
+                JPanel aboutPane = new JPanel(new GridBagLayout());
+                aboutPane.setOpaque(false);
+                aboutPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+                aboutPane.add(new JLabel("jOOQ library: "), new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+                aboutPane.add(new JLabel("Lukas Eder"), new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+                aboutPane.add(new JLabel("jOOQ Console: "), new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                aboutPane.add(new JLabel("Christopher Deckers"), new GridBagConstraints(1, 1, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                aboutPane.add(new JLabel("License: "), new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                aboutPane.add(new JLabel("Apache License, Version 2.0"), new GridBagConstraints(1, 2, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                aboutPane.add(new JLabel("Web site: "), new GridBagConstraints(0, 3, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
                 JLabel siteLabel = new JLabel("http://www.jooq.org");
                 siteLabel.setForeground(Color.BLUE);
                 Map<TextAttribute, Object> attributeMap = new HashMap<TextAttribute, Object>();
@@ -179,8 +183,30 @@ public class Console extends JFrame {
                         }
                     }
                 });
-                centerPane.add(siteLabel, new GridBagConstraints(1, 3, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
-                contentPane.add(centerPane, BorderLayout.CENTER);
+                aboutPane.add(siteLabel, new GridBagConstraints(1, 3, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                tabbedPane.addTab("About", aboutPane);
+                JPanel disclaimerPane = new JPanel(new BorderLayout());
+                disclaimerPane.setBorder(BorderFactory.createEmptyBorder(2, 5, 5, 5));
+                disclaimerPane.setOpaque(false);
+                JTextArea textArea = new JTextArea(
+                        "This software is provided by the copyright holders and contributors \"as is\"" +
+                        " and any express or implied warranties, including, but not limited to, the" +
+                        " implied warranties of merchantability and fitness for a particular purpose" +
+                        " are disclaimed. In no event shall the copyright owner or contributors be" +
+                        " liable for any direct, indirect, incidental, special, exemplary, or" +
+                        " consequential damages (including, but not limited to, procurement of" +
+                        " substitute goods or services; loss of use, data, or profits; or business" +
+                        " interruption) however caused and on any theory of liability, whether in" +
+                        " contract, strict liability, or tort (including negligence or otherwise)" +
+                        " arising in any way out of the use of this software, even if advised of the" +
+                        " possibility of such damage."
+                );
+                textArea.setLineWrap(true);
+                textArea.setWrapStyleWord(true);
+                textArea.setEditable(false);
+                disclaimerPane.add(new JScrollPane(textArea));
+                tabbedPane.addTab("Disclaimer", disclaimerPane);
+                contentPane.add(tabbedPane, BorderLayout.CENTER);
                 JPanel southPane = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 JButton okButton = new JButton("OK");
                 okButton.addActionListener(new ActionListener() {
@@ -191,7 +217,7 @@ public class Console extends JFrame {
                 });
                 southPane.add(okButton);
                 contentPane.add(southPane, BorderLayout.SOUTH);
-                aboutDialog.pack();
+                aboutDialog.setSize(500, 400);
                 aboutDialog.setLocationRelativeTo(Console.this);
                 aboutDialog.setVisible(true);
             }

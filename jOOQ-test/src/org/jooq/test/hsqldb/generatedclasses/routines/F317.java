@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
  */
 public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 281472065;
+	private static final long serialVersionUID = 1894963265;
 
 
 	/**
@@ -53,7 +53,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Set the <code>P1</code> parameter to the routine
 	 */
 	public void setP1(java.lang.Integer value) {
-		setValue(P1, value);
+		setValue(org.jooq.test.hsqldb.generatedclasses.routines.F317.P1, value);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Set the <code>P2</code> parameter to the routine
 	 */
 	public void setP2(java.lang.Integer value) {
-		setValue(P2, value);
+		setValue(org.jooq.test.hsqldb.generatedclasses.routines.F317.P2, value);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Set the <code>P3</code> parameter to the routine
 	 */
 	public void setP3(java.lang.Integer value) {
-		setValue(P3, value);
+		setValue(org.jooq.test.hsqldb.generatedclasses.routines.F317.P3, value);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Set the <code>P4</code> parameter to the routine
 	 */
 	public void setP4(java.lang.Integer value) {
-		setValue(P4, value);
+		setValue(org.jooq.test.hsqldb.generatedclasses.routines.F317.P4, value);
 	}
 
 	/**

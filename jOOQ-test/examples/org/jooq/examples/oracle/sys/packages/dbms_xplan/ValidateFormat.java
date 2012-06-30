@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class ValidateFormat extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 1376721367;
+	private static final long serialVersionUID = 1579883703;
 
 
 	/**
@@ -53,14 +53,14 @@ public class ValidateFormat extends org.jooq.impl.AbstractRoutine<java.lang.Obje
 	 * Set the <code>HASPLANSTATS</code> parameter to the routine
 	 */
 	public void setHasplanstats(java.lang.Object value) {
-		setValue(HASPLANSTATS, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.ValidateFormat.HASPLANSTATS, value);
 	}
 
 	/**
 	 * Set the <code>FORMAT</code> parameter to the routine
 	 */
 	public void setFormat(java.lang.String value) {
-		setValue(FORMAT, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.ValidateFormat.FORMAT, value);
 	}
 
 	public java.lang.Integer getFormatFlags() {

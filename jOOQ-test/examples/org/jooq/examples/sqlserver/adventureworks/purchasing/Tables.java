@@ -13,42 +13,42 @@ public final class Tables {
 	/**
 	 * The table Purchasing.ProductVendor
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor ProductVendor = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor;
+	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor ProductVendor = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor;
 
 	/**
 	 * The table Purchasing.PurchaseOrderDetail
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail PurchaseOrderDetail = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail;
+	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail PurchaseOrderDetail = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail;
 
 	/**
 	 * The table Purchasing.PurchaseOrderHeader
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader PurchaseOrderHeader = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader;
+	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader PurchaseOrderHeader = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader;
 
 	/**
 	 * The table Purchasing.ShipMethod
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ShipMethod ShipMethod = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ShipMethod.ShipMethod;
+	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ShipMethod ShipMethod = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ShipMethod.ShipMethod;
 
 	/**
 	 * The table Purchasing.Vendor
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor Vendor = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor;
+	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor Vendor = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor;
 
 	/**
 	 * The table Purchasing.VendorAddress
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorAddress VendorAddress = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorAddress.VendorAddress;
+	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorAddress VendorAddress = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorAddress.VendorAddress;
 
 	/**
 	 * The table Purchasing.VendorContact
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact VendorContact = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact;
+	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact VendorContact = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact;
 
 	/**
 	 * The table Purchasing.vVendor
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor vVendor = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor;
+	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor vVendor = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor;
 
 	/**
 	 * No instances

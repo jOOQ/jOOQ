@@ -64,7 +64,7 @@ import org.jooq.conf.StatementType;
  *
  * @author Lukas Eder
  */
-class ConnectionProxy implements Connection {
+class ConnectionProxy extends JDBC41Connection {
 
     private final Connection delegate;
     private final Settings settings;

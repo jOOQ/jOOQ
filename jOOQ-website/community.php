@@ -199,7 +199,7 @@ Follow jOOQ on any of these channels to get the latest news:
 	<li>On Twitter: <a href="https://twitter.com/#!/JavaOOQ" title="jOOQ on Twitter">https://twitter.com/#!/JavaOOQ</a>
 	<li>On Wordpress: <a href="http://blog.jooq.org" title="Lukas Eder's blog about Java, SQL and jOOQ">http://blog.jooq.org</a></li>
     <li>On SourceForge: <a href="https://sourceforge.net/projects/jooq/" title="jOOQ download and hosting on source forge">https://sourceforge.net/projects/jooq/</a></li>
-    <li>On GitHub: <a href="https://github.com/lukaseder/jOOQ" title="fork jOOQ on GitHub">https://github.com/lukaseder/jOOQ</a></li>
+    <li>On GitHub: <a href="https://github.com/jOOQ/jOOQ" title="fork jOOQ on GitHub">https://github.com/jOOQ/jOOQ</a></li>
     <li>On ohloh: <a href="https://www.ohloh.net/p/jooq" title="see some statistics about jOOQ on ohloh">https://www.ohloh.net/p/jooq</a></li>
     <li>On freecode: <a href="http://freecode.com/projects/jooq" title="subscribe to some jOOQ announcements on freshmeat">http://freecode.com/projects/jooq</a></li>
 </ul>

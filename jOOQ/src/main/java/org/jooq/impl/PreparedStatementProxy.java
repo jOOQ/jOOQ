@@ -65,7 +65,7 @@ import java.util.Calendar;
  *
  * @author Lukas Eder
  */
-class PreparedStatementProxy implements PreparedStatement {
+class PreparedStatementProxy extends JDBC41Statement implements PreparedStatement {
 
     private final Connection connection;
     private final Statement  delegate;
@@ -140,7 +140,8 @@ class PreparedStatementProxy implements PreparedStatement {
         SQL,
 
         /**
-         * Corresponds to {@link Connection#prepareStatement(String, int, int)         */
+         * Corresponds to {@link Connection#prepareStatement(String, int, int)
+         */
         SQL_RST_RSC,
 
         /**

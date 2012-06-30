@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.routines;
  */
 public class uspUpdateEmployeePersonalInfo extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1260130444;
+	private static final long serialVersionUID = 1504404345;
 
 
 	/**
@@ -53,34 +53,34 @@ public class uspUpdateEmployeePersonalInfo extends org.jooq.impl.AbstractRoutine
 	 * Set the <code>EmployeeID</code> parameter to the routine
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
-		setValue(EmployeeID, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeePersonalInfo.EmployeeID, value);
 	}
 
 	/**
 	 * Set the <code>NationalIDNumber</code> parameter to the routine
 	 */
 	public void setNationalIDNumber(java.lang.String value) {
-		setValue(NationalIDNumber, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeePersonalInfo.NationalIDNumber, value);
 	}
 
 	/**
 	 * Set the <code>BirthDate</code> parameter to the routine
 	 */
 	public void setBirthDate(java.sql.Timestamp value) {
-		setValue(BirthDate, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeePersonalInfo.BirthDate, value);
 	}
 
 	/**
 	 * Set the <code>MaritalStatus</code> parameter to the routine
 	 */
 	public void setMaritalStatus(java.lang.String value) {
-		setValue(MaritalStatus, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeePersonalInfo.MaritalStatus, value);
 	}
 
 	/**
 	 * Set the <code>Gender</code> parameter to the routine
 	 */
 	public void setGender(java.lang.String value) {
-		setValue(Gender, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeePersonalInfo.Gender, value);
 	}
 }

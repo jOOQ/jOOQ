@@ -49,7 +49,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Factory.field;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -373,36 +372,43 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             // escape syntax
             else if (type == Date.class) {
 
-                // Sybase ASE needs explicit casting to DATE
-                if (dialect == ASE) {
-                    context.sql(field("{d '" + val + "'}").cast(Date.class));
-                }
+//                // Sybase ASE needs explicit casting to DATE
+//                if (dialect == ASE) {
+//                    context.sql(field("{d '" + val + "'}").cast(Date.class));
+//                }
 
                 // The SQLite JDBC driver does not implement the escape syntax
-                else if (dialect == SQLITE) {
+                // [#1253] SQL Server and Sybase do not implement date literals
+                if (asList(SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
                     context.sql("'").sql(val.toString()).sql("'");
                 }
 
-                // These dialects implement SQL standard date literals
-                else if (dialect == CUBRID) {
-                    context.keyword("date '").sql(val.toString()).sql("'");
+                // [#1253] Derby doesn't support the standard literal
+                else if (dialect == DERBY) {
+                    context.keyword("date('").sql(val.toString()).sql("')");
                 }
 
-                // Fallback: Apply JDBC escape syntax
+                // Most dialects implement SQL standard date literals
                 else {
-                    context.keyword("{d '").sql(val.toString()).sql("'}");
+                    context.keyword("date '").sql(val.toString()).sql("'");
                 }
             }
             else if (type == Timestamp.class) {
 
-                // Sybase ASE needs explicit casting to DATETIME
-                if (dialect == ASE) {
-                    context.sql(field("{ts '" + val + "'}").cast(Timestamp.class));
-                }
+//                // Sybase ASE needs explicit casting to DATETIME
+//                if (dialect == ASE) {
+//                    context.sql(field("{ts '" + val + "'}").cast(Timestamp.class));
+//                }
 
                 // The SQLite JDBC driver does not implement the escape syntax
-                else if (dialect == SQLITE) {
+                // [#1253] SQL Server and Sybase do not implement timestamp literals
+                if (asList(SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
                     context.sql("'").sql(val.toString()).sql("'");
+                }
+
+                // [#1253] Derby doesn't support the standard literal
+                else if (dialect == DERBY) {
+                    context.keyword("timestamp('").sql(val.toString()).sql("')");
                 }
 
                 // CUBRID timestamps have no fractional seconds
@@ -410,26 +416,32 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                     context.keyword("datetime '").sql(val.toString()).sql("'");
                 }
 
-                // Fallback: Apply JDBC escape syntax
+                // Most dialects implement SQL standard timestamp literals
                 else {
-                    context.keyword("{ts '").sql(val.toString()).sql("'}");
+                    context.keyword("timestamp '").sql(val.toString()).sql("'");
                 }
             }
             else if (type == Time.class) {
 
                 // The SQLite JDBC driver does not implement the escape syntax
-                if (dialect == SQLITE) {
+                // [#1253] SQL Server and Sybase do not implement time literals
+                if (asList(SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
                     context.sql("'").sql(val.toString()).sql("'");
                 }
 
-                // CUBRID timestamps have no fractional seconds
-                else if (dialect == CUBRID) {
-                    context.keyword("time '").sql(val.toString()).sql("'");
+                // [#1253] Derby doesn't support the standard literal
+                else if (dialect == DERBY) {
+                    context.keyword("time('").sql(val.toString()).sql("')");
                 }
 
-                // Fallback: Apply JDBC escape syntax
+                // [#1253] Oracle doesn't know time literals
+                else if (dialect == ORACLE) {
+                    context.keyword("timestamp '1970-01-01 ").sql(val.toString()).sql("'");
+                }
+
+                // Most dialects implement SQL standard time literals
                 else {
-                    context.keyword("{t '").sql(val.toString()).sql("'}");
+                    context.keyword("time '").sql(val.toString()).sql("'");
                 }
             }
             else if (type.isArray()) {

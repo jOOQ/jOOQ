@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class PGetOneCursor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -472046541;
+	private static final long serialVersionUID = -1497010977;
 
 
 	/**
@@ -41,7 +41,7 @@ public class PGetOneCursor extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Set the <code>book_ids</code> parameter to the routine
 	 */
 	public void setBookIds(java.lang.Integer[] value) {
-		setValue(BOOK_IDS, value);
+		setValue(org.jooq.test.postgres.generatedclasses.routines.PGetOneCursor.BOOK_IDS, value);
 	}
 
 	public java.lang.Integer getTotal() {

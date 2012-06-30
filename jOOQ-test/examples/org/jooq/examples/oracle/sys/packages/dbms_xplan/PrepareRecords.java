@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class PrepareRecords extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 1327322139;
+	private static final long serialVersionUID = -1341951237;
 
 
 	/**
@@ -41,7 +41,7 @@ public class PrepareRecords extends org.jooq.impl.AbstractRoutine<org.jooq.examp
 	 * Set the <code>PLAN_CUR</code> parameter to the routine
 	 */
 	public void setPlanCur(org.jooq.Result<org.jooq.Record> value) {
-		setValue(PLAN_CUR, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.PrepareRecords.PLAN_CUR, value);
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class PrepareRecords extends org.jooq.impl.AbstractRoutine<org.jooq.examp
 	 * Set the <code>I_FORMAT_FLAGS</code> parameter to the routine
 	 */
 	public void setIFormatFlags(java.lang.Integer value) {
-		setValue(I_FORMAT_FLAGS, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.PrepareRecords.I_FORMAT_FLAGS, value);
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PTables3 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1745891520;
+	private static final long serialVersionUID = -796572187;
 
 
 	/**
@@ -35,7 +35,7 @@ public class PTables3 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>IN_TABLE</code> parameter to the routine
 	 */
 	public void setInTable(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringTableRecord value) {
-		setValue(IN_TABLE, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.routines.PTables3.IN_TABLE, value);
 	}
 
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UStringTableRecord getOutTable() {

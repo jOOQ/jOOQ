@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class uspGetBillOfMaterials extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 2139682679;
+	private static final long serialVersionUID = -1204798185;
 
 
 	/**
@@ -35,13 +35,13 @@ public class uspGetBillOfMaterials extends org.jooq.impl.AbstractRoutine<java.la
 	 * Set the <code>StartProductID</code> parameter to the routine
 	 */
 	public void setStartProductID(java.lang.Integer value) {
-		setValue(StartProductID, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetBillOfMaterials.StartProductID, value);
 	}
 
 	/**
 	 * Set the <code>CheckDate</code> parameter to the routine
 	 */
 	public void setCheckDate(java.sql.Timestamp value) {
-		setValue(CheckDate, value);
+		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetBillOfMaterials.CheckDate, value);
 	}
 }

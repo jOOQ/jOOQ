@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1261265625;
+	private static final long serialVersionUID = -1271782595;
 
 
 	/**
@@ -35,7 +35,7 @@ public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integ
 	 * Set the <code>P2</code> parameter to the routine
 	 */
 	public void setP2(java.lang.String value) {
-		setValue(P2, value);
+		setValue(org.jooq.test.h2.generatedclasses.routines.FAuthorExists.P2, value);
 	}
 
 	/**

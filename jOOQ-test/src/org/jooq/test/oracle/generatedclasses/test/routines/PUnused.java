@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1131112328;
+	private static final long serialVersionUID = 474125656;
 
 
 	/**
@@ -41,14 +41,14 @@ public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>IN1</code> parameter to the routine
 	 */
 	public void setIn1(java.lang.String value) {
-		setValue(IN1, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.routines.PUnused.IN1, value);
 	}
 
 	/**
 	 * Set the <code>OUT2</code> parameter to the routine
 	 */
 	public void setOut2(java.lang.Number value) {
-		setNumber(OUT2, value);
+		setNumber(org.jooq.test.oracle.generatedclasses.test.routines.PUnused.OUT2, value);
 	}
 
 	public java.math.BigDecimal getOut1() {

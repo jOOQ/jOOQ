@@ -791,6 +791,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
     @Test
     public void testConversion() throws Exception {
+
+        // Converting NULL
+        // ---------------
         assertEquals(null, SQLDataType.TINYINT.convert((Object) null));
         assertEquals(null, SQLDataType.TINYINTUNSIGNED.convert((Object) null));
         assertEquals(null, SQLDataType.SMALLINT.convert((Object) null));
@@ -809,6 +812,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(null, SQLDataType.TIME.convert((Object) null));
         assertEquals(null, SQLDataType.TIMESTAMP.convert((Object) null));
 
+        // Converting NULLs
+        // ----------------
         List<Object> list = asList(null, null, null);
         assertEquals(list, asList(SQLDataType.TINYINT.convert(null, null, null)));
         assertEquals(list, asList(SQLDataType.TINYINTUNSIGNED.convert(null, null, null)));
@@ -828,6 +833,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(list, asList(SQLDataType.TIME.convert(null, null, null)));
         assertEquals(list, asList(SQLDataType.TIMESTAMP.convert(null, null, null)));
 
+        // Converting char
+        // ---------------
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert('1'));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert('1'));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert('1'));
@@ -843,6 +850,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Boolean.TRUE, SQLDataType.BOOLEAN.convert('1'));
         assertEquals("1", SQLDataType.VARCHAR.convert('1'));
 
+        // Converting String
+        // -----------------
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert("1"));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert("1"));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert("1"));
@@ -873,6 +882,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Boolean.TRUE, SQLDataType.BOOLEAN.convert("  1"));
         assertEquals("  1", SQLDataType.VARCHAR.convert("  1"));
 
+        // Converting "any"
+        // ----------------
         assertEquals(
             asList(Byte.valueOf("1"), Byte.valueOf("2"), Byte.valueOf("3")),
             asList(SQLDataType.TINYINT.convert('1', "2", 3)));
@@ -913,6 +924,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             asList("1", "2", "3"),
             asList(SQLDataType.VARCHAR.convert('1', "2", 3)));
 
+        // Converting byte
+        // ---------------
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert((byte) 1));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert((byte) 1));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert((byte) 1));
@@ -928,6 +941,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Boolean.TRUE, SQLDataType.BOOLEAN.convert((byte) 1));
         assertEquals("1", SQLDataType.VARCHAR.convert((byte) 1));
 
+        // Converting short
+        // ----------------
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert((short) 1));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert((short) 1));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert((short) 1));
@@ -943,6 +958,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Boolean.TRUE, SQLDataType.BOOLEAN.convert((short) 1));
         assertEquals("1", SQLDataType.VARCHAR.convert((short) 1));
 
+        // Converting int
+        // --------------
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert(1));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert(1));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert(1));
@@ -958,6 +975,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Boolean.TRUE, SQLDataType.BOOLEAN.convert(1));
         assertEquals("1", SQLDataType.VARCHAR.convert(1));
 
+        // Converting long
+        // ---------------
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert((long) 1));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert((long) 1));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert((long) 1));
@@ -973,6 +992,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Boolean.TRUE, SQLDataType.BOOLEAN.convert((long) 1));
         assertEquals("1", SQLDataType.VARCHAR.convert((long) 1));
 
+        // Converting float
+        // ----------------
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert(1.1f));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert(1.1f));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert(1.1f));
@@ -988,6 +1009,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(null, SQLDataType.BOOLEAN.convert(1.1f));
         assertEquals("1.1", SQLDataType.VARCHAR.convert(1.1f));
 
+        // Converting double
+        // -----------------
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert(1.1));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert(1.1));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert(1.1));
@@ -1003,6 +1026,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(null, SQLDataType.BOOLEAN.convert(1.1));
         assertEquals("1.1", SQLDataType.VARCHAR.convert(1.1));
 
+        // Converting BigInteger
+        // ---------------------
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert(new BigInteger("1")));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert(new BigInteger("1")));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert(new BigInteger("1")));
@@ -1018,6 +1043,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Boolean.TRUE, SQLDataType.BOOLEAN.convert(new BigInteger("1")));
         assertEquals("1", SQLDataType.VARCHAR.convert(new BigInteger("1")));
 
+        // Converting BigDecimal
+        // ---------------------
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert(new BigDecimal("1.1")));
         assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert(new BigDecimal("1.1")));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert(new BigDecimal("1.1")));
@@ -1033,6 +1060,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(null, SQLDataType.BOOLEAN.convert(new BigDecimal("1.1")));
         assertEquals("1.1", SQLDataType.VARCHAR.convert(new BigDecimal("1.1")));
 
+        // Date time conversions
+        // ---------------------
         assertEquals(new Date(1), SQLDataType.DATE.convert(new Date(1)));
         assertEquals(new Time(1), SQLDataType.TIME.convert(new Date(1)));
         assertEquals(new Timestamp(1), SQLDataType.TIMESTAMP.convert(new Date(1)));
@@ -1049,7 +1078,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(new Time(1), SQLDataType.TIME.convert(1L));
         assertEquals(new Timestamp(1), SQLDataType.TIMESTAMP.convert(1L));
 
+        // [#1501] String parsing conversions for date time data types
+        // -----------------------------------------------------------
+
+        // Use toString() to avoid timezone mess
+        assertEquals("1970-01-01", SQLDataType.DATE.convert("1970-01-01").toString());
+        assertEquals("00:00:00", SQLDataType.TIME.convert("00:00:00").toString());
+        assertEquals("1970-01-01 00:00:00.0", SQLDataType.TIMESTAMP.convert("1970-01-01 00:00:00").toString());
+
         // [#936] Primitive type conversion
+        // --------------------------------
         A author1 = create().newRecord(TAuthor());
         assertEquals(Byte.valueOf("0"), author1.getValue(TAuthor_ID(), byte.class));
         assertEquals(Short.valueOf("0"), author1.getValue(TAuthor_ID(), short.class));

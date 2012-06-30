@@ -55,7 +55,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                  generateJPAAnnotations        = false;
     boolean                  generateValidationAnnotations = false;
 
-    GeneratorStrategyWrapper strategy;
+    protected GeneratorStrategyWrapper strategy;
 
     @Override
     public void setStrategy(GeneratorStrategy strategy) {

@@ -76,7 +76,16 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
      * <p>
      * This currently only works well for DB2, HSQLDB, MySQL, and Postgres
      *
+     * @return The returned values as specified by the
+     *         {@link InsertReturningStep}. Note:
+     *         <ul>
+     *         <li>Not all databases / JDBC drivers support returning several
+     *         values on multi-row inserts!</li><li>This may return an empty
+     *         <code>Result</code> in case jOOQ could not retrieve any generated
+     *         keys from the JDBC driver.</li>
+     *         </ul>
      * @throws DataAccessException if something went wrong executing the query
+     * @see InsertQuery#getReturnedRecords()
      */
     @Support
     Result<R> fetch() throws DataAccessException;
@@ -85,7 +94,12 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
      * The record holding returned values as specified by the
      * {@link InsertReturningStep}
      *
+     * @return The returned value as specified by the
+     *         {@link InsertReturningStep}. This may return <code>null</code> in
+     *         case jOOQ could not retrieve any generated keys from the JDBC
+     *         driver.
      * @throws DataAccessException if something went wrong executing the query
+     * @see InsertQuery#getReturnedRecord()
      */
     @Support
     R fetchOne() throws DataAccessException;

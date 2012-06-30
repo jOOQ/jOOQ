@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1061560321;
+	private static final long serialVersionUID = 1402619950;
 
 
 	/**
@@ -29,6 +29,6 @@ public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>value</code> parameter to the routine
 	 */
 	public void setValue(java.lang.Number value) {
-		setNumber(VALUE, value);
+		setNumber(org.jooq.test.oracle.generatedclasses.test.routines.P1490.VALUE, value);
 	}
 }

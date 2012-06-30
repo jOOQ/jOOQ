@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PGetOneCursor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -709779459;
+	private static final long serialVersionUID = -170442884;
 
 
 	/**
@@ -41,7 +41,7 @@ public class PGetOneCursor extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Set the <code>BOOK_IDS</code> parameter to the routine
 	 */
 	public void setBookIds(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord value) {
-		setValue(BOOK_IDS, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.routines.PGetOneCursor.BOOK_IDS, value);
 	}
 
 	public java.math.BigDecimal getTotal() {

@@ -41,6 +41,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.count;
@@ -62,6 +63,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.Settings;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -319,6 +321,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 assertEquals(3, (int) create().select(count)
                     .from(TBook())
                     .where(TBook_ID().notIn(Collections.nCopies(1950, 1)))
+                    .fetchOne(count));
+
+                // [#1520] Any database should be able to handle lots of inlined
+                // variables, including SQL Server and Sybase ASE
+                assertEquals(3, (int) create(new Settings().withStatementType(STATIC_STATEMENT))
+                    .select(count)
+                    .from(TBook())
+                    .where(TBook_ID().notIn(Collections.nCopies(3000, 1)))
                     .fetchOne(count));
 
                 // [#1515] Check correct splitting of NOT IN

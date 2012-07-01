@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = -1270921357;
+	private static final long serialVersionUID = -107335256;
 
 
 	/**
@@ -35,7 +35,7 @@ public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result
 	 * Set the <code>BOOK_IDS</code> parameter to the routine
 	 */
 	public void setBookIds(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord value) {
-		setValue(BOOK_IDS, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.routines.FGetOneCursor.BOOK_IDS, value);
 	}
 
 	/**

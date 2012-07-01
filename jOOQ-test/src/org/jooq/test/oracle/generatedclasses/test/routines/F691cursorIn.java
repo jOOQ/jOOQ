@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class F691cursorIn extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -2122056832;
+	private static final long serialVersionUID = -1860024872;
 
 
 	/**
@@ -35,7 +35,7 @@ public class F691cursorIn extends org.jooq.impl.AbstractRoutine<java.math.BigDec
 	 * Set the <code>C</code> parameter to the routine
 	 */
 	public void setC(org.jooq.Result<org.jooq.Record> value) {
-		setValue(C, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.routines.F691cursorIn.C, value);
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_CREATE_AUTHOR_BY_NAME extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1567405493;
+	private static final long serialVersionUID = -1520715115;
 
 
 	/**
@@ -35,13 +35,13 @@ public class P_CREATE_AUTHOR_BY_NAME extends org.jooq.impl.AbstractRoutine<java.
 	 * Set the <code>FIRST_NAME</code> parameter to the routine
 	 */
 	public void setFIRST_NAME(java.lang.String value) {
-		setValue(FIRST_NAME, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_CREATE_AUTHOR_BY_NAME.FIRST_NAME, value);
 	}
 
 	/**
 	 * Set the <code>LAST_NAME</code> parameter to the routine
 	 */
 	public void setLAST_NAME(java.lang.String value) {
-		setValue(LAST_NAME, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_CREATE_AUTHOR_BY_NAME.LAST_NAME, value);
 	}
 }

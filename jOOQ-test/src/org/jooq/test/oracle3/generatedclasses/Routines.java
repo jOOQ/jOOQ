@@ -955,6 +955,19 @@ public final class Routines {
 	}
 
 	/**
+	 * Call TEST.P1490
+	 *
+	 * @param value IN parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static void call_P1490(org.jooq.Configuration configuration, java.lang.Number value) {
+		org.jooq.test.oracle3.generatedclasses.routines.P1490 p = new org.jooq.test.oracle3.generatedclasses.routines.P1490();
+		p.setvalue(value);
+
+		p.execute(configuration);
+	}
+
+	/**
 	 * Call TEST.P377
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
  */
 public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = 159216626;
+	private static final long serialVersionUID = -784892408;
 
 
 	/**
@@ -93,6 +93,34 @@ public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.tes
 	 */
 	public java.lang.Integer getCode() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.CODE);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setF_1323(byte[] value) {
+		setValue(org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.F_1323, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public byte[] getF_1323() {
+		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.F_1323);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setF_1326(java.lang.String value) {
+		setValue(org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.F_1326, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public java.lang.String getF_1326() {
+		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.F_1326);
 	}
 
 	public UAddressTypeRecord() {

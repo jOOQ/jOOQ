@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class VAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1980522144;
+	private static final long serialVersionUID = -1538266874;
 
 	private java.lang.Integer                                                         id;
 	private java.lang.String                                                          firstName;
@@ -64,7 +64,7 @@ public class VAuthor implements java.io.Serializable {
 		this.yearOfBirth = yearOfBirth;
 	}
 
-	@javax.persistence.Column(name = "ADDRESS", length = 448)
+	@javax.persistence.Column(name = "ADDRESS", length = 40)
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord getAddress() {
 		return this.address;
 	}

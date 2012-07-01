@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FArrays3 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord> {
 
-	private static final long serialVersionUID = -950354982;
+	private static final long serialVersionUID = -1066217902;
 
 
 	/**
@@ -35,7 +35,7 @@ public class FArrays3 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle
 	 * Set the <code>IN_ARRAY</code> parameter to the routine
 	 */
 	public void setInArray(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord value) {
-		setValue(IN_ARRAY, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.routines.FArrays3.IN_ARRAY, value);
 	}
 
 	/**

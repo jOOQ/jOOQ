@@ -8,15 +8,15 @@ package org.jooq.test.oracle.generatedclasses.test;
  *
  * A Factory for specific use with the <code>TEST</code> schema.
  * <p>
- * This Factory will not render the <code>TEST</code> schema's schema name
- * in rendered SQL (assuming that you use it as the default schema on your
- * connection!). Use the more generic {@link org.jooq.util.oracle.OracleFactory}
- * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify
+ * This Factory will not render the <code>TEST</code> schema's schema name 
+ * in rendered SQL (assuming that you use it as the default schema on your 
+ * connection!). Use the more generic {@link org.jooq.util.oracle.OracleFactory} 
+ * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
 public class TestFactory extends org.jooq.util.oracle.OracleFactory {
 
-	private static final long serialVersionUID = -1137965343;
+	private static final long serialVersionUID = 873865847;
 
 	/**
 	 * Create a factory with a connection
@@ -29,7 +29,7 @@ public class TestFactory extends org.jooq.util.oracle.OracleFactory {
 
 	/**
 	 * Create a factory with a connection and a schema mapping
-	 *
+	 * 
 	 * @deprecated - 2.0.5 - Use {@link #TestFactory(java.sql.Connection, org.jooq.conf.Settings)} instead
 	 */
 	@Deprecated

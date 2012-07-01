@@ -58,10 +58,12 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
 
+import org.jooq.tools.jdbc.JDBC41ResultSet;
+
 /**
  * @author Christopher Deckers
  */
-abstract class UsageTrackingResultSet implements ResultSet {
+abstract class UsageTrackingResultSet extends JDBC41ResultSet implements ResultSet {
 
     private ResultSet resultSet;
 

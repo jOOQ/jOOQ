@@ -70,17 +70,10 @@
 
     <contributors>
         <contributor>
-            <name>Sander Plas</name>
-            <email>sander.plas@gmail.com</email>
+            <name>Aaron Digulla</name>
+            <email>digulla@hepe.com</email>
             <roles>
-                <role>maven-support</role>
-            </roles>
-        </contributor>
-        <contributor>
-            <name>Sergey Epik</name>
-            <email>sergey.epik@gmail.com</email>
-            <roles>
-                <role>spring-support</role>
+                <role>codegen-support</role>
             </roles>
         </contributor>
         <contributor>
@@ -94,6 +87,20 @@
             <email>robin@nibor.org</email>
             <roles>
                 <role>git-support</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Sander Plas</name>
+            <email>sander.plas@gmail.com</email>
+            <roles>
+                <role>maven-support</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Sergey Epik</name>
+            <email>sergey.epik@gmail.com</email>
+            <roles>
+                <role>spring-support</role>
             </roles>
         </contributor>
     </contributors>

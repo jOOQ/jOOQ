@@ -45,6 +45,7 @@ import static org.jooq.tools.StringUtils.rightPad;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -1298,6 +1299,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
 
         return handler;
+    }
+
+    @Override
+    public final ResultSet intoResultSet() {
+        return new ResultSetImpl(this);
     }
 
     // -------------------------------------------------------------------------

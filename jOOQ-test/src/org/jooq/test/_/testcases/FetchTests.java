@@ -47,8 +47,12 @@ import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.tools.reflect.Reflect.on;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1121,5 +1125,182 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         catch (ReflectException e) {
             log.info("SKIPPING", "Generated POJO tests");
         }
+    }
+
+    @Test
+    public void testFetchIntoResultSet() throws Exception {
+        Result<B> result = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch();
+        Result<Record> result1 = create().fetch(result.intoResultSet());
+        Result<Record> result2 = create().fetch(result1.intoResultSet());
+
+        // Check whether an inverse operation yields the same Result object
+        assertEquals(result, result1);
+        assertEquals(result, result2);
+
+        // Check the data correctness
+        ResultSet rs = result.intoResultSet();
+        check0(rs);
+
+        assertTrue(rs.next());
+        check1(rs);
+
+        assertFalse(rs.previous());
+        check0(rs);
+
+        assertFalse(rs.absolute(0));
+        check0(rs);
+
+        assertTrue(rs.relative(1));
+        check1(rs);
+
+        assertFalse(rs.relative(-1));
+        check0(rs);
+
+        assertTrue(rs.absolute(-4));
+        check1(rs);
+
+        assertFalse(rs.absolute(-5));
+        check0(rs);
+
+        assertTrue(rs.absolute(1));
+        check1(rs);
+
+        rs.beforeFirst();
+        check0(rs);
+
+        assertTrue(rs.last());
+        check4(rs);
+
+        rs.afterLast();
+        check5(rs);
+
+        assertTrue(rs.previous());
+        check4(rs);
+
+        assertFalse(rs.relative(1));
+        check5(rs);
+
+        // Check the meta data
+        ResultSetMetaData meta = rs.getMetaData();
+        assertEquals(result.getFields().size(), meta.getColumnCount());
+        assertEquals(Integer.class.getName(), meta.getColumnClassName(1));
+        assertEquals(Types.INTEGER, meta.getColumnType(1));
+        assertEquals("integer", meta.getColumnTypeName(1));
+        assertEquals(TBook_ID().getName(), meta.getColumnLabel(1));
+        assertEquals(TBook_ID().getName(), meta.getColumnName(1));
+        assertEquals("", meta.getCatalogName(1));
+
+        if (schema() != null)
+            assertEquals(schema().getName(), meta.getSchemaName(1));
+
+        assertEquals(TBook().getName(), meta.getTableName(1));
+    }
+
+    private void check5(ResultSet rs) throws SQLException {
+        assertFalse(rs.isClosed());
+        assertFalse(rs.isBeforeFirst());
+        assertTrue(rs.isAfterLast());
+        assertFalse(rs.isFirst());
+        assertFalse(rs.isLast());
+        assertEquals(0, rs.getRow());
+
+        try {
+            rs.getObject(1);
+            fail();
+        }
+        catch (SQLException expected) {}
+    }
+
+    private void check4(ResultSet rs) throws SQLException {
+        assertFalse(rs.isClosed());
+        assertFalse(rs.isBeforeFirst());
+        assertFalse(rs.isAfterLast());
+        assertFalse(rs.isFirst());
+        assertTrue(rs.isLast());
+        assertEquals(4, rs.getRow());
+
+        assertEquals(4, rs.getInt(1));
+        assertFalse(rs.wasNull());
+        assertEquals(4, rs.getInt(TBook_ID().getName()));
+        assertFalse(rs.wasNull());
+        assertFalse(rs.wasNull());
+        assertEquals("4", rs.getString(1));
+        assertEquals((byte) 4, rs.getByte(1));
+        assertEquals((short) 4, rs.getShort(1));
+        assertEquals(4L, rs.getLong(1));
+        assertEquals(4.0f, rs.getFloat(1));
+        assertEquals(4.0, rs.getDouble(1));
+        assertEquals(new BigDecimal("4"), rs.getBigDecimal(1));
+
+        assertEquals(0, rs.getInt(3));
+        assertTrue(rs.wasNull());
+        assertTrue(rs.wasNull());
+        assertEquals("Brida", rs.getString(5));
+        assertFalse(rs.wasNull());
+
+        try {
+            rs.getObject(0);
+            fail();
+        }
+        catch (SQLException expected) {}
+        try {
+            rs.getObject(10);
+            fail();
+        }
+        catch (SQLException expected) {}
+    }
+
+    private void check1(ResultSet rs) throws SQLException {
+        assertFalse(rs.isClosed());
+        assertFalse(rs.isBeforeFirst());
+        assertFalse(rs.isAfterLast());
+        assertTrue(rs.isFirst());
+        assertFalse(rs.isLast());
+        assertEquals(1, rs.getRow());
+
+        assertEquals(1, rs.getInt(1));
+        assertFalse(rs.wasNull());
+        assertEquals(1, rs.getInt(TBook_ID().getName()));
+        assertFalse(rs.wasNull());
+        assertFalse(rs.wasNull());
+        assertEquals("1", rs.getString(1));
+        assertEquals((byte) 1, rs.getByte(1));
+        assertEquals((short) 1, rs.getShort(1));
+        assertEquals(1L, rs.getLong(1));
+        assertEquals(1.0f, rs.getFloat(1));
+        assertEquals(1.0, rs.getDouble(1));
+        assertEquals(BigDecimal.ONE, rs.getBigDecimal(1));
+
+        assertEquals(0, rs.getInt(3));
+        assertTrue(rs.wasNull());
+        assertTrue(rs.wasNull());
+        assertEquals(1984, rs.getInt(5));
+        assertFalse(rs.wasNull());
+
+        try {
+            rs.getObject(0);
+            fail();
+        }
+        catch (SQLException expected) {}
+        try {
+            rs.getObject(10);
+            fail();
+        }
+        catch (SQLException expected) {}
+    }
+
+    private void check0(ResultSet rs) throws SQLException {
+        assertFalse(rs.isClosed());
+        assertTrue(rs.isBeforeFirst());
+        assertFalse(rs.isAfterLast());
+        assertFalse(rs.isFirst());
+        assertFalse(rs.isLast());
+        assertEquals(0, rs.getRow());
+
+        try {
+            rs.getObject(1);
+            fail();
+        }
+        catch (SQLException expected) {}
     }
 }

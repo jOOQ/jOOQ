@@ -756,6 +756,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchIntoResultSet() throws Exception {
+        new FetchTests(this).testFetchIntoResultSet();
+    }
+
+    @Test
     public void testFetchLazy() throws Exception {
         new FetchTests(this).testFetchLazy();
     }

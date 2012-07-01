@@ -372,14 +372,9 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             // escape syntax
             else if (type == Date.class) {
 
-//                // Sybase ASE needs explicit casting to DATE
-//                if (dialect == ASE) {
-//                    context.sql(field("{d '" + val + "'}").cast(Date.class));
-//                }
-
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement date literals
-                if (asList(SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
+                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
                     context.sql("'").sql(val.toString()).sql("'");
                 }
 
@@ -395,14 +390,9 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             }
             else if (type == Timestamp.class) {
 
-//                // Sybase ASE needs explicit casting to DATETIME
-//                if (dialect == ASE) {
-//                    context.sql(field("{ts '" + val + "'}").cast(Timestamp.class));
-//                }
-
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement timestamp literals
-                if (asList(SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
+                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
                     context.sql("'").sql(val.toString()).sql("'");
                 }
 
@@ -425,7 +415,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement time literals
-                if (asList(SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
+                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
                     context.sql("'").sql(val.toString()).sql("'");
                 }
 

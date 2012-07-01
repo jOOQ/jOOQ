@@ -47,6 +47,7 @@ import java.util.List;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
 import org.jooq.debug.BreakpointHit.ExecutionType;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.Factory;
 
@@ -241,6 +242,9 @@ public class DebugListener extends DefaultExecuteListener {
                 matchingDebugger = null;
             }
             switch(executionType) {
+                case FAIL: {
+                    throw new DataAccessException("Failing SQL statement.");
+                }
                 case RUN_OVER: {
                     try {
                         ctx.statement().close();

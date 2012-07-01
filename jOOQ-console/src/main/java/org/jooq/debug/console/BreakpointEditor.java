@@ -52,13 +52,11 @@ import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 import org.jooq.debug.Breakpoint;
 import org.jooq.debug.SqlQueryType;
@@ -92,9 +90,7 @@ public class BreakpointEditor extends JPanel {
     private JPanel processorPane;
     private JCheckBox beforeExecutionCheckBox;
     private StatementProcessorPane beforeExecutionProcessorPane;
-    private JRadioButton executeRadioButton;
-//    private JRadioButton doNotExecuteRadioButton;
-    private JRadioButton replaceExecutionRadioButton;
+    private JComboBox executeTypeComboBox;
     private StatementProcessorPane replacementExecutionProcessorPane;
     private JCheckBox afterExecutionCheckBox;
     private StatementProcessorPane afterExecutionProcessorPane;
@@ -228,35 +224,21 @@ public class BreakpointEditor extends JPanel {
         beforeExecutionProcessorPane = new StatementProcessorPane(beforeExecutionProcessor);
         processorPane.add(beforeExecutionProcessorPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 0, 0), 0, 0));
         y++;
-        ButtonGroup executionButtonGroup = new ButtonGroup();
         StatementProcessor replacementExecutionProcessor = breakpoint.getReplacementExecutionProcessor();
-        executeRadioButton = new JRadioButton("Execute");
-        executeRadioButton.setOpaque(false);
-        executionButtonGroup.add(executeRadioButton);
-        processorPane.add(executeRadioButton, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        y++;
+        executeTypeComboBox = new JComboBox(new String[] {"Execute", "Replace with"});
 //        doNotExecuteRadioButton = new JRadioButton("Do not execute");
 //        executionButtonGroup.add(doNotExecuteRadioButton);
 //        processorPane.add(doNotExecuteRadioButton, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 //        y++;
-        replaceExecutionRadioButton = new JRadioButton("Replace with: ");
-        replaceExecutionRadioButton.setOpaque(false);
-        executionButtonGroup.add(replaceExecutionRadioButton);
         if(replacementExecutionProcessor != null) {
-            replaceExecutionRadioButton.setSelected(true);
+            executeTypeComboBox.setSelectedIndex(1);
         } else {
-            executeRadioButton.setSelected(true);
+            executeTypeComboBox.setSelectedIndex(0);
         }
-        processorPane.add(replaceExecutionRadioButton, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        processorPane.add(executeTypeComboBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         replacementExecutionProcessorPane = new StatementProcessorPane(breakpoint.getReplacementExecutionProcessor());
         processorPane.add(replacementExecutionProcessorPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
-        executeRadioButton.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                adjustStates();
-            }
-        });
-        replaceExecutionRadioButton.addItemListener(new ItemListener() {
+        executeTypeComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 adjustStates();
@@ -296,10 +278,9 @@ public class BreakpointEditor extends JPanel {
         processorPane.setVisible(isActive && breakpointTypeComboBox.getSelectedItem() == PROCESS);
         beforeExecutionCheckBox.setEnabled(isActive);
         beforeExecutionProcessorPane.setLocked(!isActive || !beforeExecutionCheckBox.isSelected());
-        executeRadioButton.setEnabled(isActive);
-        replaceExecutionRadioButton.setEnabled(isActive);
+        executeTypeComboBox.setEnabled(isActive);
 //        doNotExecuteRadioButton;
-        replacementExecutionProcessorPane.setLocked(!isActive || !replaceExecutionRadioButton.isSelected());
+        replacementExecutionProcessorPane.setLocked(!isActive || executeTypeComboBox.getSelectedIndex() != 1);
         afterExecutionCheckBox.setEnabled(isActive);
         afterExecutionProcessorPane.setLocked(!isActive || !afterExecutionCheckBox.isSelected());
     }
@@ -345,7 +326,7 @@ public class BreakpointEditor extends JPanel {
         StatementProcessor afterExecutionProcessor = null;
         if(!isBreaking) {
             beforeExecutionProcessor = beforeExecutionCheckBox.isSelected()? beforeExecutionProcessorPane.getStatementProcessor(): null;
-            replacementExecutionProcessor = replaceExecutionRadioButton.isSelected()? replacementExecutionProcessorPane.getStatementProcessor(): null;
+            replacementExecutionProcessor = executeTypeComboBox.getSelectedIndex() == 1? replacementExecutionProcessorPane.getStatementProcessor(): null;
             afterExecutionProcessor = afterExecutionCheckBox.isSelected()? afterExecutionProcessorPane.getStatementProcessor(): null;
         }
         return new Breakpoint(id, hitCount, statementMatcher, isBreaking, beforeExecutionProcessor, replacementExecutionProcessor, afterExecutionProcessor);

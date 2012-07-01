@@ -81,30 +81,32 @@ public class LocalStatementExecutor implements StatementExecutor {
         boolean isAllowed = true;
         if(executorContext.isReadOnly()) {
             String simplifiedSql = sql.replaceAll("'[^']*'", "");
-            Matcher matcher = Pattern.compile("[a-zA-Z_0-9\\$]+").matcher(simplifiedSql);
-            boolean isFirst = true;
-            while(matcher.find()) {
-                String word = simplifiedSql.substring(matcher.start(), matcher.end()).toUpperCase(Locale.ENGLISH);
-                if(isFirst && !word.equals("SELECT")) {
+            switch(SqlQueryType.detectType(simplifiedSql)) {
+                case SELECT:
+                    String[] forbiddenWords = new String[] {
+                            "INSERT",
+                            "UPDATE",
+                            "DELETE",
+                            "ALTER",
+                            "DROP",
+                            "CREATE",
+                            "EXEC",
+                            "EXECUTE",
+                    };
+                    Matcher matcher = Pattern.compile("[a-zA-Z_0-9\\$]+").matcher(simplifiedSql);
+                    while(matcher.find()) {
+                        String word = simplifiedSql.substring(matcher.start(), matcher.end()).toUpperCase(Locale.ENGLISH);
+                        for(String keyword: forbiddenWords) {
+                            if(word.equals(keyword)) {
+                                isAllowed = false;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                default:
                     isAllowed = false;
                     break;
-                }
-                isFirst = false;
-                for(String keyword: new String[] {
-                        "INSERT",
-                        "UPDATE",
-                        "DELETE",
-                        "ALTER",
-                        "DROP",
-                        "CREATE",
-                        "EXEC",
-                        "EXECUTE",
-                }) {
-                    if(word.equals(keyword)) {
-                        isAllowed = false;
-                        break;
-                    }
-                }
             }
         }
         if(!isAllowed) {

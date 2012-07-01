@@ -59,7 +59,21 @@ public class ClientStatementExecutionResultSetResult implements StatementExecuti
         columnNames = rsResult.getColumnNames();
         typeInfos = rsResult.getTypeInfos();
         columnClasses = rsResult.getColumnClasses();
-        rowData = rsResult.getRowData();
+        Object[][] rowData_ = rsResult.getRowData();
+        rowData = new Object[rowData_.length][];
+        for(int i=0; i<rowData_.length; i++) {
+            Object[] columnData_ = rowData_[i];
+            Object[] columnData = new Object[columnData_.length];
+            for(int j=0; j<columnData_.length; j++) {
+                Object o = columnData_[j];
+                if(o != null && !(o instanceof Serializable)) {
+                    // Best effort conversion because we are in remote mode...
+                    o = String.valueOf(o);
+                }
+                columnData[j] = o;
+            }
+            rowData[i] = columnData;
+        }
         rowCount = rsResult.getRowCount();
         resultSetParsingDuration = rsResult.getResultSetParsingDuration();
         retainParsedRSDataRowCountThreshold = rsResult.getRetainParsedRSDataRowCountThreshold();

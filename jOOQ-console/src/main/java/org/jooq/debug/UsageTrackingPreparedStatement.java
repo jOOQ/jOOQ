@@ -61,10 +61,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.jooq.tools.jdbc.JDBC41Statement;
+
 /**
  * @author Christopher Deckers
  */
-public class UsageTrackingPreparedStatement implements PreparedStatement {
+public class UsageTrackingPreparedStatement extends JDBC41Statement implements PreparedStatement {
 
 	private PreparedStatement stmt;
 

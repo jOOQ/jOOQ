@@ -70,6 +70,7 @@ import static org.jooq.impl.Factory.varPop;
 import static org.jooq.impl.Factory.varSamp;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Record;
@@ -255,8 +256,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         switch (getDialect()) {
             case ASE:
             case CUBRID:
-            case DERBY:
-            case H2:
             case HSQLDB:
             case INGRES:
             case MYSQL:
@@ -264,6 +263,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 log.info("SKIPPING", "Window function tests");
                 return;
         }
+
+        // [#1523] Derby now supports the ROW_NUMBER() OVER() window function
+        // without any window clause, though
+        List<Integer> rows =
+        create().select(rowNumber().over()).from(TBook()).fetch(0, Integer.class);
+        assertEquals(asList(1, 2, 3, 4), rows);
+
+        switch (getDialect()) {
+            case DERBY:
+            case H2:
+                log.info("SKIPPING", "Advanced window function tests");
+                return;
+        }
+
 
         int column = 0;
 

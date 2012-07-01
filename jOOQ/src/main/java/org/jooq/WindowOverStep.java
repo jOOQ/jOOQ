@@ -36,6 +36,8 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -65,7 +67,7 @@ public interface WindowOverStep<T> {
     /**
      * Add an <code>OVER</code> clause
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, DERBY, H2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> over();
 
 }

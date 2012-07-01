@@ -5098,8 +5098,12 @@ public class Factory implements FactoryOperations {
      * <p>
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
+     * <p>
+     * Newer versions of {@link SQLDialect#DERBY} and {@link SQLDialect#H2} also
+     * support the <code>ROW_NUMBER() OVER()</code> window function without any
+     * window clause. See the respective docs for details
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, DERBY, H2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> rowNumber() {
         return new Function<Integer>("row_number", SQLDataType.INTEGER);
     }

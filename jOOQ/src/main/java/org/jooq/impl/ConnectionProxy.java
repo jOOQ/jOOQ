@@ -57,6 +57,7 @@ import java.util.Properties;
 
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
+import org.jooq.tools.jdbc.JDBC41Connection;
 
 /**
  * A proxy for a JDBC {@link Connection} that handles creation of prepared
@@ -64,7 +65,7 @@ import org.jooq.conf.StatementType;
  *
  * @author Lukas Eder
  */
-class ConnectionProxy extends JDBC41Connection {
+class ConnectionProxy extends JDBC41Connection implements Connection {
 
     private final Connection delegate;
     private final Settings settings;

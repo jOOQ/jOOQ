@@ -43,13 +43,15 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
+import org.jooq.tools.jdbc.JDBC41Statement;
+
 /**
  * A {@link DataSource}-enabled statement.
  *
  * @author Lukas Eder
  * @see DataSourceConnection
  */
-class DataSourceStatement extends JDBC41Statement {
+class DataSourceStatement extends JDBC41Statement implements Statement {
 
     private final DataSourceConnection connection;
     private final Statement statement;

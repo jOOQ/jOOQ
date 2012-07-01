@@ -57,6 +57,7 @@ import javax.sql.DataSource;
 
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
+import org.jooq.tools.jdbc.JDBC41Connection;
 
 /**
  * A {@link DataSource}-enabled connection.
@@ -68,7 +69,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-class DataSourceConnection extends JDBC41Connection {
+class DataSourceConnection extends JDBC41Connection implements Connection {
 
     private final DataSource datasource;
     private final Settings   settings;

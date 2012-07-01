@@ -59,6 +59,8 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
+import org.jooq.tools.jdbc.JDBC41Statement;
+
 /**
  * A proxy for a JDBC {@link PreparedStatement} that simulates the API of a
  * prepared statement, when in fact executing an ad-hoc {@link Statement}

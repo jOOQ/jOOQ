@@ -120,10 +120,18 @@ public class BreakpointHitEditor extends JPanel {
         executeTypeNoneRadioButton.setSelected(true);
         executionTypeGroup.add(executeTypeNoneRadioButton);
         executionTypePane.add(executeTypeNoneRadioButton);
-        JRadioButton executeTypeBreakRadioButton = new JRadioButton("Execute and break");
+        final JRadioButton executeTypeBreakRadioButton = new JRadioButton("Execute and break");
         executeTypeBreakRadioButton.setOpaque(false);
         executionTypeGroup.add(executeTypeBreakRadioButton);
         executionTypePane.add(executeTypeBreakRadioButton);
+        final JRadioButton executeTypeSkipRadioButton = new JRadioButton("Skip");
+        executeTypeSkipRadioButton.setOpaque(false);
+        executionTypeGroup.add(executeTypeSkipRadioButton);
+        executionTypePane.add(executeTypeSkipRadioButton);
+        final JRadioButton executeTypeFailRadioButton = new JRadioButton("Throw exception");
+        executeTypeFailRadioButton.setOpaque(false);
+        executionTypeGroup.add(executeTypeFailRadioButton);
+        executionTypePane.add(executeTypeFailRadioButton);
         breakpointHitExecutionPane.add(executionTypePane, new GridBagConstraints(0, y++, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 0, 0));
         JPanel buttonPane = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         buttonPane.setOpaque(false);
@@ -134,7 +142,20 @@ public class BreakpointHitEditor extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(breakpointHit.isBeforeExecution()) {
-                    breakpointHit.setExecutionType(executeTypeNoneRadioButton.isSelected()? ExecutionType.RUN: ExecutionType.STEP_THROUGH, replaceStatementCheckBox.isSelected()? replacementSQLTextArea.getText(): null);
+                    String replacementSQL = null;
+                    ExecutionType executionType = ExecutionType.RUN;
+                    if(executeTypeNoneRadioButton.isSelected()) {
+                        executionType = ExecutionType.RUN;
+                        replacementSQL = replaceStatementCheckBox.isSelected()? replacementSQLTextArea.getText(): null;
+                    } else if(executeTypeBreakRadioButton.isSelected()) {
+                        executionType = ExecutionType.STEP_THROUGH;
+                        replacementSQL = replaceStatementCheckBox.isSelected()? replacementSQLTextArea.getText(): null;
+                    } else if(executeTypeSkipRadioButton.isSelected()) {
+                        executionType = ExecutionType.RUN_OVER;
+                    } else if(executeTypeFailRadioButton.isSelected()) {
+                        executionType = ExecutionType.FAIL;
+                    }
+                    breakpointHit.setExecutionType(executionType, replacementSQL);
                 } else {
                     breakpointHit.setExecutionType(ExecutionType.RUN, null);
                 }

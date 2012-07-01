@@ -39,6 +39,8 @@ package org.jooq;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
@@ -1777,8 +1779,10 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convert this result into an array of arrays
      * <p>
-     * The resulting array has the same number of first-dimension elements as this result has records. It has the same number of second-dimension elements as this result's records have fields.
-     * The resulting array contains data as such:
+     * The resulting array has the same number of first-dimension elements as
+     * this result has records. It has the same number of second-dimension
+     * elements as this result's records have fields. The resulting array
+     * contains data as such:
      * <p>
      * <code><pre>
      * // For arbitrary values of i, j
@@ -1832,6 +1836,32 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      */
     <H extends RecordHandler<R>> H into(H handler);
 
-
+    /**
+     * Generate an in-memory JDBC {@link ResultSet} containing the data of this
+     * <code>Result</code>.
+     * <p>
+     * Use this as an adapter for JDBC-compliant code that expects a
+     * {@link ResultSet} to operate on, rather than a jOOQ {@link Result}. The
+     * returned <code>ResultSet</code> allows for the following behaviour
+     * according to the JDBC specification:
+     * <ul>
+     * <li> {@link ResultSet#CLOSE_CURSORS_AT_COMMIT}: The cursors (i.e.
+     * {@link Statement} object) are no longer available</li>
+     * <li> {@link ResultSet#CONCUR_READ_ONLY}: You cannot update the database
+     * through this <code>ResultSet</code>, as the underlying {@link Result}
+     * object does not hold any open database refences anymore</li>
+     * <li> {@link ResultSet#FETCH_FORWARD}: The fetch direction is forward only,
+     * and cannot be changed</li>
+     * <li> {@link ResultSet#TYPE_SCROLL_INSENSITIVE}: You can use any of the
+     * <code>ResultSet</code>'s scrolling methods, e.g. {@link ResultSet#next()}
+     * or {@link ResultSet#previous()}, etc.</li>
+     * </ul>
+     * <p>
+     * You may use {@link FactoryOperations#fetch(ResultSet)} to unwind this
+     * wrapper again.
+     *
+     * @return A wrapper JDBC <code>ResultSet</code>
+     */
+    ResultSet intoResultSet();
 
 }

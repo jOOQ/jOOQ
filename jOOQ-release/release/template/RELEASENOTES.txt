@@ -30,6 +30,11 @@ Bug fixes
         plugin)
 #1478 - Caching SQLDialect in AbstractDatabase heavily improves
         code generation performance
+#1490 - Compilation error when a SQL Server stored procedure has
+        a parameter named "value"
+#1493 - Bad syntax for SELECT /*+hint*/ DISTINCT ... in Oracle
+#1515 - Splitting of large NOT IN conditions is wrong. The parts
+        should be connected with AND, not with OR
 
 Version 2.3.1 - May 11, 2012
 =================================================================

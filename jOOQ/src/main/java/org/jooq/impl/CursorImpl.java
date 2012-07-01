@@ -68,6 +68,7 @@ import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.Table;
+import org.jooq.tools.jdbc.JDBC41ResultSet;
 
 /**
  * @author Lukas Eder
@@ -231,7 +232,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     /**
      * A wrapper for the underlying JDBC {@link ResultSet} and {@link Statement}
      */
-    private final class CursorResultSet extends JDBC41ResultSet {
+    private final class CursorResultSet extends JDBC41ResultSet implements ResultSet {
 
         private final boolean keepStatementOpen;
 

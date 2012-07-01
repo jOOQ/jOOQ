@@ -33,27 +33,49 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
+package org.jooq.tools.jdbc;
 
-import java.sql.ResultSet;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.concurrent.Executor;
 
 /**
- * Add JDBC 4.1 API compliance to a JDBC 4.0 {@link ResultSet}
+ * Add JDBC 4.1 API compliance to a JDBC 4.0 {@link Connection}
+ * <p>
+ * Extend this type if you want to compile {@link Connection} implementations on
+ * both JDBC 4.0 (JDK 6) and 4.1 (JDK 7).
  *
  * @author Lukas Eder
  */
-abstract class JDBC41ResultSet implements ResultSet {
+public abstract class JDBC41Connection {
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
-    public <T> T getObject(int columnIndex, Class<T> type0) throws SQLException {
+    public void setSchema(String s) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
-    public <T> T getObject(String columnLabel, Class<T> type0) throws SQLException {
+    public String getSchema() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    // JDBC 4.1 compliance: @Override
+    @SuppressWarnings("unused")
+    public void abort(Executor executor) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    // JDBC 4.1 compliance: @Override
+    @SuppressWarnings("unused")
+    public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    // JDBC 4.1 compliance: @Override
+    @SuppressWarnings("unused")
+    public int getNetworkTimeout() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

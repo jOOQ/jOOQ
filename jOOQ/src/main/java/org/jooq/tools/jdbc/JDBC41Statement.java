@@ -33,17 +33,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
+package org.jooq.tools.jdbc;
 
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Add JDBC 4.1 API compliance to a JDBC 4.0 {@link Statement}
+ * Add JDBC 4.1 API compliance to a JDBC 4.0 {@link Statement}.
+ * <p>
+ * Extend this type if you want to compile {@link Statement},
+ * {@link PreparedStatement}, and {@link CallableStatement} implementations on
+ * both JDBC 4.0 (JDK 6) and 4.1 (JDK 7).
  *
  * @author Lukas Eder
  */
-abstract class JDBC41Statement implements Statement {
+public abstract class JDBC41Statement {
+
+    // ------------------------------------------------------------------------
+    // Methods from JDBC 4.1 java.sql.Statement
+    // ------------------------------------------------------------------------
 
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
@@ -54,6 +64,22 @@ abstract class JDBC41Statement implements Statement {
     // JDBC 4.1 compliance: @Override
     @SuppressWarnings("unused")
     public boolean isCloseOnCompletion() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    // ------------------------------------------------------------------------
+    // Methods from JDBC 4.1 java.sql.PreparedCall
+    // ------------------------------------------------------------------------
+
+    // JDBC 4.1 compliance: @Override
+    @SuppressWarnings("unused")
+    public <T> T getObject(int parameterIndex, Class<T> type) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    // JDBC 4.1 compliance: @Override
+    @SuppressWarnings("unused")
+    public <T> T getObject(String parameterName, Class<T> type) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

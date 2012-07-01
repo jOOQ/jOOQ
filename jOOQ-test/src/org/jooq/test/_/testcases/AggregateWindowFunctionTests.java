@@ -256,7 +256,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         switch (getDialect()) {
             case ASE:
             case CUBRID:
-            case HSQLDB:
             case INGRES:
             case MYSQL:
             case SQLITE:
@@ -264,8 +263,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 return;
         }
 
-        // [#1523] Derby now supports the ROW_NUMBER() OVER() window function
-        // without any window clause, though
+        // [#1523] Derby, H2 now support the ROW_NUMBER() OVER() window function
+        // without any window clause, though. HSQLDB can simulate it using ROWNUM()
         List<Integer> rows =
         create().select(rowNumber().over()).from(TBook()).fetch(0, Integer.class);
         assertEquals(asList(1, 2, 3, 4), rows);
@@ -273,6 +272,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         switch (getDialect()) {
             case DERBY:
             case H2:
+            case HSQLDB:
                 log.info("SKIPPING", "Advanced window function tests");
                 return;
         }

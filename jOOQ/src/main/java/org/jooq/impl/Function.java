@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Term.LIST_AGG;
+import static org.jooq.impl.Term.ROW_NUMBER;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -299,7 +300,16 @@ class Function<T> extends AbstractField<T> implements
     }
 
     private final void toSQLOverClause(RenderContext context) {
-        if (!over) return;
+
+        // Render this clause only if needed
+        if (!over) {
+            return;
+        }
+
+        // [#1524] Don't render this clause where it is not supported
+        if (over && term == ROW_NUMBER && context.getDialect() == HSQLDB) {
+            return;
+        }
 
         String glue = "";
         context.keyword(" over (");

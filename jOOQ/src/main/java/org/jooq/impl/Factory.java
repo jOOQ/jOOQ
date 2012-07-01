@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.conf.SettingsTools.getRenderMapping;
+import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Util.combine;
 
 import java.io.IOException;
@@ -5101,11 +5102,13 @@ public class Factory implements FactoryOperations {
      * <p>
      * Newer versions of {@link SQLDialect#DERBY} and {@link SQLDialect#H2} also
      * support the <code>ROW_NUMBER() OVER()</code> window function without any
-     * window clause. See the respective docs for details
+     * window clause. See the respective docs for details.
+     * {@link SQLDialect#HSQLDB} can simulate this function using
+     * <code>ROWNUM()</code>
      */
-    @Support({ DB2, DERBY, H2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, DERBY, H2, HSQLDB, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> rowNumber() {
-        return new Function<Integer>("row_number", SQLDataType.INTEGER);
+        return new Function<Integer>(ROW_NUMBER, SQLDataType.INTEGER);
     }
 
     /**

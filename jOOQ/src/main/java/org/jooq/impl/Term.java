@@ -149,6 +149,17 @@ enum Term {
             return "octet_length";
         }
     },
+    ROW_NUMBER {
+        @Override
+        public String translate(SQLDialect dialect) {
+            switch (dialect) {
+                case HSQLDB:
+                    return "rownum";
+            }
+
+            return "row_number";
+        }
+    },
     STDDEV_POP {
         @Override
         public String translate(SQLDialect dialect) {

@@ -10,7 +10,7 @@ http://www.jooq.org/notes.php?version=2.2
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES-2.2.txt
 
-Version 2.2.3 - June 03, 2012
+Version 2.2.3 - July 1, 2012
 =================================================================
 
 This is a minor patch release, fixing some issues
@@ -43,6 +43,11 @@ Bug fixes
         unmarshalling leads to non-negligible overall overhead.
         Use serialisation instead (short of a useful XJC clone
         plugin)
+#1490 - Compilation error when a SQL Server stored procedure has
+        a parameter named "value"
+#1493 - Bad syntax for SELECT /*+hint*/ DISTINCT ... in Oracle
+#1515 - Splitting of large NOT IN conditions is wrong. The parts
+        should be connected with AND, not with OR
 
 Version 2.2.2 - April 22, 2012
 =================================================================

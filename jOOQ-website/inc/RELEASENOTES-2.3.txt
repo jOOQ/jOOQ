@@ -10,7 +10,7 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 2.3.2 - June 3, 2012
+Version 2.3.2 - July 1, 2012
 =================================================================
 This is a minor patch release with some useful fixes for the 2.3
 branch
@@ -30,6 +30,11 @@ Bug fixes
         plugin)
 #1478 - Caching SQLDialect in AbstractDatabase heavily improves
         code generation performance
+#1490 - Compilation error when a SQL Server stored procedure has
+        a parameter named "value"
+#1493 - Bad syntax for SELECT /*+hint*/ DISTINCT ... in Oracle
+#1515 - Splitting of large NOT IN conditions is wrong. The parts
+        should be connected with AND, not with OR
 
 Version 2.3.1 - May 11, 2012
 =================================================================

@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt.u_author_type;
  */
 public class COUNT_BOOKS extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -629595169;
+	private static final long serialVersionUID = -415069599;
 
 
 	/**
@@ -35,7 +35,7 @@ public class COUNT_BOOKS extends org.jooq.impl.AbstractRoutine<java.math.BigDeci
 	 * Set the <code>SELF</code> parameter to the routine
 	 */
 	public void setSELF(org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE value) {
-		setValue(SELF, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS.SELF, value);
 	}
 
 	/**

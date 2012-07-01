@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 1424665241;
+	private static final long serialVersionUID = -1252587511;
 
 
 	/**
@@ -53,7 +53,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	 * Set the <code>SQL_ID</code> parameter to the routine
 	 */
 	public void setSqlId(java.lang.String value) {
-		setValue(SQL_ID, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr.SQL_ID, value);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	 * Set the <code>PLAN_HASH_VALUE</code> parameter to the routine
 	 */
 	public void setPlanHashValue(java.math.BigInteger value) {
-		setValue(PLAN_HASH_VALUE, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr.PLAN_HASH_VALUE, value);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	 * Set the <code>DB_ID</code> parameter to the routine
 	 */
 	public void setDbId(java.math.BigInteger value) {
-		setValue(DB_ID, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr.DB_ID, value);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	 * Set the <code>FORMAT</code> parameter to the routine
 	 */
 	public void setFormat(java.lang.String value) {
-		setValue(FORMAT, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr.FORMAT, value);
 	}
 
 	/**

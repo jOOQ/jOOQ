@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 1712537906;
+	private static final long serialVersionUID = 1150104531;
 
 
 	/**
@@ -50,7 +50,7 @@ public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lan
 	 * Set the <code>REPORT_REF</code> parameter to the routine
 	 */
 	public void setReportRef(java.lang.String value) {
-		setValue(REPORT_REF, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml.REPORT_REF, value);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lan
 	 * Set the <code>TID</code> parameter to the routine
 	 */
 	public void setTid(java.lang.Number value) {
-		setNumber(TID, value);
+		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml.TID, value);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lan
 	 * Set the <code>METHOD</code> parameter to the routine
 	 */
 	public void setMethod(java.lang.String value) {
-		setValue(METHOD, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml.METHOD, value);
 	}
 
 	/**

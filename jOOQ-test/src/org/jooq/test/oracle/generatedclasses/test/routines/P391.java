@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1394377767;
+	private static final long serialVersionUID = 2014807531;
 
 
 	/**
@@ -59,28 +59,28 @@ public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>I1</code> parameter to the routine
 	 */
 	public void setI1(java.lang.Number value) {
-		setNumber(I1, value);
+		setNumber(org.jooq.test.oracle.generatedclasses.test.routines.P391.I1, value);
 	}
 
 	/**
 	 * Set the <code>IO1</code> parameter to the routine
 	 */
 	public void setIo1(java.lang.Number value) {
-		setNumber(IO1, value);
+		setNumber(org.jooq.test.oracle.generatedclasses.test.routines.P391.IO1, value);
 	}
 
 	/**
 	 * Set the <code>IO2</code> parameter to the routine
 	 */
 	public void setIo2(java.lang.Number value) {
-		setNumber(IO2, value);
+		setNumber(org.jooq.test.oracle.generatedclasses.test.routines.P391.IO2, value);
 	}
 
 	/**
 	 * Set the <code>I2</code> parameter to the routine
 	 */
 	public void setI2(java.lang.Number value) {
-		setNumber(I2, value);
+		setNumber(org.jooq.test.oracle.generatedclasses.test.routines.P391.I2, value);
 	}
 
 	public java.math.BigDecimal getIo1() {

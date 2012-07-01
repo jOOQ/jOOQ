@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.u_author_type;
  */
 public class GetBooks extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1634527224;
+	private static final long serialVersionUID = 735784729;
 
 
 	/**
@@ -47,7 +47,7 @@ public class GetBooks extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>SELF</code> parameter to the routine
 	 */
 	public void setSelf(org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord value) {
-		setValue(SELF, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks.SELF, value);
 	}
 
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord getSelf() {

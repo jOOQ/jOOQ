@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FTables2 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord> {
 
-	private static final long serialVersionUID = 1309453259;
+	private static final long serialVersionUID = 1514249171;
 
 
 	/**
@@ -35,7 +35,7 @@ public class FTables2 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle
 	 * Set the <code>IN_TABLE</code> parameter to the routine
 	 */
 	public void setInTable(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord value) {
-		setValue(IN_TABLE, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.routines.FTables2.IN_TABLE, value);
 	}
 
 	/**

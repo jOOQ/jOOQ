@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
  */
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1108393792;
+	private static final long serialVersionUID = -431032283;
 
 
 	/**
@@ -35,7 +35,7 @@ public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integ
 	 * Set the <code>author_name</code> parameter to the routine
 	 */
 	public void setAuthorName(java.lang.String value) {
-		setValue(AUTHOR_NAME, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists.AUTHOR_NAME, value);
 	}
 
 	/**

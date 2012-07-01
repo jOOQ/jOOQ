@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1180154706;
+	private static final long serialVersionUID = -1746709350;
 
 
 	/**
@@ -59,21 +59,21 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>P_IN_NUMBER</code> parameter to the routine
 	 */
 	public void setPInNumber(java.lang.Number value) {
-		setNumber(P_IN_NUMBER, value);
+		setNumber(org.jooq.test.oracle.generatedclasses.test.routines.PDefault.P_IN_NUMBER, value);
 	}
 
 	/**
 	 * Set the <code>P_IN_VARCHAR</code> parameter to the routine
 	 */
 	public void setPInVarchar(java.lang.String value) {
-		setValue(P_IN_VARCHAR, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.routines.PDefault.P_IN_VARCHAR, value);
 	}
 
 	/**
 	 * Set the <code>P_IN_DATE</code> parameter to the routine
 	 */
 	public void setPInDate(java.sql.Date value) {
-		setValue(P_IN_DATE, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.routines.PDefault.P_IN_DATE, value);
 	}
 
 	public java.math.BigDecimal getPOutNumber() {

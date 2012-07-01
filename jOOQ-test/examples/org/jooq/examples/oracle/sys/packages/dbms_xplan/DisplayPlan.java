@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -1539036962;
+	private static final long serialVersionUID = -1265144893;
 
 
 	/**
@@ -59,7 +59,7 @@ public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	 * Set the <code>TABLE_NAME</code> parameter to the routine
 	 */
 	public void setTableName(java.lang.String value) {
-		setValue(TABLE_NAME, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayPlan.TABLE_NAME, value);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	 * Set the <code>STATEMENT_ID</code> parameter to the routine
 	 */
 	public void setStatementId(java.lang.String value) {
-		setValue(STATEMENT_ID, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayPlan.STATEMENT_ID, value);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	 * Set the <code>FORMAT</code> parameter to the routine
 	 */
 	public void setFormat(java.lang.String value) {
-		setValue(FORMAT, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayPlan.FORMAT, value);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	 * Set the <code>FILTER_PREDS</code> parameter to the routine
 	 */
 	public void setFilterPreds(java.lang.String value) {
-		setValue(FILTER_PREDS, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayPlan.FILTER_PREDS, value);
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	 * Set the <code>TYPE</code> parameter to the routine
 	 */
 	public void setType(java.lang.String value) {
-		setValue(TYPE, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayPlan.TYPE, value);
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
  */
 public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -401798427;
+	private static final long serialVersionUID = -1357162319;
 
 
 	/**
@@ -59,42 +59,42 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Set the <code>p_in_number</code> parameter to the routine
 	 */
 	public void setPInNumber(java.lang.Integer value) {
-		setValue(P_IN_NUMBER, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PDefault.P_IN_NUMBER, value);
 	}
 
 	/**
 	 * Set the <code>p_out_number</code> parameter to the routine
 	 */
 	public void setPOutNumber(java.lang.Integer value) {
-		setValue(P_OUT_NUMBER, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PDefault.P_OUT_NUMBER, value);
 	}
 
 	/**
 	 * Set the <code>p_in_varchar</code> parameter to the routine
 	 */
 	public void setPInVarchar(java.lang.String value) {
-		setValue(P_IN_VARCHAR, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PDefault.P_IN_VARCHAR, value);
 	}
 
 	/**
 	 * Set the <code>p_out_varchar</code> parameter to the routine
 	 */
 	public void setPOutVarchar(java.lang.String value) {
-		setValue(P_OUT_VARCHAR, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PDefault.P_OUT_VARCHAR, value);
 	}
 
 	/**
 	 * Set the <code>p_in_date</code> parameter to the routine
 	 */
 	public void setPInDate(java.sql.Date value) {
-		setValue(P_IN_DATE, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PDefault.P_IN_DATE, value);
 	}
 
 	/**
 	 * Set the <code>p_out_date</code> parameter to the routine
 	 */
 	public void setPOutDate(java.sql.Date value) {
-		setValue(P_OUT_DATE, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PDefault.P_OUT_DATE, value);
 	}
 
 	public java.lang.Integer getPOutNumber() {

@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.packages.library;
  */
 public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1677278516;
+	private static final long serialVersionUID = 2131653684;
 
 
 	/**
@@ -2429,7 +2429,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F000</code> parameter to the routine
 	 */
 	public void setF000(java.lang.Number value) {
-		setNumber(F000, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F000, value);
 	}
 
 	/**
@@ -2445,7 +2445,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F001</code> parameter to the routine
 	 */
 	public void setF001(java.lang.Number value) {
-		setNumber(F001, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F001, value);
 	}
 
 	/**
@@ -2461,7 +2461,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F002</code> parameter to the routine
 	 */
 	public void setF002(java.lang.Number value) {
-		setNumber(F002, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F002, value);
 	}
 
 	/**
@@ -2477,7 +2477,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F003</code> parameter to the routine
 	 */
 	public void setF003(java.lang.Number value) {
-		setNumber(F003, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F003, value);
 	}
 
 	/**
@@ -2493,7 +2493,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F004</code> parameter to the routine
 	 */
 	public void setF004(java.lang.Number value) {
-		setNumber(F004, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F004, value);
 	}
 
 	/**
@@ -2509,7 +2509,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F005</code> parameter to the routine
 	 */
 	public void setF005(java.lang.Number value) {
-		setNumber(F005, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F005, value);
 	}
 
 	/**
@@ -2525,7 +2525,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F006</code> parameter to the routine
 	 */
 	public void setF006(java.lang.Number value) {
-		setNumber(F006, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F006, value);
 	}
 
 	/**
@@ -2541,7 +2541,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F007</code> parameter to the routine
 	 */
 	public void setF007(java.lang.Number value) {
-		setNumber(F007, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F007, value);
 	}
 
 	/**
@@ -2557,7 +2557,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F008</code> parameter to the routine
 	 */
 	public void setF008(java.lang.Number value) {
-		setNumber(F008, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F008, value);
 	}
 
 	/**
@@ -2573,7 +2573,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F009</code> parameter to the routine
 	 */
 	public void setF009(java.lang.Number value) {
-		setNumber(F009, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F009, value);
 	}
 
 	/**
@@ -2589,7 +2589,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F010</code> parameter to the routine
 	 */
 	public void setF010(java.lang.Number value) {
-		setNumber(F010, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F010, value);
 	}
 
 	/**
@@ -2605,7 +2605,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F011</code> parameter to the routine
 	 */
 	public void setF011(java.lang.Number value) {
-		setNumber(F011, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F011, value);
 	}
 
 	/**
@@ -2621,7 +2621,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F012</code> parameter to the routine
 	 */
 	public void setF012(java.lang.Number value) {
-		setNumber(F012, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F012, value);
 	}
 
 	/**
@@ -2637,7 +2637,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F013</code> parameter to the routine
 	 */
 	public void setF013(java.lang.Number value) {
-		setNumber(F013, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F013, value);
 	}
 
 	/**
@@ -2653,7 +2653,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F014</code> parameter to the routine
 	 */
 	public void setF014(java.lang.Number value) {
-		setNumber(F014, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F014, value);
 	}
 
 	/**
@@ -2669,7 +2669,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F015</code> parameter to the routine
 	 */
 	public void setF015(java.lang.Number value) {
-		setNumber(F015, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F015, value);
 	}
 
 	/**
@@ -2685,7 +2685,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F016</code> parameter to the routine
 	 */
 	public void setF016(java.lang.Number value) {
-		setNumber(F016, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F016, value);
 	}
 
 	/**
@@ -2701,7 +2701,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F017</code> parameter to the routine
 	 */
 	public void setF017(java.lang.Number value) {
-		setNumber(F017, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F017, value);
 	}
 
 	/**
@@ -2717,7 +2717,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F018</code> parameter to the routine
 	 */
 	public void setF018(java.lang.Number value) {
-		setNumber(F018, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F018, value);
 	}
 
 	/**
@@ -2733,7 +2733,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F019</code> parameter to the routine
 	 */
 	public void setF019(java.lang.Number value) {
-		setNumber(F019, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F019, value);
 	}
 
 	/**
@@ -2749,7 +2749,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F020</code> parameter to the routine
 	 */
 	public void setF020(java.lang.Number value) {
-		setNumber(F020, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F020, value);
 	}
 
 	/**
@@ -2765,7 +2765,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F021</code> parameter to the routine
 	 */
 	public void setF021(java.lang.Number value) {
-		setNumber(F021, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F021, value);
 	}
 
 	/**
@@ -2781,7 +2781,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F022</code> parameter to the routine
 	 */
 	public void setF022(java.lang.Number value) {
-		setNumber(F022, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F022, value);
 	}
 
 	/**
@@ -2797,7 +2797,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F023</code> parameter to the routine
 	 */
 	public void setF023(java.lang.Number value) {
-		setNumber(F023, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F023, value);
 	}
 
 	/**
@@ -2813,7 +2813,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F024</code> parameter to the routine
 	 */
 	public void setF024(java.lang.Number value) {
-		setNumber(F024, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F024, value);
 	}
 
 	/**
@@ -2829,7 +2829,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F025</code> parameter to the routine
 	 */
 	public void setF025(java.lang.Number value) {
-		setNumber(F025, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F025, value);
 	}
 
 	/**
@@ -2845,7 +2845,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F026</code> parameter to the routine
 	 */
 	public void setF026(java.lang.Number value) {
-		setNumber(F026, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F026, value);
 	}
 
 	/**
@@ -2861,7 +2861,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F027</code> parameter to the routine
 	 */
 	public void setF027(java.lang.Number value) {
-		setNumber(F027, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F027, value);
 	}
 
 	/**
@@ -2877,7 +2877,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F028</code> parameter to the routine
 	 */
 	public void setF028(java.lang.Number value) {
-		setNumber(F028, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F028, value);
 	}
 
 	/**
@@ -2893,7 +2893,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F029</code> parameter to the routine
 	 */
 	public void setF029(java.lang.Number value) {
-		setNumber(F029, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F029, value);
 	}
 
 	/**
@@ -2909,7 +2909,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F030</code> parameter to the routine
 	 */
 	public void setF030(java.lang.Number value) {
-		setNumber(F030, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F030, value);
 	}
 
 	/**
@@ -2925,7 +2925,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F031</code> parameter to the routine
 	 */
 	public void setF031(java.lang.Number value) {
-		setNumber(F031, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F031, value);
 	}
 
 	/**
@@ -2941,7 +2941,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F032</code> parameter to the routine
 	 */
 	public void setF032(java.lang.Number value) {
-		setNumber(F032, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F032, value);
 	}
 
 	/**
@@ -2957,7 +2957,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F033</code> parameter to the routine
 	 */
 	public void setF033(java.lang.Number value) {
-		setNumber(F033, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F033, value);
 	}
 
 	/**
@@ -2973,7 +2973,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F034</code> parameter to the routine
 	 */
 	public void setF034(java.lang.Number value) {
-		setNumber(F034, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F034, value);
 	}
 
 	/**
@@ -2989,7 +2989,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F035</code> parameter to the routine
 	 */
 	public void setF035(java.lang.Number value) {
-		setNumber(F035, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F035, value);
 	}
 
 	/**
@@ -3005,7 +3005,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F036</code> parameter to the routine
 	 */
 	public void setF036(java.lang.Number value) {
-		setNumber(F036, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F036, value);
 	}
 
 	/**
@@ -3021,7 +3021,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F037</code> parameter to the routine
 	 */
 	public void setF037(java.lang.Number value) {
-		setNumber(F037, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F037, value);
 	}
 
 	/**
@@ -3037,7 +3037,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F038</code> parameter to the routine
 	 */
 	public void setF038(java.lang.Number value) {
-		setNumber(F038, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F038, value);
 	}
 
 	/**
@@ -3053,7 +3053,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F039</code> parameter to the routine
 	 */
 	public void setF039(java.lang.Number value) {
-		setNumber(F039, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F039, value);
 	}
 
 	/**
@@ -3069,7 +3069,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F040</code> parameter to the routine
 	 */
 	public void setF040(java.lang.Number value) {
-		setNumber(F040, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F040, value);
 	}
 
 	/**
@@ -3085,7 +3085,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F041</code> parameter to the routine
 	 */
 	public void setF041(java.lang.Number value) {
-		setNumber(F041, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F041, value);
 	}
 
 	/**
@@ -3101,7 +3101,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F042</code> parameter to the routine
 	 */
 	public void setF042(java.lang.Number value) {
-		setNumber(F042, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F042, value);
 	}
 
 	/**
@@ -3117,7 +3117,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F043</code> parameter to the routine
 	 */
 	public void setF043(java.lang.Number value) {
-		setNumber(F043, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F043, value);
 	}
 
 	/**
@@ -3133,7 +3133,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F044</code> parameter to the routine
 	 */
 	public void setF044(java.lang.Number value) {
-		setNumber(F044, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F044, value);
 	}
 
 	/**
@@ -3149,7 +3149,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F045</code> parameter to the routine
 	 */
 	public void setF045(java.lang.Number value) {
-		setNumber(F045, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F045, value);
 	}
 
 	/**
@@ -3165,7 +3165,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F046</code> parameter to the routine
 	 */
 	public void setF046(java.lang.Number value) {
-		setNumber(F046, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F046, value);
 	}
 
 	/**
@@ -3181,7 +3181,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F047</code> parameter to the routine
 	 */
 	public void setF047(java.lang.Number value) {
-		setNumber(F047, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F047, value);
 	}
 
 	/**
@@ -3197,7 +3197,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F048</code> parameter to the routine
 	 */
 	public void setF048(java.lang.Number value) {
-		setNumber(F048, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F048, value);
 	}
 
 	/**
@@ -3213,7 +3213,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F049</code> parameter to the routine
 	 */
 	public void setF049(java.lang.Number value) {
-		setNumber(F049, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F049, value);
 	}
 
 	/**
@@ -3229,7 +3229,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F050</code> parameter to the routine
 	 */
 	public void setF050(java.lang.Number value) {
-		setNumber(F050, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F050, value);
 	}
 
 	/**
@@ -3245,7 +3245,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F051</code> parameter to the routine
 	 */
 	public void setF051(java.lang.Number value) {
-		setNumber(F051, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F051, value);
 	}
 
 	/**
@@ -3261,7 +3261,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F052</code> parameter to the routine
 	 */
 	public void setF052(java.lang.Number value) {
-		setNumber(F052, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F052, value);
 	}
 
 	/**
@@ -3277,7 +3277,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F053</code> parameter to the routine
 	 */
 	public void setF053(java.lang.Number value) {
-		setNumber(F053, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F053, value);
 	}
 
 	/**
@@ -3293,7 +3293,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F054</code> parameter to the routine
 	 */
 	public void setF054(java.lang.Number value) {
-		setNumber(F054, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F054, value);
 	}
 
 	/**
@@ -3309,7 +3309,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F055</code> parameter to the routine
 	 */
 	public void setF055(java.lang.Number value) {
-		setNumber(F055, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F055, value);
 	}
 
 	/**
@@ -3325,7 +3325,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F056</code> parameter to the routine
 	 */
 	public void setF056(java.lang.Number value) {
-		setNumber(F056, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F056, value);
 	}
 
 	/**
@@ -3341,7 +3341,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F057</code> parameter to the routine
 	 */
 	public void setF057(java.lang.Number value) {
-		setNumber(F057, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F057, value);
 	}
 
 	/**
@@ -3357,7 +3357,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F058</code> parameter to the routine
 	 */
 	public void setF058(java.lang.Number value) {
-		setNumber(F058, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F058, value);
 	}
 
 	/**
@@ -3373,7 +3373,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F059</code> parameter to the routine
 	 */
 	public void setF059(java.lang.Number value) {
-		setNumber(F059, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F059, value);
 	}
 
 	/**
@@ -3389,7 +3389,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F060</code> parameter to the routine
 	 */
 	public void setF060(java.lang.Number value) {
-		setNumber(F060, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F060, value);
 	}
 
 	/**
@@ -3405,7 +3405,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F061</code> parameter to the routine
 	 */
 	public void setF061(java.lang.Number value) {
-		setNumber(F061, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F061, value);
 	}
 
 	/**
@@ -3421,7 +3421,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F062</code> parameter to the routine
 	 */
 	public void setF062(java.lang.Number value) {
-		setNumber(F062, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F062, value);
 	}
 
 	/**
@@ -3437,7 +3437,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F063</code> parameter to the routine
 	 */
 	public void setF063(java.lang.Number value) {
-		setNumber(F063, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F063, value);
 	}
 
 	/**
@@ -3453,7 +3453,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F064</code> parameter to the routine
 	 */
 	public void setF064(java.lang.Number value) {
-		setNumber(F064, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F064, value);
 	}
 
 	/**
@@ -3469,7 +3469,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F065</code> parameter to the routine
 	 */
 	public void setF065(java.lang.Number value) {
-		setNumber(F065, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F065, value);
 	}
 
 	/**
@@ -3485,7 +3485,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F066</code> parameter to the routine
 	 */
 	public void setF066(java.lang.Number value) {
-		setNumber(F066, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F066, value);
 	}
 
 	/**
@@ -3501,7 +3501,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F067</code> parameter to the routine
 	 */
 	public void setF067(java.lang.Number value) {
-		setNumber(F067, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F067, value);
 	}
 
 	/**
@@ -3517,7 +3517,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F068</code> parameter to the routine
 	 */
 	public void setF068(java.lang.Number value) {
-		setNumber(F068, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F068, value);
 	}
 
 	/**
@@ -3533,7 +3533,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F069</code> parameter to the routine
 	 */
 	public void setF069(java.lang.Number value) {
-		setNumber(F069, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F069, value);
 	}
 
 	/**
@@ -3549,7 +3549,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F070</code> parameter to the routine
 	 */
 	public void setF070(java.lang.Number value) {
-		setNumber(F070, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F070, value);
 	}
 
 	/**
@@ -3565,7 +3565,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F071</code> parameter to the routine
 	 */
 	public void setF071(java.lang.Number value) {
-		setNumber(F071, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F071, value);
 	}
 
 	/**
@@ -3581,7 +3581,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F072</code> parameter to the routine
 	 */
 	public void setF072(java.lang.Number value) {
-		setNumber(F072, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F072, value);
 	}
 
 	/**
@@ -3597,7 +3597,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F073</code> parameter to the routine
 	 */
 	public void setF073(java.lang.Number value) {
-		setNumber(F073, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F073, value);
 	}
 
 	/**
@@ -3613,7 +3613,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F074</code> parameter to the routine
 	 */
 	public void setF074(java.lang.Number value) {
-		setNumber(F074, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F074, value);
 	}
 
 	/**
@@ -3629,7 +3629,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F075</code> parameter to the routine
 	 */
 	public void setF075(java.lang.Number value) {
-		setNumber(F075, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F075, value);
 	}
 
 	/**
@@ -3645,7 +3645,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F076</code> parameter to the routine
 	 */
 	public void setF076(java.lang.Number value) {
-		setNumber(F076, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F076, value);
 	}
 
 	/**
@@ -3661,7 +3661,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F077</code> parameter to the routine
 	 */
 	public void setF077(java.lang.Number value) {
-		setNumber(F077, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F077, value);
 	}
 
 	/**
@@ -3677,7 +3677,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F078</code> parameter to the routine
 	 */
 	public void setF078(java.lang.Number value) {
-		setNumber(F078, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F078, value);
 	}
 
 	/**
@@ -3693,7 +3693,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F079</code> parameter to the routine
 	 */
 	public void setF079(java.lang.Number value) {
-		setNumber(F079, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F079, value);
 	}
 
 	/**
@@ -3709,7 +3709,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F080</code> parameter to the routine
 	 */
 	public void setF080(java.lang.Number value) {
-		setNumber(F080, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F080, value);
 	}
 
 	/**
@@ -3725,7 +3725,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F081</code> parameter to the routine
 	 */
 	public void setF081(java.lang.Number value) {
-		setNumber(F081, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F081, value);
 	}
 
 	/**
@@ -3741,7 +3741,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F082</code> parameter to the routine
 	 */
 	public void setF082(java.lang.Number value) {
-		setNumber(F082, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F082, value);
 	}
 
 	/**
@@ -3757,7 +3757,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F083</code> parameter to the routine
 	 */
 	public void setF083(java.lang.Number value) {
-		setNumber(F083, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F083, value);
 	}
 
 	/**
@@ -3773,7 +3773,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F084</code> parameter to the routine
 	 */
 	public void setF084(java.lang.Number value) {
-		setNumber(F084, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F084, value);
 	}
 
 	/**
@@ -3789,7 +3789,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F085</code> parameter to the routine
 	 */
 	public void setF085(java.lang.Number value) {
-		setNumber(F085, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F085, value);
 	}
 
 	/**
@@ -3805,7 +3805,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F086</code> parameter to the routine
 	 */
 	public void setF086(java.lang.Number value) {
-		setNumber(F086, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F086, value);
 	}
 
 	/**
@@ -3821,7 +3821,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F087</code> parameter to the routine
 	 */
 	public void setF087(java.lang.Number value) {
-		setNumber(F087, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F087, value);
 	}
 
 	/**
@@ -3837,7 +3837,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F088</code> parameter to the routine
 	 */
 	public void setF088(java.lang.Number value) {
-		setNumber(F088, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F088, value);
 	}
 
 	/**
@@ -3853,7 +3853,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F089</code> parameter to the routine
 	 */
 	public void setF089(java.lang.Number value) {
-		setNumber(F089, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F089, value);
 	}
 
 	/**
@@ -3869,7 +3869,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F090</code> parameter to the routine
 	 */
 	public void setF090(java.lang.Number value) {
-		setNumber(F090, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F090, value);
 	}
 
 	/**
@@ -3885,7 +3885,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F091</code> parameter to the routine
 	 */
 	public void setF091(java.lang.Number value) {
-		setNumber(F091, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F091, value);
 	}
 
 	/**
@@ -3901,7 +3901,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F092</code> parameter to the routine
 	 */
 	public void setF092(java.lang.Number value) {
-		setNumber(F092, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F092, value);
 	}
 
 	/**
@@ -3917,7 +3917,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F093</code> parameter to the routine
 	 */
 	public void setF093(java.lang.Number value) {
-		setNumber(F093, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F093, value);
 	}
 
 	/**
@@ -3933,7 +3933,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F094</code> parameter to the routine
 	 */
 	public void setF094(java.lang.Number value) {
-		setNumber(F094, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F094, value);
 	}
 
 	/**
@@ -3949,7 +3949,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F095</code> parameter to the routine
 	 */
 	public void setF095(java.lang.Number value) {
-		setNumber(F095, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F095, value);
 	}
 
 	/**
@@ -3965,7 +3965,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F096</code> parameter to the routine
 	 */
 	public void setF096(java.lang.Number value) {
-		setNumber(F096, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F096, value);
 	}
 
 	/**
@@ -3981,7 +3981,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F097</code> parameter to the routine
 	 */
 	public void setF097(java.lang.Number value) {
-		setNumber(F097, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F097, value);
 	}
 
 	/**
@@ -3997,7 +3997,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F098</code> parameter to the routine
 	 */
 	public void setF098(java.lang.Number value) {
-		setNumber(F098, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F098, value);
 	}
 
 	/**
@@ -4013,7 +4013,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F099</code> parameter to the routine
 	 */
 	public void setF099(java.lang.Number value) {
-		setNumber(F099, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F099, value);
 	}
 
 	/**
@@ -4029,7 +4029,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F100</code> parameter to the routine
 	 */
 	public void setF100(java.lang.Number value) {
-		setNumber(F100, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F100, value);
 	}
 
 	/**
@@ -4045,7 +4045,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F101</code> parameter to the routine
 	 */
 	public void setF101(java.lang.Number value) {
-		setNumber(F101, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F101, value);
 	}
 
 	/**
@@ -4061,7 +4061,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F102</code> parameter to the routine
 	 */
 	public void setF102(java.lang.Number value) {
-		setNumber(F102, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F102, value);
 	}
 
 	/**
@@ -4077,7 +4077,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F103</code> parameter to the routine
 	 */
 	public void setF103(java.lang.Number value) {
-		setNumber(F103, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F103, value);
 	}
 
 	/**
@@ -4093,7 +4093,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F104</code> parameter to the routine
 	 */
 	public void setF104(java.lang.Number value) {
-		setNumber(F104, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F104, value);
 	}
 
 	/**
@@ -4109,7 +4109,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F105</code> parameter to the routine
 	 */
 	public void setF105(java.lang.Number value) {
-		setNumber(F105, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F105, value);
 	}
 
 	/**
@@ -4125,7 +4125,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F106</code> parameter to the routine
 	 */
 	public void setF106(java.lang.Number value) {
-		setNumber(F106, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F106, value);
 	}
 
 	/**
@@ -4141,7 +4141,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F107</code> parameter to the routine
 	 */
 	public void setF107(java.lang.Number value) {
-		setNumber(F107, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F107, value);
 	}
 
 	/**
@@ -4157,7 +4157,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F108</code> parameter to the routine
 	 */
 	public void setF108(java.lang.Number value) {
-		setNumber(F108, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F108, value);
 	}
 
 	/**
@@ -4173,7 +4173,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F109</code> parameter to the routine
 	 */
 	public void setF109(java.lang.Number value) {
-		setNumber(F109, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F109, value);
 	}
 
 	/**
@@ -4189,7 +4189,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F110</code> parameter to the routine
 	 */
 	public void setF110(java.lang.Number value) {
-		setNumber(F110, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F110, value);
 	}
 
 	/**
@@ -4205,7 +4205,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F111</code> parameter to the routine
 	 */
 	public void setF111(java.lang.Number value) {
-		setNumber(F111, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F111, value);
 	}
 
 	/**
@@ -4221,7 +4221,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F112</code> parameter to the routine
 	 */
 	public void setF112(java.lang.Number value) {
-		setNumber(F112, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F112, value);
 	}
 
 	/**
@@ -4237,7 +4237,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F113</code> parameter to the routine
 	 */
 	public void setF113(java.lang.Number value) {
-		setNumber(F113, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F113, value);
 	}
 
 	/**
@@ -4253,7 +4253,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F114</code> parameter to the routine
 	 */
 	public void setF114(java.lang.Number value) {
-		setNumber(F114, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F114, value);
 	}
 
 	/**
@@ -4269,7 +4269,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F115</code> parameter to the routine
 	 */
 	public void setF115(java.lang.Number value) {
-		setNumber(F115, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F115, value);
 	}
 
 	/**
@@ -4285,7 +4285,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F116</code> parameter to the routine
 	 */
 	public void setF116(java.lang.Number value) {
-		setNumber(F116, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F116, value);
 	}
 
 	/**
@@ -4301,7 +4301,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F117</code> parameter to the routine
 	 */
 	public void setF117(java.lang.Number value) {
-		setNumber(F117, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F117, value);
 	}
 
 	/**
@@ -4317,7 +4317,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F118</code> parameter to the routine
 	 */
 	public void setF118(java.lang.Number value) {
-		setNumber(F118, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F118, value);
 	}
 
 	/**
@@ -4333,7 +4333,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F119</code> parameter to the routine
 	 */
 	public void setF119(java.lang.Number value) {
-		setNumber(F119, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F119, value);
 	}
 
 	/**
@@ -4349,7 +4349,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F120</code> parameter to the routine
 	 */
 	public void setF120(java.lang.Number value) {
-		setNumber(F120, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F120, value);
 	}
 
 	/**
@@ -4365,7 +4365,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F121</code> parameter to the routine
 	 */
 	public void setF121(java.lang.Number value) {
-		setNumber(F121, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F121, value);
 	}
 
 	/**
@@ -4381,7 +4381,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F122</code> parameter to the routine
 	 */
 	public void setF122(java.lang.Number value) {
-		setNumber(F122, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F122, value);
 	}
 
 	/**
@@ -4397,7 +4397,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F123</code> parameter to the routine
 	 */
 	public void setF123(java.lang.Number value) {
-		setNumber(F123, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F123, value);
 	}
 
 	/**
@@ -4413,7 +4413,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F124</code> parameter to the routine
 	 */
 	public void setF124(java.lang.Number value) {
-		setNumber(F124, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F124, value);
 	}
 
 	/**
@@ -4429,7 +4429,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F125</code> parameter to the routine
 	 */
 	public void setF125(java.lang.Number value) {
-		setNumber(F125, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F125, value);
 	}
 
 	/**
@@ -4445,7 +4445,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F126</code> parameter to the routine
 	 */
 	public void setF126(java.lang.Number value) {
-		setNumber(F126, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F126, value);
 	}
 
 	/**
@@ -4461,7 +4461,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F127</code> parameter to the routine
 	 */
 	public void setF127(java.lang.Number value) {
-		setNumber(F127, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F127, value);
 	}
 
 	/**
@@ -4477,7 +4477,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F128</code> parameter to the routine
 	 */
 	public void setF128(java.lang.Number value) {
-		setNumber(F128, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F128, value);
 	}
 
 	/**
@@ -4493,7 +4493,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F129</code> parameter to the routine
 	 */
 	public void setF129(java.lang.Number value) {
-		setNumber(F129, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F129, value);
 	}
 
 	/**
@@ -4509,7 +4509,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F130</code> parameter to the routine
 	 */
 	public void setF130(java.lang.Number value) {
-		setNumber(F130, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F130, value);
 	}
 
 	/**
@@ -4525,7 +4525,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F131</code> parameter to the routine
 	 */
 	public void setF131(java.lang.Number value) {
-		setNumber(F131, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F131, value);
 	}
 
 	/**
@@ -4541,7 +4541,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F132</code> parameter to the routine
 	 */
 	public void setF132(java.lang.Number value) {
-		setNumber(F132, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F132, value);
 	}
 
 	/**
@@ -4557,7 +4557,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F133</code> parameter to the routine
 	 */
 	public void setF133(java.lang.Number value) {
-		setNumber(F133, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F133, value);
 	}
 
 	/**
@@ -4573,7 +4573,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F134</code> parameter to the routine
 	 */
 	public void setF134(java.lang.Number value) {
-		setNumber(F134, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F134, value);
 	}
 
 	/**
@@ -4589,7 +4589,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F135</code> parameter to the routine
 	 */
 	public void setF135(java.lang.Number value) {
-		setNumber(F135, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F135, value);
 	}
 
 	/**
@@ -4605,7 +4605,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F136</code> parameter to the routine
 	 */
 	public void setF136(java.lang.Number value) {
-		setNumber(F136, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F136, value);
 	}
 
 	/**
@@ -4621,7 +4621,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F137</code> parameter to the routine
 	 */
 	public void setF137(java.lang.Number value) {
-		setNumber(F137, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F137, value);
 	}
 
 	/**
@@ -4637,7 +4637,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F138</code> parameter to the routine
 	 */
 	public void setF138(java.lang.Number value) {
-		setNumber(F138, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F138, value);
 	}
 
 	/**
@@ -4653,7 +4653,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F139</code> parameter to the routine
 	 */
 	public void setF139(java.lang.Number value) {
-		setNumber(F139, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F139, value);
 	}
 
 	/**
@@ -4669,7 +4669,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F140</code> parameter to the routine
 	 */
 	public void setF140(java.lang.Number value) {
-		setNumber(F140, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F140, value);
 	}
 
 	/**
@@ -4685,7 +4685,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F141</code> parameter to the routine
 	 */
 	public void setF141(java.lang.Number value) {
-		setNumber(F141, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F141, value);
 	}
 
 	/**
@@ -4701,7 +4701,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F142</code> parameter to the routine
 	 */
 	public void setF142(java.lang.Number value) {
-		setNumber(F142, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F142, value);
 	}
 
 	/**
@@ -4717,7 +4717,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F143</code> parameter to the routine
 	 */
 	public void setF143(java.lang.Number value) {
-		setNumber(F143, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F143, value);
 	}
 
 	/**
@@ -4733,7 +4733,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F144</code> parameter to the routine
 	 */
 	public void setF144(java.lang.Number value) {
-		setNumber(F144, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F144, value);
 	}
 
 	/**
@@ -4749,7 +4749,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F145</code> parameter to the routine
 	 */
 	public void setF145(java.lang.Number value) {
-		setNumber(F145, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F145, value);
 	}
 
 	/**
@@ -4765,7 +4765,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F146</code> parameter to the routine
 	 */
 	public void setF146(java.lang.Number value) {
-		setNumber(F146, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F146, value);
 	}
 
 	/**
@@ -4781,7 +4781,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F147</code> parameter to the routine
 	 */
 	public void setF147(java.lang.Number value) {
-		setNumber(F147, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F147, value);
 	}
 
 	/**
@@ -4797,7 +4797,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F148</code> parameter to the routine
 	 */
 	public void setF148(java.lang.Number value) {
-		setNumber(F148, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F148, value);
 	}
 
 	/**
@@ -4813,7 +4813,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F149</code> parameter to the routine
 	 */
 	public void setF149(java.lang.Number value) {
-		setNumber(F149, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F149, value);
 	}
 
 	/**
@@ -4829,7 +4829,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F150</code> parameter to the routine
 	 */
 	public void setF150(java.lang.Number value) {
-		setNumber(F150, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F150, value);
 	}
 
 	/**
@@ -4845,7 +4845,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F151</code> parameter to the routine
 	 */
 	public void setF151(java.lang.Number value) {
-		setNumber(F151, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F151, value);
 	}
 
 	/**
@@ -4861,7 +4861,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F152</code> parameter to the routine
 	 */
 	public void setF152(java.lang.Number value) {
-		setNumber(F152, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F152, value);
 	}
 
 	/**
@@ -4877,7 +4877,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F153</code> parameter to the routine
 	 */
 	public void setF153(java.lang.Number value) {
-		setNumber(F153, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F153, value);
 	}
 
 	/**
@@ -4893,7 +4893,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F154</code> parameter to the routine
 	 */
 	public void setF154(java.lang.Number value) {
-		setNumber(F154, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F154, value);
 	}
 
 	/**
@@ -4909,7 +4909,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F155</code> parameter to the routine
 	 */
 	public void setF155(java.lang.Number value) {
-		setNumber(F155, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F155, value);
 	}
 
 	/**
@@ -4925,7 +4925,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F156</code> parameter to the routine
 	 */
 	public void setF156(java.lang.Number value) {
-		setNumber(F156, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F156, value);
 	}
 
 	/**
@@ -4941,7 +4941,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F157</code> parameter to the routine
 	 */
 	public void setF157(java.lang.Number value) {
-		setNumber(F157, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F157, value);
 	}
 
 	/**
@@ -4957,7 +4957,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F158</code> parameter to the routine
 	 */
 	public void setF158(java.lang.Number value) {
-		setNumber(F158, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F158, value);
 	}
 
 	/**
@@ -4973,7 +4973,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F159</code> parameter to the routine
 	 */
 	public void setF159(java.lang.Number value) {
-		setNumber(F159, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F159, value);
 	}
 
 	/**
@@ -4989,7 +4989,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F160</code> parameter to the routine
 	 */
 	public void setF160(java.lang.Number value) {
-		setNumber(F160, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F160, value);
 	}
 
 	/**
@@ -5005,7 +5005,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F161</code> parameter to the routine
 	 */
 	public void setF161(java.lang.Number value) {
-		setNumber(F161, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F161, value);
 	}
 
 	/**
@@ -5021,7 +5021,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F162</code> parameter to the routine
 	 */
 	public void setF162(java.lang.Number value) {
-		setNumber(F162, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F162, value);
 	}
 
 	/**
@@ -5037,7 +5037,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F163</code> parameter to the routine
 	 */
 	public void setF163(java.lang.Number value) {
-		setNumber(F163, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F163, value);
 	}
 
 	/**
@@ -5053,7 +5053,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F164</code> parameter to the routine
 	 */
 	public void setF164(java.lang.Number value) {
-		setNumber(F164, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F164, value);
 	}
 
 	/**
@@ -5069,7 +5069,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F165</code> parameter to the routine
 	 */
 	public void setF165(java.lang.Number value) {
-		setNumber(F165, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F165, value);
 	}
 
 	/**
@@ -5085,7 +5085,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F166</code> parameter to the routine
 	 */
 	public void setF166(java.lang.Number value) {
-		setNumber(F166, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F166, value);
 	}
 
 	/**
@@ -5101,7 +5101,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F167</code> parameter to the routine
 	 */
 	public void setF167(java.lang.Number value) {
-		setNumber(F167, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F167, value);
 	}
 
 	/**
@@ -5117,7 +5117,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F168</code> parameter to the routine
 	 */
 	public void setF168(java.lang.Number value) {
-		setNumber(F168, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F168, value);
 	}
 
 	/**
@@ -5133,7 +5133,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F169</code> parameter to the routine
 	 */
 	public void setF169(java.lang.Number value) {
-		setNumber(F169, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F169, value);
 	}
 
 	/**
@@ -5149,7 +5149,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F170</code> parameter to the routine
 	 */
 	public void setF170(java.lang.Number value) {
-		setNumber(F170, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F170, value);
 	}
 
 	/**
@@ -5165,7 +5165,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F171</code> parameter to the routine
 	 */
 	public void setF171(java.lang.Number value) {
-		setNumber(F171, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F171, value);
 	}
 
 	/**
@@ -5181,7 +5181,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F172</code> parameter to the routine
 	 */
 	public void setF172(java.lang.Number value) {
-		setNumber(F172, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F172, value);
 	}
 
 	/**
@@ -5197,7 +5197,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F173</code> parameter to the routine
 	 */
 	public void setF173(java.lang.Number value) {
-		setNumber(F173, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F173, value);
 	}
 
 	/**
@@ -5213,7 +5213,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F174</code> parameter to the routine
 	 */
 	public void setF174(java.lang.Number value) {
-		setNumber(F174, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F174, value);
 	}
 
 	/**
@@ -5229,7 +5229,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F175</code> parameter to the routine
 	 */
 	public void setF175(java.lang.Number value) {
-		setNumber(F175, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F175, value);
 	}
 
 	/**
@@ -5245,7 +5245,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F176</code> parameter to the routine
 	 */
 	public void setF176(java.lang.Number value) {
-		setNumber(F176, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F176, value);
 	}
 
 	/**
@@ -5261,7 +5261,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F177</code> parameter to the routine
 	 */
 	public void setF177(java.lang.Number value) {
-		setNumber(F177, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F177, value);
 	}
 
 	/**
@@ -5277,7 +5277,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F178</code> parameter to the routine
 	 */
 	public void setF178(java.lang.Number value) {
-		setNumber(F178, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F178, value);
 	}
 
 	/**
@@ -5293,7 +5293,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F179</code> parameter to the routine
 	 */
 	public void setF179(java.lang.Number value) {
-		setNumber(F179, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F179, value);
 	}
 
 	/**
@@ -5309,7 +5309,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F180</code> parameter to the routine
 	 */
 	public void setF180(java.lang.Number value) {
-		setNumber(F180, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F180, value);
 	}
 
 	/**
@@ -5325,7 +5325,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F181</code> parameter to the routine
 	 */
 	public void setF181(java.lang.Number value) {
-		setNumber(F181, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F181, value);
 	}
 
 	/**
@@ -5341,7 +5341,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F182</code> parameter to the routine
 	 */
 	public void setF182(java.lang.Number value) {
-		setNumber(F182, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F182, value);
 	}
 
 	/**
@@ -5357,7 +5357,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F183</code> parameter to the routine
 	 */
 	public void setF183(java.lang.Number value) {
-		setNumber(F183, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F183, value);
 	}
 
 	/**
@@ -5373,7 +5373,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F184</code> parameter to the routine
 	 */
 	public void setF184(java.lang.Number value) {
-		setNumber(F184, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F184, value);
 	}
 
 	/**
@@ -5389,7 +5389,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F185</code> parameter to the routine
 	 */
 	public void setF185(java.lang.Number value) {
-		setNumber(F185, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F185, value);
 	}
 
 	/**
@@ -5405,7 +5405,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F186</code> parameter to the routine
 	 */
 	public void setF186(java.lang.Number value) {
-		setNumber(F186, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F186, value);
 	}
 
 	/**
@@ -5421,7 +5421,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F187</code> parameter to the routine
 	 */
 	public void setF187(java.lang.Number value) {
-		setNumber(F187, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F187, value);
 	}
 
 	/**
@@ -5437,7 +5437,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F188</code> parameter to the routine
 	 */
 	public void setF188(java.lang.Number value) {
-		setNumber(F188, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F188, value);
 	}
 
 	/**
@@ -5453,7 +5453,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F189</code> parameter to the routine
 	 */
 	public void setF189(java.lang.Number value) {
-		setNumber(F189, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F189, value);
 	}
 
 	/**
@@ -5469,7 +5469,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F190</code> parameter to the routine
 	 */
 	public void setF190(java.lang.Number value) {
-		setNumber(F190, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F190, value);
 	}
 
 	/**
@@ -5485,7 +5485,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F191</code> parameter to the routine
 	 */
 	public void setF191(java.lang.Number value) {
-		setNumber(F191, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F191, value);
 	}
 
 	/**
@@ -5501,7 +5501,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F192</code> parameter to the routine
 	 */
 	public void setF192(java.lang.Number value) {
-		setNumber(F192, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F192, value);
 	}
 
 	/**
@@ -5517,7 +5517,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F193</code> parameter to the routine
 	 */
 	public void setF193(java.lang.Number value) {
-		setNumber(F193, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F193, value);
 	}
 
 	/**
@@ -5533,7 +5533,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F194</code> parameter to the routine
 	 */
 	public void setF194(java.lang.Number value) {
-		setNumber(F194, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F194, value);
 	}
 
 	/**
@@ -5549,7 +5549,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F195</code> parameter to the routine
 	 */
 	public void setF195(java.lang.Number value) {
-		setNumber(F195, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F195, value);
 	}
 
 	/**
@@ -5565,7 +5565,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F196</code> parameter to the routine
 	 */
 	public void setF196(java.lang.Number value) {
-		setNumber(F196, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F196, value);
 	}
 
 	/**
@@ -5581,7 +5581,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F197</code> parameter to the routine
 	 */
 	public void setF197(java.lang.Number value) {
-		setNumber(F197, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F197, value);
 	}
 
 	/**
@@ -5597,7 +5597,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F198</code> parameter to the routine
 	 */
 	public void setF198(java.lang.Number value) {
-		setNumber(F198, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F198, value);
 	}
 
 	/**
@@ -5613,7 +5613,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F199</code> parameter to the routine
 	 */
 	public void setF199(java.lang.Number value) {
-		setNumber(F199, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F199, value);
 	}
 
 	/**
@@ -5629,7 +5629,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F200</code> parameter to the routine
 	 */
 	public void setF200(java.lang.Number value) {
-		setNumber(F200, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F200, value);
 	}
 
 	/**
@@ -5645,7 +5645,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F201</code> parameter to the routine
 	 */
 	public void setF201(java.lang.Number value) {
-		setNumber(F201, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F201, value);
 	}
 
 	/**
@@ -5661,7 +5661,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F202</code> parameter to the routine
 	 */
 	public void setF202(java.lang.Number value) {
-		setNumber(F202, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F202, value);
 	}
 
 	/**
@@ -5677,7 +5677,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F203</code> parameter to the routine
 	 */
 	public void setF203(java.lang.Number value) {
-		setNumber(F203, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F203, value);
 	}
 
 	/**
@@ -5693,7 +5693,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F204</code> parameter to the routine
 	 */
 	public void setF204(java.lang.Number value) {
-		setNumber(F204, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F204, value);
 	}
 
 	/**
@@ -5709,7 +5709,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F205</code> parameter to the routine
 	 */
 	public void setF205(java.lang.Number value) {
-		setNumber(F205, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F205, value);
 	}
 
 	/**
@@ -5725,7 +5725,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F206</code> parameter to the routine
 	 */
 	public void setF206(java.lang.Number value) {
-		setNumber(F206, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F206, value);
 	}
 
 	/**
@@ -5741,7 +5741,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F207</code> parameter to the routine
 	 */
 	public void setF207(java.lang.Number value) {
-		setNumber(F207, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F207, value);
 	}
 
 	/**
@@ -5757,7 +5757,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F208</code> parameter to the routine
 	 */
 	public void setF208(java.lang.Number value) {
-		setNumber(F208, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F208, value);
 	}
 
 	/**
@@ -5773,7 +5773,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F209</code> parameter to the routine
 	 */
 	public void setF209(java.lang.Number value) {
-		setNumber(F209, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F209, value);
 	}
 
 	/**
@@ -5789,7 +5789,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F210</code> parameter to the routine
 	 */
 	public void setF210(java.lang.Number value) {
-		setNumber(F210, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F210, value);
 	}
 
 	/**
@@ -5805,7 +5805,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F211</code> parameter to the routine
 	 */
 	public void setF211(java.lang.Number value) {
-		setNumber(F211, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F211, value);
 	}
 
 	/**
@@ -5821,7 +5821,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F212</code> parameter to the routine
 	 */
 	public void setF212(java.lang.Number value) {
-		setNumber(F212, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F212, value);
 	}
 
 	/**
@@ -5837,7 +5837,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F213</code> parameter to the routine
 	 */
 	public void setF213(java.lang.Number value) {
-		setNumber(F213, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F213, value);
 	}
 
 	/**
@@ -5853,7 +5853,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F214</code> parameter to the routine
 	 */
 	public void setF214(java.lang.Number value) {
-		setNumber(F214, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F214, value);
 	}
 
 	/**
@@ -5869,7 +5869,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F215</code> parameter to the routine
 	 */
 	public void setF215(java.lang.Number value) {
-		setNumber(F215, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F215, value);
 	}
 
 	/**
@@ -5885,7 +5885,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F216</code> parameter to the routine
 	 */
 	public void setF216(java.lang.Number value) {
-		setNumber(F216, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F216, value);
 	}
 
 	/**
@@ -5901,7 +5901,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F217</code> parameter to the routine
 	 */
 	public void setF217(java.lang.Number value) {
-		setNumber(F217, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F217, value);
 	}
 
 	/**
@@ -5917,7 +5917,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F218</code> parameter to the routine
 	 */
 	public void setF218(java.lang.Number value) {
-		setNumber(F218, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F218, value);
 	}
 
 	/**
@@ -5933,7 +5933,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F219</code> parameter to the routine
 	 */
 	public void setF219(java.lang.Number value) {
-		setNumber(F219, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F219, value);
 	}
 
 	/**
@@ -5949,7 +5949,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F220</code> parameter to the routine
 	 */
 	public void setF220(java.lang.Number value) {
-		setNumber(F220, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F220, value);
 	}
 
 	/**
@@ -5965,7 +5965,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F221</code> parameter to the routine
 	 */
 	public void setF221(java.lang.Number value) {
-		setNumber(F221, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F221, value);
 	}
 
 	/**
@@ -5981,7 +5981,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F222</code> parameter to the routine
 	 */
 	public void setF222(java.lang.Number value) {
-		setNumber(F222, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F222, value);
 	}
 
 	/**
@@ -5997,7 +5997,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F223</code> parameter to the routine
 	 */
 	public void setF223(java.lang.Number value) {
-		setNumber(F223, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F223, value);
 	}
 
 	/**
@@ -6013,7 +6013,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F224</code> parameter to the routine
 	 */
 	public void setF224(java.lang.Number value) {
-		setNumber(F224, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F224, value);
 	}
 
 	/**
@@ -6029,7 +6029,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F225</code> parameter to the routine
 	 */
 	public void setF225(java.lang.Number value) {
-		setNumber(F225, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F225, value);
 	}
 
 	/**
@@ -6045,7 +6045,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F226</code> parameter to the routine
 	 */
 	public void setF226(java.lang.Number value) {
-		setNumber(F226, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F226, value);
 	}
 
 	/**
@@ -6061,7 +6061,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F227</code> parameter to the routine
 	 */
 	public void setF227(java.lang.Number value) {
-		setNumber(F227, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F227, value);
 	}
 
 	/**
@@ -6077,7 +6077,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F228</code> parameter to the routine
 	 */
 	public void setF228(java.lang.Number value) {
-		setNumber(F228, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F228, value);
 	}
 
 	/**
@@ -6093,7 +6093,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F229</code> parameter to the routine
 	 */
 	public void setF229(java.lang.Number value) {
-		setNumber(F229, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F229, value);
 	}
 
 	/**
@@ -6109,7 +6109,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F230</code> parameter to the routine
 	 */
 	public void setF230(java.lang.Number value) {
-		setNumber(F230, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F230, value);
 	}
 
 	/**
@@ -6125,7 +6125,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F231</code> parameter to the routine
 	 */
 	public void setF231(java.lang.Number value) {
-		setNumber(F231, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F231, value);
 	}
 
 	/**
@@ -6141,7 +6141,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F232</code> parameter to the routine
 	 */
 	public void setF232(java.lang.Number value) {
-		setNumber(F232, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F232, value);
 	}
 
 	/**
@@ -6157,7 +6157,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F233</code> parameter to the routine
 	 */
 	public void setF233(java.lang.Number value) {
-		setNumber(F233, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F233, value);
 	}
 
 	/**
@@ -6173,7 +6173,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F234</code> parameter to the routine
 	 */
 	public void setF234(java.lang.Number value) {
-		setNumber(F234, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F234, value);
 	}
 
 	/**
@@ -6189,7 +6189,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F235</code> parameter to the routine
 	 */
 	public void setF235(java.lang.Number value) {
-		setNumber(F235, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F235, value);
 	}
 
 	/**
@@ -6205,7 +6205,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F236</code> parameter to the routine
 	 */
 	public void setF236(java.lang.Number value) {
-		setNumber(F236, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F236, value);
 	}
 
 	/**
@@ -6221,7 +6221,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F237</code> parameter to the routine
 	 */
 	public void setF237(java.lang.Number value) {
-		setNumber(F237, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F237, value);
 	}
 
 	/**
@@ -6237,7 +6237,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F238</code> parameter to the routine
 	 */
 	public void setF238(java.lang.Number value) {
-		setNumber(F238, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F238, value);
 	}
 
 	/**
@@ -6253,7 +6253,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F239</code> parameter to the routine
 	 */
 	public void setF239(java.lang.Number value) {
-		setNumber(F239, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F239, value);
 	}
 
 	/**
@@ -6269,7 +6269,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F240</code> parameter to the routine
 	 */
 	public void setF240(java.lang.Number value) {
-		setNumber(F240, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F240, value);
 	}
 
 	/**
@@ -6285,7 +6285,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F241</code> parameter to the routine
 	 */
 	public void setF241(java.lang.Number value) {
-		setNumber(F241, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F241, value);
 	}
 
 	/**
@@ -6301,7 +6301,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F242</code> parameter to the routine
 	 */
 	public void setF242(java.lang.Number value) {
-		setNumber(F242, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F242, value);
 	}
 
 	/**
@@ -6317,7 +6317,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F243</code> parameter to the routine
 	 */
 	public void setF243(java.lang.Number value) {
-		setNumber(F243, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F243, value);
 	}
 
 	/**
@@ -6333,7 +6333,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F244</code> parameter to the routine
 	 */
 	public void setF244(java.lang.Number value) {
-		setNumber(F244, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F244, value);
 	}
 
 	/**
@@ -6349,7 +6349,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F245</code> parameter to the routine
 	 */
 	public void setF245(java.lang.Number value) {
-		setNumber(F245, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F245, value);
 	}
 
 	/**
@@ -6365,7 +6365,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F246</code> parameter to the routine
 	 */
 	public void setF246(java.lang.Number value) {
-		setNumber(F246, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F246, value);
 	}
 
 	/**
@@ -6381,7 +6381,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F247</code> parameter to the routine
 	 */
 	public void setF247(java.lang.Number value) {
-		setNumber(F247, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F247, value);
 	}
 
 	/**
@@ -6397,7 +6397,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F248</code> parameter to the routine
 	 */
 	public void setF248(java.lang.Number value) {
-		setNumber(F248, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F248, value);
 	}
 
 	/**
@@ -6413,7 +6413,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F249</code> parameter to the routine
 	 */
 	public void setF249(java.lang.Number value) {
-		setNumber(F249, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F249, value);
 	}
 
 	/**
@@ -6429,7 +6429,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F250</code> parameter to the routine
 	 */
 	public void setF250(java.lang.Number value) {
-		setNumber(F250, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F250, value);
 	}
 
 	/**
@@ -6445,7 +6445,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F251</code> parameter to the routine
 	 */
 	public void setF251(java.lang.Number value) {
-		setNumber(F251, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F251, value);
 	}
 
 	/**
@@ -6461,7 +6461,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F252</code> parameter to the routine
 	 */
 	public void setF252(java.lang.Number value) {
-		setNumber(F252, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F252, value);
 	}
 
 	/**
@@ -6477,7 +6477,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F253</code> parameter to the routine
 	 */
 	public void setF253(java.lang.Number value) {
-		setNumber(F253, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F253, value);
 	}
 
 	/**
@@ -6493,7 +6493,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F254</code> parameter to the routine
 	 */
 	public void setF254(java.lang.Number value) {
-		setNumber(F254, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F254, value);
 	}
 
 	/**
@@ -6509,7 +6509,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F255</code> parameter to the routine
 	 */
 	public void setF255(java.lang.Number value) {
-		setNumber(F255, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F255, value);
 	}
 
 	/**
@@ -6525,7 +6525,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F256</code> parameter to the routine
 	 */
 	public void setF256(java.lang.Number value) {
-		setNumber(F256, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F256, value);
 	}
 
 	/**
@@ -6541,7 +6541,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F257</code> parameter to the routine
 	 */
 	public void setF257(java.lang.Number value) {
-		setNumber(F257, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F257, value);
 	}
 
 	/**
@@ -6557,7 +6557,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F258</code> parameter to the routine
 	 */
 	public void setF258(java.lang.Number value) {
-		setNumber(F258, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F258, value);
 	}
 
 	/**
@@ -6573,7 +6573,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F259</code> parameter to the routine
 	 */
 	public void setF259(java.lang.Number value) {
-		setNumber(F259, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F259, value);
 	}
 
 	/**
@@ -6589,7 +6589,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F260</code> parameter to the routine
 	 */
 	public void setF260(java.lang.Number value) {
-		setNumber(F260, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F260, value);
 	}
 
 	/**
@@ -6605,7 +6605,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F261</code> parameter to the routine
 	 */
 	public void setF261(java.lang.Number value) {
-		setNumber(F261, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F261, value);
 	}
 
 	/**
@@ -6621,7 +6621,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F262</code> parameter to the routine
 	 */
 	public void setF262(java.lang.Number value) {
-		setNumber(F262, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F262, value);
 	}
 
 	/**
@@ -6637,7 +6637,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F263</code> parameter to the routine
 	 */
 	public void setF263(java.lang.Number value) {
-		setNumber(F263, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F263, value);
 	}
 
 	/**
@@ -6653,7 +6653,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F264</code> parameter to the routine
 	 */
 	public void setF264(java.lang.Number value) {
-		setNumber(F264, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F264, value);
 	}
 
 	/**
@@ -6669,7 +6669,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F265</code> parameter to the routine
 	 */
 	public void setF265(java.lang.Number value) {
-		setNumber(F265, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F265, value);
 	}
 
 	/**
@@ -6685,7 +6685,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F266</code> parameter to the routine
 	 */
 	public void setF266(java.lang.Number value) {
-		setNumber(F266, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F266, value);
 	}
 
 	/**
@@ -6701,7 +6701,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F267</code> parameter to the routine
 	 */
 	public void setF267(java.lang.Number value) {
-		setNumber(F267, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F267, value);
 	}
 
 	/**
@@ -6717,7 +6717,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F268</code> parameter to the routine
 	 */
 	public void setF268(java.lang.Number value) {
-		setNumber(F268, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F268, value);
 	}
 
 	/**
@@ -6733,7 +6733,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F269</code> parameter to the routine
 	 */
 	public void setF269(java.lang.Number value) {
-		setNumber(F269, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F269, value);
 	}
 
 	/**
@@ -6749,7 +6749,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F270</code> parameter to the routine
 	 */
 	public void setF270(java.lang.Number value) {
-		setNumber(F270, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F270, value);
 	}
 
 	/**
@@ -6765,7 +6765,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F271</code> parameter to the routine
 	 */
 	public void setF271(java.lang.Number value) {
-		setNumber(F271, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F271, value);
 	}
 
 	/**
@@ -6781,7 +6781,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F272</code> parameter to the routine
 	 */
 	public void setF272(java.lang.Number value) {
-		setNumber(F272, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F272, value);
 	}
 
 	/**
@@ -6797,7 +6797,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F273</code> parameter to the routine
 	 */
 	public void setF273(java.lang.Number value) {
-		setNumber(F273, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F273, value);
 	}
 
 	/**
@@ -6813,7 +6813,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F274</code> parameter to the routine
 	 */
 	public void setF274(java.lang.Number value) {
-		setNumber(F274, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F274, value);
 	}
 
 	/**
@@ -6829,7 +6829,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F275</code> parameter to the routine
 	 */
 	public void setF275(java.lang.Number value) {
-		setNumber(F275, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F275, value);
 	}
 
 	/**
@@ -6845,7 +6845,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F276</code> parameter to the routine
 	 */
 	public void setF276(java.lang.Number value) {
-		setNumber(F276, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F276, value);
 	}
 
 	/**
@@ -6861,7 +6861,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F277</code> parameter to the routine
 	 */
 	public void setF277(java.lang.Number value) {
-		setNumber(F277, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F277, value);
 	}
 
 	/**
@@ -6877,7 +6877,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F278</code> parameter to the routine
 	 */
 	public void setF278(java.lang.Number value) {
-		setNumber(F278, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F278, value);
 	}
 
 	/**
@@ -6893,7 +6893,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F279</code> parameter to the routine
 	 */
 	public void setF279(java.lang.Number value) {
-		setNumber(F279, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F279, value);
 	}
 
 	/**
@@ -6909,7 +6909,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F280</code> parameter to the routine
 	 */
 	public void setF280(java.lang.Number value) {
-		setNumber(F280, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F280, value);
 	}
 
 	/**
@@ -6925,7 +6925,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F281</code> parameter to the routine
 	 */
 	public void setF281(java.lang.Number value) {
-		setNumber(F281, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F281, value);
 	}
 
 	/**
@@ -6941,7 +6941,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F282</code> parameter to the routine
 	 */
 	public void setF282(java.lang.Number value) {
-		setNumber(F282, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F282, value);
 	}
 
 	/**
@@ -6957,7 +6957,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F283</code> parameter to the routine
 	 */
 	public void setF283(java.lang.Number value) {
-		setNumber(F283, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F283, value);
 	}
 
 	/**
@@ -6973,7 +6973,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F284</code> parameter to the routine
 	 */
 	public void setF284(java.lang.Number value) {
-		setNumber(F284, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F284, value);
 	}
 
 	/**
@@ -6989,7 +6989,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F285</code> parameter to the routine
 	 */
 	public void setF285(java.lang.Number value) {
-		setNumber(F285, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F285, value);
 	}
 
 	/**
@@ -7005,7 +7005,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F286</code> parameter to the routine
 	 */
 	public void setF286(java.lang.Number value) {
-		setNumber(F286, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F286, value);
 	}
 
 	/**
@@ -7021,7 +7021,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F287</code> parameter to the routine
 	 */
 	public void setF287(java.lang.Number value) {
-		setNumber(F287, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F287, value);
 	}
 
 	/**
@@ -7037,7 +7037,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F288</code> parameter to the routine
 	 */
 	public void setF288(java.lang.Number value) {
-		setNumber(F288, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F288, value);
 	}
 
 	/**
@@ -7053,7 +7053,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F289</code> parameter to the routine
 	 */
 	public void setF289(java.lang.Number value) {
-		setNumber(F289, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F289, value);
 	}
 
 	/**
@@ -7069,7 +7069,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F290</code> parameter to the routine
 	 */
 	public void setF290(java.lang.Number value) {
-		setNumber(F290, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F290, value);
 	}
 
 	/**
@@ -7085,7 +7085,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F291</code> parameter to the routine
 	 */
 	public void setF291(java.lang.Number value) {
-		setNumber(F291, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F291, value);
 	}
 
 	/**
@@ -7101,7 +7101,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F292</code> parameter to the routine
 	 */
 	public void setF292(java.lang.Number value) {
-		setNumber(F292, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F292, value);
 	}
 
 	/**
@@ -7117,7 +7117,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F293</code> parameter to the routine
 	 */
 	public void setF293(java.lang.Number value) {
-		setNumber(F293, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F293, value);
 	}
 
 	/**
@@ -7133,7 +7133,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F294</code> parameter to the routine
 	 */
 	public void setF294(java.lang.Number value) {
-		setNumber(F294, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F294, value);
 	}
 
 	/**
@@ -7149,7 +7149,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F295</code> parameter to the routine
 	 */
 	public void setF295(java.lang.Number value) {
-		setNumber(F295, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F295, value);
 	}
 
 	/**
@@ -7165,7 +7165,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F296</code> parameter to the routine
 	 */
 	public void setF296(java.lang.Number value) {
-		setNumber(F296, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F296, value);
 	}
 
 	/**
@@ -7181,7 +7181,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F297</code> parameter to the routine
 	 */
 	public void setF297(java.lang.Number value) {
-		setNumber(F297, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F297, value);
 	}
 
 	/**
@@ -7197,7 +7197,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F298</code> parameter to the routine
 	 */
 	public void setF298(java.lang.Number value) {
-		setNumber(F298, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F298, value);
 	}
 
 	/**
@@ -7213,7 +7213,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F299</code> parameter to the routine
 	 */
 	public void setF299(java.lang.Number value) {
-		setNumber(F299, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F299, value);
 	}
 
 	/**
@@ -7229,7 +7229,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F300</code> parameter to the routine
 	 */
 	public void setF300(java.lang.Number value) {
-		setNumber(F300, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F300, value);
 	}
 
 	/**
@@ -7245,7 +7245,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F301</code> parameter to the routine
 	 */
 	public void setF301(java.lang.Number value) {
-		setNumber(F301, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F301, value);
 	}
 
 	/**
@@ -7261,7 +7261,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F302</code> parameter to the routine
 	 */
 	public void setF302(java.lang.Number value) {
-		setNumber(F302, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F302, value);
 	}
 
 	/**
@@ -7277,7 +7277,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F303</code> parameter to the routine
 	 */
 	public void setF303(java.lang.Number value) {
-		setNumber(F303, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F303, value);
 	}
 
 	/**
@@ -7293,7 +7293,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F304</code> parameter to the routine
 	 */
 	public void setF304(java.lang.Number value) {
-		setNumber(F304, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F304, value);
 	}
 
 	/**
@@ -7309,7 +7309,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F305</code> parameter to the routine
 	 */
 	public void setF305(java.lang.Number value) {
-		setNumber(F305, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F305, value);
 	}
 
 	/**
@@ -7325,7 +7325,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F306</code> parameter to the routine
 	 */
 	public void setF306(java.lang.Number value) {
-		setNumber(F306, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F306, value);
 	}
 
 	/**
@@ -7341,7 +7341,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F307</code> parameter to the routine
 	 */
 	public void setF307(java.lang.Number value) {
-		setNumber(F307, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F307, value);
 	}
 
 	/**
@@ -7357,7 +7357,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F308</code> parameter to the routine
 	 */
 	public void setF308(java.lang.Number value) {
-		setNumber(F308, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F308, value);
 	}
 
 	/**
@@ -7373,7 +7373,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F309</code> parameter to the routine
 	 */
 	public void setF309(java.lang.Number value) {
-		setNumber(F309, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F309, value);
 	}
 
 	/**
@@ -7389,7 +7389,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F310</code> parameter to the routine
 	 */
 	public void setF310(java.lang.Number value) {
-		setNumber(F310, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F310, value);
 	}
 
 	/**
@@ -7405,7 +7405,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F311</code> parameter to the routine
 	 */
 	public void setF311(java.lang.Number value) {
-		setNumber(F311, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F311, value);
 	}
 
 	/**
@@ -7421,7 +7421,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F312</code> parameter to the routine
 	 */
 	public void setF312(java.lang.Number value) {
-		setNumber(F312, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F312, value);
 	}
 
 	/**
@@ -7437,7 +7437,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F313</code> parameter to the routine
 	 */
 	public void setF313(java.lang.Number value) {
-		setNumber(F313, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F313, value);
 	}
 
 	/**
@@ -7453,7 +7453,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F314</code> parameter to the routine
 	 */
 	public void setF314(java.lang.Number value) {
-		setNumber(F314, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F314, value);
 	}
 
 	/**
@@ -7469,7 +7469,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F315</code> parameter to the routine
 	 */
 	public void setF315(java.lang.Number value) {
-		setNumber(F315, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F315, value);
 	}
 
 	/**
@@ -7485,7 +7485,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F316</code> parameter to the routine
 	 */
 	public void setF316(java.lang.Number value) {
-		setNumber(F316, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F316, value);
 	}
 
 	/**
@@ -7501,7 +7501,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F317</code> parameter to the routine
 	 */
 	public void setF317(java.lang.Number value) {
-		setNumber(F317, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F317, value);
 	}
 
 	/**
@@ -7517,7 +7517,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F318</code> parameter to the routine
 	 */
 	public void setF318(java.lang.Number value) {
-		setNumber(F318, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F318, value);
 	}
 
 	/**
@@ -7533,7 +7533,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F319</code> parameter to the routine
 	 */
 	public void setF319(java.lang.Number value) {
-		setNumber(F319, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F319, value);
 	}
 
 	/**
@@ -7549,7 +7549,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F320</code> parameter to the routine
 	 */
 	public void setF320(java.lang.Number value) {
-		setNumber(F320, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F320, value);
 	}
 
 	/**
@@ -7565,7 +7565,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F321</code> parameter to the routine
 	 */
 	public void setF321(java.lang.Number value) {
-		setNumber(F321, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F321, value);
 	}
 
 	/**
@@ -7581,7 +7581,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F322</code> parameter to the routine
 	 */
 	public void setF322(java.lang.Number value) {
-		setNumber(F322, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F322, value);
 	}
 
 	/**
@@ -7597,7 +7597,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F323</code> parameter to the routine
 	 */
 	public void setF323(java.lang.Number value) {
-		setNumber(F323, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F323, value);
 	}
 
 	/**
@@ -7613,7 +7613,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F324</code> parameter to the routine
 	 */
 	public void setF324(java.lang.Number value) {
-		setNumber(F324, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F324, value);
 	}
 
 	/**
@@ -7629,7 +7629,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F325</code> parameter to the routine
 	 */
 	public void setF325(java.lang.Number value) {
-		setNumber(F325, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F325, value);
 	}
 
 	/**
@@ -7645,7 +7645,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F326</code> parameter to the routine
 	 */
 	public void setF326(java.lang.Number value) {
-		setNumber(F326, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F326, value);
 	}
 
 	/**
@@ -7661,7 +7661,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F327</code> parameter to the routine
 	 */
 	public void setF327(java.lang.Number value) {
-		setNumber(F327, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F327, value);
 	}
 
 	/**
@@ -7677,7 +7677,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F328</code> parameter to the routine
 	 */
 	public void setF328(java.lang.Number value) {
-		setNumber(F328, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F328, value);
 	}
 
 	/**
@@ -7693,7 +7693,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F329</code> parameter to the routine
 	 */
 	public void setF329(java.lang.Number value) {
-		setNumber(F329, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F329, value);
 	}
 
 	/**
@@ -7709,7 +7709,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F330</code> parameter to the routine
 	 */
 	public void setF330(java.lang.Number value) {
-		setNumber(F330, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F330, value);
 	}
 
 	/**
@@ -7725,7 +7725,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F331</code> parameter to the routine
 	 */
 	public void setF331(java.lang.Number value) {
-		setNumber(F331, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F331, value);
 	}
 
 	/**
@@ -7741,7 +7741,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F332</code> parameter to the routine
 	 */
 	public void setF332(java.lang.Number value) {
-		setNumber(F332, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F332, value);
 	}
 
 	/**
@@ -7757,7 +7757,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F333</code> parameter to the routine
 	 */
 	public void setF333(java.lang.Number value) {
-		setNumber(F333, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F333, value);
 	}
 
 	/**
@@ -7773,7 +7773,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F334</code> parameter to the routine
 	 */
 	public void setF334(java.lang.Number value) {
-		setNumber(F334, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F334, value);
 	}
 
 	/**
@@ -7789,7 +7789,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F335</code> parameter to the routine
 	 */
 	public void setF335(java.lang.Number value) {
-		setNumber(F335, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F335, value);
 	}
 
 	/**
@@ -7805,7 +7805,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F336</code> parameter to the routine
 	 */
 	public void setF336(java.lang.Number value) {
-		setNumber(F336, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F336, value);
 	}
 
 	/**
@@ -7821,7 +7821,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F337</code> parameter to the routine
 	 */
 	public void setF337(java.lang.Number value) {
-		setNumber(F337, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F337, value);
 	}
 
 	/**
@@ -7837,7 +7837,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F338</code> parameter to the routine
 	 */
 	public void setF338(java.lang.Number value) {
-		setNumber(F338, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F338, value);
 	}
 
 	/**
@@ -7853,7 +7853,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F339</code> parameter to the routine
 	 */
 	public void setF339(java.lang.Number value) {
-		setNumber(F339, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F339, value);
 	}
 
 	/**
@@ -7869,7 +7869,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F340</code> parameter to the routine
 	 */
 	public void setF340(java.lang.Number value) {
-		setNumber(F340, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F340, value);
 	}
 
 	/**
@@ -7885,7 +7885,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F341</code> parameter to the routine
 	 */
 	public void setF341(java.lang.Number value) {
-		setNumber(F341, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F341, value);
 	}
 
 	/**
@@ -7901,7 +7901,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F342</code> parameter to the routine
 	 */
 	public void setF342(java.lang.Number value) {
-		setNumber(F342, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F342, value);
 	}
 
 	/**
@@ -7917,7 +7917,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F343</code> parameter to the routine
 	 */
 	public void setF343(java.lang.Number value) {
-		setNumber(F343, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F343, value);
 	}
 
 	/**
@@ -7933,7 +7933,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F344</code> parameter to the routine
 	 */
 	public void setF344(java.lang.Number value) {
-		setNumber(F344, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F344, value);
 	}
 
 	/**
@@ -7949,7 +7949,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F345</code> parameter to the routine
 	 */
 	public void setF345(java.lang.Number value) {
-		setNumber(F345, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F345, value);
 	}
 
 	/**
@@ -7965,7 +7965,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F346</code> parameter to the routine
 	 */
 	public void setF346(java.lang.Number value) {
-		setNumber(F346, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F346, value);
 	}
 
 	/**
@@ -7981,7 +7981,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F347</code> parameter to the routine
 	 */
 	public void setF347(java.lang.Number value) {
-		setNumber(F347, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F347, value);
 	}
 
 	/**
@@ -7997,7 +7997,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F348</code> parameter to the routine
 	 */
 	public void setF348(java.lang.Number value) {
-		setNumber(F348, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F348, value);
 	}
 
 	/**
@@ -8013,7 +8013,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F349</code> parameter to the routine
 	 */
 	public void setF349(java.lang.Number value) {
-		setNumber(F349, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F349, value);
 	}
 
 	/**
@@ -8029,7 +8029,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F350</code> parameter to the routine
 	 */
 	public void setF350(java.lang.Number value) {
-		setNumber(F350, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F350, value);
 	}
 
 	/**
@@ -8045,7 +8045,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F351</code> parameter to the routine
 	 */
 	public void setF351(java.lang.Number value) {
-		setNumber(F351, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F351, value);
 	}
 
 	/**
@@ -8061,7 +8061,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F352</code> parameter to the routine
 	 */
 	public void setF352(java.lang.Number value) {
-		setNumber(F352, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F352, value);
 	}
 
 	/**
@@ -8077,7 +8077,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F353</code> parameter to the routine
 	 */
 	public void setF353(java.lang.Number value) {
-		setNumber(F353, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F353, value);
 	}
 
 	/**
@@ -8093,7 +8093,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F354</code> parameter to the routine
 	 */
 	public void setF354(java.lang.Number value) {
-		setNumber(F354, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F354, value);
 	}
 
 	/**
@@ -8109,7 +8109,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F355</code> parameter to the routine
 	 */
 	public void setF355(java.lang.Number value) {
-		setNumber(F355, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F355, value);
 	}
 
 	/**
@@ -8125,7 +8125,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F356</code> parameter to the routine
 	 */
 	public void setF356(java.lang.Number value) {
-		setNumber(F356, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F356, value);
 	}
 
 	/**
@@ -8141,7 +8141,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F357</code> parameter to the routine
 	 */
 	public void setF357(java.lang.Number value) {
-		setNumber(F357, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F357, value);
 	}
 
 	/**
@@ -8157,7 +8157,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F358</code> parameter to the routine
 	 */
 	public void setF358(java.lang.Number value) {
-		setNumber(F358, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F358, value);
 	}
 
 	/**
@@ -8173,7 +8173,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F359</code> parameter to the routine
 	 */
 	public void setF359(java.lang.Number value) {
-		setNumber(F359, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F359, value);
 	}
 
 	/**
@@ -8189,7 +8189,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F360</code> parameter to the routine
 	 */
 	public void setF360(java.lang.Number value) {
-		setNumber(F360, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F360, value);
 	}
 
 	/**
@@ -8205,7 +8205,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F361</code> parameter to the routine
 	 */
 	public void setF361(java.lang.Number value) {
-		setNumber(F361, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F361, value);
 	}
 
 	/**
@@ -8221,7 +8221,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F362</code> parameter to the routine
 	 */
 	public void setF362(java.lang.Number value) {
-		setNumber(F362, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F362, value);
 	}
 
 	/**
@@ -8237,7 +8237,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F363</code> parameter to the routine
 	 */
 	public void setF363(java.lang.Number value) {
-		setNumber(F363, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F363, value);
 	}
 
 	/**
@@ -8253,7 +8253,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F364</code> parameter to the routine
 	 */
 	public void setF364(java.lang.Number value) {
-		setNumber(F364, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F364, value);
 	}
 
 	/**
@@ -8269,7 +8269,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F365</code> parameter to the routine
 	 */
 	public void setF365(java.lang.Number value) {
-		setNumber(F365, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F365, value);
 	}
 
 	/**
@@ -8285,7 +8285,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F366</code> parameter to the routine
 	 */
 	public void setF366(java.lang.Number value) {
-		setNumber(F366, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F366, value);
 	}
 
 	/**
@@ -8301,7 +8301,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F367</code> parameter to the routine
 	 */
 	public void setF367(java.lang.Number value) {
-		setNumber(F367, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F367, value);
 	}
 
 	/**
@@ -8317,7 +8317,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F368</code> parameter to the routine
 	 */
 	public void setF368(java.lang.Number value) {
-		setNumber(F368, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F368, value);
 	}
 
 	/**
@@ -8333,7 +8333,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F369</code> parameter to the routine
 	 */
 	public void setF369(java.lang.Number value) {
-		setNumber(F369, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F369, value);
 	}
 
 	/**
@@ -8349,7 +8349,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F370</code> parameter to the routine
 	 */
 	public void setF370(java.lang.Number value) {
-		setNumber(F370, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F370, value);
 	}
 
 	/**
@@ -8365,7 +8365,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F371</code> parameter to the routine
 	 */
 	public void setF371(java.lang.Number value) {
-		setNumber(F371, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F371, value);
 	}
 
 	/**
@@ -8381,7 +8381,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F372</code> parameter to the routine
 	 */
 	public void setF372(java.lang.Number value) {
-		setNumber(F372, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F372, value);
 	}
 
 	/**
@@ -8397,7 +8397,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F373</code> parameter to the routine
 	 */
 	public void setF373(java.lang.Number value) {
-		setNumber(F373, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F373, value);
 	}
 
 	/**
@@ -8413,7 +8413,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F374</code> parameter to the routine
 	 */
 	public void setF374(java.lang.Number value) {
-		setNumber(F374, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F374, value);
 	}
 
 	/**
@@ -8429,7 +8429,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F375</code> parameter to the routine
 	 */
 	public void setF375(java.lang.Number value) {
-		setNumber(F375, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F375, value);
 	}
 
 	/**
@@ -8445,7 +8445,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F376</code> parameter to the routine
 	 */
 	public void setF376(java.lang.Number value) {
-		setNumber(F376, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F376, value);
 	}
 
 	/**
@@ -8461,7 +8461,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F377</code> parameter to the routine
 	 */
 	public void setF377(java.lang.Number value) {
-		setNumber(F377, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F377, value);
 	}
 
 	/**
@@ -8477,7 +8477,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F378</code> parameter to the routine
 	 */
 	public void setF378(java.lang.Number value) {
-		setNumber(F378, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F378, value);
 	}
 
 	/**
@@ -8493,7 +8493,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F379</code> parameter to the routine
 	 */
 	public void setF379(java.lang.Number value) {
-		setNumber(F379, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F379, value);
 	}
 
 	/**
@@ -8509,7 +8509,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F380</code> parameter to the routine
 	 */
 	public void setF380(java.lang.Number value) {
-		setNumber(F380, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F380, value);
 	}
 
 	/**
@@ -8525,7 +8525,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F381</code> parameter to the routine
 	 */
 	public void setF381(java.lang.Number value) {
-		setNumber(F381, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F381, value);
 	}
 
 	/**
@@ -8541,7 +8541,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F382</code> parameter to the routine
 	 */
 	public void setF382(java.lang.Number value) {
-		setNumber(F382, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F382, value);
 	}
 
 	/**
@@ -8557,7 +8557,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F383</code> parameter to the routine
 	 */
 	public void setF383(java.lang.Number value) {
-		setNumber(F383, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F383, value);
 	}
 
 	/**
@@ -8573,7 +8573,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F384</code> parameter to the routine
 	 */
 	public void setF384(java.lang.Number value) {
-		setNumber(F384, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F384, value);
 	}
 
 	/**
@@ -8589,7 +8589,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F385</code> parameter to the routine
 	 */
 	public void setF385(java.lang.Number value) {
-		setNumber(F385, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F385, value);
 	}
 
 	/**
@@ -8605,7 +8605,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F386</code> parameter to the routine
 	 */
 	public void setF386(java.lang.Number value) {
-		setNumber(F386, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F386, value);
 	}
 
 	/**
@@ -8621,7 +8621,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F387</code> parameter to the routine
 	 */
 	public void setF387(java.lang.Number value) {
-		setNumber(F387, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F387, value);
 	}
 
 	/**
@@ -8637,7 +8637,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F388</code> parameter to the routine
 	 */
 	public void setF388(java.lang.Number value) {
-		setNumber(F388, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F388, value);
 	}
 
 	/**
@@ -8653,7 +8653,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F389</code> parameter to the routine
 	 */
 	public void setF389(java.lang.Number value) {
-		setNumber(F389, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F389, value);
 	}
 
 	/**
@@ -8669,7 +8669,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F390</code> parameter to the routine
 	 */
 	public void setF390(java.lang.Number value) {
-		setNumber(F390, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F390, value);
 	}
 
 	/**
@@ -8685,7 +8685,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F391</code> parameter to the routine
 	 */
 	public void setF391(java.lang.Number value) {
-		setNumber(F391, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F391, value);
 	}
 
 	/**
@@ -8701,7 +8701,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F392</code> parameter to the routine
 	 */
 	public void setF392(java.lang.Number value) {
-		setNumber(F392, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F392, value);
 	}
 
 	/**
@@ -8717,7 +8717,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F393</code> parameter to the routine
 	 */
 	public void setF393(java.lang.Number value) {
-		setNumber(F393, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F393, value);
 	}
 
 	/**
@@ -8733,7 +8733,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F394</code> parameter to the routine
 	 */
 	public void setF394(java.lang.Number value) {
-		setNumber(F394, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F394, value);
 	}
 
 	/**
@@ -8749,7 +8749,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F395</code> parameter to the routine
 	 */
 	public void setF395(java.lang.Number value) {
-		setNumber(F395, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F395, value);
 	}
 
 	/**
@@ -8765,7 +8765,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F396</code> parameter to the routine
 	 */
 	public void setF396(java.lang.Number value) {
-		setNumber(F396, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F396, value);
 	}
 
 	/**
@@ -8781,7 +8781,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F397</code> parameter to the routine
 	 */
 	public void setF397(java.lang.Number value) {
-		setNumber(F397, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F397, value);
 	}
 
 	/**
@@ -8797,7 +8797,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F398</code> parameter to the routine
 	 */
 	public void setF398(java.lang.Number value) {
-		setNumber(F398, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F398, value);
 	}
 
 	/**
@@ -8813,7 +8813,7 @@ public class PKG_F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.ma
 	 * Set the <code>F399</code> parameter to the routine
 	 */
 	public void setF399(java.lang.Number value) {
-		setNumber(F399, value);
+		setNumber(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_F_MANY_PARAMETERS.F399, value);
 	}
 
 	/**

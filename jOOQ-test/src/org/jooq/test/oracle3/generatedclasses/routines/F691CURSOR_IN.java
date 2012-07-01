@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F691CURSOR_IN extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -810431991;
+	private static final long serialVersionUID = -654005023;
 
 
 	/**
@@ -35,7 +35,7 @@ public class F691CURSOR_IN extends org.jooq.impl.AbstractRoutine<java.math.BigDe
 	 * Set the <code>C</code> parameter to the routine
 	 */
 	public void setC(org.jooq.Result<org.jooq.Record> value) {
-		setValue(C, value);
+		setValue(org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_IN.C, value);
 	}
 
 	/**

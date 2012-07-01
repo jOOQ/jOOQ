@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
  */
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1792413373;
+	private static final long serialVersionUID = -1609839843;
 
 
 	/**
@@ -35,14 +35,14 @@ public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Set the <code>author_name</code> parameter to the routine
 	 */
 	public void setAuthorName(java.lang.String value) {
-		setValue(AUTHOR_NAME, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PAuthorExists.AUTHOR_NAME, value);
 	}
 
 	/**
 	 * Set the <code>result</code> parameter to the routine
 	 */
 	public void setResult(java.lang.Integer value) {
-		setValue(RESULT, value);
+		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PAuthorExists.RESULT, value);
 	}
 
 	public java.lang.Integer getResult() {

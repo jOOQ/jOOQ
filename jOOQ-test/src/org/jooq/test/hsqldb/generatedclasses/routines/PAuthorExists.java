@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
  */
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -857379830;
+	private static final long serialVersionUID = -1333440240;
 
 
 	/**
@@ -35,7 +35,7 @@ public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Set the <code>AUTHOR_NAME</code> parameter to the routine
 	 */
 	public void setAuthorName(java.lang.String value) {
-		setValue(AUTHOR_NAME, value);
+		setValue(org.jooq.test.hsqldb.generatedclasses.routines.PAuthorExists.AUTHOR_NAME, value);
 	}
 
 	public java.lang.Integer getResult() {

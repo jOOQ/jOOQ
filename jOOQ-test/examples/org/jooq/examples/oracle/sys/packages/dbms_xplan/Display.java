@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -1053260196;
+	private static final long serialVersionUID = 777584510;
 
 
 	/**
@@ -53,7 +53,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	 * Set the <code>TABLE_NAME</code> parameter to the routine
 	 */
 	public void setTableName(java.lang.String value) {
-		setValue(TABLE_NAME, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.Display.TABLE_NAME, value);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	 * Set the <code>STATEMENT_ID</code> parameter to the routine
 	 */
 	public void setStatementId(java.lang.String value) {
-		setValue(STATEMENT_ID, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.Display.STATEMENT_ID, value);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	 * Set the <code>FORMAT</code> parameter to the routine
 	 */
 	public void setFormat(java.lang.String value) {
-		setValue(FORMAT, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.Display.FORMAT, value);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	 * Set the <code>FILTER_PREDS</code> parameter to the routine
 	 */
 	public void setFilterPreds(java.lang.String value) {
-		setValue(FILTER_PREDS, value);
+		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.Display.FILTER_PREDS, value);
 	}
 
 	/**

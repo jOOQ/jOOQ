@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.packages.library;
  */
 public class PkgFAuthorExists2 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1642385081;
+	private static final long serialVersionUID = -817289895;
 
 
 	/**
@@ -42,7 +42,7 @@ public class PkgFAuthorExists2 extends org.jooq.impl.AbstractRoutine<java.math.B
 	 * Set the <code>AUTHOR_NAME</code> parameter to the routine
 	 */
 	public void setAuthorName(java.lang.String value) {
-		setValue(AUTHOR_NAME, value);
+		setValue(org.jooq.test.oracle.generatedclasses.test.packages.library.PkgFAuthorExists2.AUTHOR_NAME, value);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class PkgFAuthorExists2 extends org.jooq.impl.AbstractRoutine<java.math.B
 	 * Set the <code>UNUSED</code> parameter to the routine
 	 */
 	public void setUnused(java.lang.Number value) {
-		setNumber(UNUSED, value);
+		setNumber(org.jooq.test.oracle.generatedclasses.test.packages.library.PkgFAuthorExists2.UNUSED, value);
 	}
 
 	/**

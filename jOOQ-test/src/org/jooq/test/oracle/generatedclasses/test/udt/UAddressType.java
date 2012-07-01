@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
  */
 public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -849475538;
+	private static final long serialVersionUID = 781413964;
 
 	/**
 	 * The singleton instance of TEST.U_ADDRESS_TYPE
@@ -57,16 +57,6 @@ public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gen
 	 * An uncommented item
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord, java.lang.Integer> CODE = createField("CODE", org.jooq.impl.SQLDataType.INTEGER, U_ADDRESS_TYPE);
-
-	/**
-	 * An uncommented item
-	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord, byte[]> F_1323 = createField("F_1323", org.jooq.impl.SQLDataType.BLOB, U_ADDRESS_TYPE);
-
-	/**
-	 * An uncommented item
-	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord, java.lang.String> F_1326 = createField("F_1326", org.jooq.impl.SQLDataType.CLOB, U_ADDRESS_TYPE);
 
 	/**
 	 * No further instances allowed

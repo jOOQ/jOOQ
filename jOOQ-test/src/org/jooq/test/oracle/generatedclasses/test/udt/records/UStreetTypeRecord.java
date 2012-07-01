@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
  */
 public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord> {
 
-	private static final long serialVersionUID = -615019899;
+	private static final long serialVersionUID = -838066655;
 
 
 	/**
@@ -51,34 +51,6 @@ public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord getFloors() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UStreetType.FLOORS);
-	}
-
-	/**
-	 * An uncommented item
-	 */
-	public void setF_1323(byte[] value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.udt.UStreetType.F_1323, value);
-	}
-
-	/**
-	 * An uncommented item
-	 */
-	public byte[] getF_1323() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UStreetType.F_1323);
-	}
-
-	/**
-	 * An uncommented item
-	 */
-	public void setF_1326(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.udt.UStreetType.F_1326, value);
-	}
-
-	/**
-	 * An uncommented item
-	 */
-	public java.lang.String getF_1326() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UStreetType.F_1326);
 	}
 
 	public UStreetTypeRecord() {

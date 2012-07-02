@@ -26,6 +26,7 @@ Passionate contributors have made jOOQ what it is. Here's a list of contributors
 worth mentioning (in alphabetical order)
 </p>
 <ul>
+    <li>Aaron Digulla: jOOQ-codegen cleanup</li>
     <li>Christopher Deckers: jOOQ-Console contribution</li>
     <li>Christopher Klewes: Maven integration</li>
     <li>Espen Stromsnes: DB2, H2, Sybase, and HSQLDB integrations</li>

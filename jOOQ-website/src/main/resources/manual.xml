@@ -1492,7 +1492,7 @@ public void bind(BindContext context) throws DataAccessException;</java>
       <!-- The database dialect from jooq-meta. Available dialects are
            named org.util.[database].[database]Database. Known values are:
 
-           org.jooq.util.ase.ASEDatabase
+           org.jooq.util.ase.ASEDatabase (to be used with Sybase ASE)
            org.jooq.util.cubrid.CUBRIDDatabase
            org.jooq.util.db2.DB2Database
            org.jooq.util.derby.DerbyDatabase
@@ -1504,7 +1504,7 @@ public void bind(BindContext context) throws DataAccessException;</java>
            org.jooq.util.postgres.PostgresDatabase
            org.jooq.util.sqlite.SQLiteDatabaes
            org.jooq.util.sqlserver.SQLServerDatabase
-           org.jooq.util.sybase.SybaseDatabase
+           org.jooq.util.sybase.SybaseDatabase (to be used with Sybase SQL Anywhere)
 
            You can also provide your own org.jooq.util.Database implementation
            here, if your database is currently not supported -->

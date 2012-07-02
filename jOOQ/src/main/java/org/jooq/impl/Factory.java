@@ -419,6 +419,7 @@ public class Factory implements FactoryOperations {
     @Override
     public final void commit() throws DataAccessException {
         try {
+            log.debug("commit");
             getConnection().commit();
         }
         catch (Exception e) {
@@ -432,6 +433,7 @@ public class Factory implements FactoryOperations {
     @Override
     public final void rollback() throws DataAccessException {
         try {
+            log.debug("rollback");
             getConnection().rollback();
         }
         catch (Exception e) {
@@ -445,6 +447,7 @@ public class Factory implements FactoryOperations {
     @Override
     public final void rollback(Savepoint savepoint) throws DataAccessException {
         try {
+            log.debug("rollback to savepoint");
             getConnection().rollback(savepoint);
         }
         catch (Exception e) {
@@ -458,6 +461,7 @@ public class Factory implements FactoryOperations {
     @Override
     public final Savepoint setSavepoint() throws DataAccessException {
         try {
+            log.debug("set savepoint");
             return getConnection().setSavepoint();
         }
         catch (Exception e) {
@@ -471,6 +475,7 @@ public class Factory implements FactoryOperations {
     @Override
     public final Savepoint setSavepoint(String name) throws DataAccessException {
         try {
+            log.debug("set savepoint", name);
             return getConnection().setSavepoint(name);
         }
         catch (Exception e) {
@@ -484,6 +489,7 @@ public class Factory implements FactoryOperations {
     @Override
     public final void releaseSavepoint(Savepoint savepoint) throws DataAccessException {
         try {
+            log.debug("release savepoint");
             getConnection().releaseSavepoint(savepoint);
         }
         catch (Exception e) {
@@ -497,6 +503,7 @@ public class Factory implements FactoryOperations {
     @Override
     public final void setAutoCommit(boolean autoCommit) throws DataAccessException {
         try {
+            log.debug("setting auto commit", autoCommit);
             getConnection().setAutoCommit(autoCommit);
         }
         catch (Exception e) {
@@ -523,6 +530,7 @@ public class Factory implements FactoryOperations {
     @Override
     public final void setHoldability(int holdability) throws DataAccessException {
         try {
+            log.debug("setting holdability", holdability);
             getConnection().setHoldability(holdability);
         }
         catch (Exception e) {
@@ -549,6 +557,7 @@ public class Factory implements FactoryOperations {
     @Override
     public final void setTransactionIsolation(int level) throws DataAccessException {
         try {
+            log.debug("setting tx isolation", level);
             getConnection().setTransactionIsolation(level);
         }
         catch (Exception e) {

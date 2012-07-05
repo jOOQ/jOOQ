@@ -43,8 +43,23 @@ import javax.sql.DataSource;
 
 import org.jooq.conf.Settings;
 
+import org.hamcrest.Factory;
+
 /**
- * The Configuration holds data about sql dialects and connections
+ * The Configuration holds data about sql dialects, connections / data sources,
+ * and custom settings as well as custom data.
+ * <p>
+ * Essentially, the lifecycle of all objects in {@link Configuration} is the
+ * same. It corresponds to the lifecycle of a single {@link Query} and its
+ * rendering, variable binding, execution, and data fetching phases. This is
+ * also reflected in the fact that {@link ExecuteListener} objects are
+ * re-created every time a <code>Query</code> is executed
+ * <p>
+ * However, {@link Configuration} / {@link Factory} may be reused for several
+ * consecutive queries in a single thread, if the supplied
+ * <code>Connection</code> / <code>DataSource</code> allows this and if client
+ * code can live with the possibility of stale state in
+ * {@link Configuration#getData()} between executions
  *
  * @author Lukas Eder
  */
@@ -93,8 +108,8 @@ public interface Configuration extends Serializable {
      * <p>
      * This is custom data that was previously set to the configuration using
      * {@link #setData(String, Object)}. Use custom data if you want to pass
-     * data to your custom {@link QueryPart} or {@link ExecuteListener} objects to
-     * be made available at render, bind, execution, fetch time.
+     * data to your custom {@link QueryPart} or {@link ExecuteListener} objects
+     * to be made available at render, bind, execution, fetch time.
      * <p>
      * See {@link ExecuteListener} for more details.
      *
@@ -108,8 +123,8 @@ public interface Configuration extends Serializable {
      * <p>
      * This is custom data that was previously set to the configuration using
      * {@link #setData(String, Object)}. Use custom data if you want to pass
-     * data to your custom {@link QueryPart} or {@link ExecuteListener} objects to
-     * be made available at render, bind, execution, fetch time.
+     * data to your custom {@link QueryPart} or {@link ExecuteListener} objects
+     * to be made available at render, bind, execution, fetch time.
      * <p>
      * See {@link ExecuteListener} for more details.
      *
@@ -123,10 +138,9 @@ public interface Configuration extends Serializable {
     /**
      * Set some custom data to this <code>Configuration</code>
      * <p>
-     * This is custom data that was previously set to the configuration using
-     * {@link #setData(String, Object)}. Use custom data if you want to pass
-     * data to your custom {@link QueryPart} or {@link ExecuteListener} objects to
-     * be made available at render, bind, execution, fetch time.
+     * Use custom data if you want to pass data to your custom {@link QueryPart}
+     * or {@link ExecuteListener} objects to be made available at render, bind,
+     * execution, fetch time.
      * <p>
      * Be sure that your custom data implements {@link Serializable} if you want
      * to serialise this <code>Configuration</code> or objects referencing this

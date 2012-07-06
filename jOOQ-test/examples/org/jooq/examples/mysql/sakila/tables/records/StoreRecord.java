@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class StoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> {
 
-	private static final long serialVersionUID = 931410945;
+	private static final long serialVersionUID = 1008273904;
 
 	/**
 	 * The table column <code>sakila.store.store_id</code>
@@ -91,6 +91,19 @@ public class StoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StaffRecord 
+	 * StaffRecord}
+	 */
+	public void setManagerStaffId(org.jooq.examples.mysql.sakila.tables.records.StaffRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.MANAGER_STAFF_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.MANAGER_STAFF_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID));
+		}
+	}
+
+	/**
 	 * The table column <code>sakila.store.manager_staff_id</code>
 	 * <p>
 	 * This column is part of a FOREIGN KEY: <code><pre>
@@ -130,6 +143,19 @@ public class StoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 */
 	public java.lang.Short getAddressId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.ADDRESS_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.AddressRecord 
+	 * AddressRecord}
+	 */
+	public void setAddressId(org.jooq.examples.mysql.sakila.tables.records.AddressRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.ADDRESS_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.ADDRESS_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID));
+		}
 	}
 
 	/**

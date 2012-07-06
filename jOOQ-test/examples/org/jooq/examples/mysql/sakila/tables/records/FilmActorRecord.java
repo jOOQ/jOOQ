@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> {
 
-	private static final long serialVersionUID = -1054039084;
+	private static final long serialVersionUID = 943974465;
 
 	/**
 	 * The table column <code>sakila.film_actor.actor_id</code>
@@ -38,6 +38,19 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public java.lang.Short getActorId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR.ACTOR_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.ActorRecord 
+	 * ActorRecord}
+	 */
+	public void setActorId(org.jooq.examples.mysql.sakila.tables.records.ActorRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR.ACTOR_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR.ACTOR_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.ACTOR_ID));
+		}
 	}
 
 	/**
@@ -86,6 +99,19 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public java.lang.Short getFilmId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR.FILM_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.FilmRecord 
+	 * FilmRecord}
+	 */
+	public void setFilmId(org.jooq.examples.mysql.sakila.tables.records.FilmRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR.FILM_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR.FILM_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID));
+		}
 	}
 
 	/**

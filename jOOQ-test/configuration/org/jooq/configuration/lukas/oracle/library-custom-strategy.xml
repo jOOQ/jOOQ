@@ -60,7 +60,7 @@
             <deprecated>true</deprecated>
             <instanceFields>true</instanceFields>
             <generatedAnnotation>false</generatedAnnotation>
-            <records>false</records>
+            <records>true</records>
             <pojos>true</pojos>
             <interfaces>true</interfaces>
             <jpaAnnotations>true</jpaAnnotations>

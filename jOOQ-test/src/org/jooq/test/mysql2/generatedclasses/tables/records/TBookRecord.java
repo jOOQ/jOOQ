@@ -12,7 +12,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "test2")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1735311823;
+	private static final long serialVersionUID = -2035015781;
 
 	/**
 	 * The book ID
@@ -74,6 +74,19 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord 
+	 * TAuthorRecord}
+	 */
+	public void setAuthorId(org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, value.getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID));
+		}
+	}
+
+	/**
 	 * The author ID in entity 'author'
 	 * <p>
 	 * This column is part of a FOREIGN KEY: <code><pre>
@@ -114,6 +127,19 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@javax.persistence.Column(name = "co_author_id", precision = 10)
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord 
+	 * TAuthorRecord}
+	 */
+	public void setCoAuthorId(org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, value.getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID));
+		}
 	}
 
 	/**

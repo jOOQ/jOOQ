@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "public")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 2000420941;
+	private static final long serialVersionUID = -394117229;
 
 	/**
 	 * The table column <code>public.t_book.id</code>
@@ -72,6 +72,19 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord 
+	 * TAuthorRecord}
+	 */
+	public void setAuthorId(org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, value.getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID));
+		}
+	}
+
+	/**
 	 * The table column <code>public.t_book.author_id</code>
 	 * <p>
 	 * This column is part of a FOREIGN KEY: <code><pre>
@@ -112,6 +125,19 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@javax.persistence.Column(name = "co_author_id", precision = 32)
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord 
+	 * TAuthorRecord}
+	 */
+	public void setCoAuthorId(org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, value.getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID));
+		}
 	}
 
 	/**

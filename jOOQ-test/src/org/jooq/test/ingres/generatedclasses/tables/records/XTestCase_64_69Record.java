@@ -8,7 +8,7 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  */
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -92020924;
+	private static final long serialVersionUID = -909974594;
 
 	/**
 	 * The table column <code>test.x_test_case_64_69.id</code>
@@ -64,6 +64,19 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 */
 	public java.lang.Integer getUnusedId() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.ingres.generatedclasses.tables.records.XUnusedRecord 
+	 * XUnusedRecord}
+	 */
+	public void setUnusedId(org.jooq.test.ingres.generatedclasses.tables.records.XUnusedRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.ingres.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.ingres.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, value.getValue(org.jooq.test.ingres.generatedclasses.tables.XUnused.ID));
+		}
 	}
 
 	/**

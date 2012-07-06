@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 522672215;
+	private static final long serialVersionUID = -368244009;
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.ID</code>
@@ -60,6 +60,19 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord 
+	 * TAuthorRecord}
+	 */
+	public void setAuthorId(org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.AUTHOR_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.AUTHOR_ID, value.getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ID));
+		}
+	}
+
+	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.AUTHOR_ID</code>
 	 * <p>
 	 * This column is part of a FOREIGN KEY: <code><pre>
@@ -100,6 +113,19 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.CO_AUTHOR_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord 
+	 * TAuthorRecord}
+	 */
+	public void setCoAuthorId(org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.CO_AUTHOR_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.CO_AUTHOR_ID, value.getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ID));
+		}
 	}
 
 	/**

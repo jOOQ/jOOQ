@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IXTestCase_64_69 {
 
-	private static final long serialVersionUID = 339086715;
+	private static final long serialVersionUID = 1321809848;
 
 	/**
 	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.ID</code>
@@ -68,6 +68,19 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	@Override
 	public java.lang.Integer getUnusedId() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord 
+	 * XUnusedRecord}
+	 */
+	public void setUnusedId(org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID, value.getValue(org.jooq.test.hsqldb.generatedclasses.tables.XUnused.X_UNUSED.ID));
+		}
 	}
 
 	/**

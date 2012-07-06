@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_64_69", schema = "public")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1309886100;
+	private static final long serialVersionUID = -756599686;
 
 	/**
 	 * The table column <code>public.x_test_case_64_69.id</code>
@@ -69,6 +69,19 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	@javax.persistence.Column(name = "unused_id", precision = 32)
 	public java.lang.Integer getUnusedId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord 
+	 * XUnusedRecord}
+	 */
+	public void setUnusedId(org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID, value.getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID));
+		}
 	}
 
 	/**

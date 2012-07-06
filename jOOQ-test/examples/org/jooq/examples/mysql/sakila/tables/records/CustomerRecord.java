@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> {
 
-	private static final long serialVersionUID = -1712418677;
+	private static final long serialVersionUID = -1436619010;
 
 	/**
 	 * The table column <code>sakila.customer.customer_id</code>
@@ -76,6 +76,19 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 */
 	public java.lang.Byte getStoreId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.STORE_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StoreRecord 
+	 * StoreRecord}
+	 */
+	public void setStoreId(org.jooq.examples.mysql.sakila.tables.records.StoreRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.STORE_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.STORE_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID));
+		}
 	}
 
 	/**
@@ -160,6 +173,19 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 */
 	public java.lang.Short getAddressId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.ADDRESS_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.AddressRecord 
+	 * AddressRecord}
+	 */
+	public void setAddressId(org.jooq.examples.mysql.sakila.tables.records.AddressRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.ADDRESS_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.ADDRESS_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID));
+		}
 	}
 
 	/**

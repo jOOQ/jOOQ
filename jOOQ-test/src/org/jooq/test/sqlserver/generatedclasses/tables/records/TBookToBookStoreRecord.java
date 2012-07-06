@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
  */
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1967816253;
+	private static final long serialVersionUID = -261629684;
 
 	/**
 	 * The table column <code>dbo.t_book_to_book_store.BOOK_STORE_NAME</code>
@@ -38,6 +38,19 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord 
+	 * TBookStoreRecord}
+	 */
+	public void setBookStoreName(org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, null);
+		}
+		else {
+			setValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value.getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME));
+		}
 	}
 
 	/**
@@ -86,6 +99,19 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord 
+	 * TBookRecord}
+	 */
+	public void setBookId(org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value.getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.ID));
+		}
 	}
 
 	/**

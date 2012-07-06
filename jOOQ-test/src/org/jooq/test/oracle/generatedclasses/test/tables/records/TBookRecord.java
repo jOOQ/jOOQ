@@ -12,7 +12,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_BOOK", schema = "TEST")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1858754413;
+	private static final long serialVersionUID = 1872409185;
 
 	/**
 	 * The book ID
@@ -74,6 +74,19 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord 
+	 * TAuthorRecord}
+	 */
+	public void setAuthorId(org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.AUTHOR_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.AUTHOR_ID, value.getValue(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ID));
+		}
+	}
+
+	/**
 	 * The author ID in entity 'author'
 	 * <p>
 	 * This column is part of a FOREIGN KEY: <code><pre>
@@ -114,6 +127,19 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CO_AUTHOR_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord 
+	 * TAuthorRecord}
+	 */
+	public void setCoAuthorId(org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CO_AUTHOR_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CO_AUTHOR_ID, value.getValue(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ID));
+		}
 	}
 
 	/**

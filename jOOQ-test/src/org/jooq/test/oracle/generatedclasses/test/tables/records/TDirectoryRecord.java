@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = 245485765;
+	private static final long serialVersionUID = -519277969;
 
 	/**
 	 * The table column <code>TEST.T_DIRECTORY.ID</code>
@@ -69,6 +69,19 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@javax.persistence.Column(name = "PARENT_ID", precision = 7)
 	public java.lang.Integer getParentId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.PARENT_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord 
+	 * TDirectoryRecord}
+	 */
+	public void setParentId(org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.PARENT_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.PARENT_ID, value.getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.ID));
+		}
 	}
 
 	/**

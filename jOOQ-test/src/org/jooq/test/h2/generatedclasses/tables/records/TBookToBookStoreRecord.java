@@ -10,7 +10,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = 1214760651;
+	private static final long serialVersionUID = 1217868862;
 
 	/**
 	 * The book store name
@@ -42,6 +42,19 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord 
+	 * TBookStoreRecord}
+	 */
+	public void setBookStoreName(org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, null);
+		}
+		else {
+			setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value.getValue(org.jooq.test.h2.generatedclasses.tables.TBookStore.NAME));
+		}
 	}
 
 	/**
@@ -92,6 +105,19 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TBookRecord 
+	 * TBookRecord}
+	 */
+	public void setBookId(org.jooq.test.h2.generatedclasses.tables.records.TBookRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID, value.getValue(org.jooq.test.h2.generatedclasses.tables.TBook.ID));
+		}
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> {
 
-	private static final long serialVersionUID = -128739601;
+	private static final long serialVersionUID = -1408661231;
 
 	/**
 	 * The table column <code>sakila.payment.payment_id</code>
@@ -55,6 +55,19 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CustomerRecord 
+	 * CustomerRecord}
+	 */
+	public void setCustomerId(org.jooq.examples.mysql.sakila.tables.records.CustomerRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CUSTOMER_ID));
+		}
+	}
+
+	/**
 	 * The table column <code>sakila.payment.customer_id</code>
 	 * <p>
 	 * This column is part of a FOREIGN KEY: <code><pre>
@@ -97,6 +110,19 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StaffRecord 
+	 * StaffRecord}
+	 */
+	public void setStaffId(org.jooq.examples.mysql.sakila.tables.records.StaffRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID));
+		}
+	}
+
+	/**
 	 * The table column <code>sakila.payment.staff_id</code>
 	 * <p>
 	 * This column is part of a FOREIGN KEY: <code><pre>
@@ -136,6 +162,19 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 */
 	public java.lang.Integer getRentalId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.RentalRecord 
+	 * RentalRecord}
+	 */
+	public void setRentalId(org.jooq.examples.mysql.sakila.tables.records.RentalRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_ID));
+		}
 	}
 
 	/**

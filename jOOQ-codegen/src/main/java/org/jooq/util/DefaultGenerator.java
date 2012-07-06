@@ -3013,7 +3013,22 @@ public class DefaultGenerator extends AbstractGenerator {
         if (comment != null && comment.length() > 0) {
             out.println("\t * " + comment);
         } else {
-            out.println("\t * An uncommented item");
+            out.print("\t *");
+
+            if (element instanceof ColumnDefinition) {
+                out.print(" The table column");
+            }
+            else if (element instanceof ParameterDefinition) {
+                out.print(" The procedure parameter");
+            }
+            else if (element instanceof AttributeDefinition) {
+                out.print(" The UDT column");
+            }
+            else if (element instanceof SequenceDefinition) {
+                out.print(" The sequence");
+            }
+
+            out.println(" <code>" + element.getQualifiedOutputName() + "</code>");
         }
 
         if (getJavaType(element.getType()).startsWith("java.lang.Object")) {
@@ -3021,7 +3036,7 @@ public class DefaultGenerator extends AbstractGenerator {
             String u = element.getType().getUserType();
             String combined = t.equalsIgnoreCase(u) ? t : t + ", " + u;
 
-            out.println("\t * ");
+            out.println("\t * <p>");
             out.print("\t * The SQL type of this item (");
             out.print(combined);
             out.println(") could not be mapped.<br/>");
@@ -3037,14 +3052,14 @@ public class DefaultGenerator extends AbstractGenerator {
             ForeignKeyDefinition foreignKey = column.getForeignKey();
 
             if (primaryKey != null) {
-                out.println("\t * ");
-                out.print("\t * PRIMARY KEY");
+                out.println("\t * <p>");
+                out.print("\t * This column is part of the table's PRIMARY KEY");
                 out.println();
             }
 
             if (foreignKey != null) {
                 out.println("\t * <p>");
-                out.println("\t * <code><pre>");
+                out.println("\t * This column is part of a FOREIGN KEY: <code><pre>");
 
                 out.print("\t * CONSTRAINT ");
                 out.println(foreignKey.getOutputName());

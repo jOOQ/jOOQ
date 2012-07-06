@@ -263,26 +263,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 return;
         }
 
-        // [#1523] Derby, H2 now support the ROW_NUMBER() OVER() window function
-        // without any window clause, though. HSQLDB can simulate it using ROWNUM()
-        List<Integer> rows =
-        create().select(rowNumber().over()).from(TBook()).fetch(0, Integer.class);
-        assertEquals(asList(1, 2, 3, 4), rows);
-
         switch (getDialect()) {
             case DERBY:
             case H2:
             case HSQLDB:
+
+                // [#1535] TODO: Move this out of the switch statement. Oracle
+                // and other databases should be able to support ORDER-BY-less
+                // OVER() clauses for ranking functions
+
+                // [#1523] Derby, H2 now support the ROW_NUMBER() OVER() window function
+                // without any window clause, though. HSQLDB can simulate it using ROWNUM()
+                List<Integer> rows =
+                create().select(rowNumber().over()).from(TBook()).orderBy(TBook_ID()).fetch(0, Integer.class);
+                assertEquals(asList(1, 2, 3, 4), rows);
+
                 log.info("SKIPPING", "Advanced window function tests");
                 return;
         }
-
 
         int column = 0;
 
         // ROW_NUMBER()
         Result<Record> result =
         create().select(TBook_ID(),
+// [#1535] TODO:        rowNumber().over(),
                         rowNumber().over()
                                    .partitionByOne()
                                    .orderBy(TBook_ID().desc()),
@@ -292,6 +297,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .from(TBook())
                 .orderBy(TBook_ID().asc())
                 .fetch();
+
+//        // [#1535] No ORDER BY clause
+//        column++;
+//        assertEquals(BOOK_IDS, result.getValues(column));
 
         // Ordered ROW_NUMBER()
         column++;

@@ -205,29 +205,6 @@
                     <downloadSources>true</downloadSources>
                 </configuration>
             </plugin>
-
-            <!-- If this plugin produces an error, make sure you are running
-                 Maven with Java 6. This section was contributed by user digulla
-                 See details here: https://github.com/jOOQ/jOOQ/issues/17 -->
-            <plugin>
-                <artifactId>maven-enforcer-plugin</artifactId>
-
-                <executions>
-                    <execution>
-                        <id>enforce-java</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireJavaVersion>
-                                    <version>[1.6.0,1.7.0)</version>
-                                </requireJavaVersion>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 

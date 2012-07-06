@@ -60,6 +60,7 @@ import org.jooq.InsertQuery;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
 import org.jooq.LoaderOptionsStep;
+import org.jooq.MergeKeyStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -324,6 +325,16 @@ public final class FactoryProxy implements FactoryOperations {
     @Override
     public final <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
         return getDelegate().mergeInto(table);
+    }
+
+    @Override
+    public final <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Field<?>... fields) {
+        return getDelegate().mergeInto(table, fields);
+    }
+
+    @Override
+    public final <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
+        return getDelegate().mergeInto(table, fields);
     }
 
     @Override

@@ -549,7 +549,7 @@ public interface FactoryOperations extends Configuration {
     <R extends Record> UpdateSetStep<R> update(Table<R> table);
 
     /**
-     * Create a new DSL merge statement.
+     * Create a new DSL SQL standard MERGE statement.
      * <p>
      * This statement is available from DSL syntax only. It is known to be
      * supported in some way by any of these dialects:
@@ -610,9 +610,38 @@ public interface FactoryOperations extends Configuration {
      *       .values(value1, value2)
      *       .execute();
      * </pre></code>
+     * <p>
+     * Note: Using this method, you can also create an H2-specific MERGE
+     * statement without field specification. See also
+     * {@link #mergeInto(Table, Field...)}
      */
     @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * </table>
+     */
+    @Support(H2)
+    <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Field<?>... fields);
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     *
+     * @see #mergeInto(Table, Field...)
+     */
+    @Support(H2)
+    <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields);
 
     /**
      * Create a new {@link DeleteQuery}

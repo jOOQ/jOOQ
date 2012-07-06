@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.impl.Factory.condition;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.notExists;
@@ -63,14 +64,18 @@ import org.jooq.MergeOnConditionStep;
 import org.jooq.MergeOnStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Operator;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.StringUtils;
 
 /**
+ * The SQL standard MERGE statement
+ *
  * @author Lukas Eder
  */
 class MergeImpl<R extends Record> extends AbstractQuery
@@ -105,15 +110,110 @@ implements
     private boolean                     notMatchedClause;
     private FieldMapForInsert           notMatchedInsert;
 
+    // Objects for the H2-specific syntax
+    private boolean                     h2Style;
+    private FieldList                   h2Fields;
+    private FieldList                   h2Keys;
+    private FieldList                   h2Values;
+    private Select<?>                   h2Select;
+
     MergeImpl(Configuration configuration, Table<R> table) {
+        this(configuration, table, null);
+    }
+
+    MergeImpl(Configuration configuration, Table<R> table, Collection<? extends Field<?>> fields) {
         super(configuration);
 
         this.table = table;
         this.on = new ConditionProviderImpl();
+
+        if (fields != null) {
+            h2Style = true;
+            h2Fields = new FieldList(fields);
+        }
     }
 
     // -------------------------------------------------------------------------
-    // QueryPart API
+    // H2-specific MERGE API
+    // -------------------------------------------------------------------------
+
+    FieldList getH2Fields() {
+        if (h2Fields == null) {
+            h2Fields = new FieldList();
+            h2Fields.addAll(table.getFields());
+        }
+
+        return h2Fields;
+    }
+
+    FieldList getH2Keys() {
+        if (h2Keys == null) {
+            h2Keys = new FieldList();
+        }
+
+        return h2Keys;
+    }
+
+    FieldList getH2Values() {
+        if (h2Values == null) {
+            h2Values = new FieldList();
+        }
+
+        return h2Values;
+    }
+
+    @Override
+    public final MergeImpl<R> select(Select<?> select) {
+        h2Style = true;
+        h2Select = select;
+        return this;
+    }
+
+    @Override
+    public final MergeImpl<R> key(Field<?>... k) {
+        return key(Arrays.asList(k));
+    }
+
+    @Override
+    public final MergeImpl<R> key(Collection<? extends Field<?>> keys) {
+        h2Style = true;
+        getH2Keys().addAll(keys);
+        return this;
+    }
+
+    // -------------------------------------------------------------------------
+    // Shared MERGE API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final MergeImpl<R> values(Object... values) {
+
+        // [#1541] The VALUES() clause is also supported in the H2-specific
+        // syntax, in case of which, the USING() was not added
+        if (using == null) {
+            h2Style = true;
+            getH2Values().addAll(vals(convert(getH2Fields(), values)));
+        }
+        else {
+            List<Field<?>> fields = new ArrayList<Field<?>>(notMatchedInsert.keySet());
+            notMatchedInsert.putValues(vals(convert(fields, values)));
+        }
+
+        return this;
+    }
+
+    @Override
+    public final MergeImpl<R> values(Field<?>... values) {
+        return values((Object[]) values);
+    }
+
+    @Override
+    public final MergeImpl<R> values(Collection<?> values) {
+        return values(values.toArray());
+    }
+
+    // -------------------------------------------------------------------------
+    // Merge API
     // -------------------------------------------------------------------------
 
     @Override
@@ -271,23 +371,6 @@ implements
     }
 
     @Override
-    public final MergeImpl<R> values(Object... values) {
-        List<Field<?>> fields = new ArrayList<Field<?>>(notMatchedInsert.keySet());
-        notMatchedInsert.putValues(vals(convert(fields, values)));
-        return this;
-    }
-
-    @Override
-    public final MergeImpl<R> values(Field<?>... values) {
-        return values((Object[]) values);
-    }
-
-    @Override
-    public final MergeImpl<R> values(Collection<?> values) {
-        return values(values.toArray());
-    }
-
-    @Override
     public final MergeImpl<R> where(Condition condition) {
         if (matchedClause) {
             matchedWhere = condition;
@@ -314,6 +397,46 @@ implements
 
     @Override
     public final void toSQL(RenderContext context) {
+        if (h2Style) {
+            toSQLH2(context);
+        }
+        else {
+            toSQLStandard(context);
+        }
+    }
+
+    private final void toSQLH2(RenderContext context) {
+        if (context.getDialect() != H2) {
+            throw new SQLDialectNotSupportedException("The H2-specific MERGE syntax is only supported in H2");
+        }
+
+        context.keyword("merge into ")
+               .declareTables(true)
+               .sql(table)
+               .formatSeparator();
+
+        context.sql("(");
+        Util.toSQLNames(context, getH2Fields());
+        context.sql(")");
+
+        if (!getH2Keys().isEmpty()) {
+            context.keyword(" key (");
+            Util.toSQLNames(context, getH2Keys());
+            context.sql(")");
+        }
+
+        if (h2Select != null) {
+            context.sql(" ")
+                   .sql(h2Select);
+        }
+        else {
+            context.keyword(" values (")
+                   .sql(getH2Values())
+                   .sql(")");
+        }
+    }
+
+    private final void toSQLStandard(RenderContext context) {
         context.keyword("merge into ")
                .declareTables(true)
                .sql(table)
@@ -405,6 +528,25 @@ implements
 
     @Override
     public final void bind(BindContext context) {
+        if (h2Style) {
+            bindH2(context);
+        }
+        else {
+            bindStandard(context);
+        }
+    }
+
+    private final void bindH2(BindContext context) {
+        context.declareTables(true)
+               .bind(table)
+               .declareTables(false)
+               .bind((QueryPart) getH2Fields())
+               .bind((QueryPart) getH2Keys())
+               .bind(h2Select)
+               .bind((QueryPart) getH2Values());
+    }
+
+    private final void bindStandard(BindContext context) {
         context.declareTables(true)
                .bind(table)
                .bind(using)
@@ -425,6 +567,10 @@ implements
             matchedWhere,
             matchedDeleteWhere,
             notMatchedInsert,
-            notMatchedWhere);
+            notMatchedWhere,
+            h2Fields,
+            h2Keys,
+            h2Select,
+            h2Values);
     }
 }

@@ -35,48 +35,41 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.H2;
+
+import java.util.Collection;
 
 /**
- * This type is used for the {@link Merge}'s DSL API.
+ * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
  * Example: <code><pre>
  * Factory create = new Factory();
- * 
- * create.mergeInto(table)
- *       .using(select)
- *       .on(condition)
- *       .whenMatchedThenUpdate()
- *       .set(field1, value1)
- *       .set(field2, value2)
- *       .whenNotMatchedThenInsert(field1, field2)
+ *
+ * create.mergeInto(table, field1, field2)
+ *       .key(id)
  *       .values(value1, value2)
  *       .execute();
  * </pre></code>
- * 
+ *
  * @author Lukas Eder
  */
-public interface MergeUsingStep<R extends Record> extends MergeKeyStep<R> {
+public interface MergeKeyStep<R extends Record> extends MergeValuesStep<R> {
 
     /**
-     * Add the <code>USING</code> clause to the SQL standard <code>MERGE</code>
-     * statement
-     */
-    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> using(TableLike<?> table);
-
-    /**
-     * Add a dummy <code>USING</code> clause to the SQL standard
-     * <code>MERGE</code> statement
+     * Specify an optional <code>KEY</code> clause.
      * <p>
-     * This results in <code>USING(SELECT 1 FROM DUAL)</code> for most RDBMS, or
-     * in <code>USING(SELECT 1) AS [dummy_table(dummy_field)]</code> in SQL
-     * Server, where derived tables need to be aliased.
+     * Use this optional clause in order to override using the underlying
+     * <code>PRIMARY KEY</code>.
      */
-    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> usingDual();
+    @Support(H2)
+    MergeValuesStep<R> key(Field<?>... keys);
+
+    /**
+     * Specify an optional <code>KEY</code> clause.
+     * <p>
+     * Use this optional clause in order to override using the underlying
+     * <code>PRIMARY KEY</code>.
+     */
+    @Support(H2)
+    MergeValuesStep<R> key(Collection<? extends Field<?>> keys);
 }

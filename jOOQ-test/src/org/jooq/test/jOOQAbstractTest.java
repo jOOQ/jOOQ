@@ -1111,6 +1111,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testH2Merge() throws Exception {
+        new InsertUpdateTests(this).testH2Merge();
+    }
+
+    @Test
     public void testBlobAndClob() throws Exception {
         new DataTypeTests(this).testBlobAndClob();
     }

@@ -104,6 +104,7 @@ import org.jooq.InsertQuery;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
 import org.jooq.LoaderOptionsStep;
+import org.jooq.MergeKeyStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
@@ -1842,6 +1843,22 @@ public class Factory implements FactoryOperations {
     @Override
     public final <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
         return new MergeImpl<R>(this, table);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Field<?>... fields) {
+        return mergeInto(table, Arrays.asList(fields));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
+        return new MergeImpl<R>(this, table, fields);
     }
 
     /**

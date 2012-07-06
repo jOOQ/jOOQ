@@ -35,48 +35,54 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.H2;
+
+import java.util.Collection;
 
 /**
- * This type is used for the {@link Merge}'s DSL API.
+ * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
  * Example: <code><pre>
  * Factory create = new Factory();
- * 
- * create.mergeInto(table)
- *       .using(select)
- *       .on(condition)
- *       .whenMatchedThenUpdate()
- *       .set(field1, value1)
- *       .set(field2, value2)
- *       .whenNotMatchedThenInsert(field1, field2)
+ *
+ * create.mergeInto(table, field1, field2)
+ *       .key(id)
  *       .values(value1, value2)
  *       .execute();
  * </pre></code>
- * 
+ *
  * @author Lukas Eder
  */
-public interface MergeUsingStep<R extends Record> extends MergeKeyStep<R> {
+public interface MergeValuesStep<R extends Record> {
 
     /**
-     * Add the <code>USING</code> clause to the SQL standard <code>MERGE</code>
-     * statement
+     * Specify a <code>VALUES</code> clause
      */
-    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> using(TableLike<?> table);
+    @Support(H2)
+    Merge<R> values(Object... values);
 
     /**
-     * Add a dummy <code>USING</code> clause to the SQL standard
+     * Specify a <code>VALUES</code> clause
+     */
+    @Support(H2)
+    Merge<R> values(Field<?>... values);
+
+    /**
+     * Specify a <code>VALUES</code> clause
+     */
+    @Support(H2)
+    Merge<R> values(Collection<?> values);
+
+    /**
+     * Use a <code>SELECT</code> statement as the source of values for the
      * <code>MERGE</code> statement
      * <p>
-     * This results in <code>USING(SELECT 1 FROM DUAL)</code> for most RDBMS, or
-     * in <code>USING(SELECT 1) AS [dummy_table(dummy_field)]</code> in SQL
-     * Server, where derived tables need to be aliased.
+     * This variant of the <code>MERGE .. SELECT</code> statement expects a
+     * select returning exactly as many fields as specified previously in the
+     * <code>INTO</code> clause:
+     * {@link FactoryOperations#mergeInto(Table, Field...)} or
+     * {@link FactoryOperations#mergeInto(Table, Collection)}
      */
-    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> usingDual();
+    @Support(H2)
+    Merge<R> select(Select<?> select);
 }

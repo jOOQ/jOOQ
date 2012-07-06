@@ -793,6 +793,74 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testH2Merge() throws Exception {
+        switch (getDialect()) {
+            case H2:
+                break;
+
+            default:
+                log.info("SKIPPING", "H2-specific MERGE syntax test");
+                return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        // H2 MERGE test leading to a single INSERT .. VALUES
+        assertEquals(1,
+        create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                .values(3, "Hesse")
+                .execute());
+
+        Result<A> authors1 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
+        assertEquals(3, authors1.size());
+        assertEquals(3, (int) authors1.get(2).getValue(TAuthor_ID()));
+        assertEquals("Hesse", authors1.get(2).getValue(TAuthor_LAST_NAME()));
+        assertNull(authors1.get(2).getValue(TAuthor_FIRST_NAME()));
+
+        // H2 MERGE test leading to a single UPDATE
+        assertEquals(1,
+        create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_FIRST_NAME())
+                .values(3, "Hermann")
+                .execute());
+
+        Result<A> authors2 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
+        assertEquals(3, authors2.size());
+        assertEquals(3, (int) authors2.get(2).getValue(TAuthor_ID()));
+        assertEquals("Hesse", authors2.get(2).getValue(TAuthor_LAST_NAME()));
+        assertEquals("Hermann", authors2.get(2).getValue(TAuthor_FIRST_NAME()));
+
+        // H2 MERGE test specifying a custom KEY clause
+        assertEquals(1,
+        create().mergeInto(TAuthor(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+                .key(TAuthor_LAST_NAME())
+                .values("Lukas", "Hesse")
+                .execute());
+
+        Result<A> authors3 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
+        assertEquals(3, authors3.size());
+        assertEquals(3, (int) authors3.get(2).getValue(TAuthor_ID()));
+        assertEquals("Hesse", authors3.get(2).getValue(TAuthor_LAST_NAME()));
+        assertEquals("Lukas", authors3.get(2).getValue(TAuthor_FIRST_NAME()));
+
+        // H2 MERGE test specifying a subselect
+        assertEquals(2,
+        create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                .key(TAuthor_ID())
+                .select(create().select(val(3), val("Eder")).unionAll(
+                        create().select(val(4), val("Eder"))))
+                .execute());
+
+        Result<A> authors4 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
+        assertEquals(4, authors4.size());
+        assertEquals(3, (int) authors4.get(2).getValue(TAuthor_ID()));
+        assertEquals("Eder", authors4.get(2).getValue(TAuthor_LAST_NAME()));
+        assertEquals("Lukas", authors4.get(2).getValue(TAuthor_FIRST_NAME()));
+        assertEquals(4, (int) authors4.get(3).getValue(TAuthor_ID()));
+        assertEquals("Eder", authors4.get(3).getValue(TAuthor_LAST_NAME()));
+        assertNull(authors4.get(3).getValue(TAuthor_FIRST_NAME()));
+    }
+
+    @Test
     public void testUpdateSelect() throws Exception {
         switch (getDialect()) {
             case SQLITE:

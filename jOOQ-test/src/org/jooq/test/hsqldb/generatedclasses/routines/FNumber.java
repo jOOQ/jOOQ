@@ -8,16 +8,16 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
  */
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 2076513558;
+	private static final long serialVersionUID = 240236630;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.F_NUMBER.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.F_NUMBER.N</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> N = createParameter("N", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -32,7 +32,7 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>N</code> parameter to the routine
+	 * Set the <code>N</code> parameter IN value to the routine
 	 */
 	public void setN(java.lang.Integer value) {
 		setValue(org.jooq.test.hsqldb.generatedclasses.routines.FNumber.N, value);

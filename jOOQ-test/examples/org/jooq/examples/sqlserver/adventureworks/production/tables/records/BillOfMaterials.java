@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "BillOfMaterials", schema = "Production")
 public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials> {
 
-	private static final long serialVersionUID = 88704232;
+	private static final long serialVersionUID = 1589494180;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.BillOfMaterials.BillOfMaterialsID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setBillOfMaterialsID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.BillOfMaterialsID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.BillOfMaterials.BillOfMaterialsID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "BillOfMaterialsID", unique = true, nullable = false, precision = 10)
@@ -33,9 +33,9 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.ProductAssemblyID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_BillOfMaterials_Product_ProductAssemblyID
 	 * FOREIGN KEY (ProductAssemblyID)
 	 * REFERENCES Production.Product (ProductID)
@@ -46,9 +46,9 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.ProductAssemblyID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_BillOfMaterials_Product_ProductAssemblyID
 	 * FOREIGN KEY (ProductAssemblyID)
 	 * REFERENCES Production.Product (ProductID)
@@ -60,9 +60,9 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.ComponentID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_BillOfMaterials_Product_ComponentID
 	 * FOREIGN KEY (ComponentID)
 	 * REFERENCES Production.Product (ProductID)
@@ -73,9 +73,9 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.ComponentID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_BillOfMaterials_Product_ComponentID
 	 * FOREIGN KEY (ComponentID)
 	 * REFERENCES Production.Product (ProductID)
@@ -87,14 +87,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.StartDate</code>
 	 */
 	public void setStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.StartDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.StartDate</code>
 	 */
 	@javax.persistence.Column(name = "StartDate", nullable = false)
 	public java.sql.Timestamp getStartDate() {
@@ -102,14 +102,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.EndDate</code>
 	 */
 	public void setEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.EndDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.EndDate</code>
 	 */
 	@javax.persistence.Column(name = "EndDate")
 	public java.sql.Timestamp getEndDate() {
@@ -117,9 +117,9 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.UnitMeasureCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_BillOfMaterials_UnitMeasure_UnitMeasureCode
 	 * FOREIGN KEY (UnitMeasureCode)
 	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
@@ -130,9 +130,9 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.UnitMeasureCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_BillOfMaterials_UnitMeasure_UnitMeasureCode
 	 * FOREIGN KEY (UnitMeasureCode)
 	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
@@ -144,14 +144,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.BOMLevel</code>
 	 */
 	public void setBOMLevel(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.BOMLevel, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.BOMLevel</code>
 	 */
 	@javax.persistence.Column(name = "BOMLevel", nullable = false, precision = 5)
 	public java.lang.Short getBOMLevel() {
@@ -159,14 +159,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.PerAssemblyQty</code>
 	 */
 	public void setPerAssemblyQty(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.PerAssemblyQty, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.PerAssemblyQty</code>
 	 */
 	@javax.persistence.Column(name = "PerAssemblyQty", nullable = false, precision = 8, scale = 2)
 	public java.math.BigDecimal getPerAssemblyQty() {
@@ -174,14 +174,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

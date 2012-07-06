@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_877Record> implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877 {
 
-	private static final long serialVersionUID = 609179556;
+	private static final long serialVersionUID = 424713060;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_877.ID</code>
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -19,7 +19,7 @@ public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_877.ID</code>
 	 */
 	@Override
 	public java.lang.Integer getId() {

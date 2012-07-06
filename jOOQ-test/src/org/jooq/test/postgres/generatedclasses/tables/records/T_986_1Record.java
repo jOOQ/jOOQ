@@ -10,12 +10,12 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_986_1", schema = "public")
 public class T_986_1Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 1867185835;
+	private static final long serialVersionUID = -283248203;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_986_1.ref</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT t_986_1__fk_986
 	 * FOREIGN KEY (ref, ref)
 	 * REFERENCES public.x_unused (id)
@@ -26,9 +26,9 @@ public class T_986_1Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_986_1.ref</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT t_986_1__fk_986
 	 * FOREIGN KEY (ref, ref)
 	 * REFERENCES public.x_unused (id)

@@ -9,26 +9,26 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface IT_725LobTest extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_725_LOB_TEST.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_725_LOB_TEST.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_725_LOB_TEST.LOB</code>
 	 */
 	public void setLob(byte[] value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_725_LOB_TEST.LOB</code>
 	 */
 	public byte[] getLob();
 }

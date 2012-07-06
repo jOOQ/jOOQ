@@ -9,12 +9,12 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface IT_877 extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_877.ID</code>
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_877.ID</code>
 	 */
 	public java.lang.Integer getId();
 }

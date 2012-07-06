@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "Employee", schema = "HumanResources")
 public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> {
 
-	private static final long serialVersionUID = 1919166517;
+	private static final long serialVersionUID = 514582043;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.Employee.EmployeeID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.EmployeeID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.Employee.EmployeeID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "EmployeeID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.NationalIDNumber</code>
 	 */
 	public void setNationalIDNumber(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.NationalIDNumber, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.NationalIDNumber</code>
 	 */
 	@javax.persistence.Column(name = "NationalIDNumber", nullable = false, length = 15)
 	public java.lang.String getNationalIDNumber() {
@@ -48,9 +48,9 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Employee_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -61,9 +61,9 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Employee_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -75,14 +75,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.LoginID</code>
 	 */
 	public void setLoginID(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.LoginID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.LoginID</code>
 	 */
 	@javax.persistence.Column(name = "LoginID", nullable = false, length = 256)
 	public java.lang.String getLoginID() {
@@ -90,9 +90,9 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.ManagerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Employee_Employee_ManagerID
 	 * FOREIGN KEY (ManagerID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -103,9 +103,9 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.ManagerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Employee_Employee_ManagerID
 	 * FOREIGN KEY (ManagerID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -117,14 +117,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.Title</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.Title, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.Title</code>
 	 */
 	@javax.persistence.Column(name = "Title", nullable = false, length = 50)
 	public java.lang.String getTitle() {
@@ -132,14 +132,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.BirthDate</code>
 	 */
 	public void setBirthDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.BirthDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.BirthDate</code>
 	 */
 	@javax.persistence.Column(name = "BirthDate", nullable = false)
 	public java.sql.Timestamp getBirthDate() {
@@ -147,14 +147,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.MaritalStatus</code>
 	 */
 	public void setMaritalStatus(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.MaritalStatus, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.MaritalStatus</code>
 	 */
 	@javax.persistence.Column(name = "MaritalStatus", nullable = false, length = 1)
 	public java.lang.String getMaritalStatus() {
@@ -162,14 +162,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.Gender</code>
 	 */
 	public void setGender(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.Gender, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.Gender</code>
 	 */
 	@javax.persistence.Column(name = "Gender", nullable = false, length = 1)
 	public java.lang.String getGender() {
@@ -177,14 +177,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.HireDate</code>
 	 */
 	public void setHireDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.HireDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.HireDate</code>
 	 */
 	@javax.persistence.Column(name = "HireDate", nullable = false)
 	public java.sql.Timestamp getHireDate() {
@@ -192,14 +192,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.SalariedFlag</code>
 	 */
 	public void setSalariedFlag(java.lang.Boolean value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.SalariedFlag, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.SalariedFlag</code>
 	 */
 	@javax.persistence.Column(name = "SalariedFlag", nullable = false)
 	public java.lang.Boolean getSalariedFlag() {
@@ -207,14 +207,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.VacationHours</code>
 	 */
 	public void setVacationHours(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.VacationHours, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.VacationHours</code>
 	 */
 	@javax.persistence.Column(name = "VacationHours", nullable = false, precision = 5)
 	public java.lang.Short getVacationHours() {
@@ -222,14 +222,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.SickLeaveHours</code>
 	 */
 	public void setSickLeaveHours(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.SickLeaveHours, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.SickLeaveHours</code>
 	 */
 	@javax.persistence.Column(name = "SickLeaveHours", nullable = false, precision = 5)
 	public java.lang.Short getSickLeaveHours() {
@@ -237,14 +237,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.CurrentFlag</code>
 	 */
 	public void setCurrentFlag(java.lang.Boolean value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.CurrentFlag, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.CurrentFlag</code>
 	 */
 	@javax.persistence.Column(name = "CurrentFlag", nullable = false)
 	public java.lang.Boolean getCurrentFlag() {
@@ -252,14 +252,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -267,14 +267,14 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Employee.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

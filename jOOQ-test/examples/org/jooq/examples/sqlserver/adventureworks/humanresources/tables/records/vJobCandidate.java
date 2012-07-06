@@ -10,17 +10,17 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "vJobCandidate", schema = "HumanResources")
 public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate> {
 
-	private static final long serialVersionUID = 1475514243;
+	private static final long serialVersionUID = 87656643;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.JobCandidateID</code>
 	 */
 	public void setJobCandidateID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.JobCandidateID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.JobCandidateID</code>
 	 */
 	@javax.persistence.Column(name = "JobCandidateID", nullable = false, precision = 10)
 	public java.lang.Integer getJobCandidateID() {
@@ -28,14 +28,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.EmployeeID</code>
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.EmployeeID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.EmployeeID</code>
 	 */
 	@javax.persistence.Column(name = "EmployeeID", precision = 10)
 	public java.lang.Integer getEmployeeID() {
@@ -43,14 +43,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Name.Prefix</code>
 	 */
 	public void setName_Prefix(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.Name_Prefix, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Name.Prefix</code>
 	 */
 	@javax.persistence.Column(name = "Name.Prefix", length = 30)
 	public java.lang.String getName_Prefix() {
@@ -58,14 +58,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Name.First</code>
 	 */
 	public void setName_First(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.Name_First, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Name.First</code>
 	 */
 	@javax.persistence.Column(name = "Name.First", length = 30)
 	public java.lang.String getName_First() {
@@ -73,14 +73,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Name.Middle</code>
 	 */
 	public void setName_Middle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.Name_Middle, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Name.Middle</code>
 	 */
 	@javax.persistence.Column(name = "Name.Middle", length = 30)
 	public java.lang.String getName_Middle() {
@@ -88,14 +88,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Name.Last</code>
 	 */
 	public void setName_Last(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.Name_Last, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Name.Last</code>
 	 */
 	@javax.persistence.Column(name = "Name.Last", length = 30)
 	public java.lang.String getName_Last() {
@@ -103,14 +103,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Name.Suffix</code>
 	 */
 	public void setName_Suffix(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.Name_Suffix, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Name.Suffix</code>
 	 */
 	@javax.persistence.Column(name = "Name.Suffix", length = 30)
 	public java.lang.String getName_Suffix() {
@@ -118,14 +118,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Skills</code>
 	 */
 	public void setSkills(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.Skills, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Skills</code>
 	 */
 	@javax.persistence.Column(name = "Skills")
 	public java.lang.String getSkills() {
@@ -133,14 +133,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Addr.Type</code>
 	 */
 	public void setAddr_Type(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.Addr_Type, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Addr.Type</code>
 	 */
 	@javax.persistence.Column(name = "Addr.Type", length = 30)
 	public java.lang.String getAddr_Type() {
@@ -148,14 +148,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Addr.Loc.CountryRegion</code>
 	 */
 	public void setAddr_Loc_CountryRegion(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.Addr_Loc_CountryRegion, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Addr.Loc.CountryRegion</code>
 	 */
 	@javax.persistence.Column(name = "Addr.Loc.CountryRegion", length = 100)
 	public java.lang.String getAddr_Loc_CountryRegion() {
@@ -163,14 +163,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Addr.Loc.State</code>
 	 */
 	public void setAddr_Loc_State(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.Addr_Loc_State, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Addr.Loc.State</code>
 	 */
 	@javax.persistence.Column(name = "Addr.Loc.State", length = 100)
 	public java.lang.String getAddr_Loc_State() {
@@ -178,14 +178,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Addr.Loc.City</code>
 	 */
 	public void setAddr_Loc_City(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.Addr_Loc_City, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Addr.Loc.City</code>
 	 */
 	@javax.persistence.Column(name = "Addr.Loc.City", length = 100)
 	public java.lang.String getAddr_Loc_City() {
@@ -193,14 +193,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Addr.PostalCode</code>
 	 */
 	public void setAddr_PostalCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.Addr_PostalCode, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.Addr.PostalCode</code>
 	 */
 	@javax.persistence.Column(name = "Addr.PostalCode", length = 20)
 	public java.lang.String getAddr_PostalCode() {
@@ -208,14 +208,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.EMail</code>
 	 */
 	public void setEMail(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.EMail, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.EMail</code>
 	 */
 	@javax.persistence.Column(name = "EMail")
 	public java.lang.String getEMail() {
@@ -223,14 +223,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.WebSite</code>
 	 */
 	public void setWebSite(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.WebSite, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.WebSite</code>
 	 */
 	@javax.persistence.Column(name = "WebSite")
 	public java.lang.String getWebSite() {
@@ -238,14 +238,14 @@ public class vJobCandidate extends org.jooq.impl.TableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vJobCandidate.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

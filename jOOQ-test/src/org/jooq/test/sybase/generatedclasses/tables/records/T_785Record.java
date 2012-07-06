@@ -8,45 +8,45 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  */
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -684719594;
+	private static final long serialVersionUID = -79222668;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.t_785.ID</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.T_785.T_785.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.t_785.ID</code>
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.T_785.T_785.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.t_785.NAME</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.T_785.T_785.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.t_785.NAME</code>
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.T_785.T_785.NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.t_785.VALUE</code>
 	 */
 	public void setValue(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.T_785.T_785.VALUE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.t_785.VALUE</code>
 	 */
 	public java.lang.String getValue() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.T_785.T_785.VALUE);

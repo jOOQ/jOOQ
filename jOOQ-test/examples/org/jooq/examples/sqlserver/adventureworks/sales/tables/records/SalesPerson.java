@@ -10,14 +10,14 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesPerson", schema = "Sales")
 public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson> {
 
-	private static final long serialVersionUID = 105088995;
+	private static final long serialVersionUID = -578998367;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesPerson.SalesPersonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesPerson_Employee_SalesPersonID
 	 * FOREIGN KEY (SalesPersonID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -28,11 +28,11 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesPerson.SalesPersonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesPerson_Employee_SalesPersonID
 	 * FOREIGN KEY (SalesPersonID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -45,9 +45,9 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.TerritoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesPerson_SalesTerritory_TerritoryID
 	 * FOREIGN KEY (TerritoryID)
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
@@ -58,9 +58,9 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.TerritoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesPerson_SalesTerritory_TerritoryID
 	 * FOREIGN KEY (TerritoryID)
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
@@ -72,14 +72,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.SalesQuota</code>
 	 */
 	public void setSalesQuota(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesQuota, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.SalesQuota</code>
 	 */
 	@javax.persistence.Column(name = "SalesQuota", precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesQuota() {
@@ -87,14 +87,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.Bonus</code>
 	 */
 	public void setBonus(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.Bonus, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.Bonus</code>
 	 */
 	@javax.persistence.Column(name = "Bonus", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getBonus() {
@@ -102,14 +102,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.CommissionPct</code>
 	 */
 	public void setCommissionPct(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.CommissionPct, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.CommissionPct</code>
 	 */
 	@javax.persistence.Column(name = "CommissionPct", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getCommissionPct() {
@@ -117,14 +117,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.SalesYTD</code>
 	 */
 	public void setSalesYTD(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesYTD, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.SalesYTD</code>
 	 */
 	@javax.persistence.Column(name = "SalesYTD", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesYTD() {
@@ -132,14 +132,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.SalesLastYear</code>
 	 */
 	public void setSalesLastYear(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesLastYear, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.SalesLastYear</code>
 	 */
 	@javax.persistence.Column(name = "SalesLastYear", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesLastYear() {
@@ -147,14 +147,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -162,14 +162,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

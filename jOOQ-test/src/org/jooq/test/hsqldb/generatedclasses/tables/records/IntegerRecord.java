@@ -8,10 +8,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class IntegerRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.IntegerRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IInteger {
 
-	private static final long serialVersionUID = 343802911;
+	private static final long serialVersionUID = 1476475135;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.INTEGER.ID</code>
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -19,7 +19,7 @@ public class IntegerRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.INTEGER.ID</code>
 	 */
 	@Override
 	public java.lang.Integer getId() {

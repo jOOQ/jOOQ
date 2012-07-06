@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class VendorAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorAddress> {
 
-	private static final long serialVersionUID = -1562438434;
+	private static final long serialVersionUID = -1460743012;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.VendorAddress.VendorID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorAddress_Vendor_VendorID
 	 * FOREIGN KEY (VendorID)
 	 * REFERENCES Purchasing.Vendor (VendorID)
@@ -30,11 +30,11 @@ public class VendorAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.VendorAddress.VendorID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorAddress_Vendor_VendorID
 	 * FOREIGN KEY (VendorID)
 	 * REFERENCES Purchasing.Vendor (VendorID)
@@ -46,11 +46,11 @@ public class VendorAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.VendorAddress.AddressID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorAddress_Address_AddressID
 	 * FOREIGN KEY (AddressID)
 	 * REFERENCES Person.Address (AddressID)
@@ -61,11 +61,11 @@ public class VendorAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.VendorAddress.AddressID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorAddress_Address_AddressID
 	 * FOREIGN KEY (AddressID)
 	 * REFERENCES Person.Address (AddressID)
@@ -77,9 +77,9 @@ public class VendorAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.VendorAddress.AddressTypeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorAddress_AddressType_AddressTypeID
 	 * FOREIGN KEY (AddressTypeID)
 	 * REFERENCES Person.AddressType (AddressTypeID)
@@ -90,9 +90,9 @@ public class VendorAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.VendorAddress.AddressTypeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorAddress_AddressType_AddressTypeID
 	 * FOREIGN KEY (AddressTypeID)
 	 * REFERENCES Person.AddressType (AddressTypeID)
@@ -104,14 +104,14 @@ public class VendorAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.VendorAddress.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorAddress.VendorAddress.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.VendorAddress.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

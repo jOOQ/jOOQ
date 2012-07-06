@@ -8,41 +8,41 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.routines;
  */
 public class uspUpdateEmployeeHireInfo extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 2089133676;
+	private static final long serialVersionUID = -300292850;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.EmployeeID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> EmployeeID = createParameter("EmployeeID", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.Title</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> Title = createParameter("Title", org.jooq.impl.SQLDataType.NVARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.HireDate</code>
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> HireDate = createParameter("HireDate", org.jooq.impl.SQLDataType.TIMESTAMP);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.RateChangeDate</code>
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> RateChangeDate = createParameter("RateChangeDate", org.jooq.impl.SQLDataType.TIMESTAMP);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.Rate</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> Rate = createParameter("Rate", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.PayFrequency</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Byte> PayFrequency = createParameter("PayFrequency", org.jooq.impl.SQLDataType.TINYINT);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.CurrentFlag</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Boolean> CurrentFlag = createParameter("CurrentFlag", org.jooq.impl.SQLDataType.BIT);
 
@@ -62,49 +62,49 @@ public class uspUpdateEmployeeHireInfo extends org.jooq.impl.AbstractRoutine<jav
 	}
 
 	/**
-	 * Set the <code>EmployeeID</code> parameter to the routine
+	 * Set the <code>EmployeeID</code> parameter IN value to the routine
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.EmployeeID, value);
 	}
 
 	/**
-	 * Set the <code>Title</code> parameter to the routine
+	 * Set the <code>Title</code> parameter IN value to the routine
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.Title, value);
 	}
 
 	/**
-	 * Set the <code>HireDate</code> parameter to the routine
+	 * Set the <code>HireDate</code> parameter IN value to the routine
 	 */
 	public void setHireDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.HireDate, value);
 	}
 
 	/**
-	 * Set the <code>RateChangeDate</code> parameter to the routine
+	 * Set the <code>RateChangeDate</code> parameter IN value to the routine
 	 */
 	public void setRateChangeDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.RateChangeDate, value);
 	}
 
 	/**
-	 * Set the <code>Rate</code> parameter to the routine
+	 * Set the <code>Rate</code> parameter IN value to the routine
 	 */
 	public void setRate(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.Rate, value);
 	}
 
 	/**
-	 * Set the <code>PayFrequency</code> parameter to the routine
+	 * Set the <code>PayFrequency</code> parameter IN value to the routine
 	 */
 	public void setPayFrequency(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.PayFrequency, value);
 	}
 
 	/**
-	 * Set the <code>CurrentFlag</code> parameter to the routine
+	 * Set the <code>CurrentFlag</code> parameter IN value to the routine
 	 */
 	public void setCurrentFlag(java.lang.Boolean value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo.CurrentFlag, value);

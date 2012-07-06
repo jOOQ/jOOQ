@@ -10,21 +10,21 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_639_numbers_table", schema = "test2")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -1173966486;
+	private static final long serialVersionUID = 410537142;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.t_639_numbers_table.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.t_639_numbers_table.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.BYTE</code>
 	 */
 	public void setByte(java.lang.Byte value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.BYTE</code>
 	 */
 	@javax.persistence.Column(name = "BYTE", precision = 3)
 	public java.lang.Byte getByte() {
@@ -48,14 +48,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.SHORT</code>
 	 */
 	public void setShort(java.lang.Short value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.SHORT</code>
 	 */
 	@javax.persistence.Column(name = "SHORT", precision = 5)
 	public java.lang.Short getShort() {
@@ -63,14 +63,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.INTEGER</code>
 	 */
 	public void setInteger(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.INTEGER</code>
 	 */
 	@javax.persistence.Column(name = "INTEGER", precision = 10)
 	public java.lang.Integer getInteger() {
@@ -78,14 +78,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.LONG</code>
 	 */
 	public void setLong(java.lang.Long value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.LONG</code>
 	 */
 	@javax.persistence.Column(name = "LONG", precision = 19)
 	public java.lang.Long getLong() {
@@ -93,14 +93,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.BYTE_DECIMAL</code>
 	 */
 	public void setByteDecimal(java.lang.Byte value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE_DECIMAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.BYTE_DECIMAL</code>
 	 */
 	@javax.persistence.Column(name = "BYTE_DECIMAL", precision = 2)
 	public java.lang.Byte getByteDecimal() {
@@ -108,14 +108,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.SHORT_DECIMAL</code>
 	 */
 	public void setShortDecimal(java.lang.Short value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT_DECIMAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.SHORT_DECIMAL</code>
 	 */
 	@javax.persistence.Column(name = "SHORT_DECIMAL", precision = 4)
 	public java.lang.Short getShortDecimal() {
@@ -123,14 +123,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.INTEGER_DECIMAL</code>
 	 */
 	public void setIntegerDecimal(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER_DECIMAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.INTEGER_DECIMAL</code>
 	 */
 	@javax.persistence.Column(name = "INTEGER_DECIMAL", precision = 9)
 	public java.lang.Integer getIntegerDecimal() {
@@ -138,14 +138,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.LONG_DECIMAL</code>
 	 */
 	public void setLongDecimal(java.lang.Long value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG_DECIMAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.LONG_DECIMAL</code>
 	 */
 	@javax.persistence.Column(name = "LONG_DECIMAL", precision = 18)
 	public java.lang.Long getLongDecimal() {
@@ -153,14 +153,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.BIG_INTEGER</code>
 	 */
 	public void setBigInteger(java.math.BigInteger value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.BIG_INTEGER</code>
 	 */
 	@javax.persistence.Column(name = "BIG_INTEGER", precision = 22)
 	public java.math.BigInteger getBigInteger() {
@@ -168,14 +168,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.BIG_DECIMAL</code>
 	 */
 	public void setBigDecimal(java.math.BigDecimal value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.BIG_DECIMAL</code>
 	 */
 	@javax.persistence.Column(name = "BIG_DECIMAL", precision = 22, scale = 5)
 	public java.math.BigDecimal getBigDecimal() {
@@ -183,14 +183,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.FLOAT</code>
 	 */
 	public void setFloat(java.lang.Double value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.FLOAT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.FLOAT</code>
 	 */
 	@javax.persistence.Column(name = "FLOAT", precision = 12)
 	public java.lang.Double getFloat() {
@@ -198,14 +198,14 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.DOUBLE</code>
 	 */
 	public void setDouble(java.lang.Double value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.DOUBLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_639_numbers_table.DOUBLE</code>
 	 */
 	@javax.persistence.Column(name = "DOUBLE", precision = 22)
 	public java.lang.Double getDouble() {

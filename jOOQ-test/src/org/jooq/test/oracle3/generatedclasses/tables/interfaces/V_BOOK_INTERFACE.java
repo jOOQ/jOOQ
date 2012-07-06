@@ -11,100 +11,100 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface V_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.ID</code>
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.ID</code>
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.AUTHOR_ID</code>
 	 */
 	public void setAUTHOR_ID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.AUTHOR_ID</code>
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
 	public java.lang.Integer getAUTHOR_ID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CO_AUTHOR_ID</code>
 	 */
 	public void setCO_AUTHOR_ID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CO_AUTHOR_ID</code>
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
 	public java.lang.Integer getCO_AUTHOR_ID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.DETAILS_ID</code>
 	 */
 	public void setDETAILS_ID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.DETAILS_ID</code>
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
 	public java.lang.Integer getDETAILS_ID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.TITLE</code>
 	 */
 	public void setTITLE(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.TITLE</code>
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTITLE();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.PUBLISHED_IN</code>
 	 */
 	public void setPUBLISHED_IN(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.PUBLISHED_IN</code>
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
 	public java.lang.Integer getPUBLISHED_IN();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.LANGUAGE_ID</code>
 	 */
 	public void setLANGUAGE_ID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.LANGUAGE_ID</code>
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	public java.lang.Integer getLANGUAGE_ID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CONTENT_TEXT</code>
 	 */
 	public void setCONTENT_TEXT(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CONTENT_TEXT</code>
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getCONTENT_TEXT();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CONTENT_PDF</code>
 	 */
 	public void setCONTENT_PDF(byte[] value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CONTENT_PDF</code>
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getCONTENT_PDF();

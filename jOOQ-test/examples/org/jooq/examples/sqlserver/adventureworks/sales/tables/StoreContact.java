@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class StoreContact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact> {
 
-	private static final long serialVersionUID = 1101877073;
+	private static final long serialVersionUID = -1504052696;
 
 	/**
 	 * The singleton instance of Sales.StoreContact
@@ -24,11 +24,11 @@ public class StoreContact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.StoreContact.CustomerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_StoreContact_Store_CustomerID
 	 * FOREIGN KEY (CustomerID)
 	 * REFERENCES Sales.Store (CustomerID)
@@ -37,11 +37,11 @@ public class StoreContact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, java.lang.Integer> CustomerID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.StoreContact.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_StoreContact_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -50,9 +50,9 @@ public class StoreContact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, java.lang.Integer> ContactID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.StoreContact.ContactTypeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_StoreContact_ContactType_ContactTypeID
 	 * FOREIGN KEY (ContactTypeID)
 	 * REFERENCES Person.ContactType (ContactTypeID)
@@ -61,12 +61,12 @@ public class StoreContact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, java.lang.Integer> ContactTypeID = createField("ContactTypeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.StoreContact.rowguid</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.StoreContact.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

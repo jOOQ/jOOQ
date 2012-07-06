@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 1208798079;
+	private static final long serialVersionUID = -559690265;
 
 	/**
 	 * The singleton instance of TEST.T_IDENTITY
@@ -24,12 +24,12 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.derby.gener
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_IDENTITY.ID</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_IDENTITY.VAL</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 

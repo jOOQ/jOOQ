@@ -8,7 +8,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1731724660;
+	private static final long serialVersionUID = 74350664;
 
 	/**
 	 * The singleton instance of test.v_book
@@ -24,47 +24,47 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generate
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_book.id</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_book.author_id</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_book.co_author_id</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.VBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_book.details_id</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.VBookRecord, java.lang.Integer> DETAILS_ID = createField("details_id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_book.title</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, V_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_book.published_in</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("published_in", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_book.language_id</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_book.content_text</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.LONGVARCHAR, V_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_book.content_pdf</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.LONGVARBINARY, V_BOOK);
 

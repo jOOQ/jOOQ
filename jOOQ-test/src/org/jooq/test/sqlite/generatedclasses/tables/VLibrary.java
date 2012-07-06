@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1323108322;
+	private static final long serialVersionUID = 1068244691;
 
 	/**
 	 * The singleton instance of V_LIBRARY
@@ -24,12 +24,12 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.gener
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>V_LIBRARY.AUTHOR</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR, V_LIBRARY);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>V_LIBRARY.TITLE</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, V_LIBRARY);
 

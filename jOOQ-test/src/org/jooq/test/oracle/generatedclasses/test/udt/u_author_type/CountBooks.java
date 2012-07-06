@@ -8,16 +8,16 @@ package org.jooq.test.oracle.generatedclasses.test.udt.u_author_type;
  */
 public class CountBooks extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -581744094;
+	private static final long serialVersionUID = 1627325554;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.SELF</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> SELF = createParameter("SELF", org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.U_AUTHOR_TYPE.getDataType());
 
@@ -32,7 +32,7 @@ public class CountBooks extends org.jooq.impl.AbstractRoutine<java.math.BigDecim
 	}
 
 	/**
-	 * Set the <code>SELF</code> parameter to the routine
+	 * Set the <code>SELF</code> parameter IN value to the routine
 	 */
 	public void setSelf(org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.CountBooks.SELF, value);

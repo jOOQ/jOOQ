@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1366148994;
+	private static final long serialVersionUID = 615851925;
 
 	/**
 	 * The singleton instance of x_unused
@@ -24,28 +24,28 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>x_unused.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>x_unused.NAME</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.BIG_INTEGER</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.ID_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_unused_X_UNUSED_1
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES x_unused (ID)
@@ -54,49 +54,49 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID_REF = createField("ID_REF", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.CLASS</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> CLASS = createField("CLASS", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.FIELDS</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> FIELDS = createField("FIELDS", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.CONFIGURATION</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> CONFIGURATION = createField("CONFIGURATION", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.U_D_T</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> U_D_T = createField("U_D_T", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.META_DATA</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> META_DATA = createField("META_DATA", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.TYPE0</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> TYPE0 = createField("TYPE0", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.PRIMARY_KEY</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> PRIMARY_KEY = createField("PRIMARY_KEY", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.PRIMARYKEY</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> PRIMARYKEY = createField("PRIMARYKEY", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.NAME_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_unused_X_UNUSED_1
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES x_unused (ID)
@@ -105,7 +105,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, X_UNUSED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_unused.FIELD 737</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC, X_UNUSED);
 

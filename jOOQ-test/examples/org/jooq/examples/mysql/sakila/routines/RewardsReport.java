@@ -10,21 +10,21 @@ package org.jooq.examples.mysql.sakila.routines;
  */
 public class RewardsReport extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -835189535;
+	private static final long serialVersionUID = 1735495315;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>sakila.rewards_report.min_monthly_purchases</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Byte> MIN_MONTHLY_PURCHASES = createParameter("min_monthly_purchases", org.jooq.impl.SQLDataType.TINYINT);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>sakila.rewards_report.min_dollar_amount_purchased</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> MIN_DOLLAR_AMOUNT_PURCHASED = createParameter("min_dollar_amount_purchased", org.jooq.impl.SQLDataType.DECIMAL);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>sakila.rewards_report.count_rewardees</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> COUNT_REWARDEES = createParameter("count_rewardees", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -40,19 +40,22 @@ public class RewardsReport extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	}
 
 	/**
-	 * Set the <code>min_monthly_purchases</code> parameter to the routine
+	 * Set the <code>min_monthly_purchases</code> parameter IN value to the routine
 	 */
 	public void setMinMonthlyPurchases(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.routines.RewardsReport.MIN_MONTHLY_PURCHASES, value);
 	}
 
 	/**
-	 * Set the <code>min_dollar_amount_purchased</code> parameter to the routine
+	 * Set the <code>min_dollar_amount_purchased</code> parameter IN value to the routine
 	 */
 	public void setMinDollarAmountPurchased(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.mysql.sakila.routines.RewardsReport.MIN_DOLLAR_AMOUNT_PURCHASED, value);
 	}
 
+	/**
+	 * Get the <code>count_rewardees</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getCountRewardees() {
 		return getValue(COUNT_REWARDEES);
 	}

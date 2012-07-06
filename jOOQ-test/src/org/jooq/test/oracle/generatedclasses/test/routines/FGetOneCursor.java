@@ -8,16 +8,16 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = -107335256;
+	private static final long serialVersionUID = 1745788318;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_GET_ONE_CURSOR.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_GET_ONE_CURSOR.BOOK_IDS</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord> BOOK_IDS = createParameter("BOOK_IDS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord.class));
 
@@ -32,7 +32,7 @@ public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result
 	}
 
 	/**
-	 * Set the <code>BOOK_IDS</code> parameter to the routine
+	 * Set the <code>BOOK_IDS</code> parameter IN value to the routine
 	 */
 	public void setBookIds(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.routines.FGetOneCursor.BOOK_IDS, value);

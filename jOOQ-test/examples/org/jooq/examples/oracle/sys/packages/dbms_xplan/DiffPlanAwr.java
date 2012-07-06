@@ -8,26 +8,26 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DiffPlanAwr extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 1249208854;
+	private static final long serialVersionUID = 1172373729;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_AWR.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_AWR.SQL_ID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQL_ID = createParameter("SQL_ID", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_AWR.PLAN_HASH_VALUE1</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> PLAN_HASH_VALUE1 = createParameter("PLAN_HASH_VALUE1", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_AWR.PLAN_HASH_VALUE2</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> PLAN_HASH_VALUE2 = createParameter("PLAN_HASH_VALUE2", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -44,7 +44,7 @@ public class DiffPlanAwr extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	}
 
 	/**
-	 * Set the <code>SQL_ID</code> parameter to the routine
+	 * Set the <code>SQL_ID</code> parameter IN value to the routine
 	 */
 	public void setSqlId(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr.SQL_ID, value);
@@ -60,7 +60,7 @@ public class DiffPlanAwr extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	}
 
 	/**
-	 * Set the <code>PLAN_HASH_VALUE1</code> parameter to the routine
+	 * Set the <code>PLAN_HASH_VALUE1</code> parameter IN value to the routine
 	 */
 	public void setPlanHashValue1(java.lang.Number value) {
 		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr.PLAN_HASH_VALUE1, value);
@@ -76,7 +76,7 @@ public class DiffPlanAwr extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	}
 
 	/**
-	 * Set the <code>PLAN_HASH_VALUE2</code> parameter to the routine
+	 * Set the <code>PLAN_HASH_VALUE2</code> parameter IN value to the routine
 	 */
 	public void setPlanHashValue2(java.lang.Number value) {
 		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr.PLAN_HASH_VALUE2, value);

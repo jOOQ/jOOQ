@@ -9,62 +9,62 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface ITArrays extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setStringArray(java.lang.Object[] value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public java.lang.Object[] getStringArray();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setNumberArray(java.lang.Object[] value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public java.lang.Object[] getNumberArray();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setDateArray(java.lang.Object[] value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */

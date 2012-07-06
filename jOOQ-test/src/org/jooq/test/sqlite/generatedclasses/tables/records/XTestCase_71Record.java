@@ -8,30 +8,30 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -842063168;
+	private static final long serialVersionUID = 1931153112;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>x_test_case_71.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_71.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>x_test_case_71.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_71.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_test_case_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_71_X_TEST_CASE_64_69_1
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES x_test_case_64_69 (ID)
@@ -42,9 +42,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_test_case_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_71_X_TEST_CASE_64_69_1
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES x_test_case_64_69 (ID)
@@ -55,9 +55,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_test_case_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_71_X_TEST_CASE_64_69_1
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES x_test_case_64_69 (ID)

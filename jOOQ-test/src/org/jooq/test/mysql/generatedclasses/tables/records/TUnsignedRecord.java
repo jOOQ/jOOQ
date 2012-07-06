@@ -8,59 +8,59 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
  */
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = -2060572600;
+	private static final long serialVersionUID = -705546048;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_byte</code>
 	 */
 	public void setUByte(org.jooq.tools.unsigned.UByte value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_BYTE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_byte</code>
 	 */
 	public org.jooq.tools.unsigned.UByte getUByte() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_BYTE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_short</code>
 	 */
 	public void setUShort(org.jooq.tools.unsigned.UShort value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_SHORT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_short</code>
 	 */
 	public org.jooq.tools.unsigned.UShort getUShort() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_SHORT);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_int</code>
 	 */
 	public void setUInt(org.jooq.tools.unsigned.UInteger value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_INT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_int</code>
 	 */
 	public org.jooq.tools.unsigned.UInteger getUInt() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_INT);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_long</code>
 	 */
 	public void setULong(org.jooq.tools.unsigned.ULong value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_LONG, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_long</code>
 	 */
 	public org.jooq.tools.unsigned.ULong getULong() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_LONG);

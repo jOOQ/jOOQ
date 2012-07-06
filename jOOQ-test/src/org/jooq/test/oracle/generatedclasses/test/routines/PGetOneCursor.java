@@ -8,21 +8,21 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PGetOneCursor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -170442884;
+	private static final long serialVersionUID = -299804072;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_GET_ONE_CURSOR.TOTAL</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> TOTAL = createParameter("TOTAL", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_GET_ONE_CURSOR.BOOKS</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_GET_ONE_CURSOR.BOOK_IDS</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord> BOOK_IDS = createParameter("BOOK_IDS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord.class));
 
@@ -38,16 +38,22 @@ public class PGetOneCursor extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	}
 
 	/**
-	 * Set the <code>BOOK_IDS</code> parameter to the routine
+	 * Set the <code>BOOK_IDS</code> parameter IN value to the routine
 	 */
 	public void setBookIds(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.routines.PGetOneCursor.BOOK_IDS, value);
 	}
 
+	/**
+	 * Get the <code>TOTAL</code> parameter OUT value from the routine
+	 */
 	public java.math.BigDecimal getTotal() {
 		return getValue(TOTAL);
 	}
 
+	/**
+	 * Get the <code>BOOKS</code> parameter OUT value from the routine
+	 */
 	public org.jooq.Result<org.jooq.Record> getBooks() {
 		return getValue(BOOKS);
 	}

@@ -10,14 +10,14 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "Store", schema = "Sales")
 public class Store extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Store> {
 
-	private static final long serialVersionUID = 127367462;
+	private static final long serialVersionUID = -606840386;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.Store.CustomerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Store_Customer_CustomerID
 	 * FOREIGN KEY (CustomerID)
 	 * REFERENCES Sales.Customer (CustomerID)
@@ -28,11 +28,11 @@ public class Store extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.Store.CustomerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Store_Customer_CustomerID
 	 * FOREIGN KEY (CustomerID)
 	 * REFERENCES Sales.Customer (CustomerID)
@@ -45,14 +45,14 @@ public class Store extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Store.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Store.Store.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Store.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -60,9 +60,9 @@ public class Store extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Store.SalesPersonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Store_SalesPerson_SalesPersonID
 	 * FOREIGN KEY (SalesPersonID)
 	 * REFERENCES Sales.SalesPerson (SalesPersonID)
@@ -73,9 +73,9 @@ public class Store extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Store.SalesPersonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Store_SalesPerson_SalesPersonID
 	 * FOREIGN KEY (SalesPersonID)
 	 * REFERENCES Sales.SalesPerson (SalesPersonID)
@@ -87,8 +87,8 @@ public class Store extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>Sales.Store.Demographics</code>
+	 * <p>
 	 * The SQL type of this item (xml, ) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -97,8 +97,8 @@ public class Store extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>Sales.Store.Demographics</code>
+	 * <p>
 	 * The SQL type of this item (xml, ) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -108,14 +108,14 @@ public class Store extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Store.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Store.Store.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Store.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -123,14 +123,14 @@ public class Store extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Store.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Store.Store.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Store.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

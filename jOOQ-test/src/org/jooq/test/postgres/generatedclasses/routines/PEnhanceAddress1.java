@@ -8,16 +8,16 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class PEnhanceAddress1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1695407242;
+	private static final long serialVersionUID = 1532972618;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.p_enhance_address1.address</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> ADDRESS = createParameter("address", org.jooq.test.postgres.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE.getDataType());
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.p_enhance_address1.no</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> NO = createParameter("no", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -32,12 +32,15 @@ public class PEnhanceAddress1 extends org.jooq.impl.AbstractRoutine<java.lang.Vo
 	}
 
 	/**
-	 * Set the <code>address</code> parameter to the routine
+	 * Set the <code>address</code> parameter IN value to the routine
 	 */
 	public void setAddress(org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord value) {
 		setValue(org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1.ADDRESS, value);
 	}
 
+	/**
+	 * Get the <code>no</code> parameter OUT value from the routine
+	 */
 	public java.lang.String getNo() {
 		return getValue(NO);
 	}

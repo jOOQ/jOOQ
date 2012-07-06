@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class Object extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> {
 
-	private static final long serialVersionUID = -233956927;
+	private static final long serialVersionUID = 1973479460;
 
 	/**
 	 * The singleton instance of PUBLIC.OBJECT
@@ -24,13 +24,13 @@ public class Object extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generat
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.OBJECT.ID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.OBJECT.OTHER</code>
+	 * <p>
 	 * The SQL type of this item (OTHER, null) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */

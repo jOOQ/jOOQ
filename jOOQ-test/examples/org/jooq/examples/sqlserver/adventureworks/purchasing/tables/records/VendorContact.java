@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact> {
 
-	private static final long serialVersionUID = -1986465786;
+	private static final long serialVersionUID = -570375924;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.VendorContact.VendorID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorContact_Vendor_VendorID
 	 * FOREIGN KEY (VendorID)
 	 * REFERENCES Purchasing.Vendor (VendorID)
@@ -30,11 +30,11 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.VendorContact.VendorID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorContact_Vendor_VendorID
 	 * FOREIGN KEY (VendorID)
 	 * REFERENCES Purchasing.Vendor (VendorID)
@@ -46,11 +46,11 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.VendorContact.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorContact_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -61,11 +61,11 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.VendorContact.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorContact_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -77,9 +77,9 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.VendorContact.ContactTypeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorContact_ContactType_ContactTypeID
 	 * FOREIGN KEY (ContactTypeID)
 	 * REFERENCES Person.ContactType (ContactTypeID)
@@ -90,9 +90,9 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.VendorContact.ContactTypeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_VendorContact_ContactType_ContactTypeID
 	 * FOREIGN KEY (ContactTypeID)
 	 * REFERENCES Person.ContactType (ContactTypeID)
@@ -104,14 +104,14 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.VendorContact.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.VendorContact.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

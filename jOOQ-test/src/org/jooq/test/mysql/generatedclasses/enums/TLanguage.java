@@ -44,8 +44,8 @@ public enum TLanguage implements org.jooq.MasterDataType<java.lang.Integer> {
 
 	/**
 	 * The language ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final java.lang.Integer getId() {
 		return id;

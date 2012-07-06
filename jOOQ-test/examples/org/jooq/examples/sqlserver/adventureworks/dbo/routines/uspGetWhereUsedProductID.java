@@ -8,16 +8,16 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class uspGetWhereUsedProductID extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1496865001;
+	private static final long serialVersionUID = 139564497;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.uspGetWhereUsedProductID.StartProductID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> StartProductID = createParameter("StartProductID", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.uspGetWhereUsedProductID.CheckDate</code>
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> CheckDate = createParameter("CheckDate", org.jooq.impl.SQLDataType.TIMESTAMP);
 
@@ -32,14 +32,14 @@ public class uspGetWhereUsedProductID extends org.jooq.impl.AbstractRoutine<java
 	}
 
 	/**
-	 * Set the <code>StartProductID</code> parameter to the routine
+	 * Set the <code>StartProductID</code> parameter IN value to the routine
 	 */
 	public void setStartProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetWhereUsedProductID.StartProductID, value);
 	}
 
 	/**
-	 * Set the <code>CheckDate</code> parameter to the routine
+	 * Set the <code>CheckDate</code> parameter IN value to the routine
 	 */
 	public void setCheckDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetWhereUsedProductID.CheckDate, value);

@@ -8,16 +8,16 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_ARRAYS2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -579222289;
+	private static final long serialVersionUID = -1243919902;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_ARRAYS2.IN_ARRAY</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_ARRAYS2.OUT_ARRAY</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY.class));
 
@@ -32,12 +32,15 @@ public class P_ARRAYS2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> imp
 	}
 
 	/**
-	 * Set the <code>IN_ARRAY</code> parameter to the routine
+	 * Set the <code>IN_ARRAY</code> parameter IN value to the routine
 	 */
 	public void setIN_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS2.IN_ARRAY, value);
 	}
 
+	/**
+	 * Get the <code>OUT_ARRAY</code> parameter OUT value from the routine
+	 */
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY getOUT_ARRAY() {
 		return getValue(OUT_ARRAY);
 	}

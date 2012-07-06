@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.records;
 @javax.persistence.Table(name = "AWBuildVersion", schema = "dbo")
 public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion> {
 
-	private static final long serialVersionUID = -1626804339;
+	private static final long serialVersionUID = 14444309;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.AWBuildVersion.SystemInformationID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setSystemInformationID(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.SystemInformationID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.AWBuildVersion.SystemInformationID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "SystemInformationID", unique = true, nullable = false, precision = 3)
@@ -33,14 +33,14 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.AWBuildVersion.Database Version</code>
 	 */
 	public void setDatabase_Version(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.Database_Version, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.AWBuildVersion.Database Version</code>
 	 */
 	@javax.persistence.Column(name = "Database Version", nullable = false, length = 25)
 	public java.lang.String getDatabase_Version() {
@@ -48,14 +48,14 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.AWBuildVersion.VersionDate</code>
 	 */
 	public void setVersionDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.VersionDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.AWBuildVersion.VersionDate</code>
 	 */
 	@javax.persistence.Column(name = "VersionDate", nullable = false)
 	public java.sql.Timestamp getVersionDate() {
@@ -63,14 +63,14 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.AWBuildVersion.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.AWBuildVersion.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

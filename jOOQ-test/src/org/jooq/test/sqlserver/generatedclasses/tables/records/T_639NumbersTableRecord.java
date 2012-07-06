@@ -8,189 +8,189 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
  */
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -360765236;
+	private static final long serialVersionUID = -1474934140;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_639_numbers_table.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_639_numbers_table.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.BYTE</code>
 	 */
 	public void setByte(java.lang.Byte value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.BYTE</code>
 	 */
 	public java.lang.Byte getByte() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.SHORT</code>
 	 */
 	public void setShort(java.lang.Short value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.SHORT</code>
 	 */
 	public java.lang.Short getShort() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.INTEGER</code>
 	 */
 	public void setInteger(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.INTEGER</code>
 	 */
 	public java.lang.Integer getInteger() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.LONG</code>
 	 */
 	public void setLong(java.lang.Long value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.LONG</code>
 	 */
 	public java.lang.Long getLong() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.BYTE_DECIMAL</code>
 	 */
 	public void setByteDecimal(java.lang.Byte value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE_DECIMAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.BYTE_DECIMAL</code>
 	 */
 	public java.lang.Byte getByteDecimal() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE_DECIMAL);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.SHORT_DECIMAL</code>
 	 */
 	public void setShortDecimal(java.lang.Short value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT_DECIMAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.SHORT_DECIMAL</code>
 	 */
 	public java.lang.Short getShortDecimal() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT_DECIMAL);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.INTEGER_DECIMAL</code>
 	 */
 	public void setIntegerDecimal(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER_DECIMAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.INTEGER_DECIMAL</code>
 	 */
 	public java.lang.Integer getIntegerDecimal() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER_DECIMAL);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.LONG_DECIMAL</code>
 	 */
 	public void setLongDecimal(java.lang.Long value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG_DECIMAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.LONG_DECIMAL</code>
 	 */
 	public java.lang.Long getLongDecimal() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG_DECIMAL);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.BIG_INTEGER</code>
 	 */
 	public void setBigInteger(java.math.BigInteger value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.BIG_INTEGER</code>
 	 */
 	public java.math.BigInteger getBigInteger() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.BIG_DECIMAL</code>
 	 */
 	public void setBigDecimal(java.math.BigDecimal value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.BIG_DECIMAL</code>
 	 */
 	public java.math.BigDecimal getBigDecimal() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.FLOAT</code>
 	 */
 	public void setFloat(java.lang.Float value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.FLOAT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.FLOAT</code>
 	 */
 	public java.lang.Float getFloat() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.FLOAT);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.DOUBLE</code>
 	 */
 	public void setDouble(java.lang.Double value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.DOUBLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_639_numbers_table.DOUBLE</code>
 	 */
 	public java.lang.Double getDouble() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.DOUBLE);

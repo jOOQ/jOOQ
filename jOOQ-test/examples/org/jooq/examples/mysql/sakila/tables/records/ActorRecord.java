@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class ActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.ActorRecord> {
 
-	private static final long serialVersionUID = 170144386;
+	private static final long serialVersionUID = 1086860935;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.actor.actor_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setActorId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.ACTOR_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.actor.actor_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Short getActorId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.ACTOR_ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.actor.actor_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> fetchFilmActorList() {
 		return create()
@@ -41,42 +41,42 @@ public class ActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor.first_name</code>
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.FIRST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor.first_name</code>
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.FIRST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor.last_name</code>
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.LAST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor.last_name</code>
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.LAST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.LAST_UPDATE);

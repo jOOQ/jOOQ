@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class ProductModelIllustration extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration> {
 
-	private static final long serialVersionUID = 638093926;
+	private static final long serialVersionUID = -1326092755;
 
 	/**
 	 * The singleton instance of Production.ProductModelIllustration
@@ -24,11 +24,11 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableTableImpl<o
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductModelIllustration.ProductModelID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductModelIllustration_ProductModel_ProductModelID
 	 * FOREIGN KEY (ProductModelID)
 	 * REFERENCES Production.ProductModel (ProductModelID)
@@ -37,11 +37,11 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableTableImpl<o
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration, java.lang.Integer> ProductModelID = createField("ProductModelID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductModelIllustration.IllustrationID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductModelIllustration_Illustration_IllustrationID
 	 * FOREIGN KEY (IllustrationID)
 	 * REFERENCES Production.Illustration (IllustrationID)
@@ -50,7 +50,7 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableTableImpl<o
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration, java.lang.Integer> IllustrationID = createField("IllustrationID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductModelIllustration.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

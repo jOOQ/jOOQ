@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @javax.persistence.Table(name = "PurchaseOrderHeader", schema = "Purchasing")
 public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> {
 
-	private static final long serialVersionUID = -1529599739;
+	private static final long serialVersionUID = -1256515507;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.PurchaseOrderHeader.PurchaseOrderID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setPurchaseOrderID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.PurchaseOrderID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.PurchaseOrderHeader.PurchaseOrderID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "PurchaseOrderID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.RevisionNumber</code>
 	 */
 	public void setRevisionNumber(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.RevisionNumber, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.RevisionNumber</code>
 	 */
 	@javax.persistence.Column(name = "RevisionNumber", nullable = false, precision = 3)
 	public java.lang.Byte getRevisionNumber() {
@@ -48,14 +48,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.Status</code>
 	 */
 	public void setStatus(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.Status, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.Status</code>
 	 */
 	@javax.persistence.Column(name = "Status", nullable = false, precision = 3)
 	public java.lang.Byte getStatus() {
@@ -63,9 +63,9 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_PurchaseOrderHeader_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -76,9 +76,9 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_PurchaseOrderHeader_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -90,9 +90,9 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.VendorID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_PurchaseOrderHeader_Vendor_VendorID
 	 * FOREIGN KEY (VendorID)
 	 * REFERENCES Purchasing.Vendor (VendorID)
@@ -103,9 +103,9 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.VendorID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_PurchaseOrderHeader_Vendor_VendorID
 	 * FOREIGN KEY (VendorID)
 	 * REFERENCES Purchasing.Vendor (VendorID)
@@ -117,9 +117,9 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.ShipMethodID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_PurchaseOrderHeader_ShipMethod_ShipMethodID
 	 * FOREIGN KEY (ShipMethodID)
 	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
@@ -130,9 +130,9 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.ShipMethodID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_PurchaseOrderHeader_ShipMethod_ShipMethodID
 	 * FOREIGN KEY (ShipMethodID)
 	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
@@ -144,14 +144,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.OrderDate</code>
 	 */
 	public void setOrderDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.OrderDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.OrderDate</code>
 	 */
 	@javax.persistence.Column(name = "OrderDate", nullable = false)
 	public java.sql.Timestamp getOrderDate() {
@@ -159,14 +159,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.ShipDate</code>
 	 */
 	public void setShipDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.ShipDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.ShipDate</code>
 	 */
 	@javax.persistence.Column(name = "ShipDate")
 	public java.sql.Timestamp getShipDate() {
@@ -174,14 +174,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.SubTotal</code>
 	 */
 	public void setSubTotal(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.SubTotal, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.SubTotal</code>
 	 */
 	@javax.persistence.Column(name = "SubTotal", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSubTotal() {
@@ -189,14 +189,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.TaxAmt</code>
 	 */
 	public void setTaxAmt(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.TaxAmt, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.TaxAmt</code>
 	 */
 	@javax.persistence.Column(name = "TaxAmt", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTaxAmt() {
@@ -204,14 +204,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.Freight</code>
 	 */
 	public void setFreight(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.Freight, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.Freight</code>
 	 */
 	@javax.persistence.Column(name = "Freight", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getFreight() {
@@ -219,14 +219,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.TotalDue</code>
 	 */
 	public void setTotalDue(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.TotalDue, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.TotalDue</code>
 	 */
 	@javax.persistence.Column(name = "TotalDue", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTotalDue() {
@@ -234,14 +234,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

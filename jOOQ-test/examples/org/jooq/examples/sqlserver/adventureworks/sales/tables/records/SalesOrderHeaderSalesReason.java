@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeaderSalesReason> {
 
-	private static final long serialVersionUID = -1223554308;
+	private static final long serialVersionUID = 642210974;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesOrderHeaderSalesReason.SalesOrderID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID
 	 * FOREIGN KEY (SalesOrderID)
 	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
@@ -30,11 +30,11 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesOrderHeaderSalesReason.SalesOrderID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID
 	 * FOREIGN KEY (SalesOrderID)
 	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
@@ -46,11 +46,11 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesOrderHeaderSalesReason.SalesReasonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID
 	 * FOREIGN KEY (SalesReasonID)
 	 * REFERENCES Sales.SalesReason (SalesReasonID)
@@ -61,11 +61,11 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesOrderHeaderSalesReason.SalesReasonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID
 	 * FOREIGN KEY (SalesReasonID)
 	 * REFERENCES Sales.SalesReason (SalesReasonID)
@@ -77,14 +77,14 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeaderSalesReason.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeaderSalesReason.SalesOrderHeaderSalesReason.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeaderSalesReason.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class PurchaseOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> {
 
-	private static final long serialVersionUID = -1265127586;
+	private static final long serialVersionUID = 1840464863;
 
 	/**
 	 * The singleton instance of Purchasing.PurchaseOrderHeader
@@ -24,26 +24,26 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.PurchaseOrderHeader.PurchaseOrderID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.lang.Integer> PurchaseOrderID = createField("PurchaseOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.RevisionNumber</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.lang.Byte> RevisionNumber = createField("RevisionNumber", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.Status</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.lang.Byte> Status = createField("Status", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_PurchaseOrderHeader_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -52,9 +52,9 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jo
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.lang.Integer> EmployeeID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.VendorID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_PurchaseOrderHeader_Vendor_VendorID
 	 * FOREIGN KEY (VendorID)
 	 * REFERENCES Purchasing.Vendor (VendorID)
@@ -63,9 +63,9 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jo
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.lang.Integer> VendorID = createField("VendorID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.ShipMethodID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_PurchaseOrderHeader_ShipMethod_ShipMethodID
 	 * FOREIGN KEY (ShipMethodID)
 	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
@@ -74,37 +74,37 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jo
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.lang.Integer> ShipMethodID = createField("ShipMethodID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.OrderDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.sql.Timestamp> OrderDate = createField("OrderDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.ShipDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.sql.Timestamp> ShipDate = createField("ShipDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.SubTotal</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.math.BigDecimal> SubTotal = createField("SubTotal", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.TaxAmt</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.math.BigDecimal> TaxAmt = createField("TaxAmt", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.Freight</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.math.BigDecimal> Freight = createField("Freight", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.TotalDue</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.math.BigDecimal> TotalDue = createField("TotalDue", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderHeader.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

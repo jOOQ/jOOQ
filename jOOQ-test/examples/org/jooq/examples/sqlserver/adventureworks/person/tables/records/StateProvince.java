@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "StateProvince", schema = "Person")
 public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> {
 
-	private static final long serialVersionUID = 927409794;
+	private static final long serialVersionUID = 616164798;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Person.StateProvince.StateProvinceID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setStateProvinceID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.StateProvinceID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Person.StateProvince.StateProvinceID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "StateProvinceID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.StateProvinceCode</code>
 	 */
 	public void setStateProvinceCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.StateProvinceCode, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.StateProvinceCode</code>
 	 */
 	@javax.persistence.Column(name = "StateProvinceCode", nullable = false, length = 3)
 	public java.lang.String getStateProvinceCode() {
@@ -48,9 +48,9 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.CountryRegionCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_StateProvince_CountryRegion_CountryRegionCode
 	 * FOREIGN KEY (CountryRegionCode)
 	 * REFERENCES Person.CountryRegion (CountryRegionCode)
@@ -61,9 +61,9 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.CountryRegionCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_StateProvince_CountryRegion_CountryRegionCode
 	 * FOREIGN KEY (CountryRegionCode)
 	 * REFERENCES Person.CountryRegion (CountryRegionCode)
@@ -75,14 +75,14 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.IsOnlyStateProvinceFlag</code>
 	 */
 	public void setIsOnlyStateProvinceFlag(java.lang.Boolean value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.IsOnlyStateProvinceFlag, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.IsOnlyStateProvinceFlag</code>
 	 */
 	@javax.persistence.Column(name = "IsOnlyStateProvinceFlag", nullable = false)
 	public java.lang.Boolean getIsOnlyStateProvinceFlag() {
@@ -90,14 +90,14 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -105,9 +105,9 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.TerritoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_StateProvince_SalesTerritory_TerritoryID
 	 * FOREIGN KEY (TerritoryID)
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
@@ -118,9 +118,9 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.TerritoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_StateProvince_SalesTerritory_TerritoryID
 	 * FOREIGN KEY (TerritoryID)
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
@@ -132,14 +132,14 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -147,14 +147,14 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

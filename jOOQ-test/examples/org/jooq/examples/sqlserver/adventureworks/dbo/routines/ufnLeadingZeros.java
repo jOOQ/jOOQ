@@ -8,16 +8,16 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class ufnLeadingZeros extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 1145180694;
+	private static final long serialVersionUID = 968160491;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.ufnLeadingZeros.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.ufnLeadingZeros.Value</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> Value = createParameter("Value", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -32,7 +32,7 @@ public class ufnLeadingZeros extends org.jooq.impl.AbstractRoutine<java.lang.Str
 	}
 
 	/**
-	 * Set the <code>Value</code> parameter to the routine
+	 * Set the <code>Value</code> parameter IN value to the routine
 	 */
 	public void setValue(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnLeadingZeros.Value, value);

@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -2075583425;
+	private static final long serialVersionUID = 1532625951;
 
 	/**
 	 * The singleton instance of test.t_book_to_book_store
@@ -27,10 +27,10 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 
 	/**
 	 * The book store name
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_b2bs_bs_name
 	 * FOREIGN KEY (book_store_name)
 	 * REFERENCES test.t_book_store (name)
@@ -40,10 +40,10 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_b2bs_b_id
 	 * FOREIGN KEY (book_id)
 	 * REFERENCES test.t_book (ID)

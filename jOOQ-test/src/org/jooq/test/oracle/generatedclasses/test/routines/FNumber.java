@@ -8,16 +8,16 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1127947693;
+	private static final long serialVersionUID = 2096333359;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_NUMBER.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_NUMBER.N</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> N = createParameter("N", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -32,7 +32,7 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal>
 	}
 
 	/**
-	 * Set the <code>N</code> parameter to the routine
+	 * Set the <code>N</code> parameter IN value to the routine
 	 */
 	public void setN(java.lang.Number value) {
 		setNumber(org.jooq.test.oracle.generatedclasses.test.routines.FNumber.N, value);

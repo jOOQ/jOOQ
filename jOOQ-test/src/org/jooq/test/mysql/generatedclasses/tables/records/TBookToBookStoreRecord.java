@@ -10,14 +10,14 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
  */
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1485041457;
+	private static final long serialVersionUID = 720692349;
 
 	/**
 	 * The book store name
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_b2bs_bs_name
 	 * FOREIGN KEY (book_store_name)
 	 * REFERENCES test.t_book_store (name)
@@ -29,10 +29,10 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The book store name
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_b2bs_bs_name
 	 * FOREIGN KEY (book_store_name)
 	 * REFERENCES test.t_book_store (name)
@@ -44,10 +44,10 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The book store name
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_b2bs_bs_name
 	 * FOREIGN KEY (book_store_name)
 	 * REFERENCES test.t_book_store (name)
@@ -62,10 +62,10 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_b2bs_b_id
 	 * FOREIGN KEY (book_id)
 	 * REFERENCES test.t_book (ID)
@@ -77,10 +77,10 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_b2bs_b_id
 	 * FOREIGN KEY (book_id)
 	 * REFERENCES test.t_book (ID)
@@ -92,10 +92,10 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_b2bs_b_id
 	 * FOREIGN KEY (book_id)
 	 * REFERENCES test.t_book (ID)

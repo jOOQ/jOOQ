@@ -8,16 +8,16 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F_TABLES1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1100427067;
+	private static final long serialVersionUID = 1027186319;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_TABLES1.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_TABLES1.IN_TABLE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE.class));
 
@@ -32,7 +32,7 @@ public class F_TABLES1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracl
 	}
 
 	/**
-	 * Set the <code>IN_TABLE</code> parameter to the routine
+	 * Set the <code>IN_TABLE</code> parameter IN value to the routine
 	 */
 	public void setIN_TABLE(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.routines.F_TABLES1.IN_TABLE, value);

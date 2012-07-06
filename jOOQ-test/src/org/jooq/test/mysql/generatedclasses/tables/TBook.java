@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -641039081;
+	private static final long serialVersionUID = -1541206147;
 
 	/**
 	 * The singleton instance of test.t_book
@@ -27,15 +27,15 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
 	 * The author ID in entity 'author'
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_author_id
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES test.t_author (ID)
@@ -44,9 +44,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_book.co_author_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_co_author_id
 	 * FOREIGN KEY (co_author_id)
 	 * REFERENCES test.t_author (ID)
@@ -72,7 +72,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.
 	/**
 	 * The language of the book
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_language_id
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES test.t_language (ID)

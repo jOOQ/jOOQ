@@ -12,7 +12,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_book", schema = "test2")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -139536077;
+	private static final long serialVersionUID = -1788473005;
 
 	/**
 	 * The book ID
@@ -45,14 +45,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.v_book.co_author_id</code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.CO_AUTHOR_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.v_book.co_author_id</code>
 	 */
 	@javax.persistence.Column(name = "co_author_id", precision = 10)
 	public java.lang.Integer getCoAuthorId() {

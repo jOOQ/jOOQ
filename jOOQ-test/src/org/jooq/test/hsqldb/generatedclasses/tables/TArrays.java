@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -1379657846;
+	private static final long serialVersionUID = 74118506;
 
 	/**
 	 * The singleton instance of PUBLIC.T_ARRAYS
@@ -24,24 +24,24 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsql
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.lang.String[]> STRING_ARRAY = createField("STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.lang.Integer[]> NUMBER_ARRAY = createField("NUMBER_ARRAY", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.sql.Date[]> DATE_ARRAY = createField("DATE_ARRAY", org.jooq.impl.SQLDataType.DATE.getArrayDataType(), this);
 

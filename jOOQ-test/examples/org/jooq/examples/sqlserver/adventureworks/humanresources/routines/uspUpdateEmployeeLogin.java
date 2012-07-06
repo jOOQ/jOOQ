@@ -8,36 +8,36 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.routines;
  */
 public class uspUpdateEmployeeLogin extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -154471100;
+	private static final long serialVersionUID = -1962617272;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.EmployeeID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> EmployeeID = createParameter("EmployeeID", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.ManagerID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> ManagerID = createParameter("ManagerID", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.LoginID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> LoginID = createParameter("LoginID", org.jooq.impl.SQLDataType.NVARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.Title</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> Title = createParameter("Title", org.jooq.impl.SQLDataType.NVARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.HireDate</code>
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> HireDate = createParameter("HireDate", org.jooq.impl.SQLDataType.TIMESTAMP);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.CurrentFlag</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Boolean> CurrentFlag = createParameter("CurrentFlag", org.jooq.impl.SQLDataType.BIT);
 
@@ -56,42 +56,42 @@ public class uspUpdateEmployeeLogin extends org.jooq.impl.AbstractRoutine<java.l
 	}
 
 	/**
-	 * Set the <code>EmployeeID</code> parameter to the routine
+	 * Set the <code>EmployeeID</code> parameter IN value to the routine
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.EmployeeID, value);
 	}
 
 	/**
-	 * Set the <code>ManagerID</code> parameter to the routine
+	 * Set the <code>ManagerID</code> parameter IN value to the routine
 	 */
 	public void setManagerID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.ManagerID, value);
 	}
 
 	/**
-	 * Set the <code>LoginID</code> parameter to the routine
+	 * Set the <code>LoginID</code> parameter IN value to the routine
 	 */
 	public void setLoginID(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.LoginID, value);
 	}
 
 	/**
-	 * Set the <code>Title</code> parameter to the routine
+	 * Set the <code>Title</code> parameter IN value to the routine
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.Title, value);
 	}
 
 	/**
-	 * Set the <code>HireDate</code> parameter to the routine
+	 * Set the <code>HireDate</code> parameter IN value to the routine
 	 */
 	public void setHireDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.HireDate, value);
 	}
 
 	/**
-	 * Set the <code>CurrentFlag</code> parameter to the routine
+	 * Set the <code>CurrentFlag</code> parameter IN value to the routine
 	 */
 	public void setCurrentFlag(java.lang.Boolean value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin.CurrentFlag, value);

@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables;
  */
 public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 2126371375;
+	private static final long serialVersionUID = -699802036;
 
 	/**
 	 * The singleton instance of LUKAS.T_986_1
@@ -24,11 +24,11 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>LUKAS.T_986_1.REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_986_1__FK_986
 	 * FOREIGN KEY (REF)
 	 * REFERENCES LUKAS.X_UNUSED (ID)

@@ -8,31 +8,31 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -155524452;
+	private static final long serialVersionUID = 2008413650;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F317.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F317.P1</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P1 = createParameter("P1", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F317.P2</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P2 = createParameter("P2", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F317.P3</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P3 = createParameter("P3", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F317.P4</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P4 = createParameter("P4", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -50,7 +50,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> im
 	}
 
 	/**
-	 * Set the <code>P1</code> parameter to the routine
+	 * Set the <code>P1</code> parameter IN value to the routine
 	 */
 	public void setP1(java.lang.Number value) {
 		setNumber(org.jooq.test.oracle3.generatedclasses.routines.F317.P1, value);
@@ -66,7 +66,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> im
 	}
 
 	/**
-	 * Set the <code>P2</code> parameter to the routine
+	 * Set the <code>P2</code> parameter IN value to the routine
 	 */
 	public void setP2(java.lang.Number value) {
 		setNumber(org.jooq.test.oracle3.generatedclasses.routines.F317.P2, value);
@@ -82,7 +82,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> im
 	}
 
 	/**
-	 * Set the <code>P3</code> parameter to the routine
+	 * Set the <code>P3</code> parameter IN value to the routine
 	 */
 	public void setP3(java.lang.Number value) {
 		setNumber(org.jooq.test.oracle3.generatedclasses.routines.F317.P3, value);
@@ -98,7 +98,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> im
 	}
 
 	/**
-	 * Set the <code>P4</code> parameter to the routine
+	 * Set the <code>P4</code> parameter IN value to the routine
 	 */
 	public void setP4(java.lang.Number value) {
 		setNumber(org.jooq.test.oracle3.generatedclasses.routines.F317.P4, value);

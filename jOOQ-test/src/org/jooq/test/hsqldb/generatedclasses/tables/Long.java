@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class Long extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.LongRecord> {
 
-	private static final long serialVersionUID = -1065492854;
+	private static final long serialVersionUID = -383935935;
 
 	/**
 	 * The singleton instance of PUBLIC.LONG
@@ -24,12 +24,12 @@ public class Long extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generated
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.LONG.ID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.LongRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.LONG.OTHER</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.LongRecord, java.lang.Long> OTHER = createField("OTHER", org.jooq.impl.SQLDataType.BIGINT, this);
 

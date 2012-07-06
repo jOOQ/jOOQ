@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class Class extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ClassRecord> {
 
-	private static final long serialVersionUID = 522249023;
+	private static final long serialVersionUID = 1893768079;
 
 	/**
 	 * The singleton instance of PUBLIC.CLASS
@@ -24,7 +24,7 @@ public class Class extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generate
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.CLASS.CLASS</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.ClassRecord, java.lang.Integer> CLASS_ = createField("CLASS", org.jooq.impl.SQLDataType.INTEGER, this);
 

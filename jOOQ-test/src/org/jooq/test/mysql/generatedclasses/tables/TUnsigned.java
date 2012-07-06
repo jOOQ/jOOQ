@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = -1947181772;
+	private static final long serialVersionUID = 1779510579;
 
 	/**
 	 * The singleton instance of test.t_unsigned
@@ -24,22 +24,22 @@ public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.mysql.gener
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_byte</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TUnsignedRecord, org.jooq.tools.unsigned.UByte> U_BYTE = createField("u_byte", org.jooq.impl.SQLDataType.TINYINTUNSIGNED, T_UNSIGNED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_short</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TUnsignedRecord, org.jooq.tools.unsigned.UShort> U_SHORT = createField("u_short", org.jooq.impl.SQLDataType.SMALLINTUNSIGNED, T_UNSIGNED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_int</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TUnsignedRecord, org.jooq.tools.unsigned.UInteger> U_INT = createField("u_int", org.jooq.impl.SQLDataType.INTEGERUNSIGNED, T_UNSIGNED);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_unsigned.u_long</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TUnsignedRecord, org.jooq.tools.unsigned.ULong> U_LONG = createField("u_long", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, T_UNSIGNED);
 

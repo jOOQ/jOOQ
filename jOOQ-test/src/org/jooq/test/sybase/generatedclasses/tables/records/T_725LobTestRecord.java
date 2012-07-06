@@ -8,35 +8,35 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  */
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 990897838;
+	private static final long serialVersionUID = 1969987006;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>DBA.t_725_lob_test.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>DBA.t_725_lob_test.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.t_725_lob_test.LOB</code>
 	 */
 	public void setLob(byte[] value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.t_725_lob_test.LOB</code>
 	 */
 	public byte[] getLob() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB);

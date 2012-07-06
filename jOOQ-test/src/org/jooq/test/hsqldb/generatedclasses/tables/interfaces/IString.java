@@ -9,22 +9,22 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IString extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.STRING.ID</code>
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.STRING.ID</code>
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.STRING.OTHER</code>
 	 */
 	public void setOther(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.STRING.OTHER</code>
 	 */
 	public java.lang.String getOther();
 }

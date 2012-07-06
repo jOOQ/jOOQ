@@ -9,23 +9,23 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITBook extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_BOOK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_BOOK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -34,9 +34,9 @@ public interface ITBook extends java.io.Serializable {
 	public void setAuthorId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -45,9 +45,9 @@ public interface ITBook extends java.io.Serializable {
 	public java.lang.Integer getAuthorId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -56,9 +56,9 @@ public interface ITBook extends java.io.Serializable {
 	public void setCoAuthorId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -67,39 +67,39 @@ public interface ITBook extends java.io.Serializable {
 	public java.lang.Integer getCoAuthorId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
 	 */
 	public void setDetailsId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
 	 */
 	public java.lang.Integer getDetailsId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.TITLE</code>
 	 */
 	public void setTitle(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.TITLE</code>
 	 */
 	public java.lang.String getTitle();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>
 	 */
 	public void setPublishedIn(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>
 	 */
 	public java.lang.Integer getPublishedIn();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
@@ -108,9 +108,9 @@ public interface ITBook extends java.io.Serializable {
 	public void setLanguageId(org.jooq.test.hsqldb.generatedclasses.enums.TLanguage value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
@@ -119,22 +119,22 @@ public interface ITBook extends java.io.Serializable {
 	public org.jooq.test.hsqldb.generatedclasses.enums.TLanguage getLanguageId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>
 	 */
 	public void setContentText(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>
 	 */
 	public java.lang.String getContentText();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CONTENT_PDF</code>
 	 */
 	public void setContentPdf(byte[] value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CONTENT_PDF</code>
 	 */
 	public byte[] getContentPdf();
 }

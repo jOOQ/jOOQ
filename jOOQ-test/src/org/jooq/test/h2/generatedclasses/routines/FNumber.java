@@ -8,16 +8,16 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1080721949;
+	private static final long serialVersionUID = 236939818;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.F_NUMBER.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.F_NUMBER.P1</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P1 = createParameter("P1", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -32,7 +32,7 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>P1</code> parameter to the routine
+	 * Set the <code>P1</code> parameter IN value to the routine
 	 */
 	public void setP1(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.routines.FNumber.P1, value);

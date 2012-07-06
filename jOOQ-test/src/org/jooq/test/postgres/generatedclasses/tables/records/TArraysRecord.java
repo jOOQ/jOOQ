@@ -10,21 +10,21 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_arrays", schema = "public")
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -676882876;
+	private static final long serialVersionUID = 1231121680;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.t_arrays.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.t_arrays.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -33,14 +33,14 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.string_array</code>
 	 */
 	public void setStringArray(java.lang.String[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS.STRING_ARRAY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.string_array</code>
 	 */
 	@javax.persistence.Column(name = "string_array")
 	public java.lang.String[] getStringArray() {
@@ -48,14 +48,14 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.number_array</code>
 	 */
 	public void setNumberArray(java.lang.Integer[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS.NUMBER_ARRAY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.number_array</code>
 	 */
 	@javax.persistence.Column(name = "number_array")
 	public java.lang.Integer[] getNumberArray() {
@@ -63,14 +63,14 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.date_array</code>
 	 */
 	public void setDateArray(java.sql.Date[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS.DATE_ARRAY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.date_array</code>
 	 */
 	@javax.persistence.Column(name = "date_array")
 	public java.sql.Date[] getDateArray() {
@@ -78,14 +78,14 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.udt_array</code>
 	 */
 	public void setUdtArray(org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS.UDT_ARRAY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.udt_array</code>
 	 */
 	@javax.persistence.Column(name = "udt_array")
 	public org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[] getUdtArray() {
@@ -93,14 +93,14 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.enum_array</code>
 	 */
 	public void setEnumArray(org.jooq.test.postgres.generatedclasses.enums.UCountry[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS.ENUM_ARRAY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.enum_array</code>
 	 */
 	@javax.persistence.Column(name = "enum_array")
 	public org.jooq.test.postgres.generatedclasses.enums.UCountry[] getEnumArray() {
@@ -108,14 +108,14 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.array_array</code>
 	 */
 	public void setArrayArray(java.lang.Integer[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS.ARRAY_ARRAY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.array_array</code>
 	 */
 	@javax.persistence.Column(name = "array_array")
 	public java.lang.Integer[] getArrayArray() {

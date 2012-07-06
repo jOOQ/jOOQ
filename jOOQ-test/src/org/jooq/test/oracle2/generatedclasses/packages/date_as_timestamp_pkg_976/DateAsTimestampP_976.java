@@ -8,16 +8,16 @@ package org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_97
  */
 public class DateAsTimestampP_976 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 697277087;
+	private static final long serialVersionUID = -928355962;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.PKG_976.P_976.I</code>
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_I = createParameter("I", org.jooq.impl.SQLDataType.TIMESTAMP);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.PKG_976.P_976.O</code>
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_O = createParameter("O", org.jooq.impl.SQLDataType.TIMESTAMP);
 
@@ -32,12 +32,15 @@ public class DateAsTimestampP_976 extends org.jooq.impl.AbstractRoutine<java.lan
 	}
 
 	/**
-	 * Set the <code>I</code> parameter to the routine
+	 * Set the <code>I</code> parameter IN value to the routine
 	 */
 	public void setI(java.sql.Timestamp value) {
 		setValue(org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampP_976.DATE_AS_TIMESTAMP_I, value);
 	}
 
+	/**
+	 * Get the <code>O</code> parameter OUT value from the routine
+	 */
 	public java.sql.Timestamp getO() {
 		return getValue(DATE_AS_TIMESTAMP_O);
 	}

@@ -14,15 +14,15 @@ public interface T_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializa
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -31,7 +31,7 @@ public interface T_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializa
 	/**
 	 * The author ID in entity 'author'
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -42,7 +42,7 @@ public interface T_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializa
 	/**
 	 * The author ID in entity 'author'
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -52,9 +52,9 @@ public interface T_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializa
 	public java.lang.Integer getAUTHOR_ID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -63,9 +63,9 @@ public interface T_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializa
 	public void setCO_AUTHOR_ID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -75,12 +75,12 @@ public interface T_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializa
 	public java.lang.Integer getCO_AUTHOR_ID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.DETAILS_ID</code>
 	 */
 	public void setDETAILS_ID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.DETAILS_ID</code>
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
 	public java.lang.Integer getDETAILS_ID();
@@ -110,7 +110,7 @@ public interface T_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializa
 	/**
 	 * The language of the book
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES TEST.T_LANGUAGE (ID)
@@ -121,7 +121,7 @@ public interface T_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializa
 	/**
 	 * The language of the book
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES TEST.T_LANGUAGE (ID)

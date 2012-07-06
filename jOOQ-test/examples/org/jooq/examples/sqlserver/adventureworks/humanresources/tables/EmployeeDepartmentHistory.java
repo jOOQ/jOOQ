@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory> {
 
-	private static final long serialVersionUID = -1863982095;
+	private static final long serialVersionUID = -511613006;
 
 	/**
 	 * The singleton instance of HumanResources.EmployeeDepartmentHistory
@@ -24,11 +24,11 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableTableImpl<
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeDepartmentHistory_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -37,11 +37,11 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableTableImpl<
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory, java.lang.Integer> EmployeeID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.DepartmentID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeDepartmentHistory_Department_DepartmentID
 	 * FOREIGN KEY (DepartmentID)
 	 * REFERENCES HumanResources.Department (DepartmentID)
@@ -50,11 +50,11 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableTableImpl<
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory, java.lang.Short> DepartmentID = createField("DepartmentID", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.ShiftID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeDepartmentHistory_Shift_ShiftID
 	 * FOREIGN KEY (ShiftID)
 	 * REFERENCES HumanResources.Shift (ShiftID)
@@ -63,19 +63,19 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableTableImpl<
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory, java.lang.Byte> ShiftID = createField("ShiftID", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.StartDate</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory, java.sql.Timestamp> StartDate = createField("StartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.EndDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory, java.sql.Timestamp> EndDate = createField("EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

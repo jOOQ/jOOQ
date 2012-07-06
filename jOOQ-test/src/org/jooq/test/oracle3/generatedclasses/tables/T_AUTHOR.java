@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_AUTHOR extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 834252593;
+	private static final long serialVersionUID = 559687276;
 
 	/**
 	 * The singleton instance of TEST.T_AUTHOR
@@ -27,8 +27,8 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> 
 
 	/**
 	 * The author ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 

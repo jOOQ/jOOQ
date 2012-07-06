@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> {
 
-	private static final long serialVersionUID = -1861584637;
+	private static final long serialVersionUID = 1007906944;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.rental.rental_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setRentalId(java.lang.Integer value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.rental.rental_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getRentalId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.rental.rental_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> fetchPaymentList() {
 		return create()
@@ -41,23 +41,23 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.rental_date</code>
 	 */
 	public void setRentalDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_DATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.rental_date</code>
 	 */
 	public java.sql.Timestamp getRentalDate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_DATE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.inventory_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_inventory
 	 * FOREIGN KEY (inventory_id)
 	 * REFERENCES sakila.inventory (inventory_id)
@@ -68,9 +68,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.inventory_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_inventory
 	 * FOREIGN KEY (inventory_id)
 	 * REFERENCES sakila.inventory (inventory_id)
@@ -81,9 +81,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.inventory_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_inventory
 	 * FOREIGN KEY (inventory_id)
 	 * REFERENCES sakila.inventory (inventory_id)
@@ -97,9 +97,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.customer_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_customer
 	 * FOREIGN KEY (customer_id)
 	 * REFERENCES sakila.customer (customer_id)
@@ -110,9 +110,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.customer_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_customer
 	 * FOREIGN KEY (customer_id)
 	 * REFERENCES sakila.customer (customer_id)
@@ -123,9 +123,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.customer_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_customer
 	 * FOREIGN KEY (customer_id)
 	 * REFERENCES sakila.customer (customer_id)
@@ -139,23 +139,23 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.return_date</code>
 	 */
 	public void setReturnDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RETURN_DATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.return_date</code>
 	 */
 	public java.sql.Timestamp getReturnDate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RETURN_DATE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.staff_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_staff
 	 * FOREIGN KEY (staff_id)
 	 * REFERENCES sakila.staff (staff_id)
@@ -166,9 +166,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.staff_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_staff
 	 * FOREIGN KEY (staff_id)
 	 * REFERENCES sakila.staff (staff_id)
@@ -179,9 +179,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.staff_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_staff
 	 * FOREIGN KEY (staff_id)
 	 * REFERENCES sakila.staff (staff_id)
@@ -195,14 +195,14 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.LAST_UPDATE);

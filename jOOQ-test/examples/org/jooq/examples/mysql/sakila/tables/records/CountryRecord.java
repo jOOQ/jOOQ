@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class CountryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CountryRecord> {
 
-	private static final long serialVersionUID = 1509860044;
+	private static final long serialVersionUID = -1253816329;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.country.country_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setCountryId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.COUNTRY_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.country.country_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Short getCountryId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.COUNTRY_ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.country.country_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.CityRecord> fetchCityList() {
 		return create()
@@ -41,28 +41,28 @@ public class CountryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.country.country</code>
 	 */
 	public void setCountry(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.COUNTRY_, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.country.country</code>
 	 */
 	public java.lang.String getCountry() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.COUNTRY_);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.country.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.country.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.LAST_UPDATE);

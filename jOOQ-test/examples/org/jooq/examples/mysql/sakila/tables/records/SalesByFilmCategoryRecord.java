@@ -10,31 +10,31 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class SalesByFilmCategoryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord> {
 
-	private static final long serialVersionUID = -1561919436;
+	private static final long serialVersionUID = -919919172;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.sales_by_film_category.category</code>
 	 */
 	public void setCategory(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.CATEGORY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.sales_by_film_category.category</code>
 	 */
 	public java.lang.String getCategory() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.CATEGORY);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.sales_by_film_category.total_sales</code>
 	 */
 	public void setTotalSales(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.TOTAL_SALES, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.sales_by_film_category.total_sales</code>
 	 */
 	public java.math.BigDecimal getTotalSales() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.TOTAL_SALES);

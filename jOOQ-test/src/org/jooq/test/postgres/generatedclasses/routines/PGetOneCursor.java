@@ -8,21 +8,21 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class PGetOneCursor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1497010977;
+	private static final long serialVersionUID = -325374240;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.p_get_one_cursor.total</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> TOTAL = createParameter("total", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.p_get_one_cursor.books</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> BOOKS = createParameter("books", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.p_get_one_cursor.book_ids</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer[]> BOOK_IDS = createParameter("book_ids", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType());
 
@@ -38,16 +38,22 @@ public class PGetOneCursor extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	}
 
 	/**
-	 * Set the <code>book_ids</code> parameter to the routine
+	 * Set the <code>book_ids</code> parameter IN value to the routine
 	 */
 	public void setBookIds(java.lang.Integer[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.routines.PGetOneCursor.BOOK_IDS, value);
 	}
 
+	/**
+	 * Get the <code>total</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getTotal() {
 		return getValue(TOTAL);
 	}
 
+	/**
+	 * Get the <code>books</code> parameter OUT value from the routine
+	 */
 	public org.jooq.Result<org.jooq.Record> getBooks() {
 		return getValue(BOOKS);
 	}

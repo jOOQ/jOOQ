@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> {
 
-	private static final long serialVersionUID = -1668497777;
+	private static final long serialVersionUID = 1134647863;
 
 	/**
 	 * The singleton instance of sakila.inventory
@@ -24,16 +24,16 @@ public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.inventory.inventory_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord, java.lang.Integer> INVENTORY_ID = createField("inventory_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.inventory.film_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_inventory_film
 	 * FOREIGN KEY (film_id)
 	 * REFERENCES sakila.film (film_id)
@@ -42,9 +42,9 @@ public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord, java.lang.Short> FILM_ID = createField("film_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.inventory.store_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_inventory_store
 	 * FOREIGN KEY (store_id)
 	 * REFERENCES sakila.store (store_id)
@@ -53,7 +53,7 @@ public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord, java.lang.Byte> STORE_ID = createField("store_id", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.inventory.last_update</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

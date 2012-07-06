@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> {
 
-	private static final long serialVersionUID = -1506444876;
+	private static final long serialVersionUID = -1712418677;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.customer.customer_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setCustomerId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CUSTOMER_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.customer.customer_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Short getCustomerId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CUSTOMER_ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.customer.customer_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> fetchPaymentList() {
 		return create()
@@ -41,9 +41,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.customer.customer_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> fetchRentalList() {
 		return create()
@@ -53,9 +53,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.store_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_customer_store
 	 * FOREIGN KEY (store_id)
 	 * REFERENCES sakila.store (store_id)
@@ -66,9 +66,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.store_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_customer_store
 	 * FOREIGN KEY (store_id)
 	 * REFERENCES sakila.store (store_id)
@@ -79,9 +79,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.store_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_customer_store
 	 * FOREIGN KEY (store_id)
 	 * REFERENCES sakila.store (store_id)
@@ -95,51 +95,51 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.first_name</code>
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.FIRST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.first_name</code>
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.FIRST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.last_name</code>
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.LAST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.last_name</code>
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.LAST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.email</code>
 	 */
 	public void setEmail(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.EMAIL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.email</code>
 	 */
 	public java.lang.String getEmail() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.EMAIL);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.address_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_customer_address
 	 * FOREIGN KEY (address_id)
 	 * REFERENCES sakila.address (address_id)
@@ -150,9 +150,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.address_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_customer_address
 	 * FOREIGN KEY (address_id)
 	 * REFERENCES sakila.address (address_id)
@@ -163,9 +163,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.address_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_customer_address
 	 * FOREIGN KEY (address_id)
 	 * REFERENCES sakila.address (address_id)
@@ -179,42 +179,42 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.active</code>
 	 */
 	public void setActive(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.ACTIVE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.active</code>
 	 */
 	public java.lang.Byte getActive() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.ACTIVE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.create_date</code>
 	 */
 	public void setCreateDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CREATE_DATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.create_date</code>
 	 */
 	public java.sql.Timestamp getCreateDate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CREATE_DATE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.LAST_UPDATE);

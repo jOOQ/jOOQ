@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> {
 
-	private static final long serialVersionUID = 69117642;
+	private static final long serialVersionUID = 1479661138;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.ContactCreditCard.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ContactCreditCard_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -30,11 +30,11 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.ContactCreditCard.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ContactCreditCard_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -46,11 +46,11 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.ContactCreditCard.CreditCardID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ContactCreditCard_CreditCard_CreditCardID
 	 * FOREIGN KEY (CreditCardID)
 	 * REFERENCES Sales.CreditCard (CreditCardID)
@@ -61,11 +61,11 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.ContactCreditCard.CreditCardID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ContactCreditCard_CreditCard_CreditCardID
 	 * FOREIGN KEY (CreditCardID)
 	 * REFERENCES Sales.CreditCard (CreditCardID)
@@ -77,14 +77,14 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ContactCreditCard.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ContactCreditCard.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

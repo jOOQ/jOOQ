@@ -8,29 +8,29 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 1150104531;
+	private static final long serialVersionUID = -767124243;
 
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.RETURN_VALUE</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED, XMLTYPE) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.REPORT_REF</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> REPORT_REF = createParameter("REPORT_REF", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.TID</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> TID = createParameter("TID", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.METHOD</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> METHOD = createParameter("METHOD", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -47,7 +47,7 @@ public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lan
 	}
 
 	/**
-	 * Set the <code>REPORT_REF</code> parameter to the routine
+	 * Set the <code>REPORT_REF</code> parameter IN value to the routine
 	 */
 	public void setReportRef(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml.REPORT_REF, value);
@@ -63,7 +63,7 @@ public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lan
 	}
 
 	/**
-	 * Set the <code>TID</code> parameter to the routine
+	 * Set the <code>TID</code> parameter IN value to the routine
 	 */
 	public void setTid(java.lang.Number value) {
 		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml.TID, value);
@@ -79,7 +79,7 @@ public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lan
 	}
 
 	/**
-	 * Set the <code>METHOD</code> parameter to the routine
+	 * Set the <code>METHOD</code> parameter IN value to the routine
 	 */
 	public void setMethod(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml.METHOD, value);

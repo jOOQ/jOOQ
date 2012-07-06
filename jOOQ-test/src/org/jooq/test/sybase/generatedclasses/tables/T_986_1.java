@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 1436042625;
+	private static final long serialVersionUID = 725938735;
 
 	/**
 	 * The singleton instance of DBA.t_986_1
@@ -24,11 +24,11 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>DBA.t_986_1.REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT t_986_1__fk_986
 	 * FOREIGN KEY (REF)
 	 * REFERENCES DBA.x_unused (ID)

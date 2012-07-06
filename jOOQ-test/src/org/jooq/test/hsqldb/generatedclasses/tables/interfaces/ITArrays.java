@@ -9,46 +9,46 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITArrays extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
 	 */
 	public void setStringArray(java.lang.String[] value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
 	 */
 	public java.lang.String[] getStringArray();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
 	 */
 	public void setNumberArray(java.lang.Integer[] value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
 	 */
 	public java.lang.Integer[] getNumberArray();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
 	 */
 	public void setDateArray(java.sql.Date[] value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
 	 */
 	public java.sql.Date[] getDateArray();
 }

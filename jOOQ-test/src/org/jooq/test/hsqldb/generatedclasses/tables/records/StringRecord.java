@@ -8,10 +8,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IString {
 
-	private static final long serialVersionUID = 1914150888;
+	private static final long serialVersionUID = 1862906916;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.STRING.ID</code>
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -19,7 +19,7 @@ public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.STRING.ID</code>
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -27,7 +27,7 @@ public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.STRING.OTHER</code>
 	 */
 	@Override
 	public void setOther(java.lang.String value) {
@@ -35,7 +35,7 @@ public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.STRING.OTHER</code>
 	 */
 	@Override
 	public java.lang.String getOther() {

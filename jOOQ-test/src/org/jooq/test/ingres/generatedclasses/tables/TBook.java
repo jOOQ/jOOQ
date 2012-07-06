@@ -10,7 +10,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1345977093;
+	private static final long serialVersionUID = -1723006436;
 
 	/**
 	 * The singleton instance of test.t_book
@@ -27,15 +27,15 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
 	 * The author ID in entity 'author'
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_author_id
 	 * FOREIGN KEY (author_id)
 	 * REFERENCES test.t_author (id)
@@ -44,9 +44,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_book.co_author_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_co_author_id
 	 * FOREIGN KEY (co_author_id)
 	 * REFERENCES test.t_author (id)
@@ -55,7 +55,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_book.details_id</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("details_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
@@ -72,7 +72,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres
 	/**
 	 * The language of the book
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_language_id
 	 * FOREIGN KEY (language_id)
 	 * REFERENCES test.t_language (id)

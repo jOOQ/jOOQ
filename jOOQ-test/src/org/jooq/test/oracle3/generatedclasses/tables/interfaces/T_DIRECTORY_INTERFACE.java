@@ -11,25 +11,25 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_DIRECTORY_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_DIRECTORY.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_DIRECTORY.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT PK_T_DIRECTORY_SELF
 	 * FOREIGN KEY (PARENT_ID)
 	 * REFERENCES TEST.T_DIRECTORY (ID)
@@ -38,9 +38,9 @@ public interface T_DIRECTORY_INTERFACE extends java.lang.Cloneable, java.io.Seri
 	public void setPARENT_ID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT PK_T_DIRECTORY_SELF
 	 * FOREIGN KEY (PARENT_ID)
 	 * REFERENCES TEST.T_DIRECTORY (ID)
@@ -50,23 +50,23 @@ public interface T_DIRECTORY_INTERFACE extends java.lang.Cloneable, java.io.Seri
 	public java.lang.Integer getPARENT_ID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>
 	 */
 	public void setIS_DIRECTORY(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>
 	 */
 	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 7)
 	public java.lang.Integer getIS_DIRECTORY();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.name</code>
 	 */
 	public void setname(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.name</code>
 	 */
 	@javax.persistence.Column(name = "name", length = 50)
 	public java.lang.String getname();

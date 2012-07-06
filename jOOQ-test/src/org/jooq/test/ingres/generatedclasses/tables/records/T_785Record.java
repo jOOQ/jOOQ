@@ -8,45 +8,45 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  */
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -2096600021;
+	private static final long serialVersionUID = 607765043;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_785.id</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.T_785.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_785.id</code>
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.T_785.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_785.name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.T_785.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_785.name</code>
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.T_785.NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_785.value</code>
 	 */
 	public void setValue(java.lang.String value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.T_785.VALUE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_785.value</code>
 	 */
 	public java.lang.String getValue() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.T_785.VALUE);

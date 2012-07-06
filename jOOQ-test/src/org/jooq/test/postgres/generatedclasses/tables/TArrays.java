@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 363337766;
+	private static final long serialVersionUID = 1138152100;
 
 	/**
 	 * The singleton instance of public.t_arrays
@@ -24,39 +24,39 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.t_arrays.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.string_array</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.String[]> STRING_ARRAY = createField("string_array", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.number_array</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer[]> NUMBER_ARRAY = createField("number_array", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.date_array</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.sql.Date[]> DATE_ARRAY = createField("date_array", org.jooq.impl.SQLDataType.DATE.getArrayDataType(), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.udt_array</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[]> UDT_ARRAY = createField("udt_array", org.jooq.test.postgres.generatedclasses.udt.UStreetType.U_STREET_TYPE.getDataType().getArrayDataType(), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.enum_array</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, org.jooq.test.postgres.generatedclasses.enums.UCountry[]> ENUM_ARRAY = createField("enum_array", org.jooq.util.postgres.PostgresDataType.VARCHAR.asEnumDataType(org.jooq.test.postgres.generatedclasses.enums.UCountry.class).getArrayDataType(), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_arrays.array_array</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer[]> ARRAY_ARRAY = createField("array_array", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), this);
 

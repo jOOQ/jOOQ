@@ -8,10 +8,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IObject {
 
-	private static final long serialVersionUID = -1496457054;
+	private static final long serialVersionUID = -1712897764;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.OBJECT.ID</code>
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -19,7 +19,7 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.OBJECT.ID</code>
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -27,8 +27,8 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.OBJECT.OTHER</code>
+	 * <p>
 	 * The SQL type of this item (OTHER, null) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -38,8 +38,8 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.OBJECT.OTHER</code>
+	 * <p>
 	 * The SQL type of this item (OTHER, null) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */

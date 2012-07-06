@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductDescription", schema = "Production")
 public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDescription> {
 
-	private static final long serialVersionUID = 2052199881;
+	private static final long serialVersionUID = 136316007;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductDescription.ProductDescriptionID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setProductDescriptionID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription.ProductDescriptionID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductDescription.ProductDescriptionID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ProductDescriptionID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductDescription.Description</code>
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription.Description, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductDescription.Description</code>
 	 */
 	@javax.persistence.Column(name = "Description", nullable = false, length = 400)
 	public java.lang.String getDescription() {
@@ -48,14 +48,14 @@ public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductDescription.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductDescription.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -63,14 +63,14 @@ public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductDescription.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductDescription.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

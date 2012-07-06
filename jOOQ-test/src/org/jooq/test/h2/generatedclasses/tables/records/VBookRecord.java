@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = -540768731;
+	private static final long serialVersionUID = 2107473895;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.ID</code>
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -19,7 +19,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.ID</code>
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -27,7 +27,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.AUTHOR_ID</code>
 	 */
 	@Override
 	public void setAuthorId(java.lang.Integer value) {
@@ -35,7 +35,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.AUTHOR_ID</code>
 	 */
 	@Override
 	public java.lang.Integer getAuthorId() {
@@ -43,7 +43,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>
 	 */
 	@Override
 	public void setCoAuthorId(java.lang.Integer value) {
@@ -51,7 +51,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>
 	 */
 	@Override
 	public java.lang.Integer getCoAuthorId() {
@@ -59,7 +59,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.DETAILS_ID</code>
 	 */
 	@Override
 	public void setDetailsId(java.lang.Integer value) {
@@ -67,7 +67,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.DETAILS_ID</code>
 	 */
 	@Override
 	public java.lang.Integer getDetailsId() {
@@ -75,7 +75,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.TITLE</code>
 	 */
 	@Override
 	public void setTitle(java.lang.String value) {
@@ -83,7 +83,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.TITLE</code>
 	 */
 	@Override
 	public java.lang.String getTitle() {
@@ -91,7 +91,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>
 	 */
 	@Override
 	public void setPublishedIn(java.lang.Integer value) {
@@ -99,7 +99,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>
 	 */
 	@Override
 	public java.lang.Integer getPublishedIn() {
@@ -107,7 +107,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>
 	 */
 	@Override
 	public void setLanguageId(java.lang.Integer value) {
@@ -115,7 +115,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>
 	 */
 	@Override
 	public java.lang.Integer getLanguageId() {
@@ -123,7 +123,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>
 	 */
 	@Override
 	public void setContentText(java.lang.String value) {
@@ -131,7 +131,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>
 	 */
 	@Override
 	public java.lang.String getContentText() {
@@ -139,7 +139,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CONTENT_PDF</code>
 	 */
 	@Override
 	public void setContentPdf(byte[] value) {
@@ -147,7 +147,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CONTENT_PDF</code>
 	 */
 	@Override
 	public byte[] getContentPdf() {

@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -2084883313;
+	private static final long serialVersionUID = -1502761809;
 
 	/**
 	 * The singleton instance of TEST.T_BOOK_TO_BOOK_STORE
@@ -27,10 +27,10 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.j
 
 	/**
 	 * The book store name
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_BS_NAME
 	 * FOREIGN KEY (BOOK_STORE_NAME)
 	 * REFERENCES TEST.T_BOOK_STORE (NAME)
@@ -40,10 +40,10 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.j
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_B_ID
 	 * FOREIGN KEY (BOOK_ID)
 	 * REFERENCES TEST.T_BOOK (ID)

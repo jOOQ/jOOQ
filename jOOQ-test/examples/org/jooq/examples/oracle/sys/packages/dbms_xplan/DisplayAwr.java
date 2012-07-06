@@ -8,31 +8,31 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -1252587511;
+	private static final long serialVersionUID = -424156627;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.SQL_ID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQL_ID = createParameter("SQL_ID", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.PLAN_HASH_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.DB_ID</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigInteger> DB_ID = createParameter("DB_ID", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.FORMAT</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -50,7 +50,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	}
 
 	/**
-	 * Set the <code>SQL_ID</code> parameter to the routine
+	 * Set the <code>SQL_ID</code> parameter IN value to the routine
 	 */
 	public void setSqlId(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr.SQL_ID, value);
@@ -66,7 +66,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	}
 
 	/**
-	 * Set the <code>PLAN_HASH_VALUE</code> parameter to the routine
+	 * Set the <code>PLAN_HASH_VALUE</code> parameter IN value to the routine
 	 */
 	public void setPlanHashValue(java.math.BigInteger value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr.PLAN_HASH_VALUE, value);
@@ -82,7 +82,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	}
 
 	/**
-	 * Set the <code>DB_ID</code> parameter to the routine
+	 * Set the <code>DB_ID</code> parameter IN value to the routine
 	 */
 	public void setDbId(java.math.BigInteger value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr.DB_ID, value);
@@ -98,7 +98,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the routine
+	 * Set the <code>FORMAT</code> parameter IN value to the routine
 	 */
 	public void setFormat(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr.FORMAT, value);

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class CountryRegionCurrency extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> {
 
-	private static final long serialVersionUID = -1002905574;
+	private static final long serialVersionUID = 964360464;
 
 	/**
 	 * The singleton instance of Sales.CountryRegionCurrency
@@ -24,11 +24,11 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableTableImpl<org.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CountryRegionCurrency.CountryRegionCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CountryRegionCurrency_CountryRegion_CountryRegionCode
 	 * FOREIGN KEY (CountryRegionCode)
 	 * REFERENCES Person.CountryRegion (CountryRegionCode)
@@ -37,11 +37,11 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableTableImpl<org.
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency, java.lang.String> CountryRegionCode = createField("CountryRegionCode", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CountryRegionCurrency.CurrencyCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CountryRegionCurrency_Currency_CurrencyCode
 	 * FOREIGN KEY (CurrencyCode)
 	 * REFERENCES Sales.Currency (CurrencyCode)
@@ -50,7 +50,7 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableTableImpl<org.
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency, java.lang.String> CurrencyCode = createField("CurrencyCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CountryRegionCurrency.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

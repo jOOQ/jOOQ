@@ -8,11 +8,11 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -933349680;
+	private static final long serialVersionUID = 976895700;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P1490.value</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> value = createParameter("value", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -26,7 +26,7 @@ public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> impleme
 	}
 
 	/**
-	 * Set the <code>value</code> parameter to the routine
+	 * Set the <code>value</code> parameter IN value to the routine
 	 */
 	public void setvalue(java.lang.Number value) {
 		setNumber(org.jooq.test.oracle3.generatedclasses.routines.P1490.value, value);

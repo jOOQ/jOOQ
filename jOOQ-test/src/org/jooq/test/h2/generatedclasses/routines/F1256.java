@@ -8,16 +8,16 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class F1256 extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -398303628;
+	private static final long serialVersionUID = 1831736499;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.F1256.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.F1256.P1</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P1 = createParameter("P1", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -32,7 +32,7 @@ public class F1256 extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 	}
 
 	/**
-	 * Set the <code>P1</code> parameter to the routine
+	 * Set the <code>P1</code> parameter IN value to the routine
 	 */
 	public void setP1(java.lang.String value) {
 		setValue(org.jooq.test.h2.generatedclasses.routines.F1256.P1, value);

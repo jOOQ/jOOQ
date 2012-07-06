@@ -9,12 +9,12 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IPreparedStatement extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.PREPARED_STATEMENT.ID</code>
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.PREPARED_STATEMENT.ID</code>
 	 */
 	public java.lang.Integer getId();
 }

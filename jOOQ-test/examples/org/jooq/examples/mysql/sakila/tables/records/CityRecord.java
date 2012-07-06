@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CityRecord> {
 
-	private static final long serialVersionUID = 969805918;
+	private static final long serialVersionUID = 779140644;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.city.city_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setCityId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.City.CITY.CITY_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.city.city_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Short getCityId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.CITY_ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.city.city_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> fetchAddressList() {
 		return create()
@@ -41,23 +41,23 @@ public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.city.city</code>
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.City.CITY.CITY_, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.city.city</code>
 	 */
 	public java.lang.String getCity() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.CITY_);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.city.country_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_city_country
 	 * FOREIGN KEY (country_id)
 	 * REFERENCES sakila.country (country_id)
@@ -68,9 +68,9 @@ public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.city.country_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_city_country
 	 * FOREIGN KEY (country_id)
 	 * REFERENCES sakila.country (country_id)
@@ -81,9 +81,9 @@ public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.city.country_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_city_country
 	 * FOREIGN KEY (country_id)
 	 * REFERENCES sakila.country (country_id)
@@ -97,14 +97,14 @@ public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.city.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.City.CITY.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.city.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.LAST_UPDATE);

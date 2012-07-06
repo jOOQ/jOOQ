@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesOrderHeader", schema = "Sales")
 public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader> {
 
-	private static final long serialVersionUID = -1644021636;
+	private static final long serialVersionUID = -3957478;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesOrderHeader.SalesOrderID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setSalesOrderID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.SalesOrderID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesOrderHeader.SalesOrderID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "SalesOrderID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.RevisionNumber</code>
 	 */
 	public void setRevisionNumber(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.RevisionNumber, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.RevisionNumber</code>
 	 */
 	@javax.persistence.Column(name = "RevisionNumber", nullable = false, precision = 3)
 	public java.lang.Byte getRevisionNumber() {
@@ -48,14 +48,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.OrderDate</code>
 	 */
 	public void setOrderDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.OrderDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.OrderDate</code>
 	 */
 	@javax.persistence.Column(name = "OrderDate", nullable = false)
 	public java.sql.Timestamp getOrderDate() {
@@ -63,14 +63,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.DueDate</code>
 	 */
 	public void setDueDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.DueDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.DueDate</code>
 	 */
 	@javax.persistence.Column(name = "DueDate", nullable = false)
 	public java.sql.Timestamp getDueDate() {
@@ -78,14 +78,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.ShipDate</code>
 	 */
 	public void setShipDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.ShipDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.ShipDate</code>
 	 */
 	@javax.persistence.Column(name = "ShipDate")
 	public java.sql.Timestamp getShipDate() {
@@ -93,14 +93,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.Status</code>
 	 */
 	public void setStatus(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.Status, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.Status</code>
 	 */
 	@javax.persistence.Column(name = "Status", nullable = false, precision = 3)
 	public java.lang.Byte getStatus() {
@@ -108,14 +108,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.OnlineOrderFlag</code>
 	 */
 	public void setOnlineOrderFlag(java.lang.Boolean value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.OnlineOrderFlag, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.OnlineOrderFlag</code>
 	 */
 	@javax.persistence.Column(name = "OnlineOrderFlag", nullable = false)
 	public java.lang.Boolean getOnlineOrderFlag() {
@@ -123,14 +123,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.SalesOrderNumber</code>
 	 */
 	public void setSalesOrderNumber(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.SalesOrderNumber, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.SalesOrderNumber</code>
 	 */
 	@javax.persistence.Column(name = "SalesOrderNumber", nullable = false, length = 25)
 	public java.lang.String getSalesOrderNumber() {
@@ -138,14 +138,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.PurchaseOrderNumber</code>
 	 */
 	public void setPurchaseOrderNumber(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.PurchaseOrderNumber, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.PurchaseOrderNumber</code>
 	 */
 	@javax.persistence.Column(name = "PurchaseOrderNumber", length = 25)
 	public java.lang.String getPurchaseOrderNumber() {
@@ -153,14 +153,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.AccountNumber</code>
 	 */
 	public void setAccountNumber(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.AccountNumber, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.AccountNumber</code>
 	 */
 	@javax.persistence.Column(name = "AccountNumber", length = 15)
 	public java.lang.String getAccountNumber() {
@@ -168,9 +168,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.CustomerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_Customer_CustomerID
 	 * FOREIGN KEY (CustomerID)
 	 * REFERENCES Sales.Customer (CustomerID)
@@ -181,9 +181,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.CustomerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_Customer_CustomerID
 	 * FOREIGN KEY (CustomerID)
 	 * REFERENCES Sales.Customer (CustomerID)
@@ -195,9 +195,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -208,9 +208,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -222,9 +222,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.SalesPersonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_SalesPerson_SalesPersonID
 	 * FOREIGN KEY (SalesPersonID)
 	 * REFERENCES Sales.SalesPerson (SalesPersonID)
@@ -235,9 +235,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.SalesPersonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_SalesPerson_SalesPersonID
 	 * FOREIGN KEY (SalesPersonID)
 	 * REFERENCES Sales.SalesPerson (SalesPersonID)
@@ -249,9 +249,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.TerritoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_SalesTerritory_TerritoryID
 	 * FOREIGN KEY (TerritoryID)
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
@@ -262,9 +262,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.TerritoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_SalesTerritory_TerritoryID
 	 * FOREIGN KEY (TerritoryID)
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
@@ -276,9 +276,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.BillToAddressID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_Address_BillToAddressID
 	 * FOREIGN KEY (BillToAddressID)
 	 * REFERENCES Person.Address (AddressID)
@@ -289,9 +289,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.BillToAddressID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_Address_BillToAddressID
 	 * FOREIGN KEY (BillToAddressID)
 	 * REFERENCES Person.Address (AddressID)
@@ -303,9 +303,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.ShipToAddressID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_Address_ShipToAddressID
 	 * FOREIGN KEY (ShipToAddressID)
 	 * REFERENCES Person.Address (AddressID)
@@ -316,9 +316,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.ShipToAddressID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_Address_ShipToAddressID
 	 * FOREIGN KEY (ShipToAddressID)
 	 * REFERENCES Person.Address (AddressID)
@@ -330,9 +330,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.ShipMethodID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_ShipMethod_ShipMethodID
 	 * FOREIGN KEY (ShipMethodID)
 	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
@@ -343,9 +343,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.ShipMethodID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_ShipMethod_ShipMethodID
 	 * FOREIGN KEY (ShipMethodID)
 	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
@@ -357,9 +357,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.CreditCardID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_CreditCard_CreditCardID
 	 * FOREIGN KEY (CreditCardID)
 	 * REFERENCES Sales.CreditCard (CreditCardID)
@@ -370,9 +370,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.CreditCardID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_CreditCard_CreditCardID
 	 * FOREIGN KEY (CreditCardID)
 	 * REFERENCES Sales.CreditCard (CreditCardID)
@@ -384,14 +384,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.CreditCardApprovalCode</code>
 	 */
 	public void setCreditCardApprovalCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.CreditCardApprovalCode, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.CreditCardApprovalCode</code>
 	 */
 	@javax.persistence.Column(name = "CreditCardApprovalCode", length = 15)
 	public java.lang.String getCreditCardApprovalCode() {
@@ -399,9 +399,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.CurrencyRateID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_CurrencyRate_CurrencyRateID
 	 * FOREIGN KEY (CurrencyRateID)
 	 * REFERENCES Sales.CurrencyRate (CurrencyRateID)
@@ -412,9 +412,9 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.CurrencyRateID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeader_CurrencyRate_CurrencyRateID
 	 * FOREIGN KEY (CurrencyRateID)
 	 * REFERENCES Sales.CurrencyRate (CurrencyRateID)
@@ -426,14 +426,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.SubTotal</code>
 	 */
 	public void setSubTotal(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.SubTotal, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.SubTotal</code>
 	 */
 	@javax.persistence.Column(name = "SubTotal", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSubTotal() {
@@ -441,14 +441,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.TaxAmt</code>
 	 */
 	public void setTaxAmt(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.TaxAmt, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.TaxAmt</code>
 	 */
 	@javax.persistence.Column(name = "TaxAmt", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTaxAmt() {
@@ -456,14 +456,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.Freight</code>
 	 */
 	public void setFreight(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.Freight, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.Freight</code>
 	 */
 	@javax.persistence.Column(name = "Freight", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getFreight() {
@@ -471,14 +471,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.TotalDue</code>
 	 */
 	public void setTotalDue(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.TotalDue, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.TotalDue</code>
 	 */
 	@javax.persistence.Column(name = "TotalDue", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTotalDue() {
@@ -486,14 +486,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.Comment</code>
 	 */
 	public void setComment(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.Comment, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.Comment</code>
 	 */
 	@javax.persistence.Column(name = "Comment", length = 128)
 	public java.lang.String getComment() {
@@ -501,14 +501,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -516,14 +516,14 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeader.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

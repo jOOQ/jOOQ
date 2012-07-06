@@ -8,16 +8,16 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1645473537;
+	private static final long serialVersionUID = -1380905001;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.f_number.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.f_number.n</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> N = createParameter("n", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -32,7 +32,7 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>n</code> parameter to the routine
+	 * Set the <code>n</code> parameter IN value to the routine
 	 */
 	public void setN(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.routines.FNumber.N, value);

@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor> {
 
-	private static final long serialVersionUID = -1055203280;
+	private static final long serialVersionUID = -709753774;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.ProductVendor.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductVendor_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -30,11 +30,11 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.ProductVendor.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductVendor_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -46,11 +46,11 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.ProductVendor.VendorID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductVendor_Vendor_VendorID
 	 * FOREIGN KEY (VendorID)
 	 * REFERENCES Purchasing.Vendor (VendorID)
@@ -61,11 +61,11 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.ProductVendor.VendorID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductVendor_Vendor_VendorID
 	 * FOREIGN KEY (VendorID)
 	 * REFERENCES Purchasing.Vendor (VendorID)
@@ -77,14 +77,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.AverageLeadTime</code>
 	 */
 	public void setAverageLeadTime(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.AverageLeadTime, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.AverageLeadTime</code>
 	 */
 	@javax.persistence.Column(name = "AverageLeadTime", nullable = false, precision = 10)
 	public java.lang.Integer getAverageLeadTime() {
@@ -92,14 +92,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.StandardPrice</code>
 	 */
 	public void setStandardPrice(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.StandardPrice, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.StandardPrice</code>
 	 */
 	@javax.persistence.Column(name = "StandardPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getStandardPrice() {
@@ -107,14 +107,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.LastReceiptCost</code>
 	 */
 	public void setLastReceiptCost(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.LastReceiptCost, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.LastReceiptCost</code>
 	 */
 	@javax.persistence.Column(name = "LastReceiptCost", precision = 19, scale = 4)
 	public java.math.BigDecimal getLastReceiptCost() {
@@ -122,14 +122,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.LastReceiptDate</code>
 	 */
 	public void setLastReceiptDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.LastReceiptDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.LastReceiptDate</code>
 	 */
 	@javax.persistence.Column(name = "LastReceiptDate")
 	public java.sql.Timestamp getLastReceiptDate() {
@@ -137,14 +137,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.MinOrderQty</code>
 	 */
 	public void setMinOrderQty(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.MinOrderQty, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.MinOrderQty</code>
 	 */
 	@javax.persistence.Column(name = "MinOrderQty", nullable = false, precision = 10)
 	public java.lang.Integer getMinOrderQty() {
@@ -152,14 +152,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.MaxOrderQty</code>
 	 */
 	public void setMaxOrderQty(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.MaxOrderQty, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.MaxOrderQty</code>
 	 */
 	@javax.persistence.Column(name = "MaxOrderQty", nullable = false, precision = 10)
 	public java.lang.Integer getMaxOrderQty() {
@@ -167,14 +167,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.OnOrderQty</code>
 	 */
 	public void setOnOrderQty(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.OnOrderQty, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.OnOrderQty</code>
 	 */
 	@javax.persistence.Column(name = "OnOrderQty", precision = 10)
 	public java.lang.Integer getOnOrderQty() {
@@ -182,9 +182,9 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.UnitMeasureCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductVendor_UnitMeasure_UnitMeasureCode
 	 * FOREIGN KEY (UnitMeasureCode)
 	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
@@ -195,9 +195,9 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.UnitMeasureCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductVendor_UnitMeasure_UnitMeasureCode
 	 * FOREIGN KEY (UnitMeasureCode)
 	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
@@ -209,14 +209,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.ProductVendor.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

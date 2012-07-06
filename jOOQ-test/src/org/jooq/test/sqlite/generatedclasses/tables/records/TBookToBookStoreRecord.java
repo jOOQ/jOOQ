@@ -8,14 +8,14 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1303653357;
+	private static final long serialVersionUID = -560063941;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>t_book_to_book_store.book_store_name</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_to_book_store_t_book_store_1
 	 * FOREIGN KEY (book_store_name)
 	 * REFERENCES t_book_store (name)
@@ -26,11 +26,11 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>t_book_to_book_store.book_store_name</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_to_book_store_t_book_store_1
 	 * FOREIGN KEY (book_store_name)
 	 * REFERENCES t_book_store (name)
@@ -41,11 +41,11 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>t_book_to_book_store.book_store_name</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_to_book_store_t_book_store_1
 	 * FOREIGN KEY (book_store_name)
 	 * REFERENCES t_book_store (name)
@@ -59,11 +59,11 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>t_book_to_book_store.book_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_to_book_store_t_book_1
 	 * FOREIGN KEY (book_id)
 	 * REFERENCES t_book (ID)
@@ -74,11 +74,11 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>t_book_to_book_store.book_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_to_book_store_t_book_1
 	 * FOREIGN KEY (book_id)
 	 * REFERENCES t_book (ID)
@@ -89,11 +89,11 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>t_book_to_book_store.book_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_to_book_store_t_book_1
 	 * FOREIGN KEY (book_id)
 	 * REFERENCES t_book (ID)
@@ -107,14 +107,14 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>t_book_to_book_store.stock</code>
 	 */
 	public void setStock(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.STOCK, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>t_book_to_book_store.stock</code>
 	 */
 	public java.lang.Integer getStock() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.STOCK);

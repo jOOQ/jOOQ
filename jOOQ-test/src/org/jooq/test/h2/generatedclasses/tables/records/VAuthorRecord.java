@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = 839148601;
+	private static final long serialVersionUID = 1910840895;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.ID</code>
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -19,7 +19,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.ID</code>
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -27,7 +27,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>
 	 */
 	@Override
 	public void setFirstName(java.lang.String value) {
@@ -35,7 +35,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>
 	 */
 	@Override
 	public java.lang.String getFirstName() {
@@ -43,7 +43,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.LAST_NAME</code>
 	 */
 	@Override
 	public void setLastName(java.lang.String value) {
@@ -51,7 +51,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.LAST_NAME</code>
 	 */
 	@Override
 	public java.lang.String getLastName() {
@@ -59,7 +59,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	@Override
 	public void setDateOfBirth(java.sql.Date value) {
@@ -67,7 +67,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	@Override
 	public java.sql.Date getDateOfBirth() {
@@ -75,7 +75,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	@Override
 	public void setYearOfBirth(java.lang.Integer value) {
@@ -83,7 +83,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	@Override
 	public java.lang.Integer getYearOfBirth() {
@@ -91,7 +91,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.ADDRESS</code>
 	 */
 	@Override
 	public void setAddress(java.lang.String value) {
@@ -99,7 +99,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_AUTHOR.ADDRESS</code>
 	 */
 	@Override
 	public java.lang.String getAddress() {

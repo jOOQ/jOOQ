@@ -9,22 +9,22 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ILong extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.LONG.ID</code>
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.LONG.ID</code>
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.LONG.OTHER</code>
 	 */
 	public void setOther(java.lang.Long value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.LONG.OTHER</code>
 	 */
 	public java.lang.Long getOther();
 }

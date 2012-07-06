@@ -11,28 +11,28 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_725_LOB_TEST_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_725_LOB_TEST.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_725_LOB_TEST.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_725_LOB_TEST.LOB</code>
 	 */
 	public void setLOB(byte[] value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_725_LOB_TEST.LOB</code>
 	 */
 	@javax.persistence.Column(name = "LOB")
 	public byte[] getLOB();

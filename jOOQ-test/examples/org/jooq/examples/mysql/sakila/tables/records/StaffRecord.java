@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> {
 
-	private static final long serialVersionUID = -947198494;
+	private static final long serialVersionUID = -1522194560;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.staff.staff_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setStaffId(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.staff.staff_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Byte getStaffId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.staff.staff_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> fetchPaymentList() {
 		return create()
@@ -41,9 +41,9 @@ public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.staff.staff_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> fetchRentalList() {
 		return create()
@@ -53,9 +53,9 @@ public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.staff.staff_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> fetchStoreList() {
 		return create()
@@ -65,37 +65,37 @@ public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.first_name</code>
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.FIRST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.first_name</code>
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.FIRST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.last_name</code>
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.LAST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.last_name</code>
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.LAST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.address_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_staff_address
 	 * FOREIGN KEY (address_id)
 	 * REFERENCES sakila.address (address_id)
@@ -106,9 +106,9 @@ public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.address_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_staff_address
 	 * FOREIGN KEY (address_id)
 	 * REFERENCES sakila.address (address_id)
@@ -119,9 +119,9 @@ public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.address_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_staff_address
 	 * FOREIGN KEY (address_id)
 	 * REFERENCES sakila.address (address_id)
@@ -135,37 +135,37 @@ public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.picture</code>
 	 */
 	public void setPicture(byte[] value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.PICTURE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.picture</code>
 	 */
 	public byte[] getPicture() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.PICTURE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.email</code>
 	 */
 	public void setEmail(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.EMAIL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.email</code>
 	 */
 	public java.lang.String getEmail() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.EMAIL);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.store_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_staff_store
 	 * FOREIGN KEY (store_id)
 	 * REFERENCES sakila.store (store_id)
@@ -176,9 +176,9 @@ public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.store_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_staff_store
 	 * FOREIGN KEY (store_id)
 	 * REFERENCES sakila.store (store_id)
@@ -189,9 +189,9 @@ public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.store_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_staff_store
 	 * FOREIGN KEY (store_id)
 	 * REFERENCES sakila.store (store_id)
@@ -205,56 +205,56 @@ public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.active</code>
 	 */
 	public void setActive(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.ACTIVE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.active</code>
 	 */
 	public java.lang.Byte getActive() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.ACTIVE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.username</code>
 	 */
 	public void setUsername(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.USERNAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.username</code>
 	 */
 	public java.lang.String getUsername() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.USERNAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.password</code>
 	 */
 	public void setPassword(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.PASSWORD, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.password</code>
 	 */
 	public java.lang.String getPassword() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.PASSWORD);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.LAST_UPDATE);

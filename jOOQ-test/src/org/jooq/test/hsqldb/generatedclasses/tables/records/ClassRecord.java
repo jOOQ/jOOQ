@@ -8,10 +8,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class ClassRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ClassRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IClass {
 
-	private static final long serialVersionUID = -1009151535;
+	private static final long serialVersionUID = 419793315;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.CLASS.CLASS</code>
 	 */
 	@Override
 	public void setClass_(java.lang.Integer value) {
@@ -19,7 +19,7 @@ public class ClassRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.CLASS.CLASS</code>
 	 */
 	@Override
 	public java.lang.Integer getClass_() {

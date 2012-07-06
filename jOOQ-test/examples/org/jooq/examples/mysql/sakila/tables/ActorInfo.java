@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class ActorInfo extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord> {
 
-	private static final long serialVersionUID = -1907234278;
+	private static final long serialVersionUID = 1554974128;
 
 	/**
 	 * The singleton instance of sakila.actor_info
@@ -26,22 +26,22 @@ public class ActorInfo extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.s
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.actor_id</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.Short> ACTOR_ID = createField("actor_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.first_name</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.last_name</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.film_info</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> FILM_INFO = createField("film_info", org.jooq.impl.SQLDataType.VARCHAR, this);
 

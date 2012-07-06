@@ -8,18 +8,18 @@ package org.jooq.test.oracle2.generatedclasses.udt.records;
  */
 public class DateAsTimestampT_976ObjectTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> {
 
-	private static final long serialVersionUID = -1483120838;
+	private static final long serialVersionUID = -2012874460;
 
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.T_976_OBJECT_TYPE.D</code>
 	 */
 	public void setD(java.sql.Timestamp value) {
 		setValue(org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_D, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.T_976_OBJECT_TYPE.D</code>
 	 */
 	public java.sql.Timestamp getD() {
 		return getValue(org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_D);

@@ -8,12 +8,12 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 1218070983;
+	private static final long serialVersionUID = -1628820436;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -21,9 +21,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -31,9 +31,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record> fetchXTestCase_85List() {
 		return create()
@@ -44,9 +44,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> fetchXUnusedList() {
 		return create()
@@ -57,9 +57,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69List() {
 		return create()
@@ -69,9 +69,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_UNUSED.NAME</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setName(java.lang.String value) {
@@ -79,9 +79,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_UNUSED.NAME</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.String getName() {
@@ -89,7 +89,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.BIG_INTEGER</code>
 	 */
 	@Override
 	public void setBigInteger(java.math.BigInteger value) {
@@ -97,7 +97,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.BIG_INTEGER</code>
 	 */
 	@Override
 	public java.math.BigInteger getBigInteger() {
@@ -105,9 +105,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.ID_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
@@ -119,9 +119,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.ID_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
@@ -133,9 +133,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.ID_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
@@ -150,7 +150,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.CLASS</code>
 	 */
 	@Override
 	public void setClass_(java.lang.Integer value) {
@@ -158,7 +158,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.CLASS</code>
 	 */
 	@Override
 	public java.lang.Integer getClass_() {
@@ -166,7 +166,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.FIELDS</code>
 	 */
 	@Override
 	public void setFields_(java.lang.Integer value) {
@@ -174,7 +174,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.FIELDS</code>
 	 */
 	@Override
 	public java.lang.Integer getFields_() {
@@ -182,7 +182,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.CONFIGURATION</code>
 	 */
 	@Override
 	public void setConfiguration_(java.lang.Integer value) {
@@ -190,7 +190,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.CONFIGURATION</code>
 	 */
 	@Override
 	public java.lang.Integer getConfiguration_() {
@@ -198,7 +198,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.U_D_T</code>
 	 */
 	@Override
 	public void setUDT(java.lang.Integer value) {
@@ -206,7 +206,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.U_D_T</code>
 	 */
 	@Override
 	public java.lang.Integer getUDT() {
@@ -214,7 +214,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.META_DATA</code>
 	 */
 	@Override
 	public void setMetaData_(java.lang.Integer value) {
@@ -222,7 +222,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.META_DATA</code>
 	 */
 	@Override
 	public java.lang.Integer getMetaData_() {
@@ -230,7 +230,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.TYPE0</code>
 	 */
 	@Override
 	public void setType0_(java.lang.Integer value) {
@@ -238,7 +238,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.TYPE0</code>
 	 */
 	@Override
 	public java.lang.Integer getType0_() {
@@ -246,7 +246,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.PRIMARY_KEY</code>
 	 */
 	@Override
 	public void setPrimaryKey(java.lang.Integer value) {
@@ -254,7 +254,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.PRIMARY_KEY</code>
 	 */
 	@Override
 	public java.lang.Integer getPrimaryKey() {
@@ -262,7 +262,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.PRIMARYKEY</code>
 	 */
 	@Override
 	public void setPrimarykey(java.lang.Integer value) {
@@ -270,7 +270,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.PRIMARYKEY</code>
 	 */
 	@Override
 	public java.lang.Integer getPrimarykey() {
@@ -278,9 +278,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.NAME_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
@@ -292,9 +292,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.NAME_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
@@ -306,7 +306,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.FIELD 737</code>
 	 */
 	@Override
 	public void setField_737(java.math.BigDecimal value) {
@@ -314,7 +314,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.FIELD 737</code>
 	 */
 	@Override
 	public java.math.BigDecimal getField_737() {
@@ -322,7 +322,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.CONNECTION</code>
 	 */
 	@Override
 	public void setConnection(java.lang.Integer value) {
@@ -330,7 +330,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.CONNECTION</code>
 	 */
 	@Override
 	public java.lang.Integer getConnection() {
@@ -338,7 +338,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.PREPARED_STATEMENT</code>
 	 */
 	@Override
 	public void setPreparedStatement(java.lang.Integer value) {
@@ -346,7 +346,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_UNUSED.PREPARED_STATEMENT</code>
 	 */
 	@Override
 	public java.lang.Integer getPreparedStatement() {

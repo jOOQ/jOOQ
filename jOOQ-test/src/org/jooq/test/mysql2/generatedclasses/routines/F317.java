@@ -10,31 +10,31 @@ package org.jooq.test.mysql2.generatedclasses.routines;
  */
 public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1666844030;
+	private static final long serialVersionUID = -779952420;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>test2.f317.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>test2.f317.p1</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P1 = createParameter("p1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>test2.f317.p2</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P2 = createParameter("p2", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>test2.f317.p3</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P3 = createParameter("p3", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>test2.f317.p4</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P4 = createParameter("p4", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -52,7 +52,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>p1</code> parameter to the routine
+	 * Set the <code>p1</code> parameter IN value to the routine
 	 */
 	public void setP1(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.routines.F317.P1, value);
@@ -68,7 +68,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>p2</code> parameter to the routine
+	 * Set the <code>p2</code> parameter IN value to the routine
 	 */
 	public void setP2(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.routines.F317.P2, value);
@@ -84,7 +84,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>p3</code> parameter to the routine
+	 * Set the <code>p3</code> parameter IN value to the routine
 	 */
 	public void setP3(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.routines.F317.P3, value);
@@ -100,7 +100,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>p4</code> parameter to the routine
+	 * Set the <code>p4</code> parameter IN value to the routine
 	 */
 	public void setP4(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.routines.F317.P4, value);

@@ -10,115 +10,115 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class StaffListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.StaffListRecord> {
 
-	private static final long serialVersionUID = -175503462;
+	private static final long serialVersionUID = -1061504498;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.ID</code>
 	 */
 	public void setId(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.ID</code>
 	 */
 	public java.lang.Byte getId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.name</code>
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.address</code>
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ADDRESS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.address</code>
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ADDRESS);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.zip code</code>
 	 */
 	public void setZipCode(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ZIP_CODE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.zip code</code>
 	 */
 	public java.lang.String getZipCode() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ZIP_CODE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.phone</code>
 	 */
 	public void setPhone(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.PHONE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.phone</code>
 	 */
 	public java.lang.String getPhone() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.PHONE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.city</code>
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.CITY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.city</code>
 	 */
 	public java.lang.String getCity() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.CITY);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.country</code>
 	 */
 	public void setCountry(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.COUNTRY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.country</code>
 	 */
 	public java.lang.String getCountry() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.COUNTRY);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.SID</code>
 	 */
 	public void setSid(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.SID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.staff_list.SID</code>
 	 */
 	public java.lang.Byte getSid() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.SID);

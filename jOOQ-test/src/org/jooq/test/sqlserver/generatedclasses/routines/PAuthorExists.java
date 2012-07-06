@@ -8,16 +8,16 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
  */
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1609839843;
+	private static final long serialVersionUID = 348000174;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.p_author_exists.author_name</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("author_name", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.p_author_exists.result</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RESULT = createParameter("result", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -32,19 +32,22 @@ public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	}
 
 	/**
-	 * Set the <code>author_name</code> parameter to the routine
+	 * Set the <code>author_name</code> parameter IN value to the routine
 	 */
 	public void setAuthorName(java.lang.String value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PAuthorExists.AUTHOR_NAME, value);
 	}
 
 	/**
-	 * Set the <code>result</code> parameter to the routine
+	 * Set the <code>result</code> parameter IN value to the routine
 	 */
 	public void setResult(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.routines.PAuthorExists.RESULT, value);
 	}
 
+	/**
+	 * Get the <code>result</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getResult() {
 		return getValue(RESULT);
 	}

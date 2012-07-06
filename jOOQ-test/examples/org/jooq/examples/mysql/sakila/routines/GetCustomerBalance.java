@@ -8,21 +8,21 @@ package org.jooq.examples.mysql.sakila.routines;
  */
 public class GetCustomerBalance extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 135266216;
+	private static final long serialVersionUID = 638152916;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>sakila.get_customer_balance.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.DECIMAL);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>sakila.get_customer_balance.p_customer_id</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_CUSTOMER_ID = createParameter("p_customer_id", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>sakila.get_customer_balance.p_effective_date</code>
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> P_EFFECTIVE_DATE = createParameter("p_effective_date", org.jooq.impl.SQLDataType.TIMESTAMP);
 
@@ -38,7 +38,7 @@ public class GetCustomerBalance extends org.jooq.impl.AbstractRoutine<java.math.
 	}
 
 	/**
-	 * Set the <code>p_customer_id</code> parameter to the routine
+	 * Set the <code>p_customer_id</code> parameter IN value to the routine
 	 */
 	public void setPCustomerId(java.lang.Integer value) {
 		setValue(org.jooq.examples.mysql.sakila.routines.GetCustomerBalance.P_CUSTOMER_ID, value);
@@ -54,7 +54,7 @@ public class GetCustomerBalance extends org.jooq.impl.AbstractRoutine<java.math.
 	}
 
 	/**
-	 * Set the <code>p_effective_date</code> parameter to the routine
+	 * Set the <code>p_effective_date</code> parameter IN value to the routine
 	 */
 	public void setPEffectiveDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.routines.GetCustomerBalance.P_EFFECTIVE_DATE, value);

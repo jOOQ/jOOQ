@@ -8,17 +8,17 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
  */
 public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = 1602019867;
+	private static final long serialVersionUID = -1338162187;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_959.java_keywords</code>
 	 */
 	public void setJavaKeywords(org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.T_959.JAVA_KEYWORDS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_959.java_keywords</code>
 	 */
 	public org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords getJavaKeywords() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.T_959.JAVA_KEYWORDS);

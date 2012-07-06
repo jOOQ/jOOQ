@@ -8,12 +8,12 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = -1824061288;
+	private static final long serialVersionUID = 308579226;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -21,9 +21,9 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -31,7 +31,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
 	 */
 	@Override
 	public void setStringArray(java.lang.String[] value) {
@@ -39,7 +39,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
 	 */
 	@Override
 	public java.lang.String[] getStringArray() {
@@ -47,7 +47,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
 	 */
 	@Override
 	public void setNumberArray(java.lang.Integer[] value) {
@@ -55,7 +55,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
 	 */
 	@Override
 	public java.lang.Integer[] getNumberArray() {
@@ -63,7 +63,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
 	 */
 	@Override
 	public void setDateArray(java.sql.Date[] value) {
@@ -71,7 +71,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
 	 */
 	@Override
 	public java.sql.Date[] getDateArray() {

@@ -8,16 +8,16 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PGetTwoCursors extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -958304863;
+	private static final long serialVersionUID = -2007953231;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_GET_TWO_CURSORS.BOOKS</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_GET_TWO_CURSORS.AUTHORS</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> AUTHORS = createParameter("AUTHORS", org.jooq.impl.SQLDataType.RESULT);
 
@@ -31,10 +31,16 @@ public class PGetTwoCursors extends org.jooq.impl.AbstractRoutine<java.lang.Void
 		addOutParameter(AUTHORS);
 	}
 
+	/**
+	 * Get the <code>BOOKS</code> parameter OUT value from the routine
+	 */
 	public org.jooq.Result<org.jooq.Record> getBooks() {
 		return getValue(BOOKS);
 	}
 
+	/**
+	 * Get the <code>AUTHORS</code> parameter OUT value from the routine
+	 */
 	public org.jooq.Result<org.jooq.Record> getAuthors() {
 		return getValue(AUTHORS);
 	}

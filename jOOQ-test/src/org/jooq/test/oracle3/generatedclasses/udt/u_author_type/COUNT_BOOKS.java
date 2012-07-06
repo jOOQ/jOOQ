@@ -8,16 +8,16 @@ package org.jooq.test.oracle3.generatedclasses.udt.u_author_type;
  */
 public class COUNT_BOOKS extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -415069599;
+	private static final long serialVersionUID = 141984103;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.SELF</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> SELF = createParameter("SELF", org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE.getDataType());
 
@@ -32,7 +32,7 @@ public class COUNT_BOOKS extends org.jooq.impl.AbstractRoutine<java.math.BigDeci
 	}
 
 	/**
-	 * Set the <code>SELF</code> parameter to the routine
+	 * Set the <code>SELF</code> parameter IN value to the routine
 	 */
 	public void setSELF(org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS.SELF, value);

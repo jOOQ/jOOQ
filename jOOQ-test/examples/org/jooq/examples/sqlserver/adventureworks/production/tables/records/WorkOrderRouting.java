@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting> {
 
-	private static final long serialVersionUID = 896010410;
+	private static final long serialVersionUID = -840167894;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.WorkOrderRouting.WorkOrderID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_WorkOrderRouting_WorkOrder_WorkOrderID
 	 * FOREIGN KEY (WorkOrderID)
 	 * REFERENCES Production.WorkOrder (WorkOrderID)
@@ -30,11 +30,11 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.WorkOrderRouting.WorkOrderID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_WorkOrderRouting_WorkOrder_WorkOrderID
 	 * FOREIGN KEY (WorkOrderID)
 	 * REFERENCES Production.WorkOrder (WorkOrderID)
@@ -46,18 +46,18 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.WorkOrderRouting.ProductID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ProductID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.WorkOrderRouting.ProductID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
@@ -65,18 +65,18 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.WorkOrderRouting.OperationSequence</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setOperationSequence(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.OperationSequence, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.WorkOrderRouting.OperationSequence</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Column(name = "OperationSequence", nullable = false, precision = 5)
 	public java.lang.Short getOperationSequence() {
@@ -84,9 +84,9 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.LocationID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_WorkOrderRouting_Location_LocationID
 	 * FOREIGN KEY (LocationID)
 	 * REFERENCES Production.Location (LocationID)
@@ -97,9 +97,9 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.LocationID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_WorkOrderRouting_Location_LocationID
 	 * FOREIGN KEY (LocationID)
 	 * REFERENCES Production.Location (LocationID)
@@ -111,14 +111,14 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ScheduledStartDate</code>
 	 */
 	public void setScheduledStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ScheduledStartDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ScheduledStartDate</code>
 	 */
 	@javax.persistence.Column(name = "ScheduledStartDate", nullable = false)
 	public java.sql.Timestamp getScheduledStartDate() {
@@ -126,14 +126,14 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ScheduledEndDate</code>
 	 */
 	public void setScheduledEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ScheduledEndDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ScheduledEndDate</code>
 	 */
 	@javax.persistence.Column(name = "ScheduledEndDate", nullable = false)
 	public java.sql.Timestamp getScheduledEndDate() {
@@ -141,14 +141,14 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualStartDate</code>
 	 */
 	public void setActualStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ActualStartDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualStartDate</code>
 	 */
 	@javax.persistence.Column(name = "ActualStartDate")
 	public java.sql.Timestamp getActualStartDate() {
@@ -156,14 +156,14 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualEndDate</code>
 	 */
 	public void setActualEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ActualEndDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualEndDate</code>
 	 */
 	@javax.persistence.Column(name = "ActualEndDate")
 	public java.sql.Timestamp getActualEndDate() {
@@ -171,14 +171,14 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualResourceHrs</code>
 	 */
 	public void setActualResourceHrs(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ActualResourceHrs, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualResourceHrs</code>
 	 */
 	@javax.persistence.Column(name = "ActualResourceHrs", precision = 9, scale = 4)
 	public java.math.BigDecimal getActualResourceHrs() {
@@ -186,14 +186,14 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.PlannedCost</code>
 	 */
 	public void setPlannedCost(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.PlannedCost, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.PlannedCost</code>
 	 */
 	@javax.persistence.Column(name = "PlannedCost", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getPlannedCost() {
@@ -201,14 +201,14 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualCost</code>
 	 */
 	public void setActualCost(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ActualCost, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualCost</code>
 	 */
 	@javax.persistence.Column(name = "ActualCost", precision = 19, scale = 4)
 	public java.math.BigDecimal getActualCost() {
@@ -216,14 +216,14 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

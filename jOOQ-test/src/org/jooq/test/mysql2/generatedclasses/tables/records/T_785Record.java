@@ -10,17 +10,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_785", schema = "test2")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 1113905506;
+	private static final long serialVersionUID = 1515026814;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_785.ID</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_785.ID</code>
 	 */
 	@javax.persistence.Column(name = "ID", precision = 10)
 	public java.lang.Integer getId() {
@@ -28,14 +28,14 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_785.NAME</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_785.NAME</code>
 	 */
 	@javax.persistence.Column(name = "NAME", length = 50)
 	public java.lang.String getName() {
@@ -43,14 +43,14 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_785.VALUE</code>
 	 */
 	public void setValue(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785.VALUE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_785.VALUE</code>
 	 */
 	@javax.persistence.Column(name = "VALUE", length = 50)
 	public java.lang.String getValue() {

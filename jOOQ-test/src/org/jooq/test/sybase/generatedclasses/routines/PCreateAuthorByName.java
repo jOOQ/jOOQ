@@ -8,16 +8,16 @@ package org.jooq.test.sybase.generatedclasses.routines;
  */
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -445003838;
+	private static final long serialVersionUID = 1542065318;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>DBA.p_create_author_by_name.p_first_name</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_FIRST_NAME = createParameter("p_first_name", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>DBA.p_create_author_by_name.p_last_name</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_LAST_NAME = createParameter("p_last_name", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -32,14 +32,14 @@ public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang
 	}
 
 	/**
-	 * Set the <code>p_first_name</code> parameter to the routine
+	 * Set the <code>p_first_name</code> parameter IN value to the routine
 	 */
 	public void setPFirstName(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.routines.PCreateAuthorByName.P_FIRST_NAME, value);
 	}
 
 	/**
-	 * Set the <code>p_last_name</code> parameter to the routine
+	 * Set the <code>p_last_name</code> parameter IN value to the routine
 	 */
 	public void setPLastName(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.routines.PCreateAuthorByName.P_LAST_NAME, value);

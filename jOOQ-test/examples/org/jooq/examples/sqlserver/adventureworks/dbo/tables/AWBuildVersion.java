@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class AWBuildVersion extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion> {
 
-	private static final long serialVersionUID = 693197187;
+	private static final long serialVersionUID = 1642762724;
 
 	/**
 	 * The singleton instance of dbo.AWBuildVersion
@@ -24,24 +24,24 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableTableImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.AWBuildVersion.SystemInformationID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion, java.lang.Byte> SystemInformationID = createField("SystemInformationID", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.AWBuildVersion.Database Version</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion, java.lang.String> Database_Version = createField("Database Version", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.AWBuildVersion.VersionDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion, java.sql.Timestamp> VersionDate = createField("VersionDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.AWBuildVersion.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

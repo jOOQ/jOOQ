@@ -8,12 +8,12 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -2126642801;
+	private static final long serialVersionUID = -12639577;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_BOOLEANS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -21,9 +21,9 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_BOOLEANS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -31,7 +31,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.ONE_ZERO</code>
 	 */
 	@Override
 	public void setOneZero(org.jooq.test._.converters.Boolean_10 value) {
@@ -39,7 +39,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.ONE_ZERO</code>
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_10 getOneZero() {
@@ -47,7 +47,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_LC</code>
 	 */
 	@Override
 	public void setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC value) {
@@ -55,7 +55,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_LC</code>
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc() {
@@ -63,7 +63,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_UC</code>
 	 */
 	@Override
 	public void setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC value) {
@@ -71,7 +71,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_UC</code>
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc() {
@@ -79,7 +79,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.YES_NO_LC</code>
 	 */
 	@Override
 	public void setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC value) {
@@ -87,7 +87,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.YES_NO_LC</code>
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc() {
@@ -95,7 +95,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.YES_NO_UC</code>
 	 */
 	@Override
 	public void setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC value) {
@@ -103,7 +103,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.YES_NO_UC</code>
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc() {
@@ -111,7 +111,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.Y_N_LC</code>
 	 */
 	@Override
 	public void setYNLc(org.jooq.test._.converters.Boolean_YN_LC value) {
@@ -119,7 +119,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.Y_N_LC</code>
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YN_LC getYNLc() {
@@ -127,7 +127,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.Y_N_UC</code>
 	 */
 	@Override
 	public void setYNUc(org.jooq.test._.converters.Boolean_YN_UC value) {
@@ -135,7 +135,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.Y_N_UC</code>
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YN_UC getYNUc() {
@@ -143,7 +143,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.VC_BOOLEAN</code>
 	 */
 	@Override
 	public void setVcBoolean(java.lang.Boolean value) {
@@ -151,7 +151,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.VC_BOOLEAN</code>
 	 */
 	@Override
 	public java.lang.Boolean getVcBoolean() {
@@ -159,7 +159,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.C_BOOLEAN</code>
 	 */
 	@Override
 	public void setCBoolean(java.lang.Boolean value) {
@@ -167,7 +167,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.C_BOOLEAN</code>
 	 */
 	@Override
 	public java.lang.Boolean getCBoolean() {
@@ -175,7 +175,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.N_BOOLEAN</code>
 	 */
 	@Override
 	public void setNBoolean(java.lang.Boolean value) {
@@ -183,7 +183,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOLEANS.N_BOOLEAN</code>
 	 */
 	@Override
 	public java.lang.Boolean getNBoolean() {

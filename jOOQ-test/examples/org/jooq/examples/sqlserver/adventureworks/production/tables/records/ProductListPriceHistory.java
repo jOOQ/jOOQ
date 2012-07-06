@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory> {
 
-	private static final long serialVersionUID = -1589644688;
+	private static final long serialVersionUID = -29480302;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductListPriceHistory.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductListPriceHistory_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -30,11 +30,11 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductListPriceHistory.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductListPriceHistory_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -46,18 +46,18 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductListPriceHistory.StartDate</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.StartDate, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductListPriceHistory.StartDate</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Column(name = "StartDate", nullable = false)
 	public java.sql.Timestamp getStartDate() {
@@ -65,14 +65,14 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductListPriceHistory.EndDate</code>
 	 */
 	public void setEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.EndDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductListPriceHistory.EndDate</code>
 	 */
 	@javax.persistence.Column(name = "EndDate")
 	public java.sql.Timestamp getEndDate() {
@@ -80,14 +80,14 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductListPriceHistory.ListPrice</code>
 	 */
 	public void setListPrice(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.ListPrice, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductListPriceHistory.ListPrice</code>
 	 */
 	@javax.persistence.Column(name = "ListPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getListPrice() {
@@ -95,14 +95,14 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductListPriceHistory.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductListPriceHistory.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

@@ -8,12 +8,12 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 990480842;
+	private static final long serialVersionUID = 1101528418;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_AUTHOR.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -21,9 +21,9 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_AUTHOR.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -31,9 +31,9 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_AUTHOR.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
 		return create()
@@ -43,9 +43,9 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_AUTHOR.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
 		return create()
@@ -55,7 +55,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>
 	 */
 	@Override
 	public void setFirstName(java.lang.String value) {
@@ -63,7 +63,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>
 	 */
 	@Override
 	public java.lang.String getFirstName() {
@@ -71,7 +71,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.LAST_NAME</code>
 	 */
 	@Override
 	public void setLastName(java.lang.String value) {
@@ -79,7 +79,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.LAST_NAME</code>
 	 */
 	@Override
 	public java.lang.String getLastName() {
@@ -87,7 +87,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	@Override
 	public void setDateOfBirth(java.sql.Date value) {
@@ -95,7 +95,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	@Override
 	public java.sql.Date getDateOfBirth() {
@@ -103,7 +103,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	@Override
 	public void setYearOfBirth(java.lang.Integer value) {
@@ -111,7 +111,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	@Override
 	public java.lang.Integer getYearOfBirth() {
@@ -119,7 +119,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.ADDRESS</code>
 	 */
 	@Override
 	public void setAddress(java.lang.String value) {
@@ -127,7 +127,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.ADDRESS</code>
 	 */
 	@Override
 	public java.lang.String getAddress() {

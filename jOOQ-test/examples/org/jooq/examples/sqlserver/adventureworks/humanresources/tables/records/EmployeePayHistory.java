@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory> {
 
-	private static final long serialVersionUID = 1550485133;
+	private static final long serialVersionUID = 1895309397;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeePayHistory.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeePayHistory_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -30,11 +30,11 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeePayHistory.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeePayHistory_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -46,18 +46,18 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeePayHistory.RateChangeDate</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setRateChangeDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.RateChangeDate, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeePayHistory.RateChangeDate</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Column(name = "RateChangeDate", nullable = false)
 	public java.sql.Timestamp getRateChangeDate() {
@@ -65,14 +65,14 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeePayHistory.Rate</code>
 	 */
 	public void setRate(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.Rate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeePayHistory.Rate</code>
 	 */
 	@javax.persistence.Column(name = "Rate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getRate() {
@@ -80,14 +80,14 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeePayHistory.PayFrequency</code>
 	 */
 	public void setPayFrequency(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.PayFrequency, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeePayHistory.PayFrequency</code>
 	 */
 	@javax.persistence.Column(name = "PayFrequency", nullable = false, precision = 3)
 	public java.lang.Byte getPayFrequency() {
@@ -95,14 +95,14 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeePayHistory.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeePayHistory.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.udt;
  */
 public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord> {
 
-	private static final long serialVersionUID = 593354470;
+	private static final long serialVersionUID = -662178221;
 
 	/**
 	 * The singleton instance of public.u_street_type
@@ -24,22 +24,22 @@ public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.ge
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>public.u_street_type.street</code>
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord, java.lang.String> STREET = createField("street", org.jooq.impl.SQLDataType.VARCHAR, U_STREET_TYPE);
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>public.u_street_type.no</code>
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord, java.lang.String> NO = createField("no", org.jooq.impl.SQLDataType.VARCHAR, U_STREET_TYPE);
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>public.u_street_type.floors</code>
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord, java.lang.Integer[]> FLOORS = createField("floors", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), U_STREET_TYPE);
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>public.u_street_type.f_1323</code>
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord, byte[]> F_1323 = createField("f_1323", org.jooq.impl.SQLDataType.BLOB, U_STREET_TYPE);
 

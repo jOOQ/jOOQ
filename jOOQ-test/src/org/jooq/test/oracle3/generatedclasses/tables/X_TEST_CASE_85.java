@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -319690351;
+	private static final long serialVersionUID = -312950692;
 
 	/**
 	 * The singleton instance of TEST.X_TEST_CASE_85
@@ -24,16 +24,16 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.Re
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_TEST_CASE_85.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_85
 	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
 	 * REFERENCES TEST.X_UNUSED (ID, NAME)
@@ -42,9 +42,9 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.Re
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> X_UNUSED_ID = createField("X_UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_85
 	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
 	 * REFERENCES TEST.X_UNUSED (ID, NAME)

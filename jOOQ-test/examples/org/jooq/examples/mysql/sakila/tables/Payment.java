@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> {
 
-	private static final long serialVersionUID = -855815780;
+	private static final long serialVersionUID = 1442021416;
 
 	/**
 	 * The singleton instance of sakila.payment
@@ -24,16 +24,16 @@ public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.payment.payment_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.lang.Short> PAYMENT_ID = createField("payment_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.customer_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_customer
 	 * FOREIGN KEY (customer_id)
 	 * REFERENCES sakila.customer (customer_id)
@@ -42,9 +42,9 @@ public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.lang.Short> CUSTOMER_ID = createField("customer_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.staff_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_staff
 	 * FOREIGN KEY (staff_id)
 	 * REFERENCES sakila.staff (staff_id)
@@ -53,9 +53,9 @@ public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.lang.Byte> STAFF_ID = createField("staff_id", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.rental_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_rental
 	 * FOREIGN KEY (rental_id)
 	 * REFERENCES sakila.rental (rental_id)
@@ -64,17 +64,17 @@ public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.lang.Integer> RENTAL_ID = createField("rental_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.amount</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.math.BigDecimal> AMOUNT = createField("amount", org.jooq.impl.SQLDataType.DECIMAL, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.payment_date</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.sql.Timestamp> PAYMENT_DATE = createField("payment_date", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.last_update</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 233817453;
+	private static final long serialVersionUID = -495982038;
 
 	/**
 	 * The singleton instance of t_986_1
@@ -24,11 +24,11 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>t_986_1.REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_986_1_X_UNUSED_1
 	 * FOREIGN KEY (REF)
 	 * REFERENCES x_unused (ID)

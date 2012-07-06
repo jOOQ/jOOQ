@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "Address", schema = "Person")
 public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Address> {
 
-	private static final long serialVersionUID = -739542774;
+	private static final long serialVersionUID = 980291986;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Person.Address.AddressID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setAddressID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.AddressID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Person.Address.AddressID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "AddressID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.AddressLine1</code>
 	 */
 	public void setAddressLine1(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.AddressLine1, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.AddressLine1</code>
 	 */
 	@javax.persistence.Column(name = "AddressLine1", nullable = false, length = 60)
 	public java.lang.String getAddressLine1() {
@@ -48,14 +48,14 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.AddressLine2</code>
 	 */
 	public void setAddressLine2(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.AddressLine2, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.AddressLine2</code>
 	 */
 	@javax.persistence.Column(name = "AddressLine2", length = 60)
 	public java.lang.String getAddressLine2() {
@@ -63,14 +63,14 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.City</code>
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.City, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.City</code>
 	 */
 	@javax.persistence.Column(name = "City", nullable = false, length = 30)
 	public java.lang.String getCity() {
@@ -78,9 +78,9 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.StateProvinceID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Address_StateProvince_StateProvinceID
 	 * FOREIGN KEY (StateProvinceID)
 	 * REFERENCES Person.StateProvince (StateProvinceID)
@@ -91,9 +91,9 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.StateProvinceID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Address_StateProvince_StateProvinceID
 	 * FOREIGN KEY (StateProvinceID)
 	 * REFERENCES Person.StateProvince (StateProvinceID)
@@ -105,14 +105,14 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.PostalCode</code>
 	 */
 	public void setPostalCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.PostalCode, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.PostalCode</code>
 	 */
 	@javax.persistence.Column(name = "PostalCode", nullable = false, length = 15)
 	public java.lang.String getPostalCode() {
@@ -120,14 +120,14 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -135,14 +135,14 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Address.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

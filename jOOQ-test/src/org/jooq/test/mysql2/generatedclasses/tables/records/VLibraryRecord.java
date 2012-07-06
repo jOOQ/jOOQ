@@ -12,17 +12,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_library", schema = "test2")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -1430437703;
+	private static final long serialVersionUID = -290283155;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.v_library.AUTHOR</code>
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY.AUTHOR, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.v_library.AUTHOR</code>
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	public java.lang.String getAuthor() {

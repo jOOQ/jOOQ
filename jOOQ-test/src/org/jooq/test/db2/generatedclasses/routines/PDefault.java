@@ -8,36 +8,36 @@ package org.jooq.test.db2.generatedclasses.routines;
  */
 public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -763679678;
+	private static final long serialVersionUID = -966195181;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_IN_NUMBER</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_IN_NUMBER = createParameter("P_IN_NUMBER", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_OUT_NUMBER</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_OUT_NUMBER = createParameter("P_OUT_NUMBER", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_IN_VARCHAR</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_IN_VARCHAR = createParameter("P_IN_VARCHAR", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_OUT_VARCHAR</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_OUT_VARCHAR = createParameter("P_OUT_VARCHAR", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_IN_DATE</code>
 	 */
 	public static final org.jooq.Parameter<java.sql.Date> P_IN_DATE = createParameter("P_IN_DATE", org.jooq.impl.SQLDataType.DATE);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_OUT_DATE</code>
 	 */
 	public static final org.jooq.Parameter<java.sql.Date> P_OUT_DATE = createParameter("P_OUT_DATE", org.jooq.impl.SQLDataType.DATE);
 
@@ -56,34 +56,43 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	}
 
 	/**
-	 * Set the <code>P_IN_NUMBER</code> parameter to the routine
+	 * Set the <code>P_IN_NUMBER</code> parameter IN value to the routine
 	 */
 	public void setPInNumber(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.routines.PDefault.P_IN_NUMBER, value);
 	}
 
 	/**
-	 * Set the <code>P_IN_VARCHAR</code> parameter to the routine
+	 * Set the <code>P_IN_VARCHAR</code> parameter IN value to the routine
 	 */
 	public void setPInVarchar(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.routines.PDefault.P_IN_VARCHAR, value);
 	}
 
 	/**
-	 * Set the <code>P_IN_DATE</code> parameter to the routine
+	 * Set the <code>P_IN_DATE</code> parameter IN value to the routine
 	 */
 	public void setPInDate(java.sql.Date value) {
 		setValue(org.jooq.test.db2.generatedclasses.routines.PDefault.P_IN_DATE, value);
 	}
 
+	/**
+	 * Get the <code>P_OUT_NUMBER</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getPOutNumber() {
 		return getValue(P_OUT_NUMBER);
 	}
 
+	/**
+	 * Get the <code>P_OUT_VARCHAR</code> parameter OUT value from the routine
+	 */
 	public java.lang.String getPOutVarchar() {
 		return getValue(P_OUT_VARCHAR);
 	}
 
+	/**
+	 * Get the <code>P_OUT_DATE</code> parameter OUT value from the routine
+	 */
 	public java.sql.Date getPOutDate() {
 		return getValue(P_OUT_DATE);
 	}

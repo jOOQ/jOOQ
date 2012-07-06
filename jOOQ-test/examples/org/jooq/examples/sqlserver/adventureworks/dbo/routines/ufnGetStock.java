@@ -8,16 +8,16 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class ufnGetStock extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1796471651;
+	private static final long serialVersionUID = 1549957653;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.ufnGetStock.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.ufnGetStock.ProductID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> ProductID = createParameter("ProductID", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -32,7 +32,7 @@ public class ufnGetStock extends org.jooq.impl.AbstractRoutine<java.lang.Integer
 	}
 
 	/**
-	 * Set the <code>ProductID</code> parameter to the routine
+	 * Set the <code>ProductID</code> parameter IN value to the routine
 	 */
 	public void setProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetStock.ProductID, value);

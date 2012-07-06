@@ -10,12 +10,12 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  */
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1871368730;
+	private static final long serialVersionUID = 1294706955;
 
 	/**
 	 * The books store name
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.TBookStore.NAME, value);
@@ -23,8 +23,8 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 
 	/**
 	 * The books store name
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.TBookStore.NAME);
@@ -32,8 +32,8 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 
 	/**
 	 * The books store name
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.ingres.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()

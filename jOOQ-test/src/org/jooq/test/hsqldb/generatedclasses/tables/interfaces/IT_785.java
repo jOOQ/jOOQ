@@ -9,32 +9,32 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IT_785 extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_785.ID</code>
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_785.ID</code>
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_785.NAME</code>
 	 */
 	public void setName(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_785.NAME</code>
 	 */
 	public java.lang.String getName();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_785.VALUE</code>
 	 */
 	public void setValue(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_785.VALUE</code>
 	 */
 	public java.lang.String getValue();
 }

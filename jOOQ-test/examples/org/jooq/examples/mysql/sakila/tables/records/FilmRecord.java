@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> {
 
-	private static final long serialVersionUID = 572677983;
+	private static final long serialVersionUID = 1822472842;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film.film_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setFilmId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film.film_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Short getFilmId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film.film_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> fetchFilmActorList() {
 		return create()
@@ -41,9 +41,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film.film_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord> fetchFilmCategoryList() {
 		return create()
@@ -53,9 +53,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film.film_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> fetchInventoryList() {
 		return create()
@@ -65,51 +65,51 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.title</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.title</code>
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.TITLE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.description</code>
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.DESCRIPTION, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.description</code>
 	 */
 	public java.lang.String getDescription() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.DESCRIPTION);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.release_year</code>
 	 */
 	public void setReleaseYear(java.sql.Date value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RELEASE_YEAR, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.release_year</code>
 	 */
 	public java.sql.Date getReleaseYear() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RELEASE_YEAR);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.language_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_language
 	 * FOREIGN KEY (language_id)
 	 * REFERENCES sakila.language (language_id)
@@ -120,9 +120,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.language_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_language
 	 * FOREIGN KEY (language_id)
 	 * REFERENCES sakila.language (language_id)
@@ -133,9 +133,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.language_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_language
 	 * FOREIGN KEY (language_id)
 	 * REFERENCES sakila.language (language_id)
@@ -149,9 +149,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.original_language_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_language_original
 	 * FOREIGN KEY (original_language_id)
 	 * REFERENCES sakila.language (language_id)
@@ -162,9 +162,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.original_language_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_language_original
 	 * FOREIGN KEY (original_language_id)
 	 * REFERENCES sakila.language (language_id)
@@ -175,9 +175,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.original_language_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_language_original
 	 * FOREIGN KEY (original_language_id)
 	 * REFERENCES sakila.language (language_id)
@@ -191,98 +191,98 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.rental_duration</code>
 	 */
 	public void setRentalDuration(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RENTAL_DURATION, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.rental_duration</code>
 	 */
 	public java.lang.Byte getRentalDuration() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RENTAL_DURATION);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.rental_rate</code>
 	 */
 	public void setRentalRate(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RENTAL_RATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.rental_rate</code>
 	 */
 	public java.math.BigDecimal getRentalRate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RENTAL_RATE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.length</code>
 	 */
 	public void setLength(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LENGTH, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.length</code>
 	 */
 	public java.lang.Short getLength() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LENGTH);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.replacement_cost</code>
 	 */
 	public void setReplacementCost(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.REPLACEMENT_COST, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.replacement_cost</code>
 	 */
 	public java.math.BigDecimal getReplacementCost() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.REPLACEMENT_COST);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.rating</code>
 	 */
 	public void setRating(org.jooq.examples.mysql.sakila.enums.FilmRating value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RATING, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.rating</code>
 	 */
 	public org.jooq.examples.mysql.sakila.enums.FilmRating getRating() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RATING);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.special_features</code>
 	 */
 	public void setSpecialFeatures(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.SPECIAL_FEATURES, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.special_features</code>
 	 */
 	public java.lang.String getSpecialFeatures() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.SPECIAL_FEATURES);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LAST_UPDATE);

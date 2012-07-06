@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class ProductPhoto extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductPhoto> {
 
-	private static final long serialVersionUID = -151945937;
+	private static final long serialVersionUID = 706606377;
 
 	/**
 	 * The singleton instance of Production.ProductPhoto
@@ -24,34 +24,34 @@ public class ProductPhoto extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductPhoto.ProductPhotoID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductPhoto, java.lang.Integer> ProductPhotoID = createField("ProductPhotoID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.ThumbNailPhoto</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductPhoto, byte[]> ThumbNailPhoto = createField("ThumbNailPhoto", org.jooq.impl.SQLDataType.VARBINARY, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.ThumbnailPhotoFileName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductPhoto, java.lang.String> ThumbnailPhotoFileName = createField("ThumbnailPhotoFileName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.LargePhoto</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductPhoto, byte[]> LargePhoto = createField("LargePhoto", org.jooq.impl.SQLDataType.VARBINARY, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.LargePhotoFileName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductPhoto, java.lang.String> LargePhotoFileName = createField("LargePhotoFileName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductPhoto, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

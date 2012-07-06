@@ -10,45 +10,45 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class SalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> {
 
-	private static final long serialVersionUID = 280065501;
+	private static final long serialVersionUID = 1870159577;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.sales_by_store.store</code>
 	 */
 	public void setStore(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.STORE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.sales_by_store.store</code>
 	 */
 	public java.lang.String getStore() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.STORE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.sales_by_store.manager</code>
 	 */
 	public void setManager(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.MANAGER, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.sales_by_store.manager</code>
 	 */
 	public java.lang.String getManager() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.MANAGER);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.sales_by_store.total_sales</code>
 	 */
 	public void setTotalSales(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.TOTAL_SALES, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.sales_by_store.total_sales</code>
 	 */
 	public java.math.BigDecimal getTotalSales() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.TOTAL_SALES);

@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
  */
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -2034491329;
+	private static final long serialVersionUID = 234670511;
 
 	/**
 	 * The book ID
@@ -41,14 +41,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_book.co_author_id</code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.VBook.CO_AUTHOR_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_book.co_author_id</code>
 	 */
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.VBook.CO_AUTHOR_ID);

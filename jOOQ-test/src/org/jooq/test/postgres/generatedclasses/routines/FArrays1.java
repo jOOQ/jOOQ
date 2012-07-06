@@ -8,16 +8,16 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class FArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Integer[]> {
 
-	private static final long serialVersionUID = 88956884;
+	private static final long serialVersionUID = -2114495353;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.f_arrays.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer[]> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType());
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.f_arrays.in_array</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer[]> IN_ARRAY = createParameter("in_array", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType());
 
@@ -33,7 +33,7 @@ public class FArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Integer[]>
 	}
 
 	/**
-	 * Set the <code>in_array</code> parameter to the routine
+	 * Set the <code>in_array</code> parameter IN value to the routine
 	 */
 	public void setInArray(java.lang.Integer[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.routines.FArrays1.IN_ARRAY, value);

@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 573062358;
+	private static final long serialVersionUID = 1828530986;
 
 	/**
 	 * The singleton instance of test2.v_library
@@ -26,7 +26,7 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gener
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.v_library.AUTHOR</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR, this);
 

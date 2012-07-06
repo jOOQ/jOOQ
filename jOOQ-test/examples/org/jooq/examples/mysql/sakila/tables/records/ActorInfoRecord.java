@@ -10,59 +10,59 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class ActorInfoRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord> {
 
-	private static final long serialVersionUID = -424778646;
+	private static final long serialVersionUID = 1720161772;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.actor_id</code>
 	 */
 	public void setActorId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.ACTOR_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.actor_id</code>
 	 */
 	public java.lang.Short getActorId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.ACTOR_ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.first_name</code>
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.FIRST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.first_name</code>
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.FIRST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.last_name</code>
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.LAST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.last_name</code>
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.LAST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.film_info</code>
 	 */
 	public void setFilmInfo(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.FILM_INFO, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor_info.film_info</code>
 	 */
 	public java.lang.String getFilmInfo() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.FILM_INFO);

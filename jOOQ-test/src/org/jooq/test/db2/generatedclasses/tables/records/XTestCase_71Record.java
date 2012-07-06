@@ -8,30 +8,30 @@ package org.jooq.test.db2.generatedclasses.tables.records;
  */
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -1065315127;
+	private static final long serialVersionUID = -1725644465;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>LUKAS.X_TEST_CASE_71.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>LUKAS.X_TEST_CASE_71.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT X_TEST_CASE_71__FK_X_TEST_CASE_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES LUKAS.X_TEST_CASE_64_69 (ID)
@@ -42,9 +42,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT X_TEST_CASE_71__FK_X_TEST_CASE_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES LUKAS.X_TEST_CASE_64_69 (ID)
@@ -55,9 +55,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT X_TEST_CASE_71__FK_X_TEST_CASE_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES LUKAS.X_TEST_CASE_64_69 (ID)

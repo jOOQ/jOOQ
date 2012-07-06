@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_DATES extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -467810153;
+	private static final long serialVersionUID = -960977856;
 
 	/**
 	 * The singleton instance of TEST.T_DATES
@@ -24,44 +24,44 @@ public class T_DATES extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> i
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_DATES.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.D</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.sql.Date> D = createField("D", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.T</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.sql.Timestamp> T = createField("T", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.TS</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.sql.Timestamp> TS = createField("TS", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.D_INT</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> D_INT = createField("D_INT", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.TS_BIGINT</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.I_Y</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, org.jooq.types.YearToMonth> I_Y = createField("I_Y", org.jooq.impl.SQLDataType.INTERVALYEARTOMONTH, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.I_D</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, org.jooq.types.DayToSecond> I_D = createField("I_D", org.jooq.impl.SQLDataType.INTERVALDAYTOSECOND, this);
 

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class ErrorLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog> {
 
-	private static final long serialVersionUID = -1919991107;
+	private static final long serialVersionUID = 1601857083;
 
 	/**
 	 * The singleton instance of dbo.ErrorLog
@@ -24,49 +24,49 @@ public class ErrorLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.ErrorLog.ErrorLogID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.lang.Integer> ErrorLogID = createField("ErrorLogID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.ErrorLog.ErrorTime</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.sql.Timestamp> ErrorTime = createField("ErrorTime", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.ErrorLog.UserName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.lang.String> UserName = createField("UserName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.ErrorLog.ErrorNumber</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.lang.Integer> ErrorNumber = createField("ErrorNumber", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.ErrorLog.ErrorSeverity</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.lang.Integer> ErrorSeverity = createField("ErrorSeverity", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.ErrorLog.ErrorState</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.lang.Integer> ErrorState = createField("ErrorState", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.ErrorLog.ErrorProcedure</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.lang.String> ErrorProcedure = createField("ErrorProcedure", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.ErrorLog.ErrorLine</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.lang.Integer> ErrorLine = createField("ErrorLine", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.ErrorLog.ErrorMessage</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.lang.String> ErrorMessage = createField("ErrorMessage", org.jooq.impl.SQLDataType.NVARCHAR, this);
 

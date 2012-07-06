@@ -8,7 +8,7 @@ package org.jooq.test.oracle2.generatedclasses.tables;
  */
 public class DateAsTimestampT_976 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> {
 
-	private static final long serialVersionUID = 2097991947;
+	private static final long serialVersionUID = 1115398808;
 
 	/**
 	 * The singleton instance of TEST.T_976
@@ -24,24 +24,24 @@ public class DateAsTimestampT_976 extends org.jooq.impl.UpdatableTableImpl<org.j
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_976.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, java.lang.Integer> DATE_AS_TIMESTAMP_ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_976.D</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, java.sql.Timestamp> DATE_AS_TIMESTAMP_D = createField("D", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_976.T</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord> DATE_AS_TIMESTAMP_T = createField("T", org.jooq.impl.SQLDataType.DATE.asArrayDataType(org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord.class), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_976.O</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> DATE_AS_TIMESTAMP_O = createField("O", org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE.getDataType(), this);
 

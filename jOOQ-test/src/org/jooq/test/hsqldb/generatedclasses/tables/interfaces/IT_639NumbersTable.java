@@ -9,136 +9,136 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IT_639NumbersTable extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE</code>
 	 */
 	public void setByte(java.lang.Byte value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE</code>
 	 */
 	public java.lang.Byte getByte();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT</code>
 	 */
 	public void setShort(java.lang.Short value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT</code>
 	 */
 	public java.lang.Short getShort();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER</code>
 	 */
 	public void setInteger(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER</code>
 	 */
 	public java.lang.Integer getInteger();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG</code>
 	 */
 	public void setLong(java.lang.Long value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG</code>
 	 */
 	public java.lang.Long getLong();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
 	 */
 	public void setByteDecimal(java.lang.Byte value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
 	 */
 	public java.lang.Byte getByteDecimal();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
 	 */
 	public void setShortDecimal(java.lang.Short value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
 	 */
 	public java.lang.Short getShortDecimal();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>
 	 */
 	public void setIntegerDecimal(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>
 	 */
 	public java.lang.Integer getIntegerDecimal();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
 	 */
 	public void setLongDecimal(java.lang.Long value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
 	 */
 	public java.lang.Long getLongDecimal();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>
 	 */
 	public void setBigInteger(java.math.BigInteger value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>
 	 */
 	public java.math.BigInteger getBigInteger();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
 	 */
 	public void setBigDecimal(java.math.BigDecimal value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
 	 */
 	public java.math.BigDecimal getBigDecimal();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.FLOAT</code>
 	 */
 	public void setFloat(java.lang.Double value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.FLOAT</code>
 	 */
 	public java.lang.Double getFloat();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.DOUBLE</code>
 	 */
 	public void setDouble(java.lang.Double value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.DOUBLE</code>
 	 */
 	public java.lang.Double getDouble();
 }

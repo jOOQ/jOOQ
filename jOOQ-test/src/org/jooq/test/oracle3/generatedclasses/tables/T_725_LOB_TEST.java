@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_725_LOB_TEST extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1902716469;
+	private static final long serialVersionUID = 1476294716;
 
 	/**
 	 * The singleton instance of TEST.T_725_LOB_TEST
@@ -24,14 +24,14 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableTableImpl<org.jooq.Re
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_725_LOB_TEST.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_725_LOB_TEST.LOB</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, this);
 

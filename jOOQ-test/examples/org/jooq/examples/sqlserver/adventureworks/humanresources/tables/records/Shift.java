@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "Shift", schema = "HumanResources")
 public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> {
 
-	private static final long serialVersionUID = -603737055;
+	private static final long serialVersionUID = 791599235;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.Shift.ShiftID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setShiftID(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.ShiftID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.Shift.ShiftID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ShiftID", unique = true, nullable = false, precision = 3)
@@ -33,14 +33,14 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Shift.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Shift.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -48,14 +48,14 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Shift.StartTime</code>
 	 */
 	public void setStartTime(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.StartTime, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Shift.StartTime</code>
 	 */
 	@javax.persistence.Column(name = "StartTime", nullable = false)
 	public java.sql.Timestamp getStartTime() {
@@ -63,14 +63,14 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Shift.EndTime</code>
 	 */
 	public void setEndTime(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.EndTime, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Shift.EndTime</code>
 	 */
 	@javax.persistence.Column(name = "EndTime", nullable = false)
 	public java.sql.Timestamp getEndTime() {
@@ -78,14 +78,14 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Shift.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Shift.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

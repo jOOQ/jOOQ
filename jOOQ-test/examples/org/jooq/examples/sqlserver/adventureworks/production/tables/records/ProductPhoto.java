@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductPhoto", schema = "Production")
 public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductPhoto> {
 
-	private static final long serialVersionUID = -1669748017;
+	private static final long serialVersionUID = 978274549;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductPhoto.ProductPhotoID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setProductPhotoID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.ProductPhotoID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductPhoto.ProductPhotoID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ProductPhotoID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.ThumbNailPhoto</code>
 	 */
 	public void setThumbNailPhoto(byte[] value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.ThumbNailPhoto, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.ThumbNailPhoto</code>
 	 */
 	@javax.persistence.Column(name = "ThumbNailPhoto")
 	public byte[] getThumbNailPhoto() {
@@ -48,14 +48,14 @@ public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.ThumbnailPhotoFileName</code>
 	 */
 	public void setThumbnailPhotoFileName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.ThumbnailPhotoFileName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.ThumbnailPhotoFileName</code>
 	 */
 	@javax.persistence.Column(name = "ThumbnailPhotoFileName", length = 50)
 	public java.lang.String getThumbnailPhotoFileName() {
@@ -63,14 +63,14 @@ public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.LargePhoto</code>
 	 */
 	public void setLargePhoto(byte[] value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.LargePhoto, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.LargePhoto</code>
 	 */
 	@javax.persistence.Column(name = "LargePhoto")
 	public byte[] getLargePhoto() {
@@ -78,14 +78,14 @@ public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.LargePhotoFileName</code>
 	 */
 	public void setLargePhotoFileName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.LargePhotoFileName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.LargePhotoFileName</code>
 	 */
 	@javax.persistence.Column(name = "LargePhotoFileName", length = 50)
 	public java.lang.String getLargePhotoFileName() {
@@ -93,14 +93,14 @@ public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductPhoto.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

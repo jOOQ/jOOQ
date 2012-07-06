@@ -10,16 +10,16 @@ package org.jooq.test.mysql2.generatedclasses.routines;
  */
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -198395741;
+	private static final long serialVersionUID = 110156056;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>test2.p_author_exists.author_name</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("author_name", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>test2.p_author_exists.result</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RESULT = createParameter("result", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -34,12 +34,15 @@ public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	}
 
 	/**
-	 * Set the <code>author_name</code> parameter to the routine
+	 * Set the <code>author_name</code> parameter IN value to the routine
 	 */
 	public void setAuthorName(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.routines.PAuthorExists.AUTHOR_NAME, value);
 	}
 
+	/**
+	 * Get the <code>result</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getResult() {
 		return getValue(RESULT);
 	}

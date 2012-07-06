@@ -1311,7 +1311,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         }
         catch (SQLException expected) {}
         try {
-            rs.getObject(10);
+            rs.getObject(100);
             fail();
         }
         catch (SQLException expected) {}
@@ -1350,7 +1350,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         }
         catch (SQLException expected) {}
         try {
-            rs.getObject(10);
+            rs.getObject(100);
             fail();
         }
         catch (SQLException expected) {}

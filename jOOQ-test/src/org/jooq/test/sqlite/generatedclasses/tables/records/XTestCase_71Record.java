@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 1931153112;
+	private static final long serialVersionUID = 1236747099;
 
 	/**
 	 * The table column <code>x_test_case_71.ID</code>
@@ -52,6 +52,19 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	public java.lang.Short getTestCase_64_69Id() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record 
+	 * XTestCase_64_69Record}
+	 */
+	public void setTestCase_64_69Id(org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record value) {
+		if (value == null) {
+			setValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, value.getValueAsShort(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.ID));
+		}
 	}
 
 	/**

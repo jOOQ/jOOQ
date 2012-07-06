@@ -10,7 +10,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -672458278;
+	private static final long serialVersionUID = -832621196;
 
 	/**
 	 * The book ID
@@ -73,6 +73,19 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord 
+	 * TAuthorRecord}
+	 */
+	public void setAuthorId(org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID, value.getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID));
+		}
+	}
+
+	/**
 	 * The author ID in entity 'author'
 	 * <p>
 	 * This column is part of a FOREIGN KEY: <code><pre>
@@ -114,6 +127,19 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord 
+	 * TAuthorRecord}
+	 */
+	public void setCoAuthorId(org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID, value.getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID));
+		}
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  */
 public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = 921295381;
+	private static final long serialVersionUID = -1056115701;
 
 	/**
 	 * The table column <code>DBA.t_986_2.REF</code>
@@ -38,6 +38,19 @@ public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public java.lang.Integer getRef() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2.REF);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord 
+	 * XUnusedRecord}
+	 */
+	public void setRef(org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2.REF, null);
+		}
+		else {
+			setValue(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2.REF, value.getValue(org.jooq.test.sybase.generatedclasses.tables.XUnused.X_UNUSED.ID));
+		}
 	}
 
 	/**

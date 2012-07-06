@@ -10,7 +10,7 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  */
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1779229051;
+	private static final long serialVersionUID = 622797686;
 
 	/**
 	 * The book store name
@@ -40,6 +40,19 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord 
+	 * TBookStoreRecord}
+	 */
+	public void setBookStoreName(org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, null);
+		}
+		else {
+			setValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value.getValue(org.jooq.test.ingres.generatedclasses.tables.TBookStore.NAME));
+		}
 	}
 
 	/**
@@ -88,6 +101,19 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord 
+	 * TBookRecord}
+	 */
+	public void setBookId(org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_ID, value.getValue(org.jooq.test.ingres.generatedclasses.tables.TBook.ID));
+		}
 	}
 
 	/**

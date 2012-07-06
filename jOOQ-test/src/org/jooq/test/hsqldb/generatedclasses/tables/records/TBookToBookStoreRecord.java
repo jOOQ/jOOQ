@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = -247272470;
+	private static final long serialVersionUID = 1884327825;
 
 	/**
 	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
@@ -40,6 +40,19 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord 
+	 * TBookStoreRecord}
+	 */
+	public void setBookStoreName(org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, null);
+		}
+		else {
+			setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value.getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME));
+		}
 	}
 
 	/**
@@ -90,6 +103,19 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord 
+	 * TBookRecord}
+	 */
+	public void setBookId(org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value.getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.ID));
+		}
 	}
 
 	/**

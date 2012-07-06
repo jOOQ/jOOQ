@@ -14,7 +14,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 2044388652;
+	private static final long serialVersionUID = -1578135455;
 
 	/**
 	 * The book store name
@@ -67,6 +67,19 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord 
+	 * TBookStoreRecord}
+	 */
+	public void setBookStoreName(org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, null);
+		}
+		else {
+			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value.getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE.NAME));
+		}
+	}
+
+	/**
 	 * The book store name
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
@@ -113,6 +126,19 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord 
+	 * TBookRecord}
+	 */
+	public void setBookId(org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value.getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.ID));
+		}
 	}
 
 	/**

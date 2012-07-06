@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> {
 
-	private static final long serialVersionUID = -1441983818;
+	private static final long serialVersionUID = -1441749377;
 
 	/**
 	 * The table column <code>sakila.inventory.inventory_id</code>
@@ -67,6 +67,19 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.FilmRecord 
+	 * FilmRecord}
+	 */
+	public void setFilmId(org.jooq.examples.mysql.sakila.tables.records.FilmRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.FILM_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.FILM_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID));
+		}
+	}
+
+	/**
 	 * The table column <code>sakila.inventory.film_id</code>
 	 * <p>
 	 * This column is part of a FOREIGN KEY: <code><pre>
@@ -106,6 +119,19 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public java.lang.Byte getStoreId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.STORE_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StoreRecord 
+	 * StoreRecord}
+	 */
+	public void setStoreId(org.jooq.examples.mysql.sakila.tables.records.StoreRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.STORE_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.STORE_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID));
+		}
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> {
 
-	private static final long serialVersionUID = 1822472842;
+	private static final long serialVersionUID = -1019131517;
 
 	/**
 	 * The table column <code>sakila.film.film_id</code>
@@ -133,6 +133,19 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.LanguageRecord 
+	 * LanguageRecord}
+	 */
+	public void setLanguageId(org.jooq.examples.mysql.sakila.tables.records.LanguageRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LANGUAGE_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LANGUAGE_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID));
+		}
+	}
+
+	/**
 	 * The table column <code>sakila.film.language_id</code>
 	 * <p>
 	 * This column is part of a FOREIGN KEY: <code><pre>
@@ -172,6 +185,19 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 */
 	public java.lang.Byte getOriginalLanguageId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.ORIGINAL_LANGUAGE_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.LanguageRecord 
+	 * LanguageRecord}
+	 */
+	public void setOriginalLanguageId(org.jooq.examples.mysql.sakila.tables.records.LanguageRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.ORIGINAL_LANGUAGE_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.ORIGINAL_LANGUAGE_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID));
+		}
 	}
 
 	/**

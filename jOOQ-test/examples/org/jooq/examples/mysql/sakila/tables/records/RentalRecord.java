@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> {
 
-	private static final long serialVersionUID = 1007906944;
+	private static final long serialVersionUID = -1817580228;
 
 	/**
 	 * The table column <code>sakila.rental.rental_id</code>
@@ -81,6 +81,19 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.InventoryRecord 
+	 * InventoryRecord}
+	 */
+	public void setInventoryId(org.jooq.examples.mysql.sakila.tables.records.InventoryRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.INVENTORY_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.INVENTORY_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.INVENTORY_ID));
+		}
+	}
+
+	/**
 	 * The table column <code>sakila.rental.inventory_id</code>
 	 * <p>
 	 * This column is part of a FOREIGN KEY: <code><pre>
@@ -120,6 +133,19 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 */
 	public java.lang.Short getCustomerId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.CUSTOMER_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CustomerRecord 
+	 * CustomerRecord}
+	 */
+	public void setCustomerId(org.jooq.examples.mysql.sakila.tables.records.CustomerRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.CUSTOMER_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.CUSTOMER_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CUSTOMER_ID));
+		}
 	}
 
 	/**
@@ -176,6 +202,19 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 */
 	public java.lang.Byte getStaffId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.STAFF_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StaffRecord 
+	 * StaffRecord}
+	 */
+	public void setStaffId(org.jooq.examples.mysql.sakila.tables.records.StaffRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.STAFF_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.STAFF_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID));
+		}
 	}
 
 	/**

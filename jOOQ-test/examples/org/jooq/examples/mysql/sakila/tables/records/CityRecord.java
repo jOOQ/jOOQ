@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CityRecord> {
 
-	private static final long serialVersionUID = 779140644;
+	private static final long serialVersionUID = 2043856302;
 
 	/**
 	 * The table column <code>sakila.city.city_id</code>
@@ -78,6 +78,19 @@ public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 */
 	public java.lang.Short getCountryId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.COUNTRY_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CountryRecord 
+	 * CountryRecord}
+	 */
+	public void setCountryId(org.jooq.examples.mysql.sakila.tables.records.CountryRecord value) {
+		if (value == null) {
+			setValue(org.jooq.examples.mysql.sakila.tables.City.CITY.COUNTRY_ID, null);
+		}
+		else {
+			setValue(org.jooq.examples.mysql.sakila.tables.City.CITY.COUNTRY_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.COUNTRY_ID));
+		}
 	}
 
 	/**

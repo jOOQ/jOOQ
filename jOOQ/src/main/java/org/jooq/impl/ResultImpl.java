@@ -104,7 +104,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     // -------------------------------------------------------------------------
-    // Attachable API
+    // XXX: Attachable API
     // -------------------------------------------------------------------------
 
     @Override
@@ -136,7 +136,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     // -------------------------------------------------------------------------
-    // Result API
+    // XXX: Result API
     // -------------------------------------------------------------------------
 
     @Override
@@ -1307,7 +1307,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     // -------------------------------------------------------------------------
-    // Object API
+    // XXX Object API
     // -------------------------------------------------------------------------
 
     @Override
@@ -1332,7 +1332,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     // -------------------------------------------------------------------------
-    // List API
+    // XXX: List API
     // -------------------------------------------------------------------------
 
     @Override

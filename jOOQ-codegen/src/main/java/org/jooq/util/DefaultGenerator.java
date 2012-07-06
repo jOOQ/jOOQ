@@ -2223,7 +2223,7 @@ public class DefaultGenerator extends AbstractGenerator {
         for (ParameterDefinition parameter : routine.getInParameters()) {
             out.println();
             out.println("\t/**");
-            out.println("\t * Set the <code>" + parameter.getOutputName() + "</code> parameter to the routine");
+            out.println("\t * Set the <code>" + parameter.getOutputName() + "</code> parameter IN value to the routine");
             out.println("\t */");
             out.print("\tpublic void ");
             out.print(strategy.getJavaSetterName(parameter, Mode.DEFAULT));
@@ -2282,6 +2282,9 @@ public class DefaultGenerator extends AbstractGenerator {
 
             if (isOutParameter && !isReturnValue) {
                 out.println();
+                out.println("\t/**");
+                out.println("\t * Get the <code>" + parameter.getOutputName() + "</code> parameter OUT value from the routine");
+                out.println("\t */");
                 out.print("\tpublic ");
                 out.print(getJavaType(parameter.getType()));
                 out.print(" ");

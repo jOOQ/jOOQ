@@ -212,6 +212,15 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         return null;
     }
 
+    /**
+     * Reset all value flags' changed status
+     */
+    final void setAllChanged(boolean changed) {
+        for (Value<?> value : getValues()) {
+            value.setChanged(changed);
+        }
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + " [values=" + Arrays.asList(getValues()) + "]";
@@ -710,6 +719,25 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
                 if (targetField != null) {
                     Util.setValue(result, targetField, this, sourceField);
+                }
+            }
+
+            // [#1522] If the primary key has been fully fetched, then changed
+            // flags should all be reset in order for the returned record to be
+            // updatable using store()
+            if (result instanceof AbstractRecord) {
+                UniqueKey<?> key = ((AbstractRecord) result).getMainKey();
+
+                if (key != null) {
+                    boolean isKeySet = true;
+
+                    for (Field<?> field : key.getFields()) {
+                        isKeySet &= (getField(field) != null);
+                    }
+
+                    if (isKeySet) {
+                        ((AbstractRecord) result).setAllChanged(false);
+                    }
                 }
             }
 

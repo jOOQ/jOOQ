@@ -139,9 +139,11 @@ public abstract class BaseTest<
     protected static final List<String>    BOOK_TITLES        = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
     protected static final List<String>    BOOK_FIRST_NAMES   = Arrays.asList("George", "George", "Paulo", "Paulo");
     protected static final List<String>    BOOK_LAST_NAMES    = Arrays.asList("Orwell", "Orwell", "Coelho", "Coelho");
+    protected static final List<Object>    BOOK_NULLS         = Arrays.asList(null, null, null, null);
     protected static final List<Integer>   AUTHOR_IDS         = Arrays.asList(1, 2);
     protected static final List<String>    AUTHOR_FIRST_NAMES = Arrays.asList("George", "Paulo");
     protected static final List<String>    AUTHOR_LAST_NAMES  = Arrays.asList("Orwell", "Coelho");
+    protected static final List<Object>    AUTHOR_NULLS       = Arrays.asList(null, null);
 
     protected static final JooqLogger      log                = JooqLogger.getLogger(jOOQAbstractTest.class);
 

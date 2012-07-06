@@ -820,6 +820,69 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testFetchIntoTable() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        // JOIN two tables into a generated UpdatableRecord
+        Result<B> result1 =
+        create().select(
+                    TBook_ID(),
+                    TBook_TITLE(),
+                    TBook_AUTHOR_ID(),
+                    TAuthor_FIRST_NAME(),
+                    TAuthor_LAST_NAME())
+                .from(TBook())
+                .join(TAuthor())
+                .on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
+                .orderBy(TBook_ID())
+                .fetch()
+                .into(TBook());
+
+        // Assure that only book-related fields are actually contained in Result
+        assertEquals(4, result1.size());
+        assertEquals(BOOK_IDS, result1.getValues(TBook_ID()));
+        assertEquals(BOOK_TITLES, result1.getValues(TBook_TITLE()));
+        assertEquals(BOOK_AUTHOR_IDS, result1.getValues(TBook_AUTHOR_ID()));
+        assertEquals(BOOK_NULLS, result1.getValues(TBook_PUBLISHED_IN()));
+        assertNull(result1.getField(TAuthor_FIRST_NAME()));
+        assertNull(result1.getField(TAuthor_LAST_NAME()));
+
+        // Ensure that books can be updated using store()
+        result1.get(0).setValue(TBook_TITLE(), "Changed");
+        assertEquals(1, result1.get(0).store());
+
+        Result<B> books1 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch();
+        assertEquals(4, books1.size());
+        assertEquals(BOOK_IDS, books1.getValues(TBook_ID()));
+        assertEquals(1, (int) books1.getValue(0, TBook_ID()));
+        assertEquals(1, (int) books1.getValue(0, TBook_AUTHOR_ID()));
+        assertEquals("Changed", books1.getValue(0, TBook_TITLE()));
+
+        // Without any fetched primary keys, the resulting records should be
+        // inserted using store()
+        B book =
+        create().select(
+                    TBook_TITLE(),
+                    TBook_AUTHOR_ID(),
+                    TBook_PUBLISHED_IN(),
+                    TBook_LANGUAGE_ID())
+                .from(TBook())
+                .where(TBook_ID().equal(2))
+                .fetchOne()
+                .into(TBook());
+
+        assertNotNull(book);
+        assertEquals("Animal Farm", book.getValue(TBook_TITLE()));
+        assertNull(book.getValue(TBook_ID()));
+
+        book.setValue(TBook_ID(), 5);
+        assertEquals(1, book.store());
+        Result<B> books2 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch();
+        assertEquals(5, books2.size());
+        assertEquals("Animal Farm", books2.getValue(4, TBook_TITLE()));
+    }
+
+    @Test
     public void testFetchIntoCustomTable() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere

@@ -37,6 +37,7 @@ package org.jooq.tools;
 
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
+import org.jooq.ExecuteType;
 import org.jooq.impl.DefaultExecuteListener;
 
 /**
@@ -65,7 +66,14 @@ public class LoggerListener extends DefaultExecuteListener {
                 }
             }
             else if (!StringUtils.isBlank(ctx.sql())) {
-                log.debug("Executing query", ctx.sql());
+
+                // [#1529] Batch queries should be logged specially
+                if (ctx.type() == ExecuteType.BATCH) {
+                    log.debug("Executing batch query", ctx.sql());
+                }
+                else {
+                    log.debug("Executing query", ctx.sql());
+                }
             }
         }
     }

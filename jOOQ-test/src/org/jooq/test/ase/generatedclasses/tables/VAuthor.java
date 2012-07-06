@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.ase.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -2136897402;
+	private static final long serialVersionUID = 1211493824;
 
 	/**
 	 * The singleton instance of dbo.v_author
@@ -24,32 +24,32 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.ase.generated
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_author.id</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_author.first_name</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_author.last_name</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_author.date_of_birth</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.VAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("date_of_birth", org.jooq.impl.SQLDataType.DATE, V_AUTHOR);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_author.year_of_birth</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("year_of_birth", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_author.address</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 

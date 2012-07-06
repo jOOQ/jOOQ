@@ -8,21 +8,21 @@ package org.jooq.test.ase.generatedclasses.tables.records;
  */
 public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ase.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = -1122338092;
+	private static final long serialVersionUID = -1819117900;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_986_1.REF</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setRef(java.lang.Integer value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.T_986_1.REF, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_986_1.REF</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getRef() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.T_986_1.REF);

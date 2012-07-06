@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1184463855;
+	private static final long serialVersionUID = 1742971439;
 
 	/**
 	 * The singleton instance of dbo.t_book_to_book_store
@@ -24,11 +24,11 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_book_to_book_store.book_store_name</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
 	 * FOREIGN KEY (book_store_name)
 	 * REFERENCES dbo.t_book_store (name)
@@ -37,11 +37,11 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_TO_BOOK_STORE);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_book_to_book_store.book_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
 	 * FOREIGN KEY (book_id)
 	 * REFERENCES dbo.t_book (id)
@@ -50,7 +50,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book_to_book_store.stock</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 

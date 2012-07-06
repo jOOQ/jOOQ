@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @javax.persistence.Entity
 @javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
-public interface X_TEST_CASE_85_INTERFACE extends java.lang.Cloneable {
+public interface X_TEST_CASE_85_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
 	 * An uncommented item

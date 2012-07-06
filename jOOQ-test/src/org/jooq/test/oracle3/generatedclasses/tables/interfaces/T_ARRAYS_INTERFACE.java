@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
-public interface T_ARRAYS_INTERFACE extends java.lang.Cloneable {
+public interface T_ARRAYS_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
 	 * An uncommented item

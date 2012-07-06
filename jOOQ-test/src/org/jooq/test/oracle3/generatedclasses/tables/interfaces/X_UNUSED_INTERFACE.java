@@ -12,7 +12,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 @javax.persistence.Table(name = "X_UNUSED", schema = "TEST", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"ID", "NAME"})
 })
-public interface X_UNUSED_INTERFACE extends java.lang.Cloneable {
+public interface X_UNUSED_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
 	 * An uncommented item

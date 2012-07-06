@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK_STORE", schema = "TEST")
-public interface T_BOOK_STORE_INTERFACE extends java.lang.Cloneable {
+public interface T_BOOK_STORE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
 	 * The books store name

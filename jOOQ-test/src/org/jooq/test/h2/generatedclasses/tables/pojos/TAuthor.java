@@ -8,9 +8,9 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  *
  * An entity holding authors of books
  */
-public class TAuthor implements java.io.Serializable, org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
+public class TAuthor implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 100147464;
+	private static final long serialVersionUID = -1825133641;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;

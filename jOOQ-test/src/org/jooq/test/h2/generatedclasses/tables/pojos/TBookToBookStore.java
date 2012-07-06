@@ -8,9 +8,9 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  *
  * An m:n relation between books and book stores
  */
-public class TBookToBookStore implements java.io.Serializable, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
+public class TBookToBookStore implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = -677351109;
+	private static final long serialVersionUID = 1051744684;
 
 	private java.lang.String  bookStoreName;
 	private java.lang.Integer bookId;

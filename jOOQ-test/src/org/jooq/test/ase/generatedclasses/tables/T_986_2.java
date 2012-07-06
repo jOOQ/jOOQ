@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = 974356622;
+	private static final long serialVersionUID = -1702128257;
 
 	/**
 	 * The singleton instance of dbo.t_986_2
@@ -24,9 +24,9 @@ public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_986_2.REF</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.T_986_2Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER, T_986_2);
 

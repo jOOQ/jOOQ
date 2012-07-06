@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.ase.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 266809394;
+	private static final long serialVersionUID = -546305173;
 
 	/**
 	 * The singleton instance of dbo.v_library
@@ -24,12 +24,12 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.ase.generate
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_library.author</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.VARCHAR, V_LIBRARY);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_library.title</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, V_LIBRARY);
 

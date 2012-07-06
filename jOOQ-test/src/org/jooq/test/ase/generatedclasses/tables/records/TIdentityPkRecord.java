@@ -8,35 +8,35 @@ package org.jooq.test.ase.generatedclasses.tables.records;
  */
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ase.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -1826718918;
+	private static final long serialVersionUID = 941773888;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_identity_pk.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TIdentityPk.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_identity_pk.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TIdentityPk.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_identity_pk.val</code>
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TIdentityPk.VAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_identity_pk.val</code>
 	 */
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TIdentityPk.VAL);

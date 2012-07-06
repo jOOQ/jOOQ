@@ -524,16 +524,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             case INGRES:
             case ORACLE:
             case SYBASE: {
-                Result<Record> result = create().select(TAuthor_ID())
+                Result<Record> result =
+                create().select(TAuthor_ID())
                         .from(TAuthor())
                         .forUpdate()
-                        .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
+
+                        // DB2 requires a key column to be contained in the
+                        // FOR UPDATE OF ... clause
+                        .of(TAuthor_ID(),
+                            TAuthor_LAST_NAME(),
+                            TAuthor_FIRST_NAME())
                         .fetch();
                 assertEquals(2, result.size());
 
-                Result<A> result2 = create().selectFrom(TAuthor())
+                Result<A> result2 =
+                create().selectFrom(TAuthor())
                         .forUpdate()
-                        .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
+                        .of(TAuthor_ID(),
+                            TAuthor_LAST_NAME(),
+                            TAuthor_FIRST_NAME())
                         .fetch();
                 assertEquals(2, result2.size());
 

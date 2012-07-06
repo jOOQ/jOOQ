@@ -1325,4 +1325,13 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
             return result.getField(column - 1).getType().getName();
         }
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        return result == null ? "null" : result.toString();
+    }
 }

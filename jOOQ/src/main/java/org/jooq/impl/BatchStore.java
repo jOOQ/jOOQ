@@ -93,7 +93,12 @@ class BatchStore implements Batch {
         Settings orig = SettingsTools.clone(work);
 
         try {
+
+            // Add the QueryCollector to intercept query execution after rendering
             work.setExecuteListeners(Arrays.asList(QueryCollector.class.getName()));
+
+            // [#1529] Avoid DEBUG logging of single INSERT / UPDATE statements
+            work.setExecuteLogging(false);
 
             for (int i = 0; i < records.length; i++) {
                 Configuration previous = records[i].internalAPI(AttachableInternal.class).getConfiguration();
@@ -127,6 +132,7 @@ class BatchStore implements Batch {
         // Restore the original factory
         finally {
             work.setExecuteListeners(orig.getExecuteListeners());
+            work.setExecuteLogging(orig.isExecuteLogging());
         }
 
         // Execute one batch statement for each identical SQL statement. Every

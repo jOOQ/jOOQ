@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Location", schema = "Production")
 public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Location> {
 
-	private static final long serialVersionUID = 938148699;
+	private static final long serialVersionUID = 813799219;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.Location.LocationID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setLocationID(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.LocationID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.Location.LocationID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "LocationID", unique = true, nullable = false, precision = 5)
@@ -33,14 +33,14 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Location.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Location.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -48,14 +48,14 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Location.CostRate</code>
 	 */
 	public void setCostRate(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.CostRate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Location.CostRate</code>
 	 */
 	@javax.persistence.Column(name = "CostRate", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getCostRate() {
@@ -63,14 +63,14 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Location.Availability</code>
 	 */
 	public void setAvailability(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.Availability, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Location.Availability</code>
 	 */
 	@javax.persistence.Column(name = "Availability", nullable = false, precision = 8, scale = 2)
 	public java.math.BigDecimal getAvailability() {
@@ -78,14 +78,14 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Location.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Location.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

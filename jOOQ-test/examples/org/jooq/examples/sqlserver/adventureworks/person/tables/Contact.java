@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class Contact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact> {
 
-	private static final long serialVersionUID = -393856092;
+	private static final long serialVersionUID = 1730200399;
 
 	/**
 	 * The singleton instance of Person.Contact
@@ -24,82 +24,82 @@ public class Contact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Person.Contact.ContactID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.Integer> ContactID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.NameStyle</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.Boolean> NameStyle = createField("NameStyle", org.jooq.impl.SQLDataType.BIT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.Title</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.String> Title = createField("Title", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.FirstName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.String> FirstName = createField("FirstName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.MiddleName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.String> MiddleName = createField("MiddleName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.LastName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.String> LastName = createField("LastName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.Suffix</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.String> Suffix = createField("Suffix", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.EmailAddress</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.String> EmailAddress = createField("EmailAddress", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.EmailPromotion</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.Integer> EmailPromotion = createField("EmailPromotion", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.Phone</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.String> Phone = createField("Phone", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.PasswordHash</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.String> PasswordHash = createField("PasswordHash", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.PasswordSalt</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.String> PasswordSalt = createField("PasswordSalt", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>Person.Contact.AdditionalContactInfo</code>
+	 * <p>
 	 * The SQL type of this item (xml, ) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.Object> AdditionalContactInfo = createField("AdditionalContactInfo", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.rowguid</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.Contact.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

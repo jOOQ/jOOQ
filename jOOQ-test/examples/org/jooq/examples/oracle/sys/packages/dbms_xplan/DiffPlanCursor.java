@@ -8,26 +8,26 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DiffPlanCursor extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -61987936;
+	private static final long serialVersionUID = 1688955867;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_CURSOR.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_CURSOR.SQL_ID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQL_ID = createParameter("SQL_ID", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_CURSOR.CURSOR_CHILD_NUM1</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> CURSOR_CHILD_NUM1 = createParameter("CURSOR_CHILD_NUM1", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_CURSOR.CURSOR_CHILD_NUM2</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> CURSOR_CHILD_NUM2 = createParameter("CURSOR_CHILD_NUM2", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -44,7 +44,7 @@ public class DiffPlanCursor extends org.jooq.impl.AbstractRoutine<java.lang.Stri
 	}
 
 	/**
-	 * Set the <code>SQL_ID</code> parameter to the routine
+	 * Set the <code>SQL_ID</code> parameter IN value to the routine
 	 */
 	public void setSqlId(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor.SQL_ID, value);
@@ -60,7 +60,7 @@ public class DiffPlanCursor extends org.jooq.impl.AbstractRoutine<java.lang.Stri
 	}
 
 	/**
-	 * Set the <code>CURSOR_CHILD_NUM1</code> parameter to the routine
+	 * Set the <code>CURSOR_CHILD_NUM1</code> parameter IN value to the routine
 	 */
 	public void setCursorChildNum1(java.lang.Number value) {
 		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor.CURSOR_CHILD_NUM1, value);
@@ -76,7 +76,7 @@ public class DiffPlanCursor extends org.jooq.impl.AbstractRoutine<java.lang.Stri
 	}
 
 	/**
-	 * Set the <code>CURSOR_CHILD_NUM2</code> parameter to the routine
+	 * Set the <code>CURSOR_CHILD_NUM2</code> parameter IN value to the routine
 	 */
 	public void setCursorChildNum2(java.lang.Number value) {
 		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor.CURSOR_CHILD_NUM2, value);

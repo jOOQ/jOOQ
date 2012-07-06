@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears> {
 
-	private static final long serialVersionUID = -929980544;
+	private static final long serialVersionUID = -1250885830;
 
 	/**
 	 * The singleton instance of Sales.vSalesPersonSalesByFiscalYears
@@ -24,37 +24,37 @@ public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableImpl<org.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.SalesPersonID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears, java.lang.Integer> SalesPersonID = createField("SalesPersonID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.FullName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears, java.lang.String> FullName = createField("FullName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.Title</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears, java.lang.String> Title = createField("Title", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.SalesTerritory</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears, java.lang.String> SalesTerritory = createField("SalesTerritory", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.2002</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears, java.math.BigDecimal> _2002 = createField("2002", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.2003</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears, java.math.BigDecimal> _2003 = createField("2003", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.2004</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears, java.math.BigDecimal> _2004 = createField("2004", org.jooq.impl.SQLDataType.NUMERIC, this);
 

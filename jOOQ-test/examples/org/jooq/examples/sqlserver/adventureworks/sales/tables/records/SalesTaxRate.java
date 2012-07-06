@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesTaxRate", schema = "Sales")
 public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTaxRate> {
 
-	private static final long serialVersionUID = -1811363962;
+	private static final long serialVersionUID = -1584523652;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesTaxRate.SalesTaxRateID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setSalesTaxRateID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.SalesTaxRateID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesTaxRate.SalesTaxRateID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "SalesTaxRateID", unique = true, nullable = false, precision = 10)
@@ -33,9 +33,9 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.StateProvinceID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesTaxRate_StateProvince_StateProvinceID
 	 * FOREIGN KEY (StateProvinceID)
 	 * REFERENCES Person.StateProvince (StateProvinceID)
@@ -46,9 +46,9 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.StateProvinceID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesTaxRate_StateProvince_StateProvinceID
 	 * FOREIGN KEY (StateProvinceID)
 	 * REFERENCES Person.StateProvince (StateProvinceID)
@@ -60,14 +60,14 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.TaxType</code>
 	 */
 	public void setTaxType(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.TaxType, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.TaxType</code>
 	 */
 	@javax.persistence.Column(name = "TaxType", nullable = false, precision = 3)
 	public java.lang.Byte getTaxType() {
@@ -75,14 +75,14 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.TaxRate</code>
 	 */
 	public void setTaxRate(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.TaxRate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.TaxRate</code>
 	 */
 	@javax.persistence.Column(name = "TaxRate", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getTaxRate() {
@@ -90,14 +90,14 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -105,14 +105,14 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -120,14 +120,14 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTaxRate.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

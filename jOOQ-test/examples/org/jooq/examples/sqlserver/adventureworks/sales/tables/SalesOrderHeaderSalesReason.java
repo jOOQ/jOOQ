@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeaderSalesReason> {
 
-	private static final long serialVersionUID = 997717770;
+	private static final long serialVersionUID = -564018483;
 
 	/**
 	 * The singleton instance of Sales.SalesOrderHeaderSalesReason
@@ -24,11 +24,11 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableTableImp
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesOrderHeaderSalesReason.SalesOrderID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID
 	 * FOREIGN KEY (SalesOrderID)
 	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
@@ -37,11 +37,11 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableTableImp
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeaderSalesReason, java.lang.Integer> SalesOrderID = createField("SalesOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesOrderHeaderSalesReason.SalesReasonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID
 	 * FOREIGN KEY (SalesReasonID)
 	 * REFERENCES Sales.SalesReason (SalesReasonID)
@@ -50,7 +50,7 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableTableImp
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeaderSalesReason, java.lang.Integer> SalesReasonID = createField("SalesReasonID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesOrderHeaderSalesReason.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeaderSalesReason, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

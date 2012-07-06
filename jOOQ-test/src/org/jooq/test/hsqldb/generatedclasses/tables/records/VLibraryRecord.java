@@ -8,10 +8,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = -130292311;
+	private static final long serialVersionUID = -1218025621;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_LIBRARY.AUTHOR</code>
 	 */
 	@Override
 	public void setAuthor(java.lang.String value) {
@@ -19,7 +19,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_LIBRARY.AUTHOR</code>
 	 */
 	@Override
 	public java.lang.String getAuthor() {
@@ -27,7 +27,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_LIBRARY.TITLE</code>
 	 */
 	@Override
 	public void setTitle(java.lang.String value) {
@@ -35,7 +35,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_LIBRARY.TITLE</code>
 	 */
 	@Override
 	public java.lang.String getTitle() {

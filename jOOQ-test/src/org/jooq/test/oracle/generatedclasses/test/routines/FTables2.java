@@ -8,16 +8,16 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FTables2 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord> {
 
-	private static final long serialVersionUID = 1514249171;
+	private static final long serialVersionUID = -2099413767;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_TABLES2.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_TABLES2.IN_TABLE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord.class));
 
@@ -32,7 +32,7 @@ public class FTables2 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle
 	}
 
 	/**
-	 * Set the <code>IN_TABLE</code> parameter to the routine
+	 * Set the <code>IN_TABLE</code> parameter IN value to the routine
 	 */
 	public void setInTable(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.routines.FTables2.IN_TABLE, value);

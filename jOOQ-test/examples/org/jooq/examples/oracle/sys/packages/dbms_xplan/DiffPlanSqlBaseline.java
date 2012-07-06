@@ -8,21 +8,21 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DiffPlanSqlBaseline extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -1091811030;
+	private static final long serialVersionUID = 740641399;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE.BASELINE_PLAN_NAME1</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> BASELINE_PLAN_NAME1 = createParameter("BASELINE_PLAN_NAME1", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE.BASELINE_PLAN_NAME2</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> BASELINE_PLAN_NAME2 = createParameter("BASELINE_PLAN_NAME2", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -38,7 +38,7 @@ public class DiffPlanSqlBaseline extends org.jooq.impl.AbstractRoutine<java.lang
 	}
 
 	/**
-	 * Set the <code>BASELINE_PLAN_NAME1</code> parameter to the routine
+	 * Set the <code>BASELINE_PLAN_NAME1</code> parameter IN value to the routine
 	 */
 	public void setBaselinePlanName1(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanSqlBaseline.BASELINE_PLAN_NAME1, value);
@@ -54,7 +54,7 @@ public class DiffPlanSqlBaseline extends org.jooq.impl.AbstractRoutine<java.lang
 	}
 
 	/**
-	 * Set the <code>BASELINE_PLAN_NAME2</code> parameter to the routine
+	 * Set the <code>BASELINE_PLAN_NAME2</code> parameter IN value to the routine
 	 */
 	public void setBaselinePlanName2(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanSqlBaseline.BASELINE_PLAN_NAME2, value);

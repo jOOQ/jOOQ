@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_ARRAYS extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 835516949;
+	private static final long serialVersionUID = -1034097751;
 
 	/**
 	 * The singleton instance of TEST.T_ARRAYS
@@ -24,29 +24,29 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> 
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_ARRAYS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_ARRAYS.STRING_ARRAY</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY> STRING_ARRAY = createField("STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY.class), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> NUMBER_ARRAY = createField("NUMBER_ARRAY", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY> NUMBER_LONG_ARRAY = createField("NUMBER_LONG_ARRAY", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY.class), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_ARRAYS.DATE_ARRAY</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY> DATE_ARRAY = createField("DATE_ARRAY", org.jooq.impl.SQLDataType.DATE.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY.class), this);
 

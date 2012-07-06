@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1740813465;
+	private static final long serialVersionUID = 533397646;
 
 	/**
 	 * The singleton instance of dbo.t_book_store
@@ -24,7 +24,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.s
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book_store.NAME</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 

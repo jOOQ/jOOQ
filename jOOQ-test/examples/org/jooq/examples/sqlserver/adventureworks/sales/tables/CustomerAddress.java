@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class CustomerAddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerAddress> {
 
-	private static final long serialVersionUID = 2028231937;
+	private static final long serialVersionUID = -1050764327;
 
 	/**
 	 * The singleton instance of Sales.CustomerAddress
@@ -24,11 +24,11 @@ public class CustomerAddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CustomerAddress.CustomerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CustomerAddress_Customer_CustomerID
 	 * FOREIGN KEY (CustomerID)
 	 * REFERENCES Sales.Customer (CustomerID)
@@ -37,11 +37,11 @@ public class CustomerAddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerAddress, java.lang.Integer> CustomerID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CustomerAddress.AddressID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CustomerAddress_Address_AddressID
 	 * FOREIGN KEY (AddressID)
 	 * REFERENCES Person.Address (AddressID)
@@ -50,9 +50,9 @@ public class CustomerAddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerAddress, java.lang.Integer> AddressID = createField("AddressID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CustomerAddress.AddressTypeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CustomerAddress_AddressType_AddressTypeID
 	 * FOREIGN KEY (AddressTypeID)
 	 * REFERENCES Person.AddressType (AddressTypeID)
@@ -61,12 +61,12 @@ public class CustomerAddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerAddress, java.lang.Integer> AddressTypeID = createField("AddressTypeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CustomerAddress.rowguid</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerAddress, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CustomerAddress.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerAddress, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

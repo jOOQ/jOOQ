@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Document", schema = "Production")
 public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document> {
 
-	private static final long serialVersionUID = 423074071;
+	private static final long serialVersionUID = -1798934651;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.Document.DocumentID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setDocumentID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.DocumentID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.Document.DocumentID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "DocumentID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.Title</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Title, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.Title</code>
 	 */
 	@javax.persistence.Column(name = "Title", nullable = false, length = 50)
 	public java.lang.String getTitle() {
@@ -48,14 +48,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.FileName</code>
 	 */
 	public void setFileName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.FileName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.FileName</code>
 	 */
 	@javax.persistence.Column(name = "FileName", nullable = false, length = 400)
 	public java.lang.String getFileName() {
@@ -63,14 +63,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.FileExtension</code>
 	 */
 	public void setFileExtension(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.FileExtension, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.FileExtension</code>
 	 */
 	@javax.persistence.Column(name = "FileExtension", nullable = false, length = 8)
 	public java.lang.String getFileExtension() {
@@ -78,14 +78,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.Revision</code>
 	 */
 	public void setRevision(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Revision, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.Revision</code>
 	 */
 	@javax.persistence.Column(name = "Revision", nullable = false, length = 5)
 	public java.lang.String getRevision() {
@@ -93,14 +93,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.ChangeNumber</code>
 	 */
 	public void setChangeNumber(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.ChangeNumber, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.ChangeNumber</code>
 	 */
 	@javax.persistence.Column(name = "ChangeNumber", nullable = false, precision = 10)
 	public java.lang.Integer getChangeNumber() {
@@ -108,14 +108,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.Status</code>
 	 */
 	public void setStatus(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Status, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.Status</code>
 	 */
 	@javax.persistence.Column(name = "Status", nullable = false, precision = 3)
 	public java.lang.Byte getStatus() {
@@ -123,14 +123,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.DocumentSummary</code>
 	 */
 	public void setDocumentSummary(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.DocumentSummary, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.DocumentSummary</code>
 	 */
 	@javax.persistence.Column(name = "DocumentSummary")
 	public java.lang.String getDocumentSummary() {
@@ -138,14 +138,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.Document</code>
 	 */
 	public void setDocument(byte[] value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Document_, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.Document</code>
 	 */
 	@javax.persistence.Column(name = "Document")
 	public byte[] getDocument() {
@@ -153,14 +153,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Document.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

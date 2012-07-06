@@ -12,21 +12,21 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_64_69", schema = "test2")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 49054844;
+	private static final long serialVersionUID = 852063368;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.x_test_case_64_69.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.x_test_case_64_69.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
@@ -35,9 +35,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.x_test_case_64_69.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
 		return create()
@@ -47,9 +47,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_test_case_64_69.UNUSED_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_64_69a
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES test2.x_unused (ID, NAME)
@@ -60,9 +60,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_test_case_64_69.UNUSED_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_64_69a
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES test2.x_unused (ID, NAME)

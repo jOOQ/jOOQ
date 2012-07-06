@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerAddress> {
 
-	private static final long serialVersionUID = 1815203743;
+	private static final long serialVersionUID = 1569029069;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CustomerAddress.CustomerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CustomerAddress_Customer_CustomerID
 	 * FOREIGN KEY (CustomerID)
 	 * REFERENCES Sales.Customer (CustomerID)
@@ -30,11 +30,11 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CustomerAddress.CustomerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CustomerAddress_Customer_CustomerID
 	 * FOREIGN KEY (CustomerID)
 	 * REFERENCES Sales.Customer (CustomerID)
@@ -46,11 +46,11 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CustomerAddress.AddressID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CustomerAddress_Address_AddressID
 	 * FOREIGN KEY (AddressID)
 	 * REFERENCES Person.Address (AddressID)
@@ -61,11 +61,11 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CustomerAddress.AddressID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CustomerAddress_Address_AddressID
 	 * FOREIGN KEY (AddressID)
 	 * REFERENCES Person.Address (AddressID)
@@ -77,9 +77,9 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CustomerAddress.AddressTypeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CustomerAddress_AddressType_AddressTypeID
 	 * FOREIGN KEY (AddressTypeID)
 	 * REFERENCES Person.AddressType (AddressTypeID)
@@ -90,9 +90,9 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CustomerAddress.AddressTypeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CustomerAddress_AddressType_AddressTypeID
 	 * FOREIGN KEY (AddressTypeID)
 	 * REFERENCES Person.AddressType (AddressTypeID)
@@ -104,14 +104,14 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CustomerAddress.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CustomerAddress.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -119,14 +119,14 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CustomerAddress.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CustomerAddress.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Individual extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual> {
 
-	private static final long serialVersionUID = 1234467021;
+	private static final long serialVersionUID = -1830115705;
 
 	/**
 	 * The singleton instance of Sales.Individual
@@ -24,11 +24,11 @@ public class Individual extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.Individual.CustomerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Individual_Customer_CustomerID
 	 * FOREIGN KEY (CustomerID)
 	 * REFERENCES Sales.Customer (CustomerID)
@@ -37,9 +37,9 @@ public class Individual extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.lang.Integer> CustomerID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Individual.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Individual_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -48,15 +48,15 @@ public class Individual extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.lang.Integer> ContactID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>Sales.Individual.Demographics</code>
+	 * <p>
 	 * The SQL type of this item (xml, ) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.lang.Object> Demographics = createField("Demographics", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Individual.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

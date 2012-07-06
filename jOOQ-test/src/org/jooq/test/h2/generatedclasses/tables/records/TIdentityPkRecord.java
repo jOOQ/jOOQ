@@ -8,12 +8,12 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentityPk {
 
-	private static final long serialVersionUID = 619519858;
+	private static final long serialVersionUID = 620338364;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_IDENTITY_PK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -21,9 +21,9 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_IDENTITY_PK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -31,7 +31,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_IDENTITY_PK.VAL</code>
 	 */
 	@Override
 	public void setVal(java.lang.Integer value) {
@@ -39,7 +39,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_IDENTITY_PK.VAL</code>
 	 */
 	@Override
 	public java.lang.Integer getVal() {

@@ -36,9 +36,9 @@ public enum T_658_11 implements org.jooq.MasterDataType<java.lang.String> {
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.t_658_11.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final java.lang.String getId() {
 		return id;

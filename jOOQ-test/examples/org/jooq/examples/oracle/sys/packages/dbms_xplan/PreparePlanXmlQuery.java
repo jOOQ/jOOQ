@@ -8,16 +8,16 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class PreparePlanXmlQuery extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 110969148;
+	private static final long serialVersionUID = 1880861370;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.PREPARE_PLAN_XML_QUERY.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.PREPARE_PLAN_XML_QUERY.PLAN_QUERY</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> PLAN_QUERY = createParameter("PLAN_QUERY", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -32,7 +32,7 @@ public class PreparePlanXmlQuery extends org.jooq.impl.AbstractRoutine<java.lang
 	}
 
 	/**
-	 * Set the <code>PLAN_QUERY</code> parameter to the routine
+	 * Set the <code>PLAN_QUERY</code> parameter IN value to the routine
 	 */
 	public void setPlanQuery(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.PreparePlanXmlQuery.PLAN_QUERY, value);

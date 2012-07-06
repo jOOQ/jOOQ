@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class FilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord> {
 
-	private static final long serialVersionUID = -645421505;
+	private static final long serialVersionUID = -697601532;
 
 	/**
 	 * The singleton instance of sakila.film_list
@@ -26,42 +26,42 @@ public class FilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.FID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.Short> FID = createField("FID", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.title</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.description</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.CLOB, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.category</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> CATEGORY = createField("category", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.price</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.math.BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.length</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.Short> LENGTH = createField("length", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.rating</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, org.jooq.examples.mysql.sakila.enums.FilmListRating> RATING = createField("rating", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.examples.mysql.sakila.enums.FilmListRating.class), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.actors</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> ACTORS = createField("actors", org.jooq.impl.SQLDataType.VARCHAR, this);
 

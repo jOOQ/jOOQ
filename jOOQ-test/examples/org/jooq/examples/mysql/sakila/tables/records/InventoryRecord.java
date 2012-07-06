@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> {
 
-	private static final long serialVersionUID = 2040732694;
+	private static final long serialVersionUID = -1441983818;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.inventory.inventory_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setInventoryId(java.lang.Integer value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.INVENTORY_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.inventory.inventory_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getInventoryId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.INVENTORY_ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.inventory.inventory_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> fetchRentalList() {
 		return create()
@@ -41,9 +41,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.inventory.film_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_inventory_film
 	 * FOREIGN KEY (film_id)
 	 * REFERENCES sakila.film (film_id)
@@ -54,9 +54,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.inventory.film_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_inventory_film
 	 * FOREIGN KEY (film_id)
 	 * REFERENCES sakila.film (film_id)
@@ -67,9 +67,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.inventory.film_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_inventory_film
 	 * FOREIGN KEY (film_id)
 	 * REFERENCES sakila.film (film_id)
@@ -83,9 +83,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.inventory.store_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_inventory_store
 	 * FOREIGN KEY (store_id)
 	 * REFERENCES sakila.store (store_id)
@@ -96,9 +96,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.inventory.store_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_inventory_store
 	 * FOREIGN KEY (store_id)
 	 * REFERENCES sakila.store (store_id)
@@ -109,9 +109,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.inventory.store_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_inventory_store
 	 * FOREIGN KEY (store_id)
 	 * REFERENCES sakila.store (store_id)
@@ -125,14 +125,14 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.inventory.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.inventory.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.LAST_UPDATE);

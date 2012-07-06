@@ -8,11 +8,11 @@ package org.jooq.test.oracle.generatedclasses.test.packages.library_767_package_
  */
 public class Library_767PackageTest extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1715232815;
+	private static final long serialVersionUID = -142907592;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 

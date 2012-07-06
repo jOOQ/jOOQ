@@ -8,32 +8,32 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
  */
 public class UBookTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> {
 
-	private static final long serialVersionUID = 1474870513;
+	private static final long serialVersionUID = 1153597209;
 
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_BOOK_TYPE.ID</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.udt.UBookType.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_BOOK_TYPE.ID</code>
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UBookType.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_BOOK_TYPE.TITLE</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.udt.UBookType.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_BOOK_TYPE.TITLE</code>
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UBookType.TITLE);

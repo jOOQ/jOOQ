@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 840605408;
+	private static final long serialVersionUID = 432236663;
 
 	/**
 	 * The singleton instance of TEST.V_LIBRARY
@@ -24,12 +24,12 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.derby.genera
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_LIBRARY.AUTHOR</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR, V_LIBRARY);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_LIBRARY.TITLE</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, V_LIBRARY);
 

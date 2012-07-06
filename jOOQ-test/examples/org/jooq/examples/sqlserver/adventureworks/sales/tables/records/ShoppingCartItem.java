@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "ShoppingCartItem", schema = "Sales")
 public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem> {
 
-	private static final long serialVersionUID = -1908312939;
+	private static final long serialVersionUID = -271138981;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.ShoppingCartItem.ShoppingCartItemID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setShoppingCartItemID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.ShoppingCartItemID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.ShoppingCartItem.ShoppingCartItemID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ShoppingCartItemID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.ShoppingCartID</code>
 	 */
 	public void setShoppingCartID(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.ShoppingCartID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.ShoppingCartID</code>
 	 */
 	@javax.persistence.Column(name = "ShoppingCartID", nullable = false, length = 50)
 	public java.lang.String getShoppingCartID() {
@@ -48,14 +48,14 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.Quantity</code>
 	 */
 	public void setQuantity(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.Quantity, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.Quantity</code>
 	 */
 	@javax.persistence.Column(name = "Quantity", nullable = false, precision = 10)
 	public java.lang.Integer getQuantity() {
@@ -63,9 +63,9 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ShoppingCartItem_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -76,9 +76,9 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ShoppingCartItem_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -90,14 +90,14 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.DateCreated</code>
 	 */
 	public void setDateCreated(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.DateCreated, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.DateCreated</code>
 	 */
 	@javax.persistence.Column(name = "DateCreated", nullable = false)
 	public java.sql.Timestamp getDateCreated() {
@@ -105,14 +105,14 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

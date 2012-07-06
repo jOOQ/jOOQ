@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class EmployeePayHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory> {
 
-	private static final long serialVersionUID = 2063722322;
+	private static final long serialVersionUID = -777267435;
 
 	/**
 	 * The singleton instance of HumanResources.EmployeePayHistory
@@ -24,11 +24,11 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeePayHistory.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeePayHistory_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -37,24 +37,24 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, java.lang.Integer> EmployeeID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeePayHistory.RateChangeDate</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, java.sql.Timestamp> RateChangeDate = createField("RateChangeDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeePayHistory.Rate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, java.math.BigDecimal> Rate = createField("Rate", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeePayHistory.PayFrequency</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, java.lang.Byte> PayFrequency = createField("PayFrequency", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeePayHistory.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

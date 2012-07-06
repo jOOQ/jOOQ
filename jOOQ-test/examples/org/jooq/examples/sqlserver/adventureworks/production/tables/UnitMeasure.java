@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class UnitMeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> {
 
-	private static final long serialVersionUID = 1195936827;
+	private static final long serialVersionUID = 737481563;
 
 	/**
 	 * The singleton instance of Production.UnitMeasure
@@ -24,19 +24,19 @@ public class UnitMeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.UnitMeasure.UnitMeasureCode</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure, java.lang.String> UnitMeasureCode = createField("UnitMeasureCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.UnitMeasure.Name</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.UnitMeasure.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

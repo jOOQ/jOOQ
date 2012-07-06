@@ -10,17 +10,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1750224359;
+	private static final long serialVersionUID = 54502717;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.ID</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VAuthor.V_AUTHOR.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.ID</code>
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getId() {
@@ -28,14 +28,14 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.FIRST_NAME</code>
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VAuthor.V_AUTHOR.FIRST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.FIRST_NAME</code>
 	 */
 	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	public java.lang.String getFirstName() {
@@ -43,14 +43,14 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.LAST_NAME</code>
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VAuthor.V_AUTHOR.LAST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.LAST_NAME</code>
 	 */
 	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	public java.lang.String getLastName() {
@@ -58,14 +58,14 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VAuthor.V_AUTHOR.DATE_OF_BIRTH, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
 	public java.sql.Date getDateOfBirth() {
@@ -73,14 +73,14 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VAuthor.V_AUTHOR.YEAR_OF_BIRTH, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
 	public java.lang.Integer getYearOfBirth() {
@@ -88,14 +88,14 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.o
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.ADDRESS</code>
 	 */
 	public void setAddress(org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VAuthor.V_AUTHOR.ADDRESS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.ADDRESS</code>
 	 */
 	@javax.persistence.Column(name = "ADDRESS", length = 40)
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord getAddress() {

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class ProductCostHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCostHistory> {
 
-	private static final long serialVersionUID = 990536618;
+	private static final long serialVersionUID = -1707743420;
 
 	/**
 	 * The singleton instance of Production.ProductCostHistory
@@ -24,11 +24,11 @@ public class ProductCostHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductCostHistory.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductCostHistory_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -37,24 +37,24 @@ public class ProductCostHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCostHistory, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductCostHistory.StartDate</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCostHistory, java.sql.Timestamp> StartDate = createField("StartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductCostHistory.EndDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCostHistory, java.sql.Timestamp> EndDate = createField("EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductCostHistory.StandardCost</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCostHistory, java.math.BigDecimal> StandardCost = createField("StandardCost", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductCostHistory.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCostHistory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

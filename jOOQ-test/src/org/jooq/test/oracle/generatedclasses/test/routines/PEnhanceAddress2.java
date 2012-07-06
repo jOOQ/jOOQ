@@ -8,11 +8,11 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PEnhanceAddress2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -173600634;
+	private static final long serialVersionUID = -441980941;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_ENHANCE_ADDRESS2.ADDRESS</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> ADDRESS = createParameter("ADDRESS", org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.U_ADDRESS_TYPE.getDataType());
 
@@ -25,6 +25,9 @@ public class PEnhanceAddress2 extends org.jooq.impl.AbstractRoutine<java.lang.Vo
 		addOutParameter(ADDRESS);
 	}
 
+	/**
+	 * Get the <code>ADDRESS</code> parameter OUT value from the routine
+	 */
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord getAddress() {
 		return getValue(ADDRESS);
 	}

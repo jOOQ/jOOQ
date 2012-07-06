@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 2059524416;
+	private static final long serialVersionUID = -244874831;
 
 	/**
 	 * The singleton instance of x_test_case_85
@@ -24,16 +24,16 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>x_test_case_85.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_test_case_85.x_unused_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_85_X_UNUSED_1
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
 	 * REFERENCES x_unused (ID)
@@ -42,9 +42,9 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("x_unused_id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>x_test_case_85.x_unused_name</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_85_X_UNUSED_1
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
 	 * REFERENCES x_unused (ID)

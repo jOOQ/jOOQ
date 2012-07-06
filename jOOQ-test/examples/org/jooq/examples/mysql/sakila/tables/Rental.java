@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> {
 
-	private static final long serialVersionUID = 201805321;
+	private static final long serialVersionUID = -501691022;
 
 	/**
 	 * The singleton instance of sakila.rental
@@ -24,21 +24,21 @@ public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.m
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.rental.rental_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Integer> RENTAL_ID = createField("rental_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.rental_date</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.sql.Timestamp> RENTAL_DATE = createField("rental_date", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.inventory_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_inventory
 	 * FOREIGN KEY (inventory_id)
 	 * REFERENCES sakila.inventory (inventory_id)
@@ -47,9 +47,9 @@ public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.m
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Integer> INVENTORY_ID = createField("inventory_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.customer_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_customer
 	 * FOREIGN KEY (customer_id)
 	 * REFERENCES sakila.customer (customer_id)
@@ -58,14 +58,14 @@ public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.m
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Short> CUSTOMER_ID = createField("customer_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.return_date</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.sql.Timestamp> RETURN_DATE = createField("return_date", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.staff_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_rental_staff
 	 * FOREIGN KEY (staff_id)
 	 * REFERENCES sakila.staff (staff_id)
@@ -74,7 +74,7 @@ public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.m
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Byte> STAFF_ID = createField("staff_id", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.rental.last_update</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

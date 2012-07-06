@@ -8,31 +8,31 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  */
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 2006594241;
+	private static final long serialVersionUID = 375827335;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.V_LIBRARY.AUTHOR</code>
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.VLibrary.V_LIBRARY.AUTHOR, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.V_LIBRARY.AUTHOR</code>
 	 */
 	public java.lang.String getAuthor() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.VLibrary.V_LIBRARY.AUTHOR);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.V_LIBRARY.TITLE</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.VLibrary.V_LIBRARY.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.V_LIBRARY.TITLE</code>
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.VLibrary.V_LIBRARY.TITLE);

@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 1986650598;
+	private static final long serialVersionUID = -864464182;
 
 	/**
 	 * The singleton instance of PUBLIC.T_IDENTITY
@@ -24,12 +24,12 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.h2.generate
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_IDENTITY.ID</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_IDENTITY.VAL</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 

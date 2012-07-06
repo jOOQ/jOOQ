@@ -10,17 +10,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "vSalesPersonSalesByFiscalYears", schema = "Sales")
 public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears> {
 
-	private static final long serialVersionUID = -748334049;
+	private static final long serialVersionUID = 1887453971;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.SalesPersonID</code>
 	 */
 	public void setSalesPersonID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears.SalesPersonID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.SalesPersonID</code>
 	 */
 	@javax.persistence.Column(name = "SalesPersonID", precision = 10)
 	public java.lang.Integer getSalesPersonID() {
@@ -28,14 +28,14 @@ public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.FullName</code>
 	 */
 	public void setFullName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears.FullName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.FullName</code>
 	 */
 	@javax.persistence.Column(name = "FullName", length = 152)
 	public java.lang.String getFullName() {
@@ -43,14 +43,14 @@ public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.Title</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears.Title, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.Title</code>
 	 */
 	@javax.persistence.Column(name = "Title", nullable = false, length = 50)
 	public java.lang.String getTitle() {
@@ -58,14 +58,14 @@ public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.SalesTerritory</code>
 	 */
 	public void setSalesTerritory(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears.SalesTerritory, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.SalesTerritory</code>
 	 */
 	@javax.persistence.Column(name = "SalesTerritory", nullable = false, length = 50)
 	public java.lang.String getSalesTerritory() {
@@ -73,14 +73,14 @@ public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.2002</code>
 	 */
 	public void set2002(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears._2002, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.2002</code>
 	 */
 	@javax.persistence.Column(name = "2002", precision = 19, scale = 4)
 	public java.math.BigDecimal get2002() {
@@ -88,14 +88,14 @@ public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.2003</code>
 	 */
 	public void set2003(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears._2003, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.2003</code>
 	 */
 	@javax.persistence.Column(name = "2003", precision = 19, scale = 4)
 	public java.math.BigDecimal get2003() {
@@ -103,14 +103,14 @@ public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.2004</code>
 	 */
 	public void set2004(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears._2004, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.2004</code>
 	 */
 	@javax.persistence.Column(name = "2004", precision = 19, scale = 4)
 	public java.math.BigDecimal get2004() {

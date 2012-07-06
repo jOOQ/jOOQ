@@ -10,17 +10,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_785", schema = "TEST")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 1183009918;
+	private static final long serialVersionUID = 591307366;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_785.ID</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_785.ID</code>
 	 */
 	@javax.persistence.Column(name = "ID", precision = 7)
 	public java.lang.Integer getId() {
@@ -28,14 +28,14 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_785.NAME</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_785.NAME</code>
 	 */
 	@javax.persistence.Column(name = "NAME", length = 50)
 	public java.lang.String getName() {
@@ -43,14 +43,14 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_785.VALUE</code>
 	 */
 	public void setValue(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785.VALUE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_785.VALUE</code>
 	 */
 	@javax.persistence.Column(name = "VALUE", length = 50)
 	public java.lang.String getValue() {

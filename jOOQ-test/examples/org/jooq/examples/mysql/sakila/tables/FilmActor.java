@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class FilmActor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> {
 
-	private static final long serialVersionUID = -512910996;
+	private static final long serialVersionUID = -306430275;
 
 	/**
 	 * The singleton instance of sakila.film_actor
@@ -24,11 +24,11 @@ public class FilmActor extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film_actor.actor_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_actor_actor
 	 * FOREIGN KEY (actor_id)
 	 * REFERENCES sakila.actor (actor_id)
@@ -37,11 +37,11 @@ public class FilmActor extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord, java.lang.Short> ACTOR_ID = createField("actor_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film_actor.film_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_actor_film
 	 * FOREIGN KEY (film_id)
 	 * REFERENCES sakila.film (film_id)
@@ -50,7 +50,7 @@ public class FilmActor extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord, java.lang.Short> FILM_ID = createField("film_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_actor.last_update</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

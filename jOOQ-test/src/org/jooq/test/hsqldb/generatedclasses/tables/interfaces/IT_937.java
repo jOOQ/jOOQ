@@ -9,16 +9,16 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IT_937 extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_937.T_937</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setT_937(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_937.T_937</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getT_937();
 }

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class WorkOrderRouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting> {
 
-	private static final long serialVersionUID = 655356755;
+	private static final long serialVersionUID = 1958935510;
 
 	/**
 	 * The singleton instance of Production.WorkOrderRouting
@@ -24,11 +24,11 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.WorkOrderRouting.WorkOrderID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_WorkOrderRouting_WorkOrder_WorkOrderID
 	 * FOREIGN KEY (WorkOrderID)
 	 * REFERENCES Production.WorkOrder (WorkOrderID)
@@ -37,23 +37,23 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.lang.Integer> WorkOrderID = createField("WorkOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.WorkOrderRouting.ProductID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.WorkOrderRouting.OperationSequence</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.lang.Short> OperationSequence = createField("OperationSequence", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.LocationID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_WorkOrderRouting_Location_LocationID
 	 * FOREIGN KEY (LocationID)
 	 * REFERENCES Production.Location (LocationID)
@@ -62,42 +62,42 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.lang.Short> LocationID = createField("LocationID", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ScheduledStartDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.sql.Timestamp> ScheduledStartDate = createField("ScheduledStartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ScheduledEndDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.sql.Timestamp> ScheduledEndDate = createField("ScheduledEndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualStartDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.sql.Timestamp> ActualStartDate = createField("ActualStartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualEndDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.sql.Timestamp> ActualEndDate = createField("ActualEndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualResourceHrs</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.math.BigDecimal> ActualResourceHrs = createField("ActualResourceHrs", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.PlannedCost</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.math.BigDecimal> PlannedCost = createField("PlannedCost", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ActualCost</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.math.BigDecimal> ActualCost = createField("ActualCost", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrderRouting.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

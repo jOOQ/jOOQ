@@ -10,21 +10,21 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_triggers", schema = "public")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -2010660847;
+	private static final long serialVersionUID = 35715487;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.t_triggers.id_generated</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setIdGenerated(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.t_triggers.id_generated</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id_generated", unique = true, nullable = false, precision = 32)
@@ -33,14 +33,14 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_triggers.id</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_triggers.id</code>
 	 */
 	@javax.persistence.Column(name = "id", precision = 32)
 	public java.lang.Integer getId() {
@@ -48,14 +48,14 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_triggers.counter</code>
 	 */
 	public void setCounter(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_triggers.counter</code>
 	 */
 	@javax.persistence.Column(name = "counter", precision = 32)
 	public java.lang.Integer getCounter() {

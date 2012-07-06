@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class StateProvince extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> {
 
-	private static final long serialVersionUID = -507480585;
+	private static final long serialVersionUID = 888358030;
 
 	/**
 	 * The singleton instance of Person.StateProvince
@@ -24,21 +24,21 @@ public class StateProvince extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Person.StateProvince.StateProvinceID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.Integer> StateProvinceID = createField("StateProvinceID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.StateProvinceCode</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.String> StateProvinceCode = createField("StateProvinceCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.CountryRegionCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_StateProvince_CountryRegion_CountryRegionCode
 	 * FOREIGN KEY (CountryRegionCode)
 	 * REFERENCES Person.CountryRegion (CountryRegionCode)
@@ -47,19 +47,19 @@ public class StateProvince extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.String> CountryRegionCode = createField("CountryRegionCode", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.IsOnlyStateProvinceFlag</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.Boolean> IsOnlyStateProvinceFlag = createField("IsOnlyStateProvinceFlag", org.jooq.impl.SQLDataType.BIT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.Name</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.TerritoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_StateProvince_SalesTerritory_TerritoryID
 	 * FOREIGN KEY (TerritoryID)
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
@@ -68,12 +68,12 @@ public class StateProvince extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.Integer> TerritoryID = createField("TerritoryID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.rowguid</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.StateProvince.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

@@ -8,36 +8,36 @@ package org.jooq.test.sybase.generatedclasses.routines;
  */
 public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1556261941;
+	private static final long serialVersionUID = -713865680;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>DBA.p391.i1</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> I1 = createParameter("i1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>DBA.p391.io1</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> IO1 = createParameter("io1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>DBA.p391.o1</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> O1 = createParameter("o1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>DBA.p391.o2</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> O2 = createParameter("o2", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>DBA.p391.io2</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> IO2 = createParameter("io2", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>DBA.p391.i2</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> I2 = createParameter("i2", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -56,45 +56,57 @@ public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	}
 
 	/**
-	 * Set the <code>i1</code> parameter to the routine
+	 * Set the <code>i1</code> parameter IN value to the routine
 	 */
 	public void setI1(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.routines.P391.I1, value);
 	}
 
 	/**
-	 * Set the <code>io1</code> parameter to the routine
+	 * Set the <code>io1</code> parameter IN value to the routine
 	 */
 	public void setIo1(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.routines.P391.IO1, value);
 	}
 
 	/**
-	 * Set the <code>io2</code> parameter to the routine
+	 * Set the <code>io2</code> parameter IN value to the routine
 	 */
 	public void setIo2(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.routines.P391.IO2, value);
 	}
 
 	/**
-	 * Set the <code>i2</code> parameter to the routine
+	 * Set the <code>i2</code> parameter IN value to the routine
 	 */
 	public void setI2(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.routines.P391.I2, value);
 	}
 
+	/**
+	 * Get the <code>io1</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getIo1() {
 		return getValue(IO1);
 	}
 
+	/**
+	 * Get the <code>o1</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getO1() {
 		return getValue(O1);
 	}
 
+	/**
+	 * Get the <code>o2</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getO2() {
 		return getValue(O2);
 	}
 
+	/**
+	 * Get the <code>io2</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getIo2() {
 		return getValue(IO2);
 	}

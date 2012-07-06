@@ -8,11 +8,11 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class F691cursorOut extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = -589977465;
+	private static final long serialVersionUID = -2050304039;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F691CURSOR_OUT.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT);
 

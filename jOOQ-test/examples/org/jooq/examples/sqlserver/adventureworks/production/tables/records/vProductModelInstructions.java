@@ -10,17 +10,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "vProductModelInstructions", schema = "Production")
 public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelInstructions> {
 
-	private static final long serialVersionUID = 1812521227;
+	private static final long serialVersionUID = -830745117;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.ProductModelID</code>
 	 */
 	public void setProductModelID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.ProductModelID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.ProductModelID</code>
 	 */
 	@javax.persistence.Column(name = "ProductModelID", nullable = false, precision = 10)
 	public java.lang.Integer getProductModelID() {
@@ -28,14 +28,14 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -43,14 +43,14 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.Instructions</code>
 	 */
 	public void setInstructions(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.Instructions, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.Instructions</code>
 	 */
 	@javax.persistence.Column(name = "Instructions")
 	public java.lang.String getInstructions() {
@@ -58,14 +58,14 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.LocationID</code>
 	 */
 	public void setLocationID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.LocationID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.LocationID</code>
 	 */
 	@javax.persistence.Column(name = "LocationID", precision = 10)
 	public java.lang.Integer getLocationID() {
@@ -73,14 +73,14 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.SetupHours</code>
 	 */
 	public void setSetupHours(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.SetupHours, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.SetupHours</code>
 	 */
 	@javax.persistence.Column(name = "SetupHours", precision = 9, scale = 4)
 	public java.math.BigDecimal getSetupHours() {
@@ -88,14 +88,14 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.MachineHours</code>
 	 */
 	public void setMachineHours(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.MachineHours, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.MachineHours</code>
 	 */
 	@javax.persistence.Column(name = "MachineHours", precision = 9, scale = 4)
 	public java.math.BigDecimal getMachineHours() {
@@ -103,14 +103,14 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.LaborHours</code>
 	 */
 	public void setLaborHours(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.LaborHours, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.LaborHours</code>
 	 */
 	@javax.persistence.Column(name = "LaborHours", precision = 9, scale = 4)
 	public java.math.BigDecimal getLaborHours() {
@@ -118,14 +118,14 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.LotSize</code>
 	 */
 	public void setLotSize(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.LotSize, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.LotSize</code>
 	 */
 	@javax.persistence.Column(name = "LotSize", precision = 10)
 	public java.lang.Integer getLotSize() {
@@ -133,14 +133,14 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.Step</code>
 	 */
 	public void setStep(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.Step, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.Step</code>
 	 */
 	@javax.persistence.Column(name = "Step", length = 1024)
 	public java.lang.String getStep() {
@@ -148,14 +148,14 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -163,14 +163,14 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductModelInstructions.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

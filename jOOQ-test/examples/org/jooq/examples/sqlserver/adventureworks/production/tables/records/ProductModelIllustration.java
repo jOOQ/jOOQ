@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration> {
 
-	private static final long serialVersionUID = 1222808413;
+	private static final long serialVersionUID = 228613159;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductModelIllustration.ProductModelID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductModelIllustration_ProductModel_ProductModelID
 	 * FOREIGN KEY (ProductModelID)
 	 * REFERENCES Production.ProductModel (ProductModelID)
@@ -30,11 +30,11 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductModelIllustration.ProductModelID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductModelIllustration_ProductModel_ProductModelID
 	 * FOREIGN KEY (ProductModelID)
 	 * REFERENCES Production.ProductModel (ProductModelID)
@@ -46,11 +46,11 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductModelIllustration.IllustrationID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductModelIllustration_Illustration_IllustrationID
 	 * FOREIGN KEY (IllustrationID)
 	 * REFERENCES Production.Illustration (IllustrationID)
@@ -61,11 +61,11 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductModelIllustration.IllustrationID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductModelIllustration_Illustration_IllustrationID
 	 * FOREIGN KEY (IllustrationID)
 	 * REFERENCES Production.Illustration (IllustrationID)
@@ -77,14 +77,14 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductModelIllustration.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration.ProductModelIllustration.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductModelIllustration.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

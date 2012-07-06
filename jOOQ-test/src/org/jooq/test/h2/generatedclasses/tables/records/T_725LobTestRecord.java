@@ -8,12 +8,12 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_725LobTest {
 
-	private static final long serialVersionUID = 1184867045;
+	private static final long serialVersionUID = 1515989229;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_725_LOB_TEST.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -21,9 +21,9 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_725_LOB_TEST.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -31,7 +31,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_725_LOB_TEST.LOB</code>
 	 */
 	@Override
 	public void setLob(byte[] value) {
@@ -39,7 +39,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_725_LOB_TEST.LOB</code>
 	 */
 	@Override
 	public byte[] getLob() {

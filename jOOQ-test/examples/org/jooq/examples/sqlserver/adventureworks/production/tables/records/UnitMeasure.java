@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "UnitMeasure", schema = "Production")
 public class UnitMeasure extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> {
 
-	private static final long serialVersionUID = 397159338;
+	private static final long serialVersionUID = -1415238306;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.UnitMeasure.UnitMeasureCode</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setUnitMeasureCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure.UnitMeasureCode, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.UnitMeasure.UnitMeasureCode</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "UnitMeasureCode", unique = true, nullable = false, length = 3)
@@ -33,14 +33,14 @@ public class UnitMeasure extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.UnitMeasure.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.UnitMeasure.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -48,14 +48,14 @@ public class UnitMeasure extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.UnitMeasure.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.UnitMeasure.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

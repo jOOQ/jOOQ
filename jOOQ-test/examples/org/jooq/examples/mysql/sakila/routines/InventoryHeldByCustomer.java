@@ -8,16 +8,16 @@ package org.jooq.examples.mysql.sakila.routines;
  */
 public class InventoryHeldByCustomer extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1505012236;
+	private static final long serialVersionUID = -704529341;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>sakila.inventory_held_by_customer.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>sakila.inventory_held_by_customer.p_inventory_id</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_INVENTORY_ID = createParameter("p_inventory_id", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -32,7 +32,7 @@ public class InventoryHeldByCustomer extends org.jooq.impl.AbstractRoutine<java.
 	}
 
 	/**
-	 * Set the <code>p_inventory_id</code> parameter to the routine
+	 * Set the <code>p_inventory_id</code> parameter IN value to the routine
 	 */
 	public void setPInventoryId(java.lang.Integer value) {
 		setValue(org.jooq.examples.mysql.sakila.routines.InventoryHeldByCustomer.P_INVENTORY_ID, value);

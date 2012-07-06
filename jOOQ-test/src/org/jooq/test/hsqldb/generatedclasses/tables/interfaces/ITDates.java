@@ -9,86 +9,86 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITDates extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_DATES.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_DATES.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.D</code>
 	 */
 	public void setD(java.sql.Date value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.D</code>
 	 */
 	public java.sql.Date getD();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.T</code>
 	 */
 	public void setT(java.sql.Time value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.T</code>
 	 */
 	public java.sql.Time getT();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.TS</code>
 	 */
 	public void setTs(java.sql.Timestamp value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.TS</code>
 	 */
 	public java.sql.Timestamp getTs();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.D_INT</code>
 	 */
 	public void setDInt(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.D_INT</code>
 	 */
 	public java.lang.Integer getDInt();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.TS_BIGINT</code>
 	 */
 	public void setTsBigint(java.lang.Long value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.TS_BIGINT</code>
 	 */
 	public java.lang.Long getTsBigint();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.I_Y</code>
 	 */
 	public void setIY(org.jooq.types.YearToMonth value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.I_Y</code>
 	 */
 	public org.jooq.types.YearToMonth getIY();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.I_D</code>
 	 */
 	public void setID(org.jooq.types.DayToSecond value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_DATES.I_D</code>
 	 */
 	public org.jooq.types.DayToSecond getID();
 }

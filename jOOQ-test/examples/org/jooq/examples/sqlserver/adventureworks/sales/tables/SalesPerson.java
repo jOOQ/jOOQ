@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class SalesPerson extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson> {
 
-	private static final long serialVersionUID = -1237119535;
+	private static final long serialVersionUID = -498066814;
 
 	/**
 	 * The singleton instance of Sales.SalesPerson
@@ -24,11 +24,11 @@ public class SalesPerson extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesPerson.SalesPersonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesPerson_Employee_SalesPersonID
 	 * FOREIGN KEY (SalesPersonID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -37,9 +37,9 @@ public class SalesPerson extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson, java.lang.Integer> SalesPersonID = createField("SalesPersonID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.TerritoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_SalesPerson_SalesTerritory_TerritoryID
 	 * FOREIGN KEY (TerritoryID)
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
@@ -48,37 +48,37 @@ public class SalesPerson extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson, java.lang.Integer> TerritoryID = createField("TerritoryID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.SalesQuota</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson, java.math.BigDecimal> SalesQuota = createField("SalesQuota", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.Bonus</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson, java.math.BigDecimal> Bonus = createField("Bonus", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.CommissionPct</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson, java.math.BigDecimal> CommissionPct = createField("CommissionPct", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.SalesYTD</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson, java.math.BigDecimal> SalesYTD = createField("SalesYTD", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.SalesLastYear</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson, java.math.BigDecimal> SalesLastYear = createField("SalesLastYear", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.rowguid</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesPerson.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

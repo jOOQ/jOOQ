@@ -8,10 +8,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITIdentity {
 
-	private static final long serialVersionUID = 291029284;
+	private static final long serialVersionUID = -1037928328;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_IDENTITY.ID</code>
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -19,7 +19,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_IDENTITY.ID</code>
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -27,7 +27,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_IDENTITY.VAL</code>
 	 */
 	@Override
 	public void setVal(java.lang.Integer value) {
@@ -35,7 +35,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_IDENTITY.VAL</code>
 	 */
 	@Override
 	public java.lang.Integer getVal() {

@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_DIRECTORY extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1049923835;
+	private static final long serialVersionUID = -1358387722;
 
 	/**
 	 * The singleton instance of TEST.T_DIRECTORY
@@ -24,16 +24,16 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableTableImpl<org.jooq.Recor
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_DIRECTORY.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT PK_T_DIRECTORY_SELF
 	 * FOREIGN KEY (PARENT_ID)
 	 * REFERENCES TEST.T_DIRECTORY (ID)
@@ -42,12 +42,12 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableTableImpl<org.jooq.Recor
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> PARENT_ID = createField("PARENT_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> IS_DIRECTORY = createField("IS_DIRECTORY", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.name</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> name = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this);
 

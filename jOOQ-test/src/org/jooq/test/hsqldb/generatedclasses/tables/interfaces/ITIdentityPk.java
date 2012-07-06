@@ -9,26 +9,26 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITIdentityPk extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_IDENTITY_PK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_IDENTITY_PK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_IDENTITY_PK.VAL</code>
 	 */
 	public void setVal(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_IDENTITY_PK.VAL</code>
 	 */
 	public java.lang.Integer getVal();
 }

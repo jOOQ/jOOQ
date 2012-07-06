@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class CategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> {
 
-	private static final long serialVersionUID = -1221034988;
+	private static final long serialVersionUID = -1504458865;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.category.category_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setCategoryId(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Category.CATEGORY.CATEGORY_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.category.category_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Byte getCategoryId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Category.CATEGORY.CATEGORY_ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.category.category_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord> fetchFilmCategoryList() {
 		return create()
@@ -41,28 +41,28 @@ public class CategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.category.name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Category.CATEGORY.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.category.name</code>
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Category.CATEGORY.NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.category.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Category.CATEGORY.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.category.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Category.CATEGORY.LAST_UPDATE);

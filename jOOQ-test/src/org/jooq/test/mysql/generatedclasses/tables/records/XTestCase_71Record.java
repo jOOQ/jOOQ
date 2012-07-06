@@ -10,30 +10,30 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
  */
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -18000200;
+	private static final long serialVersionUID = -1038382558;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test.x_test_case_71.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test.x_test_case_71.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES test.x_test_case_64_69 (ID)
@@ -44,9 +44,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES test.x_test_case_64_69 (ID)
@@ -57,9 +57,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES test.x_test_case_64_69 (ID)

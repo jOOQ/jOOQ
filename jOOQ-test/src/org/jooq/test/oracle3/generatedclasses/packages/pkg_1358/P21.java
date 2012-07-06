@@ -8,11 +8,11 @@ package org.jooq.test.oracle3.generatedclasses.packages.pkg_1358;
  */
 public class P21 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -585110020;
+	private static final long serialVersionUID = 742233193;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.PKG_1358.P21.I</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> I = createParameter("I", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -26,7 +26,7 @@ public class P21 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implement
 	}
 
 	/**
-	 * Set the <code>I</code> parameter to the routine
+	 * Set the <code>I</code> parameter IN value to the routine
 	 */
 	public void setI(java.lang.String value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P21.I, value);

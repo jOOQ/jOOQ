@@ -8,17 +8,17 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = 1791608477;
+	private static final long serialVersionUID = -1791020627;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.F_GET_ONE_CURSOR.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The procedure parameter <code>PUBLIC.F_GET_ONE_CURSOR.P2</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -35,7 +35,7 @@ public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result
 	}
 
 	/**
-	 * Set the <code>P2</code> parameter to the routine
+	 * Set the <code>P2</code> parameter IN value to the routine
 	 */
 	public void setP2(java.lang.Object[] value) {
 		setValue(org.jooq.test.h2.generatedclasses.routines.FGetOneCursor.P2, value);

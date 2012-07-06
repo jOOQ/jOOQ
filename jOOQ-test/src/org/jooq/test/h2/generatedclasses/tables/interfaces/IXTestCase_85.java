@@ -9,23 +9,23 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface IXTestCase_85 extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_TEST_CASE_85.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_TEST_CASE_85.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_85
 	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_ID, X_UNUSED_NAME, X_UNUSED_NAME)
 	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
@@ -34,9 +34,9 @@ public interface IXTestCase_85 extends java.io.Serializable {
 	public void setXUnusedId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_85
 	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_ID, X_UNUSED_NAME, X_UNUSED_NAME)
 	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
@@ -45,9 +45,9 @@ public interface IXTestCase_85 extends java.io.Serializable {
 	public java.lang.Integer getXUnusedId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_85
 	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_ID, X_UNUSED_NAME, X_UNUSED_NAME)
 	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
@@ -56,9 +56,9 @@ public interface IXTestCase_85 extends java.io.Serializable {
 	public void setXUnusedName(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_85
 	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_ID, X_UNUSED_NAME, X_UNUSED_NAME)
 	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)

@@ -8,16 +8,16 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PTables2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 794356383;
+	private static final long serialVersionUID = -1816745343;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_TABLES2.IN_TABLE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_TABLES2.OUT_TABLE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord> OUT_TABLE = createParameter("OUT_TABLE", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord.class));
 
@@ -32,12 +32,15 @@ public class PTables2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	}
 
 	/**
-	 * Set the <code>IN_TABLE</code> parameter to the routine
+	 * Set the <code>IN_TABLE</code> parameter IN value to the routine
 	 */
 	public void setInTable(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.routines.PTables2.IN_TABLE, value);
 	}
 
+	/**
+	 * Get the <code>OUT_TABLE</code> parameter OUT value from the routine
+	 */
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord getOutTable() {
 		return getValue(OUT_TABLE);
 	}

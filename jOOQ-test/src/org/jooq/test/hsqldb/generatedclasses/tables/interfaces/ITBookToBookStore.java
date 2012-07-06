@@ -9,11 +9,11 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITBookToBookStore extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_BS_NAME
 	 * FOREIGN KEY (BOOK_STORE_NAME)
 	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
@@ -22,11 +22,11 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	public void setBookStoreName(java.lang.String value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_BS_NAME
 	 * FOREIGN KEY (BOOK_STORE_NAME)
 	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
@@ -35,11 +35,11 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	public java.lang.String getBookStoreName();
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_B_ID
 	 * FOREIGN KEY (BOOK_ID)
 	 * REFERENCES PUBLIC.T_BOOK (ID)
@@ -48,11 +48,11 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	public void setBookId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_B_ID
 	 * FOREIGN KEY (BOOK_ID)
 	 * REFERENCES PUBLIC.T_BOOK (ID)
@@ -61,12 +61,12 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	public java.lang.Integer getBookId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>
 	 */
 	public void setStock(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>
 	 */
 	public java.lang.Integer getStock();
 }

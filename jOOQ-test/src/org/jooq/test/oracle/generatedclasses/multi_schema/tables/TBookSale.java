@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
  */
 public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = -1029867998;
+	private static final long serialVersionUID = -476374658;
 
 	/**
 	 * The singleton instance of MULTI_SCHEMA.T_BOOK_SALE
@@ -24,16 +24,16 @@ public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
 	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
 	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
@@ -42,9 +42,9 @@ public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
 	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
 	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
@@ -53,12 +53,12 @@ public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.sql.Date> SOLD_AT = createField("SOLD_AT", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.math.BigDecimal> SOLD_FOR = createField("SOLD_FOR", org.jooq.impl.SQLDataType.NUMERIC, this);
 

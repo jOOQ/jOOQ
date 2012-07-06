@@ -8,30 +8,30 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1920286153;
+	private static final long serialVersionUID = 369943000;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_book.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_book.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_book.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()
@@ -41,9 +41,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_author_id
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES dbo.t_author (ID)
@@ -54,9 +54,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_author_id
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES dbo.t_author (ID)
@@ -67,9 +67,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_author_id
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES dbo.t_author (ID)
@@ -83,9 +83,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_co_author_id
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES dbo.t_author (ID)
@@ -96,9 +96,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_co_author_id
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES dbo.t_author (ID)
@@ -109,9 +109,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_co_author_id
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES dbo.t_author (ID)
@@ -125,51 +125,51 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.DETAILS_ID</code>
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.DETAILS_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.DETAILS_ID</code>
 	 */
 	public java.lang.Integer getDetailsId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.DETAILS_ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.TITLE</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.TITLE</code>
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.TITLE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.PUBLISHED_IN</code>
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.PUBLISHED_IN</code>
 	 */
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.LANGUAGE_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_language_id
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES dbo.t_language (id)
@@ -180,9 +180,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.LANGUAGE_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_book_language_id
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES dbo.t_language (id)
@@ -193,28 +193,28 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.CONTENT_TEXT</code>
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.CONTENT_TEXT</code>
 	 */
 	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.CONTENT_PDF</code>
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_book.CONTENT_PDF</code>
 	 */
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF);

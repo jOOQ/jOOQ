@@ -10,7 +10,7 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1268222725;
+	private static final long serialVersionUID = 814206006;
 
 	/**
 	 * The singleton instance of PUBLIC.T_AUTHOR
@@ -27,8 +27,8 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.g
 
 	/**
 	 * The author ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_AUTHOR);
 

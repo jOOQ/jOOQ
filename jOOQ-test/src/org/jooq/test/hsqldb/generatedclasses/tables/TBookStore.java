@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 255221336;
+	private static final long serialVersionUID = 2090710253;
 
 	/**
 	 * The singleton instance of PUBLIC.T_BOOK_STORE
@@ -24,7 +24,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK_STORE.NAME</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 

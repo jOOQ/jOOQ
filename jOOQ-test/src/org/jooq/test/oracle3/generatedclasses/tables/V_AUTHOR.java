@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class V_AUTHOR extends org.jooq.impl.TableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1394046202;
+	private static final long serialVersionUID = 1972648380;
 
 	/**
 	 * The singleton instance of TEST.V_AUTHOR
@@ -24,32 +24,32 @@ public class V_AUTHOR extends org.jooq.impl.TableImpl<org.jooq.Record> implement
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.ID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.FIRST_NAME</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.LAST_NAME</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_AUTHOR.ADDRESS</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> ADDRESS = createField("ADDRESS", org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.U_ADDRESS_TYPE.getDataType(), this);
 

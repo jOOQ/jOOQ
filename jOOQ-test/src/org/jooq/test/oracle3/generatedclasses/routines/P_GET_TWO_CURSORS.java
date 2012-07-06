@@ -8,16 +8,16 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_GET_TWO_CURSORS extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1305535992;
+	private static final long serialVersionUID = -2053783860;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_GET_TWO_CURSORS.BOOKS</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_GET_TWO_CURSORS.AUTHORS</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> AUTHORS = createParameter("AUTHORS", org.jooq.impl.SQLDataType.RESULT);
 
@@ -31,10 +31,16 @@ public class P_GET_TWO_CURSORS extends org.jooq.impl.AbstractRoutine<java.lang.V
 		addOutParameter(AUTHORS);
 	}
 
+	/**
+	 * Get the <code>BOOKS</code> parameter OUT value from the routine
+	 */
 	public org.jooq.Result<org.jooq.Record> getBOOKS() {
 		return getValue(BOOKS);
 	}
 
+	/**
+	 * Get the <code>AUTHORS</code> parameter OUT value from the routine
+	 */
 	public org.jooq.Result<org.jooq.Record> getAUTHORS() {
 		return getValue(AUTHORS);
 	}

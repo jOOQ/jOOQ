@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "WorkOrder", schema = "Production")
 public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder> {
 
-	private static final long serialVersionUID = -695950417;
+	private static final long serialVersionUID = -938354857;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.WorkOrder.WorkOrderID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setWorkOrderID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.WorkOrderID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.WorkOrder.WorkOrderID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "WorkOrderID", unique = true, nullable = false, precision = 10)
@@ -33,9 +33,9 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_WorkOrder_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -46,9 +46,9 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_WorkOrder_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -60,14 +60,14 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.OrderQty</code>
 	 */
 	public void setOrderQty(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.OrderQty, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.OrderQty</code>
 	 */
 	@javax.persistence.Column(name = "OrderQty", nullable = false, precision = 10)
 	public java.lang.Integer getOrderQty() {
@@ -75,14 +75,14 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.StockedQty</code>
 	 */
 	public void setStockedQty(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.StockedQty, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.StockedQty</code>
 	 */
 	@javax.persistence.Column(name = "StockedQty", nullable = false, precision = 10)
 	public java.lang.Integer getStockedQty() {
@@ -90,14 +90,14 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.ScrappedQty</code>
 	 */
 	public void setScrappedQty(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.ScrappedQty, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.ScrappedQty</code>
 	 */
 	@javax.persistence.Column(name = "ScrappedQty", nullable = false, precision = 5)
 	public java.lang.Short getScrappedQty() {
@@ -105,14 +105,14 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.StartDate</code>
 	 */
 	public void setStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.StartDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.StartDate</code>
 	 */
 	@javax.persistence.Column(name = "StartDate", nullable = false)
 	public java.sql.Timestamp getStartDate() {
@@ -120,14 +120,14 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.EndDate</code>
 	 */
 	public void setEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.EndDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.EndDate</code>
 	 */
 	@javax.persistence.Column(name = "EndDate")
 	public java.sql.Timestamp getEndDate() {
@@ -135,14 +135,14 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.DueDate</code>
 	 */
 	public void setDueDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.DueDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.DueDate</code>
 	 */
 	@javax.persistence.Column(name = "DueDate", nullable = false)
 	public java.sql.Timestamp getDueDate() {
@@ -150,9 +150,9 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.ScrapReasonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_WorkOrder_ScrapReason_ScrapReasonID
 	 * FOREIGN KEY (ScrapReasonID)
 	 * REFERENCES Production.ScrapReason (ScrapReasonID)
@@ -163,9 +163,9 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.ScrapReasonID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_WorkOrder_ScrapReason_ScrapReasonID
 	 * FOREIGN KEY (ScrapReasonID)
 	 * REFERENCES Production.ScrapReason (ScrapReasonID)
@@ -177,14 +177,14 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.WorkOrder.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

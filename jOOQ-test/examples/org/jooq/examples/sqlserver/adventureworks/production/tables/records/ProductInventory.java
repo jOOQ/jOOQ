@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory> {
 
-	private static final long serialVersionUID = 1419459639;
+	private static final long serialVersionUID = -590194971;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductInventory.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductInventory_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -30,11 +30,11 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductInventory.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductInventory_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -46,11 +46,11 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductInventory.LocationID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductInventory_Location_LocationID
 	 * FOREIGN KEY (LocationID)
 	 * REFERENCES Production.Location (LocationID)
@@ -61,11 +61,11 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductInventory.LocationID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductInventory_Location_LocationID
 	 * FOREIGN KEY (LocationID)
 	 * REFERENCES Production.Location (LocationID)
@@ -77,14 +77,14 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductInventory.Shelf</code>
 	 */
 	public void setShelf(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.Shelf, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductInventory.Shelf</code>
 	 */
 	@javax.persistence.Column(name = "Shelf", nullable = false, length = 10)
 	public java.lang.String getShelf() {
@@ -92,14 +92,14 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductInventory.Bin</code>
 	 */
 	public void setBin(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.Bin, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductInventory.Bin</code>
 	 */
 	@javax.persistence.Column(name = "Bin", nullable = false, precision = 3)
 	public java.lang.Byte getBin() {
@@ -107,14 +107,14 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductInventory.Quantity</code>
 	 */
 	public void setQuantity(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.Quantity, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductInventory.Quantity</code>
 	 */
 	@javax.persistence.Column(name = "Quantity", nullable = false, precision = 5)
 	public java.lang.Short getQuantity() {
@@ -122,14 +122,14 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductInventory.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductInventory.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -137,14 +137,14 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductInventory.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductInventory.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

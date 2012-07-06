@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class LanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> {
 
-	private static final long serialVersionUID = 89181779;
+	private static final long serialVersionUID = -121093231;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.language.language_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setLanguageId(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.language.language_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Byte getLanguageId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.language.language_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> fetchFilmListByLanguageId() {
 		return create()
@@ -41,9 +41,9 @@ public class LanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.language.language_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> fetchFilmListByOriginalLanguageId() {
 		return create()
@@ -53,28 +53,28 @@ public class LanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.language.name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.language.name</code>
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.language.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.language.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LAST_UPDATE);

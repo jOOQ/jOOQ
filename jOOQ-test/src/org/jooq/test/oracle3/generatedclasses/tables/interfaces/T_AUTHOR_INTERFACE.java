@@ -14,15 +14,15 @@ public interface T_AUTHOR_INTERFACE extends java.lang.Cloneable, java.io.Seriali
 
 	/**
 	 * The author ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
 	 * The author ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

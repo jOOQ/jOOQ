@@ -10,21 +10,21 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_64_69", schema = "public")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -1253361970;
+	private static final long serialVersionUID = 1309886100;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.x_test_case_64_69.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.x_test_case_64_69.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -33,9 +33,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.x_test_case_64_69.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
 		return create()
@@ -45,9 +45,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_test_case_64_69.unused_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69a
 	 * FOREIGN KEY (unused_id)
 	 * REFERENCES public.x_unused (id)
@@ -58,9 +58,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_test_case_64_69.unused_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69a
 	 * FOREIGN KEY (unused_id)
 	 * REFERENCES public.x_unused (id)
@@ -72,9 +72,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_test_case_64_69.unused_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69a
 	 * FOREIGN KEY (unused_id)
 	 * REFERENCES public.x_unused (id)

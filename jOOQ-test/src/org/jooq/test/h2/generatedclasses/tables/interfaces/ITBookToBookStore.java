@@ -12,10 +12,10 @@ public interface ITBookToBookStore extends java.io.Serializable {
 
 	/**
 	 * The book store name
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_BS_NAME
 	 * FOREIGN KEY (BOOK_STORE_NAME)
 	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
@@ -25,10 +25,10 @@ public interface ITBookToBookStore extends java.io.Serializable {
 
 	/**
 	 * The book store name
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_BS_NAME
 	 * FOREIGN KEY (BOOK_STORE_NAME)
 	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
@@ -38,10 +38,10 @@ public interface ITBookToBookStore extends java.io.Serializable {
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_B_ID
 	 * FOREIGN KEY (BOOK_ID)
 	 * REFERENCES PUBLIC.T_BOOK (ID)
@@ -51,10 +51,10 @@ public interface ITBookToBookStore extends java.io.Serializable {
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_B_ID
 	 * FOREIGN KEY (BOOK_ID)
 	 * REFERENCES PUBLIC.T_BOOK (ID)

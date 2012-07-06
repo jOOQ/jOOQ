@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -1653006744;
+	private static final long serialVersionUID = -1861086740;
 
 	/**
 	 * The singleton instance of LUKAS.V_AUTHOR
@@ -24,32 +24,32 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.db2.generated
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.V_AUTHOR.ID</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.V_AUTHOR.FIRST_NAME</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.V_AUTHOR.LAST_NAME</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.V_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, V_AUTHOR);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.V_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.V_AUTHOR.ADDRESS</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 

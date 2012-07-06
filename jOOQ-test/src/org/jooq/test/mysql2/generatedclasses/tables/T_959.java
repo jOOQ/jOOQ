@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = 702265258;
+	private static final long serialVersionUID = 1939251724;
 
 	/**
 	 * The singleton instance of test2.t_959
@@ -24,7 +24,7 @@ public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generate
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_959.java_keywords</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record, org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords> JAVA_KEYWORDS = createField("java_keywords", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords.class), this);
 

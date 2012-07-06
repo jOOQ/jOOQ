@@ -10,21 +10,21 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1990157151;
+	private static final long serialVersionUID = 212355815;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_TRIGGERS.ID_GENERATED</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setIdGenerated(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS.ID_GENERATED, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_TRIGGERS.ID_GENERATED</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, precision = 7)
@@ -33,14 +33,14 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_TRIGGERS.ID</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_TRIGGERS.ID</code>
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getId() {
@@ -48,14 +48,14 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_TRIGGERS.COUNTER</code>
 	 */
 	public void setCounter(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS.COUNTER, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_TRIGGERS.COUNTER</code>
 	 */
 	@javax.persistence.Column(name = "COUNTER", nullable = false, precision = 7)
 	public java.lang.Integer getCounter() {

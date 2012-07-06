@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class V_LIBRARY extends org.jooq.impl.TableImpl<org.jooq.Record> implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1721862738;
+	private static final long serialVersionUID = 1730092957;
 
 	/**
 	 * The singleton instance of TEST.V_LIBRARY
@@ -24,12 +24,12 @@ public class V_LIBRARY extends org.jooq.impl.TableImpl<org.jooq.Record> implemen
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_LIBRARY.AUTHOR</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_LIBRARY.TITLE</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
 

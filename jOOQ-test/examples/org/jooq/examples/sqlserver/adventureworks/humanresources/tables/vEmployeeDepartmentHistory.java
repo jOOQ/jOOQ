@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class vEmployeeDepartmentHistory extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory> {
 
-	private static final long serialVersionUID = -1171094175;
+	private static final long serialVersionUID = 91264027;
 
 	/**
 	 * The singleton instance of HumanResources.vEmployeeDepartmentHistory
@@ -24,57 +24,57 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.EmployeeID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.Integer> EmployeeID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.Title</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> Title = createField("Title", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.FirstName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> FirstName = createField("FirstName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.MiddleName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> MiddleName = createField("MiddleName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.LastName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> LastName = createField("LastName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.Suffix</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> Suffix = createField("Suffix", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.Shift</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> Shift = createField("Shift", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.Department</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> Department = createField("Department", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.GroupName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> GroupName = createField("GroupName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.StartDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.sql.Timestamp> StartDate = createField("StartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.EndDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.sql.Timestamp> EndDate = createField("EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

@@ -8,21 +8,21 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class PrepareRecords extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -1341951237;
+	private static final long serialVersionUID = -1340055858;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.PREPARE_RECORDS.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.PREPARE_RECORDS.PLAN_CUR</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> PLAN_CUR = createParameter("PLAN_CUR", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.PREPARE_RECORDS.I_FORMAT_FLAGS</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> I_FORMAT_FLAGS = createParameter("I_FORMAT_FLAGS", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -38,7 +38,7 @@ public class PrepareRecords extends org.jooq.impl.AbstractRoutine<org.jooq.examp
 	}
 
 	/**
-	 * Set the <code>PLAN_CUR</code> parameter to the routine
+	 * Set the <code>PLAN_CUR</code> parameter IN value to the routine
 	 */
 	public void setPlanCur(org.jooq.Result<org.jooq.Record> value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.PrepareRecords.PLAN_CUR, value);
@@ -54,7 +54,7 @@ public class PrepareRecords extends org.jooq.impl.AbstractRoutine<org.jooq.examp
 	}
 
 	/**
-	 * Set the <code>I_FORMAT_FLAGS</code> parameter to the routine
+	 * Set the <code>I_FORMAT_FLAGS</code> parameter IN value to the routine
 	 */
 	public void setIFormatFlags(java.lang.Integer value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.PrepareRecords.I_FORMAT_FLAGS, value);

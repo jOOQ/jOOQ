@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Actor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.ActorRecord> {
 
-	private static final long serialVersionUID = 1932902334;
+	private static final long serialVersionUID = 1009770094;
 
 	/**
 	 * The singleton instance of sakila.actor
@@ -24,24 +24,24 @@ public class Actor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.actor.actor_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorRecord, java.lang.Short> ACTOR_ID = createField("actor_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor.first_name</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor.last_name</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.actor.last_update</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

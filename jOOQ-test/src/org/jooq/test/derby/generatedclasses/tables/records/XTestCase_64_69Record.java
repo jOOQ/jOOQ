@@ -8,30 +8,30 @@ package org.jooq.test.derby.generatedclasses.tables.records;
  */
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1372924184;
+	private static final long serialVersionUID = 328133946;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_TEST_CASE_64_69.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_64_69.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_TEST_CASE_64_69.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_64_69.ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_TEST_CASE_64_69.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
 		return create()
@@ -41,9 +41,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES TEST.X_UNUSED (ID)
@@ -54,9 +54,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES TEST.X_UNUSED (ID)
@@ -67,9 +67,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES TEST.X_UNUSED (ID)

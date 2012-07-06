@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -4840839;
+	private static final long serialVersionUID = -1405123223;
 
 	/**
 	 * The singleton instance of DBA.x_test_case_64_69
@@ -24,16 +24,16 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>DBA.x_test_case_64_69.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.x_test_case_64_69.UNUSED_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69a
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES DBA.x_unused (ID)

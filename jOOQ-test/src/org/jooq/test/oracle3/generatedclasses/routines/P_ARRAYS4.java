@@ -8,16 +8,16 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_ARRAYS4 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 336214115;
+	private static final long serialVersionUID = -1913754762;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_ARRAYS4.IN_ARRAY</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_ARRAYS4.OUT_ARRAY</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY.class));
 
@@ -32,12 +32,15 @@ public class P_ARRAYS4 extends org.jooq.impl.AbstractRoutine<java.lang.Void> imp
 	}
 
 	/**
-	 * Set the <code>IN_ARRAY</code> parameter to the routine
+	 * Set the <code>IN_ARRAY</code> parameter IN value to the routine
 	 */
 	public void setIN_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS4.IN_ARRAY, value);
 	}
 
+	/**
+	 * Get the <code>OUT_ARRAY</code> parameter OUT value from the routine
+	 */
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY getOUT_ARRAY() {
 		return getValue(OUT_ARRAY);
 	}

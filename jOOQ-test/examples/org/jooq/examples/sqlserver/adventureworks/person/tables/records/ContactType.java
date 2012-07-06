@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "ContactType", schema = "Person")
 public class ContactType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactType> {
 
-	private static final long serialVersionUID = -111002194;
+	private static final long serialVersionUID = -1414317480;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Person.ContactType.ContactTypeID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setContactTypeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType.ContactType.ContactTypeID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Person.ContactType.ContactTypeID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ContactTypeID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class ContactType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.ContactType.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType.ContactType.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.ContactType.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -48,14 +48,14 @@ public class ContactType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.ContactType.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType.ContactType.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.ContactType.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

@@ -8,46 +8,46 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
  */
 public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -380592012;
+	private static final long serialVersionUID = -656553594;
 
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_AUTHOR_TYPE.ID</code>
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_AUTHOR_TYPE.ID</code>
 	 */
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>
 	 */
 	public void setFIRST_NAME(java.lang.String value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.FIRST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>
 	 */
 	public java.lang.String getFIRST_NAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.FIRST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>
 	 */
 	public void setLAST_NAME(java.lang.String value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.LAST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>
 	 */
 	public java.lang.String getLAST_NAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.LAST_NAME);

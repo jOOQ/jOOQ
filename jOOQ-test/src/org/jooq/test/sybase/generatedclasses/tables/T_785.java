@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 1475566732;
+	private static final long serialVersionUID = -103559068;
 
 	/**
 	 * The singleton instance of DBA.t_785
@@ -24,17 +24,17 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generate
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.t_785.ID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.t_785.NAME</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>DBA.t_785.VALUE</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, this);
 

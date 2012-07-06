@@ -8,16 +8,16 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F_ARRAYS1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -941188606;
+	private static final long serialVersionUID = -1661238769;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_ARRAYS1.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_ARRAYS1.IN_ARRAY</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
 
@@ -32,7 +32,7 @@ public class F_ARRAYS1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracl
 	}
 
 	/**
-	 * Set the <code>IN_ARRAY</code> parameter to the routine
+	 * Set the <code>IN_ARRAY</code> parameter IN value to the routine
 	 */
 	public void setIN_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS1.IN_ARRAY, value);

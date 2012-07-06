@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Illustration extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration> {
 
-	private static final long serialVersionUID = -1685723503;
+	private static final long serialVersionUID = 1336898783;
 
 	/**
 	 * The singleton instance of Production.Illustration
@@ -24,22 +24,22 @@ public class Illustration extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.Illustration.IllustrationID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration, java.lang.Integer> IllustrationID = createField("IllustrationID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>Production.Illustration.Diagram</code>
+	 * <p>
 	 * The SQL type of this item (xml, ) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration, java.lang.Object> Diagram = createField("Diagram", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Illustration.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

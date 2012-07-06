@@ -8,10 +8,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class LongRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.LongRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ILong {
 
-	private static final long serialVersionUID = 884492283;
+	private static final long serialVersionUID = -1656838261;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.LONG.ID</code>
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -19,7 +19,7 @@ public class LongRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.LONG.ID</code>
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -27,7 +27,7 @@ public class LongRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.LONG.OTHER</code>
 	 */
 	@Override
 	public void setOther(java.lang.Long value) {
@@ -35,7 +35,7 @@ public class LongRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.LONG.OTHER</code>
 	 */
 	@Override
 	public java.lang.Long getOther() {

@@ -9,66 +9,66 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITAuthor extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_AUTHOR.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_AUTHOR.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>
 	 */
 	public void setFirstName(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>
 	 */
 	public java.lang.String getFirstName();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.LAST_NAME</code>
 	 */
 	public void setLastName(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.LAST_NAME</code>
 	 */
 	public java.lang.String getLastName();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	public void setDateOfBirth(java.sql.Date value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	public java.sql.Date getDateOfBirth();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	public void setYearOfBirth(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	public java.lang.Integer getYearOfBirth();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.ADDRESS</code>
 	 */
 	public void setAddress(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_AUTHOR.ADDRESS</code>
 	 */
 	public java.lang.String getAddress();
 }

@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_BOOLEANS extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -612902078;
+	private static final long serialVersionUID = -566983066;
 
 	/**
 	 * The singleton instance of TEST.T_BOOLEANS
@@ -24,59 +24,59 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_BOOLEANS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOLEANS.ONE_ZERO</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> ONE_ZERO = createField("ONE_ZERO", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOLEANS.TRUE_FALSE_LC</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> TRUE_FALSE_LC = createField("TRUE_FALSE_LC", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOLEANS.TRUE_FALSE_UC</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> TRUE_FALSE_UC = createField("TRUE_FALSE_UC", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOLEANS.YES_NO_LC</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> YES_NO_LC = createField("YES_NO_LC", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOLEANS.YES_NO_UC</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> YES_NO_UC = createField("YES_NO_UC", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOLEANS.Y_N_LC</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> Y_N_LC = createField("Y_N_LC", org.jooq.impl.SQLDataType.CHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOLEANS.Y_N_UC</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> Y_N_UC = createField("Y_N_UC", org.jooq.impl.SQLDataType.CHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOLEANS.VC_BOOLEAN</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> VC_BOOLEAN = createField("VC_BOOLEAN", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOLEANS.C_BOOLEAN</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> C_BOOLEAN = createField("C_BOOLEAN", org.jooq.impl.SQLDataType.CHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOLEANS.N_BOOLEAN</code>
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> N_BOOLEAN = createField("N_BOOLEAN", org.jooq.impl.SQLDataType.INTEGER, this);
 

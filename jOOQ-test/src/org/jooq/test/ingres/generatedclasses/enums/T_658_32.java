@@ -38,16 +38,16 @@ public enum T_658_32 implements org.jooq.MasterDataType<java.lang.Long> {
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test.t_658_32.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final java.lang.Long getId() {
 		return id;
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_658_32.cd</code>
 	 */
 	public final java.lang.Long getCd() {
 		return cd;

@@ -8,12 +8,12 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 1969766257;
+	private static final long serialVersionUID = -1842653008;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_BOOK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -21,9 +21,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_BOOK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -31,9 +31,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_BOOK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()
@@ -43,9 +43,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -57,9 +57,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -71,9 +71,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -87,9 +87,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -101,9 +101,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -115,9 +115,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -131,7 +131,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
 	 */
 	@Override
 	public void setDetailsId(java.lang.Integer value) {
@@ -139,7 +139,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
 	 */
 	@Override
 	public java.lang.Integer getDetailsId() {
@@ -147,7 +147,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.TITLE</code>
 	 */
 	@Override
 	public void setTitle(java.lang.String value) {
@@ -155,7 +155,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.TITLE</code>
 	 */
 	@Override
 	public java.lang.String getTitle() {
@@ -163,7 +163,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>
 	 */
 	@Override
 	public void setPublishedIn(java.lang.Integer value) {
@@ -171,7 +171,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>
 	 */
 	@Override
 	public java.lang.Integer getPublishedIn() {
@@ -179,9 +179,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
@@ -193,9 +193,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
@@ -207,7 +207,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>
 	 */
 	@Override
 	public void setContentText(java.lang.String value) {
@@ -215,7 +215,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>
 	 */
 	@Override
 	public java.lang.String getContentText() {
@@ -223,7 +223,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CONTENT_PDF</code>
 	 */
 	@Override
 	public void setContentPdf(byte[] value) {
@@ -231,7 +231,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CONTENT_PDF</code>
 	 */
 	@Override
 	public byte[] getContentPdf() {

@@ -36,9 +36,9 @@ public enum T_658_31 implements java.lang.Cloneable, org.jooq.MasterDataType<jav
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_658_31.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final java.lang.Long getID() {
 		return ID;

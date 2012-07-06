@@ -8,16 +8,16 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
  */
 public class FArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Long[]> {
 
-	private static final long serialVersionUID = -110110052;
+	private static final long serialVersionUID = 2099776487;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.F_ARRAYS2.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Long[]> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BIGINT.getArrayDataType());
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.F_ARRAYS2.IN_ARRAY</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Long[]> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.BIGINT.getArrayDataType());
 
@@ -32,7 +32,7 @@ public class FArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Long[]> {
 	}
 
 	/**
-	 * Set the <code>IN_ARRAY</code> parameter to the routine
+	 * Set the <code>IN_ARRAY</code> parameter IN value to the routine
 	 */
 	public void setInArray(java.lang.Long[] value) {
 		setValue(org.jooq.test.hsqldb.generatedclasses.routines.FArrays2.IN_ARRAY, value);

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class JobCandidate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate> {
 
-	private static final long serialVersionUID = 1894578350;
+	private static final long serialVersionUID = -2134604913;
 
 	/**
 	 * The singleton instance of HumanResources.JobCandidate
@@ -24,16 +24,16 @@ public class JobCandidate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.JobCandidate.JobCandidateID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.lang.Integer> JobCandidateID = createField("JobCandidateID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.JobCandidate.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_JobCandidate_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -42,15 +42,15 @@ public class JobCandidate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.lang.Integer> EmployeeID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>HumanResources.JobCandidate.Resume</code>
+	 * <p>
 	 * The SQL type of this item (xml, ) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.lang.Object> Resume = createField("Resume", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.JobCandidate.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

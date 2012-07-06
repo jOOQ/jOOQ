@@ -8,31 +8,31 @@ package org.jooq.test.derby.generatedclasses.tables.records;
  */
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -479725794;
+	private static final long serialVersionUID = -212792720;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_LIBRARY.AUTHOR</code>
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.VLibrary.AUTHOR, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_LIBRARY.AUTHOR</code>
 	 */
 	public java.lang.String getAuthor() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.VLibrary.AUTHOR);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_LIBRARY.TITLE</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.VLibrary.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_LIBRARY.TITLE</code>
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.VLibrary.TITLE);

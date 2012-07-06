@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class PurchaseOrderDetail extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail> {
 
-	private static final long serialVersionUID = -857454431;
+	private static final long serialVersionUID = 1408829401;
 
 	/**
 	 * The singleton instance of Purchasing.PurchaseOrderDetail
@@ -24,11 +24,11 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableTableImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.PurchaseOrderDetail.PurchaseOrderID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID
 	 * FOREIGN KEY (PurchaseOrderID)
 	 * REFERENCES Purchasing.PurchaseOrderHeader (PurchaseOrderID)
@@ -37,26 +37,26 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableTableImpl<org.jo
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.lang.Integer> PurchaseOrderID = createField("PurchaseOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.PurchaseOrderDetail.PurchaseOrderDetailID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.lang.Integer> PurchaseOrderDetailID = createField("PurchaseOrderDetailID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderDetail.DueDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.sql.Timestamp> DueDate = createField("DueDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderDetail.OrderQty</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.lang.Short> OrderQty = createField("OrderQty", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderDetail.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_PurchaseOrderDetail_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -65,32 +65,32 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableTableImpl<org.jo
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderDetail.UnitPrice</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.math.BigDecimal> UnitPrice = createField("UnitPrice", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderDetail.LineTotal</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.math.BigDecimal> LineTotal = createField("LineTotal", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderDetail.ReceivedQty</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.math.BigDecimal> ReceivedQty = createField("ReceivedQty", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderDetail.RejectedQty</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.math.BigDecimal> RejectedQty = createField("RejectedQty", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderDetail.StockedQty</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.math.BigDecimal> StockedQty = createField("StockedQty", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.PurchaseOrderDetail.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

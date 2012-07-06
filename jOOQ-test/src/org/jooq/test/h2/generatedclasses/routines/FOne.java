@@ -8,11 +8,11 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class FOne extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1256811765;
+	private static final long serialVersionUID = 1376976332;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.F_ONE.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 

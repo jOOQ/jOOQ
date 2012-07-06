@@ -8,16 +8,16 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class FormatNumber2 extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 416390479;
+	private static final long serialVersionUID = -2013028969;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.FORMAT_NUMBER2.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.FORMAT_NUMBER2.NUM</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> NUM = createParameter("NUM", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -32,7 +32,7 @@ public class FormatNumber2 extends org.jooq.impl.AbstractRoutine<java.lang.Strin
 	}
 
 	/**
-	 * Set the <code>NUM</code> parameter to the routine
+	 * Set the <code>NUM</code> parameter IN value to the routine
 	 */
 	public void setNum(java.lang.Number value) {
 		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber2.NUM, value);

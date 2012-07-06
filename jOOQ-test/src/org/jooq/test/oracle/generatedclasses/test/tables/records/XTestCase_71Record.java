@@ -10,21 +10,21 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_71", schema = "TEST")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 973509087;
+	private static final long serialVersionUID = -560528073;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_TEST_CASE_71.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71.X_TEST_CASE_71.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_TEST_CASE_71.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -33,9 +33,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)
@@ -46,9 +46,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)
@@ -60,9 +60,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)

@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesTerritory", schema = "Sales")
 public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTerritory> {
 
-	private static final long serialVersionUID = 333568597;
+	private static final long serialVersionUID = -1960757009;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesTerritory.TerritoryID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setTerritoryID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.TerritoryID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.SalesTerritory.TerritoryID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "TerritoryID", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -48,14 +48,14 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.CountryRegionCode</code>
 	 */
 	public void setCountryRegionCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.CountryRegionCode, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.CountryRegionCode</code>
 	 */
 	@javax.persistence.Column(name = "CountryRegionCode", nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
@@ -63,14 +63,14 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.Group</code>
 	 */
 	public void setGroup(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.Group, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.Group</code>
 	 */
 	@javax.persistence.Column(name = "Group", nullable = false, length = 50)
 	public java.lang.String getGroup() {
@@ -78,14 +78,14 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.SalesYTD</code>
 	 */
 	public void setSalesYTD(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.SalesYTD, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.SalesYTD</code>
 	 */
 	@javax.persistence.Column(name = "SalesYTD", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesYTD() {
@@ -93,14 +93,14 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.SalesLastYear</code>
 	 */
 	public void setSalesLastYear(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.SalesLastYear, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.SalesLastYear</code>
 	 */
 	@javax.persistence.Column(name = "SalesLastYear", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesLastYear() {
@@ -108,14 +108,14 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.CostYTD</code>
 	 */
 	public void setCostYTD(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.CostYTD, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.CostYTD</code>
 	 */
 	@javax.persistence.Column(name = "CostYTD", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getCostYTD() {
@@ -123,14 +123,14 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.CostLastYear</code>
 	 */
 	public void setCostLastYear(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.CostLastYear, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.CostLastYear</code>
 	 */
 	@javax.persistence.Column(name = "CostLastYear", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getCostLastYear() {
@@ -138,14 +138,14 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -153,14 +153,14 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.SalesTerritory.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

@@ -8,31 +8,31 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DiffPlanOutline extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -1686148162;
+	private static final long serialVersionUID = 895298560;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.SQL_TEXT</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQL_TEXT = createParameter("SQL_TEXT", org.jooq.impl.SQLDataType.CLOB);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.OUTLINE1</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> OUTLINE1 = createParameter("OUTLINE1", org.jooq.impl.SQLDataType.CLOB);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.OUTLINE2</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> OUTLINE2 = createParameter("OUTLINE2", org.jooq.impl.SQLDataType.CLOB);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.USER_NAME</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> USER_NAME = createParameter("USER_NAME", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -50,7 +50,7 @@ public class DiffPlanOutline extends org.jooq.impl.AbstractRoutine<java.lang.Str
 	}
 
 	/**
-	 * Set the <code>SQL_TEXT</code> parameter to the routine
+	 * Set the <code>SQL_TEXT</code> parameter IN value to the routine
 	 */
 	public void setSqlText(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanOutline.SQL_TEXT, value);
@@ -66,7 +66,7 @@ public class DiffPlanOutline extends org.jooq.impl.AbstractRoutine<java.lang.Str
 	}
 
 	/**
-	 * Set the <code>OUTLINE1</code> parameter to the routine
+	 * Set the <code>OUTLINE1</code> parameter IN value to the routine
 	 */
 	public void setOutline1(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanOutline.OUTLINE1, value);
@@ -82,7 +82,7 @@ public class DiffPlanOutline extends org.jooq.impl.AbstractRoutine<java.lang.Str
 	}
 
 	/**
-	 * Set the <code>OUTLINE2</code> parameter to the routine
+	 * Set the <code>OUTLINE2</code> parameter IN value to the routine
 	 */
 	public void setOutline2(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanOutline.OUTLINE2, value);
@@ -98,7 +98,7 @@ public class DiffPlanOutline extends org.jooq.impl.AbstractRoutine<java.lang.Str
 	}
 
 	/**
-	 * Set the <code>USER_NAME</code> parameter to the routine
+	 * Set the <code>USER_NAME</code> parameter IN value to the routine
 	 */
 	public void setUserName(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanOutline.USER_NAME, value);

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Vendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor> {
 
-	private static final long serialVersionUID = 698258439;
+	private static final long serialVersionUID = -87621700;
 
 	/**
 	 * The singleton instance of Purchasing.Vendor
@@ -24,44 +24,44 @@ public class Vendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Purchasing.Vendor.VendorID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor, java.lang.Integer> VendorID = createField("VendorID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.Vendor.AccountNumber</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor, java.lang.String> AccountNumber = createField("AccountNumber", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.Vendor.Name</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.Vendor.CreditRating</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor, java.lang.Byte> CreditRating = createField("CreditRating", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.Vendor.PreferredVendorStatus</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor, java.lang.Boolean> PreferredVendorStatus = createField("PreferredVendorStatus", org.jooq.impl.SQLDataType.BIT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.Vendor.ActiveFlag</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor, java.lang.Boolean> ActiveFlag = createField("ActiveFlag", org.jooq.impl.SQLDataType.BIT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.Vendor.PurchasingWebServiceURL</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor, java.lang.String> PurchasingWebServiceURL = createField("PurchasingWebServiceURL", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.Vendor.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

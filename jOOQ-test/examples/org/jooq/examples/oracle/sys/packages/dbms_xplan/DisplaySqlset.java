@@ -8,36 +8,36 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 1640384731;
+	private static final long serialVersionUID = -1379403662;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.SQLSET_NAME</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQLSET_NAME = createParameter("SQLSET_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.SQL_ID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQL_ID = createParameter("SQL_ID", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.PLAN_HASH_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.FORMAT</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.SQLSET_OWNER</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQLSET_OWNER = createParameter("SQLSET_OWNER", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -56,7 +56,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>SQLSET_NAME</code> parameter to the routine
+	 * Set the <code>SQLSET_NAME</code> parameter IN value to the routine
 	 */
 	public void setSqlsetName(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset.SQLSET_NAME, value);
@@ -72,7 +72,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>SQL_ID</code> parameter to the routine
+	 * Set the <code>SQL_ID</code> parameter IN value to the routine
 	 */
 	public void setSqlId(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset.SQL_ID, value);
@@ -88,7 +88,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>PLAN_HASH_VALUE</code> parameter to the routine
+	 * Set the <code>PLAN_HASH_VALUE</code> parameter IN value to the routine
 	 */
 	public void setPlanHashValue(java.math.BigInteger value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset.PLAN_HASH_VALUE, value);
@@ -104,7 +104,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the routine
+	 * Set the <code>FORMAT</code> parameter IN value to the routine
 	 */
 	public void setFormat(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset.FORMAT, value);
@@ -120,7 +120,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>SQLSET_OWNER</code> parameter to the routine
+	 * Set the <code>SQLSET_OWNER</code> parameter IN value to the routine
 	 */
 	public void setSqlsetOwner(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset.SQLSET_OWNER, value);

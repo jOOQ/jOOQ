@@ -8,16 +8,16 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F691CURSOR_IN extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -654005023;
+	private static final long serialVersionUID = 695034574;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F691CURSOR_IN.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F691CURSOR_IN.C</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> C = createParameter("C", org.jooq.impl.SQLDataType.RESULT);
 
@@ -32,7 +32,7 @@ public class F691CURSOR_IN extends org.jooq.impl.AbstractRoutine<java.math.BigDe
 	}
 
 	/**
-	 * Set the <code>C</code> parameter to the routine
+	 * Set the <code>C</code> parameter IN value to the routine
 	 */
 	public void setC(org.jooq.Result<org.jooq.Record> value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_IN.C, value);

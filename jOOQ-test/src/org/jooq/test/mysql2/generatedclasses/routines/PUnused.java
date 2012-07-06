@@ -8,21 +8,21 @@ package org.jooq.test.mysql2.generatedclasses.routines;
  */
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1224230315;
+	private static final long serialVersionUID = -841681157;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>test2.p_unused.in1</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> IN1 = createParameter("in1", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>test2.p_unused.out1</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Boolean> OUT1 = createParameter("out1", org.jooq.impl.SQLDataType.BOOLEAN);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>test2.p_unused.out2</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Boolean> OUT2 = createParameter("out2", org.jooq.impl.SQLDataType.BOOLEAN);
 
@@ -38,23 +38,29 @@ public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	}
 
 	/**
-	 * Set the <code>in1</code> parameter to the routine
+	 * Set the <code>in1</code> parameter IN value to the routine
 	 */
 	public void setIn1(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.routines.PUnused.IN1, value);
 	}
 
 	/**
-	 * Set the <code>out2</code> parameter to the routine
+	 * Set the <code>out2</code> parameter IN value to the routine
 	 */
 	public void setOut2(java.lang.Boolean value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.routines.PUnused.OUT2, value);
 	}
 
+	/**
+	 * Get the <code>out1</code> parameter OUT value from the routine
+	 */
 	public java.lang.Boolean getOut1() {
 		return getValue(OUT1);
 	}
 
+	/**
+	 * Get the <code>out2</code> parameter OUT value from the routine
+	 */
 	public java.lang.Boolean getOut2() {
 		return getValue(OUT2);
 	}

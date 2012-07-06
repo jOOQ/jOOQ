@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class CurrencyRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate> {
 
-	private static final long serialVersionUID = 2033271196;
+	private static final long serialVersionUID = 522195475;
 
 	/**
 	 * The singleton instance of Sales.CurrencyRate
@@ -24,21 +24,21 @@ public class CurrencyRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CurrencyRate.CurrencyRateID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.lang.Integer> CurrencyRateID = createField("CurrencyRateID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CurrencyRate.CurrencyRateDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.sql.Timestamp> CurrencyRateDate = createField("CurrencyRateDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CurrencyRate.FromCurrencyCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CurrencyRate_Currency_FromCurrencyCode
 	 * FOREIGN KEY (FromCurrencyCode)
 	 * REFERENCES Sales.Currency (CurrencyCode)
@@ -47,9 +47,9 @@ public class CurrencyRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.lang.String> FromCurrencyCode = createField("FromCurrencyCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CurrencyRate.ToCurrencyCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CurrencyRate_Currency_ToCurrencyCode
 	 * FOREIGN KEY (ToCurrencyCode)
 	 * REFERENCES Sales.Currency (CurrencyCode)
@@ -58,17 +58,17 @@ public class CurrencyRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.lang.String> ToCurrencyCode = createField("ToCurrencyCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CurrencyRate.AverageRate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.math.BigDecimal> AverageRate = createField("AverageRate", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CurrencyRate.EndOfDayRate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.math.BigDecimal> EndOfDayRate = createField("EndOfDayRate", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CurrencyRate.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

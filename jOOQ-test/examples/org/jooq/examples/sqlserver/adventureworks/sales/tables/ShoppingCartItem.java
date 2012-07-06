@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class ShoppingCartItem extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem> {
 
-	private static final long serialVersionUID = 478452004;
+	private static final long serialVersionUID = 1208175370;
 
 	/**
 	 * The singleton instance of Sales.ShoppingCartItem
@@ -24,26 +24,26 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.ShoppingCartItem.ShoppingCartItemID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem, java.lang.Integer> ShoppingCartItemID = createField("ShoppingCartItemID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.ShoppingCartID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem, java.lang.String> ShoppingCartID = createField("ShoppingCartID", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.Quantity</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem, java.lang.Integer> Quantity = createField("Quantity", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ShoppingCartItem_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -52,12 +52,12 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.DateCreated</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem, java.sql.Timestamp> DateCreated = createField("DateCreated", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ShoppingCartItem.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -2067317371;
+	private static final long serialVersionUID = 1345808291;
 
 	/**
 	 * The singleton instance of PUBLIC.T_ARRAYS
@@ -24,31 +24,31 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.g
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_ARRAYS);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord, java.lang.Object[]> STRING_ARRAY = createField("STRING_ARRAY", org.jooq.impl.SQLDataType.OTHER.getArrayDataType(), T_ARRAYS);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord, java.lang.Object[]> NUMBER_ARRAY = createField("NUMBER_ARRAY", org.jooq.impl.SQLDataType.OTHER.getArrayDataType(), T_ARRAYS);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */

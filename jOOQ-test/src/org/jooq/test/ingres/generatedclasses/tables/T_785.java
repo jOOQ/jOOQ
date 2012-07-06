@@ -8,7 +8,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
  */
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 1682672646;
+	private static final long serialVersionUID = 198012017;
 
 	/**
 	 * The singleton instance of test.t_785
@@ -24,17 +24,17 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generate
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_785.id</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_785);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_785.name</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, T_785);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.t_785.value</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("value", org.jooq.impl.SQLDataType.VARCHAR, T_785);
 

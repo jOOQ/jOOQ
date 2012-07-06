@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -945379360;
+	private static final long serialVersionUID = 204155015;
 
 	/**
 	 * The singleton instance of PUBLIC.T_IDENTITY_PK
@@ -24,14 +24,14 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_IDENTITY_PK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_IDENTITY_PK.VAL</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK);
 

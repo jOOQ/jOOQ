@@ -8,31 +8,31 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 777584510;
+	private static final long serialVersionUID = 445820689;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY.TABLE_NAME</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> TABLE_NAME = createParameter("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY.STATEMENT_ID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> STATEMENT_ID = createParameter("STATEMENT_ID", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY.FORMAT</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY.FILTER_PREDS</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FILTER_PREDS = createParameter("FILTER_PREDS", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -50,7 +50,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	}
 
 	/**
-	 * Set the <code>TABLE_NAME</code> parameter to the routine
+	 * Set the <code>TABLE_NAME</code> parameter IN value to the routine
 	 */
 	public void setTableName(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.Display.TABLE_NAME, value);
@@ -66,7 +66,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	}
 
 	/**
-	 * Set the <code>STATEMENT_ID</code> parameter to the routine
+	 * Set the <code>STATEMENT_ID</code> parameter IN value to the routine
 	 */
 	public void setStatementId(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.Display.STATEMENT_ID, value);
@@ -82,7 +82,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the routine
+	 * Set the <code>FORMAT</code> parameter IN value to the routine
 	 */
 	public void setFormat(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.Display.FORMAT, value);
@@ -98,7 +98,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	}
 
 	/**
-	 * Set the <code>FILTER_PREDS</code> parameter to the routine
+	 * Set the <code>FILTER_PREDS</code> parameter IN value to the routine
 	 */
 	public void setFilterPreds(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.Display.FILTER_PREDS, value);

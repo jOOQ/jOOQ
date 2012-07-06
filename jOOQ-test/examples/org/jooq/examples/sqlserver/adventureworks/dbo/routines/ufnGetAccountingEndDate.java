@@ -8,11 +8,11 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class ufnGetAccountingEndDate extends org.jooq.impl.AbstractRoutine<java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 131486399;
+	private static final long serialVersionUID = 2005395714;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.ufnGetAccountingEndDate.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.TIMESTAMP);
 

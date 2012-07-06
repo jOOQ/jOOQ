@@ -10,115 +10,115 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class FilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord> {
 
-	private static final long serialVersionUID = -431703598;
+	private static final long serialVersionUID = -1900197678;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.FID</code>
 	 */
 	public void setFid(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.FID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.FID</code>
 	 */
 	public java.lang.Short getFid() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.FID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.title</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.title</code>
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.TITLE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.description</code>
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.DESCRIPTION, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.description</code>
 	 */
 	public java.lang.String getDescription() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.DESCRIPTION);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.category</code>
 	 */
 	public void setCategory(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.CATEGORY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.category</code>
 	 */
 	public java.lang.String getCategory() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.CATEGORY);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.price</code>
 	 */
 	public void setPrice(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.PRICE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.price</code>
 	 */
 	public java.math.BigDecimal getPrice() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.PRICE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.length</code>
 	 */
 	public void setLength(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.LENGTH, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.length</code>
 	 */
 	public java.lang.Short getLength() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.LENGTH);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.rating</code>
 	 */
 	public void setRating(org.jooq.examples.mysql.sakila.enums.FilmListRating value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.RATING, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.rating</code>
 	 */
 	public org.jooq.examples.mysql.sakila.enums.FilmListRating getRating() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.RATING);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.actors</code>
 	 */
 	public void setActors(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.ACTORS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_list.actors</code>
 	 */
 	public java.lang.String getActors() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.ACTORS);

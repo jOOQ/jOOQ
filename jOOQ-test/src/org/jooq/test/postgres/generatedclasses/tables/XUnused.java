@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1232746692;
+	private static final long serialVersionUID = 1104010608;
 
 	/**
 	 * The singleton instance of public.x_unused
@@ -24,28 +24,28 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.x_unused.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.x_unused.name</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.big_integer</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("big_integer", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.id_ref</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT x_unused__fk_x_unused_self
 	 * FOREIGN KEY (id_ref, name_ref)
 	 * REFERENCES public.x_unused (id, name)
@@ -54,54 +54,54 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID_REF = createField("id_ref", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.class</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> CLASS = createField("class", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.fields</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> FIELDS = createField("fields", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.configuration</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> CONFIGURATION = createField("configuration", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.u_d_t</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> U_D_T = createField("u_d_t", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.meta_data</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> META_DATA = createField("meta_data", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.values</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> VALUES = createField("values", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.type0</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> TYPE0 = createField("type0", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.primary_key</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> PRIMARY_KEY = createField("primary_key", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.primarykey</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> PRIMARYKEY = createField("primarykey", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.name_ref</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT x_unused__fk_x_unused_self
 	 * FOREIGN KEY (id_ref, name_ref)
 	 * REFERENCES public.x_unused (id, name)
@@ -110,7 +110,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("name_ref", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_unused.FIELD 737</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC, this);
 

@@ -8,24 +8,24 @@ package org.jooq.test.db2.generatedclasses.tables.records;
  */
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -358913910;
+	private static final long serialVersionUID = -83857220;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_BOOK_STORE.NAME</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TBookStore.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_BOOK_STORE.NAME</code>
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TBookStore.NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_BOOK_STORE.NAME</code>
 	 */
 	public java.util.List<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()

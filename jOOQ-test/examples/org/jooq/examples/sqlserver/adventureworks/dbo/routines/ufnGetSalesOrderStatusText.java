@@ -8,16 +8,16 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class ufnGetSalesOrderStatusText extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -1003002024;
+	private static final long serialVersionUID = 26650036;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.ufnGetSalesOrderStatusText.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NVARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.ufnGetSalesOrderStatusText.Status</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Byte> Status = createParameter("Status", org.jooq.impl.SQLDataType.TINYINT);
 
@@ -32,7 +32,7 @@ public class ufnGetSalesOrderStatusText extends org.jooq.impl.AbstractRoutine<ja
 	}
 
 	/**
-	 * Set the <code>Status</code> parameter to the routine
+	 * Set the <code>Status</code> parameter IN value to the routine
 	 */
 	public void setStatus(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText.Status, value);

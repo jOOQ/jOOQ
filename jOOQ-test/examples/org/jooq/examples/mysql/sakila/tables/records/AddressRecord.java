@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> {
 
-	private static final long serialVersionUID = 1459879401;
+	private static final long serialVersionUID = -1768647207;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.address.address_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setAddressId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.address.address_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Short getAddressId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.address.address_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> fetchCustomerList() {
 		return create()
@@ -41,9 +41,9 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.address.address_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> fetchStaffList() {
 		return create()
@@ -53,9 +53,9 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.address.address_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> fetchStoreList() {
 		return create()
@@ -65,51 +65,51 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.address</code>
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.address</code>
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.address2</code>
 	 */
 	public void setAddress2(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS2, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.address2</code>
 	 */
 	public java.lang.String getAddress2() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS2);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.district</code>
 	 */
 	public void setDistrict(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.DISTRICT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.district</code>
 	 */
 	public java.lang.String getDistrict() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.DISTRICT);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.city_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_address_city
 	 * FOREIGN KEY (city_id)
 	 * REFERENCES sakila.city (city_id)
@@ -120,9 +120,9 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.city_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_address_city
 	 * FOREIGN KEY (city_id)
 	 * REFERENCES sakila.city (city_id)
@@ -133,9 +133,9 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.city_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_address_city
 	 * FOREIGN KEY (city_id)
 	 * REFERENCES sakila.city (city_id)
@@ -149,42 +149,42 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.postal_code</code>
 	 */
 	public void setPostalCode(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.POSTAL_CODE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.postal_code</code>
 	 */
 	public java.lang.String getPostalCode() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.POSTAL_CODE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.phone</code>
 	 */
 	public void setPhone(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.PHONE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.phone</code>
 	 */
 	public java.lang.String getPhone() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.PHONE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.address.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.LAST_UPDATE);

@@ -10,17 +10,17 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "vAdditionalContactInfo", schema = "Person")
 public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo> {
 
-	private static final long serialVersionUID = -1853043052;
+	private static final long serialVersionUID = -1442591790;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.ContactID</code>
 	 */
 	public void setContactID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.ContactID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.ContactID</code>
 	 */
 	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
@@ -28,14 +28,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.FirstName</code>
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.FirstName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.FirstName</code>
 	 */
 	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
@@ -43,14 +43,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.MiddleName</code>
 	 */
 	public void setMiddleName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.MiddleName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.MiddleName</code>
 	 */
 	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
@@ -58,14 +58,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.LastName</code>
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.LastName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.LastName</code>
 	 */
 	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
@@ -73,14 +73,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.TelephoneNumber</code>
 	 */
 	public void setTelephoneNumber(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.TelephoneNumber, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.TelephoneNumber</code>
 	 */
 	@javax.persistence.Column(name = "TelephoneNumber", length = 50)
 	public java.lang.String getTelephoneNumber() {
@@ -88,14 +88,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.TelephoneSpecialInstructions</code>
 	 */
 	public void setTelephoneSpecialInstructions(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.TelephoneSpecialInstructions, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.TelephoneSpecialInstructions</code>
 	 */
 	@javax.persistence.Column(name = "TelephoneSpecialInstructions")
 	public java.lang.String getTelephoneSpecialInstructions() {
@@ -103,14 +103,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.Street</code>
 	 */
 	public void setStreet(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.Street, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.Street</code>
 	 */
 	@javax.persistence.Column(name = "Street", length = 50)
 	public java.lang.String getStreet() {
@@ -118,14 +118,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.City</code>
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.City, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.City</code>
 	 */
 	@javax.persistence.Column(name = "City", length = 50)
 	public java.lang.String getCity() {
@@ -133,14 +133,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.StateProvince</code>
 	 */
 	public void setStateProvince(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.StateProvince, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.StateProvince</code>
 	 */
 	@javax.persistence.Column(name = "StateProvince", length = 50)
 	public java.lang.String getStateProvince() {
@@ -148,14 +148,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.PostalCode</code>
 	 */
 	public void setPostalCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.PostalCode, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.PostalCode</code>
 	 */
 	@javax.persistence.Column(name = "PostalCode", length = 50)
 	public java.lang.String getPostalCode() {
@@ -163,14 +163,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.CountryRegion</code>
 	 */
 	public void setCountryRegion(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.CountryRegion, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.CountryRegion</code>
 	 */
 	@javax.persistence.Column(name = "CountryRegion", length = 50)
 	public java.lang.String getCountryRegion() {
@@ -178,14 +178,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.HomeAddressSpecialInstructions</code>
 	 */
 	public void setHomeAddressSpecialInstructions(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.HomeAddressSpecialInstructions, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.HomeAddressSpecialInstructions</code>
 	 */
 	@javax.persistence.Column(name = "HomeAddressSpecialInstructions")
 	public java.lang.String getHomeAddressSpecialInstructions() {
@@ -193,14 +193,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.EMailAddress</code>
 	 */
 	public void setEMailAddress(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.EMailAddress, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.EMailAddress</code>
 	 */
 	@javax.persistence.Column(name = "EMailAddress", length = 128)
 	public java.lang.String getEMailAddress() {
@@ -208,14 +208,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.EMailSpecialInstructions</code>
 	 */
 	public void setEMailSpecialInstructions(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.EMailSpecialInstructions, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.EMailSpecialInstructions</code>
 	 */
 	@javax.persistence.Column(name = "EMailSpecialInstructions")
 	public java.lang.String getEMailSpecialInstructions() {
@@ -223,14 +223,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.EMailTelephoneNumber</code>
 	 */
 	public void setEMailTelephoneNumber(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.EMailTelephoneNumber, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.EMailTelephoneNumber</code>
 	 */
 	@javax.persistence.Column(name = "EMailTelephoneNumber", length = 50)
 	public java.lang.String getEMailTelephoneNumber() {
@@ -238,14 +238,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -253,14 +253,14 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vAdditionalContactInfo.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

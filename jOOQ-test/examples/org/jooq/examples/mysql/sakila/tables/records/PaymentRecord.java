@@ -8,30 +8,30 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> {
 
-	private static final long serialVersionUID = 813941489;
+	private static final long serialVersionUID = -128739601;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.payment.payment_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setPaymentId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.payment.payment_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Short getPaymentId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.customer_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_customer
 	 * FOREIGN KEY (customer_id)
 	 * REFERENCES sakila.customer (customer_id)
@@ -42,9 +42,9 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.customer_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_customer
 	 * FOREIGN KEY (customer_id)
 	 * REFERENCES sakila.customer (customer_id)
@@ -55,9 +55,9 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.customer_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_customer
 	 * FOREIGN KEY (customer_id)
 	 * REFERENCES sakila.customer (customer_id)
@@ -71,9 +71,9 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.staff_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_staff
 	 * FOREIGN KEY (staff_id)
 	 * REFERENCES sakila.staff (staff_id)
@@ -84,9 +84,9 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.staff_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_staff
 	 * FOREIGN KEY (staff_id)
 	 * REFERENCES sakila.staff (staff_id)
@@ -97,9 +97,9 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.staff_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_staff
 	 * FOREIGN KEY (staff_id)
 	 * REFERENCES sakila.staff (staff_id)
@@ -113,9 +113,9 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.rental_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_rental
 	 * FOREIGN KEY (rental_id)
 	 * REFERENCES sakila.rental (rental_id)
@@ -126,9 +126,9 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.rental_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_rental
 	 * FOREIGN KEY (rental_id)
 	 * REFERENCES sakila.rental (rental_id)
@@ -139,9 +139,9 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.rental_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_payment_rental
 	 * FOREIGN KEY (rental_id)
 	 * REFERENCES sakila.rental (rental_id)
@@ -155,42 +155,42 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.amount</code>
 	 */
 	public void setAmount(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.AMOUNT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.amount</code>
 	 */
 	public java.math.BigDecimal getAmount() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.AMOUNT);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.payment_date</code>
 	 */
 	public void setPaymentDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_DATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.payment_date</code>
 	 */
 	public java.sql.Timestamp getPaymentDate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_DATE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.payment.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.LAST_UPDATE);

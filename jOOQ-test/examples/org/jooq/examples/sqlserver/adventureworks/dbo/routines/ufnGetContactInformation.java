@@ -8,19 +8,19 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class ufnGetContactInformation extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 978853107;
+	private static final long serialVersionUID = -1660552750;
 
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The procedure parameter <code>dbo.ufnGetContactInformation.RETURN_VALUE</code>
+	 * <p>
 	 * The SQL type of this item (TABLE) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("TABLE"));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.ufnGetContactInformation.ContactID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> ContactID = createParameter("ContactID", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -35,7 +35,7 @@ public class ufnGetContactInformation extends org.jooq.impl.AbstractRoutine<java
 	}
 
 	/**
-	 * Set the <code>ContactID</code> parameter to the routine
+	 * Set the <code>ContactID</code> parameter IN value to the routine
 	 */
 	public void setContactID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation.ContactID, value);

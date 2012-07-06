@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class vStateProvinceCountryRegion extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion> {
 
-	private static final long serialVersionUID = -327074684;
+	private static final long serialVersionUID = 59881553;
 
 	/**
 	 * The singleton instance of Person.vStateProvinceCountryRegion
@@ -24,37 +24,37 @@ public class vStateProvinceCountryRegion extends org.jooq.impl.TableImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vStateProvinceCountryRegion.StateProvinceID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion, java.lang.Integer> StateProvinceID = createField("StateProvinceID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vStateProvinceCountryRegion.StateProvinceCode</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion, java.lang.String> StateProvinceCode = createField("StateProvinceCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vStateProvinceCountryRegion.IsOnlyStateProvinceFlag</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion, java.lang.Boolean> IsOnlyStateProvinceFlag = createField("IsOnlyStateProvinceFlag", org.jooq.impl.SQLDataType.BIT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vStateProvinceCountryRegion.StateProvinceName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion, java.lang.String> StateProvinceName = createField("StateProvinceName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vStateProvinceCountryRegion.TerritoryID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion, java.lang.Integer> TerritoryID = createField("TerritoryID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vStateProvinceCountryRegion.CountryRegionCode</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion, java.lang.String> CountryRegionCode = createField("CountryRegionCode", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.vStateProvinceCountryRegion.CountryRegionName</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion, java.lang.String> CountryRegionName = createField("CountryRegionName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 

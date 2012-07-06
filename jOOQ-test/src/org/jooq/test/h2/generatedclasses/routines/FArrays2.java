@@ -8,20 +8,20 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class FArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Object[]> {
 
-	private static final long serialVersionUID = -1537113282;
+	private static final long serialVersionUID = -1175198939;
 
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The procedure parameter <code>PUBLIC.F_ARRAYS2.RETURN_VALUE</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public static final org.jooq.Parameter<java.lang.Object[]> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.OTHER.getArrayDataType());
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The procedure parameter <code>PUBLIC.F_ARRAYS2.P1</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -38,7 +38,7 @@ public class FArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Object[]> 
 	}
 
 	/**
-	 * Set the <code>P1</code> parameter to the routine
+	 * Set the <code>P1</code> parameter IN value to the routine
 	 */
 	public void setP1(java.lang.Object[] value) {
 		setValue(org.jooq.test.h2.generatedclasses.routines.FArrays2.P1, value);

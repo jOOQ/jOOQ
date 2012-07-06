@@ -8,11 +8,11 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F691CURSOR_OUT extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1588742848;
+	private static final long serialVersionUID = 551266030;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F691CURSOR_OUT.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT);
 

@@ -10,11 +10,11 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
 public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> {
 
-	private static final long serialVersionUID = -1291458455;
+	private static final long serialVersionUID = 1251218581;
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -23,8 +23,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -34,8 +34,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -44,8 +44,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -55,8 +55,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -65,8 +65,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -76,8 +76,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -86,8 +86,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -97,8 +97,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.TITLE</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -107,8 +107,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.TITLE</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -118,8 +118,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -128,8 +128,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -139,8 +139,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -149,8 +149,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -160,8 +160,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -170,8 +170,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -181,8 +181,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -191,8 +191,8 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */

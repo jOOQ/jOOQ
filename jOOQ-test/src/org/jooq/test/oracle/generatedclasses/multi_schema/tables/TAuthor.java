@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 22428830;
+	private static final long serialVersionUID = 877685323;
 
 	/**
 	 * The singleton instance of MULTI_SCHEMA.T_AUTHOR
@@ -24,35 +24,35 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>MULTI_SCHEMA.T_AUTHOR.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_AUTHOR.FIRST_NAME</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_AUTHOR.LAST_NAME</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>MULTI_SCHEMA.T_AUTHOR.ADDRESS</code>
+	 * <p>
 	 * The SQL type of this item (U_ADDRESS_TYPE) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */

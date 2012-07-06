@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer> {
 
-	private static final long serialVersionUID = 429100115;
+	private static final long serialVersionUID = -916491858;
 
 	/**
 	 * The singleton instance of Sales.Customer
@@ -24,16 +24,16 @@ public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.Customer.CustomerID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.Integer> CustomerID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Customer.TerritoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Customer_SalesTerritory_TerritoryID
 	 * FOREIGN KEY (TerritoryID)
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
@@ -42,22 +42,22 @@ public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.Integer> TerritoryID = createField("TerritoryID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Customer.AccountNumber</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.String> AccountNumber = createField("AccountNumber", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Customer.CustomerType</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.String> CustomerType = createField("CustomerType", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Customer.rowguid</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Customer.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

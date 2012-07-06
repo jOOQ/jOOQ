@@ -8,16 +8,16 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
  */
 public class PArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -536027650;
+	private static final long serialVersionUID = -665129387;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.P_ARRAYS1.IN_ARRAY</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer[]> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType());
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>PUBLIC.P_ARRAYS1.OUT_ARRAY</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer[]> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType());
 
@@ -32,12 +32,15 @@ public class PArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	}
 
 	/**
-	 * Set the <code>IN_ARRAY</code> parameter to the routine
+	 * Set the <code>IN_ARRAY</code> parameter IN value to the routine
 	 */
 	public void setInArray(java.lang.Integer[] value) {
 		setValue(org.jooq.test.hsqldb.generatedclasses.routines.PArrays1.IN_ARRAY, value);
 	}
 
+	/**
+	 * Get the <code>OUT_ARRAY</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer[] getOutArray() {
 		return getValue(OUT_ARRAY);
 	}

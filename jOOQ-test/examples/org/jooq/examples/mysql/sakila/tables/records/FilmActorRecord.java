@@ -8,14 +8,14 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> {
 
-	private static final long serialVersionUID = 1548276093;
+	private static final long serialVersionUID = -1054039084;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film_actor.actor_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_actor_actor
 	 * FOREIGN KEY (actor_id)
 	 * REFERENCES sakila.actor (actor_id)
@@ -26,11 +26,11 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film_actor.actor_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_actor_actor
 	 * FOREIGN KEY (actor_id)
 	 * REFERENCES sakila.actor (actor_id)
@@ -41,11 +41,11 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film_actor.actor_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_actor_actor
 	 * FOREIGN KEY (actor_id)
 	 * REFERENCES sakila.actor (actor_id)
@@ -59,11 +59,11 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film_actor.film_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_actor_film
 	 * FOREIGN KEY (film_id)
 	 * REFERENCES sakila.film (film_id)
@@ -74,11 +74,11 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film_actor.film_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_actor_film
 	 * FOREIGN KEY (film_id)
 	 * REFERENCES sakila.film (film_id)
@@ -89,11 +89,11 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film_actor.film_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_film_actor_film
 	 * FOREIGN KEY (film_id)
 	 * REFERENCES sakila.film (film_id)
@@ -107,14 +107,14 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_actor.last_update</code>
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR.LAST_UPDATE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_actor.last_update</code>
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR.LAST_UPDATE);

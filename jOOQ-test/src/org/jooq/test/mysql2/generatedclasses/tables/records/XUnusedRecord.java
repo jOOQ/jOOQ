@@ -14,21 +14,21 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1406261947;
+	private static final long serialVersionUID = 1789474806;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.x_unused.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.x_unused.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getId() {
@@ -36,9 +36,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.x_unused.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_85Record> fetchXTestCase_85List() {
 		return create()
@@ -49,9 +49,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.x_unused.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> fetchXUnusedList() {
 		return create()
@@ -62,18 +62,18 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.x_unused.NAME</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.x_unused.NAME</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Column(name = "NAME", nullable = false, length = 10)
 	public java.lang.String getName() {
@@ -81,14 +81,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.BIG_INTEGER</code>
 	 */
 	public void setBigInteger(java.math.BigInteger value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.BIG_INTEGER, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.BIG_INTEGER</code>
 	 */
 	@javax.persistence.Column(name = "BIG_INTEGER", precision = 25)
 	public java.math.BigInteger getBigInteger() {
@@ -96,9 +96,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.ID_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_unused_self
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES test2.x_unused (ID, NAME)
@@ -109,9 +109,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.ID_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_unused_self
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES test2.x_unused (ID, NAME)
@@ -123,9 +123,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.ID_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_unused_self
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES test2.x_unused (ID, NAME)
@@ -140,9 +140,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.NAME_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_unused_self
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES test2.x_unused (ID, NAME)
@@ -153,9 +153,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.NAME_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_unused_self
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES test2.x_unused (ID, NAME)
@@ -167,14 +167,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.CLASS</code>
 	 */
 	public void setClass_(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.CLASS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.CLASS</code>
 	 */
 	@javax.persistence.Column(name = "CLASS", precision = 10)
 	public java.lang.Integer getClass_() {
@@ -182,14 +182,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.FIELDS</code>
 	 */
 	public void setFields_(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.FIELDS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.FIELDS</code>
 	 */
 	@javax.persistence.Column(name = "FIELDS", precision = 10)
 	public java.lang.Integer getFields_() {
@@ -197,14 +197,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.CONFIGURATION</code>
 	 */
 	public void setConfiguration_(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.CONFIGURATION, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.CONFIGURATION</code>
 	 */
 	@javax.persistence.Column(name = "CONFIGURATION", precision = 10)
 	public java.lang.Integer getConfiguration_() {
@@ -212,14 +212,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.U_D_T</code>
 	 */
 	public void setUDT(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.U_D_T, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.U_D_T</code>
 	 */
 	@javax.persistence.Column(name = "U_D_T", precision = 10)
 	public java.lang.Integer getUDT() {
@@ -227,14 +227,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.META_DATA</code>
 	 */
 	public void setMetaData_(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.META_DATA, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.META_DATA</code>
 	 */
 	@javax.persistence.Column(name = "META_DATA", precision = 10)
 	public java.lang.Integer getMetaData_() {
@@ -242,14 +242,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.TYPE0</code>
 	 */
 	public void setType0_(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.TYPE0, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.TYPE0</code>
 	 */
 	@javax.persistence.Column(name = "TYPE0", precision = 10)
 	public java.lang.Integer getType0_() {
@@ -257,14 +257,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.PRIMARY_KEY</code>
 	 */
 	public void setPrimaryKey(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.PRIMARY_KEY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.PRIMARY_KEY</code>
 	 */
 	@javax.persistence.Column(name = "PRIMARY_KEY", precision = 10)
 	public java.lang.Integer getPrimaryKey() {
@@ -272,14 +272,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.PRIMARYKEY</code>
 	 */
 	public void setPrimarykey(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.PRIMARYKEY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.PRIMARYKEY</code>
 	 */
 	@javax.persistence.Column(name = "PRIMARYKEY", precision = 10)
 	public java.lang.Integer getPrimarykey() {
@@ -287,14 +287,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.FIELD 737</code>
 	 */
 	public void setField_737(java.math.BigDecimal value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.FIELD_737, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.x_unused.FIELD 737</code>
 	 */
 	@javax.persistence.Column(name = "FIELD 737", precision = 25, scale = 2)
 	public java.math.BigDecimal getField_737() {

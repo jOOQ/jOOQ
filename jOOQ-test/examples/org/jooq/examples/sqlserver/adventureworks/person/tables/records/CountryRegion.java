@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "CountryRegion", schema = "Person")
 public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> {
 
-	private static final long serialVersionUID = 1811459010;
+	private static final long serialVersionUID = -2054077458;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Person.CountryRegion.CountryRegionCode</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setCountryRegionCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.CountryRegionCode, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Person.CountryRegion.CountryRegionCode</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "CountryRegionCode", unique = true, nullable = false, length = 3)
@@ -33,14 +33,14 @@ public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.CountryRegion.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.CountryRegion.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -48,14 +48,14 @@ public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.CountryRegion.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Person.CountryRegion.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

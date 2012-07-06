@@ -8,12 +8,12 @@ package org.jooq.test.db2.generatedclasses.tables.records;
  */
 public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = 1169500822;
+	private static final long serialVersionUID = -426072630;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_11</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_11
 	 * FOREIGN KEY (REF_11)
 	 * REFERENCES LUKAS.T_658_11 (ID)
@@ -24,9 +24,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_11</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_11
 	 * FOREIGN KEY (REF_11)
 	 * REFERENCES LUKAS.T_658_11 (ID)
@@ -37,9 +37,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_21</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_21
 	 * FOREIGN KEY (REF_21)
 	 * REFERENCES LUKAS.T_658_21 (ID)
@@ -50,9 +50,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_21</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_21
 	 * FOREIGN KEY (REF_21)
 	 * REFERENCES LUKAS.T_658_21 (ID)
@@ -63,9 +63,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_31</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_31
 	 * FOREIGN KEY (REF_31)
 	 * REFERENCES LUKAS.T_658_31 (ID)
@@ -76,9 +76,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_31</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_31
 	 * FOREIGN KEY (REF_31)
 	 * REFERENCES LUKAS.T_658_31 (ID)
@@ -89,9 +89,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_12</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_12
 	 * FOREIGN KEY (REF_12)
 	 * REFERENCES LUKAS.T_658_12 (ID)
@@ -102,9 +102,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_12</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_12
 	 * FOREIGN KEY (REF_12)
 	 * REFERENCES LUKAS.T_658_12 (ID)
@@ -115,9 +115,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_22</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_22
 	 * FOREIGN KEY (REF_22)
 	 * REFERENCES LUKAS.T_658_22 (ID)
@@ -128,9 +128,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_22</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_22
 	 * FOREIGN KEY (REF_22)
 	 * REFERENCES LUKAS.T_658_22 (ID)
@@ -141,9 +141,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_32</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_32
 	 * FOREIGN KEY (REF_32)
 	 * REFERENCES LUKAS.T_658_32 (ID)
@@ -154,9 +154,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_32</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_32
 	 * FOREIGN KEY (REF_32)
 	 * REFERENCES LUKAS.T_658_32 (ID)

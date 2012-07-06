@@ -10,129 +10,129 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class CustomerListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord> {
 
-	private static final long serialVersionUID = -1100718874;
+	private static final long serialVersionUID = 2088616700;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.ID</code>
 	 */
 	public void setId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.ID</code>
 	 */
 	public java.lang.Short getId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.name</code>
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.address</code>
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ADDRESS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.address</code>
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ADDRESS);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.zip code</code>
 	 */
 	public void setZipCode(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ZIP_CODE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.zip code</code>
 	 */
 	public java.lang.String getZipCode() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ZIP_CODE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.phone</code>
 	 */
 	public void setPhone(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.PHONE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.phone</code>
 	 */
 	public java.lang.String getPhone() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.PHONE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.city</code>
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.CITY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.city</code>
 	 */
 	public java.lang.String getCity() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.CITY);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.country</code>
 	 */
 	public void setCountry(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.COUNTRY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.country</code>
 	 */
 	public java.lang.String getCountry() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.COUNTRY);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.notes</code>
 	 */
 	public void setNotes(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NOTES, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.notes</code>
 	 */
 	public java.lang.String getNotes() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NOTES);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.SID</code>
 	 */
 	public void setSid(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.SID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.customer_list.SID</code>
 	 */
 	public java.lang.Byte getSid() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.SID);

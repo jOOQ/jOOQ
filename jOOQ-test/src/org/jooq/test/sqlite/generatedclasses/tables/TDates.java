@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -2054519403;
+	private static final long serialVersionUID = -65997183;
 
 	/**
 	 * The singleton instance of t_dates
@@ -24,37 +24,37 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlit
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>t_dates.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>t_dates.d</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("d", org.jooq.impl.SQLDataType.DATE, T_DATES);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>t_dates.t</code>
+	 * <p>
 	 * The SQL type of this item (time) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord, java.lang.Object> T = createField("t", org.jooq.util.sqlite.SQLiteDataType.getDefaultDataType("time"), T_DATES);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>t_dates.ts</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>t_dates.d_int</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>t_dates.ts_bigint</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, T_DATES);
 

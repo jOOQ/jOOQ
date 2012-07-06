@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = 1920786461;
+	private static final long serialVersionUID = 265879594;
 
 	/**
 	 * The singleton instance of public.t_959
@@ -24,7 +24,7 @@ public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.genera
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_959.java_keywords</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_959Record, org.jooq.test.postgres.generatedclasses.enums.U_959> JAVA_KEYWORDS = createField("java_keywords", org.jooq.util.postgres.PostgresDataType.VARCHAR.asEnumDataType(org.jooq.test.postgres.generatedclasses.enums.U_959.class), this);
 

@@ -11,25 +11,25 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface X_TEST_CASE_64_69_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_TEST_CASE_64_69.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_TEST_CASE_64_69.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES TEST.X_UNUSED (ID)
@@ -38,9 +38,9 @@ public interface X_TEST_CASE_64_69_INTERFACE extends java.lang.Cloneable, java.i
 	public void setUNUSED_ID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES TEST.X_UNUSED (ID)

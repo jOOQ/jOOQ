@@ -10,17 +10,17 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_library", schema = "public")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 291353944;
+	private static final long serialVersionUID = -1375144788;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_library.author</code>
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VLibrary.V_LIBRARY.AUTHOR, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_library.author</code>
 	 */
 	@javax.persistence.Column(name = "author")
 	public java.lang.String getAuthor() {
@@ -28,14 +28,14 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_library.title</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VLibrary.V_LIBRARY.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_library.title</code>
 	 */
 	@javax.persistence.Column(name = "title", length = 400)
 	public java.lang.String getTitle() {

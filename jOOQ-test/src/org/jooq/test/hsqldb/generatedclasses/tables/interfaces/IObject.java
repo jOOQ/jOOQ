@@ -9,26 +9,26 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IObject extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.OBJECT.ID</code>
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.OBJECT.ID</code>
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.OBJECT.OTHER</code>
+	 * <p>
 	 * The SQL type of this item (OTHER, null) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setOther(java.lang.Object value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.OBJECT.OTHER</code>
+	 * <p>
 	 * The SQL type of this item (OTHER, null) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */

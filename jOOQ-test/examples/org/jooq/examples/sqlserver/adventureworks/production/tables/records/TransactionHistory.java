@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "TransactionHistory", schema = "Production")
 public class TransactionHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory> {
 
-	private static final long serialVersionUID = -907638023;
+	private static final long serialVersionUID = 1867670471;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.TransactionHistory.TransactionID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setTransactionID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistory.TransactionHistory.TransactionID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.TransactionHistory.TransactionID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "TransactionID", unique = true, nullable = false, precision = 10)
@@ -33,9 +33,9 @@ public class TransactionHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_TransactionHistory_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -46,9 +46,9 @@ public class TransactionHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_TransactionHistory_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -60,14 +60,14 @@ public class TransactionHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ReferenceOrderID</code>
 	 */
 	public void setReferenceOrderID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistory.TransactionHistory.ReferenceOrderID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ReferenceOrderID</code>
 	 */
 	@javax.persistence.Column(name = "ReferenceOrderID", nullable = false, precision = 10)
 	public java.lang.Integer getReferenceOrderID() {
@@ -75,14 +75,14 @@ public class TransactionHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ReferenceOrderLineID</code>
 	 */
 	public void setReferenceOrderLineID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistory.TransactionHistory.ReferenceOrderLineID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ReferenceOrderLineID</code>
 	 */
 	@javax.persistence.Column(name = "ReferenceOrderLineID", nullable = false, precision = 10)
 	public java.lang.Integer getReferenceOrderLineID() {
@@ -90,14 +90,14 @@ public class TransactionHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.TransactionDate</code>
 	 */
 	public void setTransactionDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistory.TransactionHistory.TransactionDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.TransactionDate</code>
 	 */
 	@javax.persistence.Column(name = "TransactionDate", nullable = false)
 	public java.sql.Timestamp getTransactionDate() {
@@ -105,14 +105,14 @@ public class TransactionHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.TransactionType</code>
 	 */
 	public void setTransactionType(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistory.TransactionHistory.TransactionType, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.TransactionType</code>
 	 */
 	@javax.persistence.Column(name = "TransactionType", nullable = false, length = 1)
 	public java.lang.String getTransactionType() {
@@ -120,14 +120,14 @@ public class TransactionHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.Quantity</code>
 	 */
 	public void setQuantity(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistory.TransactionHistory.Quantity, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.Quantity</code>
 	 */
 	@javax.persistence.Column(name = "Quantity", nullable = false, precision = 10)
 	public java.lang.Integer getQuantity() {
@@ -135,14 +135,14 @@ public class TransactionHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ActualCost</code>
 	 */
 	public void setActualCost(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistory.TransactionHistory.ActualCost, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ActualCost</code>
 	 */
 	@javax.persistence.Column(name = "ActualCost", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getActualCost() {
@@ -150,14 +150,14 @@ public class TransactionHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistory.TransactionHistory.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

@@ -10,17 +10,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_BOOK", schema = "TEST")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -430542554;
+	private static final long serialVersionUID = 1443703170;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.ID</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.ID</code>
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getId() {
@@ -28,14 +28,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.AUTHOR_ID</code>
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.AUTHOR_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.AUTHOR_ID</code>
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
 	public java.lang.Integer getAuthorId() {
@@ -43,14 +43,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CO_AUTHOR_ID</code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.CO_AUTHOR_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CO_AUTHOR_ID</code>
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
 	public java.lang.Integer getCoAuthorId() {
@@ -58,14 +58,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.DETAILS_ID</code>
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.DETAILS_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.DETAILS_ID</code>
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
 	public java.lang.Integer getDetailsId() {
@@ -73,14 +73,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.TITLE</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.TITLE</code>
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTitle() {
@@ -88,14 +88,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.PUBLISHED_IN</code>
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.PUBLISHED_IN, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.PUBLISHED_IN</code>
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
 	public java.lang.Integer getPublishedIn() {
@@ -103,14 +103,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.LANGUAGE_ID</code>
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.LANGUAGE_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.LANGUAGE_ID</code>
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	public java.lang.Integer getLanguageId() {
@@ -118,14 +118,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CONTENT_TEXT</code>
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.CONTENT_TEXT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CONTENT_TEXT</code>
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getContentText() {
@@ -133,14 +133,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CONTENT_PDF</code>
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.CONTENT_PDF, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.V_BOOK.CONTENT_PDF</code>
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getContentPdf() {

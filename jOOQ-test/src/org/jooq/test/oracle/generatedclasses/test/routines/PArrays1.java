@@ -8,16 +8,16 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1221907820;
+	private static final long serialVersionUID = 664291447;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_ARRAYS1.IN_ARRAY</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_ARRAYS1.OUT_ARRAY</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord.class));
 
@@ -32,12 +32,15 @@ public class PArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	}
 
 	/**
-	 * Set the <code>IN_ARRAY</code> parameter to the routine
+	 * Set the <code>IN_ARRAY</code> parameter IN value to the routine
 	 */
 	public void setInArray(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.routines.PArrays1.IN_ARRAY, value);
 	}
 
+	/**
+	 * Get the <code>OUT_ARRAY</code> parameter OUT value from the routine
+	 */
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord getOutArray() {
 		return getValue(OUT_ARRAY);
 	}

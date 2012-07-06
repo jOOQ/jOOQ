@@ -10,21 +10,21 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_dates", schema = "public")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1475466088;
+	private static final long serialVersionUID = 620009930;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.t_dates.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.t_dates.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -33,14 +33,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_dates.d</code>
 	 */
 	public void setD(java.sql.Date value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES.D, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_dates.d</code>
 	 */
 	@javax.persistence.Column(name = "d")
 	public java.sql.Date getD() {
@@ -48,14 +48,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_dates.t</code>
 	 */
 	public void setT(java.sql.Time value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES.T, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_dates.t</code>
 	 */
 	@javax.persistence.Column(name = "t")
 	public java.sql.Time getT() {
@@ -63,14 +63,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_dates.ts</code>
 	 */
 	public void setTs(java.sql.Timestamp value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES.TS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_dates.ts</code>
 	 */
 	@javax.persistence.Column(name = "ts")
 	public java.sql.Timestamp getTs() {
@@ -78,14 +78,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_dates.d_int</code>
 	 */
 	public void setDInt(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES.D_INT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_dates.d_int</code>
 	 */
 	@javax.persistence.Column(name = "d_int", precision = 32)
 	public java.lang.Integer getDInt() {
@@ -93,14 +93,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_dates.ts_bigint</code>
 	 */
 	public void setTsBigint(java.lang.Long value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES.TS_BIGINT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_dates.ts_bigint</code>
 	 */
 	@javax.persistence.Column(name = "ts_bigint", precision = 64)
 	public java.lang.Long getTsBigint() {

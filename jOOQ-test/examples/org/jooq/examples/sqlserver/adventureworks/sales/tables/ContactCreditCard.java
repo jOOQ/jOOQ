@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class ContactCreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> {
 
-	private static final long serialVersionUID = -358913443;
+	private static final long serialVersionUID = 1112745103;
 
 	/**
 	 * The singleton instance of Sales.ContactCreditCard
@@ -24,11 +24,11 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.ContactCreditCard.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ContactCreditCard_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -37,11 +37,11 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, java.lang.Integer> ContactID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.ContactCreditCard.CreditCardID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ContactCreditCard_CreditCard_CreditCardID
 	 * FOREIGN KEY (CreditCardID)
 	 * REFERENCES Sales.CreditCard (CreditCardID)
@@ -50,7 +50,7 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, java.lang.Integer> CreditCardID = createField("CreditCardID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.ContactCreditCard.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

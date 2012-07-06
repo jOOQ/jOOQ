@@ -44,8 +44,8 @@ public enum T_LANGUAGE implements java.lang.Cloneable, org.jooq.MasterDataType<j
 
 	/**
 	 * The language ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final java.lang.Integer getID() {
 		return ID;

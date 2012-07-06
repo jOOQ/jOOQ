@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeAddress> {
 
-	private static final long serialVersionUID = 548416934;
+	private static final long serialVersionUID = -592252686;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeAddress.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeAddress_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -30,11 +30,11 @@ public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeAddress.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeAddress_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -46,11 +46,11 @@ public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeAddress.AddressID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeAddress_Address_AddressID
 	 * FOREIGN KEY (AddressID)
 	 * REFERENCES Person.Address (AddressID)
@@ -61,11 +61,11 @@ public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeAddress.AddressID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeAddress_Address_AddressID
 	 * FOREIGN KEY (AddressID)
 	 * REFERENCES Person.Address (AddressID)
@@ -77,14 +77,14 @@ public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeeAddress.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeeAddress.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -92,14 +92,14 @@ public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeeAddress.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeeAddress.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

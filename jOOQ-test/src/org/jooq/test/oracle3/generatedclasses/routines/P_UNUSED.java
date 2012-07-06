@@ -8,21 +8,21 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_UNUSED extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -474409179;
+	private static final long serialVersionUID = 59150733;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_UNUSED.IN1</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> IN1 = createParameter("IN1", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_UNUSED.OUT1</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> OUT1 = createParameter("OUT1", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_UNUSED.OUT2</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> OUT2 = createParameter("OUT2", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -38,23 +38,29 @@ public class P_UNUSED extends org.jooq.impl.AbstractRoutine<java.lang.Void> impl
 	}
 
 	/**
-	 * Set the <code>IN1</code> parameter to the routine
+	 * Set the <code>IN1</code> parameter IN value to the routine
 	 */
 	public void setIN1(java.lang.String value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.routines.P_UNUSED.IN1, value);
 	}
 
 	/**
-	 * Set the <code>OUT2</code> parameter to the routine
+	 * Set the <code>OUT2</code> parameter IN value to the routine
 	 */
 	public void setOUT2(java.lang.Number value) {
 		setNumber(org.jooq.test.oracle3.generatedclasses.routines.P_UNUSED.OUT2, value);
 	}
 
+	/**
+	 * Get the <code>OUT1</code> parameter OUT value from the routine
+	 */
 	public java.math.BigDecimal getOUT1() {
 		return getValue(OUT1);
 	}
 
+	/**
+	 * Get the <code>OUT2</code> parameter OUT value from the routine
+	 */
 	public java.math.BigDecimal getOUT2() {
 		return getValue(OUT2);
 	}

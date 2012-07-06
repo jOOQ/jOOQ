@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt;
  */
 public class U_AUTHOR_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> implements java.lang.Cloneable, org.jooq.Package {
 
-	private static final long serialVersionUID = 1184813142;
+	private static final long serialVersionUID = 688492513;
 
 	/**
 	 * The singleton instance of TEST.U_AUTHOR_TYPE
@@ -24,17 +24,17 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_AUTHOR_TYPE.ID</code>
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, U_AUTHOR_TYPE);
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, U_AUTHOR_TYPE);
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, U_AUTHOR_TYPE);
 

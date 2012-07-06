@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -188147784;
+	private static final long serialVersionUID = -372410209;
 
 	/**
 	 * The singleton instance of TEST.T_BOOK
@@ -24,16 +24,16 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_BOOK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -42,9 +42,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -53,24 +53,24 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.DETAILS_ID</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.TITLE</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.PUBLISHED_IN</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.LANGUAGE_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES TEST.T_LANGUAGE (ID)
@@ -79,12 +79,12 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, org.jooq.test.derby.generatedclasses.enums.TLanguage> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.derby.generatedclasses.enums.TLanguage.class), T_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CONTENT_TEXT</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, T_BOOK);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CONTENT_PDF</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, T_BOOK);
 

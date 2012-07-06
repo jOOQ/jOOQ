@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class CreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard> {
 
-	private static final long serialVersionUID = 585218471;
+	private static final long serialVersionUID = 526026903;
 
 	/**
 	 * The singleton instance of Sales.CreditCard
@@ -24,34 +24,34 @@ public class CreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CreditCard.CreditCardID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard, java.lang.Integer> CreditCardID = createField("CreditCardID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CreditCard.CardType</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard, java.lang.String> CardType = createField("CardType", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CreditCard.CardNumber</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard, java.lang.String> CardNumber = createField("CardNumber", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CreditCard.ExpMonth</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard, java.lang.Byte> ExpMonth = createField("ExpMonth", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CreditCard.ExpYear</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard, java.lang.Short> ExpYear = createField("ExpYear", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CreditCard.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

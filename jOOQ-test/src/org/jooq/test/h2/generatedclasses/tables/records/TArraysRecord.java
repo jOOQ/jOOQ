@@ -8,12 +8,12 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = -1655781738;
+	private static final long serialVersionUID = 1560263162;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -21,9 +21,9 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -31,8 +31,8 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -42,8 +42,8 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -53,8 +53,8 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -64,8 +64,8 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -75,8 +75,8 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -86,8 +86,8 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
+	 * <p>
 	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */

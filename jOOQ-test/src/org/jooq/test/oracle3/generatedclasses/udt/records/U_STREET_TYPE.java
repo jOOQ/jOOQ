@@ -8,74 +8,74 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
  */
 public class U_STREET_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1993799262;
+	private static final long serialVersionUID = -1357321768;
 
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_STREET_TYPE.STREET</code>
 	 */
 	public void setSTREET(java.lang.String value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.STREET, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_STREET_TYPE.STREET</code>
 	 */
 	public java.lang.String getSTREET() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.STREET);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_STREET_TYPE.NO</code>
 	 */
 	public void setNO(java.lang.String value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.NO, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_STREET_TYPE.NO</code>
 	 */
 	public java.lang.String getNO() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.NO);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_STREET_TYPE.FLOORS</code>
 	 */
 	public void setFLOORS(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.FLOORS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_STREET_TYPE.FLOORS</code>
 	 */
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY getFLOORS() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.FLOORS);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_STREET_TYPE.F_1323</code>
 	 */
 	public void setF_1323(byte[] value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.F_1323, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_STREET_TYPE.F_1323</code>
 	 */
 	public byte[] getF_1323() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.F_1323);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_STREET_TYPE.F_1326</code>
 	 */
 	public void setF_1326(java.lang.String value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.F_1326, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The UDT column <code>TEST.U_STREET_TYPE.F_1326</code>
 	 */
 	public java.lang.String getF_1326() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.F_1326);

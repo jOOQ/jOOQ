@@ -9,92 +9,92 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IVBook extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.ID</code>
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.ID</code>
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.AUTHOR_ID</code>
 	 */
 	public void setAuthorId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.AUTHOR_ID</code>
 	 */
 	public java.lang.Integer getAuthorId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>
 	 */
 	public java.lang.Integer getCoAuthorId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.DETAILS_ID</code>
 	 */
 	public void setDetailsId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.DETAILS_ID</code>
 	 */
 	public java.lang.Integer getDetailsId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.TITLE</code>
 	 */
 	public void setTitle(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.TITLE</code>
 	 */
 	public java.lang.String getTitle();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>
 	 */
 	public void setPublishedIn(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>
 	 */
 	public java.lang.Integer getPublishedIn();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>
 	 */
 	public void setLanguageId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>
 	 */
 	public java.lang.Integer getLanguageId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>
 	 */
 	public void setContentText(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>
 	 */
 	public java.lang.String getContentText();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CONTENT_PDF</code>
 	 */
 	public void setContentPdf(byte[] value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_BOOK.CONTENT_PDF</code>
 	 */
 	public byte[] getContentPdf();
 }

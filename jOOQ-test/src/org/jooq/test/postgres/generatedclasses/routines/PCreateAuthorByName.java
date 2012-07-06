@@ -8,16 +8,16 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -279874032;
+	private static final long serialVersionUID = 43193898;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.p_create_author_by_name.first_name</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("first_name", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.p_create_author_by_name.last_name</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("last_name", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -32,14 +32,14 @@ public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang
 	}
 
 	/**
-	 * Set the <code>first_name</code> parameter to the routine
+	 * Set the <code>first_name</code> parameter IN value to the routine
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.routines.PCreateAuthorByName.FIRST_NAME, value);
 	}
 
 	/**
-	 * Set the <code>last_name</code> parameter to the routine
+	 * Set the <code>last_name</code> parameter IN value to the routine
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.routines.PCreateAuthorByName.LAST_NAME, value);

@@ -8,49 +8,49 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class FilmTextRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord> {
 
-	private static final long serialVersionUID = 2128418409;
+	private static final long serialVersionUID = -1356777699;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film_text.film_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setFilmId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.FILM_ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.film_text.film_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Short getFilmId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.FILM_ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_text.title</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_text.title</code>
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.TITLE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_text.description</code>
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.DESCRIPTION, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.film_text.description</code>
 	 */
 	public java.lang.String getDescription() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.DESCRIPTION);

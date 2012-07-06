@@ -8,129 +8,129 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
  */
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 1730950671;
+	private static final long serialVersionUID = -180678907;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.ID</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.ID</code>
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.AUTHOR_ID</code>
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.AUTHOR_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.AUTHOR_ID</code>
 	 */
 	public java.lang.Integer getAuthorId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.AUTHOR_ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.CO_AUTHOR_ID</code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.CO_AUTHOR_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.CO_AUTHOR_ID</code>
 	 */
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.CO_AUTHOR_ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.DETAILS_ID</code>
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.DETAILS_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.DETAILS_ID</code>
 	 */
 	public java.lang.Integer getDetailsId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.DETAILS_ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.TITLE</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.TITLE</code>
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.TITLE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.PUBLISHED_IN</code>
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.PUBLISHED_IN, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.PUBLISHED_IN</code>
 	 */
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.PUBLISHED_IN);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.LANGUAGE_ID</code>
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.LANGUAGE_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.LANGUAGE_ID</code>
 	 */
 	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.LANGUAGE_ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.CONTENT_TEXT</code>
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.CONTENT_TEXT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.CONTENT_TEXT</code>
 	 */
 	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.CONTENT_TEXT);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.CONTENT_PDF</code>
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.CONTENT_PDF, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.v_book.CONTENT_PDF</code>
 	 */
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.CONTENT_PDF);

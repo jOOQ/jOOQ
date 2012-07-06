@@ -8,11 +8,11 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F_PIPELINED_TABLE1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1042558414;
+	private static final long serialVersionUID = 2090706616;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_PIPELINED_TABLE1.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE.class));
 

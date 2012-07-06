@@ -10,21 +10,21 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_71", schema = "public")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 115665010;
+	private static final long serialVersionUID = 1671876973;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.x_test_case_71.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.x_test_case_71.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -33,9 +33,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_test_case_71.test_case_64_69_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
 	 * FOREIGN KEY (test_case_64_69_id)
 	 * REFERENCES public.x_test_case_64_69 (id)
@@ -46,9 +46,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_test_case_71.test_case_64_69_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
 	 * FOREIGN KEY (test_case_64_69_id)
 	 * REFERENCES public.x_test_case_64_69 (id)
@@ -60,9 +60,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.x_test_case_71.test_case_64_69_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
 	 * FOREIGN KEY (test_case_64_69_id)
 	 * REFERENCES public.x_test_case_64_69 (id)

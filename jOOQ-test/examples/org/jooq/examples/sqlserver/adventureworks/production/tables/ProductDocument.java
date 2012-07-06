@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class ProductDocument extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument> {
 
-	private static final long serialVersionUID = 121262300;
+	private static final long serialVersionUID = -1922079481;
 
 	/**
 	 * The singleton instance of Production.ProductDocument
@@ -24,11 +24,11 @@ public class ProductDocument extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductDocument.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductDocument_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -37,11 +37,11 @@ public class ProductDocument extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductDocument.DocumentID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductDocument_Document_DocumentID
 	 * FOREIGN KEY (DocumentID)
 	 * REFERENCES Production.Document (DocumentID)
@@ -50,7 +50,7 @@ public class ProductDocument extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument, java.lang.Integer> DocumentID = createField("DocumentID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductDocument.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

@@ -8,11 +8,11 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1402619950;
+	private static final long serialVersionUID = 1579838440;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P1490.value</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> VALUE = createParameter("value", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -26,7 +26,7 @@ public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	}
 
 	/**
-	 * Set the <code>value</code> parameter to the routine
+	 * Set the <code>value</code> parameter IN value to the routine
 	 */
 	public void setValue(java.lang.Number value) {
 		setNumber(org.jooq.test.oracle.generatedclasses.test.routines.P1490.VALUE, value);

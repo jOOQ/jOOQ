@@ -8,10 +8,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = -1634350946;
+	private static final long serialVersionUID = 1459005271;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK_STORE.NAME</code>
 	 */
 	@Override
 	public void setName(java.lang.String value) {
@@ -19,7 +19,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK_STORE.NAME</code>
 	 */
 	@Override
 	public java.lang.String getName() {
@@ -27,7 +27,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK_STORE.NAME</code>
 	 */
 	public java.util.List<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()

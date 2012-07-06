@@ -8,11 +8,11 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P_ENHANCE_ADDRESS2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1612594378;
+	private static final long serialVersionUID = 1194216867;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_ENHANCE_ADDRESS2.ADDRESS</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> ADDRESS = createParameter("ADDRESS", org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.U_ADDRESS_TYPE.getDataType());
 
@@ -25,6 +25,9 @@ public class P_ENHANCE_ADDRESS2 extends org.jooq.impl.AbstractRoutine<java.lang.
 		addOutParameter(ADDRESS);
 	}
 
+	/**
+	 * Get the <code>ADDRESS</code> parameter OUT value from the routine
+	 */
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE getADDRESS() {
 		return getValue(ADDRESS);
 	}

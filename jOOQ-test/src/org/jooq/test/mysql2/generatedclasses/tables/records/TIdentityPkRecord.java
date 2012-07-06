@@ -10,21 +10,21 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_identity_pk", schema = "test2")
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -686967462;
+	private static final long serialVersionUID = 1822760066;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.t_identity_pk.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>test2.t_identity_pk.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 10)
@@ -33,14 +33,14 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_identity_pk.val</code>
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.VAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_identity_pk.val</code>
 	 */
 	@javax.persistence.Column(name = "val", precision = 10)
 	public java.lang.Integer getVal() {

@@ -10,21 +10,21 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = 1064587566;
+	private static final long serialVersionUID = -435292385;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -33,9 +33,9 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
 	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
 	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
@@ -46,9 +46,9 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
 	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
 	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
@@ -60,9 +60,9 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
 	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
 	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
@@ -77,9 +77,9 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
 	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
 	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
@@ -90,9 +90,9 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
 	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
 	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
@@ -104,14 +104,14 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>
 	 */
 	public void setSoldAt(java.sql.Date value) {
 		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.SOLD_AT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>
 	 */
 	@javax.persistence.Column(name = "SOLD_AT", nullable = false, length = 7)
 	public java.sql.Date getSoldAt() {
@@ -119,14 +119,14 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>
 	 */
 	public void setSoldFor(java.math.BigDecimal value) {
 		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.SOLD_FOR, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>
 	 */
 	@javax.persistence.Column(name = "SOLD_FOR", nullable = false, precision = 10, scale = 2)
 	public java.math.BigDecimal getSoldFor() {

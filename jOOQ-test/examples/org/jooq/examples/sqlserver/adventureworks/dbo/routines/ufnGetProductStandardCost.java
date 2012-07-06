@@ -8,21 +8,21 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class ufnGetProductStandardCost extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1094548458;
+	private static final long serialVersionUID = 434636068;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.ufnGetProductStandardCost.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.ufnGetProductStandardCost.ProductID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> ProductID = createParameter("ProductID", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.ufnGetProductStandardCost.OrderDate</code>
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> OrderDate = createParameter("OrderDate", org.jooq.impl.SQLDataType.TIMESTAMP);
 
@@ -38,7 +38,7 @@ public class ufnGetProductStandardCost extends org.jooq.impl.AbstractRoutine<jav
 	}
 
 	/**
-	 * Set the <code>ProductID</code> parameter to the routine
+	 * Set the <code>ProductID</code> parameter IN value to the routine
 	 */
 	public void setProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductStandardCost.ProductID, value);
@@ -54,7 +54,7 @@ public class ufnGetProductStandardCost extends org.jooq.impl.AbstractRoutine<jav
 	}
 
 	/**
-	 * Set the <code>OrderDate</code> parameter to the routine
+	 * Set the <code>OrderDate</code> parameter IN value to the routine
 	 */
 	public void setOrderDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductStandardCost.OrderDate, value);

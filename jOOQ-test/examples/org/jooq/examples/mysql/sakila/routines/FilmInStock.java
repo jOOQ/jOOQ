@@ -8,21 +8,21 @@ package org.jooq.examples.mysql.sakila.routines;
  */
 public class FilmInStock extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1939001857;
+	private static final long serialVersionUID = -772393445;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>sakila.film_in_stock.p_film_id</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_FILM_ID = createParameter("p_film_id", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>sakila.film_in_stock.p_store_id</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_STORE_ID = createParameter("p_store_id", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>sakila.film_in_stock.p_film_count</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_FILM_COUNT = createParameter("p_film_count", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -38,19 +38,22 @@ public class FilmInStock extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	}
 
 	/**
-	 * Set the <code>p_film_id</code> parameter to the routine
+	 * Set the <code>p_film_id</code> parameter IN value to the routine
 	 */
 	public void setPFilmId(java.lang.Integer value) {
 		setValue(org.jooq.examples.mysql.sakila.routines.FilmInStock.P_FILM_ID, value);
 	}
 
 	/**
-	 * Set the <code>p_store_id</code> parameter to the routine
+	 * Set the <code>p_store_id</code> parameter IN value to the routine
 	 */
 	public void setPStoreId(java.lang.Integer value) {
 		setValue(org.jooq.examples.mysql.sakila.routines.FilmInStock.P_STORE_ID, value);
 	}
 
+	/**
+	 * Get the <code>p_film_count</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getPFilmCount() {
 		return getValue(P_FILM_COUNT);
 	}

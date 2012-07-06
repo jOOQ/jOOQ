@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Culture", schema = "Production")
 public class Culture extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture> {
 
-	private static final long serialVersionUID = 1463175751;
+	private static final long serialVersionUID = -862572061;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.Culture.CultureID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setCultureID(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture.CultureID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.Culture.CultureID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "CultureID", unique = true, nullable = false, length = 6)
@@ -33,14 +33,14 @@ public class Culture extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Culture.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Culture.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -48,14 +48,14 @@ public class Culture extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Culture.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Culture.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

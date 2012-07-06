@@ -38,16 +38,16 @@ public enum T_658_12 implements java.lang.Cloneable, org.jooq.MasterDataType<jav
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_658_12.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final java.lang.String getID() {
 		return ID;
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_12.CD</code>
 	 */
 	public final java.lang.String getCD() {
 		return CD;

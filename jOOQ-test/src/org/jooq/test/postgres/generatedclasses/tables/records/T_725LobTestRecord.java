@@ -10,21 +10,21 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_725_lob_test", schema = "public")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1069249805;
+	private static final long serialVersionUID = 1325199803;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.t_725_lob_test.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.t_725_lob_test.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -33,14 +33,14 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_725_lob_test.lob</code>
 	 */
 	public void setLob(byte[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_725_lob_test.lob</code>
 	 */
 	@javax.persistence.Column(name = "lob")
 	public byte[] getLob() {

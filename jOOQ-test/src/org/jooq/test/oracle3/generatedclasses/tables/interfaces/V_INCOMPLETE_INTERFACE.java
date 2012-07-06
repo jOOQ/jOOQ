@@ -11,16 +11,16 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface V_INCOMPLETE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setID(java.lang.Object value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -28,16 +28,16 @@ public interface V_INCOMPLETE_INTERFACE extends java.lang.Cloneable, java.io.Ser
 	public java.lang.Object getID();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setAUTHOR_ID(java.lang.Object value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -45,16 +45,16 @@ public interface V_INCOMPLETE_INTERFACE extends java.lang.Cloneable, java.io.Ser
 	public java.lang.Object getAUTHOR_ID();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setCO_AUTHOR_ID(java.lang.Object value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -62,16 +62,16 @@ public interface V_INCOMPLETE_INTERFACE extends java.lang.Cloneable, java.io.Ser
 	public java.lang.Object getCO_AUTHOR_ID();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setDETAILS_ID(java.lang.Object value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -79,16 +79,16 @@ public interface V_INCOMPLETE_INTERFACE extends java.lang.Cloneable, java.io.Ser
 	public java.lang.Object getDETAILS_ID();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.TITLE</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setTITLE(java.lang.Object value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.TITLE</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -96,16 +96,16 @@ public interface V_INCOMPLETE_INTERFACE extends java.lang.Cloneable, java.io.Ser
 	public java.lang.Object getTITLE();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setPUBLISHED_IN(java.lang.Object value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -113,16 +113,16 @@ public interface V_INCOMPLETE_INTERFACE extends java.lang.Cloneable, java.io.Ser
 	public java.lang.Object getPUBLISHED_IN();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setLANGUAGE_ID(java.lang.Object value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -130,16 +130,16 @@ public interface V_INCOMPLETE_INTERFACE extends java.lang.Cloneable, java.io.Ser
 	public java.lang.Object getLANGUAGE_ID();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setCONTENT_TEXT(java.lang.Object value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -147,16 +147,16 @@ public interface V_INCOMPLETE_INTERFACE extends java.lang.Cloneable, java.io.Ser
 	public java.lang.Object getCONTENT_TEXT();
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public void setCONTENT_PDF(java.lang.Object value);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */

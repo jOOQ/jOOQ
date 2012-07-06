@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "Department", schema = "HumanResources")
 public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department> {
 
-	private static final long serialVersionUID = 1653650932;
+	private static final long serialVersionUID = -738971112;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.Department.DepartmentID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setDepartmentID(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.DepartmentID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.Department.DepartmentID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "DepartmentID", unique = true, nullable = false, precision = 5)
@@ -33,14 +33,14 @@ public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Department.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Department.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -48,14 +48,14 @@ public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Department.GroupName</code>
 	 */
 	public void setGroupName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.GroupName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Department.GroupName</code>
 	 */
 	@javax.persistence.Column(name = "GroupName", nullable = false, length = 50)
 	public java.lang.String getGroupName() {
@@ -63,14 +63,14 @@ public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Department.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.Department.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

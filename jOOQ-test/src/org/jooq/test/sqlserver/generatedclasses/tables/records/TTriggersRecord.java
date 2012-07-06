@@ -8,49 +8,49 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
  */
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 523012355;
+	private static final long serialVersionUID = -2076826731;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_triggers.id_generated</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setIdGenerated(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.t_triggers.id_generated</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getIdGenerated() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_triggers.id</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_triggers.id</code>
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_triggers.counter</code>
 	 */
 	public void setCounter(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.t_triggers.counter</code>
 	 */
 	public java.lang.Integer getCounter() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER);

@@ -10,14 +10,14 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "Individual", schema = "Sales")
 public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual> {
 
-	private static final long serialVersionUID = 2146286714;
+	private static final long serialVersionUID = 156387404;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.Individual.CustomerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Individual_Customer_CustomerID
 	 * FOREIGN KEY (CustomerID)
 	 * REFERENCES Sales.Customer (CustomerID)
@@ -28,11 +28,11 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.Individual.CustomerID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Individual_Customer_CustomerID
 	 * FOREIGN KEY (CustomerID)
 	 * REFERENCES Sales.Customer (CustomerID)
@@ -45,9 +45,9 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Individual.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Individual_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -58,9 +58,9 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Individual.ContactID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Individual_Contact_ContactID
 	 * FOREIGN KEY (ContactID)
 	 * REFERENCES Person.Contact (ContactID)
@@ -72,8 +72,8 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>Sales.Individual.Demographics</code>
+	 * <p>
 	 * The SQL type of this item (xml, ) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -82,8 +82,8 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>Sales.Individual.Demographics</code>
+	 * <p>
 	 * The SQL type of this item (xml, ) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
@@ -93,14 +93,14 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Individual.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.Individual.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

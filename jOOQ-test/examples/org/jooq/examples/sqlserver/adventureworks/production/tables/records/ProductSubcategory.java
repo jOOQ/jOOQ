@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductSubcategory", schema = "Production")
 public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory> {
 
-	private static final long serialVersionUID = -1504349;
+	private static final long serialVersionUID = 1837454571;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductSubcategory.ProductSubcategoryID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setProductSubcategoryID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.ProductSubcategoryID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ProductSubcategory.ProductSubcategoryID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ProductSubcategoryID", unique = true, nullable = false, precision = 10)
@@ -33,9 +33,9 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductSubcategory.ProductCategoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductSubcategory_ProductCategory_ProductCategoryID
 	 * FOREIGN KEY (ProductCategoryID)
 	 * REFERENCES Production.ProductCategory (ProductCategoryID)
@@ -46,9 +46,9 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductSubcategory.ProductCategoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_ProductSubcategory_ProductCategory_ProductCategoryID
 	 * FOREIGN KEY (ProductCategoryID)
 	 * REFERENCES Production.ProductCategory (ProductCategoryID)
@@ -60,14 +60,14 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductSubcategory.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductSubcategory.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -75,14 +75,14 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductSubcategory.rowguid</code>
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.rowguid, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductSubcategory.rowguid</code>
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -90,14 +90,14 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductSubcategory.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ProductSubcategory.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

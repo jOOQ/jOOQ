@@ -16,10 +16,10 @@ public interface T_BOOK_TO_BOOK_STORE_INTERFACE extends java.lang.Cloneable, jav
 
 	/**
 	 * The book store name
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_BS_NAME
 	 * FOREIGN KEY (BOOK_STORE_NAME)
 	 * REFERENCES TEST.T_BOOK_STORE (NAME)
@@ -29,10 +29,10 @@ public interface T_BOOK_TO_BOOK_STORE_INTERFACE extends java.lang.Cloneable, jav
 
 	/**
 	 * The book store name
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_BS_NAME
 	 * FOREIGN KEY (BOOK_STORE_NAME)
 	 * REFERENCES TEST.T_BOOK_STORE (NAME)
@@ -43,10 +43,10 @@ public interface T_BOOK_TO_BOOK_STORE_INTERFACE extends java.lang.Cloneable, jav
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_B_ID
 	 * FOREIGN KEY (BOOK_ID)
 	 * REFERENCES TEST.T_BOOK (ID)
@@ -56,10 +56,10 @@ public interface T_BOOK_TO_BOOK_STORE_INTERFACE extends java.lang.Cloneable, jav
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_B2BS_B_ID
 	 * FOREIGN KEY (BOOK_ID)
 	 * REFERENCES TEST.T_BOOK (ID)

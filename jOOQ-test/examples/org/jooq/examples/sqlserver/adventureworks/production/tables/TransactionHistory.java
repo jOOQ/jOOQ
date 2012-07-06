@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class TransactionHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory> {
 
-	private static final long serialVersionUID = 1420176517;
+	private static final long serialVersionUID = -1161797874;
 
 	/**
 	 * The singleton instance of Production.TransactionHistory
@@ -24,16 +24,16 @@ public class TransactionHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.TransactionHistory.TransactionID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory, java.lang.Integer> TransactionID = createField("TransactionID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ProductID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_TransactionHistory_Product_ProductID
 	 * FOREIGN KEY (ProductID)
 	 * REFERENCES Production.Product (ProductID)
@@ -42,37 +42,37 @@ public class TransactionHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ReferenceOrderID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory, java.lang.Integer> ReferenceOrderID = createField("ReferenceOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ReferenceOrderLineID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory, java.lang.Integer> ReferenceOrderLineID = createField("ReferenceOrderLineID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.TransactionDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory, java.sql.Timestamp> TransactionDate = createField("TransactionDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.TransactionType</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory, java.lang.String> TransactionType = createField("TransactionType", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.Quantity</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory, java.lang.Integer> Quantity = createField("Quantity", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ActualCost</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory, java.math.BigDecimal> ActualCost = createField("ActualCost", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.TransactionHistory.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

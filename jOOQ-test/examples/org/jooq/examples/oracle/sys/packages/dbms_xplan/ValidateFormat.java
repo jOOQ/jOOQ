@@ -8,32 +8,32 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class ValidateFormat extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 1579883703;
+	private static final long serialVersionUID = -2002162668;
 
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.RETURN_VALUE</code>
+	 * <p>
 	 * The SQL type of this item (PL/SQL BOOLEAN, null) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.oracle.OracleDataType.getDefaultDataType("PL/SQL BOOLEAN"));
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.HASPLANSTATS</code>
+	 * <p>
 	 * The SQL type of this item (PL/SQL BOOLEAN, null) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> HASPLANSTATS = createParameter("HASPLANSTATS", org.jooq.util.oracle.OracleDataType.getDefaultDataType("PL/SQL BOOLEAN"));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.FORMAT</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.FORMAT_FLAGS</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> FORMAT_FLAGS = createParameter("FORMAT_FLAGS", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -50,19 +50,22 @@ public class ValidateFormat extends org.jooq.impl.AbstractRoutine<java.lang.Obje
 	}
 
 	/**
-	 * Set the <code>HASPLANSTATS</code> parameter to the routine
+	 * Set the <code>HASPLANSTATS</code> parameter IN value to the routine
 	 */
 	public void setHasplanstats(java.lang.Object value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.ValidateFormat.HASPLANSTATS, value);
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the routine
+	 * Set the <code>FORMAT</code> parameter IN value to the routine
 	 */
 	public void setFormat(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.ValidateFormat.FORMAT, value);
 	}
 
+	/**
+	 * Get the <code>FORMAT_FLAGS</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getFormatFlags() {
 		return getValue(FORMAT_FLAGS);
 	}

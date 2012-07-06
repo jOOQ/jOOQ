@@ -8,14 +8,14 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  */
 public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = -413519653;
+	private static final long serialVersionUID = -721011219;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>DBA.t_986_1.REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT t_986_1__fk_986
 	 * FOREIGN KEY (REF)
 	 * REFERENCES DBA.x_unused (ID)
@@ -26,11 +26,11 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>DBA.t_986_1.REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT t_986_1__fk_986
 	 * FOREIGN KEY (REF)
 	 * REFERENCES DBA.x_unused (ID)
@@ -41,11 +41,11 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>DBA.t_986_1.REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT t_986_1__fk_986
 	 * FOREIGN KEY (REF)
 	 * REFERENCES DBA.x_unused (ID)

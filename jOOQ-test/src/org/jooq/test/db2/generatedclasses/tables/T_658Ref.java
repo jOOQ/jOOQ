@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables;
  */
 public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = -785487338;
+	private static final long serialVersionUID = -1132923065;
 
 	/**
 	 * The singleton instance of LUKAS.T_658_REF
@@ -24,9 +24,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.db2.generate
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_11</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_11
 	 * FOREIGN KEY (REF_11)
 	 * REFERENCES LUKAS.T_658_11 (ID)
@@ -35,9 +35,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.db2.generate
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.db2.generatedclasses.enums.T_658_11> REF_11 = createField("REF_11", org.jooq.impl.SQLDataType.CHAR.asMasterDataType(org.jooq.test.db2.generatedclasses.enums.T_658_11.class), T_658_REF);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_21</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_21
 	 * FOREIGN KEY (REF_21)
 	 * REFERENCES LUKAS.T_658_21 (ID)
@@ -46,9 +46,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.db2.generate
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.db2.generatedclasses.enums.T_658_21> REF_21 = createField("REF_21", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.db2.generatedclasses.enums.T_658_21.class), T_658_REF);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_31</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_31
 	 * FOREIGN KEY (REF_31)
 	 * REFERENCES LUKAS.T_658_31 (ID)
@@ -57,9 +57,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.db2.generate
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.db2.generatedclasses.enums.T_658_31> REF_31 = createField("REF_31", org.jooq.impl.SQLDataType.BIGINT.asMasterDataType(org.jooq.test.db2.generatedclasses.enums.T_658_31.class), T_658_REF);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_12</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_12
 	 * FOREIGN KEY (REF_12)
 	 * REFERENCES LUKAS.T_658_12 (ID)
@@ -68,9 +68,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.db2.generate
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.db2.generatedclasses.enums.T_658_12> REF_12 = createField("REF_12", org.jooq.impl.SQLDataType.CHAR.asMasterDataType(org.jooq.test.db2.generatedclasses.enums.T_658_12.class), T_658_REF);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_22</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_22
 	 * FOREIGN KEY (REF_22)
 	 * REFERENCES LUKAS.T_658_22 (ID)
@@ -79,9 +79,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.db2.generate
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.db2.generatedclasses.enums.T_658_22> REF_22 = createField("REF_22", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.db2.generatedclasses.enums.T_658_22.class), T_658_REF);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_658_REF.REF_32</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT T_658_REF__FK_T_658_32
 	 * FOREIGN KEY (REF_32)
 	 * REFERENCES LUKAS.T_658_32 (ID)

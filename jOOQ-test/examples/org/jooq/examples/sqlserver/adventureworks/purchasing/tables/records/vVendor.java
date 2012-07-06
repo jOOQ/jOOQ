@@ -10,17 +10,17 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @javax.persistence.Table(name = "vVendor", schema = "Purchasing")
 public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor> {
 
-	private static final long serialVersionUID = -1395608125;
+	private static final long serialVersionUID = 862788807;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.VendorID</code>
 	 */
 	public void setVendorID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.VendorID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.VendorID</code>
 	 */
 	@javax.persistence.Column(name = "VendorID", nullable = false, precision = 10)
 	public java.lang.Integer getVendorID() {
@@ -28,14 +28,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -43,14 +43,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.ContactType</code>
 	 */
 	public void setContactType(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.ContactType, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.ContactType</code>
 	 */
 	@javax.persistence.Column(name = "ContactType", nullable = false, length = 50)
 	public java.lang.String getContactType() {
@@ -58,14 +58,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.Title</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.Title, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.Title</code>
 	 */
 	@javax.persistence.Column(name = "Title", length = 8)
 	public java.lang.String getTitle() {
@@ -73,14 +73,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.FirstName</code>
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.FirstName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.FirstName</code>
 	 */
 	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
@@ -88,14 +88,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.MiddleName</code>
 	 */
 	public void setMiddleName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.MiddleName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.MiddleName</code>
 	 */
 	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
@@ -103,14 +103,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.LastName</code>
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.LastName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.LastName</code>
 	 */
 	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
@@ -118,14 +118,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.Suffix</code>
 	 */
 	public void setSuffix(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.Suffix, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.Suffix</code>
 	 */
 	@javax.persistence.Column(name = "Suffix", length = 10)
 	public java.lang.String getSuffix() {
@@ -133,14 +133,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.Phone</code>
 	 */
 	public void setPhone(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.Phone, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.Phone</code>
 	 */
 	@javax.persistence.Column(name = "Phone", length = 25)
 	public java.lang.String getPhone() {
@@ -148,14 +148,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.EmailAddress</code>
 	 */
 	public void setEmailAddress(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.EmailAddress, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.EmailAddress</code>
 	 */
 	@javax.persistence.Column(name = "EmailAddress", length = 50)
 	public java.lang.String getEmailAddress() {
@@ -163,14 +163,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.EmailPromotion</code>
 	 */
 	public void setEmailPromotion(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.EmailPromotion, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.EmailPromotion</code>
 	 */
 	@javax.persistence.Column(name = "EmailPromotion", nullable = false, precision = 10)
 	public java.lang.Integer getEmailPromotion() {
@@ -178,14 +178,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.AddressLine1</code>
 	 */
 	public void setAddressLine1(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.AddressLine1, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.AddressLine1</code>
 	 */
 	@javax.persistence.Column(name = "AddressLine1", nullable = false, length = 60)
 	public java.lang.String getAddressLine1() {
@@ -193,14 +193,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.AddressLine2</code>
 	 */
 	public void setAddressLine2(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.AddressLine2, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.AddressLine2</code>
 	 */
 	@javax.persistence.Column(name = "AddressLine2", length = 60)
 	public java.lang.String getAddressLine2() {
@@ -208,14 +208,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.City</code>
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.City, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.City</code>
 	 */
 	@javax.persistence.Column(name = "City", nullable = false, length = 30)
 	public java.lang.String getCity() {
@@ -223,14 +223,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.StateProvinceName</code>
 	 */
 	public void setStateProvinceName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.StateProvinceName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.StateProvinceName</code>
 	 */
 	@javax.persistence.Column(name = "StateProvinceName", nullable = false, length = 50)
 	public java.lang.String getStateProvinceName() {
@@ -238,14 +238,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.PostalCode</code>
 	 */
 	public void setPostalCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.PostalCode, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.PostalCode</code>
 	 */
 	@javax.persistence.Column(name = "PostalCode", nullable = false, length = 15)
 	public java.lang.String getPostalCode() {
@@ -253,14 +253,14 @@ public class vVendor extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.CountryRegionName</code>
 	 */
 	public void setCountryRegionName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor.CountryRegionName, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Purchasing.vVendor.CountryRegionName</code>
 	 */
 	@javax.persistence.Column(name = "CountryRegionName", nullable = false, length = 50)
 	public java.lang.String getCountryRegionName() {

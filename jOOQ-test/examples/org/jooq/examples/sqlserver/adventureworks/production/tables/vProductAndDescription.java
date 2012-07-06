@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class vProductAndDescription extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription> {
 
-	private static final long serialVersionUID = 173998083;
+	private static final long serialVersionUID = -977922049;
 
 	/**
 	 * The singleton instance of Production.vProductAndDescription
@@ -24,27 +24,27 @@ public class vProductAndDescription extends org.jooq.impl.TableImpl<org.jooq.exa
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductAndDescription.ProductID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductAndDescription.Name</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductAndDescription.ProductModel</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription, java.lang.String> ProductModel = createField("ProductModel", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductAndDescription.CultureID</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription, java.lang.String> CultureID = createField("CultureID", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.vProductAndDescription.Description</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription, java.lang.String> Description = createField("Description", org.jooq.impl.SQLDataType.NVARCHAR, this);
 

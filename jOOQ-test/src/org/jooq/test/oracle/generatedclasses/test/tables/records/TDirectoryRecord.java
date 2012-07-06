@@ -10,21 +10,21 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = -2033765815;
+	private static final long serialVersionUID = 245485765;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_DIRECTORY.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_DIRECTORY.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -33,9 +33,9 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_DIRECTORY.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> fetchTDirectoryList() {
 		return create()
@@ -45,9 +45,9 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT PK_T_DIRECTORY_SELF
 	 * FOREIGN KEY (PARENT_ID)
 	 * REFERENCES TEST.T_DIRECTORY (ID)
@@ -58,9 +58,9 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT PK_T_DIRECTORY_SELF
 	 * FOREIGN KEY (PARENT_ID)
 	 * REFERENCES TEST.T_DIRECTORY (ID)
@@ -72,9 +72,9 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT PK_T_DIRECTORY_SELF
 	 * FOREIGN KEY (PARENT_ID)
 	 * REFERENCES TEST.T_DIRECTORY (ID)
@@ -88,14 +88,14 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>
 	 */
 	public void setIsDirectory(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.IS_DIRECTORY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>
 	 */
 	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 7)
 	public java.lang.Integer getIsDirectory() {
@@ -103,14 +103,14 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DIRECTORY.name</code>
 	 */
 	@javax.persistence.Column(name = "name", length = 50)
 	public java.lang.String getName() {

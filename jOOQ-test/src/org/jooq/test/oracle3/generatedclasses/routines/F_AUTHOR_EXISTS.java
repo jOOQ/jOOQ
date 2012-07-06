@@ -8,16 +8,16 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F_AUTHOR_EXISTS extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1135944288;
+	private static final long serialVersionUID = -919486931;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_AUTHOR_EXISTS.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_AUTHOR_EXISTS.AUTHOR_NAME</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -32,7 +32,7 @@ public class F_AUTHOR_EXISTS extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>AUTHOR_NAME</code> parameter to the routine
+	 * Set the <code>AUTHOR_NAME</code> parameter IN value to the routine
 	 */
 	public void setAUTHOR_NAME(java.lang.String value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.routines.F_AUTHOR_EXISTS.AUTHOR_NAME, value);

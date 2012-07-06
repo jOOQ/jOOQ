@@ -8,30 +8,30 @@ package org.jooq.test.derby.generatedclasses.tables.records;
  */
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -605499140;
+	private static final long serialVersionUID = 582252321;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord> fetchXUnusedList() {
 		return create()
@@ -42,9 +42,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record> fetchXTestCase_85List() {
 		return create()
@@ -55,9 +55,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69List() {
 		return create()
@@ -67,41 +67,41 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_UNUSED.NAME</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.NAME, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.X_UNUSED.NAME</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.BIG_INTEGER</code>
 	 */
 	public void setBigInteger(java.math.BigInteger value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.BIG_INTEGER, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.BIG_INTEGER</code>
 	 */
 	public java.math.BigInteger getBigInteger() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.BIG_INTEGER);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.ID_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES TEST.X_UNUSED (ID, NAME)
@@ -112,9 +112,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.ID_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES TEST.X_UNUSED (ID, NAME)
@@ -125,9 +125,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.ID_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES TEST.X_UNUSED (ID, NAME)
@@ -142,121 +142,121 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.CLASS</code>
 	 */
 	public void setClass_(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.CLASS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.CLASS</code>
 	 */
 	public java.lang.Integer getClass_() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.CLASS);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.FIELDS</code>
 	 */
 	public void setFields_(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.FIELDS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.FIELDS</code>
 	 */
 	public java.lang.Integer getFields_() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.FIELDS);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.CONFIGURATION</code>
 	 */
 	public void setConfiguration_(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.CONFIGURATION, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.CONFIGURATION</code>
 	 */
 	public java.lang.Integer getConfiguration_() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.CONFIGURATION);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.U_D_T</code>
 	 */
 	public void setUDT(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.U_D_T, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.U_D_T</code>
 	 */
 	public java.lang.Integer getUDT() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.U_D_T);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.META_DATA</code>
 	 */
 	public void setMetaData_(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.META_DATA, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.META_DATA</code>
 	 */
 	public java.lang.Integer getMetaData_() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.META_DATA);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.TYPE0</code>
 	 */
 	public void setType0_(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.TYPE0, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.TYPE0</code>
 	 */
 	public java.lang.Integer getType0_() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.TYPE0);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.PRIMARY_KEY</code>
 	 */
 	public void setPrimaryKey(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.PRIMARY_KEY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.PRIMARY_KEY</code>
 	 */
 	public java.lang.Integer getPrimaryKey() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.PRIMARY_KEY);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.PRIMARYKEY</code>
 	 */
 	public void setPrimarykey(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.PRIMARYKEY, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.PRIMARYKEY</code>
 	 */
 	public java.lang.Integer getPrimarykey() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.PRIMARYKEY);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.NAME_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES TEST.X_UNUSED (ID, NAME)
@@ -267,9 +267,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.NAME_REF</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
 	 * REFERENCES TEST.X_UNUSED (ID, NAME)
@@ -280,14 +280,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.FIELD 737</code>
 	 */
 	public void setField_737(java.math.BigDecimal value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XUnused.FIELD_737, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.X_UNUSED.FIELD 737</code>
 	 */
 	public java.math.BigDecimal getField_737() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.FIELD_737);

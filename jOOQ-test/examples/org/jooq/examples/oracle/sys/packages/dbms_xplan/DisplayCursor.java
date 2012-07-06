@@ -8,26 +8,26 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -2012132358;
+	private static final long serialVersionUID = -1750401026;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.SQL_ID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQL_ID = createParameter("SQL_ID", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.CURSOR_CHILD_NO</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigInteger> CURSOR_CHILD_NO = createParameter("CURSOR_CHILD_NO", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.FORMAT</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -44,7 +44,7 @@ public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>SQL_ID</code> parameter to the routine
+	 * Set the <code>SQL_ID</code> parameter IN value to the routine
 	 */
 	public void setSqlId(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayCursor.SQL_ID, value);
@@ -60,7 +60,7 @@ public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>CURSOR_CHILD_NO</code> parameter to the routine
+	 * Set the <code>CURSOR_CHILD_NO</code> parameter IN value to the routine
 	 */
 	public void setCursorChildNo(java.math.BigInteger value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayCursor.CURSOR_CHILD_NO, value);
@@ -76,7 +76,7 @@ public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the routine
+	 * Set the <code>FORMAT</code> parameter IN value to the routine
 	 */
 	public void setFormat(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayCursor.FORMAT, value);

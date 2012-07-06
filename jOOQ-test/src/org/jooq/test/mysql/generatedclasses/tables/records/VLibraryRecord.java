@@ -10,17 +10,17 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
  */
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1030836399;
+	private static final long serialVersionUID = 1172762543;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_library.AUTHOR</code>
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.VLibrary.AUTHOR, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_library.AUTHOR</code>
 	 */
 	public java.lang.String getAuthor() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.VLibrary.AUTHOR);

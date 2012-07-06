@@ -11,9 +11,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_11</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_11
 	 * FOREIGN KEY (REF_11)
 	 * REFERENCES TEST.T_658_11 (ID)
@@ -22,9 +22,9 @@ public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serial
 	public void setREF_11(org.jooq.test.oracle3.generatedclasses.enums.T_658_11 value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_11</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_11
 	 * FOREIGN KEY (REF_11)
 	 * REFERENCES TEST.T_658_11 (ID)
@@ -34,9 +34,9 @@ public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serial
 	public org.jooq.test.oracle3.generatedclasses.enums.T_658_11 getREF_11();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_21</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_21
 	 * FOREIGN KEY (REF_21)
 	 * REFERENCES TEST.T_658_21 (ID)
@@ -45,9 +45,9 @@ public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serial
 	public void setREF_21(org.jooq.test.oracle3.generatedclasses.enums.T_658_21 value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_21</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_21
 	 * FOREIGN KEY (REF_21)
 	 * REFERENCES TEST.T_658_21 (ID)
@@ -57,9 +57,9 @@ public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serial
 	public org.jooq.test.oracle3.generatedclasses.enums.T_658_21 getREF_21();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_31</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_31
 	 * FOREIGN KEY (REF_31)
 	 * REFERENCES TEST.T_658_31 (ID)
@@ -68,9 +68,9 @@ public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serial
 	public void setREF_31(org.jooq.test.oracle3.generatedclasses.enums.T_658_31 value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_31</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_31
 	 * FOREIGN KEY (REF_31)
 	 * REFERENCES TEST.T_658_31 (ID)
@@ -80,9 +80,9 @@ public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serial
 	public org.jooq.test.oracle3.generatedclasses.enums.T_658_31 getREF_31();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_12</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_12
 	 * FOREIGN KEY (REF_12)
 	 * REFERENCES TEST.T_658_12 (ID)
@@ -91,9 +91,9 @@ public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serial
 	public void setREF_12(org.jooq.test.oracle3.generatedclasses.enums.T_658_12 value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_12</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_12
 	 * FOREIGN KEY (REF_12)
 	 * REFERENCES TEST.T_658_12 (ID)
@@ -103,9 +103,9 @@ public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serial
 	public org.jooq.test.oracle3.generatedclasses.enums.T_658_12 getREF_12();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_22</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_22
 	 * FOREIGN KEY (REF_22)
 	 * REFERENCES TEST.T_658_22 (ID)
@@ -114,9 +114,9 @@ public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serial
 	public void setREF_22(org.jooq.test.oracle3.generatedclasses.enums.T_658_22 value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_22</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_22
 	 * FOREIGN KEY (REF_22)
 	 * REFERENCES TEST.T_658_22 (ID)
@@ -126,9 +126,9 @@ public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serial
 	public org.jooq.test.oracle3.generatedclasses.enums.T_658_22 getREF_22();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_32</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_32
 	 * FOREIGN KEY (REF_32)
 	 * REFERENCES TEST.T_658_32 (ID)
@@ -137,9 +137,9 @@ public interface T_658_REF_INTERFACE extends java.lang.Cloneable, java.io.Serial
 	public void setREF_32(org.jooq.test.oracle3.generatedclasses.enums.T_658_32 value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_658_REF.REF_32</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_658_32
 	 * FOREIGN KEY (REF_32)
 	 * REFERENCES TEST.T_658_32 (ID)

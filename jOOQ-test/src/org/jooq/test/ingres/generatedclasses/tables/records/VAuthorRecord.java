@@ -8,87 +8,87 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  */
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1274843960;
+	private static final long serialVersionUID = -370874392;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.id</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.id</code>
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.first_name</code>
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.FIRST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.first_name</code>
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.FIRST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.last_name</code>
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.LAST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.last_name</code>
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.LAST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.date_of_birth</code>
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.DATE_OF_BIRTH, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.date_of_birth</code>
 	 */
 	public java.sql.Date getDateOfBirth() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.DATE_OF_BIRTH);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.year_of_birth</code>
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.YEAR_OF_BIRTH, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.year_of_birth</code>
 	 */
 	public java.lang.Integer getYearOfBirth() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.YEAR_OF_BIRTH);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.address</code>
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.ADDRESS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test.v_author.address</code>
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.VAuthor.ADDRESS);

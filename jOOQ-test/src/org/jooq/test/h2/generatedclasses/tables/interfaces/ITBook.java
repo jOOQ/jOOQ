@@ -12,22 +12,22 @@ public interface ITBook extends java.io.Serializable {
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
 	 * The book ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
 	 * The author ID in entity 'author'
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -38,7 +38,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * The author ID in entity 'author'
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -47,9 +47,9 @@ public interface ITBook extends java.io.Serializable {
 	public java.lang.Integer getAuthorId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -58,9 +58,9 @@ public interface ITBook extends java.io.Serializable {
 	public void setCoAuthorId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
@@ -69,12 +69,12 @@ public interface ITBook extends java.io.Serializable {
 	public java.lang.Integer getCoAuthorId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
 	 */
 	public void setDetailsId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
 	 */
 	public java.lang.Integer getDetailsId();
 
@@ -101,7 +101,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * The language of the book
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
@@ -112,7 +112,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * The language of the book
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES PUBLIC.T_LANGUAGE (ID)

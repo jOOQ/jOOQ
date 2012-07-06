@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -1678006744;
+	private static final long serialVersionUID = -724459676;
 
 	/**
 	 * The singleton instance of PUBLIC.X_TEST_CASE_71
@@ -24,16 +24,16 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_TEST_CASE_71.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES PUBLIC.X_TEST_CASE_64_69 (ID)

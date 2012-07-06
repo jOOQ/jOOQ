@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class BillOfMaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials> {
 
-	private static final long serialVersionUID = 1568146554;
+	private static final long serialVersionUID = -1631290030;
 
 	/**
 	 * The singleton instance of Production.BillOfMaterials
@@ -24,16 +24,16 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.BillOfMaterials.BillOfMaterialsID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.Integer> BillOfMaterialsID = createField("BillOfMaterialsID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.ProductAssemblyID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_BillOfMaterials_Product_ProductAssemblyID
 	 * FOREIGN KEY (ProductAssemblyID)
 	 * REFERENCES Production.Product (ProductID)
@@ -42,9 +42,9 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.Integer> ProductAssemblyID = createField("ProductAssemblyID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.ComponentID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_BillOfMaterials_Product_ComponentID
 	 * FOREIGN KEY (ComponentID)
 	 * REFERENCES Production.Product (ProductID)
@@ -53,19 +53,19 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.Integer> ComponentID = createField("ComponentID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.StartDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.sql.Timestamp> StartDate = createField("StartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.EndDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.sql.Timestamp> EndDate = createField("EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.UnitMeasureCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_BillOfMaterials_UnitMeasure_UnitMeasureCode
 	 * FOREIGN KEY (UnitMeasureCode)
 	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
@@ -74,17 +74,17 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.String> UnitMeasureCode = createField("UnitMeasureCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.BOMLevel</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.Short> BOMLevel = createField("BOMLevel", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.PerAssemblyQty</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.math.BigDecimal> PerAssemblyQty = createField("PerAssemblyQty", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.BillOfMaterials.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

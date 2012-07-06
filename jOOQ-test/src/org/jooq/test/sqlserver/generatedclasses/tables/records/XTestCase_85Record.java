@@ -8,30 +8,30 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
  */
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 1057391854;
+	private static final long serialVersionUID = -1914713059;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.x_test_case_85.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.x_test_case_85.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.x_test_case_85.x_unused_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
 	 * REFERENCES dbo.x_unused (id, name)
@@ -42,9 +42,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.x_test_case_85.x_unused_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
 	 * REFERENCES dbo.x_unused (id, name)
@@ -55,9 +55,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.x_test_case_85.x_unused_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
 	 * REFERENCES dbo.x_unused (id, name)
@@ -72,9 +72,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.x_test_case_85.x_unused_name</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
 	 * REFERENCES dbo.x_unused (id, name)
@@ -85,9 +85,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.x_test_case_85.x_unused_name</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
 	 * REFERENCES dbo.x_unused (id, name)

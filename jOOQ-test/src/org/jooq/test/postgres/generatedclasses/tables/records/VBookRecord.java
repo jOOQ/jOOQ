@@ -10,17 +10,17 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_book", schema = "public")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 737609274;
+	private static final long serialVersionUID = 1712150718;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.id</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.id</code>
 	 */
 	@javax.persistence.Column(name = "id", precision = 32)
 	public java.lang.Integer getId() {
@@ -28,14 +28,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.author_id</code>
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.AUTHOR_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.author_id</code>
 	 */
 	@javax.persistence.Column(name = "author_id", precision = 32)
 	public java.lang.Integer getAuthorId() {
@@ -43,14 +43,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.co_author_id</code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.CO_AUTHOR_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.co_author_id</code>
 	 */
 	@javax.persistence.Column(name = "co_author_id", precision = 32)
 	public java.lang.Integer getCoAuthorId() {
@@ -58,14 +58,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.details_id</code>
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.DETAILS_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.details_id</code>
 	 */
 	@javax.persistence.Column(name = "details_id", precision = 32)
 	public java.lang.Integer getDetailsId() {
@@ -73,14 +73,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.title</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.title</code>
 	 */
 	@javax.persistence.Column(name = "title", length = 400)
 	public java.lang.String getTitle() {
@@ -88,14 +88,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.published_in</code>
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.PUBLISHED_IN, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.published_in</code>
 	 */
 	@javax.persistence.Column(name = "published_in", precision = 32)
 	public java.lang.Integer getPublishedIn() {
@@ -103,14 +103,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.language_id</code>
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.LANGUAGE_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.language_id</code>
 	 */
 	@javax.persistence.Column(name = "language_id", precision = 32)
 	public java.lang.Integer getLanguageId() {
@@ -118,14 +118,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.content_text</code>
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.CONTENT_TEXT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.content_text</code>
 	 */
 	@javax.persistence.Column(name = "content_text")
 	public java.lang.String getContentText() {
@@ -133,14 +133,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.content_pdf</code>
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.CONTENT_PDF, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.content_pdf</code>
 	 */
 	@javax.persistence.Column(name = "content_pdf")
 	public byte[] getContentPdf() {
@@ -148,14 +148,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.status</code>
 	 */
 	public void setStatus(org.jooq.test.postgres.generatedclasses.enums.UBookStatus value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.STATUS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.v_book.status</code>
 	 */
 	@javax.persistence.Column(name = "status")
 	public org.jooq.test.postgres.generatedclasses.enums.UBookStatus getStatus() {

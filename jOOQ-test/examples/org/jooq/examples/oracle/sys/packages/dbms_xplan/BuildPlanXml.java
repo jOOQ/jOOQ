@@ -8,49 +8,49 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = -488952548;
+	private static final long serialVersionUID = 518448080;
 
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.RETURN_VALUE</code>
+	 * <p>
 	 * The SQL type of this item (UNDEFINED, XMLTYPE) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.TABLE_NAME</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> TABLE_NAME = createParameter("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.STATEMENT_ID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> STATEMENT_ID = createParameter("STATEMENT_ID", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.PLAN_ID</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> PLAN_ID = createParameter("PLAN_ID", org.jooq.impl.SQLDataType.NUMERIC, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.FORMAT</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.FILTER_PREDS</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FILTER_PREDS = createParameter("FILTER_PREDS", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.PLAN_TAG</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> PLAN_TAG = createParameter("PLAN_TAG", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.REPORT_REF</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> REPORT_REF = createParameter("REPORT_REF", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -71,7 +71,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>TABLE_NAME</code> parameter to the routine
+	 * Set the <code>TABLE_NAME</code> parameter IN value to the routine
 	 */
 	public void setTableName(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.TABLE_NAME, value);
@@ -87,7 +87,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>STATEMENT_ID</code> parameter to the routine
+	 * Set the <code>STATEMENT_ID</code> parameter IN value to the routine
 	 */
 	public void setStatementId(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.STATEMENT_ID, value);
@@ -103,7 +103,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>PLAN_ID</code> parameter to the routine
+	 * Set the <code>PLAN_ID</code> parameter IN value to the routine
 	 */
 	public void setPlanId(java.lang.Number value) {
 		setNumber(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.PLAN_ID, value);
@@ -119,7 +119,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the routine
+	 * Set the <code>FORMAT</code> parameter IN value to the routine
 	 */
 	public void setFormat(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.FORMAT, value);
@@ -135,7 +135,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>FILTER_PREDS</code> parameter to the routine
+	 * Set the <code>FILTER_PREDS</code> parameter IN value to the routine
 	 */
 	public void setFilterPreds(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.FILTER_PREDS, value);
@@ -151,7 +151,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>PLAN_TAG</code> parameter to the routine
+	 * Set the <code>PLAN_TAG</code> parameter IN value to the routine
 	 */
 	public void setPlanTag(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.PLAN_TAG, value);
@@ -167,7 +167,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>REPORT_REF</code> parameter to the routine
+	 * Set the <code>REPORT_REF</code> parameter IN value to the routine
 	 */
 	public void setReportRef(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml.REPORT_REF, value);

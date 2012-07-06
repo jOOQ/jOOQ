@@ -8,30 +8,30 @@ package org.jooq.test.derby.generatedclasses.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 713299790;
+	private static final long serialVersionUID = 387167046;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_BOOK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TBook.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_BOOK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TBook.ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_BOOK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.derby.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()
@@ -41,9 +41,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -54,9 +54,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -67,9 +67,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -83,9 +83,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -96,9 +96,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -109,9 +109,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES TEST.T_AUTHOR (ID)
@@ -125,51 +125,51 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.DETAILS_ID</code>
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TBook.DETAILS_ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.DETAILS_ID</code>
 	 */
 	public java.lang.Integer getDetailsId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TBook.DETAILS_ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.TITLE</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TBook.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.TITLE</code>
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TBook.TITLE);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.PUBLISHED_IN</code>
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TBook.PUBLISHED_IN, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.PUBLISHED_IN</code>
 	 */
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TBook.PUBLISHED_IN);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.LANGUAGE_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES TEST.T_LANGUAGE (ID)
@@ -180,9 +180,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.LANGUAGE_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
 	 * FOREIGN KEY (LANGUAGE_ID)
 	 * REFERENCES TEST.T_LANGUAGE (ID)
@@ -193,28 +193,28 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CONTENT_TEXT</code>
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TBook.CONTENT_TEXT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CONTENT_TEXT</code>
 	 */
 	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TBook.CONTENT_TEXT);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CONTENT_PDF</code>
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TBook.CONTENT_PDF, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_BOOK.CONTENT_PDF</code>
 	 */
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TBook.CONTENT_PDF);

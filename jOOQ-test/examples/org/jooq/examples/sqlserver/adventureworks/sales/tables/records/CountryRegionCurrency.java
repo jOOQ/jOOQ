@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> {
 
-	private static final long serialVersionUID = 1179363900;
+	private static final long serialVersionUID = 2017892180;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CountryRegionCurrency.CountryRegionCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CountryRegionCurrency_CountryRegion_CountryRegionCode
 	 * FOREIGN KEY (CountryRegionCode)
 	 * REFERENCES Person.CountryRegion (CountryRegionCode)
@@ -30,11 +30,11 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CountryRegionCurrency.CountryRegionCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CountryRegionCurrency_CountryRegion_CountryRegionCode
 	 * FOREIGN KEY (CountryRegionCode)
 	 * REFERENCES Person.CountryRegion (CountryRegionCode)
@@ -46,11 +46,11 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CountryRegionCurrency.CurrencyCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CountryRegionCurrency_Currency_CurrencyCode
 	 * FOREIGN KEY (CurrencyCode)
 	 * REFERENCES Sales.Currency (CurrencyCode)
@@ -61,11 +61,11 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Sales.CountryRegionCurrency.CurrencyCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_CountryRegionCurrency_Currency_CurrencyCode
 	 * FOREIGN KEY (CurrencyCode)
 	 * REFERENCES Sales.Currency (CurrencyCode)
@@ -77,14 +77,14 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CountryRegionCurrency.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Sales.CountryRegionCurrency.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

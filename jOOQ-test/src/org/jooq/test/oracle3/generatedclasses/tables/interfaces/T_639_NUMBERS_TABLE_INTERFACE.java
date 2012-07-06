@@ -11,127 +11,127 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_639_NUMBERS_TABLE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BYTE</code>
 	 */
 	public void setBYTE(java.lang.Byte value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BYTE</code>
 	 */
 	@javax.persistence.Column(name = "BYTE", precision = 2)
 	public java.lang.Byte getBYTE();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>
 	 */
 	public void setSHORT(java.lang.Short value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>
 	 */
 	@javax.persistence.Column(name = "SHORT", precision = 4)
 	public java.lang.Short getSHORT();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>
 	 */
 	public void setINTEGER(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>
 	 */
 	@javax.persistence.Column(name = "INTEGER", precision = 7)
 	public java.lang.Integer getINTEGER();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.LONG</code>
 	 */
 	public void setLONG(java.lang.Long value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.LONG</code>
 	 */
 	@javax.persistence.Column(name = "LONG", precision = 18)
 	public java.lang.Long getLONG();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
 	 */
 	public void setBYTE_DECIMAL(java.lang.Byte value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
 	 */
 	@javax.persistence.Column(name = "BYTE_DECIMAL", precision = 2)
 	public java.lang.Byte getBYTE_DECIMAL();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
 	 */
 	public void setSHORT_DECIMAL(java.lang.Short value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
 	 */
 	@javax.persistence.Column(name = "SHORT_DECIMAL", precision = 4)
 	public java.lang.Short getSHORT_DECIMAL();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>
 	 */
 	public void setINTEGER_DECIMAL(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>
 	 */
 	@javax.persistence.Column(name = "INTEGER_DECIMAL", precision = 9)
 	public java.lang.Integer getINTEGER_DECIMAL();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
 	 */
 	public void setLONG_DECIMAL(java.lang.Long value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
 	 */
 	@javax.persistence.Column(name = "LONG_DECIMAL", precision = 18)
 	public java.lang.Long getLONG_DECIMAL();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>
 	 */
 	public void setBIG_INTEGER(java.math.BigInteger value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>
 	 */
 	@javax.persistence.Column(name = "BIG_INTEGER", precision = 22)
 	public java.math.BigInteger getBIG_INTEGER();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
 	 */
 	public void setBIG_DECIMAL(java.math.BigDecimal value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
 	 */
 	@javax.persistence.Column(name = "BIG_DECIMAL", precision = 22, scale = 5)
 	public java.math.BigDecimal getBIG_DECIMAL();

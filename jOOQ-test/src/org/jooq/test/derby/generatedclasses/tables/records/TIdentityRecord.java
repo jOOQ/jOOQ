@@ -8,31 +8,31 @@ package org.jooq.test.derby.generatedclasses.tables.records;
  */
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 836275544;
+	private static final long serialVersionUID = 1537700498;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_IDENTITY.ID</code>
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TIdentity.ID, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_IDENTITY.ID</code>
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TIdentity.ID);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_IDENTITY.VAL</code>
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TIdentity.VAL, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_IDENTITY.VAL</code>
 	 */
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TIdentity.VAL);

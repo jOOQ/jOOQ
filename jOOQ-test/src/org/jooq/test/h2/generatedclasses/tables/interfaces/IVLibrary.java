@@ -9,22 +9,22 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface IVLibrary extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_LIBRARY.AUTHOR</code>
 	 */
 	public void setAuthor(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_LIBRARY.AUTHOR</code>
 	 */
 	public java.lang.String getAuthor();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_LIBRARY.TITLE</code>
 	 */
 	public void setTitle(java.lang.String value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.V_LIBRARY.TITLE</code>
 	 */
 	public java.lang.String getTitle();
 }

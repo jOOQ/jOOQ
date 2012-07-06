@@ -9,12 +9,12 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IClass extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.CLASS.CLASS</code>
 	 */
 	public void setClass_(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.CLASS.CLASS</code>
 	 */
 	public java.lang.Integer getClass_();
 }

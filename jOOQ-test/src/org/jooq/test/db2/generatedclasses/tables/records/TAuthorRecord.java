@@ -8,30 +8,30 @@ package org.jooq.test.db2.generatedclasses.tables.records;
  */
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -923219109;
+	private static final long serialVersionUID = -2046106057;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>LUKAS.T_AUTHOR.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>LUKAS.T_AUTHOR.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.ID);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>LUKAS.T_AUTHOR.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
 		return create()
@@ -41,9 +41,9 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>LUKAS.T_AUTHOR.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.util.List<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
 		return create()
@@ -53,70 +53,70 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_AUTHOR.FIRST_NAME</code>
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.FIRST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_AUTHOR.FIRST_NAME</code>
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.FIRST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_AUTHOR.LAST_NAME</code>
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.LAST_NAME, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_AUTHOR.LAST_NAME</code>
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.LAST_NAME);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.DATE_OF_BIRTH, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_AUTHOR.DATE_OF_BIRTH</code>
 	 */
 	public java.sql.Date getDateOfBirth() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.DATE_OF_BIRTH);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_AUTHOR.YEAR_OF_BIRTH</code>
 	 */
 	public java.lang.Integer getYearOfBirth() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_AUTHOR.ADDRESS</code>
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.ADDRESS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>LUKAS.T_AUTHOR.ADDRESS</code>
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.ADDRESS);

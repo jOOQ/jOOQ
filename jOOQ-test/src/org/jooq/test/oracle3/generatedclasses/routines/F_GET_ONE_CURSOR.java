@@ -8,16 +8,16 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F_GET_ONE_CURSOR extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 741945551;
+	private static final long serialVersionUID = 498066843;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_GET_ONE_CURSOR.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_GET_ONE_CURSOR.BOOK_IDS</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> BOOK_IDS = createParameter("BOOK_IDS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
 
@@ -32,7 +32,7 @@ public class F_GET_ONE_CURSOR extends org.jooq.impl.AbstractRoutine<org.jooq.Res
 	}
 
 	/**
-	 * Set the <code>BOOK_IDS</code> parameter to the routine
+	 * Set the <code>BOOK_IDS</code> parameter IN value to the routine
 	 */
 	public void setBOOK_IDS(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.routines.F_GET_ONE_CURSOR.BOOK_IDS, value);

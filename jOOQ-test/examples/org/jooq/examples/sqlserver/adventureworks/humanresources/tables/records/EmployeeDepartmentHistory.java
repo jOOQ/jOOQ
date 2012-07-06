@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory> {
 
-	private static final long serialVersionUID = -620207493;
+	private static final long serialVersionUID = -361053321;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeDepartmentHistory_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -30,11 +30,11 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.EmployeeID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeDepartmentHistory_Employee_EmployeeID
 	 * FOREIGN KEY (EmployeeID)
 	 * REFERENCES HumanResources.Employee (EmployeeID)
@@ -46,11 +46,11 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.DepartmentID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeDepartmentHistory_Department_DepartmentID
 	 * FOREIGN KEY (DepartmentID)
 	 * REFERENCES HumanResources.Department (DepartmentID)
@@ -61,11 +61,11 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.DepartmentID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeDepartmentHistory_Department_DepartmentID
 	 * FOREIGN KEY (DepartmentID)
 	 * REFERENCES HumanResources.Department (DepartmentID)
@@ -77,11 +77,11 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.ShiftID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeDepartmentHistory_Shift_ShiftID
 	 * FOREIGN KEY (ShiftID)
 	 * REFERENCES HumanResources.Shift (ShiftID)
@@ -92,11 +92,11 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.ShiftID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_EmployeeDepartmentHistory_Shift_ShiftID
 	 * FOREIGN KEY (ShiftID)
 	 * REFERENCES HumanResources.Shift (ShiftID)
@@ -108,18 +108,18 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.StartDate</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.StartDate, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.StartDate</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Column(name = "StartDate", nullable = false)
 	public java.sql.Timestamp getStartDate() {
@@ -127,14 +127,14 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.EndDate</code>
 	 */
 	public void setEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.EndDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.EndDate</code>
 	 */
 	@javax.persistence.Column(name = "EndDate")
 	public java.sql.Timestamp getEndDate() {
@@ -142,14 +142,14 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>HumanResources.EmployeeDepartmentHistory.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

@@ -8,31 +8,31 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 744617772;
+	private static final long serialVersionUID = 458361658;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>V_LIBRARY.AUTHOR</code>
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.VLibrary.AUTHOR, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>V_LIBRARY.AUTHOR</code>
 	 */
 	public java.lang.String getAuthor() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VLibrary.AUTHOR);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>V_LIBRARY.TITLE</code>
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.VLibrary.TITLE, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>V_LIBRARY.TITLE</code>
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VLibrary.TITLE);

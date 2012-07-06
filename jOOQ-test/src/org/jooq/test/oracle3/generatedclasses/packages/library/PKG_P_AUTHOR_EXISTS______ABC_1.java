@@ -8,16 +8,16 @@ package org.jooq.test.oracle3.generatedclasses.packages.library;
  */
 public class PKG_P_AUTHOR_EXISTS______ABC_1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 703779873;
+	private static final long serialVersionUID = 1975559610;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.LIBRARY.PKG_P_AUTHOR_EXISTS.AUTHOR_NAME</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.LIBRARY.PKG_P_AUTHOR_EXISTS.RESULT</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RESULT = createParameter("RESULT", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -33,12 +33,15 @@ public class PKG_P_AUTHOR_EXISTS______ABC_1 extends org.jooq.impl.AbstractRoutin
 	}
 
 	/**
-	 * Set the <code>AUTHOR_NAME</code> parameter to the routine
+	 * Set the <code>AUTHOR_NAME</code> parameter IN value to the routine
 	 */
 	public void setAUTHOR_NAME(java.lang.String value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.packages.library.PKG_P_AUTHOR_EXISTS______ABC_1.AUTHOR_NAME, value);
 	}
 
+	/**
+	 * Get the <code>RESULT</code> parameter OUT value from the routine
+	 */
 	public java.math.BigDecimal getRESULT() {
 		return getValue(RESULT);
 	}

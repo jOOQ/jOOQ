@@ -8,16 +8,16 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 2001399338;
+	private static final long serialVersionUID = 481291208;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_CREATE_AUTHOR_BY_NAME.FIRST_NAME</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.P_CREATE_AUTHOR_BY_NAME.LAST_NAME</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -32,14 +32,14 @@ public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang
 	}
 
 	/**
-	 * Set the <code>FIRST_NAME</code> parameter to the routine
+	 * Set the <code>FIRST_NAME</code> parameter IN value to the routine
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.routines.PCreateAuthorByName.FIRST_NAME, value);
 	}
 
 	/**
-	 * Set the <code>LAST_NAME</code> parameter to the routine
+	 * Set the <code>LAST_NAME</code> parameter IN value to the routine
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.routines.PCreateAuthorByName.LAST_NAME, value);

@@ -41,23 +41,23 @@ public enum TLanguage implements org.jooq.MasterDataType<java.lang.Integer> {
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>public.t_language.id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final java.lang.Integer getId() {
 		return id;
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_language.cd</code>
 	 */
 	public final java.lang.String getCd() {
 		return cd;
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>public.t_language.description</code>
 	 */
 	public final java.lang.String getDescription() {
 		return description;

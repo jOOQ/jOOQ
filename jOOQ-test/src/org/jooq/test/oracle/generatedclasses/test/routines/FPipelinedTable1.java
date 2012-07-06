@@ -8,11 +8,11 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FPipelinedTable1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord> {
 
-	private static final long serialVersionUID = 1725977221;
+	private static final long serialVersionUID = 1707283595;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_PIPELINED_TABLE1.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord.class));
 

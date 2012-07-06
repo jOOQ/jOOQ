@@ -10,21 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ScrapReason", schema = "Production")
 public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> {
 
-	private static final long serialVersionUID = 326815798;
+	private static final long serialVersionUID = 2008947888;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ScrapReason.ScrapReasonID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setScrapReasonID(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.ScrapReasonID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.ScrapReason.ScrapReasonID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ScrapReasonID", unique = true, nullable = false, precision = 5)
@@ -33,14 +33,14 @@ public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ScrapReason.Name</code>
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.Name, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ScrapReason.Name</code>
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -48,14 +48,14 @@ public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ScrapReason.ModifiedDate</code>
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.ModifiedDate, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.ScrapReason.ModifiedDate</code>
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {

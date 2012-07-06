@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CityRecord> {
 
-	private static final long serialVersionUID = -509762746;
+	private static final long serialVersionUID = 127579483;
 
 	/**
 	 * The singleton instance of sakila.city
@@ -24,21 +24,21 @@ public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>sakila.city.city_id</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CityRecord, java.lang.Short> CITY_ID = createField("city_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.city.city</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CityRecord, java.lang.String> CITY_ = createField("city", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.city.country_id</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_city_country
 	 * FOREIGN KEY (country_id)
 	 * REFERENCES sakila.country (country_id)
@@ -47,7 +47,7 @@ public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CityRecord, java.lang.Short> COUNTRY_ID = createField("country_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>sakila.city.last_update</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CityRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

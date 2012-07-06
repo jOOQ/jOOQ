@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -77851109;
+	private static final long serialVersionUID = 220567296;
 
 	/**
 	 * The singleton instance of test2.t_author
@@ -27,8 +27,8 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 
 	/**
 	 * The author ID
-	 * 
-	 * PRIMARY KEY
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 

@@ -8,26 +8,26 @@ package org.jooq.test.oracle.generatedclasses.test.packages.library;
  */
 public class PkgF378 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 2006168205;
+	private static final long serialVersionUID = -170134380;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.LIBRARY.PKG_F378.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.LIBRARY.PKG_F378.I</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> I = createParameter("I", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.LIBRARY.PKG_F378.IO</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> IO = createParameter("IO", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.LIBRARY.PKG_F378.O</code>
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> O = createParameter("O", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -44,23 +44,29 @@ public class PkgF378 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal>
 	}
 
 	/**
-	 * Set the <code>I</code> parameter to the routine
+	 * Set the <code>I</code> parameter IN value to the routine
 	 */
 	public void setI(java.lang.Number value) {
 		setNumber(org.jooq.test.oracle.generatedclasses.test.packages.library.PkgF378.I, value);
 	}
 
 	/**
-	 * Set the <code>IO</code> parameter to the routine
+	 * Set the <code>IO</code> parameter IN value to the routine
 	 */
 	public void setIo(java.lang.Number value) {
 		setNumber(org.jooq.test.oracle.generatedclasses.test.packages.library.PkgF378.IO, value);
 	}
 
+	/**
+	 * Get the <code>IO</code> parameter OUT value from the routine
+	 */
 	public java.math.BigDecimal getIo() {
 		return getValue(IO);
 	}
 
+	/**
+	 * Get the <code>O</code> parameter OUT value from the routine
+	 */
 	public java.math.BigDecimal getO() {
 		return getValue(O);
 	}

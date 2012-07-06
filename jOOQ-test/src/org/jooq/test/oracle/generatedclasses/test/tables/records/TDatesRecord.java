@@ -10,21 +10,21 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -1288086985;
+	private static final long serialVersionUID = 706342957;
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_DATES.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.ID, value);
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>TEST.T_DATES.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -33,14 +33,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.D</code>
 	 */
 	public void setD(java.sql.Date value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.D, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.D</code>
 	 */
 	@javax.persistence.Column(name = "D", length = 7)
 	public java.sql.Date getD() {
@@ -48,14 +48,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.T</code>
 	 */
 	public void setT(java.sql.Timestamp value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.T, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.T</code>
 	 */
 	@javax.persistence.Column(name = "T", length = 11)
 	public java.sql.Timestamp getT() {
@@ -63,14 +63,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.TS</code>
 	 */
 	public void setTs(java.sql.Timestamp value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.TS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.TS</code>
 	 */
 	@javax.persistence.Column(name = "TS", length = 11)
 	public java.sql.Timestamp getTs() {
@@ -78,14 +78,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.D_INT</code>
 	 */
 	public void setDInt(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.D_INT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.D_INT</code>
 	 */
 	@javax.persistence.Column(name = "D_INT", precision = 7)
 	public java.lang.Integer getDInt() {
@@ -93,14 +93,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.TS_BIGINT</code>
 	 */
 	public void setTsBigint(java.lang.Long value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.TS_BIGINT, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.TS_BIGINT</code>
 	 */
 	@javax.persistence.Column(name = "TS_BIGINT", precision = 18)
 	public java.lang.Long getTsBigint() {
@@ -108,14 +108,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.I_Y</code>
 	 */
 	public void setIY(org.jooq.types.YearToMonth value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.I_Y, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.I_Y</code>
 	 */
 	@javax.persistence.Column(name = "I_Y", precision = 2)
 	public org.jooq.types.YearToMonth getIY() {
@@ -123,14 +123,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.I_D</code>
 	 */
 	public void setID(org.jooq.types.DayToSecond value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.I_D, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>TEST.T_DATES.I_D</code>
 	 */
 	@javax.persistence.Column(name = "I_D", precision = 2, scale = 6)
 	public org.jooq.types.DayToSecond getID() {

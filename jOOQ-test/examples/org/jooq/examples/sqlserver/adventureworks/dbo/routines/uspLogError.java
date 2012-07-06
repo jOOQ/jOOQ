@@ -8,11 +8,11 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class uspLogError extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 519838324;
+	private static final long serialVersionUID = 131263110;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>dbo.uspLogError.ErrorLogID</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> ErrorLogID = createParameter("ErrorLogID", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -26,12 +26,15 @@ public class uspLogError extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	}
 
 	/**
-	 * Set the <code>ErrorLogID</code> parameter to the routine
+	 * Set the <code>ErrorLogID</code> parameter IN value to the routine
 	 */
 	public void setErrorLogID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspLogError.ErrorLogID, value);
 	}
 
+	/**
+	 * Get the <code>ErrorLogID</code> parameter OUT value from the routine
+	 */
 	public java.lang.Integer getErrorLogID() {
 		return getValue(ErrorLogID);
 	}

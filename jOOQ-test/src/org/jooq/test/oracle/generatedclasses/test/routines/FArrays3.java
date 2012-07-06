@@ -8,16 +8,16 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FArrays3 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord> {
 
-	private static final long serialVersionUID = -1066217902;
+	private static final long serialVersionUID = 547503149;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_ARRAYS3.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>TEST.F_ARRAYS3.IN_ARRAY</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord.class));
 
@@ -32,7 +32,7 @@ public class FArrays3 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle
 	}
 
 	/**
-	 * Set the <code>IN_ARRAY</code> parameter to the routine
+	 * Set the <code>IN_ARRAY</code> parameter IN value to the routine
 	 */
 	public void setInArray(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.routines.FArrays3.IN_ARRAY, value);

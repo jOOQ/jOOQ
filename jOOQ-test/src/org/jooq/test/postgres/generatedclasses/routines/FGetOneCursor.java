@@ -8,16 +8,16 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = -908319895;
+	private static final long serialVersionUID = -983782365;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.f_get_one_cursor.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>public.f_get_one_cursor.book_ids</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer[]> BOOK_IDS = createParameter("book_ids", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType());
 
@@ -32,7 +32,7 @@ public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result
 	}
 
 	/**
-	 * Set the <code>book_ids</code> parameter to the routine
+	 * Set the <code>book_ids</code> parameter IN value to the routine
 	 */
 	public void setBookIds(java.lang.Integer[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.routines.FGetOneCursor.BOOK_IDS, value);

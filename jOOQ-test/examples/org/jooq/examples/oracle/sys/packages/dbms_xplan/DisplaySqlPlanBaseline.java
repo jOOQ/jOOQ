@@ -8,26 +8,26 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplaySqlPlanBaseline extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -1314026095;
+	private static final long serialVersionUID = -821961524;
 
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQL_PLAN_BASELINE.RETURN_VALUE</code>
 	 */
 	public static final org.jooq.Parameter<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQL_PLAN_BASELINE.SQL_HANDLE</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQL_HANDLE = createParameter("SQL_HANDLE", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQL_PLAN_BASELINE.PLAN_NAME</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> PLAN_NAME = createParameter("PLAN_NAME", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * An uncommented item
+	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQL_PLAN_BASELINE.FORMAT</code>
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -44,7 +44,7 @@ public class DisplaySqlPlanBaseline extends org.jooq.impl.AbstractRoutine<org.jo
 	}
 
 	/**
-	 * Set the <code>SQL_HANDLE</code> parameter to the routine
+	 * Set the <code>SQL_HANDLE</code> parameter IN value to the routine
 	 */
 	public void setSqlHandle(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline.SQL_HANDLE, value);
@@ -60,7 +60,7 @@ public class DisplaySqlPlanBaseline extends org.jooq.impl.AbstractRoutine<org.jo
 	}
 
 	/**
-	 * Set the <code>PLAN_NAME</code> parameter to the routine
+	 * Set the <code>PLAN_NAME</code> parameter IN value to the routine
 	 */
 	public void setPlanName(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline.PLAN_NAME, value);
@@ -76,7 +76,7 @@ public class DisplaySqlPlanBaseline extends org.jooq.impl.AbstractRoutine<org.jo
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the routine
+	 * Set the <code>FORMAT</code> parameter IN value to the routine
 	 */
 	public void setFormat(java.lang.String value) {
 		setValue(org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline.FORMAT, value);

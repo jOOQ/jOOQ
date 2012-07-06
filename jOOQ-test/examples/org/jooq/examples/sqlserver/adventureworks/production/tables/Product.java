@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product> {
 
-	private static final long serialVersionUID = 1790459542;
+	private static final long serialVersionUID = -1715457328;
 
 	/**
 	 * The singleton instance of Production.Product
@@ -24,66 +24,66 @@ public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>Production.Product.ProductID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.Name</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.ProductNumber</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.String> ProductNumber = createField("ProductNumber", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.MakeFlag</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.Boolean> MakeFlag = createField("MakeFlag", org.jooq.impl.SQLDataType.BIT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.FinishedGoodsFlag</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.Boolean> FinishedGoodsFlag = createField("FinishedGoodsFlag", org.jooq.impl.SQLDataType.BIT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.Color</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.String> Color = createField("Color", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.SafetyStockLevel</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.Short> SafetyStockLevel = createField("SafetyStockLevel", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.ReorderPoint</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.Short> ReorderPoint = createField("ReorderPoint", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.StandardCost</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.math.BigDecimal> StandardCost = createField("StandardCost", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.ListPrice</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.math.BigDecimal> ListPrice = createField("ListPrice", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.Size</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.String> Size = createField("Size", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.SizeUnitMeasureCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Product_UnitMeasure_SizeUnitMeasureCode
 	 * FOREIGN KEY (SizeUnitMeasureCode)
 	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
@@ -92,9 +92,9 @@ public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.String> SizeUnitMeasureCode = createField("SizeUnitMeasureCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.WeightUnitMeasureCode</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Product_UnitMeasure_WeightUnitMeasureCode
 	 * FOREIGN KEY (WeightUnitMeasureCode)
 	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
@@ -103,34 +103,34 @@ public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.String> WeightUnitMeasureCode = createField("WeightUnitMeasureCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.Weight</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.math.BigDecimal> Weight = createField("Weight", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.DaysToManufacture</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.Integer> DaysToManufacture = createField("DaysToManufacture", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.ProductLine</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.String> ProductLine = createField("ProductLine", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.Class</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.String> Class = createField("Class", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.Style</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.String> Style = createField("Style", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.ProductSubcategoryID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Product_ProductSubcategory_ProductSubcategoryID
 	 * FOREIGN KEY (ProductSubcategoryID)
 	 * REFERENCES Production.ProductSubcategory (ProductSubcategoryID)
@@ -139,9 +139,9 @@ public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.Integer> ProductSubcategoryID = createField("ProductSubcategoryID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.ProductModelID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_Product_ProductModel_ProductModelID
 	 * FOREIGN KEY (ProductModelID)
 	 * REFERENCES Production.ProductModel (ProductModelID)
@@ -150,27 +150,27 @@ public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.Integer> ProductModelID = createField("ProductModelID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.SellStartDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.sql.Timestamp> SellStartDate = createField("SellStartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.SellEndDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.sql.Timestamp> SellEndDate = createField("SellEndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.DiscontinuedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.sql.Timestamp> DiscontinuedDate = createField("DiscontinuedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.rowguid</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>Production.Product.ModifiedDate</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

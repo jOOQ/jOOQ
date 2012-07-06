@@ -10,17 +10,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_959", schema = "test2")
 public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = -1270128865;
+	private static final long serialVersionUID = 1803219423;
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_959.java_keywords</code>
 	 */
 	public void setJavaKeywords(org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_959.T_959.JAVA_KEYWORDS, value);
 	}
 
 	/**
-	 * An uncommented item
+	 * The table column <code>test2.t_959.java_keywords</code>
 	 */
 	@javax.persistence.Column(name = "java_keywords", length = 12)
 	public org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords getJavaKeywords() {

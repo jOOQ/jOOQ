@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class DatabaseLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog> {
 
-	private static final long serialVersionUID = 756741451;
+	private static final long serialVersionUID = -893566518;
 
 	/**
 	 * The singleton instance of dbo.DatabaseLog
@@ -24,45 +24,45 @@ public class DatabaseLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	}
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>dbo.DatabaseLog.DatabaseLogID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.lang.Integer> DatabaseLogID = createField("DatabaseLogID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.DatabaseLog.PostTime</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.sql.Timestamp> PostTime = createField("PostTime", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.DatabaseLog.DatabaseUser</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.lang.String> DatabaseUser = createField("DatabaseUser", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.DatabaseLog.Event</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.lang.String> Event = createField("Event", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.DatabaseLog.Schema</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.lang.String> Schema = createField("Schema", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.DatabaseLog.Object</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.lang.String> Object = createField("Object", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>dbo.DatabaseLog.TSQL</code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.lang.String> TSQL = createField("TSQL", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * An uncommented item
-	 * 
+	 * The table column <code>dbo.DatabaseLog.XmlEvent</code>
+	 * <p>
 	 * The SQL type of this item (xml, ) could not be mapped.<br/>
 	 * Deserialising this field might not work!
 	 */

@@ -9,23 +9,23 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IXTestCase_71 extends java.io.Serializable {
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_TEST_CASE_71.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
+	 * The table column <code>PUBLIC.X_TEST_CASE_71.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES PUBLIC.X_TEST_CASE_64_69 (ID)
@@ -34,9 +34,9 @@ public interface IXTestCase_71 extends java.io.Serializable {
 	public void setTestCase_64_69Id(java.lang.Short value);
 
 	/**
-	 * An uncommented item
+	 * The table column <code>PUBLIC.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
 	 * <p>
-	 * <code><pre>
+	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES PUBLIC.X_TEST_CASE_64_69 (ID)

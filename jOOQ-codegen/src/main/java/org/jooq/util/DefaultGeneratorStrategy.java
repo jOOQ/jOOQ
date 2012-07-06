@@ -37,7 +37,6 @@ package org.jooq.util;
 
 import static org.jooq.util.GenerationUtil.convertToJavaIdentifier;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,10 +121,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
         List<String> result = new ArrayList<String>();
 
-        if (mode == Mode.POJO) {
-            result.add(Serializable.class.getName());
-        }
-        else if (mode == Mode.DAO) {
+        if (mode == Mode.DAO) {
             TableDefinition table = (TableDefinition) definition;
             List<ColumnDefinition> keyColumns = table.getMainUniqueKey().getKeyColumns();
 

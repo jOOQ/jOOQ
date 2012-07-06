@@ -37,7 +37,9 @@ package org.jooq.util;
 
 import static org.jooq.util.GenerationUtil.convertToJavaIdentifier;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -248,7 +250,21 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
 
         // [#1243] All generation modes can accept interfaces
-        return delegate.getJavaClassImplements(definition, mode);
+        List<String> result = new ArrayList<String>(delegate.getJavaClassImplements(definition, mode));
+
+        // [#1528] Generated interfaces (implemented by RECORD and POJO) are
+        // always Serializable
+        if (mode == Mode.INTERFACE) {
+            result.add(Serializable.class.getName());
+        }
+
+        // [#1528] POJOs only implement Serializable if they don't inherit
+        // Serializable from INTERFACE already
+        else if (mode == Mode.POJO && !generator.generateInterfaces()) {
+            result.add(Serializable.class.getName());
+        }
+
+        return result;
     }
 
     @Override

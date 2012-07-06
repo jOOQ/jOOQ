@@ -42,8 +42,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.jooq.conf.Settings;
-
-import org.hamcrest.Factory;
+import org.jooq.impl.Factory;
 
 /**
  * The Configuration holds data about sql dialects, connections / data sources,

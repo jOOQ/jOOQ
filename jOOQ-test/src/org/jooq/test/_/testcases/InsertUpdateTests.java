@@ -795,7 +795,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     @Test
     public void testH2Merge() throws Exception {
         switch (getDialect()) {
+            // Native support by H2
             case H2:
+
+            // Simulation through SQL MERGE
+            case DB2:
+            case HSQLDB:
+            case ORACLE:
+            case SQLSERVER:
+            case SYBASE:
                 break;
 
             default:
@@ -806,6 +814,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         jOOQAbstractTest.reset = false;
 
         // H2 MERGE test leading to a single INSERT .. VALUES
+        // -------------------------------------------------------------
         assertEquals(1,
         create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
                 .values(3, "Hesse")
@@ -818,6 +827,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertNull(authors1.get(2).getValue(TAuthor_FIRST_NAME()));
 
         // H2 MERGE test leading to a single UPDATE
+        // -------------------------------------------------------------
         assertEquals(1,
         create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_FIRST_NAME())
                 .values(3, "Hermann")
@@ -830,6 +840,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals("Hermann", authors2.get(2).getValue(TAuthor_FIRST_NAME()));
 
         // H2 MERGE test specifying a custom KEY clause
+        // -------------------------------------------------------------
         assertEquals(1,
         create().mergeInto(TAuthor(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
                 .key(TAuthor_LAST_NAME())
@@ -843,11 +854,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals("Lukas", authors3.get(2).getValue(TAuthor_FIRST_NAME()));
 
         // H2 MERGE test specifying a subselect
+        // -------------------------------------------------------------
         assertEquals(2,
         create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
                 .key(TAuthor_ID())
-                .select(create().select(val(3), val("Eder")).unionAll(
-                        create().select(val(4), val("Eder"))))
+
+                // inline() strings here. It seems that DB2 will lack page size
+                // in the system temporary table space, otherwise
+
+                // [#579] TODO: Aliasing shouldn't be necessary
+                .select(create().select(val(3).as("a"), inline("Eder").as("b")).unionAll(
+                        create().select(val(4).as("a"), inline("Eder").as("b"))))
                 .execute());
 
         Result<A> authors4 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
@@ -858,6 +875,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(4, (int) authors4.get(3).getValue(TAuthor_ID()));
         assertEquals("Eder", authors4.get(3).getValue(TAuthor_LAST_NAME()));
         assertNull(authors4.get(3).getValue(TAuthor_FIRST_NAME()));
+
+        // H2 MERGE test specifying a subselect
+        // -------------------------------------------------------------
+        assertEquals(2,
+        create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_FIRST_NAME())
+
+                // inline() strings here. It seems that DB2 will lack page size
+                // in the system temporary table space, otherwise
+
+                // [#579] TODO: Aliasing shouldn't be necessary
+                .select(create().select(val(3).as("a"), inline("John").as("b")).unionAll(
+                        create().select(val(4).as("a"), inline("John").as("b"))))
+                .execute());
+
+        Result<A> authors5 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
+        assertEquals(4, authors5.size());
+        assertEquals(3, (int) authors5.get(2).getValue(TAuthor_ID()));
+        assertEquals("Eder", authors5.get(2).getValue(TAuthor_LAST_NAME()));
+        assertEquals("John", authors5.get(2).getValue(TAuthor_FIRST_NAME()));
+        assertEquals(4, (int) authors5.get(3).getValue(TAuthor_ID()));
+        assertEquals("Eder", authors5.get(3).getValue(TAuthor_LAST_NAME()));
+        assertEquals("John", authors5.get(3).getValue(TAuthor_FIRST_NAME()));
     }
 
     @Test

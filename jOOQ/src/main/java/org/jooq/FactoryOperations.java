@@ -630,9 +630,15 @@ public interface FactoryOperations extends Configuration {
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
      * </table>
      */
-    @Support(H2)
+    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Field<?>... fields);
 
     /**
@@ -640,7 +646,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Support(H2)
+    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields);
 
     /**

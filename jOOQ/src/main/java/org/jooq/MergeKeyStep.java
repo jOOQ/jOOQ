@@ -35,7 +35,12 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
@@ -61,7 +66,7 @@ public interface MergeKeyStep<R extends Record> extends MergeValuesStep<R> {
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support(H2)
+    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeValuesStep<R> key(Field<?>... keys);
 
     /**
@@ -70,6 +75,6 @@ public interface MergeKeyStep<R extends Record> extends MergeValuesStep<R> {
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support(H2)
+    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeValuesStep<R> key(Collection<? extends Field<?>> keys);
 }

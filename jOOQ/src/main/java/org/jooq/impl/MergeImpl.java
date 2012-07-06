@@ -48,8 +48,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
@@ -70,6 +73,8 @@ import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.UniqueKey;
+import org.jooq.UpdatableTable;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.StringUtils;
 
@@ -395,10 +400,127 @@ implements
     // QueryPart API
     // -------------------------------------------------------------------------
 
+    /**
+     * Return a standard MERGE statement simulating the H2-specific syntax
+     */
+    private final QueryPart getStandardMerge(Configuration config) {
+        switch (config.getDialect()) {
+            case DB2:
+            case HSQLDB:
+            case ORACLE:
+            case SQLSERVER:
+            case SYBASE: {
+
+                // The SRC for the USING() clause:
+                // ------------------------------
+                Table<?> src;
+                if (h2Select != null) {
+                    FieldList v = new FieldList();
+
+                    for (int i = 0; i < h2Select.getFields().size(); i++) {
+                        v.add(h2Select.getField(i).as("s" + (i + 1)));
+                    }
+
+                    // [#579] TODO: Currently, this syntax may require aliasing
+                    // on the call-site
+                    src = create().select(v).from(h2Select).asTable("src");
+                }
+                else {
+                    FieldList v = new FieldList();
+
+                    for (int i = 0; i < getH2Values().size(); i++) {
+                        v.add(getH2Values().get(i).as("s" + (i + 1)));
+                    }
+
+                    src = create().select(v).asTable("src");
+                }
+
+                // The condition for the ON clause:
+                // --------------------------------
+                Set<Field<?>> onFields = new HashSet<Field<?>>();
+                Condition condition = null;
+                if (getH2Keys().isEmpty()) {
+                    if (table instanceof UpdatableTable) {
+                        UniqueKey<?> key = ((UpdatableTable<?>) table).getMainKey();
+                        onFields.addAll(key.getFields());
+
+                        for (int i = 0; i < key.getFields().size(); i++) {
+
+                            @SuppressWarnings({ "unchecked", "rawtypes" })
+                            Condition rhs = key.getFields().get(i).equal((Field) src.getField(i));
+
+                            if (condition == null) {
+                                condition = rhs;
+                            }
+                            else {
+                                condition = condition.and(rhs);
+                            }
+                        }
+                    }
+
+                    // This should probably execute an INSERT statement
+                    else {
+                        throw new IllegalStateException("Cannot omit KEY() clause on a non-Updatable Table");
+                    }
+                }
+                else {
+                    for (int i = 0; i < getH2Keys().size(); i++) {
+                        int matchIndex = getH2Fields().indexOf(getH2Keys().get(i));
+                        if (matchIndex == -1) {
+                            throw new IllegalStateException("Fields in KEY() clause must be part of the fields specified in MERGE INTO table (...)");
+                        }
+
+                        onFields.addAll(getH2Keys());
+
+                        @SuppressWarnings({ "unchecked", "rawtypes" })
+                        Condition rhs = getH2Keys().get(i).equal((Field) src.getField(matchIndex));
+
+                        if (condition == null) {
+                            condition = rhs;
+                        }
+                        else {
+                            condition = condition.and(rhs);
+                        }
+                    }
+                }
+
+                // INSERT and UPDATE clauses
+                // -------------------------
+                Map<Field<?>, Field<?>> update = new LinkedHashMap<Field<?>, Field<?>>();
+                Map<Field<?>, Field<?>> insert = new LinkedHashMap<Field<?>, Field<?>>();
+
+                for (int i = 0; i < src.getFields().size(); i++) {
+
+                    // Oracle does not allow to update fields from the ON clause
+                    if (!onFields.contains(getH2Fields().get(i))) {
+                        update.put(getH2Fields().get(i), src.getField(i));
+                    }
+
+                    insert.put(getH2Fields().get(i), src.getField(i));
+                }
+
+                return create().mergeInto(table)
+                               .using(src)
+                               .on(condition)
+                               .whenMatchedThenUpdate()
+                               .set(update)
+                               .whenNotMatchedThenInsert()
+                               .set(insert);
+            }
+            default:
+                throw new SQLDialectNotSupportedException("The H2-specific MERGE syntax is not supported in dialect : " + config.getDialect());
+        }
+    }
+
     @Override
     public final void toSQL(RenderContext context) {
         if (h2Style) {
-            toSQLH2(context);
+            if (context.getDialect() == H2) {
+                toSQLH2(context);
+            }
+            else {
+                context.sql(getStandardMerge(context));
+            }
         }
         else {
             toSQLStandard(context);
@@ -406,10 +528,6 @@ implements
     }
 
     private final void toSQLH2(RenderContext context) {
-        if (context.getDialect() != H2) {
-            throw new SQLDialectNotSupportedException("The H2-specific MERGE syntax is only supported in H2");
-        }
-
         context.keyword("merge into ")
                .declareTables(true)
                .sql(table)
@@ -529,7 +647,12 @@ implements
     @Override
     public final void bind(BindContext context) {
         if (h2Style) {
-            bindH2(context);
+            if (context.getDialect() == H2) {
+                bindH2(context);
+            }
+            else {
+                context.bind(getStandardMerge(context));
+            }
         }
         else {
             bindStandard(context);

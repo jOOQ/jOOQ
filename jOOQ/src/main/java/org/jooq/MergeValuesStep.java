@@ -35,7 +35,12 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
@@ -58,19 +63,19 @@ public interface MergeValuesStep<R extends Record> {
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support(H2)
+    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> values(Object... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support(H2)
+    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> values(Field<?>... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support(H2)
+    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> values(Collection<?> values);
 
     /**
@@ -83,6 +88,6 @@ public interface MergeValuesStep<R extends Record> {
      * {@link FactoryOperations#mergeInto(Table, Field...)} or
      * {@link FactoryOperations#mergeInto(Table, Collection)}
      */
-    @Support(H2)
+    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> select(Select<?> select);
 }

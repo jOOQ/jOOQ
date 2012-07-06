@@ -8,9 +8,9 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  *
  * A book store
  */
-public class TBookStore implements java.io.Serializable, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore {
+public class TBookStore implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = 108963560;
+	private static final long serialVersionUID = -954556329;
 
 	private java.lang.String name;
 

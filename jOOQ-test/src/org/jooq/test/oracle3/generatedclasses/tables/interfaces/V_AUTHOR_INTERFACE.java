@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @javax.persistence.Entity
 @javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
-public interface V_AUTHOR_INTERFACE extends java.lang.Cloneable {
+public interface V_AUTHOR_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
 	 * An uncommented item

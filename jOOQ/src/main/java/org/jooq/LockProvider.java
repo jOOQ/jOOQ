@@ -135,6 +135,10 @@ public interface LockProvider {
      * <li>Oracle</li>
      * <li>Sybase</li>
      * </ul>
+     * <p>
+     * Note, that {@link SQLDialect#DB2} has some stricter requirements
+     * regarding the updatability of fields. Refer to the DB2 documentation for
+     * further details
      *
      * @param fields The fields that should be locked
      */

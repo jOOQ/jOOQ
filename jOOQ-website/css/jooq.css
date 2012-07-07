@@ -106,6 +106,20 @@ a:hover {
     text-decoration: underline;
 }
 
+h2 a, h2 a:link, h2 a:visited, h2 a:hover, h2 a:active {
+    color: #aaaaaa;
+    text-decoration: none;
+	text-shadow: 0 1px 1px #444444;
+
+	left: -30px;
+    position: absolute;
+    width: 740px;
+}
+
+h2 a:hover {
+	text-decoration: underline;
+}
+
 .wrapper {
     height: auto;
     min-height: 101%;

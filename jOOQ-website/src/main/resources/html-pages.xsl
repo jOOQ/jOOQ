@@ -44,7 +44,11 @@ function printContent() {
 	<!-- matching templates -->
 
     <xsl:template match="h3" mode="content">
-        <h2>
+    	<xsl:variable name="id" select="generate-id(.)"/>
+
+        <h2 id="{$id}">
+        	<a href="#{$id}" name="{$id}">#</a>
+        	<xsl:text> </xsl:text>
         	<xsl:apply-templates mode="content"/>
         </h2>
     </xsl:template>
@@ -54,7 +58,7 @@ function printContent() {
 		<xsl:apply-templates select="content"/>
 
 		<xsl:if test="count(sections/section) &gt; 0">
-			<h2>Table of contents</h2>
+			<h2 id="toc"><a href="#toc" name="toc">#</a> Table of contents</h2>
 		</xsl:if>
 		<xsl:apply-templates select="." mode="toc"/>
 

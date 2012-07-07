@@ -11,7 +11,7 @@ function printContent() {
 	global $version;
 ?>
 
-<h2>Download</h2>
+<h2 id="Download"><a href="#Download" name="Download">#</a> Download</h2>
 <p>
 Get the latest version from SourceForge<br/>
 <a href="https://sourceforge.net/projects/jooq/files/Release/" title="Get the latest jOOQ version from SourceForge">https://sourceforge.net/projects/jooq/files/Release/</a>
@@ -31,7 +31,7 @@ jOOQ's sources are hosted at GitHub:
 <a href="http://github.com/jOOQ/jOOQ" title="jOOQ GitHub repository">git@github.com:jOOQ/jOOQ.git</a>
 </p>
 
-<h2>Get the right version of jOOQ</h2>
+<h2 id="version"><a href="#version" name="version">#</a> Get the right version of jOOQ</h2>
 <p>
 For increased quality, jOOQ uses <a href="http://semver.org/" title="jOOQ uses semantic versioning">semantic versioning</a>.
 The jOOQ roadmap plans for:
@@ -66,12 +66,12 @@ The semi-formal roadmap is here:<br/>
 <a href="https://sourceforge.net/apps/trac/jooq/report/6" title="The jOOQ Roadmap">https://sourceforge.net/apps/trac/jooq/report/6</a>
 </p>
 
-<h2>License</h2>
+<h2 id="License"><a href="#License" name="License">#</a> License</h2>
 <p>
 jOOQ is distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2.0 License">Apache 2.0 licence</a>
 </p>
 
-<h2>Download other products of the jOO* family</h2>
+<h2 id="other"><a href="#other" name="other">#</a> Download other products of the jOO* family</h2>
 <p>
 "jOO*" stands for Java Object Oriented ... It started with jOOQ, an internalised
 domain specific language (aka SQL), written in Java. This DSL happens to be a

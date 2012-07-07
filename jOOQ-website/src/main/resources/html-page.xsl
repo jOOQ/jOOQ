@@ -32,12 +32,13 @@ function printContent() {
 		<xsl:apply-templates select="/manual/section/content"/>
 
 		<!-- Display the overall table of contents -->
-		<h2>Table of contents</h2>
+		<h2 id="toc"><a href="#toc" name="toc">#</a> Table of contents</h2>
 		<xsl:apply-templates select="/manual/section" mode="toc"/>
 
 		<xsl:for-each select="/manual/section//section">
 			<h2 id="{@id}">
-				<a name="{@id}"/>
+				<a name="{@id}" href="#{@id}">#</a>
+				<xsl:text> </xsl:text>
 				<xsl:apply-templates select="." mode="chapter-number"/>
 				<xsl:text> </xsl:text>
 				<xsl:value-of select="title"/>

@@ -3,7 +3,7 @@
 	<section id="manual">
 		<title>The jOOQ User Manual. Multiple Pages</title>
 		<content>
-			<h2>Overview</h2>
+			<h2 id="Overview"><a href="#Overview" name="Overview">#</a> Overview</h2>
 			<p>This manual is divided into four main sections:</p>
 			<ul>
 				<li>

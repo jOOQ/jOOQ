@@ -9,12 +9,12 @@ function getActiveMenu() {
 }
 function printContent() {
 ?>
-<h2>Philosophy</h2>
+<h2 id="Philosophy"><a href="#Philosophy" name="Philosophy">#</a> Philosophy</h2>
 <p>SQL was never meant to be abstracted. To be confined in the narrow boundaries
 			of heavy mappers, hiding the beauty and simplicity of relational data.
 			SQL was never meant to be object-oriented. SQL was never meant to be
 			anything other than... SQL!</p>
-<h2>What does jOOQ code look like?</h2>
+<h2 id="jOOQ-code"><a href="#jOOQ code" name="jOOQ code">#</a> What does jOOQ code look like?</h2>
 <p>It's simple. With the jOOQ DSL, SQL looks almost as if it were
 natively supported by Java. For instance, get all books published in 2011, ordered by title</p>
 
@@ -68,7 +68,7 @@ create.select(FIRST_NAME, LAST_NAME, count())
 	</tr>
 </table>
 
-    <h2>What is jOOQ?</h2>
+<h2 id="What-is-jOOQ"><a href="#What-is-jOOQ" name="What-is-jOOQ">#</a> What is jOOQ?</h2>
     <p>jOOQ stands for Java Object Oriented Querying. It combines these essential features:</p>
 
     <ul>
@@ -79,7 +79,7 @@ create.select(FIRST_NAME, LAST_NAME, count())
     <li>Vendor-specific feature support: jOOQ encourages the use of vendor-specific extensions such as stored procedures, UDT's and ARRAY's, recursive queries, and many more.</li>
     </ul>
 
-    <h2>How does jOOQ help you?</h2>
+<h2 id="How-does-jOOQ-help-you"><a href="#How-does-jOOQ-help-you" name="How-does-jOOQ-help-you">#</a> How does jOOQ help you?</h2>
     <ul>
     <li>Your database always comes FIRST! That's where the schema is, not in your Java code or some XML mapping file.</li>
     <li>Your schema is generated in Java. You can use auto-completion in your IDE!</li>
@@ -96,7 +96,7 @@ create.select(FIRST_NAME, LAST_NAME, count())
     <li>You can be productive again!</li>
     </ul>
 
-    <h2>When to use jOOQ</h2>
+<h2 id="When-to-use-jOOQ"><a href="#When-to-use-jOOQ" name="When-to-use-jOOQ">#</a> When to use jOOQ</h2>
     <ul>
     <li>When you love your RDBMS of choice, including all its vendor-specific features.</li>
     <li>When you love control over your code.</li>
@@ -106,7 +106,7 @@ create.select(FIRST_NAME, LAST_NAME, count())
     <li>When you love both <a href="http://en.wikipedia.org/wiki/OLAP" title="Online Analytical Processing, advanced SELECT statements, i.e. what none of the ORM's do, but jOOQ does best">OLAP</a> and <a href="http://en.wikipedia.org/wiki/OLTP" title="Online Transaction Processing, i.e. basic CRUD operations, what all ORM's do">OLTP</a></li>
     </ul>
 
-    <h2>When not to use jOOQ</h2>
+<h2 id="When-not-to-use-jOOQ"><a href="#When-not-to-use-jOOQ" name="When-not-to-use-jOOQ">#</a> When not to use jOOQ</h2>
     <p>On the other hand, many people like the ease of use of Hibernate or other products, when it comes to simply persisting any domain model in any database. You should not use jOOQ...</p>
     <ul>
     <li>When you don't care about your database (or "persistence" as you would probably call it).</li>
@@ -116,7 +116,7 @@ create.select(FIRST_NAME, LAST_NAME, count())
     <li>When you need to write DDL statements. jOOQ only supports DML statements.</li>
     </ul>
 
-    <h2>What databases are supported</h2>
+<h2 id="What-databases-are-supported"><a href="#What-databases-are-supported" name="What-databases-are-supported">#</a> What databases are supported</h2>
     <p>Every RDMBS out there has its own little specialties.
     jOOQ considers those specialties as much as possible, while trying to
     standardise the behaviour in jOOQ. In order to increase the quality of jOOQ,
@@ -154,7 +154,7 @@ create.select(FIRST_NAME, LAST_NAME, count())
     <li>Teradata</li>
     </ul>
 
-    <h2>Other requirements</h2>
+<h2 id="Other-requirements"><a href="#Other-requirements" name="Other-requirements">#</a> Other requirements</h2>
 <p>jOOQ runs with Java 1.6+</p>
 
 <h3>License</h3>

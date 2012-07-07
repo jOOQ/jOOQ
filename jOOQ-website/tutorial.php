@@ -10,7 +10,7 @@ function printContent() {
     global $root;
     global $version;
 ?>
-<h2>Introduction</h2>
+<h2 id="intro"><a href="#intro" name="intro">#</a> Introduction</h2>
 <p>
 Download and run jOOQ in 6 easy steps:
 </p>
@@ -25,7 +25,7 @@ Download and run jOOQ in 6 easy steps:
     <li><a href="#step6">Step 6: Explore!</a></li>
 </ul>
 
-<h2 id="step0">Preparation: Download jOOQ and your SQL driver</h2>
+<h2 id="step0"><a href="#step0" name="step0">#</a> Preparation: Download jOOQ and your SQL driver</h2>
 <p>
 If you haven't already downloaded them, download jOOQ:<br/>
 <a href="https://sourceforge.net/projects/jooq/files/Release/" target="_blank" title="jOOQ download">https://sourceforge.net/projects/jooq/files/Release/</a>
@@ -52,7 +52,7 @@ If you don't have a MySQL instance up and running yet, get
 now! XAMPP is a simple installation bundle for Apache, MySQL, PHP and Perl
 </p>
 
-<h2 id="step1">Step 1: Create a SQL database and a table</h2>
+<h2 id="step1"><a href="#step1" name="step1">#</a> Step 1: Create a SQL database and a table</h2>
 <p>
 We're going to create a database called "guestbook" and a corresponding "posts" table. Connect to MySQL via your command line client and type the following:
 </p>
@@ -68,7 +68,7 @@ CREATE TABLE `posts` (
 );
 </pre>
 
-<h2 id="step2">Step 2: Generate classes</h2>
+<h2 id="step2"><a href="#step2" name="step2">#</a> Step 2: Generate classes</h2>
 <p>
 In this step, we're going to use jOOQ's command line tools to generate classes that
 map to the Posts table we just created. More detailed information about how to
@@ -225,7 +225,7 @@ INFO: GENERATION FINISHED!     : Total: 791.688ms, +9.143ms
 
 
 
-<h2 id="step3">Step 3: Write a main class and establish a MySQL connection</h2>
+<h2 id="step3"><a href="#step3" name="step3">#</a> Step 3: Write a main class and establish a MySQL connection</h2>
 <p>
 Let's just write a vanilla main class in the project containing the generated classes:
 </p>
@@ -265,7 +265,7 @@ This is pretty standard code for establishing a MySQL connection.
 </p>
 
 
-<h2 id="step4">Step 4: Write a query using jOOQ's DSL</h2>
+<h2 id="step4"><a href="#step4" name="step4">#</a> Step 4: Write a query using jOOQ's DSL</h2>
 <p>
 Let's add a simple query:
 </p>
@@ -285,7 +285,7 @@ the next step.
 </p>
 
 
-<h2 id="step5">Step 5: Iterate over results</h2>
+<h2 id="step5"><a href="#step5" name="step5">#</a> Step 5: Iterate over results</h2>
 <p>
 After the line where we retrieve the results, let's iterate over the results and
 print out the data:
@@ -362,7 +362,7 @@ public class Main {
 }
 </pre>
 
-<h2 id="step6">Step 6: Explore!</h2>
+<h2 id="step6"><a href="#step6" name="step6">#</a> Step 6: Explore!</h2>
 <p>
 jOOQ has grown to be a comprehensive SQL library. For more information, please consider the manual:<br/>
 <a href="http://www.jooq.org/manual/" title="jOOQ Manual">http://www.jooq.org/manual/</a>

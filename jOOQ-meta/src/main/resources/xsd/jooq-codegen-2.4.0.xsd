@@ -341,7 +341,9 @@
       <element name="pojos" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
       <!--
-        Generate interfaces that will be implemented by records and/or pojos
+        Generate interfaces that will be implemented by records and/or pojos.
+        You can also use these interfaces in Record.into(Class<?>) and similar
+        methods, to let jOOQ return proxy objects for them.
         -->
       <element name="interfaces" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 

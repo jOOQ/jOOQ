@@ -16,6 +16,9 @@ function printContent() {
     else if (isset($_GET['version']) && $_GET['version'] == '2.2') {
 	  $contents = file('inc/RELEASENOTES-2.2.txt');
     }
+    else if (isset($_GET['version']) && $_GET['version'] == '2.3') {
+	  $contents = file('inc/RELEASENOTES-2.3.txt');
+    }
     else {
       $contents = file('inc/RELEASENOTES.txt');
     }

@@ -151,6 +151,12 @@ CREATE TABLE t_book_to_book_store (
 								<li><reference class="java.sql.Connection"/> :
 								An optional JDBC Connection that will be re-used for the whole
     							lifecycle of your Factory</li>
+    							<li><reference class="java.sql.DataSource"/> :
+    							An optional JDBC DataSource that will be re-used for the whole
+    							lifecycle of your Factory. If you prefer using DataSources over
+    							Connections, jOOQ will internally fetch new Connections from
+    							your DataSource, conveniently closing them again after query execution.
+    							This is particularly useful in J2EE or Spring contexts.</li>
     							<li><reference class="org.jooq.conf.Settings"/> :
     							An optional runtime configuration.</li>
 							</ul>
@@ -899,7 +905,7 @@ d.execute();</java>
 								The MERGE statement is one of the most advanced standardised SQL
 								constructs, which is supported by DB2, HSQLDB, Oracle, SQL Server and
 								Sybase (MySQL has the similar INSERT .. ON DUPLICATE KEY UPDATE
-								construct. H2's MERGE variant is currently not supported.)
+								construct)
 							</p>
 							<p>
 								The point of the standard MERGE statement is to take a TARGET table, and
@@ -930,6 +936,36 @@ WHEN NOT MATCHED THEN INSERT (LAST_NAME)
 
 </java></code-pair>
 
+                            <h3>MERGE Statement (H2-specific syntax)</h3>
+							<p>
+							    The H2 database ships with a somewhat less powerful
+							    but a little more intuitive syntax for its own version of the MERGE statement.
+							    An example more or less equivalent to the previous one
+							    can be seen here:
+							</p>
+<code-pair>
+<sql>-- Check if there is already an author called 'Hitchcock'
+-- If there is, rename him to John. If there isn't add him.
+
+MERGE INTO T_AUTHOR (FIRST_NAME, LAST_NAME)
+KEY (LAST_NAME)
+VALUES ('John', 'Hitchcock')</sql>
+<java>create.mergeInto(T_AUTHOR,
+                 T_AUTHOR.FIRST_NAME,
+                 T_AUTHOR.LAST_NAME)
+      .key(T_AUTHOR.LAST_NAME)
+      .values("John", "Hitchcock")
+      .execute();
+</java></code-pair>
+
+                            <p>
+                                This syntax can be fully simulated by jOOQ for all other
+                                databases that support the SQL standard. For more information
+                                about the H2 MERGE syntax, see the documentation here:
+                                <br/>
+                                <br/>
+                                <a href="http://www.h2database.com/html/grammar.html#merge">http://www.h2database.com/html/grammar.html#merge</a>
+                            </p>
 
 							<h3>TRUNCATE Statement</h3>
 							<p>
@@ -1968,9 +2004,15 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to false -->
   <pojos>false</pojos>
 
-  <!-- Generate interfaces that will be implemented by records and/or pojos
+  <!-- Generate interfaces that will be implemented by records and/or pojos.
+       You can also use these interfaces in Record.into(Class<?>) and similar
+       methods, to let jOOQ return proxy objects for them.
        Defaults to false -->
   <interfaces>false</interfaces>
+
+  <!-- Generate DAOs in addition to POJO classes
+       Defaults to false -->
+  <daos>false</daos>
 
   <!-- Annotate POJOs and Records with JPA annotations for increased
        compatibility and better integration with JPA/Hibernate, etc
@@ -3081,7 +3123,9 @@ TableOnConditionStep onKey(ForeignKey<?, ?> key);]]></java>
     Condition isNull();
     Condition isNotNull();
     Condition like(T value);
+    Condition likeIgnoreCase(T value);
     Condition notLike(T value);
+    Condition notLikeIgnoreCase(T value);
     Condition in(T... values);
     Condition in(Select<?> query);
     Condition notIn(Collection<T> values);

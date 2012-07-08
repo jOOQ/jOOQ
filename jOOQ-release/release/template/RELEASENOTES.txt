@@ -10,31 +10,155 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 2.3.2 - July 1, 2012
+Version 2.4.0 - July 8, 2012
 =================================================================
-This is a minor patch release with some useful fixes for the 2.3
-branch
 
-Bug fixes
----------
-#1441 - Performance issue with AbstractDataType.convert(Object).
-        Avoid conversions when they're obviously unneeded
+This release's main new feature is jOOQ's added convenience in
+Factory initialisation for those users who get their database
+connectivity through JDBC DataSources. If supplied with a
+DataSource, a jOOQ Factory will handle the Connection lifecycle
+internally, closing the Connection when no longer needed.
+
+The H2 MERGE statement syntax is now supported and simulated in
+other databases, for those users that prefer its more intuitive
+syntax over the SQL standard.
+
+The code generator now also allows for generating interfaces and
+DAOs per table. DAO generation was previous discussed on the user
+group and seen in a competitor product called OneWebSQL.
+
+The jOOQ Console now supports breakpoints for even more effective
+SQL development
+
+Features and improvements
+-------------------------
+#1141 - Add Result.intoResultSet() to wrap a Result in a JDBC
+        ResultSet
+#1253 - Avoid JDBC escape syntax for date/time literals
+#1280 - Generate DAO classes and interfaces for POJOs
+#1404 - Document the lifecycle of an ExecuteListener in the
+        Javadoc
+#1411 - Add support for Postgres "any" data type (with quotes!).
+        This seems to map well to java.lang.Object
+#1418 - Support case-insensitive schema names in code generation
+#1419 - Add some WARN-level logging when the source-code
+        generator doesn't generate any artefacts
+#1423 - Add Field.likeIgnoreCase() to support Postgres' ILIKE
+        operator
+#1424 - Add Factory(DataSource) and similar constructors
+#1427 - Add Factory.batchStore(Collection<? extends
+        UpdatableRecord<?>>) for convenience
+#1428 - Add DataType.convert(Object...) and
+        DataType.convert(Collection<?>) for convenience
+#1431 - Add org.jooq.Name Factory.name(String) to contruct
+        QueryParts that are escaped according to
+        Settings.getRenderNameStyle()
+#1432 - Add Factory.fetch(String, QueryPart...) and
+        Factory.execute(String, QueryPart...) and similar methods
+        to support arbitrary QueryParts in plain SQL
+#1434 - Add UniqueKeyDefinition.isPrimaryKey() for completeness
+#1438 - Add Result<Record> Factory.fetchFromCSV(String)
+#1440 - Add top-level pom.xml for jooq-parent artefact (GitHub
+        Issue #14)
+#1446 - Converting arbitrary strings to Number / Date should
+        return null, instead of throwing an exception
 #1449 - Generate some meaningful Javadoc into the generated
         [schema-name]Factory classes
 #1454 - Add line breaks to generated Javadoc where appropriate
+#1463 - Add option to let generated Record / POJO objects
+        implement a common generated interface
+#1470 - Support interface types in ResultQuery.fetchInto(Class),
+        Result.into(Class), and Record.into(Class) methods,
+        returning a proxy
+#1471 - Upgrade internal jOOR dependency to jOOR 0.9.4
+#1473 - Add IdentityDefinition to jooq-meta
+#1501 - Add support for conversion of String to
+        java.sql.{Date, Time, Timestamp}. GitHub issue #22
+#1504 - Document behaviour of fetch() and fetchOne() in case jOOQ
+        cannot fetch actual records
+#1509 - Minor improvements in the generator source code. GitHub
+        pull request #23
+#1510 - Generate additional setters for foreign keys, accepting
+        records as arguments
+#1521 - Expose Connection methods, such as commit(), rollback()
+        and similar transaction-related methods in Factory
+#1523 - Support ROW_NUMBER() OVER() for the latest version of
+        Derby and H2, which support it
+#1524 - Simulate ROW_NUMBER() OVER() in HSQLDB using ROWNUM()
+#1528 - Let generated interfaces extend Serializable
+#1532 - Clarify the lifecycle of Configuration.data in the
+        Javadoc
+#1534 - Generate more meaningful Javadoc where "an uncommented
+        item" stands now
+#1536 - Add documentation to the FOR UPDATE OF clause, indicating
+        that DB2 may have stricter requirements regarding
+        updatability of fields
+#1541 - Add support for the H2 MERGE syntax - GitHub Issue #18
+#1542 - Simulate the H2 MERGE syntax in other dialects supporting
+        the SQL standard MERGE statement - GitHub Issue #18
+#1545 - Website and Documentation anchors should be links to
+        themselves, visually recognisable
+
+Features and improvements (jOOQ Console)
+----------------------------------------
+#1398 - Allow for adding breakpoints in jOOQ Console
+
+API changes (backwards-compatible)
+----------------------------------
+#1408 - Relax bounds of <R> in Factory.truncate() to Record,
+        instead of TableRecord
+#1429 - Change Convert.convert(List, XXX) to accept Collection
+        instead of List
+
+Bug fixes
+---------
+#1020 - Improve Oracle's LIMIT .. OFFSET clause simulation.
+        GitHub Issue #16
+#1358 - Compilation errors in generated source code when Oracle
+        overloaded procedures collide with procedures that end
+        with numbers
+#1437 - Error in Javadoc of FactoryOperations.fetchOne(). This
+        method may return null
+#1441 - Performance issue with AbstractDataType.convert(Object).
+        Avoid conversions when they're obviously unneeded
+#1448 - Handle String to Enum conversion (when Java Enums are
+        stored as Strings in the database) - GitHub issue #15
+#1459 - Generated Keys.java static class too large (static
+        initialiser can become bigger than 64kb)
+#1460 - Table.getReferencesTo(Table) doesn't work correctly for
+        aliased tables
+#1461 - Exception when rendering of {fn datetimeadd(...)} for
+        HSQLDB and Derby
+#1462 - Document missing GeneratorStrategy features, such as
+        getJavaClassImplements()
 #1465 - Custom generator strategy's printImplements() is called
         with Mode == RECORD for tables
+#1478 - Caching SQLDialect in AbstractDatabase heavily improves
+        code generation performance
 #1483 - Inefficient cloning of default settings using JAXB
         unmarshalling leads to non-negligible overall overhead.
         Use serialisation instead (short of a useful XJC clone
         plugin)
-#1478 - Caching SQLDialect in AbstractDatabase heavily improves
-        code generation performance
+#1489 - Fix manual where it claims to throw SQLExceptions
 #1490 - Compilation error when a SQL Server stored procedure has
         a parameter named "value"
 #1493 - Bad syntax for SELECT /*+hint*/ DISTINCT ... in Oracle
+#1498 - jOOQ does not compile using JDK 7 / JDBC 4.1. GitHub
+        Issue #24
+#1499 - Generated members of Tables.java are not final
+#1505 - Bad exception message when ON DUPLICATE KEY IGNORE cannot
+        be simulated
 #1515 - Splitting of large NOT IN conditions is wrong. The parts
         should be connected with AND, not with OR
+#1522 - fetch().into(Table) doesn't initialise records correctly,
+        such that subsequent calls to store() will execute an
+        INSERT, rather than an UPDATE
+#1525 - Generate missing Javadoc to getters for procedure OUT
+        parameters
+#1529 - Factory.batchStore() logs all single statements to DEBUG
+        output. Find a more accurate log output
+#1537 - Factory.batchStore() renders bad SQL for Postgres. The
+        RETURNING clause is not allowed in batch INSERTs
 
 Version 2.3.1 - May 11, 2012
 =================================================================

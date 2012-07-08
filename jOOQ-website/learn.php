@@ -51,6 +51,9 @@ running. It shows how to use jOOQ and its code generator with a simple MySQL dat
 	<a href="http://www.jooq.org/javadoc/latest/" title="The latest jOOQ Javadoc">The latest jOOQ Javadoc</a>
 	</li>
 	<li>
+	<a href="http://www.jooq.org/javadoc/2.3.x/" title="The latest jOOQ Javadoc">jOOQ 2.3.x</a>
+	</li>
+	<li>
 	<a href="http://www.jooq.org/javadoc/2.2.x/" title="The latest jOOQ Javadoc">jOOQ 2.2.x</a>
 	</li>
 	<li>

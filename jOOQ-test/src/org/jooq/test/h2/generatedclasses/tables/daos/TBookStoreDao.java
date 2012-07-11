@@ -28,4 +28,18 @@ public class TBookStoreDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.genera
 	protected java.lang.String getId(org.jooq.test.h2.generatedclasses.tables.pojos.TBookStore object) {
 		return object.getName();
 	}
+
+	/**
+	 * Fetch records that have <code>NAME IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBookStore> fetchByName(java.lang.String... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBookStore.NAME, values);
+	}
+
+	/**
+	 * Fetch a unique that has <code>NAME = value</code>
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.pojos.TBookStore fetchOneByName(java.lang.String value) {
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TBookStore.NAME, value);
+	}
 }

@@ -1289,6 +1289,57 @@ public class DefaultGenerator extends AbstractGenerator {
         out.println("();");
         out.println("\t}");
 
+        for (ColumnDefinition column : table.getColumns()) {
+
+            // fetchBy[Column]([T]...)
+            // -----------------------
+            out.println();
+            printJavadoc(out, "Fetch records that have <code>" + column.getOutputName() + " IN (values)</code>");
+            out.print("\tpublic ");
+            out.print(List.class);
+            out.print("<");
+            out.print(strategy.getFullJavaClassName(table, Mode.POJO));
+            out.print("> fetchBy");
+            out.print(strategy.getJavaClassName(column, Mode.POJO));
+            out.print("(");
+            out.print(getJavaType(column.getType()));
+            out.println("... values) {");
+
+            out.print("\t\treturn fetch(");
+            out.print(strategy.getFullJavaIdentifier(column));
+            out.println(", values);");
+
+            out.println("\t}");
+
+            // fetchOneBy[Column]([T])
+            // -----------------------
+            ukLoop:
+            for (UniqueKeyDefinition uk : column.getUniqueKeys()) {
+
+                // If column is part of a single-column unique key...
+                if (uk.getKeyColumns().size() == 1 && uk.getKeyColumns().get(0).equals(column)) {
+
+                    out.println();
+                    printJavadoc(out, "Fetch a unique that has <code>" + column.getOutputName() + " = value</code>");
+                    out.print("\tpublic ");
+                    out.print(strategy.getFullJavaClassName(table, Mode.POJO));
+                    out.print(" fetchOneBy");
+                    out.print(strategy.getJavaClassName(column, Mode.POJO));
+                    out.print("(");
+                    out.print(getJavaType(column.getType()));
+                    out.println(" value) {");
+
+                    out.print("\t\treturn fetchOne(");
+                    out.print(strategy.getFullJavaIdentifier(column));
+                    out.println(", value);");
+
+                    out.println("\t}");
+
+                    break ukLoop;
+                }
+            }
+        }
+
         out.println("}");
         out.close();
     }

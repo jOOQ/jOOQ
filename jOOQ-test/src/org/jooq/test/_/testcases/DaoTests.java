@@ -101,6 +101,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertTrue(TAuthorDao().existsById(1));
         assertNull(TAuthorDao().findById(17));
 
+        List<AP> authors1 = on(TAuthorDao()).call("fetchByLastName", (Object) new String[] { "Orwell", "George"}).<List<AP>>get();
+        assertEquals(1, authors1.size());
+        assertEquals(1, on(authors1.get(0)).get("id"));
+        assertEquals("George", on(authors1.get(0)).get("firstName"));
+        assertEquals("Orwell", on(authors1.get(0)).get("lastName"));
+
+        List<AP> authors2 = on(TAuthorDao()).call("fetchByLastName", (Object) new String[] { "Orwell", "Coelho"}).<List<AP>>get();
+        assertEquals(2, authors2.size());
+        assertEquals(1, on(authors2.get(0)).get("id"));
+        assertEquals("George", on(authors2.get(0)).get("firstName"));
+        assertEquals("Orwell", on(authors2.get(0)).get("lastName"));
+        assertEquals(2, on(authors2.get(1)).get("id"));
+        assertEquals("Paulo", on(authors2.get(1)).get("firstName"));
+        assertEquals("Coelho", on(authors2.get(1)).get("lastName"));
+
         // Single insertion
         // ----------------
         AP author =

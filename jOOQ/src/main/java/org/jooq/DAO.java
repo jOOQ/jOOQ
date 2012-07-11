@@ -186,6 +186,31 @@ public interface DAO<R extends TableRecord<R>, P, T> {
     P findById(T id) throws DataAccessException;
 
     /**
+     * Find records by a given field and a set of values.
+     *
+     * @param field The field to compare values against
+     * @param values The accepted values
+     * @return A list of records fulfilling <code>field IN (values)</code>
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <Z> List<P> fetch(Field<Z> field, Z... values) throws DataAccessException;
+
+    /**
+     * Find a unique record by a given field and a value.
+     *
+     * @param field The field to compare value against
+     * @param value The accepted value
+     * @return A record fulfilling <code>field = value</code>, or
+     *         <code>null</code>
+     * @throws DataAccessException This exception is thrown
+     *             <ul>
+     *             <li>if something went wrong executing the query</li>
+     *             <li>if the query returned more than one value</li>
+     *             </ul>
+     */
+    <Z> P fetchOne(Field<Z> field, Z value) throws DataAccessException;
+
+    /**
      * Get the underlying table
      */
     Table<R> getTable();

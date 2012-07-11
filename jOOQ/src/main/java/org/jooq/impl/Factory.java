@@ -196,6 +196,17 @@ public class Factory implements FactoryOperations {
 
     /**
      * Create a factory with a connection and a dialect configured.
+     * <p>
+     * If you provide a JDBC connection to a jOOQ Factory, jOOQ will use that
+     * connection for creating statements, but it will never call any of these
+     * methods:
+     * <ul>
+     * <li> {@link Connection#commit()}</li>
+     * <li> {@link Connection#rollback()}</li>
+     * <li> {@link Connection#close()}</li>
+     * </ul>
+     * Use this constructor if you want to handle transactions directly on the
+     * connection.
      *
      * @param connection The connection to use with objects created from this
      *            factory
@@ -207,6 +218,19 @@ public class Factory implements FactoryOperations {
 
     /**
      * Create a factory with a data source and a dialect configured.
+     * <p>
+     * If you provide a JDBC data source to a jOOQ Factory, jOOQ will use that
+     * data source for initialising connections, and creating statements.
+     * <p>
+     * Use this constructor if you want to run distributed transactions, such as
+     * <code>javax.transaction.UserTransaction</code>. If you provide jOOQ
+     * factories with a data source, jOOQ will {@link Connection#close()
+     * close()} all connections after query execution in order to return the
+     * connection to the connection pool. If you do not use distributed
+     * transactions, this will produce driver-specific behaviour at the end of
+     * query execution at <code>close()</code> invocation (e.g. a transaction
+     * rollback). Use {@link #Factory(Connection, SQLDialect)} instead, to
+     * control the connection's lifecycle.
      *
      * @param datasource The data source to use with objects created from this
      *            factory
@@ -231,6 +255,17 @@ public class Factory implements FactoryOperations {
     /**
      * Create a factory with a connection, a dialect and a schema mapping
      * configured.
+     * <p>
+     * If you provide a JDBC connection to a jOOQ Factory, jOOQ will use that
+     * connection for creating statements, but it will never call any of these
+     * methods:
+     * <ul>
+     * <li> {@link Connection#commit()}</li>
+     * <li> {@link Connection#rollback()}</li>
+     * <li> {@link Connection#close()}</li>
+     * </ul>
+     * Use this constructor if you want to handle transactions directly on the
+     * connection.
      *
      * @param connection The connection to use with objects created from this
      *            factory
@@ -247,6 +282,17 @@ public class Factory implements FactoryOperations {
 
     /**
      * Create a factory with a connection, a dialect and settings configured.
+     * <p>
+     * If you provide a JDBC connection to a jOOQ Factory, jOOQ will use that
+     * connection for creating statements, but it will never call any of these
+     * methods:
+     * <ul>
+     * <li> {@link Connection#commit()}</li>
+     * <li> {@link Connection#rollback()}</li>
+     * <li> {@link Connection#close()}</li>
+     * </ul>
+     * Use this constructor if you want to handle transactions directly on the
+     * connection.
      *
      * @param connection The connection to use with objects created from this
      *            factory
@@ -261,6 +307,19 @@ public class Factory implements FactoryOperations {
 
     /**
      * Create a factory with a data source, a dialect and settings configured.
+     * <p>
+     * If you provide a JDBC data source to a jOOQ Factory, jOOQ will use that
+     * data source for initialising connections, and creating statements.
+     * <p>
+     * Use this constructor if you want to run distributed transactions, such as
+     * <code>javax.transaction.UserTransaction</code>. If you provide jOOQ
+     * factories with a data source, jOOQ will {@link Connection#close()
+     * close()} all connections after query execution in order to return the
+     * connection to the connection pool. If you do not use distributed
+     * transactions, this will produce driver-specific behaviour at the end of
+     * query execution at <code>close()</code> invocation (e.g. a transaction
+     * rollback). Use {@link #Factory(Connection, SQLDialect, Settings)}
+     * instead, to control the connection's lifecycle.
      *
      * @param datasource The data source to use with objects created from this
      *            factory

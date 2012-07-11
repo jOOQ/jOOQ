@@ -76,16 +76,44 @@ public interface Configuration extends Serializable {
 
     /**
      * Set the configured data source
+     * <p>
+     * If you provide a JDBC data source to a jOOQ Factory, jOOQ will use that
+     * data source for initialising connections, and creating statements.
+     * <p>
+     * Use data sources if you want to run distributed transactions, such as
+     * <code>javax.transaction.UserTransaction</code>. If you provide jOOQ
+     * factories with a data source, jOOQ will {@link Connection#close()
+     * close()} all connections after query execution in order to return the
+     * connection to the connection pool. If you do not use distributed
+     * transactions, this will produce driver-specific behaviour at the end of
+     * query execution at <code>close()</code> invocation (e.g. a transaction
+     * rollback). Use {@link #setConnection(Connection)} instead, to control the
+     * connection's lifecycle.
      */
     void setDataSource(DataSource datasource);
 
     /**
      * Retrieve the configured connection
+     * <p>
+     * If you configured a data source for this {@link Configuration} (see
+     * {@link #setDataSource(DataSource)}), then this may initialise a new
+     * connection.
      */
     Connection getConnection();
 
     /**
      * Set the configured connection
+     * <p>
+     * If you provide a JDBC connection to a jOOQ Factory, jOOQ will use that
+     * connection for creating statements, but it will never call any of these
+     * methods:
+     * <ul>
+     * <li> {@link Connection#commit()}</li>
+     * <li> {@link Connection#rollback()}</li>
+     * <li> {@link Connection#close()}</li>
+     * </ul>
+     * Use this constructor if you want to handle transactions directly on the
+     * connection.
      */
     void setConnection(Connection connection);
 

@@ -28,4 +28,74 @@ public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedcl
 	protected java.lang.Integer getId(org.jooq.test.h2.generatedclasses.tables.pojos.TBook object) {
 		return object.getId();
 	}
+
+	/**
+	 * Fetch records that have <code>ID IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchById(java.lang.Integer... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.ID, values);
+	}
+
+	/**
+	 * Fetch a unique that has <code>ID = value</code>
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.pojos.TBook fetchOneById(java.lang.Integer value) {
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TBook.ID, value);
+	}
+
+	/**
+	 * Fetch records that have <code>AUTHOR_ID IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByAuthorId(java.lang.Integer... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID, values);
+	}
+
+	/**
+	 * Fetch records that have <code>CO_AUTHOR_ID IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByCoAuthorId(java.lang.Integer... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID, values);
+	}
+
+	/**
+	 * Fetch records that have <code>DETAILS_ID IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByDetailsId(java.lang.Integer... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.DETAILS_ID, values);
+	}
+
+	/**
+	 * Fetch records that have <code>TITLE IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByTitle(java.lang.String... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.TITLE, values);
+	}
+
+	/**
+	 * Fetch records that have <code>PUBLISHED_IN IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByPublishedIn(java.lang.Integer... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.PUBLISHED_IN, values);
+	}
+
+	/**
+	 * Fetch records that have <code>LANGUAGE_ID IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByLanguageId(org.jooq.test.h2.generatedclasses.enums.TLanguage... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID, values);
+	}
+
+	/**
+	 * Fetch records that have <code>CONTENT_TEXT IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByContentText(java.lang.String... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_TEXT, values);
+	}
+
+	/**
+	 * Fetch records that have <code>CONTENT_PDF IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByContentPdf(byte[]... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_PDF, values);
+	}
 }

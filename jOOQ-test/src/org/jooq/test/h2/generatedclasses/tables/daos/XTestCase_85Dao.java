@@ -26,4 +26,32 @@ public class XTestCase_85Dao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.gene
 	protected java.lang.Integer getId(org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_85 object) {
 		return object.getId();
 	}
+
+	/**
+	 * Fetch records that have <code>ID IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_85> fetchById(java.lang.Integer... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XTestCase_85.ID, values);
+	}
+
+	/**
+	 * Fetch a unique that has <code>ID = value</code>
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_85 fetchOneById(java.lang.Integer value) {
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.XTestCase_85.ID, value);
+	}
+
+	/**
+	 * Fetch records that have <code>X_UNUSED_ID IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_85> fetchByXUnusedId(java.lang.Integer... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_UNUSED_ID, values);
+	}
+
+	/**
+	 * Fetch records that have <code>X_UNUSED_NAME IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_85> fetchByXUnusedName(java.lang.String... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME, values);
+	}
 }

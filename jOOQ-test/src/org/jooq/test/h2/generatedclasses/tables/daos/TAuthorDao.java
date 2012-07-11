@@ -28,4 +28,53 @@ public class TAuthorDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generated
 	protected java.lang.Integer getId(org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor object) {
 		return object.getId();
 	}
+
+	/**
+	 * Fetch records that have <code>ID IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchById(java.lang.Integer... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID, values);
+	}
+
+	/**
+	 * Fetch a unique that has <code>ID = value</code>
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor fetchOneById(java.lang.Integer value) {
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID, value);
+	}
+
+	/**
+	 * Fetch records that have <code>FIRST_NAME IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchByFirstName(java.lang.String... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME, values);
+	}
+
+	/**
+	 * Fetch records that have <code>LAST_NAME IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchByLastName(java.lang.String... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME, values);
+	}
+
+	/**
+	 * Fetch records that have <code>DATE_OF_BIRTH IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchByDateOfBirth(java.sql.Date... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.DATE_OF_BIRTH, values);
+	}
+
+	/**
+	 * Fetch records that have <code>YEAR_OF_BIRTH IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchByYearOfBirth(java.lang.Integer... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH, values);
+	}
+
+	/**
+	 * Fetch records that have <code>ADDRESS IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchByAddress(java.lang.String... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.ADDRESS, values);
+	}
 }

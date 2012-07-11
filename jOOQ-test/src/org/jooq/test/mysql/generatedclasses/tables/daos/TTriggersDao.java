@@ -26,4 +26,32 @@ public class TTriggersDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.gene
 	protected java.lang.Integer getId(org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers object) {
 		return object.getIdGenerated();
 	}
+
+	/**
+	 * Fetch records that have <code>id_generated IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers> fetchByIdGenerated(java.lang.Integer... values) {
+		return fetch(org.jooq.test.mysql.generatedclasses.tables.TTriggers.ID_GENERATED, values);
+	}
+
+	/**
+	 * Fetch a unique that has <code>id_generated = value</code>
+	 */
+	public org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers fetchOneByIdGenerated(java.lang.Integer value) {
+		return fetchOne(org.jooq.test.mysql.generatedclasses.tables.TTriggers.ID_GENERATED, value);
+	}
+
+	/**
+	 * Fetch records that have <code>id IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers> fetchById(java.lang.Integer... values) {
+		return fetch(org.jooq.test.mysql.generatedclasses.tables.TTriggers.ID, values);
+	}
+
+	/**
+	 * Fetch records that have <code>counter IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers> fetchByCounter(java.lang.Integer... values) {
+		return fetch(org.jooq.test.mysql.generatedclasses.tables.TTriggers.COUNTER, values);
+	}
 }

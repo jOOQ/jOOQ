@@ -26,4 +26,25 @@ public class XTestCase_64_69Dao extends org.jooq.impl.DAOImpl<org.jooq.test.orac
 	protected java.lang.Integer getId(org.jooq.test.oracle.generatedclasses.test.tables.pojos.XTestCase_64_69 object) {
 		return object.getId();
 	}
+
+	/**
+	 * Fetch records that have <code>ID IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XTestCase_64_69> fetchById(java.lang.Integer... values) {
+		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, values);
+	}
+
+	/**
+	 * Fetch a unique that has <code>ID = value</code>
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.pojos.XTestCase_64_69 fetchOneById(java.lang.Integer value) {
+		return fetchOne(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, value);
+	}
+
+	/**
+	 * Fetch records that have <code>UNUSED_ID IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XTestCase_64_69> fetchByUnusedId(java.lang.Integer... values) {
+		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID, values);
+	}
 }

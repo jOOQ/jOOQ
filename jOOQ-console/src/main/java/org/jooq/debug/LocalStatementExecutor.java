@@ -42,6 +42,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.lang.reflect.Array;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -169,7 +170,41 @@ public class LocalStatementExecutor implements StatementExecutor {
                                     System.err.println("Unknown SQL Type for \"" + columnNames[i] + "\" in " + getClass().getSimpleName() + ": " + metaData.getColumnTypeName(i));
                                     columnClasses[i] = Object.class;
                                 } else {
-                                    columnClasses[i] = Class.forName(columnClassName);
+                                    if(columnClassName.indexOf('.') == -1) {
+                                        boolean isArray;
+                                        if(columnClassName.endsWith("[]")) {
+                                            // TODO: handle multi dimensional arrays?
+                                            columnClassName = columnClassName.substring(0, columnClassName.length() - 2);
+                                            isArray = true;
+                                        } else {
+                                            isArray = false;
+                                        }
+                                        if("boolean".equals(columnClassName)) {
+                                            columnClasses[i] = boolean.class;
+                                        } else if("byte".equals(columnClassName)) {
+                                            columnClasses[i] = byte.class;
+                                        } else if("char".equals(columnClassName)) {
+                                            columnClasses[i] = char.class;
+                                        } else if("short".equals(columnClassName)) {
+                                            columnClasses[i] = short.class;
+                                        } else if("int".equals(columnClassName)) {
+                                            columnClasses[i] = int.class;
+                                        } else if("long".equals(columnClassName)) {
+                                            columnClasses[i] = long.class;
+                                        } else if("float".equals(columnClassName)) {
+                                            columnClasses[i] = float.class;
+                                        } else if("double".equals(columnClassName)) {
+                                            columnClasses[i] = double.class;
+                                        } else {
+                                            isArray = false;
+                                            columnClasses[i] = Class.forName(columnClassName);
+                                        }
+                                        if(isArray) {
+                                            columnClasses[i] = Array.newInstance(columnClasses[i], 0).getClass();
+                                        }
+                                    } else {
+                                        columnClasses[i] = Class.forName(columnClassName);
+                                    }
                                 }
                                 break;
                         }

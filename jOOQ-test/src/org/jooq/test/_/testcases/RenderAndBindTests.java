@@ -381,6 +381,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testInlinedBindValuesForNumberTypes() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        Double db1 = 1234.5678E9;
+        Float f1 = 1234.5678E9f;
+
+        // Inlining bind values globally, through the factory settings
+        // -----------------------------------------------------------
+        {
+            Factory create = create(new Settings()
+                .withStatementType(StatementType.STATIC_STATEMENT));
+
+            // [#1557] Check correct inlining of floating point values with
+            // exponential notation.
+            assertEquals(2,
+            create.insertInto(T639(), T639_ID(), T639_BIG_DECIMAL())
+                  .values(1, db1)
+                  .values(2, f1)
+                  .execute());
+
+            Result<T639> result = create.selectFrom(T639()).orderBy(T639_ID()).fetch();
+            assertEquals(1, (int) result.getValue(0, T639_ID()));
+            assertEquals(2, (int) result.getValue(1, T639_ID()));
+            assertEquals(1234, (int) (result.get(0).getValue(T639_BIG_DECIMAL(), Double.class) / 1E9));
+            assertEquals(1234, (int) (result.get(0).getValue(T639_BIG_DECIMAL(), Float.class) / 1E9f));
+        }
+    }
+
+    @Test
     public void testInlinedBindValuesForDatetime() throws Exception {
         jOOQAbstractTest.reset = false;
 

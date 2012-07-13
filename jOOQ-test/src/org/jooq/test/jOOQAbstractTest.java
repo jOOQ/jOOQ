@@ -1485,6 +1485,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInlinedBindValuesForNumberTypes() throws Exception {
+        new RenderAndBindTests(this).testInlinedBindValuesForNumberTypes();
+    }
+
+    @Test
     public void testInlinedBindValuesForDatetime() throws Exception {
         new RenderAndBindTests(this).testInlinedBindValuesForDatetime();
     }

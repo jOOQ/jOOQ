@@ -1,5 +1,6 @@
 DELETE FROM multi_schema.t_book_sale/
 
+DELETE FROM t_639_numbers_table/
 DELETE FROM t_658_ref/
 DELETE FROM t_658_11/
 DELETE FROM t_658_21/

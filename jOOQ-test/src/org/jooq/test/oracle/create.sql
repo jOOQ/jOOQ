@@ -1716,3 +1716,7 @@ CREATE TABLE T_976 (
 
   CONSTRAINT pk_t_976 PRIMARY KEY (ID)
 )/
+
+create or replace synonym t_author_synonym for t_author;
+create or replace synonym v_author_synonym for v_author;
+create or replace synonym p_unused_synonym for p_unused;

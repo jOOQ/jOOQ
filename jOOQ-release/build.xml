@@ -45,6 +45,9 @@
 		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\javax\persistence\persistence-api\1.0\persistence-api-1.0.jar"/>
 		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\javax\persistence\persistence-api\1.0\persistence-api-1.0-sources.jar"/>
 
+		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\javax\validation\validation-api\1.1.0.Alpha1\validation-api-1.1.0.Alpha1.jar"/>
+		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\javax\validation\validation-api\1.1.0.Alpha1\validation-api-1.1.0.Alpha1-sources.jar"/>
+
 		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\com\fifesoft\rsyntaxtextarea\2.0.2\rsyntaxtextarea-2.0.2.jar"/>
 		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\com\fifesoft\rsyntaxtextarea\2.0.2\rsyntaxtextarea-2.0.2-sources.jar"/>
 

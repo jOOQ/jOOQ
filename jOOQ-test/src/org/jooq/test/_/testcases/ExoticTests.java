@@ -41,6 +41,7 @@ import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.avg;
 import static org.jooq.impl.Factory.connectByIsCycle;
 import static org.jooq.impl.Factory.connectByIsLeaf;
+import static org.jooq.impl.Factory.connectByRoot;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.level;
@@ -58,7 +59,7 @@ import static org.jooq.impl.Factory.val;
 import static org.jooq.util.oracle.OracleFactory.rownum;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 
 import org.jooq.Field;
 import org.jooq.Record;
@@ -339,17 +340,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 return;
         }
 
-        List<?> paths =
-        create().select(substring(sysConnectByPath(lower(TDirectory_NAME()), "/"), 2).as("dir"))
+        Result<Record> paths =
+        create().select(
+                    lower(connectByRoot(TDirectory_NAME())),
+                    substring(sysConnectByPath(lower(TDirectory_NAME()), "/"), 2).as("dir"))
                 .from(TDirectory())
                 .where(trueCondition())
                 .and(trueCondition())
                 .connectBy(prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
                 .startWith(TDirectory_PARENT_ID().isNull())
-                .orderBy(1)
-                .fetch(0);
+                .orderBy(2)
+                .fetch();
 
         assertEquals(25, paths.size());
+        assertEquals(Collections.nCopies(25, "c:"), paths.getValues(0));
         assertEquals(Arrays.asList(
             "c:",
             "c:/eclipse",
@@ -375,6 +379,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             "c:/program files/java/jre6/bin/javaws.exe",
             "c:/program files/java/jre6/lib",
             "c:/program files/java/jre6/lib/javaws.jar",
-            "c:/program files/java/jre6/lib/rt.jar"), paths);
+            "c:/program files/java/jre6/lib/rt.jar"), paths.getValues(1));
     }
 }

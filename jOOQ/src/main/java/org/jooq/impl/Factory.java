@@ -4870,6 +4870,15 @@ public class Factory implements FactoryOperations {
     }
 
     /**
+     * Retrieve the Oracle-specific <code>CONNECT_BY_ROOT</code> pseudo-column
+     * (to be used along with <code>CONNECT BY</code> clauses)
+     */
+    @Support({ CUBRID, ORACLE })
+    public static <T> Field<T> connectByRoot(Field<T> field) {
+        return field("connect_by_root {0}", nullSafe(field).getDataType(), field);
+    }
+
+    /**
      * Retrieve the Oracle-specific
      * <code>SYS_CONNECT_BY_PATH(field, separator)</code> function (to be used
      * along with <code>CONNECT BY</code> clauses).

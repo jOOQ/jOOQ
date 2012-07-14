@@ -1467,6 +1467,35 @@ public class Factory implements FactoryOperations {
     }
 
     /**
+     * A custom SQL clause that can render arbitrary SQL elements.
+     * <p>
+     * This is useful for constructing more complex SQL syntax elements wherever
+     * <code>Condition</code> types are expected. An example for this are
+     * Postgres's various operators, some of which are missing in the jOOQ API.
+     * For instance, the "overlap" operator for arrays:
+     * <code><pre>ARRAY[1,4,3] && ARRAY[2,1]</pre></code>
+     * <p>
+     * The above Postgres operator can be expressed as such: <code><pre>
+     * condition("{0} && {1}", array1, array2);
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link #name(String...)} and similar methods
+     *
+     * @param sql The SQL
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return A condition wrapping the plain SQL
+     */
+    @Support
+    public static Condition condition(String sql, QueryPart... parts) {
+        return new SQLCondition(sql, parts);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

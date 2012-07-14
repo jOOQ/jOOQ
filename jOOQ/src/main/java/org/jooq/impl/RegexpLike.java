@@ -81,7 +81,7 @@ class RegexpLike extends AbstractCondition {
             case HSQLDB: {
 
                 // [#1570] TODO: Replace this by Factory.condition(String, QueryPart...)
-                context.sql(Factory.field("{regexp_matches}({0}, {1})", Boolean.class, search, pattern));
+                context.sql(Factory.condition("{regexp_matches}({0}, {1})", search, pattern));
                 break;
             }
 
@@ -89,7 +89,7 @@ class RegexpLike extends AbstractCondition {
             case POSTGRES: {
 
                 // [#1570] TODO: Replace this by Factory.condition(String, QueryPart...)
-                context.sql(Factory.field("{0} ~ {1}", Boolean.class, search, pattern));
+                context.sql(Factory.condition("{0} ~ {1}", search, pattern));
                 break;
             }
 
@@ -97,7 +97,7 @@ class RegexpLike extends AbstractCondition {
             case ORACLE: {
 
                 // [#1570] TODO: Replace this by Factory.condition(String, QueryPart...)
-                context.sql(Factory.field("{regexp_like}({0}, {1})", Boolean.class, search, pattern));
+                context.sql(Factory.condition("{regexp_like}({0}, {1})", search, pattern));
                 break;
             }
 

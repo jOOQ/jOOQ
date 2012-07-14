@@ -4875,7 +4875,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ CUBRID, ORACLE })
     public static <T> Field<T> connectByRoot(Field<T> field) {
-        return field("connect_by_root {0}", nullSafe(field).getDataType(), field);
+        return field("{connect_by_root} {0}", nullSafe(field).getDataType(), field);
     }
 
     /**
@@ -4885,7 +4885,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ CUBRID, ORACLE })
     public static Field<String> sysConnectByPath(Field<?> field, String separator) {
-        return function("sys_connect_by_path", String.class, field, inline(separator));
+        return field("{sys_connect_by_path}({0}, {1})", String.class, field, inline(separator));
     }
 
     /**

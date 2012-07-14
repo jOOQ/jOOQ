@@ -1156,6 +1156,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testStoreLocked() throws Exception {
+        new CRUDTests(this).testStoreLocked();
+    }
+
+    @Test
     public void testNonUpdatables() throws Exception {
         new CRUDTests(this).testNonUpdatables();
     }

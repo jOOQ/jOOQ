@@ -37,28 +37,37 @@ package org.jooq.impl;
 
 import java.io.Serializable;
 
+/**
+ * @author Lukas Eder
+ */
 class Value<T> implements Serializable {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -9065797545428164533L;
+    private final T           original;
     private T                 value;
     private boolean           isChanged;
 
     Value(T value) {
+        this.original = value;
         this.value = value;
     }
 
-    T getValue() {
+    final T getValue() {
         return value;
     }
 
-    T getValue(T defaultValue) {
+    final T getValue(T defaultValue) {
         return value != null ? value : defaultValue;
     }
 
-    void setValue(T val) {
+    final T getOriginal() {
+        return original;
+    }
+
+    final void setValue(T val) {
 
         // The flag is always set to true:
         // [#945] To avoid bugs resulting from setting the same value twice
@@ -67,7 +76,7 @@ class Value<T> implements Serializable {
         setValue(val, false);
     }
 
-    void setValue(T val, boolean primaryKey) {
+    final void setValue(T val, boolean primaryKey) {
 
         // [#948] Force setting of val in most cases, to allow for controlling
         // the number of necessary hard-parses, and to allow for explicitly
@@ -91,13 +100,17 @@ class Value<T> implements Serializable {
         value = val;
     }
 
-    boolean isChanged() {
+    final boolean isChanged() {
         return isChanged;
     }
 
-    void setChanged(boolean isChanged) {
+    final void setChanged(boolean isChanged) {
         this.isChanged = isChanged;
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object obj) {

@@ -1400,6 +1400,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testLikeRegex() throws Exception {
+        new PredicateTests(this).testLikeRegex();
+    }
+
+    @Test
     public void testDual() throws Exception {
         new GeneralTests(this).testDual();
     }

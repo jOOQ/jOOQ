@@ -286,6 +286,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testLikeRegex() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+            case DB2:
+            case DERBY:
+            case INGRES:
+            case SQLITE:
+            case SQLSERVER:
+                log.info("SKIPPING", "REGEX tests");
+                return;
+        }
+
+        Result<B> result =
+        create().selectFrom(TBook())
+                .where(TBook_CONTENT_TEXT().likeRegex(".*conscious.*"))
+                .or(TBook_TITLE().notLikeRegex(".*m.*"))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(1, (int) result.get(0).getValue(TBook_ID()));
+        assertEquals(4, (int) result.get(1).getValue(TBook_ID()));
+    }
+
+    @Test
     public void testLargeINCondition() throws Exception {
         Field<Integer> count = count();
         assertEquals(1, (int) create().select(count)

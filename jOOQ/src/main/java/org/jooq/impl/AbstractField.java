@@ -362,6 +362,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition likeRegex(String pattern) {
+        return likeRegex(val(pattern, String.class));
+    }
+
+    @Override
+    public final Condition likeRegex(Field<String> pattern) {
+        return new RegexpLike(this, nullSafe(pattern));
+    }
+
+    @Override
     public final Condition notLike(String value) {
         return notLike(val(value, String.class));
     }
@@ -399,6 +409,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition notLikeIgnoreCase(Field<String> value, char escape) {
         return new CompareCondition(this, nullSafe(value), Comparator.NOT_LIKE_IGNORE_CASE, escape);
+    }
+
+    @Override
+    public final Condition notLikeRegex(String pattern) {
+        return likeRegex(pattern).not();
+    }
+
+    @Override
+    public final Condition notLikeRegex(Field<String> pattern) {
+        return likeRegex(pattern).not();
     }
 
     @Override

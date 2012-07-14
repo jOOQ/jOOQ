@@ -54,7 +54,9 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
+import org.jooq.exception.DataChangedException;
 import org.jooq.exception.InvalidResultException;
+import org.jooq.tools.StringUtils;
 
 /**
  * A record implementation for a record originating from a single table
@@ -91,6 +93,15 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
 
     @Override
     public final int storeUsing(TableField<R, ?>... keys) {
+        return storeUsing0(keys, false);
+    }
+
+    @Override
+    public final int storeLockedUsing(TableField<R, ?>... keys) {
+        return storeUsing0(keys, true);
+    }
+
+    private final int storeUsing0(TableField<R, ?>[] keys, boolean checkLocked) {
         boolean executeUpdate = false;
 
         for (TableField<R, ?> field : keys) {
@@ -110,7 +121,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
         int result = 0;
 
         if (executeUpdate) {
-            result = storeUpdate(keys);
+            result = storeUpdate(keys, checkLocked);
         }
         else {
             result = storeInsert();
@@ -169,7 +180,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
     }
 
     @SuppressWarnings("unchecked")
-    private final int storeUpdate(TableField<R, ?>... keys) {
+    private final int storeUpdate(TableField<R, ?>[] keys, boolean checkIfChanged) {
         UpdateQuery<R> update = create().updateQuery(getTable());
 
         for (Field<?> field : getFields()) {
@@ -182,7 +193,46 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
             addCondition(update, field);
         }
 
+        // [#1547] If optimistic locking checks are requested, try fetching the
+        // Record again first, and compare this Record's original values with
+        // the ones in the database
+        if (checkIfChanged && update.isExecutable()) {
+            checkIfChanged(keys);
+        }
+
         return update.execute();
+    }
+
+    private void checkIfChanged(TableField<R, ?>[] keys) {
+        SimpleSelectQuery<R> select = create().selectQuery(getTable());
+
+        for (Field<?> field : keys) {
+            addCondition(select, field);
+        }
+
+        // [#1547] SQLite doesn't support FOR UPDATE. CUBRID and SQL Server
+        // can simulate it, though!
+        if (create().getDialect() != SQLDialect.SQLITE) {
+            select.setForUpdate(true);
+        }
+
+        R record = select.fetchOne();
+
+        if (record == null) {
+            throw new DataChangedException("Database record no longer exists");
+        }
+
+        for (Field<?> field : getFields()) {
+            Value<?> thisValue = getValue0(field);
+            Value<?> thatValue = ((AbstractRecord) record).getValue0(field);
+
+            Object thisObject = thisValue.getOriginal();
+            Object thatObject = thatValue.getOriginal();
+
+            if (!StringUtils.equals(thisObject, thatObject)) {
+                throw new DataChangedException("Database record has been changed");
+            }
+        }
     }
 
     @Override

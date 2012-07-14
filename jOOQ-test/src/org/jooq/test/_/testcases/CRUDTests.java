@@ -56,11 +56,11 @@ import org.jooq.InsertQuery;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.StoreQuery;
-import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataChangedException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -327,7 +327,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         // No ON DELETE CASCADE constraints for Sybase ASE
         if (getDialect() == SQLDialect.ASE) {
-            create().truncate((Table) table("t_book_to_book_store")).execute();
+            create().truncate(table("t_book_to_book_store")).execute();
         }
 
         // Delete the modified record
@@ -573,5 +573,70 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         record.setValue(T785_NAME(), "N");
         assertEquals(2, record.deleteUsing(T785_NAME()));
         assertEquals(0, create().fetch(T785()).size());
+    }
+
+    @Test
+    public void testStoreLocked() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        // Storing without changing shouldn't execute any queries
+        B book1 = create().fetchOne(TBook(), TBook_ID().equal(1));
+        assertEquals(0, book1.storeLocked());
+        assertEquals(0, book1.storeLocked());
+
+        // Succeed if there are no concurrency issues
+        book1.setValue(TBook_TITLE(), "New Title 1");
+        assertEquals(1, book1.storeLocked());
+        assertEquals("New Title 1", create().fetchOne(TBook(), TBook_ID().equal(1)).getValue(TBook_TITLE()));
+
+        // Get new books
+        B book2 = create().fetchOne(TBook(), TBook_ID().equal(1));
+        B book3 = create().fetchOne(TBook(), TBook_ID().equal(1));
+
+        // Still won't fail, but this will cause book3 to be stale
+        book2.setValue(TBook_TITLE(), "New Title 2");
+        assertEquals(1, book2.storeLocked());
+        assertEquals("New Title 2", create().fetchOne(TBook(), TBook_ID().equal(1)).getValue(TBook_TITLE()));
+
+        // Storing without changing shouldn't execute any queries
+        assertEquals(0, book3.storeLocked());
+
+        // This should fail as book3 is stale
+        book3.setValue(TBook_TITLE(), "New Title 3");
+        try {
+            book3.storeLocked();
+            fail();
+        }
+        catch (DataChangedException expected) {}
+        assertEquals("New Title 2", create().fetchOne(TBook(), TBook_ID().equal(1)).getValue(TBook_TITLE()));
+
+        // Refreshing first will work, though
+        book3.refresh();
+        book3.setValue(TBook_TITLE(), "New Title 3");
+        assertEquals(1, book3.storeLocked());
+        assertEquals("New Title 3", create().fetchOne(TBook(), TBook_ID().equal(1)).getValue(TBook_TITLE()));
+
+        // Get new books
+        B book4 = create().fetchOne(TBook(), TBook_ID().equal(1));
+        B book5 = create().fetchOne(TBook(), TBook_ID().equal(1));
+
+        // Delete the book
+        assertEquals(1, book4.delete());
+
+        // Storing without changing shouldn't execute any queries
+        assertEquals(0, book5.storeLocked());
+
+        // This should fail, as the database record no longer exists
+        book5.setValue(TBook_TITLE(), "New Title 5");
+        try {
+            book5.storeLocked();
+            fail();
+        }
+        catch (DataChangedException expected) {}
+
+        // Restore the book, then it should work
+        assertEquals(1, book4.storeLocked());
+        assertEquals(1, book5.storeLocked());
+        assertEquals("New Title 5", create().fetchOne(TBook(), TBook_ID().equal(1)).getValue(TBook_TITLE()));
     }
 }

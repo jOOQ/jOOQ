@@ -4500,6 +4500,13 @@ create.selectFrom(T_AUTHOR).fetch();</java>
 							<p>The query executed with a Factory equipped with the above mapping will in fact produce this SQL statement: </p>
 <sql>SELECT * FROM MY_BOOK_WORLD.MY_APP__T_AUTHOR</sql>
 
+                            <p>
+                            Table mapping and schema mapping can be applied independently, by specifying several MappedSchema entries
+                            in the above configuration. jOOQ will process them in order of appearance and map at first match. Note that
+                            you can always omit a MappedSchema's output value, in case of which, only the table mapping is applied.
+                            If you omit a MappedSchema's input value, the table mapping is applied to all schemata!
+                            </p>
+
 							<h3>Mapping at code generation time</h3>
 							<p>
 								Note that you can also hard-wire schema mapping in generated artefacts

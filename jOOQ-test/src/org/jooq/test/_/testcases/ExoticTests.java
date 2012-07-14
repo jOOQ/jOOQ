@@ -343,17 +343,46 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         Result<Record> paths =
         create().select(
                     lower(connectByRoot(TDirectory_NAME())),
+                    connectByIsLeaf(),
+                    connectByIsCycle(),
                     substring(sysConnectByPath(lower(TDirectory_NAME()), "/"), 2).as("dir"))
                 .from(TDirectory())
                 .where(trueCondition())
                 .and(trueCondition())
-                .connectBy(prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
+                .connectByNoCycle(prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
                 .startWith(TDirectory_PARENT_ID().isNull())
-                .orderBy(2)
+                .orderBy(4)
                 .fetch();
 
         assertEquals(25, paths.size());
         assertEquals(Collections.nCopies(25, "c:"), paths.getValues(0));
+        assertEquals(Arrays.asList(
+            false, // c:
+            false, // c:/eclipse
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            false, // c:/eclipse/readme
+            true,
+            true,
+            false, // c:/program files
+            false, // c:/program files/internet explorer
+            true,
+            true,
+            true,
+            false, // c:/program files/java
+            false, // c:/program files/java/jre6
+            false, // c:/program files/java/jre6/bin,
+            true,
+            true,
+            true,
+            false, // c:/program files/java/jre6/lib
+            true,
+            true), paths.getValues(1));
+        assertEquals(Collections.nCopies(25, false), paths.getValues(2));
         assertEquals(Arrays.asList(
             "c:",
             "c:/eclipse",
@@ -379,6 +408,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             "c:/program files/java/jre6/bin/javaws.exe",
             "c:/program files/java/jre6/lib",
             "c:/program files/java/jre6/lib/javaws.jar",
-            "c:/program files/java/jre6/lib/rt.jar"), paths.getValues(1));
+            "c:/program files/java/jre6/lib/rt.jar"), paths.getValues(3));
     }
 }

@@ -1721,3 +1721,5 @@ create or replace synonym t_author_synonym for t_author/
 create or replace synonym v_author_synonym for v_author/
 create or replace synonym p_unused_synonym for p_unused/
 create or replace synonym t_author_synonym_synonym for t_author_synonym/
+create or replace public synonym t_author_public_synonym for t_author/
+create or replace public synonym t_author for t_author/

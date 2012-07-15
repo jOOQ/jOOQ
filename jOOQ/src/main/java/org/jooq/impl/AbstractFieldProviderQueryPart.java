@@ -42,20 +42,20 @@ import org.jooq.AliasProvider;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Schema;
-import org.jooq.Type;
 
-abstract class AbstractType<R extends Record> extends AbstractSchemaProviderQueryPart implements Type<R> {
+@SuppressWarnings("deprecation")
+abstract class AbstractFieldProviderQueryPart<R extends Record> extends AbstractSchemaProviderQueryPart implements org.jooq.Type<R> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -4629861305735726005L;
 
-    AbstractType(String name) {
+    AbstractFieldProviderQueryPart(String name) {
         this(name, null);
     }
 
-    AbstractType(String name, Schema schema) {
+    AbstractFieldProviderQueryPart(String name, Schema schema) {
         super(name, schema);
     }
 

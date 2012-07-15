@@ -65,7 +65,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<R>> implements TableRecord<R> {
+public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord implements TableRecord<R> {
 
     /**
      * Generated UID
@@ -86,9 +86,11 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
     /*
      * This method is overridden covariantly by UpdatableRecordImpl
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Table<R> getTable() {
-        return getType0();
+        // We can be sure about that cast, as this is the only possibility
+        return (Table<R>) getFieldProvider();
     }
 
     @Override

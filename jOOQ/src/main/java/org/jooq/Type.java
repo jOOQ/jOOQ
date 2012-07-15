@@ -40,7 +40,12 @@ package org.jooq;
  *
  * @param <R> The record type
  * @author Lukas Eder
+ * @deprecated - 2.5.0 [#1579] - The <code>org.jooq.Type</code marker interface
+ *             has not proven to be useful to the public API so far. There is no
+ *             real need to abstract {@link org.jooq.Table} and
+ *             {@link org.jooq.UDT} with a single interface
  */
+@Deprecated
 public interface Type<R extends Record> extends NamedQueryPart, FieldProvider, SchemaProvider {
 
     /**

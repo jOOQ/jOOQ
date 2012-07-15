@@ -60,7 +60,14 @@ import org.jooq.impl.Factory;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
-public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>>, TableLike<R> {
+@SuppressWarnings("deprecation")
+public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider<Table<R>>, TableLike<R> {
+
+    /**
+     * @return The record type produced by this table
+     */
+    @Override
+    Class<? extends R> getRecordType();
 
     /**
      * Retrieve the table's <code>IDENTITY</code> information, if available.

@@ -66,6 +66,7 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
         this.timestamp2 = timestamp2;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final Field<DayToSecond> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {

@@ -113,8 +113,8 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * Store this record back to the database assuming an optimistic lock.
      * <p>
      * This performs the same action as {@link #storeUsing(TableField...)},
-     * except that if an <code>UPDATE</code> is performed, this record will be
-     * compared with the latest state in the database.
+     * except that if an <code>UPDATE</code> is performed, this record will
+     * first be compared with the latest state in the database.
      * <p>
      * Note that in order to compare this record with the latest state, the
      * database record will be locked pessimistically using a
@@ -164,6 +164,44 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * @throws DataAccessException if something went wrong executing the query
      */
     int deleteUsing(TableField<R, ?>... keys) throws DataAccessException;
+
+    /**
+     * Deletes this record from the database assuming an optimistic lock.
+     * <p>
+     * This performs the same action as {@link #deleteUsing(TableField...)},
+     * except that this record will first be compared with the latest state in
+     * the database.
+     * <p>
+     * Note that in order to compare this record with the latest state, the
+     * database record will be locked pessimistically using a
+     * <code>SELECT .. FOR UPDATE</code> statement. Not all databases support
+     * the <code>FOR UPDATE</code> clause natively. Namely, the following
+     * databases will show slightly different behaviour:
+     * <ul>
+     * <li> {@link SQLDialect#CUBRID} and {@link SQLDialect#SQLSERVER}: jOOQ will
+     * try to lock the database record using JDBC's
+     * {@link ResultSet#TYPE_SCROLL_SENSITIVE} and
+     * {@link ResultSet#CONCUR_UPDATABLE}.</li>
+     * <li> {@link SQLDialect#SQLITE}: No pessimistic locking is possible. Client
+     * code must assure that no race-conditions can occur between jOOQ's
+     * checking of database record state and the actual <code>UPDATE</code></li>
+     * </ul>
+     * <p>
+     * See {@link LockProvider#setForUpdate(boolean)} for more details
+     * <p>
+     * Unlike {@link #deleteUsing(TableField...)}, this will fail if several
+     * records are concerned.
+     *
+     * @param keys The key fields for the <code>DELETE</code> statement's
+     *            <code>WHERE</code> clause.
+     * @return The number of deleted records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws DataChangedException if the record has already been changed in
+     *             the database
+     * @see #deleteUsing(TableField...)
+     * @see LockProvider#setForUpdate(boolean)
+     */
+    int deleteLockedUsing(TableField<R, ?>... keys) throws DataAccessException, DataChangedException;
 
     /**
      * Refresh this record from the database, based on the value of the provided

@@ -101,7 +101,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
         return storeUsing0(keys, true);
     }
 
-    private final int storeUsing0(TableField<R, ?>[] keys, boolean checkLocked) {
+    private final int storeUsing0(TableField<R, ?>[] keys, boolean checkIfChanged) {
         boolean executeUpdate = false;
 
         for (TableField<R, ?> field : keys) {
@@ -121,7 +121,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
         int result = 0;
 
         if (executeUpdate) {
-            result = storeUpdate(keys, checkLocked);
+            result = storeUpdate(keys, checkIfChanged);
         }
         else {
             result = storeInsert();
@@ -237,11 +237,27 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
 
     @Override
     public final int deleteUsing(TableField<R, ?>... keys) {
+        return deleteUsing0(keys, false);
+    }
+
+    @Override
+    public final int deleteLockedUsing(TableField<R, ?>... keys) {
+        return deleteUsing0(keys, true);
+    }
+
+    private int deleteUsing0(TableField<R, ?>[] keys, boolean checkIfChanged) {
         try {
             DeleteQuery<R> delete = create().deleteQuery(getTable());
 
             for (Field<?> field : keys) {
                 addCondition(delete, field);
+            }
+
+            // [#1547] If optimistic locking checks are requested, try fetching the
+            // Record again first, and compare this Record's original values with
+            // the ones in the database
+            if (checkIfChanged && delete.isExecutable()) {
+                checkIfChanged(keys);
             }
 
             return delete.execute();

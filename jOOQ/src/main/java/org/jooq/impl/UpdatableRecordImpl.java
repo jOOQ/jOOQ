@@ -42,6 +42,8 @@ import org.jooq.Record;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataChangedException;
 
 /**
  * A record implementation for a record holding a primary key
@@ -84,6 +86,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     @Override
     public final int delete() {
         return deleteUsing(getMainKey().getFieldsArray());
+    }
+
+    @Override
+    public final int deleteLocked() throws DataAccessException, DataChangedException {
+        return deleteLockedUsing(getMainKey().getFieldsArray());
     }
 
     @Override

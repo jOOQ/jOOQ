@@ -87,7 +87,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         this.fields = fields;
     }
 
-    final FieldProvider getMetaData() {
+    final FieldProvider getFieldProvider() {
         return fields;
     }
 

@@ -51,7 +51,7 @@ import org.jooq.UDTRecord;
  *
  * @author Lukas Eder
  */
-public class UDTRecordImpl<R extends UDTRecord<R>> extends TypeRecord<UDT<R>> implements UDTRecord<R> {
+public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implements UDTRecord<R> {
 
     /**
      * Generated UID
@@ -62,9 +62,11 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends TypeRecord<UDT<R>> im
         super(udt);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final UDT<R> getUDT() {
-        return getType0();
+        // We can be sure about that cast, as this is the only possibility
+        return (UDT<R>) getFieldProvider();
     }
 
     @Override

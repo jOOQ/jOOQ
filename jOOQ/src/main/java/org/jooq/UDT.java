@@ -45,7 +45,14 @@ import java.util.Map;
  * @param <R> The record type
  * @author Lukas Eder
  */
-public interface UDT<R extends UDTRecord<R>> extends Type<R> {
+@SuppressWarnings("deprecation")
+public interface UDT<R extends UDTRecord<R>> extends org.jooq.Type<R> {
+
+    /**
+     * @return The record type produced by this table
+     */
+    @Override
+    Class<? extends R> getRecordType();
 
     /**
      * The complete type mapping for this UDT.

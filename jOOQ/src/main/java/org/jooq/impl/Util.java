@@ -78,7 +78,8 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.Table;
-import org.jooq.Type;
+import org.jooq.UDT;
+import org.jooq.UDTRecord;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.LoggerListener;
@@ -142,14 +143,28 @@ final class Util {
     /**
      * Create a new record
      */
-    static final <R extends Record> R newRecord(Type<R> type) {
+    static final <R extends Record> R newRecord(Table<R> type) {
         return newRecord(type, null);
     }
 
     /**
      * Create a new record
      */
-    static final <R extends Record> R newRecord(Type<R> type, Configuration configuration) {
+    static final <R extends Record> R newRecord(Table<R> type, Configuration configuration) {
+        return newRecord(type.getRecordType(), type, configuration);
+    }
+
+    /**
+     * Create a new record
+     */
+    static final <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
+        return newRecord(type, null);
+    }
+
+    /**
+     * Create a new record
+     */
+    static final <R extends UDTRecord<R>> R newRecord(UDT<R> type, Configuration configuration) {
         return newRecord(type.getRecordType(), type, configuration);
     }
 

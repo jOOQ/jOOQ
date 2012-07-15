@@ -56,7 +56,7 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 
-abstract class AbstractTable<R extends Record> extends AbstractType<R> implements Table<R> {
+abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQueryPart<R> implements Table<R> {
 
     /**
      * Generated UID

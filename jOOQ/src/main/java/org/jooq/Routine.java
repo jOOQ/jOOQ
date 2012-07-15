@@ -82,7 +82,24 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-public interface Routine<T> extends NamedQueryPart, SchemaProvider {
+@SuppressWarnings("deprecation")
+public interface Routine<T> extends NamedQueryPart, org.jooq.SchemaProvider {
+
+    /**
+     * Get the routine schema
+     */
+    @Override
+    Schema getSchema();
+
+    /**
+     * The container package of this stored procedure or function.
+     * <p>
+     * This is only supported in the {@link SQLDialect#ORACLE} dialect.
+     *
+     * @return The container package of this object, or <code>null</code> if
+     *         there is no such container.
+     */
+    Package getPackage();
 
     /**
      * A list of OUT parameters passed to the stored procedure as argument. This
@@ -113,16 +130,6 @@ public interface Routine<T> extends NamedQueryPart, SchemaProvider {
      * @return A list of parameters passed to the stored object as argument
      */
     List<Parameter<?>> getParameters();
-
-    /**
-     * The container package of this stored procedure or function.
-     * <p>
-     * This is only supported in the {@link SQLDialect#ORACLE} dialect.
-     *
-     * @return The container package of this object, or <code>null</code> if
-     *         there is no such container.
-     */
-    Package getPackage();
 
     /**
      * Execute the stored object using a {@link Configuration} object

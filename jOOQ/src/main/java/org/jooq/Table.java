@@ -64,6 +64,12 @@ import org.jooq.impl.Factory;
 public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider<Table<R>>, TableLike<R> {
 
     /**
+     * Get the table schema
+     */
+    @Override
+    Schema getSchema();
+
+    /**
      * @return The record type produced by this table
      */
     @Override

@@ -42,6 +42,13 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Package extends NamedQueryPart, SchemaProvider {
+@SuppressWarnings("deprecation")
+public interface Package extends NamedQueryPart, org.jooq.SchemaProvider {
+
+    /**
+     * Get the package schema
+     */
+    @Override
+    Schema getSchema();
 
 }

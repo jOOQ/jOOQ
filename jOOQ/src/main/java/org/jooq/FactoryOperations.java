@@ -58,6 +58,8 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
@@ -1651,61 +1653,171 @@ public interface FactoryOperations extends Configuration {
 
     /**
      * Convenience method to access {@link Connection#getTransactionIsolation()}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     int getTransactionIsolation() throws DataAccessException;
 
     /**
-     * Convenience method to access {@link Connection#setTransactionIsolation(int)}
+     * Convenience method to access
+     * {@link Connection#setTransactionIsolation(int)}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     void setTransactionIsolation(int level) throws DataAccessException;
 
     /**
      * Convenience method to access {@link Connection#getHoldability()}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     int getHoldability() throws DataAccessException;
 
     /**
      * Convenience method to access {@link Connection#setHoldability(int)}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     void setHoldability(int holdability) throws DataAccessException;
 
     /**
      * Convenience method to access {@link Connection#getAutoCommit()}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     boolean getAutoCommit() throws DataAccessException;
 
     /**
      * Convenience method to access {@link Connection#setAutoCommit(boolean)}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     void setAutoCommit(boolean autoCommit) throws DataAccessException;
 
     /**
-     * Convenience method to access {@link Connection#releaseSavepoint(Savepoint)}
+     * Convenience method to access
+     * {@link Connection#releaseSavepoint(Savepoint)}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     void releaseSavepoint(Savepoint savepoint) throws DataAccessException;
 
     /**
      * Convenience method to access {@link Connection#setSavepoint(String)}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     Savepoint setSavepoint(String name) throws DataAccessException;
 
     /**
      * Convenience method to access {@link Connection#setSavepoint()}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     Savepoint setSavepoint() throws DataAccessException;
 
     /**
      * Convenience method to access {@link Connection#rollback(Savepoint)}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     void rollback(Savepoint savepoint) throws DataAccessException;
 
     /**
      * Convenience method to access {@link Connection#rollback()}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     void rollback() throws DataAccessException;
 
     /**
      * Convenience method to access {@link Connection#commit()}
+     * <p>
+     * Use this method only if you control the JDBC {@link Connection} wrapped
+     * by this {@link Configuration}, and if that connection manages the current
+     * transaction. If your transaction is operated on a distributed
+     * <code>javax.transaction.UserTransaction</code>, for instance, this method
+     * will not work.
+     *
+     * @see Configuration#setConnection(Connection)
+     * @see Configuration#setDataSource(DataSource)
      */
     void commit() throws DataAccessException;
 }

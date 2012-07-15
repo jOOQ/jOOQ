@@ -5,7 +5,7 @@
 	<property name="dir.release" value="${basedir}/release" />
 	<property name="version" value="2.4.0"/>
 
-	<!--  Run a full mvn clean package install deploy first before this -->
+	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="release" description="Release a new version">
 		<mkdir dir="${dir.release}/versions" />
 		<mkdir dir="${dir.release}/${version}" />

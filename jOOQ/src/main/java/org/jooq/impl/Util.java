@@ -55,8 +55,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 import javax.persistence.Column;
@@ -106,11 +104,6 @@ final class Util {
      * classpath.
      */
     private static Boolean                     isJPAAvailable;
-
-    /**
-     * A cache for {@link ExecuteListener} classes
-     */
-    private static final Map<String, Class<?>> EXECUTE_LISTENERS = new ConcurrentHashMap<String, Class<?>>();
 
     /**
      * A pattern for the JDBC escape syntax
@@ -945,13 +938,11 @@ final class Util {
 
     private static final ExecuteListener getListener(String name) {
         try {
-            Class<?> type = EXECUTE_LISTENERS.get(name);
 
-            if (type == null) {
-                type = Class.forName(name);
-                EXECUTE_LISTENERS.put(name, type);
-            }
-
+            // [#1572] Loading classes like this is needed for class loading to
+            // work with OSGi. [#1578] The current implementation of loading
+            // ExecuteListeners will be reworked in jOOQ 3.0, though
+            Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(name);
             return (ExecuteListener) Reflect.accessible(type.getDeclaredConstructor()).newInstance();
         }
         catch (Exception e) {

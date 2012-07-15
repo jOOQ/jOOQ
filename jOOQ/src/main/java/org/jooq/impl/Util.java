@@ -155,14 +155,14 @@ final class Util {
     }
 
     /**
-     * Create a new record
+     * Create a new UDT record
      */
     static final <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
         return newRecord(type, null);
     }
 
     /**
-     * Create a new record
+     * Create a new UDT record
      */
     static final <R extends UDTRecord<R>> R newRecord(UDT<R> type, Configuration configuration) {
         return newRecord(type.getRecordType(), type, configuration);

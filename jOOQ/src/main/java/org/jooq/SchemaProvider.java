@@ -41,7 +41,12 @@ package org.jooq;
  *
  * @author Lukas Eder
  * @since 1.5.2
+ * @deprecated - 2.5.0 [#1580] - The <code>org.jooq.SchemaProvider</code> marker
+ *             interface has not proven to be useful to the public API so far.
+ *             There is no real need to abstract its implementations with a
+ *             single interface
  */
+@Deprecated
 public interface SchemaProvider {
 
     /**

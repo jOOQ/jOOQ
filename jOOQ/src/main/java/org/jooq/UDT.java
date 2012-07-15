@@ -49,6 +49,12 @@ import java.util.Map;
 public interface UDT<R extends UDTRecord<R>> extends org.jooq.Type<R> {
 
     /**
+     * Get the UDT schema
+     */
+    @Override
+    Schema getSchema();
+
+    /**
      * @return The record type produced by this table
      */
     @Override

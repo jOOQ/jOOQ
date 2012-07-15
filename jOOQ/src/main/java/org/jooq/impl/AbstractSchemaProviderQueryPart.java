@@ -40,12 +40,12 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.Schema;
-import org.jooq.SchemaProvider;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractSchemaProviderQueryPart extends AbstractNamedQueryPart implements SchemaProvider {
+@SuppressWarnings("deprecation")
+abstract class AbstractSchemaProviderQueryPart extends AbstractNamedQueryPart implements org.jooq.SchemaProvider {
 
     /**
      * Generated UID

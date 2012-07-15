@@ -633,7 +633,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         R record5 = create().fetchOne(table, id.equal(1));
 
         // Delete the book
-        assertEquals(1, record4.delete());
+        assertEquals(1, record4.deleteLocked());
 
         // Storing without changing shouldn't execute any queries
         assertEquals(0, record5.storeLocked());
@@ -650,5 +650,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(1, record4.storeLocked());
         assertEquals(1, record5.storeLocked());
         assertEquals("New Title 5", create().fetchOne(table, id.equal(1)).getValue(string));
+
+        // Deleting the original should no longer be possible
+        try {
+            record4.deleteLocked();
+            fail();
+        }
+        catch (DataChangedException expected) {}
+
+        // Refreshing and deleting should work
+        record4.refresh();
+        assertEquals(1, record4.deleteLocked());
+
+        // Now the other record cannot be deleted anymore
+        try {
+            record5.deleteLocked();
+            fail();
+        }
+        catch (DataChangedException expected) {}
     }
 }

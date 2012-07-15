@@ -1715,6 +1715,12 @@ public class Factory implements FactoryOperations {
         catch (IOException e) {
             throw new DataAccessException("Could not read the CSV string", e);
         }
+        finally {
+            try {
+                reader.close();
+            }
+            catch (IOException ignore) {}
+        }
 
         FieldList fields = new FieldList();
 
@@ -3326,6 +3332,7 @@ public class Factory implements FactoryOperations {
     /**
      * This is not yet implemented
      */
+    @SuppressWarnings("unused")
     static <T extends java.util.Date> Field<T> trunc(Field<T> date, DatePart part) {
         throw new UnsupportedOperationException("This is not yet implemented");
     }

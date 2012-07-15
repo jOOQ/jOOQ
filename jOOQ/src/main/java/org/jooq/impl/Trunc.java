@@ -78,6 +78,7 @@ class Trunc<T> extends AbstractFunction<T> {
         }
     }
 
+    @SuppressWarnings("unused")
     private final Field<T> getDateTimeFunction(Configuration configuration) {
         return null;
     }

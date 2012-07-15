@@ -280,7 +280,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Arrays.asList("Coelho", "Orwell"), new ArrayList<String>(authorNames));
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testUpdatablesPK() throws Exception {
         jOOQAbstractTest.reset = false;

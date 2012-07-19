@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class XUnused implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1359273608;
+	private static final long serialVersionUID = -564578112;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
@@ -99,19 +99,19 @@ public class XUnused implements java.io.Serializable {
 		this.uDT = uDT;
 	}
 
-	public java.lang.Integer getMetaData_() {
+	public java.lang.Integer getMetaData() {
 		return this.metaData;
 	}
 
-	public void setMetaData_(java.lang.Integer metaData) {
+	public void setMetaData(java.lang.Integer metaData) {
 		this.metaData = metaData;
 	}
 
-	public java.lang.Integer getType0_() {
+	public java.lang.Integer getType0() {
 		return this.type0;
 	}
 
-	public void setType0_(java.lang.Integer type0) {
+	public void setType0(java.lang.Integer type0) {
 		this.type0 = type0;
 	}
 

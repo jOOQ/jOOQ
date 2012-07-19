@@ -16,7 +16,7 @@ package org.jooq.test.sybase.generatedclasses;
  */
 public class DbaFactory extends org.jooq.util.sybase.SybaseFactory {
 
-	private static final long serialVersionUID = 599067461;
+	private static final long serialVersionUID = -557059004;
 
 	/**
 	 * Create a factory with a connection
@@ -25,6 +25,17 @@ public class DbaFactory extends org.jooq.util.sybase.SybaseFactory {
 	 */
 	public DbaFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Create a factory with a data source
+	 *
+	 * @param dataSource The data source to use with objects created from this factory
+	 */
+	public DbaFactory(javax.sql.DataSource dataSource) {
+		super(dataSource);
 
 		initDefaultSchema();
 	}
@@ -49,6 +60,18 @@ public class DbaFactory extends org.jooq.util.sybase.SybaseFactory {
 	 */
 	public DbaFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Create a factory with a data source and some settings
+	 *
+	 * @param dataSource The data source to use with objects created from this factory
+	 * @param settings The settings to apply to objects created from this factory
+	 */
+	public DbaFactory(javax.sql.DataSource dataSource, org.jooq.conf.Settings settings) {
+		super(dataSource, settings);
 
 		initDefaultSchema();
 	}

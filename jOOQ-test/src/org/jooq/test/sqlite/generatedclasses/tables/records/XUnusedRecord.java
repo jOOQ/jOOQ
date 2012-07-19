@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1357009621;
+	private static final long serialVersionUID = 1989884519;
 
 	/**
 	 * The table column <code>x_unused.ID</code>
@@ -181,28 +181,28 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * The table column <code>x_unused.META_DATA</code>
 	 */
-	public void setMetaData_(java.lang.Integer value) {
+	public void setMetaData(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.META_DATA, value);
 	}
 
 	/**
 	 * The table column <code>x_unused.META_DATA</code>
 	 */
-	public java.lang.Integer getMetaData_() {
+	public java.lang.Integer getMetaData() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.META_DATA);
 	}
 
 	/**
 	 * The table column <code>x_unused.TYPE0</code>
 	 */
-	public void setType0_(java.lang.Integer value) {
+	public void setType0(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.TYPE0, value);
 	}
 
 	/**
 	 * The table column <code>x_unused.TYPE0</code>
 	 */
-	public java.lang.Integer getType0_() {
+	public java.lang.Integer getType0() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.TYPE0);
 	}
 

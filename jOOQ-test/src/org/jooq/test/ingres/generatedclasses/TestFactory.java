@@ -16,7 +16,7 @@ package org.jooq.test.ingres.generatedclasses;
  */
 public class TestFactory extends org.jooq.util.ingres.IngresFactory {
 
-	private static final long serialVersionUID = -525553662;
+	private static final long serialVersionUID = -2129091931;
 
 	/**
 	 * Create a factory with a connection
@@ -25,6 +25,17 @@ public class TestFactory extends org.jooq.util.ingres.IngresFactory {
 	 */
 	public TestFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Create a factory with a data source
+	 *
+	 * @param dataSource The data source to use with objects created from this factory
+	 */
+	public TestFactory(javax.sql.DataSource dataSource) {
+		super(dataSource);
 
 		initDefaultSchema();
 	}
@@ -49,6 +60,18 @@ public class TestFactory extends org.jooq.util.ingres.IngresFactory {
 	 */
 	public TestFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Create a factory with a data source and some settings
+	 *
+	 * @param dataSource The data source to use with objects created from this factory
+	 * @param settings The settings to apply to objects created from this factory
+	 */
+	public TestFactory(javax.sql.DataSource dataSource, org.jooq.conf.Settings settings) {
+		super(dataSource, settings);
 
 		initDefaultSchema();
 	}

@@ -16,7 +16,7 @@ package org.jooq.test.db2.generatedclasses;
  */
 public class LukasFactory extends org.jooq.util.db2.DB2Factory {
 
-	private static final long serialVersionUID = 707653306;
+	private static final long serialVersionUID = 158994551;
 
 	/**
 	 * Create a factory with a connection
@@ -25,6 +25,17 @@ public class LukasFactory extends org.jooq.util.db2.DB2Factory {
 	 */
 	public LukasFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Create a factory with a data source
+	 *
+	 * @param dataSource The data source to use with objects created from this factory
+	 */
+	public LukasFactory(javax.sql.DataSource dataSource) {
+		super(dataSource);
 
 		initDefaultSchema();
 	}
@@ -49,6 +60,18 @@ public class LukasFactory extends org.jooq.util.db2.DB2Factory {
 	 */
 	public LukasFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Create a factory with a data source and some settings
+	 *
+	 * @param dataSource The data source to use with objects created from this factory
+	 * @param settings The settings to apply to objects created from this factory
+	 */
+	public LukasFactory(javax.sql.DataSource dataSource, org.jooq.conf.Settings settings) {
+		super(dataSource, settings);
 
 		initDefaultSchema();
 	}

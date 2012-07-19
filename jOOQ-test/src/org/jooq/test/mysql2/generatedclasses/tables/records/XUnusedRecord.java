@@ -14,7 +14,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1789474806;
+	private static final long serialVersionUID = -565809090;
 
 	/**
 	 * The table column <code>test2.x_unused.ID</code>
@@ -229,7 +229,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * The table column <code>test2.x_unused.META_DATA</code>
 	 */
-	public void setMetaData_(java.lang.Integer value) {
+	public void setMetaData(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.META_DATA, value);
 	}
 
@@ -237,14 +237,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>test2.x_unused.META_DATA</code>
 	 */
 	@javax.persistence.Column(name = "META_DATA", precision = 10)
-	public java.lang.Integer getMetaData_() {
+	public java.lang.Integer getMetaData() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.META_DATA);
 	}
 
 	/**
 	 * The table column <code>test2.x_unused.TYPE0</code>
 	 */
-	public void setType0_(java.lang.Integer value) {
+	public void setType0(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.TYPE0, value);
 	}
 
@@ -252,7 +252,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>test2.x_unused.TYPE0</code>
 	 */
 	@javax.persistence.Column(name = "TYPE0", precision = 10)
-	public java.lang.Integer getType0_() {
+	public java.lang.Integer getType0() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.TYPE0);
 	}
 

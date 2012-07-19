@@ -12,7 +12,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -648402411;
+	private static final long serialVersionUID = -62730103;
 
 	/**
 	 * The table column <code>public.x_unused.id</code>
@@ -212,7 +212,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * The table column <code>public.x_unused.meta_data</code>
 	 */
-	public void setMetaData_(java.lang.Integer value) {
+	public void setMetaData(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.META_DATA, value);
 	}
 
@@ -220,7 +220,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>public.x_unused.meta_data</code>
 	 */
 	@javax.persistence.Column(name = "meta_data", precision = 32)
-	public java.lang.Integer getMetaData_() {
+	public java.lang.Integer getMetaData() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.META_DATA);
 	}
 
@@ -242,7 +242,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * The table column <code>public.x_unused.type0</code>
 	 */
-	public void setType0_(java.lang.Integer value) {
+	public void setType0(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.TYPE0, value);
 	}
 
@@ -250,7 +250,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>public.x_unused.type0</code>
 	 */
 	@javax.persistence.Column(name = "type0", precision = 32)
-	public java.lang.Integer getType0_() {
+	public java.lang.Integer getType0() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.TYPE0);
 	}
 

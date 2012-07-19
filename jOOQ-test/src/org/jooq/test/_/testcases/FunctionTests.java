@@ -483,7 +483,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         // RPAD, LPAD
         switch (getDialect()) {
             case DERBY:
-            case SQLITE:
                 log.info("SKIPPING", "RPAD and LPAD functions");
                 break;
 

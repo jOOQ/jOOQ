@@ -337,16 +337,19 @@ public class jOOQCUBRIDTest extends jOOQAbstractTest<
         return TBooleans.YES_NO_UC;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_VC() {
         return (TableField) TBooleans.VC_BOOLEAN;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_C() {
         return (TableField) TBooleans.C_BOOLEAN;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_N() {
         return (TableField) TBooleans.N_BOOLEAN;

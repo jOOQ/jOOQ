@@ -37,6 +37,8 @@ package org.jooq.util.postgres;
 
 import java.sql.Connection;
 
+import javax.sql.DataSource;
+
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
 import org.jooq.conf.Settings;
@@ -83,6 +85,18 @@ public class PostgresFactory extends Factory {
     }
 
     /**
+     * Create a factory with a data source and a settings configured
+     *
+     * @param dataSource The data source to use with objects created from this
+     *            factory
+     * @param settings The runtime settings to apply to objects created from
+     *            this factory
+     */
+    public PostgresFactory(DataSource dataSource, Settings settings) {
+        super(dataSource, SQLDialect.POSTGRES, settings);
+    }
+
+    /**
      * Create a factory with connection
      *
      * @param connection The connection to use with objects created from this
@@ -90,6 +104,16 @@ public class PostgresFactory extends Factory {
      */
     public PostgresFactory(Connection connection) {
         super(connection, SQLDialect.POSTGRES);
+    }
+
+    /**
+     * Create a factory with a data source
+     *
+     * @param dataSource The data source to use with objects created from this
+     *            factory
+     */
+    public PostgresFactory(DataSource dataSource) {
+        super(dataSource, SQLDialect.POSTGRES);
     }
 
     /**

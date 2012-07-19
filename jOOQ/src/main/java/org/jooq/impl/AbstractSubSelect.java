@@ -100,6 +100,7 @@ implements
     private final FieldList             groupBy;
     private final ConditionProviderImpl having;
     private final SortFieldList         orderBy;
+    private boolean                     orderBySiblings;
     private final Limit                 limit;
 
 
@@ -532,7 +533,9 @@ implements
         // ---------------
         if (!getOrderBy().isEmpty()) {
             context.formatSeparator()
-                   .keyword("order by ")
+                   .keyword("order ")
+                   .keyword(orderBySiblings ? "siblings " : "")
+                   .keyword("by ")
                    .sql(getOrderBy());
         }
     }
@@ -784,6 +787,11 @@ implements
         }
 
         addOrderBy(fields);
+    }
+
+    @Override
+    public final void setOrderBySiblings(boolean orderBySiblings) {
+        this.orderBySiblings = orderBySiblings;
     }
 
     @Override

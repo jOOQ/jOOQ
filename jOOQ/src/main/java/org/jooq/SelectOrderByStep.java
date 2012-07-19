@@ -35,6 +35,9 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.ORACLE;
+
 import java.util.Collection;
 
 /**
@@ -110,4 +113,50 @@ public interface SelectOrderByStep extends SelectLimitStep {
      */
     @Support
     SelectLimitStep orderBy(int... fieldIndexes);
+
+    /**
+     * Add an <code>ORDER SIBLINGS BY</code> clause to the query
+     * <p>
+     * This clause can be used only along with Oracle's <code>CONNECT BY</code>
+     * clause, to indicate that the hierarchical ordering should be preserved
+     * and elements of each hierarchy should be ordered among themselves.
+     */
+    @Support({ CUBRID, ORACLE })
+    SelectLimitStep orderSiblingsBy(Field<?>... fields);
+
+    /**
+     * Add an <code>ORDER SIBLINGS BY</code> clause to the query
+     * <p>
+     * This clause can be used only along with Oracle's <code>CONNECT BY</code>
+     * clause, to indicate that the hierarchical ordering should be preserved
+     * and elements of each hierarchy should be ordered among themselves.
+     */
+    @Support({ CUBRID, ORACLE })
+    SelectLimitStep orderSiblingsBy(SortField<?>... fields);
+
+    /**
+     * Add an <code>ORDER SIBLINGS BY</code> clause to the query
+     * <p>
+     * This clause can be used only along with Oracle's <code>CONNECT BY</code>
+     * clause, to indicate that the hierarchical ordering should be preserved
+     * and elements of each hierarchy should be ordered among themselves.
+     */
+    @Support({ CUBRID, ORACLE })
+    SelectLimitStep orderSiblingsBy(Collection<SortField<?>> fields);
+
+    /**
+     * Add an <code>ORDER SIBLINGS BY</code> clause to the query
+     * <p>
+     * This clause can be used only along with Oracle's <code>CONNECT BY</code>
+     * clause, to indicate that the hierarchical ordering should be preserved
+     * and elements of each hierarchy should be ordered among themselves.
+     * <p>
+     * Indexes start at <code>1</code> in SQL!
+     * <p>
+     * Note, you can use <code>orderSiblingsBy(Factory.val(1).desc())</code> or
+     * <code>orderBy(Factory.literal(1).desc())</code> to apply descending
+     * ordering
+     */
+    @Support({ CUBRID, ORACLE })
+    SelectLimitStep orderSiblingsBy(int... fieldIndexes);
 }

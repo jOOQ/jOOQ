@@ -96,6 +96,20 @@ public interface OrderProvider {
     void addOrderBy(int... fieldIndexes);
 
     /**
+     * Indicate whether the <code>SIBLINGS</code> keyword should be used in an
+     * <code>ORDER BY</code> clause to form an <code>ORDER SIBLINGS BY</code>
+     * clause.
+     * <p>
+     * This clause can be used only along with Oracle's <code>CONNECT BY</code>
+     * clause, to indicate that the hierarchical ordering should be preserved
+     * and elements of each hierarchy should be ordered among themselves.
+     * 
+     * @param orderBySiblings
+     */
+    @Support({ CUBRID, ORACLE })
+    void setOrderBySiblings(boolean orderBySiblings);
+
+    /**
      * Limit the results of this select
      * <p>
      * This is the same as calling {@link #addLimit(int, int)} with offset = 0

@@ -37,6 +37,8 @@ package org.jooq.util.derby;
 
 import java.sql.Connection;
 
+import javax.sql.DataSource;
+
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
 import org.jooq.conf.Settings;
@@ -83,6 +85,18 @@ public class DerbyFactory extends Factory {
     }
 
     /**
+     * Create a factory with a data source and a settings configured
+     *
+     * @param dataSource The data source to use with objects created from this
+     *            factory
+     * @param settings The runtime settings to apply to objects created from
+     *            this factory
+     */
+    public DerbyFactory(DataSource dataSource, Settings settings) {
+        super(dataSource, SQLDialect.DERBY, settings);
+    }
+
+    /**
      * Create a factory with connection
      *
      * @param connection The connection to use with objects created from this
@@ -90,6 +104,16 @@ public class DerbyFactory extends Factory {
      */
     public DerbyFactory(Connection connection) {
         super(connection, SQLDialect.DERBY);
+    }
+
+    /**
+     * Create a factory with a data source
+     *
+     * @param dataSource The data source to use with objects created from this
+     *            factory
+     */
+    public DerbyFactory(DataSource dataSource) {
+        super(dataSource, SQLDialect.DERBY);
     }
 
     /**

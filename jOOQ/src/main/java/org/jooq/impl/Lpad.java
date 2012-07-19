@@ -36,11 +36,10 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.Factory.inline;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -65,7 +64,7 @@ class Lpad extends AbstractFunction<String> {
 
         this.field = field;
         this.length = length;
-        this.character = character;
+        this.character = (character == null ? inline(" ") : character);
     }
 
     @Override
@@ -74,28 +73,19 @@ class Lpad extends AbstractFunction<String> {
             case ASE:
             case SQLSERVER:
             case SYBASE: {
-                if (character == null) {
-                    return Factory.concat(Factory.repeat(" ", length.sub(Factory.length(field))), field);
-                }
-                else {
-                    return Factory.concat(Factory.repeat(character, length.sub(Factory.length(field))), field);
-                }
+                return Factory.concat(Factory.repeat(character, length.sub(Factory.length(field))), field);
+            }
+
+            // This beautiful expression was contributed by "Ludo", here:
+            // http://stackoverflow.com/questions/6576343/how-to-simulate-lpad-rpad-with-sqlite
+            case SQLITE: {
+                return Factory.field("replace(replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, ({1} - length({2}))), '''', ''), '0', {3}) || {4}",
+                    String.class,
+                    length, length, field, character, field);
             }
 
             default: {
-
-                // MySQL only knows the 3 parameter version
-                if (character == null) {
-                    if (configuration.getDialect() == SQLDialect.MYSQL) {
-                        return function("lpad", SQLDataType.VARCHAR, field, length, val(" "));
-                    }
-                    else {
-                        return function("lpad", SQLDataType.VARCHAR, field, length);
-                    }
-                }
-                else {
-                    return function("lpad", SQLDataType.VARCHAR, field, length, character);
-                }
+                return function("lpad", SQLDataType.VARCHAR, field, length, character);
             }
         }
     }

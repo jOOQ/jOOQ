@@ -52,31 +52,31 @@ public abstract class CommandMessage extends Message {
 
     /**
      * Set the arguments that will be used when the message is run.
-     * @param args the arguments, which must be serializable.
+     * @param arguments the arguments, which must be serializable.
      */
-    void setArgs(Object... args) {
-        if(args.length == 0) {
-            args = null;
+    void setArgs(Object... arguments) {
+        if(arguments.length == 0) {
+            arguments = null;
         }
-        this.args = args;
+        this.args = arguments;
     }
 
     /**
      * Execute that message asynchronously with the given arguments.
-     * @param args the arguments, which must be serializable.
+     * @param arguments the arguments, which must be serializable.
      */
-    public void asyncExec(CommunicationInterface communicationInterface, Object... args) {
-        setArgs(args);
+    public void asyncExec(CommunicationInterface communicationInterface, Object... arguments) {
+        setArgs(arguments);
         asyncSend(communicationInterface);
     }
 
     /**
      * Execute that message synchronously with the given arguments and return the result.
-     * @param args the arguments, which must be serializable.
+     * @param arguments the arguments, which must be serializable.
      * @return the result of the execution.
      */
-    public Object syncExec(CommunicationInterface communicationInterface, Object... args) {
-        setArgs(args);
+    public Object syncExec(CommunicationInterface communicationInterface, Object... arguments) {
+        setArgs(arguments);
         return syncSend(communicationInterface);
     }
 
@@ -88,11 +88,11 @@ public abstract class CommandMessage extends Message {
 
     /**
      * Run the message.
-     * @param args the arguments that were specified for that command, or an empty array if none were specified.
+     * @param arguments the arguments that were specified for that command, or an empty array if none were specified.
      * @return the result that may be passed back to the caller.
      * @throws Exception any exception that may happen, and which would be passed back if it is a synchronous execution.
      */
-    public abstract Object run(Object[] args) throws Exception;
+    public abstract Object run(Object[] arguments) throws Exception;
 
     @Override
     public String toString() {

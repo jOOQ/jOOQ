@@ -75,8 +75,6 @@ import java.sql.Connection;
 import java.util.Arrays;
 
 import org.jooq.Configuration;
-import org.jooq.ConfigurationProvider;
-import org.jooq.ConfigurationRegistry;
 import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
@@ -354,7 +352,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
     @SuppressWarnings("deprecation")
     protected final void register(final Configuration configuration) {
-        ConfigurationRegistry.setProvider(new ConfigurationProvider() {
+        org.jooq.ConfigurationRegistry.setProvider(new org.jooq.ConfigurationProvider() {
 
             @Override
             public Configuration provideFor(Configuration c) {
@@ -788,6 +786,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         testBatchAuthors("Gamma", "Helm", "Johnson");
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testBatchMultiple() throws Exception {
         jOOQAbstractTest.reset = false;
@@ -819,6 +818,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         testBatchAuthors("Gamma", "Helm", "Johnson");
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testBatchStore() throws Exception {
         jOOQAbstractTest.reset = false;

@@ -51,6 +51,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.DataType;
@@ -1913,6 +1915,22 @@ public class DefaultGenerator extends AbstractGenerator {
         outF.println("\t\tinitDefaultSchema();");
         outF.println("\t}");
 
+        outF.println();
+        outF.println("\t/**");
+        outF.println("\t * Create a factory with a data source");
+        outF.println("\t *");
+        outF.println("\t * @param dataSource The data source to use with objects created from this factory");
+        outF.println("\t */");
+        outF.print("\tpublic ");
+        outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
+        outF.print("(");
+        outF.print(DataSource.class);
+        outF.println(" dataSource) {");
+        outF.println("\t\tsuper(dataSource);");
+        outF.println();
+        outF.println("\t\tinitDefaultSchema();");
+        outF.println("\t}");
+
         if (generateDeprecated()) {
             outF.println();
             outF.println("\t/**");
@@ -1957,6 +1975,25 @@ public class DefaultGenerator extends AbstractGenerator {
         outF.println("\t\tinitDefaultSchema();");
         outF.println("\t}");
 
+        outF.println();
+        outF.println("\t/**");
+        outF.println("\t * Create a factory with a data source and some settings");
+        outF.println("\t *");
+        outF.println("\t * @param dataSource The data source to use with objects created from this factory");
+        outF.println("\t * @param settings The settings to apply to objects created from this factory");
+        outF.println("\t */");
+        outF.print("\tpublic ");
+        outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
+        outF.print("(");
+        outF.print(DataSource.class);
+        outF.print(" dataSource, ");
+        outF.print(Settings.class);
+        outF.println(" settings) {");
+        outF.println("\t\tsuper(dataSource, settings);");
+        outF.println();
+        outF.println("\t\tinitDefaultSchema();");
+        outF.println("\t}");
+
         // [#1315] schema-specific factories override the default schema
         outF.println();
         outF.println("\t/**");
@@ -1972,7 +2009,7 @@ public class DefaultGenerator extends AbstractGenerator {
         outF.println(".getName());");
         outF.println("\t}");
 
-        watch.splitInfo("Schema generated");
+        watch.splitInfo("Factory generated");
     }
 
     protected void printExtends(GenerationWriter out, Definition definition, Mode mode) {

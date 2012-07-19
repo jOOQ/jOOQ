@@ -2700,6 +2700,9 @@ public class Factory implements FactoryOperations {
      * elsewhere using concat, repeat, and length, which may be simulated as
      * well, depending on the RDBMS:
      * <code><pre>concat([field], repeat([character], [length] - length([field])))</pre></code>
+     * <p>
+     * In {@link SQLDialect#SQLITE}, this is simulated as such:
+     * <code><pre>[field] || replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
@@ -2758,6 +2761,9 @@ public class Factory implements FactoryOperations {
      * elsewhere using concat, repeat, and length, which may be simulated as
      * well, depending on the RDBMS:
      * <code><pre>concat(repeat([character], [length] - length([field])), [field])</pre></code>
+     * <p>
+     * In {@link SQLDialect#SQLITE}, this is simulated as such:
+     * <code><pre>replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character]) || [field]</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {

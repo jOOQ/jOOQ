@@ -385,6 +385,34 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final SelectImpl orderSiblingsBy(Field<?>... fields) {
+        getQuery().addOrderBy(fields);
+        getQuery().setOrderBySiblings(true);
+        return this;
+    }
+
+    @Override
+    public final SelectImpl orderSiblingsBy(SortField<?>... fields) {
+        getQuery().addOrderBy(fields);
+        getQuery().setOrderBySiblings(true);
+        return this;
+    }
+
+    @Override
+    public final SelectImpl orderSiblingsBy(Collection<SortField<?>> fields) {
+        getQuery().addOrderBy(fields);
+        getQuery().setOrderBySiblings(true);
+        return this;
+    }
+
+    @Override
+    public final SelectImpl orderSiblingsBy(int... fieldIndexes) {
+        getQuery().addOrderBy(fieldIndexes);
+        getQuery().setOrderBySiblings(true);
+        return this;
+    }
+
+    @Override
     public final SelectImpl limit(int numberOfRows) {
         this.limit = numberOfRows;
         this.limitParam = null;

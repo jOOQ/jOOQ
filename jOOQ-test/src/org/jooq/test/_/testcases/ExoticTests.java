@@ -351,7 +351,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .and(trueCondition())
                 .connectByNoCycle(prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
                 .startWith(TDirectory_PARENT_ID().isNull())
-                .orderBy(4)
+                .orderSiblingsBy(TDirectory_NAME().lower())
                 .fetch();
 
         assertEquals(25, paths.size());

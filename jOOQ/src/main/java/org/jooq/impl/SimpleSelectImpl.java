@@ -222,6 +222,34 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingSelect<R>
     }
 
     @Override
+    public final SimpleSelectImpl<R> orderSiblingsBy(Field<?>... fields) {
+        getQuery().addOrderBy(fields);
+        getQuery().setOrderBySiblings(true);
+        return this;
+    }
+
+    @Override
+    public final SimpleSelectImpl<R> orderSiblingsBy(SortField<?>... fields) {
+        getQuery().addOrderBy(fields);
+        getQuery().setOrderBySiblings(true);
+        return this;
+    }
+
+    @Override
+    public final SimpleSelectImpl<R> orderSiblingsBy(Collection<SortField<?>> fields) {
+        getQuery().addOrderBy(fields);
+        getQuery().setOrderBySiblings(true);
+        return this;
+    }
+
+    @Override
+    public final SimpleSelectImpl<R> orderSiblingsBy(int... fieldIndexes) {
+        getQuery().addOrderBy(fieldIndexes);
+        getQuery().setOrderBySiblings(true);
+        return this;
+    }
+
+    @Override
     public final SimpleSelectImpl<R> limit(int numberOfRows) {
         this.limit = numberOfRows;
         this.limitParam = null;

@@ -67,6 +67,13 @@ class Repeat extends AbstractFunction<String> {
             case ORACLE:
                 return Factory.rpad(string, Factory.length(string).mul(count), string);
 
+            // Simulation of REPEAT() for SQLite currently cannot be achieved
+            // using RPAD() above, as RPAD() expects characters, not strings
+            // Another option is documented here, though:
+            // http://stackoverflow.com/questions/11568496/how-to-simulate-repeat-in-sqlite
+            case SQLITE:
+                return Factory.field("replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, {1}), '0', {2})", String.class, count, count, string);
+
             case ASE:
             case SQLSERVER:
                 return function("replicate", SQLDataType.VARCHAR, string, count);

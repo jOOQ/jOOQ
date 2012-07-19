@@ -2769,7 +2769,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, int count) {
         return repeat(val(field, String.class), val(count));
     }
@@ -2779,7 +2779,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, Field<? extends Number> count) {
         return repeat(val(field, String.class), nullSafe(count));
     }
@@ -2789,7 +2789,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(Field<String> field, int count) {
         return repeat(nullSafe(field), val(count));
     }
@@ -2803,8 +2803,11 @@ public class Factory implements FactoryOperations {
      * using rpad and length, which may be simulated as well, depending on the
      * RDBMS:
      * <code><pre>rpad([field], length([field]) * [count], [field])</pre></code>
+     * <p>
+     * In {@link SQLDialect#SQLITE}, this is simulated as such:
+     * <code><pre>replace(substr(quote(zeroblob(([count] + 1) / 2)), 3, [count]), '0', [field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(Field<String> field, Field<? extends Number> count) {
         return new Repeat(nullSafe(field), nullSafe(count));
     }

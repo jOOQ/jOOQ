@@ -65,6 +65,7 @@ public final class SettingsTools {
         if (property != null) {
 
             // Check classpath first
+            @SuppressWarnings("resource")
             InputStream in = SettingsTools.class.getResourceAsStream(property);
             if (in != null) {
                 settings = JAXB.unmarshal(in, Settings.class);
@@ -75,6 +76,7 @@ public final class SettingsTools {
         }
 
         if (settings == null) {
+            @SuppressWarnings("resource")
             InputStream in = SettingsTools.class.getResourceAsStream("/jooq-settings.xml");
 
             if (in != null) {

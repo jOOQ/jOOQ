@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema
   xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-2.3.0.xsd"
+  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd"
   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
   xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
   jaxb:version="1.0" jaxb:extensionBindingPrefixes="xjc"
-  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-2.3.0.xsd">
+  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd">
 
   <annotation>
     <appinfo>
       <jaxb:globalBindings>
-        <xjc:serializable uid="205"/>
+        <xjc:serializable uid="250"/>
       </jaxb:globalBindings>
     </appinfo>
   </annotation>

@@ -77,18 +77,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
-    public final int storeLocked() {
-        return storeLockedUsing(getMainKey().getFieldsArray());
-    }
-
-    @Override
     public final int delete() {
         return deleteUsing(getMainKey().getFieldsArray());
-    }
-
-    @Override
-    public final int deleteLocked() {
-        return deleteLockedUsing(getMainKey().getFieldsArray());
     }
 
     @Override

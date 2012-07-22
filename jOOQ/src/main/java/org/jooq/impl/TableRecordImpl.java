@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 
 import org.jooq.ConditionProvider;
+import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.Identity;
@@ -95,15 +96,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
     @Override
     public final int storeUsing(TableField<R, ?>... keys) {
-        return storeUsing0(keys, false);
-    }
-
-    @Override
-    public final int storeLockedUsing(TableField<R, ?>... keys) {
-        return storeUsing0(keys, true);
-    }
-
-    private final int storeUsing0(TableField<R, ?>[] keys, boolean checkIfChanged) {
+        boolean checkIfChanged = isExecuteWithOptimisticLocking();
         boolean executeUpdate = false;
 
         for (TableField<R, ?> field : keys) {
@@ -131,6 +124,16 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
         setAllChanged(false);
         return result;
+    }
+
+    private final boolean isExecuteWithOptimisticLocking() {
+        Configuration configuration = getConfiguration();
+
+        if (configuration != null) {
+            return TRUE.equals(configuration.getSettings().isExecuteWithOptimisticLocking());
+        }
+
+        return false;
     }
 
     @SuppressWarnings("unchecked")
@@ -239,15 +242,8 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
     @Override
     public final int deleteUsing(TableField<R, ?>... keys) {
-        return deleteUsing0(keys, false);
-    }
+        boolean checkIfChanged = isExecuteWithOptimisticLocking();
 
-    @Override
-    public final int deleteLockedUsing(TableField<R, ?>... keys) {
-        return deleteUsing0(keys, true);
-    }
-
-    private int deleteUsing0(TableField<R, ?>[] keys, boolean checkIfChanged) {
         try {
             DeleteQuery<R> delete = create().deleteQuery(getTable());
 

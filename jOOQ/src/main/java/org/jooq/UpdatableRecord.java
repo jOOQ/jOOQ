@@ -38,6 +38,7 @@ package org.jooq;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
 
@@ -97,13 +98,33 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * record.</li>
      * <li>If this record was loaded by jOOQ, and the primary key value was not
      * changed, an <code>UPDATE</code> statement is executed.</li>
+     * <li>If an <code>UPDATE</code> statement is executed and
+     * {@link Settings#isExecuteWithOptimisticLocking()} is set to
+     * <code>true</code>, then this record will first be compared with the
+     * latest state in the database. In order to compare this record with the
+     * latest state, the database record will be locked pessimistically using a
+     * <code>SELECT .. FOR UPDATE</code> statement. Not all databases support
+     * the <code>FOR UPDATE</code> clause natively. Namely, the following
+     * databases will show slightly different behaviour:
+     * <ul>
+     * <li> {@link SQLDialect#CUBRID} and {@link SQLDialect#SQLSERVER}: jOOQ will
+     * try to lock the database record using JDBC's
+     * {@link ResultSet#TYPE_SCROLL_SENSITIVE} and
+     * {@link ResultSet#CONCUR_UPDATABLE}.</li>
+     * <li> {@link SQLDialect#SQLITE}: No pessimistic locking is possible. Client
+     * code must assure that no race-conditions can occur between jOOQ's
+     * checking of database record state and the actual <code>UPDATE</code></li>
      * </ul>
      * <p>
-     * In either statement, only those fields are inserted/updated, which had
-     * been explicitly set by client code, in order to allow for
-     * <code>DEFAULT</code> values to be applied by the underlying RDBMS. If no
-     * fields were modified, neither an <code>UPDATE</code> nor an
-     * <code>INSERT</code> will be executed. Possible statements are
+     * See {@link LockProvider#setForUpdate(boolean)} for more details</li>
+     * </ul>
+     * <p>
+     * In either <code>INSERT</code> or <code>UPDATE</code> statement, only
+     * those fields are inserted/updated, which had been explicitly set by
+     * client code, in order to allow for <code>DEFAULT</code> values to be
+     * applied by the underlying RDBMS. If no fields were modified, neither an
+     * <code>UPDATE</code> nor an <code>INSERT</code> will be executed. Possible
+     * statements are
      * <ul>
      * <li>
      * <code><pre>
@@ -132,44 +153,11 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
      * @throws DataAccessException if something went wrong executing the query
+     * @throws DataChangedException If optimistic locking is enabled and the
+     *             record has already been changed/deleted in the database
      * @see #storeUsing(TableField...)
      */
-    int store() throws DataAccessException;
-
-    /**
-     * Store this record back to the database assuming an optimistic lock.
-     * <p>
-     * This performs the same action as {@link #store()}, except that if an
-     * <code>UPDATE</code> is performed, this record will first be compared with
-     * the latest state in the database.
-     * <p>
-     * Note that in order to compare this record with the latest state, the
-     * database record will be locked pessimistically using a
-     * <code>SELECT .. FOR UPDATE</code> statement. Not all databases support
-     * the <code>FOR UPDATE</code> clause natively. Namely, the following
-     * databases will show slightly different behaviour:
-     * <ul>
-     * <li> {@link SQLDialect#CUBRID} and {@link SQLDialect#SQLSERVER}: jOOQ will
-     * try to lock the database record using JDBC's
-     * {@link ResultSet#TYPE_SCROLL_SENSITIVE} and
-     * {@link ResultSet#CONCUR_UPDATABLE}.</li>
-     * <li> {@link SQLDialect#SQLITE}: No pessimistic locking is possible. Client
-     * code must assure that no race-conditions can occur between jOOQ's
-     * checking of database record state and the actual <code>UPDATE</code></li>
-     * </ul>
-     * <p>
-     * See {@link LockProvider#setForUpdate(boolean)} for more details
-     *
-     * @return <code>1</code> if the record was stored to the database. <code>0
-     *         </code> if storing was not necessary.
-     * @throws DataAccessException if something went wrong executing the query
-     * @throws DataChangedException if the record has already been
-     *             changed/deleted in the database
-     * @see #store()
-     * @see #storeLockedUsing(TableField...)
-     * @see LockProvider#setForUpdate(boolean)
-     */
-    int storeLocked() throws DataAccessException, DataChangedException;
+    int store() throws DataAccessException, DataChangedException;
 
     /**
      * Deletes this record from the database, based on the value of the primary
@@ -179,24 +167,10 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * DELETE FROM [table]
      * WHERE [main key fields = main key values]</pre></code>
      * <p>
-     * This is in fact the same as calling
-     * <code>delete(getTable().getMainKey().getFieldsArray())</code>
-     *
-     * @return <code>1</code> if the record was deleted from the database.
-     *         <code>0</code> if deletion was not necessary.
-     * @throws DataAccessException if something went wrong executing the query
-     * @see #deleteUsing(TableField...)
-     */
-    int delete() throws DataAccessException;
-
-    /**
-     * Deletes this record from the database assuming an optimistic lock.
-     * <p>
-     * This performs the same action as {@link #delete()}, except that this
-     * record will first be compared with the latest state in the database.
-     * <p>
-     * Note that in order to compare this record with the latest state, the
-     * database record will be locked pessimistically using a
+     * If {@link Settings#isExecuteWithOptimisticLocking()} is set to
+     * <code>true</code>, then this record will first be compared with the
+     * latest state in the database. In order to compare this record with the
+     * latest state, the database record will be locked pessimistically using a
      * <code>SELECT .. FOR UPDATE</code> statement. Not all databases support
      * the <code>FOR UPDATE</code> clause natively. Namely, the following
      * databases will show slightly different behaviour:
@@ -211,17 +185,18 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * </ul>
      * <p>
      * See {@link LockProvider#setForUpdate(boolean)} for more details
+     * <p>
+     * This is in fact the same as calling
+     * <code>delete(getTable().getMainKey().getFieldsArray())</code>
      *
      * @return <code>1</code> if the record was deleted from the database.
      *         <code>0</code> if deletion was not necessary.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws DataChangedException if the record has already been
-     *             changed/deleted in the database
-     * @see #delete()
+     * @throws DataChangedException If optimistic locking is enabled and the
+     *             record has already been changed/deleted in the database
      * @see #deleteUsing(TableField...)
-     * @see LockProvider#setForUpdate(boolean)
      */
-    int deleteLocked() throws DataAccessException, DataChangedException;
+    int delete() throws DataAccessException, DataChangedException;
 
     /**
      * Refresh this record from the database, based on the value of the primary

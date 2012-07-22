@@ -61,9 +61,11 @@ import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.InvalidResultException;
+import org.jooq.impl.Factory;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -590,80 +592,82 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     private <R extends UpdatableRecord<R>> void testStoreLocked0(
         UpdatableTable<R> table, TableField<R, Integer> id, TableField<R, String> string) throws Exception {
 
+        Factory create = create(new Settings().withExecuteWithOptimisticLocking(true));
+
         // Storing without changing shouldn't execute any queries
-        R record1 = create().fetchOne(table, id.equal(1));
-        assertEquals(0, record1.storeLocked());
-        assertEquals(0, record1.storeLocked());
+        R record1 = create.fetchOne(table, id.equal(1));
+        assertEquals(0, record1.store());
+        assertEquals(0, record1.store());
 
         // Succeed if there are no concurrency issues
         record1.setValue(string, "New Title 1");
-        assertEquals(1, record1.storeLocked());
-        assertEquals("New Title 1", create().fetchOne(table, id.equal(1)).getValue(string));
+        assertEquals(1, record1.store());
+        assertEquals("New Title 1", create.fetchOne(table, id.equal(1)).getValue(string));
 
         // Get new books
-        R record2 = create().fetchOne(table, id.equal(1));
-        R record3 = create().fetchOne(table, id.equal(1));
+        R record2 = create.fetchOne(table, id.equal(1));
+        R record3 = create.fetchOne(table, id.equal(1));
 
         // Still won't fail, but this will cause record3 to be stale
         record2.setValue(string, "New Title 2");
-        assertEquals(1, record2.storeLocked());
-        assertEquals("New Title 2", create().fetchOne(table, id.equal(1)).getValue(string));
+        assertEquals(1, record2.store());
+        assertEquals("New Title 2", create.fetchOne(table, id.equal(1)).getValue(string));
 
         // Storing without changing shouldn't execute any queries
-        assertEquals(0, record3.storeLocked());
+        assertEquals(0, record3.store());
 
         // This should fail as record3 is stale
         record3.setValue(string, "New Title 3");
         try {
-            record3.storeLocked();
+            record3.store();
             fail();
         }
         catch (DataChangedException expected) {}
-        assertEquals("New Title 2", create().fetchOne(table, id.equal(1)).getValue(string));
+        assertEquals("New Title 2", create.fetchOne(table, id.equal(1)).getValue(string));
 
         // Refreshing first will work, though
         record3.refresh();
         record3.setValue(string, "New Title 3");
-        assertEquals(1, record3.storeLocked());
-        assertEquals("New Title 3", create().fetchOne(table, id.equal(1)).getValue(string));
+        assertEquals(1, record3.store());
+        assertEquals("New Title 3", create.fetchOne(table, id.equal(1)).getValue(string));
 
         // Get new books
-        R record4 = create().fetchOne(table, id.equal(1));
-        R record5 = create().fetchOne(table, id.equal(1));
+        R record4 = create.fetchOne(table, id.equal(1));
+        R record5 = create.fetchOne(table, id.equal(1));
 
         // Delete the book
-        assertEquals(1, record4.deleteLocked());
+        assertEquals(1, record4.delete());
 
         // Storing without changing shouldn't execute any queries
-        assertEquals(0, record5.storeLocked());
+        assertEquals(0, record5.store());
 
         // This should fail, as the database record no longer exists
         record5.setValue(string, "New Title 5");
         try {
-            record5.storeLocked();
+            record5.store();
             fail();
         }
         catch (DataChangedException expected) {}
 
         // Restore the book, then it should work
-        assertEquals(1, record4.storeLocked());
-        assertEquals(1, record5.storeLocked());
-        assertEquals("New Title 5", create().fetchOne(table, id.equal(1)).getValue(string));
+        assertEquals(1, record4.store());
+        assertEquals(1, record5.store());
+        assertEquals("New Title 5", create.fetchOne(table, id.equal(1)).getValue(string));
 
         // Deleting the original should no longer be possible
         try {
-            record4.deleteLocked();
+            record4.delete();
             fail();
         }
         catch (DataChangedException expected) {}
 
         // Refreshing and deleting should work
         record4.refresh();
-        assertEquals(1, record4.deleteLocked());
+        assertEquals(1, record4.delete());
 
         // Now the other record cannot be deleted anymore
         try {
-            record5.deleteLocked();
+            record5.delete();
             fail();
         }
         catch (DataChangedException expected) {}

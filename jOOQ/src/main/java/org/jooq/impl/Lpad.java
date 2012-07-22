@@ -79,9 +79,20 @@ class Lpad extends AbstractFunction<String> {
             // This beautiful expression was contributed by "Ludo", here:
             // http://stackoverflow.com/questions/6576343/how-to-simulate-lpad-rpad-with-sqlite
             case SQLITE: {
-                return Factory.field("replace(replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, ({1} - length({2}))), '''', ''), '0', {3}) || {4}",
+                return Factory.field(
+                    "substr(" +
+                      "replace(" +
+                        "replace(" +
+                          "substr(" +
+                            "quote(" +
+                              "zeroblob((({0} - length({1}) - 1 + length({2})) / length({3}) + 1) / 2)" +
+                            "), 3" +
+                          "), '''', ''" +
+                        "), '0', {4}" +
+                      "), 1, ({5} - length({6}))" +
+                    ") || {7}",
                     String.class,
-                    length, length, field, character, field);
+                    length, field, character, character, character, length, field, field);
             }
 
             default: {

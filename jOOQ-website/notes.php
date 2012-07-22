@@ -1,7 +1,7 @@
 <?php
 require 'frame.php';
 function getH1() {
-	return 'The history of jOOQ<br/>From 2009 to ' . date('Y');
+	return 'The history of jOOQ. From 2009 to ' . date('Y');
 }
 function getActiveMenu() {
 	return "download";
@@ -73,7 +73,7 @@ function printContent() {
 
 				print '<tr>';
 				print '<td width="80">';
-				print '<a href="https://sourceforge.net/apps/trac/jooq/ticket/' . $ticket . '">#';
+				print '<a href="https://github.com/jOOQ/jOOQ/issues/' . $ticket . '">#';
 				print $ticket;
 				print '</a>';
 				print '</td>';

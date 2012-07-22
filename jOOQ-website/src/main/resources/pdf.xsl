@@ -351,7 +351,7 @@
 		<fo:basic-link xsl:use-attribute-sets="a">
 			<xsl:attribute name="external-destination">
 				<xsl:text>url('</xsl:text>
-				<xsl:text>https://sourceforge.net/apps/trac/jooq/ticket/</xsl:text>
+				<xsl:text>https://github.com/jOOQ/jOOQ/issues/</xsl:text>
 				<xsl:value-of select="@ticket"/>
 				<xsl:value-of select="@anchor"/>
 				<xsl:text>')</xsl:text>

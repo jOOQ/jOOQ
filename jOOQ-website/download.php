@@ -64,7 +64,7 @@ All branches are available here<br/>
 <h3>Future versions</h3>
 <p>
 The semi-formal roadmap is here:<br/>
-<a href="https://sourceforge.net/apps/trac/jooq/report/6" title="The jOOQ Roadmap">https://sourceforge.net/apps/trac/jooq/report/6</a>
+<a href="https://github.com/jOOQ/jOOQ/issues/milestones" title="The jOOQ Roadmap">https://github.com/jOOQ/jOOQ/issues/milestones</a>
 </p>
 
 <h2 id="License"><a href="#License" name="License">#</a> License</h2>

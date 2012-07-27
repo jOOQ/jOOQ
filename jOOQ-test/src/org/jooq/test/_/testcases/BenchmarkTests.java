@@ -72,7 +72,7 @@ public class BenchmarkTests<
     T785 extends TableRecord<T785>>
 extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> {
 
-    private static final int    REPETITIONS = 4000;
+    private static final int    REPETITIONS = 100;
     private static final String RANDOM      = "" + new Random().nextLong();
 
     public BenchmarkTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {

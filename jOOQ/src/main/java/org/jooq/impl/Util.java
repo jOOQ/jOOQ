@@ -61,8 +61,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import org.jooq.ArrayRecord;
-import org.jooq.Attachable;
-import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.DataType;
@@ -73,7 +71,6 @@ import org.jooq.FieldProvider;
 import org.jooq.NamedQueryPart;
 import org.jooq.Param;
 import org.jooq.QueryPart;
-import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
@@ -975,20 +972,6 @@ final class Util {
         else {
             return "(" + sql + ")";
         }
-    }
-
-    /**
-     * Expose the internal API of an {@link Attachable}
-     */
-    static final AttachableInternal internal(Attachable part) {
-        return part.internalAPI(AttachableInternal.class);
-    }
-
-    /**
-     * Expose the internal API of a {@link QueryPart}
-     */
-    static final QueryPartInternal internal(QueryPart part) {
-        return part.internalAPI(QueryPartInternal.class);
     }
 
     /**

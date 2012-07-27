@@ -49,6 +49,7 @@ import org.jooq.util.SchemaDefinition;
  *
  * @author Mark
  */
+@SuppressWarnings("unused")
 class ASERoutineDefinition extends AbstractRoutineDefinition {
 
     public ASERoutineDefinition(SchemaDefinition schema, String name, String dataType, Number length, Number precision, Number scale) {

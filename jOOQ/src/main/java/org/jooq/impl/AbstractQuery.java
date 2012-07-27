@@ -40,7 +40,11 @@ import static org.jooq.conf.SettingsTools.executePreparedStatements;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
 
+import org.jooq.Attachable;
+import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -52,14 +56,39 @@ import org.jooq.tools.JooqLogger;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractQuery extends AbstractQueryPart implements Query {
+abstract class AbstractQuery extends AbstractQueryPart implements Query, AttachableInternal {
 
     private static final long       serialVersionUID = -8046199737354507547L;
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractQuery.class);
 
+    private final AttachableImpl    attachable;
+
     AbstractQuery(Configuration configuration) {
-        super(configuration);
+        this.attachable = new AttachableImpl(this, configuration);
     }
+
+    // -------------------------------------------------------------------------
+    // The Attachable and Attachable internal API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final void attach(Configuration configuration) {
+        attachable.attach(configuration);
+    }
+
+    @Override
+    public final Configuration getConfiguration() {
+        return attachable.getConfiguration();
+    }
+
+    @Override
+    public final List<Attachable> getAttachables() {
+        return Collections.emptyList();
+    }
+
+    // -------------------------------------------------------------------------
+    // The QueryPart and QueryPart internal API
+    // -------------------------------------------------------------------------
 
     /**
      * Subclasses may override this for covariant result types

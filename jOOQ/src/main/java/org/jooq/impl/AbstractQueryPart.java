@@ -44,8 +44,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.Attachable;
-import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Param;
 import org.jooq.Query;
@@ -58,19 +56,9 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractQueryPart implements QueryPartInternal, AttachableInternal {
+abstract class AbstractQueryPart implements QueryPartInternal {
 
     private static final long serialVersionUID = 2078114876079493107L;
-
-    private final AttachableImpl      attachable;
-
-    AbstractQueryPart() {
-        this(DefaultConfiguration.DEFAULT_CONFIGURATION);
-    }
-
-    AbstractQueryPart(Configuration configuration) {
-        this.attachable = new AttachableImpl(this, configuration);
-    }
 
     @Override
     public final <I> I internalAPI(Class<I> internalType) {
@@ -78,21 +66,16 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     }
 
     // -------------------------------------------------------------------------
-    // The Attachable and Attachable internal API
+    // [#1544] The deprecated Attachable and Attachable internal API
     // -------------------------------------------------------------------------
 
-    /**
-     * By default, nothing is done on an attachment event. Subclasses may
-     * override this, however, in order to receive a connection when needed
-     */
     @Override
+    @Deprecated
     public void attach(Configuration configuration) {
-        attachable.attach(configuration);
     }
 
-    @Override
-    public final Configuration getConfiguration() {
-        return attachable.getConfiguration();
+    Configuration getConfiguration() {
+        return DefaultConfiguration.DEFAULT_CONFIGURATION;
     }
 
     // -------------------------------------------------------------------------
@@ -223,11 +206,6 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     // -------------------------------------------------------------------------
     // Internal convenience methods
     // -------------------------------------------------------------------------
-
-    @Override
-    public List<Attachable> getAttachables() {
-        return Collections.emptyList();
-    }
 
     /**
      * Internal convenience method

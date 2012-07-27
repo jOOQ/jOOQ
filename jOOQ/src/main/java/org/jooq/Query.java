@@ -52,7 +52,8 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface Query extends QueryPart {
+@SuppressWarnings("unused")
+public interface Query extends QueryPart, Attachable {
 
     /**
      * Execute the query, if it has been created with a properly configured

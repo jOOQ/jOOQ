@@ -52,6 +52,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.ArrayRecord;
+import org.jooq.Attachable;
+import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -76,7 +78,7 @@ import org.jooq.tools.Convert;
  *
  * @author Lukas Eder
  */
-public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart implements Routine<T> {
+public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart implements Routine<T>, AttachableInternal {
 
     /**
      * Generated UID
@@ -214,6 +216,16 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     @Override
     public final void attach(Configuration configuration) {
         attachable.attach(configuration);
+    }
+
+    @Override
+    public final List<Attachable> getAttachables() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public final Configuration getConfiguration() {
+        return attachable.getConfiguration();
     }
 
     @Override

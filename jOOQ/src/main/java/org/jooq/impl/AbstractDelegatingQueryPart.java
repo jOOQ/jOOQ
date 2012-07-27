@@ -41,13 +41,14 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
+import org.jooq.Configuration;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractDelegatingQueryPart<Q extends QueryPart> extends AbstractQueryPart {
+abstract class AbstractDelegatingQueryPart<Q extends QueryPart> extends AbstractQueryPart implements AttachableInternal {
 
     /**
      * Generated UID
@@ -56,8 +57,22 @@ abstract class AbstractDelegatingQueryPart<Q extends QueryPart> extends Abstract
     private final Q           delegate;
 
     AbstractDelegatingQueryPart(Q delegate) {
-        super(delegate.internalAPI(AttachableInternal.class).getConfiguration());
         this.delegate = delegate;
+    }
+
+    @Override
+    @Deprecated
+    public void attach(Configuration configuration) {
+        delegate.attach(configuration);
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        if (delegate instanceof AttachableInternal) {
+            return ((AttachableInternal) delegate).getConfiguration();
+        }
+
+        return super.getConfiguration();
     }
 
     @Override

@@ -83,45 +83,53 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         // This benchmark is contributed by "jjYBdx4IL" on GitHub:
         // https://github.com/jOOQ/jOOQ/issues/1625
 
+
         Factory create = create();
         create.getSettings().setExecuteLogging(false);
         create.getSettings().setExecuteListeners(Collections.<String>emptyList());
+
+        // Dry-run to avoid side-effects
+        testBenchmarkFullExecution(create, 1);
+        testBenchmarkReuseSelect(create, 1);
+        testBenchmarkReuseSQLString(create, 1);
+
+        System.in.read();
         StopWatch watch = new StopWatch();
         watch.splitInfo("Benchmark start");
 
-        testBenchmarkFullExecution(create);
+        testBenchmarkFullExecution(create, REPETITIONS);
         watch.splitInfo("Full re-execution");
 
-        testBenchmarkReuseSelect(create);
+        testBenchmarkReuseSelect(create, REPETITIONS);
         watch.splitInfo("Reuse select");
 
-        testBenchmarkReuseSQLString(create);
+        testBenchmarkReuseSQLString(create, REPETITIONS);
         watch.splitInfo("Reuse SQL String");
     }
 
-    private void testBenchmarkReuseSQLString(Factory create) throws Exception {
+    private void testBenchmarkReuseSQLString(Factory create, int repetitions) throws Exception {
         String sql = createSelect(create).getSQL(false);
         PreparedStatement pst = getConnection().prepareStatement(sql);
         pst.setLong(1, 1);
         pst.setString(2, RANDOM);
 
-        for (int i = 0; i < REPETITIONS; i++) {
+        for (int i = 0; i < repetitions; i++) {
             pst.executeQuery();
         }
 
         pst.close();
     }
 
-    private void testBenchmarkReuseSelect(Factory create) {
+    private void testBenchmarkReuseSelect(Factory create, int repetitions) {
         Select<?> scs = createSelect(create);
 
-        for (int i = 0; i < REPETITIONS; i++) {
+        for (int i = 0; i < repetitions; i++) {
             scs.execute();
         }
     }
 
-    private void testBenchmarkFullExecution(Factory create) {
-        for (int i = 0; i < REPETITIONS; i++) {
+    private void testBenchmarkFullExecution(Factory create, int repetitions) {
+        for (int i = 0; i < repetitions; i++) {
             createSelect(create).execute();
         }
     }

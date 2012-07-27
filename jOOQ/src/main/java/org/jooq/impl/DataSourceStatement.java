@@ -49,7 +49,6 @@ import org.jooq.tools.jdbc.JDBC41Statement;
  * A {@link DataSource}-enabled statement.
  *
  * @author Lukas Eder
- * @see DataSourceConnection
  */
 class DataSourceStatement extends JDBC41Statement implements Statement {
 

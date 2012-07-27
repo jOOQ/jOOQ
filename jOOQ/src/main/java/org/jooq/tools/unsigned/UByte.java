@@ -247,7 +247,7 @@ public final class UByte extends UNumber implements Comparable<UByte> {
 
     /**
      * Replace version read through deserialization with cached version. Note
-     * that this does not use the {@link valueOfUnchecked(short)} as we have no
+     * that this does not use the {@link #valueOfUnchecked(short)} as we have no
      * guarantee that the value from the stream is valid.
      *
      * @return cached instance of this object's value

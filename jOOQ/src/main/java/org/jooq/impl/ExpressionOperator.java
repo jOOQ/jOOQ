@@ -36,7 +36,7 @@
 package org.jooq.impl;
 
 /**
- * The operator used in {@link Expression}
+ * The operator used in <code>Expression</code>
  *
  * @author Lukas Eder
  */

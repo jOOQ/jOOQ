@@ -22,8 +22,6 @@ public class JSONArray {
      * behaviours will be ignored at this top level.
      *
      * @see JSONValue#writeJSONString(Object, Writer)
-     * @param list
-     * @param out
      */
     public static void writeJSONString(List<?> list, Writer out) throws IOException {
         if (list == null) {
@@ -58,7 +56,6 @@ public class JSONArray {
      * top level.
      *
      * @see JSONValue#toJSONString(Object)
-     * @param list
      * @return JSON text, or "null" if list is null.
      */
     public static String toJSONString(List<?> list) {

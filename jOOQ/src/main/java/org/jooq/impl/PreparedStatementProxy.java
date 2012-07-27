@@ -142,31 +142,31 @@ class PreparedStatementProxy extends JDBC41Statement implements PreparedStatemen
         SQL,
 
         /**
-         * Corresponds to {@link Connection#prepareStatement(String, int, int)
+         * Corresponds to {@link Connection#prepareStatement(String, int, int)}
          */
         SQL_RST_RSC,
 
         /**
          * Corresponds to
-         * {@link Connection#prepareStatement(String, int, int, int)
+         * {@link Connection#prepareStatement(String, int, int, int)}
          */
         SQL_RST_RSC_RSH,
 
         /**
          * Corresponds to
-         * {@link Connection#prepareStatement(String, int)
+         * {@link Connection#prepareStatement(String, int)}
          */
         SQL_AGK,
 
         /**
          * Corresponds to
-         * {@link Connection#prepareStatement(String, int[])
+         * {@link Connection#prepareStatement(String, int[])}
          */
         SQL_CI,
 
         /**
          * Corresponds to
-         * {@link Connection#prepareStatement(String, String[])
+         * {@link Connection#prepareStatement(String, String[])}
          */
         SQL_CN,
 

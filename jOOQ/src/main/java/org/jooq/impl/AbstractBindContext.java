@@ -94,7 +94,7 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     @Override
     public final BindContext bind(QueryPart part) {
         if (part != null) {
-            QueryPartInternal internal = part.internalAPI(QueryPartInternal.class);
+            QueryPartInternal internal = (QueryPartInternal) part;
 
             // If this is supposed to be a declaration section and the part isn't
             // able to declare anything, then disable declaration temporarily

@@ -116,7 +116,7 @@ class InsertImpl<R extends Record>
 
     @Override
     public final Insert<R> select(Select<?> select) {
-        Configuration configuration = getDelegate().internalAPI(AttachableInternal.class).getConfiguration();
+        Configuration configuration = ((AttachableInternal) getDelegate()).getConfiguration();
         return new InsertSelectQueryImpl<R>(configuration, into, fields, select);
     }
 

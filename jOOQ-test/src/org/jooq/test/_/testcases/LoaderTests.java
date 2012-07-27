@@ -38,6 +38,7 @@ package org.jooq.test._.testcases;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.Factory.count;
 
 import java.sql.SQLException;
@@ -191,16 +192,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(2, loader.ignored());
         assertEquals(2, (int) create().select(count).from(TAuthor()).fetchOne(count));
 
-        // Two records
-        // -----------
+        // Two records with different NULL representations for FIRST_NAME
+        // --------------------------------------------------------------
         loader =
         create().loadInto(TAuthor())
                 .loadCSV(
                     "####Some Data####\n" +
                     "\"ID\",\"Last Qualifier\"\r" +
-                    "3,Hesse\n" +
-                    "4,Frisch")
-                .fields(TAuthor_ID(), TAuthor_LAST_NAME())
+                    "3,\"\",Hesse\n" +
+                    "4,,Frisch")
+                .fields(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
                 .quote('"')
                 .separator(',')
                 .ignoreRows(2)
@@ -214,19 +215,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                                       .from(TAuthor())
                                       .where(TAuthor_ID().in(3, 4))
                                       .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
+                                      .and(getDialect() == ORACLE ?
+                                           TAuthor_FIRST_NAME().isNull() :
+                                           TAuthor_FIRST_NAME().equal(""))
                                       .fetchOne(count));
 
         assertEquals(2, create().delete(TAuthor()).where(TAuthor_ID().in(3, 4)).execute());
 
-        // Two records but don't load one column
-        // -------------------------------------
+        // Two records but don't load one column, and specify a value for NULL
+        // -------------------------------------------------------------------
         loader =
         create().loadInto(TAuthor())
                 .loadCSV(
-                    "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
-                    "5,Hermann,Hesse\n" +
-                    "6,\"Max\",Frisch")
-                .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
+                    "\"ID\",ignore,\"First Qualifier\",\"Last Qualifier\"\r" +
+                    "5,asdf,{null},Hesse\n" +
+                    "6,asdf,\"\",Frisch")
+                .fields(TAuthor_ID(), null, TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+                .nullString("{null}")
                 .execute();
 
         assertEquals(2, loader.processed());
@@ -247,7 +252,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals("Hesse", result.getValue(0, TAuthor_LAST_NAME()));
         assertEquals("Frisch", result.getValue(1, TAuthor_LAST_NAME()));
         assertEquals(null, result.getValue(0, TAuthor_FIRST_NAME()));
-        assertEquals(null, result.getValue(1, TAuthor_FIRST_NAME()));
+        assertEquals(getDialect() == ORACLE ? null : "", result.getValue(1, TAuthor_FIRST_NAME()));
 
         assertEquals(2, create().delete(TAuthor()).where(TAuthor_ID().in(5, 6)).execute());
 

@@ -1057,17 +1057,22 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final String formatCSV() {
-        return formatCSV(',');
+        return formatCSV(',', "");
     }
 
     @Override
     public final String formatCSV(char delimiter) {
+        return formatCSV(delimiter, "");
+    }
+
+    @Override
+    public final String formatCSV(char delimiter, String nullString) {
         StringBuilder sb = new StringBuilder();
 
         String sep1 = "";
         for (Field<?> field : getFields()) {
             sb.append(sep1);
-            sb.append(formatCSV0(field.getName()));
+            sb.append(formatCSV0(field.getName(), ""));
 
             sep1 = Character.toString(delimiter);
         }
@@ -1078,7 +1083,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             String sep2 = "";
             for (Field<?> field : getFields()) {
                 sb.append(sep2);
-                sb.append(formatCSV0(record.getValue(field)));
+                sb.append(formatCSV0(record.getValue(field), nullString));
 
                 sep2 = Character.toString(delimiter);
             }
@@ -1089,11 +1094,16 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return sb.toString();
     }
 
-    private final String formatCSV0(Object value) {
+    private final String formatCSV0(Object value, String nullString) {
 
         // Escape null and empty strings
         if (value == null || "".equals(value)) {
-            return "\"\"";
+            if (StringUtils.isEmpty(nullString)) {
+                return "\"\"";
+            }
+            else {
+                return nullString;
+            }
         }
 
         String result = format0(value);

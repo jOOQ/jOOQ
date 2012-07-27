@@ -64,14 +64,24 @@ public interface QueryPartInternal extends QueryPart {
      * Retrieve the SQL that will be rendered by this {@link QueryPart}
      * <p>
      * This method is exposed publicly in {@link Query#getSQL()}
+     *
+     * @deprecated - 2.5.0 [#1544] - This method will be removed from the
+     *             internal API. Do not reuse it, except through
+     *             {@link Query#getSQL()}
      */
+    @Deprecated
     String getSQL();
 
     /**
      * Retrieve the SQL that will be rendered by this {@link QueryPart}
      * <p>
      * This method is exposed publicly in {@link Query#getSQL(boolean)}
+     *
+     * @deprecated - 2.5.0 [#1544] - This method will be removed from the
+     *             internal API. Do not reuse it, except through
+     *             {@link Query#getSQL(boolean)}
      */
+    @Deprecated
     String getSQL(boolean inline);
 
     /**
@@ -82,7 +92,8 @@ public interface QueryPartInternal extends QueryPart {
     List<Object> getBindValues();
 
     /**
-     * Retrieve the named parameters that will be bound by this {@link QueryPart}
+     * Retrieve the named parameters that will be bound by this
+     * {@link QueryPart}
      * <p>
      * This method is exposed publicly in {@link Query#getParams()}
      */

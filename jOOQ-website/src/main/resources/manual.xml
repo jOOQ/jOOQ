@@ -1709,7 +1709,7 @@ public void bind(BindContext context) throws DataAccessException;</java>
 </plugin>
 ]]></xml>
 							<p>See the full example of a pom.xml including the jOOQ-codegen artefact here:
-							<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml" title="jOOQ-codegen-maven example pom.xml file">https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml</a></p>
+							<a href="https://github.com/jOOQ/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml" title="jOOQ-codegen-maven example pom.xml file">https://github.com/jOOQ/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml</a></p>
 
                             <h3>Migrate properties files from jOOQ 1.7, early versions of jOOQ 2.0.x:</h3>
                             <p>

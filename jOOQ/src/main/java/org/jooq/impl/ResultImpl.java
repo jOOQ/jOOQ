@@ -122,6 +122,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    @Deprecated
     public final List<Attachable> getAttachables() {
         List<Attachable> result = new ArrayList<Attachable>();
 

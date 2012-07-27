@@ -62,8 +62,6 @@ import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.ExecuteType;
 import org.jooq.Field;
-import org.jooq.QueryPart;
-import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -716,10 +714,6 @@ public abstract class jOOQAbstractTest<
 
     protected final SQLDialect getDialect() throws Exception {
         return create().getDialect();
-    }
-
-    protected final QueryPartInternal internal(QueryPart q) {
-        return q.internalAPI(QueryPartInternal.class);
     }
 
     protected String getSchemaSuffix() {

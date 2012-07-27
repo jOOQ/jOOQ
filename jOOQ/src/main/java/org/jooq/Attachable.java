@@ -56,6 +56,7 @@ import java.sql.Connection;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public interface Attachable extends Adapter, Serializable {
 
     /**

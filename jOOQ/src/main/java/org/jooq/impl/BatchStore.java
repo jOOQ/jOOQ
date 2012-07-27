@@ -103,7 +103,7 @@ class BatchStore implements Batch {
             work.setExecuteLogging(false);
 
             for (int i = 0; i < records.length; i++) {
-                Configuration previous = records[i].internalAPI(AttachableInternal.class).getConfiguration();
+                Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
 
                 try {
                     records[i].attach(create);
@@ -175,7 +175,7 @@ class BatchStore implements Batch {
             work.setExecuteListeners(Arrays.asList(QueryCollector.class.getName()));
 
             for (int i = 0; i < records.length; i++) {
-                Configuration previous = records[i].internalAPI(AttachableInternal.class).getConfiguration();
+                Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
 
                 try {
                     records[i].attach(create);

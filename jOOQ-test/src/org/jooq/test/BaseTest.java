@@ -52,8 +52,6 @@ import org.jooq.ArrayRecord;
 import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.QueryPart;
-import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -689,10 +687,6 @@ public abstract class BaseTest<
 
     protected final SQLDialect getDialect() throws Exception {
         return delegate.getDialect();
-    }
-
-    protected final QueryPartInternal internal(QueryPart q) {
-        return delegate.internal(q);
     }
 
     protected final void sleep(long millis) {

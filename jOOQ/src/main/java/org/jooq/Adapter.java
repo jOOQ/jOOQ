@@ -41,7 +41,10 @@ package org.jooq;
  * This interface is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
+ * @deprecated - 2.5.0 [#1639] - This part of the internal API will be removed
+ *             in the near future. Do not reuse.
  */
+@Deprecated
 public interface Adapter {
 
     /**
@@ -60,6 +63,9 @@ public interface Adapter {
      * @return This object wrapped by or cast to an internal type
      * @throws ClassCastException If this object cannot be wrapped by or cast to
      *             the given internal type
+     * @deprecated - 2.5.0 [#1639] - This part of the internal API will be
+     *             removed in the near future. Do not reuse.
      */
+    @Deprecated
     <I> I internalAPI(Class<I> internalType) throws ClassCastException;
 }

@@ -60,7 +60,6 @@ import javax.sql.DataSource;
  * A {@link DataSource}-enabled statement.
  *
  * @author Lukas Eder
- * @see DataSourceConnection
  */
 class DataSourcePreparedCall extends DataSourcePreparedStatement implements CallableStatement {
 

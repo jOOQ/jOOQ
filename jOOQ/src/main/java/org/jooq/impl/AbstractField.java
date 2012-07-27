@@ -216,9 +216,9 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         return add(val(value));
     }
 
-    /**
+    /*
      * This default implementation is known to be overridden by
-     * {@link Expression} to generate neater expressions
+     * Expression to generate neater expressions
      */
     @Override
     public Field<T> add(Field<?> value) {
@@ -242,7 +242,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     /**
      * This default implementation is known to be overridden by
-     * {@link Expression} to generate neater expressions
+     * <code>Expression</code> to generate neater expressions
      */
     @Override
     public Field<T> mul(Field<? extends Number> value) {

@@ -53,7 +53,7 @@ import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 
 /**
- * Essentially, this is the same as {@link ArrayTable}, except that it simulates
+ * Essentially, this is the same as <code>ArrayTable</code>, except that it simulates
  * unnested arrays using <code>UNION ALL</code>
  *
  * @author Lukas Eder

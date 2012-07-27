@@ -38,13 +38,13 @@ package org.jooq.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.AliasProvider;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Schema;
 
 @SuppressWarnings("deprecation")
-abstract class AbstractFieldProviderQueryPart<R extends Record> extends AbstractSchemaProviderQueryPart implements org.jooq.Type<R> {
+abstract class AbstractFieldProviderQueryPart<R extends Record> extends AbstractSchemaProviderQueryPart implements
+    org.jooq.Type<R> {
 
     /**
      * Generated UID
@@ -87,8 +87,8 @@ abstract class AbstractFieldProviderQueryPart<R extends Record> extends Abstract
     /**
      * Subclasses should override this method to provide the set of fields
      * contained in the concrete table implementation. For example, a
-     * {@link TableAlias} contains aliased fields of its {@link AliasProvider}
-     * table.
+     * <code>TableAlias</code> contains aliased fields of its
+     * <code>AliasProvider</code> table.
      */
     protected abstract FieldList getFieldList();
 }

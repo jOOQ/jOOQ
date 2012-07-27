@@ -92,6 +92,7 @@ import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test._.testcases.AggregateWindowFunctionTests;
+import org.jooq.test._.testcases.BenchmarkTests;
 import org.jooq.test._.testcases.CRUDTests;
 import org.jooq.test._.testcases.DaoTests;
 import org.jooq.test._.testcases.DataTypeTests;
@@ -1570,6 +1571,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testLoader() throws Exception {
         new LoaderTests(this).testLoader();
+    }
+
+    @Test
+    public void testBenchmark() throws Exception {
+        new BenchmarkTests(this).testBenchmark();
     }
 
     @Test

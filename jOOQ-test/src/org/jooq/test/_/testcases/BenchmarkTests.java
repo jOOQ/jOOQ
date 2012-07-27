@@ -94,7 +94,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         testBenchmarkReuseSelect(create, 1);
         testBenchmarkReuseSQLString(create, 1);
 
-        System.in.read();
+        // System.in.read();
         StopWatch watch = new StopWatch();
         watch.splitInfo("Benchmark start");
 

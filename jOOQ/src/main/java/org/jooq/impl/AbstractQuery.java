@@ -123,9 +123,6 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                 throw new DetachedException("Cannot execute query. No Connection configured");
             }
 
-            // Ensure that all depending Attachables are attached
-            attach(configuration);
-
             int result = 0;
             try {
                 listener.renderStart(ctx);

@@ -40,8 +40,6 @@ import static org.jooq.conf.SettingsTools.executePreparedStatements;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +52,6 @@ import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.SQLDialect;
-import org.jooq.Store;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -226,37 +223,6 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     // -------------------------------------------------------------------------
     // Internal convenience methods
     // -------------------------------------------------------------------------
-
-    /**
-     * Internal convenience method
-     */
-    protected final List<Attachable> getAttachables(Collection<? extends QueryPart> list) {
-        List<Attachable> result = new ArrayList<Attachable>();
-
-        for (QueryPart item : list) {
-            if (item != null) {
-                result.add(item);
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Internal convenience method
-     */
-    protected final List<Attachable> getAttachables(QueryPart... list) {
-        return getAttachables(Arrays.asList(list));
-    }
-
-    /**
-     * Internal convenience method
-     */
-    protected final List<Attachable> getAttachables(Store<?> store) {
-        return store == null
-            ? Collections.<Attachable> emptyList()
-            : store.internalAPI(AttachableInternal.class).getAttachables();
-    }
 
     @Override
     public List<Attachable> getAttachables() {

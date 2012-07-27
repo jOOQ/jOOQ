@@ -1724,7 +1724,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Get a simple formatted representation of this result as CSV.
      * <p>
-     * This is the same as calling <code>formatCSV(',')</code>
+     * This is the same as calling <code>formatCSV(',', "")</code>
      *
      * @return The formatted result
      */
@@ -1732,11 +1732,22 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Get a simple formatted representation of this result as CSV.
+     * <p>
+     * This is the same as calling <code>formatCSV(delimiter, "")</code>
      *
      * @param delimiter The delimiter to use between records
      * @return The formatted result
      */
     String formatCSV(char delimiter);
+
+    /**
+     * Get a simple formatted representation of this result as CSV.
+     *
+     * @param delimiter The delimiter to use between records
+     * @param nullString A special string for encoding <code>NULL</code> values.
+     * @return The formatted result
+     */
+    String formatCSV(char delimiter, String nullString);
 
     /**
      * Get a simple formatted representation of this result as a JSON array of

@@ -63,6 +63,7 @@ import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.exception.DataAccessException;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVParser;
 import org.jooq.tools.csv.CSVReader;
 
@@ -113,6 +114,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private int                     ignoreRows              = 1;
     private char                    quote                   = CSVParser.DEFAULT_QUOTE_CHARACTER;
     private char                    separator               = CSVParser.DEFAULT_SEPARATOR;
+    private String                  nullString              = null;
     private Field<?>[]              fields;
     private boolean[]               mainKey;
 
@@ -306,6 +308,12 @@ class LoaderImpl<R extends TableRecord<R>> implements
         return this;
     }
 
+    @Override
+    public final LoaderImpl<R> nullString(String n) {
+        this.nullString = n;
+        return this;
+    }
+
     // -------------------------------------------------------------------------
     // XML configuration
     // -------------------------------------------------------------------------
@@ -340,6 +348,14 @@ class LoaderImpl<R extends TableRecord<R>> implements
             // TODO: When running in COMMIT_AFTER > 1 or COMMIT_ALL mode, then
             // it might be better to bulk load / merge n records
             rowloop: while ((row = reader.readNext()) != null) {
+
+                // [#1627] Handle NULL values
+                for (int i = 0; i < row.length; i++) {
+                    if (StringUtils.equals(nullString, row[i])) {
+                        row[i] = null;
+                    }
+                }
+
                 processed++;
                 InsertQuery<R> insert = create.insertQuery(table);
 

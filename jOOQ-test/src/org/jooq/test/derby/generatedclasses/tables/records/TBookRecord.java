@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 859890348;
+	private static final long serialVersionUID = -2014054404;
 
 	/**
 	 * The table column <code>TEST.T_BOOK.ID</code>
@@ -244,6 +244,20 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TBook.CONTENT_PDF);
+	}
+
+	/**
+	 * The table column <code>TEST.T_BOOK.REC_TIMESTAMP</code>
+	 */
+	public void setRecTimestamp(java.sql.Timestamp value) {
+		setValue(org.jooq.test.derby.generatedclasses.tables.TBook.REC_TIMESTAMP, value);
+	}
+
+	/**
+	 * The table column <code>TEST.T_BOOK.REC_TIMESTAMP</code>
+	 */
+	public java.sql.Timestamp getRecTimestamp() {
+		return getValue(org.jooq.test.derby.generatedclasses.tables.TBook.REC_TIMESTAMP);
 	}
 
 	/**

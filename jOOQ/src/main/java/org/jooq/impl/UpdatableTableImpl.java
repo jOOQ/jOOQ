@@ -42,6 +42,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableTable;
 
@@ -89,6 +90,26 @@ public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implement
     @Override
     public List<UniqueKey<R>> getKeys() {
         return Collections.emptyList();
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses may override this method
+     */
+    @Override
+    public TableField<R, ? extends Number> getRecordVersion() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses may override this method
+     */
+    @Override
+    public TableField<R, ? extends java.util.Date> getRecordTimestamp() {
+        return null;
     }
 
     @Override

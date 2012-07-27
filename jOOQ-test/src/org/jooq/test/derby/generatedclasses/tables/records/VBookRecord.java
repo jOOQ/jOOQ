@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
  */
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 1509266158;
+	private static final long serialVersionUID = 1642491642;
 
 	/**
 	 * The table column <code>TEST.V_BOOK.ID</code>
@@ -134,6 +134,20 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.der
 	 */
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.VBook.CONTENT_PDF);
+	}
+
+	/**
+	 * The table column <code>TEST.V_BOOK.REC_TIMESTAMP</code>
+	 */
+	public void setRecTimestamp(java.sql.Timestamp value) {
+		setValue(org.jooq.test.derby.generatedclasses.tables.VBook.REC_TIMESTAMP, value);
+	}
+
+	/**
+	 * The table column <code>TEST.V_BOOK.REC_TIMESTAMP</code>
+	 */
+	public java.sql.Timestamp getRecTimestamp() {
+		return getValue(org.jooq.test.derby.generatedclasses.tables.VBook.REC_TIMESTAMP);
 	}
 
 	/**

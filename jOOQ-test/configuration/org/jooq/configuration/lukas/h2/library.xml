@@ -12,6 +12,8 @@
             <name>org.jooq.util.h2.H2Database</name>
             <includes>.*</includes>
             <excludes>T_BOOK_DETAILS,SYSTEM_SEQUENCE.*</excludes>
+            <recordVersionFields>REC_VERSION</recordVersionFields>
+            <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
             <inputSchema>PUBLIC</inputSchema>

@@ -137,4 +137,14 @@ public interface ITBook extends java.io.Serializable {
 	 * The table column <code>PUBLIC.T_BOOK.CONTENT_PDF</code>
 	 */
 	public byte[] getContentPdf();
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
+	 */
+	public void setRecVersion(java.lang.Integer value);
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
+	 */
+	public java.lang.Integer getRecVersion();
 }

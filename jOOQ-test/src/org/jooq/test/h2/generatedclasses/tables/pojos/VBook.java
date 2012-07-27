@@ -8,17 +8,19 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  */
 public class VBook implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = -1917104757;
+	private static final long serialVersionUID = 118771387;
 
-	private java.lang.Integer id;
-	private java.lang.Integer authorId;
-	private java.lang.Integer coAuthorId;
-	private java.lang.Integer detailsId;
-	private java.lang.String  title;
-	private java.lang.Integer publishedIn;
-	private java.lang.Integer languageId;
-	private java.lang.String  contentText;
-	private byte[]            contentPdf;
+	private java.lang.Integer  id;
+	private java.lang.Integer  authorId;
+	private java.lang.Integer  coAuthorId;
+	private java.lang.Integer  detailsId;
+	private java.lang.String   title;
+	private java.lang.Integer  publishedIn;
+	private java.lang.Integer  languageId;
+	private java.lang.String   contentText;
+	private byte[]             contentPdf;
+	private java.lang.Integer  recVersion;
+	private java.sql.Timestamp recTimestamp;
 
 	@Override
 	public java.lang.Integer getId() {
@@ -108,5 +110,25 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	@Override
 	public void setContentPdf(byte[] contentPdf) {
 		this.contentPdf = contentPdf;
+	}
+
+	@Override
+	public java.lang.Integer getRecVersion() {
+		return this.recVersion;
+	}
+
+	@Override
+	public void setRecVersion(java.lang.Integer recVersion) {
+		this.recVersion = recVersion;
+	}
+
+	@Override
+	public java.sql.Timestamp getRecTimestamp() {
+		return this.recTimestamp;
+	}
+
+	@Override
+	public void setRecTimestamp(java.sql.Timestamp recTimestamp) {
+		this.recTimestamp = recTimestamp;
 	}
 }

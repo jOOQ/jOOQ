@@ -57,6 +57,7 @@ import static org.jooq.test.hsqldb.generatedclasses.Tables.V_LIBRARY;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -184,6 +185,16 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<
 	protected TableField<TBookRecord, String> TBook_TITLE() {
 		return T_BOOK.TITLE;
 	}
+
+    @Override
+    protected TableField<TBookRecord, Integer> TBook_REC_VERSION() {
+        return T_BOOK.REC_VERSION;
+    }
+
+    @Override
+    protected TableField<TBookRecord, Timestamp> TBook_REC_TIMESTAMP() {
+        return super.TBook_REC_TIMESTAMP();
+    }
 
     @Override
     protected UpdatableTable<TBookStoreRecord> TBookStore() {

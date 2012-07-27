@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1805777047;
+	private static final long serialVersionUID = -440675106;
 
 	/**
 	 * The singleton instance of PUBLIC.T_BOOK
@@ -88,6 +88,11 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.VARBINARY, this);
 
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
+	 */
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.lang.Integer> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.INTEGER, this);
+
 	public TBook() {
 		super("T_BOOK", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
@@ -111,6 +116,11 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.hsqldb.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.hsqldb.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID);
+	}
+
+	@Override
+	public org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.lang.Integer> getRecordVersion() {
+		return org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.REC_VERSION;
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = 2107473895;
+	private static final long serialVersionUID = -1383413389;
 
 	/**
 	 * The table column <code>PUBLIC.V_BOOK.ID</code>
@@ -152,6 +152,38 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	@Override
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.VBook.CONTENT_PDF);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.V_BOOK.REC_VERSION</code>
+	 */
+	@Override
+	public void setRecVersion(java.lang.Integer value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.VBook.REC_VERSION, value);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.V_BOOK.REC_VERSION</code>
+	 */
+	@Override
+	public java.lang.Integer getRecVersion() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.VBook.REC_VERSION);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>
+	 */
+	@Override
+	public void setRecTimestamp(java.sql.Timestamp value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.VBook.REC_TIMESTAMP, value);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>
+	 */
+	@Override
+	public java.sql.Timestamp getRecTimestamp() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.VBook.REC_TIMESTAMP);
 	}
 
 	/**

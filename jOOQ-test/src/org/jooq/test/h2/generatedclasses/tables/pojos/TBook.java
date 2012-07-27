@@ -10,7 +10,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  */
 public class TBook implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -1516275994;
+	private static final long serialVersionUID = 805254564;
 
 	private java.lang.Integer                                 id;
 	private java.lang.Integer                                 authorId;
@@ -21,6 +21,8 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	private org.jooq.test.h2.generatedclasses.enums.TLanguage languageId;
 	private java.lang.String                                  contentText;
 	private byte[]                                            contentPdf;
+	private java.lang.Integer                                 recVersion;
+	private java.sql.Timestamp                                recTimestamp;
 
 	@Override
 	public java.lang.Integer getId() {
@@ -110,5 +112,25 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	@Override
 	public void setContentPdf(byte[] contentPdf) {
 		this.contentPdf = contentPdf;
+	}
+
+	@Override
+	public java.lang.Integer getRecVersion() {
+		return this.recVersion;
+	}
+
+	@Override
+	public void setRecVersion(java.lang.Integer recVersion) {
+		this.recVersion = recVersion;
+	}
+
+	@Override
+	public java.sql.Timestamp getRecTimestamp() {
+		return this.recTimestamp;
+	}
+
+	@Override
+	public void setRecTimestamp(java.sql.Timestamp recTimestamp) {
+		this.recTimestamp = recTimestamp;
 	}
 }

@@ -41,7 +41,7 @@ import org.jooq.UpdatableRecord;
  * An error occurred while storing a record whose underlying data had already
  * been changed
  *
- * @see UpdatableRecord#storeLocked()
+ * @see UpdatableRecord#store()
  * @author Lukas Eder
  */
 public class DataChangedException extends DataAccessException {

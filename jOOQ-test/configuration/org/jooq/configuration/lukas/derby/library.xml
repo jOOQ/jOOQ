@@ -14,6 +14,8 @@
             <includes>.*</includes>
             <excludes>T_BOOK_DETAILS</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
+            <recordVersionFields>REC_VERSION</recordVersionFields>
+            <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
             <unsignedTypes>true</unsignedTypes>
             <masterDataTables>
                 <masterDataTable>

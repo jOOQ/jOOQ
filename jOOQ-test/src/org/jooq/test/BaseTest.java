@@ -35,6 +35,8 @@
  */
 package org.jooq.test;
 
+import static org.jooq.tools.reflect.Reflect.on;
+
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -445,6 +447,14 @@ public abstract class BaseTest<
         return delegate.TBook_CONTENT_PDF();
     }
 
+    protected TableField<B, Timestamp> TBook_REC_TIMESTAMP() {
+        return delegate.TBook_REC_TIMESTAMP();
+    }
+
+    protected TableField<B, Integer> TBook_REC_VERSION() {
+        return delegate.TBook_REC_VERSION();
+    }
+
     protected TableField<B, ? extends Enum<?>> TBook_STATUS() {
         return delegate.TBook_STATUS();
     }
@@ -690,6 +700,22 @@ public abstract class BaseTest<
             Thread.sleep(millis);
         }
         catch (InterruptedException ignore) {}
+    }
+
+    /**
+     * Convenience method to create a new dummy book
+     */
+    @SuppressWarnings("unchecked")
+    protected final B newBook(int id) {
+        B record = create().newRecord(TBook());
+
+        record.setValue(TBook_ID(), id);
+        record.setValue(TBook_AUTHOR_ID(), 1);
+        record.setValue(TBook_TITLE(), "XX");
+        record.setValue(TBook_PUBLISHED_IN(), 2000);
+        record.setValue((Field<Object>)TBook_LANGUAGE_ID(), on(TBook_LANGUAGE_ID().getDataType().getType()).get("en"));
+
+        return record;
     }
 
     @SuppressWarnings("unchecked")

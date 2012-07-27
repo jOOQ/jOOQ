@@ -36,6 +36,8 @@
 package org.jooq.test._.testcases;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.SQLITE;
@@ -43,6 +45,7 @@ import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.table;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -511,6 +514,97 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals("Rösslitor", store.getValue(TBookStore_NAME()));
     }
 
+    @Test
+    public void testUpdatablesVersionAndTimestamp() throws Exception {
+        if (TBook_REC_TIMESTAMP() == null && TBook_REC_VERSION() == null) {
+            log.info("SKIPPING", "Record version and timestamp tests");
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        Factory create = create(new Settings().withExecuteWithOptimisticLocking(true));
+        boolean t = TBook_REC_TIMESTAMP() != null;
+        boolean v = TBook_REC_VERSION() != null;
+
+        // Test data integrity check
+        // -------------------------
+        if (t) assertEquals(2, create.selectCount().from(TBook()).where(TBook_REC_TIMESTAMP().isNotNull()).fetchOne(0));
+        if (v) assertEquals(2, create.selectCount().from(TBook()).where(TBook_REC_VERSION().isNotNull()).fetchOne(0));
+
+        // Version and timestamp shouldn't change when there are constraint violations
+        // -------------------------
+        B book1 = create.newRecord(TBook());
+        book1.setValue(TBook_ID(), 5);
+        try {
+            book1.store();
+            fail();
+        }
+        catch (DataAccessException expected) {}
+        if (t) assertNull(book1.getValue(TBook_REC_TIMESTAMP()));
+        if (v) assertNull(book1.getValue(TBook_REC_VERSION()));
+
+        // Test non-nullability of version and timestamp for new books
+        // -------------------------
+        B book2 = newBook(5);
+        assertEquals(1, book2.store());
+        Timestamp t2 = t ? book2.getValue(TBook_REC_TIMESTAMP()) : null;
+        Integer v2 = v ? book2.getValue(TBook_REC_VERSION()) : null;
+        if (t) assertNotNull(t2);
+        if (v) assertNotNull(v2);
+
+        // Test immutability of version and timestamp for non-stored books
+        // -------------------------
+        book2.refresh();
+        assertEquals(0, book2.store());
+        assertEquals(t2, t ? book2.getValue(TBook_REC_TIMESTAMP()) : null);
+        assertEquals(v2, v ? book2.getValue(TBook_REC_VERSION()) : null);
+
+        // Test resetting of version and timestamp for copied books
+        // -------------------------
+        B book3 = book2.copy();
+        book3.setValue(TBook_ID(), 6);
+        assertEquals(1, book3.store());
+        Timestamp t3 = t ? book3.getValue(TBook_REC_TIMESTAMP()) : null;
+        Integer v3 = v ? book3.getValue(TBook_REC_VERSION()) : null;
+        if (t) assertNotNull(t3);
+        if (v) assertNotNull(v3);
+        if (t && t2 != null) assertFalse(t2.equals(t3));
+        if (v && v2 != null) assertFalse(v2.equals(v3));
+
+        // Check if updating all records will lead to updated version and timestamp values
+        // -------------------------
+        // BOOK[ID=4] has version and timestamp set to null
+        B book4 = create().fetchOne(TBook(), TBook_ID().equal(4));
+        book4.setValue(TBook_TITLE(), "Blah");
+        assertEquals(1, book4.store());
+        Timestamp t4 = t ? book4.getValue(TBook_REC_TIMESTAMP()) : null;
+        Integer v4 = v ? book4.getValue(TBook_REC_VERSION()) : null;
+        if (t) assertNotNull(t4);
+        if (v) assertEquals(Integer.valueOf(1), v4);
+        book4.refresh();
+        if (t) assertEquals(t4, book4.getValue(TBook_REC_TIMESTAMP()));
+        if (v) assertEquals(v4, book4.getValue(TBook_REC_VERSION()));
+
+        // Increment both values
+        book4.setValue(TBook_TITLE(), "Blah 1");
+        assertEquals(1, book4.store());
+        Timestamp t4a = t ? book4.getValue(TBook_REC_TIMESTAMP()) : null;
+        Integer v4a = v ? book4.getValue(TBook_REC_VERSION()) : null;
+        if (t) assertNotNull(t4a);
+        if (v) assertEquals(Integer.valueOf(2), v4a);
+        book4.refresh();
+        if (t) assertEquals(t4a, book4.getValue(TBook_REC_TIMESTAMP()));
+        if (v) assertEquals(v4a, book4.getValue(TBook_REC_VERSION()));
+
+        // Don't change the book
+        assertEquals(0, book4.store());
+        if (t) assertEquals(t4a, book4.getValue(TBook_REC_TIMESTAMP()));
+        if (v) assertEquals(v4a, book4.getValue(TBook_REC_VERSION()));
+        book4.refresh();
+        if (t) assertEquals(t4a, book4.getValue(TBook_REC_TIMESTAMP()));
+        if (v) assertEquals(v4a, book4.getValue(TBook_REC_VERSION()));
+    }
+
     @SuppressWarnings("unchecked")
     @Test
     public void testNonUpdatables() throws Exception {
@@ -579,17 +673,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
-    public void testStoreLocked() throws Exception {
+    public void testStoreWithOptimisticLock() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        testStoreLocked0(TBook(), TBook_ID(), TBook_TITLE());
+        testStoreWithOptimisticLock0(TBook(), TBook_ID(), TBook_TITLE());
 
         // Avoid referential integrity problems for subsequent test
         create().executeDelete(TBook());
-        testStoreLocked0(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME());
+        testStoreWithOptimisticLock0(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME());
     }
 
-    private <R extends UpdatableRecord<R>> void testStoreLocked0(
+    private <R extends UpdatableRecord<R>> void testStoreWithOptimisticLock0(
         UpdatableTable<R> table, TableField<R, Integer> id, TableField<R, String> string) throws Exception {
 
         Factory create = create(new Settings().withExecuteWithOptimisticLocking(true));
@@ -649,8 +743,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         }
         catch (DataChangedException expected) {}
 
-        // Restore the book, then it should work
+        // Restore the book, refresh the copy, then it should work
         assertEquals(1, record4.store());
+        record5.refresh();
+        record5.setValue(string, "New Title 5");
         assertEquals(1, record5.store());
         assertEquals("New Title 5", create.fetchOne(table, id.equal(1)).getValue(string));
 

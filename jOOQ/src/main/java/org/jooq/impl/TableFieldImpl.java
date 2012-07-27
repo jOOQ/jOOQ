@@ -36,10 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Record;
@@ -67,12 +63,6 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
         if (table instanceof TableImpl) {
             ((TableImpl<?>) table).getFieldList().add(this);
         }
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-    	// Don't return Table, as Table returned TableField already
-        return Collections.emptyList();
     }
 
     @Override

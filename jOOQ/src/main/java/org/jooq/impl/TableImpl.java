@@ -36,9 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -89,16 +86,6 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         }
 
         return null;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables0() {
-        if (alias != null) {
-            return getAttachables(alias, fields);
-        }
-        else {
-            return getAttachables(fields);
-        }
     }
 
     @Override

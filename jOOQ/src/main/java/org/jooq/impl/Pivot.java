@@ -39,10 +39,7 @@ import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.vals;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -277,11 +274,6 @@ implements
         protected FieldList getFieldList() {
             return Pivot.this.getFieldList();
         }
-
-        @Override
-        protected List<Attachable> getAttachables0() {
-            return Collections.emptyList();
-        }
     }
 
 
@@ -310,11 +302,6 @@ implements
     @Override
     protected final FieldList getFieldList() {
         return new FieldList();
-    }
-
-    @Override
-    protected final List<Attachable> getAttachables0() {
-        return getAttachables(table, aggregateFunctions, on, in);
     }
 
     // ------------------------------------------------------------------------

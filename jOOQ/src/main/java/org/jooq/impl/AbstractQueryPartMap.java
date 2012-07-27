@@ -35,14 +35,11 @@
  */
 package org.jooq.impl;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
@@ -74,16 +71,6 @@ implements Map<K, V> {
 
     @Override
     public abstract void bind(BindContext context);
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        List<Attachable> result = new ArrayList<Attachable>();
-
-        result.addAll(getAttachables(keySet()));
-        result.addAll(getAttachables(values()));
-
-        return result;
-    }
 
     // -------------------------------------------------------------------------
     // The Map API

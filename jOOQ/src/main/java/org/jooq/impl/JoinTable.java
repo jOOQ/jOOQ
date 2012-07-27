@@ -58,7 +58,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Field;
@@ -262,11 +261,6 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
         result.addAll(rhs.asTable().getFields());
 
         return result;
-    }
-
-    @Override
-    protected final List<Attachable> getAttachables0() {
-        return getAttachables(lhs, rhs, condition, using);
     }
 
     @Override

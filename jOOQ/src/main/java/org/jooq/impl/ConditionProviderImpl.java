@@ -40,9 +40,7 @@ import static org.jooq.impl.Factory.trueCondition;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
@@ -68,15 +66,6 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
         }
 
         return condition;
-    }
-
-    // -------------------------------------------------------------------------
-    // Attachable API
-    // -------------------------------------------------------------------------
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(condition);
     }
 
     // -------------------------------------------------------------------------

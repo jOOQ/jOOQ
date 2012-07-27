@@ -50,10 +50,8 @@ import static org.jooq.impl.Term.ROW_NUMBER;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.jooq.AggregateFunction;
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -150,11 +148,6 @@ class Function<T> extends AbstractField<T> implements
     // -------------------------------------------------------------------------
     // XXX QueryPart API
     // -------------------------------------------------------------------------
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(arguments, keepDenseRankOrderBy, withinGroupOrderBy, partitionBy, orderBy);
-    }
 
     @Override
     public final void bind(BindContext context) {

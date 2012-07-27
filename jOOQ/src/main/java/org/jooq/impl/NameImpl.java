@@ -35,10 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Name;
 import org.jooq.RenderContext;
@@ -73,11 +69,6 @@ class NameImpl extends AbstractQueryPart implements Name {
 
     @Override
     public final void bind(BindContext context) {}
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
-    }
 
     @Override
     public final String[] getName() {

@@ -55,11 +55,8 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import org.jooq.ArrayRecord;
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -101,11 +98,6 @@ class Val<T> extends AbstractField<T> implements Param<T> {
     // ------------------------------------------------------------------------
     // XXX: Field API
     // ------------------------------------------------------------------------
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
-    }
 
     @Override
     public final void toSQL(RenderContext context) {

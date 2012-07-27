@@ -43,7 +43,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
@@ -70,12 +69,6 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
     QueryPartList(T... wrappedList) {
         this(Arrays.asList(wrappedList));
-    }
-
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(this);
     }
 
     @Override

@@ -38,7 +38,6 @@ package org.jooq.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -64,11 +63,6 @@ class FieldMapsForInsert extends AbstractQueryPart {
     // -------------------------------------------------------------------------
     // The QueryPart API
     // -------------------------------------------------------------------------
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(insertMaps);
-    }
 
     @Override
     public final void toSQL(RenderContext context) {

@@ -35,9 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.RenderContext;
@@ -50,11 +47,6 @@ class NotCondition extends AbstractCondition {
 
     NotCondition(Condition condition) {
         this.condition = condition;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(condition);
     }
 
     @Override

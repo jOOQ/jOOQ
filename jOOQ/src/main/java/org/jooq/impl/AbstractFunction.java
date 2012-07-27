@@ -35,9 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -62,11 +59,6 @@ abstract class AbstractFunction<T> extends AbstractField<T> {
         super(name, type);
 
         this.arguments = arguments;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(arguments);
     }
 
     @Override

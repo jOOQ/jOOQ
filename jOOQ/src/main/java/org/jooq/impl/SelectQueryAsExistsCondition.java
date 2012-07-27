@@ -36,9 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
 import org.jooq.Select;
@@ -56,11 +53,6 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
     SelectQueryAsExistsCondition(Select<?> query, ExistsOperator operator) {
         this.query = query;
         this.operator = operator;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(query);
     }
 
     @Override

@@ -37,10 +37,8 @@ package org.jooq.impl;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -72,11 +70,6 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractFieldProviderQueryP
         super(name, schema);
 
         this.fields = new FieldList();
-    }
-
-    @Override
-    public final List<Attachable> getAttachables0() {
-        return getAttachables(fields);
     }
 
     @Override

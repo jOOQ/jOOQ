@@ -38,9 +38,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.val;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -62,11 +59,6 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
         super(value.toString(), value.getUDT().getDataType());
 
         this.record = value;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(record);
     }
 
     @Override

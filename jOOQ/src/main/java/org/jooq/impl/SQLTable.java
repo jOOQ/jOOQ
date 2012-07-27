@@ -35,10 +35,8 @@
  */
 package org.jooq.impl;
 
-import java.util.Collections;
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -65,11 +63,6 @@ class SQLTable extends AbstractTable<Record> {
     // ------------------------------------------------------------------------
     // SQLTable API
     // ------------------------------------------------------------------------
-
-    @Override
-    public final List<Attachable> getAttachables0() {
-        return Collections.emptyList();
-    }
 
     @Override
     public final Class<? extends Record> getRecordType() {

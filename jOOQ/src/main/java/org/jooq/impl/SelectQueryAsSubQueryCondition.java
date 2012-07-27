@@ -36,9 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -59,11 +56,6 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
         this.query = query;
         this.field = field;
         this.operator = operator;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(query, field);
     }
 
     @Override

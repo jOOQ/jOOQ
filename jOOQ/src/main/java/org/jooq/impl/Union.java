@@ -38,7 +38,6 @@ package org.jooq.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -66,11 +65,6 @@ class Union<R extends Record> extends AbstractSelect<R> {
         this.queries = new ArrayList<Select<R>>();
         this.queries.add(query1);
         this.queries.add(query2);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(queries);
     }
 
     @Override

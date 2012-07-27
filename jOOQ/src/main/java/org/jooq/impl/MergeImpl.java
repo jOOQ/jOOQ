@@ -54,7 +54,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -680,20 +679,5 @@ implements
                .bind(matchedDeleteWhere)
                .bind(notMatchedInsert)
                .bind(notMatchedWhere);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(
-            table, using, on,
-            matchedUpdate,
-            matchedWhere,
-            matchedDeleteWhere,
-            notMatchedInsert,
-            notMatchedWhere,
-            h2Fields,
-            h2Keys,
-            h2Select,
-            h2Values);
     }
 }

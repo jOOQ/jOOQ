@@ -43,9 +43,6 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.ExpressionOperator.BIT_NOT;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -69,11 +66,6 @@ class Neg<T> extends AbstractField<T> {
 
         this.operator = operator;
         this.field = field;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(field);
     }
 
     @Override

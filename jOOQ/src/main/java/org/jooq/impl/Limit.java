@@ -38,10 +38,6 @@ package org.jooq.impl;
 import static org.jooq.RenderContext.CastMode.NEVER;
 import static org.jooq.impl.Factory.val;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.Param;
@@ -63,11 +59,6 @@ class Limit extends AbstractQueryPart {
     private Field<Integer>    offsetOrZero     = val(0);
     private Field<Integer>    offsetPlusOne    = val(1);
     private boolean           rendersParams;;
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
-    }
 
     @Override
     public final void toSQL(RenderContext context) {

@@ -40,7 +40,6 @@ import static org.jooq.impl.Factory.val;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.CaseWhenStep;
 import org.jooq.Field;
@@ -66,18 +65,6 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         this.results = new ArrayList<Field<T>>();
 
         when(compareValue, result);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        List<Attachable> result = new ArrayList<Attachable>();
-
-        result.addAll(getAttachables(value));
-        result.addAll(getAttachables(compareValues));
-        result.addAll(getAttachables(results));
-        result.addAll(getAttachables(otherwise));
-
-        return result;
     }
 
     @Override

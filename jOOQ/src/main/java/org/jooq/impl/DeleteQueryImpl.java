@@ -37,9 +37,7 @@
 package org.jooq.impl;
 
 import java.util.Collection;
-import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -64,11 +62,6 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
 
         this.table = table;
         this.condition = new ConditionProviderImpl();
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(table, condition);
     }
 
     @Override

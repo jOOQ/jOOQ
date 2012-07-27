@@ -37,13 +37,11 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.val;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.jooq.ArrayRecord;
-import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -70,15 +68,6 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         this.into = into;
     }
 
-    @Override
-    public final List<Attachable> getAttachables() {
-        List<Attachable> result = new ArrayList<Attachable>();
-        result.addAll(getAttachables(into));
-        result.addAll(getAttachables0());
-        return result;
-    }
-
-    protected abstract List<Attachable> getAttachables0();
     protected abstract Map<Field<?>, Field<?>> getValues();
 
     final Table<R> getInto() {

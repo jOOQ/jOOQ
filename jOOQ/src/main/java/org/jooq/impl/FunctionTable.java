@@ -35,10 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -103,10 +99,5 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
     @Override
     protected final FieldList getFieldList() {
         return new FieldList();
-    }
-
-    @Override
-    protected final List<Attachable> getAttachables0() {
-        return Collections.emptyList();
     }
 }

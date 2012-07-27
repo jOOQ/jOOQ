@@ -37,9 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.table;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -64,11 +61,6 @@ class ArrayAsSubqueryCondition<T> extends AbstractCondition {
         this.array = array;
         this.field = field;
         this.operator = operator;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(field);
     }
 
     @Override

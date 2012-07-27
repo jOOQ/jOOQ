@@ -35,10 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Package;
 import org.jooq.RenderContext;
@@ -73,9 +69,4 @@ public class PackageImpl extends AbstractSchemaProviderQueryPart implements Pack
 
     @Override
     public final void bind(BindContext context) {}
-
-    @Override
-    protected List<Attachable> getAttachables0() {
-        return Collections.emptyList();
-    }
 }

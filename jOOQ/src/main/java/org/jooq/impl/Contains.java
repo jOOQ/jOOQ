@@ -38,9 +38,6 @@ package org.jooq.impl;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.val;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Field;
@@ -83,11 +80,6 @@ class Contains<T> extends AbstractCondition {
     @Override
     public final void bind(BindContext context) throws DataAccessException {
         context.bind(condition());
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(lhs, rhs);
     }
 
     private final Condition condition() {
@@ -134,11 +126,6 @@ class Contains<T> extends AbstractCondition {
 
         private final Field<T> rhs() {
             return (rhs == null) ? val(value, lhs) : rhs;
-        }
-
-        @Override
-        public List<Attachable> getAttachables() {
-            return getAttachables(lhs, rhs);
         }
     }
 }

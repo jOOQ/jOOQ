@@ -223,13 +223,6 @@ abstract class AbstractQueryPart implements QueryPartInternal {
 
     /**
      * Internal convenience method
-     */
-    final Factory create(AttachableImpl a) {
-        return create(a.getConfiguration());
-    }
-
-    /**
-     * Internal convenience method
      *
      * @deprecated - 2.3.0 - Do not reuse
      */

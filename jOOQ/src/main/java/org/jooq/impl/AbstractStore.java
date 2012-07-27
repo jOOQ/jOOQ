@@ -42,6 +42,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
+import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Store;
@@ -55,16 +56,16 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID = -2989496800221194411L;
+    private static final long serialVersionUID = -2989496800221194411L;
 
-    private final AttachableImpl attachable;
+    private Configuration     configuration;
 
     AbstractStore() {
         this(null);
     }
 
     AbstractStore(Configuration configuration) {
-        this.attachable = new AttachableImpl(this, configuration);
+        this.configuration = configuration;
     }
 
     // -------------------------------------------------------------------------
@@ -77,13 +78,17 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
     }
 
     @Override
-    public final void attach(Configuration configuration) {
-        attachable.attach(configuration);
+    public final void attach(Configuration c) {
+        configuration = c;
+
+        for (Attachable attachable : getAttachables()) {
+            attachable.attach(c);
+        }
     }
 
     @Override
     public final Configuration getConfiguration() {
-        return attachable.getConfiguration();
+        return configuration;
     }
 
     /**

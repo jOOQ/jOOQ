@@ -50,7 +50,11 @@ public interface AttachableInternal extends Attachable {
      * Get the list of dependent <code>Attachables</code>
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     *
+     * @deprecated - 2.5.0 [#1544] - This internal method will be removed soon.
+     *             Do not reuse.
      */
+    @Deprecated
     List<Attachable> getAttachables();
 
     /**

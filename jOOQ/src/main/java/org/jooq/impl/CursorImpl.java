@@ -1287,7 +1287,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
          */
         private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
             T value = FieldTypeHelper.getFromResultSet(ctx, field, index + 1);
-            record.setValue(field, new Value<T>(value));
+            record.setValue(index, new Value<T>(value));
         }
 
         @Override

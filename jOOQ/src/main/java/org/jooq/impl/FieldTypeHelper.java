@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
@@ -111,6 +112,7 @@ public final class FieldTypeHelper {
     private static final int        INTEGER_PRECISION = String.valueOf(Integer.MAX_VALUE).length();
     private static final int        SHORT_PRECISION   = String.valueOf(Short.MAX_VALUE).length();
     private static final int        BYTE_PRECISION    = String.valueOf(Byte.MAX_VALUE).length();
+    private static final Pattern    NORMALISE_PATTERN = Pattern.compile("\"|\\.|\\s|\\(\\w+(,\\w+)*\\)|(NOT\\s*NULL)?");
 
     private static final JooqLogger log               = JooqLogger.getLogger(FieldTypeHelper.class);
 
@@ -967,7 +969,7 @@ public final class FieldTypeHelper {
      * @return The type name without all special characters and white spaces
      */
     public static String normalise(String typeName) {
-        return typeName.toUpperCase().replaceAll("\"|\\.|\\s|\\(\\w+(,\\w+)*\\)|(NOT\\s*NULL)?", "");
+        return NORMALISE_PATTERN.matcher(typeName.toUpperCase()).replaceAll("");
     }
 
     // -------------------------------------------------------------------------

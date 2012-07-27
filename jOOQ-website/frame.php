@@ -161,7 +161,7 @@
 		</div>
 		</div>
 
-		<a href="https://github.com/lukaseder/jOOQ"> <img
+		<a href="https://github.com/jOOQ/jOOQ"> <img
 			alt="Fork me on GitHub" src="<?=$root?>/img/forkme.png"
 			style="position: absolute; top: 0; right: 0; border: 0;"/> </a>
 		<div style="display: none">

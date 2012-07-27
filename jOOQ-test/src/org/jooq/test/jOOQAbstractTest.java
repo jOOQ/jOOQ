@@ -48,6 +48,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -413,9 +414,10 @@ public abstract class jOOQAbstractTest<
         int total = 0;
         for (ExecuteType type : ExecuteType.values()) {
             Integer count = TestStatisticsListener.STATISTICS.get(type);
-            if (count != null) total += count;
+            if (count == null) count = 0;
+            total += count;
 
-            log.info(type.name(), TestStatisticsListener.STATISTICS.get(type) + " executions");
+            log.info(type.name(), count + " executions");
         }
 
         log.info("---------------");
@@ -599,6 +601,12 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<B, String> TBook_CONTENT_TEXT();
     protected abstract TableField<B, byte[]> TBook_CONTENT_PDF();
     protected abstract TableField<B, ? extends Enum<?>> TBook_STATUS();
+    protected TableField<B, Integer> TBook_REC_VERSION() {
+        return null;
+    }
+    protected TableField<B, Timestamp> TBook_REC_TIMESTAMP() {
+        return null;
+    }
 
     protected abstract UpdatableTable<S> TBookStore();
     protected abstract TableField<S, String> TBookStore_NAME();
@@ -1156,8 +1164,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testStoreLocked() throws Exception {
-        new CRUDTests(this).testStoreLocked();
+    public void testUpdatablesVersionAndTimestamp() throws Exception {
+        new CRUDTests(this).testUpdatablesVersionAndTimestamp();
+    }
+
+    @Test
+    public void testStoreWithOptimisticLock() throws Exception {
+        new CRUDTests(this).testStoreWithOptimisticLock();
     }
 
     @Test

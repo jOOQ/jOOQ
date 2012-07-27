@@ -37,6 +37,8 @@ package org.jooq;
 
 import java.util.List;
 
+import org.jooq.conf.Settings;
+
 /**
  * A common interface for tables whose records can be stored back to the
  * database again.
@@ -78,5 +80,55 @@ public interface UpdatableTable<R extends Record> extends Updatable<R>, Table<R>
      *         unmodifiable list.
      */
     <O extends Record> List<ForeignKey<O, R>> getReferencesFrom(Table<O> other);
+
+    /**
+     * A "version" field holding record version information used for optimistic
+     * locking
+     * <p>
+     * jOOQ supports optimistic locking in {@link UpdatableRecord#store()} and
+     * {@link UpdatableRecord#delete()} if
+     * {@link Settings#isExecuteWithOptimisticLocking()} is enabled. Optimistic
+     * locking is performed in a single <code>UPDATE</code> or
+     * <code>DELETE</code> statement if tables provide a "version" or
+     * "timestamp" field, or in two steps using an additional
+     * <code>SELECT .. FOR UPDATE</code> statement otherwise.
+     * <p>
+     * This method is overridden in generated subclasses if their corresponding
+     * tables have been configured accordingly. A table may have both a
+     * "version" and a "timestamp" field.
+     *
+     * @return The "version" field, or <code>null</code>, if this table has no
+     *         "version" field.
+     * @see #getRecordTimestamp()
+     * @see UpdatableRecord#store()
+     * @see UpdatableRecord#delete()
+     * @see Settings#isExecuteWithOptimisticLocking()
+     */
+    TableField<R, ? extends Number> getRecordVersion();
+
+    /**
+     * A "timestamp" field holding record timestamp information used for
+     * optimistic locking
+     * <p>
+     * jOOQ supports optimistic locking in {@link UpdatableRecord#store()} and
+     * {@link UpdatableRecord#delete()} if
+     * {@link Settings#isExecuteWithOptimisticLocking()} is enabled. Optimistic
+     * locking is performed in a single <code>UPDATE</code> or
+     * <code>DELETE</code> statement if tables provide a "version" or
+     * "timestamp" field, or in two steps using an additional
+     * <code>SELECT .. FOR UPDATE</code> statement otherwise.
+     * <p>
+     * This method is overridden in generated subclasses if their corresponding
+     * tables have been configured accordingly. A table may have both a
+     * "version" and a "timestamp" field.
+     *
+     * @return The "timestamp" field, or <code>null</code>, if this table has no
+     *         "timestamp" field.
+     * @see #getRecordVersion()
+     * @see UpdatableRecord#store()
+     * @see UpdatableRecord#delete()
+     * @see Settings#isExecuteWithOptimisticLocking()
+     */
+    TableField<R, ? extends java.util.Date> getRecordTimestamp();
 
 }

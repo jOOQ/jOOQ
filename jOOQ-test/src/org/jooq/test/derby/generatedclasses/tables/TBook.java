@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -372410209;
+	private static final long serialVersionUID = -2016102727;
 
 	/**
 	 * The singleton instance of TEST.T_BOOK
@@ -89,6 +89,11 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, T_BOOK);
 
 	/**
+	 * The table column <code>TEST.T_BOOK.REC_TIMESTAMP</code>
+	 */
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, T_BOOK);
+
+	/**
 	 * No further instances allowed
 	 */
 	private TBook() {
@@ -110,5 +115,10 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.derby.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.derby.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID);
+	}
+
+	@Override
+	public org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.sql.Timestamp> getRecordTimestamp() {
+		return org.jooq.test.derby.generatedclasses.tables.TBook.REC_TIMESTAMP;
 	}
 }

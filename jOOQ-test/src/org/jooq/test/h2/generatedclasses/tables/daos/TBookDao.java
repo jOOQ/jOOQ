@@ -98,4 +98,18 @@ public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedcl
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByContentPdf(byte[]... values) {
 		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_PDF, values);
 	}
+
+	/**
+	 * Fetch records that have <code>REC_VERSION IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByRecVersion(java.lang.Integer... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.REC_VERSION, values);
+	}
+
+	/**
+	 * Fetch records that have <code>REC_TIMESTAMP IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByRecTimestamp(java.sql.Timestamp... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.REC_TIMESTAMP, values);
+	}
 }

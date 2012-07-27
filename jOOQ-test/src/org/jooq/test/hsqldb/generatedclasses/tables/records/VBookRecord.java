@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = 50732295;
+	private static final long serialVersionUID = -374904553;
 
 	/**
 	 * The table column <code>PUBLIC.V_BOOK.ID</code>
@@ -152,6 +152,22 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	@Override
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.CONTENT_PDF);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.V_BOOK.REC_VERSION</code>
+	 */
+	@Override
+	public void setRecVersion(java.lang.Integer value) {
+		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.REC_VERSION, value);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.V_BOOK.REC_VERSION</code>
+	 */
+	@Override
+	public java.lang.Integer getRecVersion() {
+		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.REC_VERSION);
 	}
 
 	/**

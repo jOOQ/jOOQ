@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -751869820;
+	private static final long serialVersionUID = 1581939470;
 
 	/**
 	 * The singleton instance of TEST.V_BOOK
@@ -67,6 +67,11 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.derby.generated
 	 * The table column <code>TEST.V_BOOK.CONTENT_PDF</code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, V_BOOK);
+
+	/**
+	 * The table column <code>TEST.V_BOOK.REC_TIMESTAMP</code>
+	 */
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, V_BOOK);
 
 	/**
 	 * No further instances allowed

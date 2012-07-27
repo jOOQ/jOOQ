@@ -501,6 +501,7 @@ public class DefaultGenerator extends AbstractGenerator {
         out.println(");");
     }
 
+    @SuppressWarnings("unused")
     protected void generateUniqueKeySuppressHidingWarning(GenerationWriter out, UniqueKeyDefinition uniqueKey) {
         out.print("\"hiding\", ");
     }
@@ -548,6 +549,7 @@ public class DefaultGenerator extends AbstractGenerator {
         out.println(");");
     }
 
+    @SuppressWarnings("unused")
     protected void generateForeignKeySuppressHidingWarning(GenerationWriter out, ForeignKeyDefinition foreignKey) {
         out.print("\"hiding\", ");
     }
@@ -1648,6 +1650,64 @@ public class DefaultGenerator extends AbstractGenerator {
 
                 out.println(");");
                 out.println("\t}");
+            }
+        }
+
+        // [#1596] UpdatableTables can provide fields for optimistic locking
+        // if properly configured
+        if (baseClass == UpdatableTableImpl.class) {
+            patternLoop: for (String pattern : database.getRecordVersionFields()) {
+                for (ColumnDefinition column : table.getColumns()) {
+                    if ((column.getName().matches(pattern.trim()) ||
+                         column.getQualifiedName().matches(pattern.trim()))) {
+
+                        out.println();
+                        out.println("\t@Override");
+                        out.print("\tpublic ");
+                        out.print(TableField.class);
+                        out.print("<");
+                        out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
+                        out.print(", ");
+                        out.print(getJavaType(column.getType()));
+                        out.println("> getRecordVersion() {");
+
+                        out.print("\t\treturn ");
+                        out.print(strategy.getFullJavaIdentifier(column));
+                        out.println(";");
+
+                        out.println("\t}");
+
+                        // Avoid generating this method twice
+                        break patternLoop;
+                    }
+                }
+            }
+
+            timestampLoop: for (String pattern : database.getRecordTimestampFields()) {
+                for (ColumnDefinition column : table.getColumns()) {
+                    if ((column.getName().matches(pattern.trim()) ||
+                         column.getQualifiedName().matches(pattern.trim()))) {
+
+                        out.println();
+                        out.println("\t@Override");
+                        out.print("\tpublic ");
+                        out.print(TableField.class);
+                        out.print("<");
+                        out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
+                        out.print(", ");
+                        out.print(getJavaType(column.getType()));
+                        out.println("> getRecordTimestamp() {");
+
+                        out.print("\t\treturn ");
+                        out.print(strategy.getFullJavaIdentifier(column));
+                        out.println(";");
+
+                        out.println("\t}");
+
+                        // Avoid generating this method twice
+                        break timestampLoop;
+                    }
+                }
             }
         }
 

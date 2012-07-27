@@ -38,6 +38,8 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.Factory.val;
 
+import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
@@ -54,6 +56,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.InvalidResultException;
@@ -94,9 +97,29 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         return (Table<R>) getFieldProvider();
     }
 
+    /**
+     * Subclasses may override this method to provide an identity
+     */
+    Collection<Field<?>> getReturning() {
+        Collection<Field<?>> result = new LinkedHashSet<Field<?>>();
+
+        Identity<R, ?> identity = getTable().getIdentity();
+        if (identity != null) {
+            result.add(identity.getField());
+        }
+
+        return result;
+    }
+
+    /**
+     * Convenience casting method, in case it is known that casting will succeed
+     */
+    UpdatableTable<R> getUpdatableTable() {
+        return (UpdatableTable<R>) getTable();
+    }
+
     @Override
     public final int storeUsing(TableField<R, ?>... keys) {
-        boolean checkIfChanged = isExecuteWithOptimisticLocking();
         boolean executeUpdate = false;
 
         for (TableField<R, ?> field : keys) {
@@ -116,7 +139,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         int result = 0;
 
         if (executeUpdate) {
-            result = storeUpdate(keys, checkIfChanged);
+            result = storeUpdate(keys);
         }
         else {
             result = storeInsert();
@@ -129,6 +152,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     private final boolean isExecuteWithOptimisticLocking() {
         Configuration configuration = getConfiguration();
 
+        // This can be null when the current record is detached
         if (configuration != null) {
             return TRUE.equals(configuration.getSettings().isExecuteWithOptimisticLocking());
         }
@@ -136,16 +160,17 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         return false;
     }
 
-    @SuppressWarnings("unchecked")
     private final int storeInsert() {
         Factory create = create();
         InsertQuery<R> insert = create.insertQuery(getTable());
+        addChangedValues(insert);
 
-        for (Field<?> field : getFields()) {
-            if (getValue0(field).isChanged()) {
-                addValue(insert, (TableField<R, ?>) field);
-            }
-        }
+        // Don't store records if no value was set by client code
+        if (!insert.isExecutable()) return 0;
+
+        // [#1596] Set timestamp and/or version columns to appropriate values
+        BigInteger version = addRecordVersion(insert);
+        Timestamp timestamp = addRecordTimestamp(insert);
 
         // [#814] Refresh identity and/or main unique key values
         // [#1002] Consider also identity columns of non-updatable records
@@ -158,11 +183,17 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
         int result = insert.execute();
 
-        // If an insert was successful try fetching the generated IDENTITY value
-        if (key != null && !key.isEmpty() && result > 0) {
-            if (insert.getReturnedRecord() != null) {
-                for (Field<?> field : key) {
-                    setValue0(field, new Value<Object>(insert.getReturnedRecord().getValue(field)));
+        if (result > 0) {
+
+            // [#1596] If insert was successful, update timestamp and/or version columns
+            setRecordVersionAndTimestamp(version, timestamp);
+
+            // If an insert was successful try fetching the generated IDENTITY value
+            if (key != null && !key.isEmpty()) {
+                if (insert.getReturnedRecord() != null) {
+                    for (Field<?> field : key) {
+                        setValue0(field, new Value<Object>(insert.getReturnedRecord().getValue(field)));
+                    }
                 }
             }
         }
@@ -170,50 +201,114 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         return result;
     }
 
-    /**
-     * Subclasses may override this method to provide an identity
-     */
-    Collection<Field<?>> getReturning() {
-        Collection<Field<?>> result = new LinkedHashSet<Field<?>>();
-
-        Identity<R, ?> identity = getTable().getIdentity();
-        if (identity != null) {
-            result.add(identity.getField());
-        }
-
-        return result;
-    }
-
-    @SuppressWarnings("unchecked")
-    private final int storeUpdate(TableField<R, ?>[] keys, boolean checkIfChanged) {
+    private final int storeUpdate(TableField<R, ?>[] keys) {
         UpdateQuery<R> update = create().updateQuery(getTable());
+        addChangedValues(update);
+        addConditions(update, keys);
 
-        for (Field<?> field : getFields()) {
-            if (getValue0(field).isChanged()) {
-                addValue(update, (TableField<R, ?>) field);
+        // Don't store records if no value was set by client code
+        if (!update.isExecutable()) return 0;
+
+        // [#1596] Set timestamp and/or version columns to appropriate values
+        BigInteger version = addRecordVersion(update);
+        Timestamp timestamp = addRecordTimestamp(update);
+
+        if (isExecuteWithOptimisticLocking()) {
+
+            // [#1596] Add additional conditions for version and/or timestamp columns
+            if (isTimestampOrVersionAvailable()) {
+                addConditionForVersionAndTimestamp(update);
+            }
+
+            // [#1547] Try fetching the Record again first, and compare this
+            // Record's original values with the ones in the database
+            else {
+                checkIfChanged(keys);
             }
         }
 
-        for (Field<?> field : keys) {
-            addCondition(update, field);
-        }
-
-        // [#1547] If optimistic locking checks are requested, try fetching the
-        // Record again first, and compare this Record's original values with
-        // the ones in the database
-        if (checkIfChanged && update.isExecutable()) {
-            checkIfChanged(keys);
-        }
-
-        return update.execute();
+        // [#1596] Check if the record was really changed in the database
+        int result = update.execute();
+        checkIfChanged(result, version, timestamp);
+        return result;
     }
 
-    private void checkIfChanged(TableField<R, ?>[] keys) {
-        SimpleSelectQuery<R> select = create().selectQuery(getTable());
+    private final void addConditionForVersionAndTimestamp(ConditionProvider query) {
+        TableField<R, ?> v = getUpdatableTable().getRecordVersion();
+        TableField<R, ?> t = getUpdatableTable().getRecordTimestamp();
 
-        for (Field<?> field : keys) {
-            addCondition(select, field);
+        if (v != null) addCondition(query, v);
+        if (t != null) addCondition(query, t);
+    }
+
+    private final boolean isTimestampOrVersionAvailable() {
+        if (getTable() instanceof UpdatableTable) {
+            UpdatableTable<R> table = (UpdatableTable<R>) getTable();
+
+            return table.getRecordTimestamp() != null || table.getRecordVersion() != null;
         }
+
+        return false;
+    }
+
+    @Override
+    public final int deleteUsing(TableField<R, ?>... keys) {
+        try {
+            DeleteQuery<R> delete = create().deleteQuery(getTable());
+            addConditions(delete, keys);
+
+            if (isExecuteWithOptimisticLocking()) {
+
+                // [#1596] Add additional conditions for version and/or timestamp columns
+                if (isTimestampOrVersionAvailable()) {
+                    addConditionForVersionAndTimestamp(delete);
+                }
+
+                // [#1547] Try fetching the Record again first, and compare this
+                // Record's original values with the ones in the database
+                else {
+                    checkIfChanged(keys);
+                }
+            }
+
+            int result = delete.execute();
+            checkIfChanged(result, null, null);
+            return result;
+        }
+
+        // [#673] If store() is called after delete(), a new INSERT should
+        // be executed and the record should be recreated
+        finally {
+            for (Field<?> field : getFields()) {
+                getValue0(field).setChanged(true);
+            }
+        }
+    }
+
+    @Override
+    public final void refreshUsing(TableField<R, ?>... keys) {
+        SimpleSelectQuery<R> select = create().selectQuery(getTable());
+        addConditions(select, keys);
+
+        if (select.execute() == 1) {
+            AbstractRecord record = (AbstractRecord) select.getResult().get(0);
+
+            for (Field<?> field : getFields()) {
+                setValue0(field, record.getValue0(field));
+            }
+        }
+        else {
+            throw new InvalidResultException("Exactly one row expected for refresh. Record does not exist in database.");
+        }
+    }
+
+    /**
+     * Perform an additional SELECT .. FOR UPDATE to check if the underlying
+     * database record has been changed compared to this record.
+     */
+    private final void checkIfChanged(TableField<R, ?>[] keys) {
+        SimpleSelectQuery<R> select = create().selectQuery(getTable());
+        addConditions(select, keys);
 
         // [#1547] SQLite doesn't support FOR UPDATE. CUBRID and SQL Server
         // can simulate it, though!
@@ -240,53 +335,21 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         }
     }
 
-    @Override
-    public final int deleteUsing(TableField<R, ?>... keys) {
-        boolean checkIfChanged = isExecuteWithOptimisticLocking();
+    /**
+     * Check if a database record was changed in the database.
+     */
+    private final void checkIfChanged(int result, BigInteger version, Timestamp timestamp) {
 
-        try {
-            DeleteQuery<R> delete = create().deleteQuery(getTable());
-
-            for (Field<?> field : keys) {
-                addCondition(delete, field);
-            }
-
-            // [#1547] If optimistic locking checks are requested, try fetching the
-            // Record again first, and compare this Record's original values with
-            // the ones in the database
-            if (checkIfChanged && delete.isExecutable()) {
-                checkIfChanged(keys);
-            }
-
-            return delete.execute();
+        // [#1596] If update/delete was successful, update version and/or
+        // timestamp columns.
+        // [#673] Do this also for deletions, in case a deleted record is re-added
+        if (result > 0) {
+            setRecordVersionAndTimestamp(version, timestamp);
         }
 
-        // [#673] If store() is called after delete(), a new INSERT should
-        // be executed and the record should be recreated
-        finally {
-            for (Field<?> field : getFields()) {
-                getValue0(field).setChanged(true);
-            }
-        }
-    }
-
-    @Override
-    public final void refreshUsing(TableField<R, ?>... keys) {
-        SimpleSelectQuery<R> select = create().selectQuery(getTable());
-
-        for (Field<?> field : keys) {
-            addCondition(select, field);
-        }
-
-        if (select.execute() == 1) {
-            AbstractRecord record = (AbstractRecord) select.getResult().get(0);
-
-            for (Field<?> field : getFields()) {
-                setValue0(field, record.getValue0(field));
-            }
-        }
-        else {
-            throw new InvalidResultException("Exactly one row expected for refresh. Record does not exist in database.");
+        // [#1596] No records were updated due to version and/or timestamp change
+        else if (isExecuteWithOptimisticLocking()) {
+            throw new DataChangedException("Database record has been changed or doesn't exist any longer");
         }
     }
 
@@ -299,16 +362,105 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     }
 
     /**
-     * Extracted method to ensure generic type safety.
+     * Add primary key conditions to a query
+     */
+    private final void addConditions(ConditionProvider query, TableField<R, ?>[] keys) {
+        for (Field<?> field : keys) {
+            addCondition(query, field);
+        }
+    }
+
+    /**
+     * Add a field condition to a query
      */
     private final <T> void addCondition(ConditionProvider provider, Field<T> field) {
         provider.addConditions(field.equal(getValue(field)));
     }
 
     /**
+     * Set all changed values of this record to a store query
+     */
+    private final void addChangedValues(StoreQuery<R> query) {
+        for (Field<?> field : getFields()) {
+            if (getValue0(field).isChanged()) {
+                addValue(query, field);
+            }
+        }
+    }
+
+    /**
      * Extracted method to ensure generic type safety.
      */
     private final <T> void addValue(StoreQuery<?> store, Field<T> field) {
-        store.addValue(field, val(getValue(field), field));
+        addValue(store, field, getValue(field));
+    }
+
+    /**
+     * Extracted method to ensure generic type safety.
+     */
+    private final <T> void addValue(StoreQuery<?> store, Field<T> field, Object value) {
+        store.addValue(field, val(value, field));
+    }
+
+    /**
+     * Set an updated timestamp value to a store query
+     */
+    private final Timestamp addRecordTimestamp(StoreQuery<?> store) {
+        Timestamp result = null;
+
+        if (isTimestampOrVersionAvailable()) {
+            TableField<R, ? extends java.util.Date> timestamp = getUpdatableTable().getRecordTimestamp();
+
+            if (timestamp != null) {
+
+                // Use Timestamp locally, to provide maximum precision
+                result = new Timestamp(System.currentTimeMillis());
+                addValue(store, timestamp, result);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Set an updated version value to a store query
+     */
+    private final BigInteger addRecordVersion(StoreQuery<?> store) {
+        BigInteger result = null;
+
+        if (isTimestampOrVersionAvailable()) {
+            TableField<R, ? extends Number> version = getUpdatableTable().getRecordVersion();
+
+            if (version != null) {
+                Number value = getValue(version);
+
+                // Use BigInteger locally to avoid arithmetic overflows
+                if (value == null) {
+                    result = BigInteger.ONE;
+                }
+                else {
+                    result = new BigInteger(value.toString()).add(BigInteger.ONE);
+                }
+
+                addValue(store, version, result);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Set a generated version and timestamp value onto this record after
+     * successfully storing the record.
+     */
+    private final void setRecordVersionAndTimestamp(BigInteger version, Timestamp timestamp) {
+        if (version != null) {
+            TableField<R, ?> field = getUpdatableTable().getRecordVersion();
+            setValue0(field, new Value<Object>(field.getDataType().convert(version)));
+        }
+        if (timestamp != null) {
+            TableField<R, ?> field = getUpdatableTable().getRecordTimestamp();
+            setValue0(field, new Value<Object>(field.getDataType().convert(timestamp)));
+        }
     }
 }

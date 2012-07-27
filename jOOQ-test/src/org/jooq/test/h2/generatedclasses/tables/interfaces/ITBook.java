@@ -139,4 +139,24 @@ public interface ITBook extends java.io.Serializable {
 	 * Some binary content of the book
 	 */
 	public byte[] getContentPdf();
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
+	 */
+	public void setRecVersion(java.lang.Integer value);
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
+	 */
+	public java.lang.Integer getRecVersion();
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
+	 */
+	public void setRecTimestamp(java.sql.Timestamp value);
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
+	 */
+	public java.sql.Timestamp getRecTimestamp();
 }

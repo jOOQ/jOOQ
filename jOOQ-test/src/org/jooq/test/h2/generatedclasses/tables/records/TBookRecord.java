@@ -10,7 +10,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -832621196;
+	private static final long serialVersionUID = 1968843840;
 
 	/**
 	 * The book ID
@@ -264,6 +264,38 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_PDF);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
+	 */
+	@Override
+	public void setRecVersion(java.lang.Integer value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_VERSION, value);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
+	 */
+	@Override
+	public java.lang.Integer getRecVersion() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_VERSION);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
+	 */
+	@Override
+	public void setRecTimestamp(java.sql.Timestamp value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_TIMESTAMP, value);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
+	 */
+	@Override
+	public java.sql.Timestamp getRecTimestamp() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_TIMESTAMP);
 	}
 
 	/**

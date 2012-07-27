@@ -74,6 +74,8 @@ public abstract class AbstractDatabase implements Database {
     private Connection                      connection;
     private String[]                        excludes;
     private String[]                        includes;
+    private String[]                        recordVersionFields;
+    private String[]                        recordTimestampFields;
     private boolean                         supportsUnsignedTypes;
     private boolean                         dateAsTimestamp;
     private List<Schema>                    configuredSchemata;
@@ -226,6 +228,26 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final String[] getIncludes() {
         return includes;
+    }
+
+    @Override
+    public void setRecordVersionFields(String[] recordVersionFields) {
+        this.recordVersionFields = recordVersionFields;
+    }
+
+    @Override
+    public String[] getRecordVersionFields() {
+        return recordVersionFields;
+    }
+
+    @Override
+    public void setRecordTimestampFields(String[] recordTimestampFields) {
+        this.recordTimestampFields = recordTimestampFields;
+    }
+
+    @Override
+    public String[] getRecordTimestampFields() {
+        return recordTimestampFields;
     }
 
     @Override

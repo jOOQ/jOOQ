@@ -32,7 +32,7 @@
 		                    <strict>false</strict>
 		                    <schemaDirectory>src/main/resources/xsd</schemaDirectory>
 		                    <schemaIncludes>
-		                        <include>jooq-codegen-2.4.0.xsd</include>
+		                        <include>jooq-codegen-2.5.0.xsd</include>
 		                    </schemaIncludes>
 		                    <generatePackage>org.jooq.util.jaxb</generatePackage>
 		                    <args>

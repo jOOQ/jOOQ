@@ -189,6 +189,18 @@ public interface Database {
     void setConfiguredSchemata(List<Schema> schemata);
 
     /**
+     * Database objects matching any of these regular expressions will not be
+     * generated.
+     */
+    void setExcludes(String[] excludes);
+
+    /**
+     * Database objects matching any of these regular expressions will not be
+     * generated.
+     */
+    String[] getExcludes();
+
+    /**
      * Only database objects matching any of these regular expressions will be
      * generated.
      */
@@ -199,6 +211,30 @@ public interface Database {
      * generated.
      */
     String[] getIncludes();
+
+    /**
+     * Table columns matching these regular expressions will be considered as
+     * record version fields in generated code
+     */
+    void setRecordVersionFields(String[] recordVersionFields);
+
+    /**
+     * Table columns matching these regular expressions will be considered as
+     * record version fields in generated code
+     */
+    String[] getRecordVersionFields();
+
+    /**
+     * Table columns matching these regular expressions will be considered as
+     * record timestamp fields in generated code
+     */
+    void setRecordTimestampFields(String[] recordTimestampFields);
+
+    /**
+     * Table columns matching these regular expressions will be considered as
+     * record timestamp fields in generated code
+     */
+    String[] getRecordTimestampFields();
 
     /**
      * Database objects matching any of these table names will be generated as
@@ -258,18 +294,6 @@ public interface Database {
      * or <code>null</code> if no {@link ForcedType} matches the definition.
      */
     ForcedType getConfiguredForcedType(Definition definition);
-
-    /**
-     * Database objects matching any of these regular expressions will not be
-     * generated.
-     */
-    void setExcludes(String[] excludes);
-
-    /**
-     * Database objects matching any of these regular expressions will not be
-     * generated.
-     */
-    String[] getExcludes();
 
     /**
      * Get the dialect for this database

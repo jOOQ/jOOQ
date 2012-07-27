@@ -223,6 +223,7 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
     }
 
     @Override
+    @Deprecated
     public final java.sql.Array createArray() throws SQLException {
         SQLDialect dialect = getConfiguration().getDialect();
 

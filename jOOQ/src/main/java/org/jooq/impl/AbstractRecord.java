@@ -97,7 +97,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
         int size = getFields().size();
         for (int i = 0; i < size; i++) {
-            Object value = getValue0(i);
+            Object value = getValue0(i).getValue();
 
             if (value instanceof Attachable) {
                 result.add((Attachable) value);

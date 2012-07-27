@@ -100,6 +100,8 @@ public interface ArrayRecord<E> extends Store<E>, Iterable<E> {
      *             JDBC {@link Array}
      * @throws DetachedException If this method is called on a detached
      *             <code>ArrayRecord</code>
+     * @deprecated - 2.5.0 [#1638] - Do not reuse this method
      */
+    @Deprecated
     Array createArray() throws SQLException, DetachedException;
 }

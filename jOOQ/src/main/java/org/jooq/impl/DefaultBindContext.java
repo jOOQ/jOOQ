@@ -40,12 +40,16 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.Util.getDriverConnection;
+import static org.jooq.tools.reflect.Reflect.on;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -314,7 +318,9 @@ class DefaultBindContext extends AbstractBindContext {
             }
         }
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            stmt.setArray(nextIndex(), ((ArrayRecord<?>) value).createArray());
+            Connection connection = getDriverConnection(this);
+            ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
+            stmt.setArray(nextIndex(), on(connection).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             stmt.setString(nextIndex(), ((EnumType) value).getLiteral());

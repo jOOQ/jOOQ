@@ -62,7 +62,7 @@ class NameImpl extends AbstractQueryPart implements Name {
     }
 
     @Override
-    public void toSQL(RenderContext context) {
+    public final void toSQL(RenderContext context) {
         String separator = "";
 
         for (String name : qualifiedName) {
@@ -72,15 +72,15 @@ class NameImpl extends AbstractQueryPart implements Name {
     }
 
     @Override
-    public void bind(BindContext context) {}
+    public final void bind(BindContext context) {}
 
     @Override
-    public List<Attachable> getAttachables() {
+    public final List<Attachable> getAttachables() {
         return Collections.emptyList();
     }
 
     @Override
-    public String[] getName() {
+    public final String[] getName() {
         return qualifiedName;
     }
 }

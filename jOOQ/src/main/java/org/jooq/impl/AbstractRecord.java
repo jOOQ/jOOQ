@@ -202,7 +202,11 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     final <T> void setValue(Field<T> field, Value<T> value) {
-        getValues()[getIndex(field)] = value;
+        setValue(getIndex(field), value);
+    }
+
+    final <T> void setValue(int index, Value<T> value) {
+        getValues()[index] = value;
     }
 
     /**

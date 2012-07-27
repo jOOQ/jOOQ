@@ -36,6 +36,7 @@
 package org.jooq.test._.testcases;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.Random;
 
@@ -114,7 +115,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         pst.setString(2, RANDOM);
 
         for (int i = 0; i < repetitions; i++) {
-            pst.executeQuery();
+            ResultSet rs = pst.executeQuery();
+            create.fetch(rs);
+            rs.close();
         }
 
         pst.close();

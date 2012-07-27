@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import java.io.Serializable;
+
 /**
  * The common base type for all objects that can be used for query composition.
  * <p>
@@ -49,7 +51,8 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface QueryPart extends Attachable {
+@SuppressWarnings("unused")
+public interface QueryPart extends Attachable, Serializable {
 
     /**
      * Attach this object to a new {@link Configuration}

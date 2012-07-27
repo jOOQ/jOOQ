@@ -93,14 +93,14 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
      */
     private static final long    serialVersionUID = 6416154375799578362L;
 
-    private final FieldProvider  fields;
-    private final List<R>        records;
-    private final AttachableImpl attachable;
+    private final FieldProvider fields;
+    private final List<R>       records;
+    private Configuration       configuration;
 
     ResultImpl(Configuration configuration, FieldProvider fields) {
         this.fields = fields;
         this.records = new ArrayList<R>();
-        this.attachable = new AttachableImpl(this, configuration);
+        this.configuration = configuration;
     }
 
     // -------------------------------------------------------------------------
@@ -113,8 +113,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final void attach(Configuration configuration) {
-        attachable.attach(configuration);
+    public final void attach(Configuration c) {
+        this.configuration = c;
+
+        for (Attachable attachable : getAttachables()) {
+            attachable.attach(c);
+        }
     }
 
     @Override
@@ -132,7 +136,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Configuration getConfiguration() {
-        return attachable.getConfiguration();
+        return configuration;
     }
 
     // -------------------------------------------------------------------------

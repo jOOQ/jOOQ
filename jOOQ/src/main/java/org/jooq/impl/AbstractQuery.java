@@ -61,10 +61,10 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     private static final long       serialVersionUID = -8046199737354507547L;
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractQuery.class);
 
-    private final AttachableImpl    attachable;
+    private Configuration           configuration;
 
     AbstractQuery(Configuration configuration) {
-        this.attachable = new AttachableImpl(this, configuration);
+        this.configuration = configuration;
     }
 
     // -------------------------------------------------------------------------
@@ -72,13 +72,13 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     // -------------------------------------------------------------------------
 
     @Override
-    public final void attach(Configuration configuration) {
-        attachable.attach(configuration);
+    public final void attach(Configuration c) {
+        configuration = c;
     }
 
     @Override
     public final Configuration getConfiguration() {
-        return attachable.getConfiguration();
+        return configuration;
     }
 
     @Override
@@ -136,18 +136,18 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         if (isExecutable()) {
 
             // Let listeners provide a configuration to this query
-            Configuration configuration = org.jooq.ConfigurationRegistry.provideFor(getConfiguration());
-            if (configuration == null) {
-                configuration = getConfiguration();
+            Configuration c = org.jooq.ConfigurationRegistry.provideFor(getConfiguration());
+            if (c == null) {
+                c = getConfiguration();
             }
 
             // [#1191] The following triggers a start event on all listeners.
             // This may be used to provide jOOQ with a JDBC connection, in case
             // this Query / Configuration was previously deserialised
-            ExecuteContext ctx = new DefaultExecuteContext(configuration, this);
+            ExecuteContext ctx = new DefaultExecuteContext(c, this);
             ExecuteListener listener = new ExecuteListeners(ctx);
 
-            Connection connection = configuration.getConnection();
+            Connection connection = c.getConnection();
             if (connection == null) {
                 throw new DetachedException("Cannot execute query. No Connection configured");
             }
@@ -163,9 +163,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 listener.prepareEnd(ctx);
 
                 // [#1145] Bind variables only for true prepared statements
-                if (executePreparedStatements(getConfiguration().getSettings())) {
+                if (executePreparedStatements(c.getSettings())) {
                     listener.bindStart(ctx);
-                    create(configuration).bind(this, ctx.statement());
+                    create(c).bind(this, ctx.statement());
                     listener.bindEnd(ctx);
                 }
 

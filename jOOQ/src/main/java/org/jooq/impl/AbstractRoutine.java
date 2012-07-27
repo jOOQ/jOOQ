@@ -105,7 +105,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     private final Set<Parameter<?>>           inValuesNonDefaulted;
     private transient Field<T>                function;
 
-    private final AttachableImpl              attachable;
+    private Configuration                     configuration;
     private final Map<Parameter<?>, Object>   results;
     private final Map<Parameter<?>, Integer>  parameterIndexes;
 
@@ -164,7 +164,6 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<T> type) {
         super(name, schema);
 
-        this.attachable = new AttachableImpl(this);
         this.parameterIndexes = new HashMap<Parameter<?>, Integer>();
 
         this.pkg = pkg;
@@ -214,8 +213,8 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     // ------------------------------------------------------------------------
 
     @Override
-    public final void attach(Configuration configuration) {
-        attachable.attach(configuration);
+    public final void attach(Configuration c) {
+        configuration = c;
     }
 
     @Override
@@ -225,14 +224,14 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
     @Override
     public final Configuration getConfiguration() {
-        return attachable.getConfiguration();
+        return configuration;
     }
 
     @Override
-    public final int execute(Configuration configuration) {
+    public final int execute(Configuration c) {
 
         // Ensure that all depending Attachables are attached
-        attach(configuration);
+        attach(c);
         return execute();
     }
 
@@ -243,7 +242,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
             return executeCallableStatement();
         }
         else {
-            switch (attachable.getConfiguration().getDialect()) {
+            switch (configuration.getDialect()) {
 
                 // [#852] Some RDBMS don't allow for using JDBC procedure escape
                 // syntax for functions. Select functions from DUAL instead
@@ -276,7 +275,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     private final int executeSelectFrom() {
-        Factory create = create(attachable);
+        Factory create = create(configuration);
         Result<?> result = create.selectFrom(table(asField())).fetch();
         results.put(returnParameter, result);
         return 0;
@@ -284,12 +283,11 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
     private final int executeSelect() {
         final Field<T> field = asField();
-        results.put(returnParameter, create(attachable).select(field).fetchOne(field));
+        results.put(returnParameter, create(configuration).select(field).fetchOne(field));
         return 0;
     }
 
     private final int executeCallableStatement() {
-        Configuration configuration = attachable.getConfiguration();
         ExecuteContext ctx = new DefaultExecuteContext(configuration, this);
         ExecuteListener listener = new ExecuteListeners(ctx);
 
@@ -529,7 +527,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     @SuppressWarnings("unchecked")
-    private final void registerOutParameters(Configuration configuration, CallableStatement statement) throws SQLException {
+    private final void registerOutParameters(Configuration c, CallableStatement statement) throws SQLException {
 
         // Register all out / inout parameters according to their position
         // Note that some RDBMS do not support binding by name very well
@@ -538,9 +536,9 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
                 getOutParameters().contains(parameter)) {
 
                 int index = parameterIndexes.get(parameter);
-                int sqlType = parameter.getDataType().getDataType(configuration).getSQLType();
+                int sqlType = parameter.getDataType().getDataType(c).getSQLType();
 
-                switch (configuration.getDialect()) {
+                switch (c.getDialect()) {
 
                     // For some user defined types Oracle needs to bind
                     // also the type name
@@ -552,7 +550,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
                         else if (sqlType == Types.ARRAY) {
                             ArrayRecord<?> record = Util.newArrayRecord(
-                                (Class<? extends ArrayRecord<?>>) parameter.getType(), configuration);
+                                (Class<? extends ArrayRecord<?>>) parameter.getType(), c);
                             statement.registerOutParameter(index, Types.ARRAY, record.getName());
                         }
 
@@ -712,8 +710,8 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
         }
 
         @Override
-        final Field<T> getFunction0(Configuration configuration) {
-            RenderContext local = create(configuration).renderContext();
+        final Field<T> getFunction0(Configuration c) {
+            RenderContext local = create(c).renderContext();
             toSQLQualifiedName(local);
 
             Field<?>[] array = new Field<?>[getInParameters().size()];
@@ -722,7 +720,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
             for (Parameter<?> p : getInParameters()) {
 
                 // Disambiguate overloaded function signatures
-                if (SQLDialect.POSTGRES == configuration.getDialect() && isOverloaded()) {
+                if (SQLDialect.POSTGRES == c.getDialect() && isOverloaded()) {
                     array[i] = getInValues().get(p).cast(p.getType());
                 }
                 else {

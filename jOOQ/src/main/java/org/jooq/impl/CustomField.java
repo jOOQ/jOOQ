@@ -35,9 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -111,6 +108,7 @@ public abstract class CustomField<T> extends AbstractField<T> {
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public void attach(Configuration configuration) {
         super.attach(configuration);
     }
@@ -118,11 +116,6 @@ public abstract class CustomField<T> extends AbstractField<T> {
     // -------------------------------------------------------------------------
     // No further overrides allowed
     // -------------------------------------------------------------------------
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return super.getAttachables();
-    }
 
     @Override
     public final Field<T> as(String alias) {

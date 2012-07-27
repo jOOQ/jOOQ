@@ -35,9 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -95,6 +92,7 @@ public abstract class CustomCondition extends AbstractCondition {
     // -------------------------------------------------------------------------
 
     @Override
+    @Deprecated
     public void attach(Configuration configuration) {
         super.attach(configuration);
     }
@@ -102,11 +100,6 @@ public abstract class CustomCondition extends AbstractCondition {
     // -------------------------------------------------------------------------
     // No further overrides allowed
     // -------------------------------------------------------------------------
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return super.getAttachables();
-    }
 
     @Override
     public final boolean declaresFields() {

@@ -41,7 +41,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
@@ -67,11 +66,6 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
         super(name);
 
         this.typeMapping = new HashMap<String, Class<?>>();
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
     }
 
     @Override

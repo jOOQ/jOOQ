@@ -35,10 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.Schema;
 
 /**
@@ -59,18 +55,6 @@ abstract class AbstractSchemaProviderQueryPart extends AbstractNamedQueryPart im
 
         this.schema = schema;
     }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        List<Attachable> result = new ArrayList<Attachable>();
-
-        result.addAll(getAttachables(schema));
-        result.addAll(getAttachables0());
-
-        return result;
-    }
-
-    protected abstract List<Attachable> getAttachables0();
 
     @Override
     public final Schema getSchema() {

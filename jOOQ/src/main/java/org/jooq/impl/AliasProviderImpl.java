@@ -42,10 +42,8 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.jooq.AliasProvider;
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
 
@@ -69,11 +67,6 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
         this.aliasProvider = aliasProvider;
         this.alias = alias;
         this.wrapInParentheses = wrapInParentheses;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(aliasProvider);
     }
 
     protected final T getAliasProvider() {

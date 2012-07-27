@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Operator;
@@ -92,11 +91,6 @@ class CombinedCondition extends AbstractCondition {
                 this.conditions.add(condition);
             }
         }
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(conditions);
     }
 
     @Override

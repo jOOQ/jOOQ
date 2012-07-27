@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -95,16 +94,6 @@ public abstract class CustomCondition extends AbstractCondition {
     // Further overrides allowed
     // -------------------------------------------------------------------------
 
-    /**
-     * Subclasses may further override this method
-     * <hr/>
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Attachable> getAttachables() {
-        return Collections.emptyList();
-    }
-
     @Override
     public void attach(Configuration configuration) {
         super.attach(configuration);
@@ -113,6 +102,11 @@ public abstract class CustomCondition extends AbstractCondition {
     // -------------------------------------------------------------------------
     // No further overrides allowed
     // -------------------------------------------------------------------------
+
+    @Override
+    public final List<Attachable> getAttachables() {
+        return super.getAttachables();
+    }
 
     @Override
     public final boolean declaresFields() {

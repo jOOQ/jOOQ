@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -67,11 +66,6 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
         this.into = into;
         this.fields = (fields == null || fields.isEmpty()) ? into.getFields() : fields;
         this.select = select;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(into, select);
     }
 
     @Override

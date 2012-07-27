@@ -52,7 +52,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.ArrayRecord;
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -215,18 +214,6 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     @Override
     public final void attach(Configuration configuration) {
         attachable.attach(configuration);
-    }
-
-    @Override
-    protected final List<Attachable> getAttachables0() {
-        List<Attachable> result = new ArrayList<Attachable>();
-
-        result.addAll(getAttachables(pkg));
-        result.addAll(getAttachables(allParameters));
-        result.addAll(getAttachables(inValues.keySet()));
-        result.addAll(getAttachables(inValues.values()));
-
-        return result;
     }
 
     @Override

@@ -35,9 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
@@ -68,10 +65,5 @@ class WrappedList extends AbstractQueryPart {
     @Override
     public final void bind(BindContext context) {
         context.bind((QueryPart) wrapped);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(wrapped);
     }
 }

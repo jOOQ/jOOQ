@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import java.util.List;
 
+import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.ForeignKey;
@@ -115,6 +116,11 @@ public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R>
     // -------------------------------------------------------------------------
     // No further overrides allowed
     // -------------------------------------------------------------------------
+
+    @Override
+    public final List<Attachable> getAttachables() {
+        return super.getAttachables();
+    }
 
     @Override
     public final Identity<R, ? extends Number> getIdentity() {

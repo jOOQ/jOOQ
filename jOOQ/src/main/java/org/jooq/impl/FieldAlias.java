@@ -36,9 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -56,11 +53,6 @@ class FieldAlias<T> extends AbstractField<T> {
         super(alias, field.getDataType());
 
         this.aliasProvider = new AliasProviderImpl<Field<T>>(field, alias, false);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(aliasProvider);
     }
 
     @Override

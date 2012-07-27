@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -70,8 +71,8 @@ abstract class AbstractDelegatingQueryPart<Q extends QueryPart> extends Abstract
     }
 
     @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(delegate);
+    public List<Attachable> getAttachables() {
+        return Arrays.<Attachable>asList(delegate);
     }
 
     final Q getDelegate() {

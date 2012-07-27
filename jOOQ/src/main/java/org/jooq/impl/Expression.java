@@ -68,9 +68,7 @@ import static org.jooq.impl.Factory.val;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -471,11 +469,6 @@ class Expression<T> extends AbstractFunction<T> {
 
         private DefaultExpression() {
             super(operator.toSQL(), lhs.getDataType());
-        }
-
-        @Override
-        public final List<Attachable> getAttachables() {
-            return Expression.this.getAttachables();
         }
 
         @Override

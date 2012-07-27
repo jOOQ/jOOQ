@@ -41,9 +41,7 @@ import static org.jooq.impl.Factory.notExists;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
@@ -182,11 +180,6 @@ implements
     @Override
     protected final FieldList getFieldList() {
         return new FieldList();
-    }
-
-    @Override
-    protected final List<Attachable> getAttachables0() {
-        return getAttachables(dividend, divisor, condition, returning);
     }
 
     // ------------------------------------------------------------------------

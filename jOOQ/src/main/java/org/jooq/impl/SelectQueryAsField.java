@@ -36,9 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -58,11 +55,6 @@ class SelectQueryAsField<T> extends AbstractField<T> {
         super("select", type);
 
         this.query = query;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(query);
     }
 
     @Override

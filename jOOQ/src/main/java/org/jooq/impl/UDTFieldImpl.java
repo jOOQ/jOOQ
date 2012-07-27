@@ -36,10 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.RenderContext;
@@ -67,12 +63,6 @@ class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implement
         if (udt instanceof UDTImpl) {
             ((UDTImpl<?>) udt).getFieldList().add(this);
         }
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        // Don't return UDT, as UDT returned UDTField already
-        return Collections.emptyList();
     }
 
     @Override

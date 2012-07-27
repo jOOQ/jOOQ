@@ -45,7 +45,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
@@ -133,16 +132,6 @@ implements
 
         this.forUpdateOf = new FieldList();
         this.forUpdateOfTables = new TableList();
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        if (limit.isApplicable()) {
-            return getAttachables(select, from, condition, groupBy, having, orderBy, limit, forUpdateOf, forUpdateOfTables);
-        }
-        else {
-            return getAttachables(select, from, condition, groupBy, having, orderBy, forUpdateOf, forUpdateOfTables);
-        }
     }
 
     @Override

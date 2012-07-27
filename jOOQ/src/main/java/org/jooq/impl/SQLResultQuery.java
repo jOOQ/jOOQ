@@ -36,10 +36,8 @@
 package org.jooq.impl;
 
 import java.sql.ResultSetMetaData;
-import java.util.Collections;
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -81,11 +79,6 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
     @Override
     public final void bind(BindContext context) {
         context.bind(substitutes);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
     }
 
     @Override

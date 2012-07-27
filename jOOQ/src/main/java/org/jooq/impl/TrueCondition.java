@@ -36,10 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
 
@@ -56,11 +52,6 @@ class TrueCondition extends AbstractCondition {
     @Override
     public final void toSQL(RenderContext context) {
         context.sql("1 = 1");
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
     }
 
     TrueCondition() {}

@@ -39,10 +39,6 @@ import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.one;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -115,11 +111,6 @@ class ArrayTableSimulation extends AbstractTable<Record> {
     @Override
     protected final FieldList getFieldList() {
         return field;
-    }
-
-    @Override
-    protected final List<Attachable> getAttachables0() {
-        return Collections.emptyList();
     }
 
     private final Table<Record> table(Configuration configuration) {

@@ -36,10 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Parameter;
@@ -60,11 +56,6 @@ class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
         super(name, type);
 
         this.isDefaulted = isDefaulted;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
     }
 
     @Override

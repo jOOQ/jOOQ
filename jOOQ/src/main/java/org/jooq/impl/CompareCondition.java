@@ -48,9 +48,6 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.POSTGRES;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Comparator;
 import org.jooq.Field;
@@ -78,11 +75,6 @@ class CompareCondition extends AbstractCondition {
         this.field2 = field2;
         this.comparator = comparator;
         this.escape = escape;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(field1, field2);
     }
 
     @Override

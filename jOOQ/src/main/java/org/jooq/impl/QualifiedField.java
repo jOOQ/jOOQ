@@ -35,10 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -68,11 +64,6 @@ class QualifiedField<T> extends AbstractField<T> {
     // ------------------------------------------------------------------------
     // Field API
     // ------------------------------------------------------------------------
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
-    }
 
     @Override
     public final void toSQL(RenderContext context) {

@@ -35,9 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Record;
@@ -92,10 +89,5 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements Truncate<R
     @Override
     public final void bind(BindContext context) {
         context.bind(table);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(table);
     }
 }

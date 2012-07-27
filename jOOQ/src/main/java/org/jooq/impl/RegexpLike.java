@@ -35,9 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -121,10 +118,5 @@ class RegexpLike extends AbstractCondition {
     @Override
     public final void bind(BindContext context) {
         context.bind(search).bind(pattern);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(search, pattern);
     }
 }

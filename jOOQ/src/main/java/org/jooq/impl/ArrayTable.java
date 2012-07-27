@@ -37,11 +37,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.fieldByName;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.jooq.ArrayRecord;
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -276,11 +272,6 @@ class ArrayTable extends AbstractTable<Record> {
         protected FieldList getFieldList() {
             return ArrayTable.this.getFieldList();
         }
-
-        @Override
-        protected List<Attachable> getAttachables0() {
-            return Collections.emptyList();
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -291,10 +282,5 @@ class ArrayTable extends AbstractTable<Record> {
     @Override
     protected final FieldList getFieldList() {
         return field;
-    }
-
-    @Override
-    protected final List<Attachable> getAttachables0() {
-        return Collections.emptyList();
     }
 }

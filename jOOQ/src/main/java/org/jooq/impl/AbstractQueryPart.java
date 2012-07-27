@@ -258,6 +258,11 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
             : store.internalAPI(AttachableInternal.class).getAttachables();
     }
 
+    @Override
+    public List<Attachable> getAttachables() {
+        return Collections.emptyList();
+    }
+
     /**
      * Internal convenience method
      */

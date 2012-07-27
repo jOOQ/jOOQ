@@ -40,7 +40,6 @@ import static org.jooq.impl.Factory.val;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.CaseConditionStep;
 import org.jooq.Condition;
@@ -65,17 +64,6 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
         this.results = new ArrayList<Field<T>>();
 
         when(condition, result);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        List<Attachable> result = new ArrayList<Attachable>();
-
-        result.addAll(getAttachables(conditions));
-        result.addAll(getAttachables(results));
-        result.addAll(getAttachables(otherwise));
-
-        return result;
     }
 
     @Override

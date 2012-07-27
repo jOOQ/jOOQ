@@ -37,10 +37,8 @@
 package org.jooq.impl;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -66,11 +64,6 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         this.condition = new ConditionProviderImpl();
         this.updateMap = new FieldMapForUpdate();
-    }
-
-    @Override
-    protected final List<Attachable> getAttachables0() {
-        return getAttachables(updateMap, condition);
     }
 
     @Override

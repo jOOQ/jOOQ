@@ -37,11 +37,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.val;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jooq.ArrayRecord;
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
 
@@ -57,16 +53,6 @@ class ArrayConstant<T> extends AbstractField<T> {
         super(array.getName(), array.getDataType());
 
         this.array = array;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        List<Attachable> result = new ArrayList<Attachable>();
-
-        result.add(array);
-        result.addAll(getAttachables(array));
-
-        return result;
     }
 
     @Override

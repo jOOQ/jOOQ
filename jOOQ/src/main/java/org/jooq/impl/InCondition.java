@@ -36,11 +36,9 @@
 
 package org.jooq.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -61,16 +59,6 @@ class InCondition<T> extends AbstractCondition {
         this.field = field;
         this.values = values;
         this.operator = operator;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        List<Attachable> result = new ArrayList<Attachable>();
-
-        result.addAll(getAttachables(field));
-        result.addAll(getAttachables(values));
-
-        return result;
     }
 
     @Override

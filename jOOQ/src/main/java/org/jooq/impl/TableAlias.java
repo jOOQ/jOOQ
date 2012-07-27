@@ -38,7 +38,6 @@ package org.jooq.impl;
 
 import java.util.List;
 
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -80,11 +79,6 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     @Override
     public final List<ForeignKey<R, ?>> getReferences() {
         return aliasProvider.getAliasProvider().getReferences();
-    }
-
-    @Override
-    public final List<Attachable> getAttachables0() {
-        return getAttachables(aliasProvider, aliasedFields);
     }
 
     @Override

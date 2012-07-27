@@ -36,9 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -58,11 +55,6 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
         super("select");
 
         this.query = query;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables0() {
-        return getAttachables(query);
     }
 
     @Override

@@ -43,9 +43,6 @@ import static org.jooq.impl.SQLDataType.FLOAT;
 import static org.jooq.impl.SQLDataType.REAL;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
-import java.util.List;
-
-import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -69,11 +66,6 @@ class Cast<T> extends AbstractField<T> {
         super("cast", type);
 
         this.field = field;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(field);
     }
 
     @SuppressWarnings("unchecked")

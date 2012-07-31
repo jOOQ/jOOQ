@@ -676,6 +676,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     public void testStoreWithOptimisticLock() throws Exception {
         jOOQAbstractTest.reset = false;
 
+        // No ON DELETE CASCADE constraints for Sybase ASE
+        if (getDialect() == SQLDialect.ASE) {
+            create().truncate(table("t_book_to_book_store")).execute();
+        }
+
         testStoreWithOptimisticLock0(TBook(), TBook_ID(), TBook_TITLE());
 
         // Avoid referential integrity problems for subsequent test

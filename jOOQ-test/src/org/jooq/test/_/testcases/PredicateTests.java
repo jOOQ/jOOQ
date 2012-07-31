@@ -465,6 +465,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         // = { ALL | ANY | SOME }
         switch (getDialect()) {
             case SQLITE:
+            case INGRES: // Ingres supports these syntaxes but has internal errors...
                 log.info("SKIPPING", "= { ALL | ANY | SOME } tests");
                 break;
 

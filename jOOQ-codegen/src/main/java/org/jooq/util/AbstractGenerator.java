@@ -43,17 +43,18 @@ package org.jooq.util;
  */
 abstract class AbstractGenerator implements Generator {
 
-    boolean                  generateDeprecated            = true;
-    boolean                  generateRelations             = false;
-    boolean                  generateNavigationMethods     = true;
-    boolean                  generateInstanceFields        = true;
-    boolean                  generateGeneratedAnnotation   = true;
-    boolean                  generateRecords               = true;
-    boolean                  generatePojos                 = false;
-    boolean                  generateInterfaces            = false;
-    boolean                  generateDaos                  = false;
-    boolean                  generateJPAAnnotations        = false;
-    boolean                  generateValidationAnnotations = false;
+    boolean                            generateDeprecated            = true;
+    boolean                            generateRelations             = false;
+    boolean                            generateNavigationMethods     = true;
+    boolean                            generateInstanceFields        = true;
+    boolean                            generateGeneratedAnnotation   = true;
+    boolean                            generateRecords               = true;
+    boolean                            generatePojos                 = false;
+    boolean                            generateImmutablePojos        = false;
+    boolean                            generateInterfaces            = false;
+    boolean                            generateDaos                  = false;
+    boolean                            generateJPAAnnotations        = false;
+    boolean                            generateValidationAnnotations = false;
 
     protected GeneratorStrategyWrapper strategy;
 
@@ -132,13 +133,24 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public boolean generatePojos() {
 
+        // [#1339] When immutable POJOs are generated, POJOs must be generated
         // [#1280] When DAOs are generated, POJOs must be generated, too
-        return generatePojos || generateDaos;
+        return generatePojos || generateImmutablePojos || generateDaos;
     }
 
     @Override
     public void setGeneratePojos(boolean generatePojos) {
         this.generatePojos = generatePojos;
+    }
+
+    @Override
+    public boolean generateImmutablePojos() {
+        return generateImmutablePojos;
+    }
+
+    @Override
+    public void setGenerateImmutablePojos(boolean generateImmutablePojos) {
+        this.generateImmutablePojos = generateImmutablePojos;
     }
 
     @Override

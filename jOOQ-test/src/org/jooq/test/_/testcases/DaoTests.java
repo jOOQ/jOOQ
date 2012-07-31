@@ -47,6 +47,7 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+import org.jooq.tools.reflect.ReflectException;
 
 import org.junit.Test;
 
@@ -97,7 +98,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(1, on(id1).get("id"));
         assertEquals("George", on(id1).get("firstName"));
         assertEquals("Orwell", on(id1).get("lastName"));
-        assertTrue(TAuthorDao().exists(on(type).create().set("id", 1).<AP>get()));
+        assertTrue(TAuthorDao().exists(id1));
         assertTrue(TAuthorDao().existsById(1));
         assertNull(TAuthorDao().findById(17));
 
@@ -118,9 +119,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         // Single insertion
         // ----------------
-        AP author =
-        on(type).create().set("id", 3)
-                         .set("lastName", "Hesse").<AP>get();
+        AP author = null;
+
+        // Mutable POJO with no-args constructor
+        try {
+            author = on(type).create().set("id", 3)
+                             .set("lastName", "Hesse").<AP>get();
+        }
+
+        // [#1339] Immutable POJO
+        catch (ReflectException e) {
+            author = (AP) type.getConstructors()[0].newInstance(3, null, "Hesse", null, null, null);
+        }
+
         TAuthorDao().insert(author);
         assertEquals(3, TAuthorDao().count());
         AP id3 = TAuthorDao().findById(3);
@@ -141,12 +152,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         // Batch insertion
         // ---------------
-        List<AP> authors = asList(
-            on(type).create().set("id", 4)
-                             .set("lastName", "Koontz").<AP>get(),
-            on(type).create().set("id", 5)
-                             .set("lastName", "Hitchcock").<AP>get()
-        );
+        List<AP> authors = null;
+
+        // Mutable POJO with no-args constructor
+        try {
+            authors = asList(
+                on(type).create().set("id", 4)
+                                 .set("lastName", "Koontz").<AP>get(),
+                on(type).create().set("id", 5)
+                                 .set("lastName", "Hitchcock").<AP>get()
+            );
+        }
+
+        // [#1339] Immutable POJO
+        catch (ReflectException e) {
+            authors = asList(
+                (AP) type.getConstructors()[0].newInstance(4, null, "Koontz", null, null, null),
+                (AP) type.getConstructors()[0].newInstance(5, null, "Hitchcock", null, null, null)
+            );
+        }
+
         TAuthorDao().insert(authors);
         AP id4 = TAuthorDao().findById(4);
         AP id5 = TAuthorDao().findById(5);

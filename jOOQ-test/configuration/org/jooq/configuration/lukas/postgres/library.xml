@@ -118,7 +118,7 @@
             <instanceFields>true</instanceFields>
             <generatedAnnotation>false</generatedAnnotation>
             <records>true</records>
-            <pojos>true</pojos>
+            <immutablePojos>true</immutablePojos>
             <jpaAnnotations>true</jpaAnnotations>
         </generate>
         <target>

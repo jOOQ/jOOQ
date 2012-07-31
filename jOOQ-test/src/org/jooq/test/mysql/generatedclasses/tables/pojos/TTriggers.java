@@ -8,33 +8,31 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class TTriggers implements java.io.Serializable {
 
-	private static final long serialVersionUID = -479572339;
+	private static final long serialVersionUID = 1302998872;
 
-	private java.lang.Integer idGenerated;
-	private java.lang.Integer id;
-	private java.lang.Integer counter;
+	private final java.lang.Integer idGenerated;
+	private final java.lang.Integer id;
+	private final java.lang.Integer counter;
+
+	public TTriggers(
+		java.lang.Integer idGenerated,
+		java.lang.Integer id,
+		java.lang.Integer counter
+	) {
+		this.idGenerated = idGenerated;
+		this.id = id;
+		this.counter = counter;
+	}
 
 	public java.lang.Integer getIdGenerated() {
 		return this.idGenerated;
-	}
-
-	public void setIdGenerated(java.lang.Integer idGenerated) {
-		this.idGenerated = idGenerated;
 	}
 
 	public java.lang.Integer getId() {
 		return this.id;
 	}
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
-
 	public java.lang.Integer getCounter() {
 		return this.counter;
-	}
-
-	public void setCounter(java.lang.Integer counter) {
-		this.counter = counter;
 	}
 }

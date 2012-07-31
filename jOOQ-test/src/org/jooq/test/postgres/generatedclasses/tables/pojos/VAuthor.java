@@ -10,22 +10,34 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "v_author", schema = "public")
 public class VAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 988713460;
+	private static final long serialVersionUID = -345888656;
 
-	private java.lang.Integer                                                      id;
-	private java.lang.String                                                       firstName;
-	private java.lang.String                                                       lastName;
-	private java.sql.Date                                                          dateOfBirth;
-	private java.lang.Integer                                                      yearOfBirth;
-	private org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address;
+	private final java.lang.Integer                                                      id;
+	private final java.lang.String                                                       firstName;
+	private final java.lang.String                                                       lastName;
+	private final java.sql.Date                                                          dateOfBirth;
+	private final java.lang.Integer                                                      yearOfBirth;
+	private final org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address;
+
+	public VAuthor(
+		java.lang.Integer                                                      id,
+		java.lang.String                                                       firstName,
+		java.lang.String                                                       lastName,
+		java.sql.Date                                                          dateOfBirth,
+		java.lang.Integer                                                      yearOfBirth,
+		org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address
+	) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.yearOfBirth = yearOfBirth;
+		this.address = address;
+	}
 
 	@javax.persistence.Column(name = "id", precision = 32)
 	public java.lang.Integer getId() {
 		return this.id;
-	}
-
-	public void setId(java.lang.Integer id) {
-		this.id = id;
 	}
 
 	@javax.persistence.Column(name = "first_name", length = 50)
@@ -33,17 +45,9 @@ public class VAuthor implements java.io.Serializable {
 		return this.firstName;
 	}
 
-	public void setFirstName(java.lang.String firstName) {
-		this.firstName = firstName;
-	}
-
 	@javax.persistence.Column(name = "last_name", length = 50)
 	public java.lang.String getLastName() {
 		return this.lastName;
-	}
-
-	public void setLastName(java.lang.String lastName) {
-		this.lastName = lastName;
 	}
 
 	@javax.persistence.Column(name = "date_of_birth")
@@ -51,25 +55,13 @@ public class VAuthor implements java.io.Serializable {
 		return this.dateOfBirth;
 	}
 
-	public void setDateOfBirth(java.sql.Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
 	@javax.persistence.Column(name = "year_of_birth", precision = 32)
 	public java.lang.Integer getYearOfBirth() {
 		return this.yearOfBirth;
 	}
 
-	public void setYearOfBirth(java.lang.Integer yearOfBirth) {
-		this.yearOfBirth = yearOfBirth;
-	}
-
 	@javax.persistence.Column(name = "address")
 	public org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord getAddress() {
 		return this.address;
-	}
-
-	public void setAddress(org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address) {
-		this.address = address;
 	}
 }

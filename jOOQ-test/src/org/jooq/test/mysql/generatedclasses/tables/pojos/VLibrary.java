@@ -10,24 +10,24 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class VLibrary implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1934101596;
+	private static final long serialVersionUID = -1474418579;
 
-	private java.lang.String author;
-	private java.lang.String title;
+	private final java.lang.String author;
+	private final java.lang.String title;
+
+	public VLibrary(
+		java.lang.String author,
+		java.lang.String title
+	) {
+		this.author = author;
+		this.title = title;
+	}
 
 	public java.lang.String getAuthor() {
 		return this.author;
 	}
 
-	public void setAuthor(java.lang.String author) {
-		this.author = author;
-	}
-
 	public java.lang.String getTitle() {
 		return this.title;
-	}
-
-	public void setTitle(java.lang.String title) {
-		this.title = title;
 	}
 }

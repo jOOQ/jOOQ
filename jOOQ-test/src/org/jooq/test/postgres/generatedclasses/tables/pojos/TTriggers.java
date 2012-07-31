@@ -10,11 +10,21 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_triggers", schema = "public")
 public class TTriggers implements java.io.Serializable {
 
-	private static final long serialVersionUID = -276004572;
+	private static final long serialVersionUID = 1530034715;
 
-	private java.lang.Integer idGenerated;
-	private java.lang.Integer id;
-	private java.lang.Integer counter;
+	private final java.lang.Integer idGenerated;
+	private final java.lang.Integer id;
+	private final java.lang.Integer counter;
+
+	public TTriggers(
+		java.lang.Integer idGenerated,
+		java.lang.Integer id,
+		java.lang.Integer counter
+	) {
+		this.idGenerated = idGenerated;
+		this.id = id;
+		this.counter = counter;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id_generated", unique = true, nullable = false, precision = 32)
@@ -22,25 +32,13 @@ public class TTriggers implements java.io.Serializable {
 		return this.idGenerated;
 	}
 
-	public void setIdGenerated(java.lang.Integer idGenerated) {
-		this.idGenerated = idGenerated;
-	}
-
 	@javax.persistence.Column(name = "id", precision = 32)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
-
 	@javax.persistence.Column(name = "counter", precision = 32)
 	public java.lang.Integer getCounter() {
 		return this.counter;
-	}
-
-	public void setCounter(java.lang.Integer counter) {
-		this.counter = counter;
 	}
 }

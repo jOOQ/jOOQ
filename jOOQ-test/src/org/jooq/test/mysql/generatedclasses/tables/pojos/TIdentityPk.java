@@ -8,24 +8,24 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class TIdentityPk implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1205361692;
+	private static final long serialVersionUID = 440216264;
 
-	private java.lang.Integer id;
-	private java.lang.Integer val;
+	private final java.lang.Integer id;
+	private final java.lang.Integer val;
+
+	public TIdentityPk(
+		java.lang.Integer id,
+		java.lang.Integer val
+	) {
+		this.id = id;
+		this.val = val;
+	}
 
 	public java.lang.Integer getId() {
 		return this.id;
 	}
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
-
 	public java.lang.Integer getVal() {
 		return this.val;
-	}
-
-	public void setVal(java.lang.Integer val) {
-		this.val = val;
 	}
 }

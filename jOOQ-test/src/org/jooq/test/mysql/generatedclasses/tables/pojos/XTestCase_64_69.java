@@ -10,24 +10,24 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class XTestCase_64_69 implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1351242452;
+	private static final long serialVersionUID = 738550398;
 
-	private java.lang.Integer id;
-	private java.lang.Integer unusedId;
+	private final java.lang.Integer id;
+	private final java.lang.Integer unusedId;
+
+	public XTestCase_64_69(
+		java.lang.Integer id,
+		java.lang.Integer unusedId
+	) {
+		this.id = id;
+		this.unusedId = unusedId;
+	}
 
 	public java.lang.Integer getId() {
 		return this.id;
 	}
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
-
 	public java.lang.Integer getUnusedId() {
 		return this.unusedId;
-	}
-
-	public void setUnusedId(java.lang.Integer unusedId) {
-		this.unusedId = unusedId;
 	}
 }

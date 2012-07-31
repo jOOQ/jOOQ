@@ -10,16 +10,18 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_book_store", schema = "public")
 public class TBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1931214125;
+	private static final long serialVersionUID = -1241030579;
 
-	private java.lang.String name;
+	private final java.lang.String name;
+
+	public TBookStore(
+		java.lang.String name
+	) {
+		this.name = name;
+	}
 
 	@javax.persistence.Column(name = "name", unique = true, nullable = false, length = 400)
 	public java.lang.String getName() {
 		return this.name;
-	}
-
-	public void setName(java.lang.String name) {
-		this.name = name;
 	}
 }

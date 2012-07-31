@@ -8,42 +8,38 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class TUnsigned implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1510277863;
+	private static final long serialVersionUID = 2041064556;
 
-	private org.jooq.tools.unsigned.UByte    uByte;
-	private org.jooq.tools.unsigned.UShort   uShort;
-	private org.jooq.tools.unsigned.UInteger uInt;
-	private org.jooq.tools.unsigned.ULong    uLong;
+	private final org.jooq.tools.unsigned.UByte    uByte;
+	private final org.jooq.tools.unsigned.UShort   uShort;
+	private final org.jooq.tools.unsigned.UInteger uInt;
+	private final org.jooq.tools.unsigned.ULong    uLong;
+
+	public TUnsigned(
+		org.jooq.tools.unsigned.UByte    uByte,
+		org.jooq.tools.unsigned.UShort   uShort,
+		org.jooq.tools.unsigned.UInteger uInt,
+		org.jooq.tools.unsigned.ULong    uLong
+	) {
+		this.uByte = uByte;
+		this.uShort = uShort;
+		this.uInt = uInt;
+		this.uLong = uLong;
+	}
 
 	public org.jooq.tools.unsigned.UByte getUByte() {
 		return this.uByte;
-	}
-
-	public void setUByte(org.jooq.tools.unsigned.UByte uByte) {
-		this.uByte = uByte;
 	}
 
 	public org.jooq.tools.unsigned.UShort getUShort() {
 		return this.uShort;
 	}
 
-	public void setUShort(org.jooq.tools.unsigned.UShort uShort) {
-		this.uShort = uShort;
-	}
-
 	public org.jooq.tools.unsigned.UInteger getUInt() {
 		return this.uInt;
 	}
 
-	public void setUInt(org.jooq.tools.unsigned.UInteger uInt) {
-		this.uInt = uInt;
-	}
-
 	public org.jooq.tools.unsigned.ULong getULong() {
 		return this.uLong;
-	}
-
-	public void setULong(org.jooq.tools.unsigned.ULong uLong) {
-		this.uLong = uLong;
 	}
 }

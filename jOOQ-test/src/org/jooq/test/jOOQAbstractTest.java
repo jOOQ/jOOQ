@@ -112,6 +112,7 @@ import org.jooq.test._.testcases.RenderAndBindTests;
 import org.jooq.test._.testcases.RoutineAndUDTTests;
 import org.jooq.test._.testcases.SchemaAndMappingTests;
 import org.jooq.test._.testcases.SelectTests;
+import org.jooq.test._.testcases.ThreadSafetyTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
@@ -1041,6 +1042,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testFetchLater() throws Exception {
         new FetchTests(this).testFetchLater();
+    }
+
+    @Test
+    public void testConcurrentExecution() throws Exception {
+        new ThreadSafetyTests(this).testConcurrentExecution();
     }
 
     @Test

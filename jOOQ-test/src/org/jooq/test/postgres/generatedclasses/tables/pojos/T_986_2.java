@@ -10,16 +10,18 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_986_2", schema = "public")
 public class T_986_2 implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1065619818;
+	private static final long serialVersionUID = 690320103;
 
-	private java.lang.Integer ref;
+	private final java.lang.Integer ref;
+
+	public T_986_2(
+		java.lang.Integer ref
+	) {
+		this.ref = ref;
+	}
 
 	@javax.persistence.Column(name = "ref", precision = 32)
 	public java.lang.Integer getRef() {
 		return this.ref;
-	}
-
-	public void setRef(java.lang.Integer ref) {
-		this.ref = ref;
 	}
 }

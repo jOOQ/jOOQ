@@ -10,15 +10,33 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_arrays", schema = "public")
 public class TArrays implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1364838127;
+	private static final long serialVersionUID = 1164985470;
 
-	private java.lang.Integer                                                       id;
-	private java.lang.String[]                                                      stringArray;
-	private java.lang.Integer[]                                                     numberArray;
-	private java.sql.Date[]                                                         dateArray;
-	private org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[] udtArray;
-	private org.jooq.test.postgres.generatedclasses.enums.UCountry[]                enumArray;
-	private java.lang.Integer[]                                                     arrayArray;
+	private final java.lang.Integer                                                       id;
+	private final java.lang.String[]                                                      stringArray;
+	private final java.lang.Integer[]                                                     numberArray;
+	private final java.sql.Date[]                                                         dateArray;
+	private final org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[] udtArray;
+	private final org.jooq.test.postgres.generatedclasses.enums.UCountry[]                enumArray;
+	private final java.lang.Integer[]                                                     arrayArray;
+
+	public TArrays(
+		java.lang.Integer                                                       id,
+		java.lang.String[]                                                      stringArray,
+		java.lang.Integer[]                                                     numberArray,
+		java.sql.Date[]                                                         dateArray,
+		org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[] udtArray,
+		org.jooq.test.postgres.generatedclasses.enums.UCountry[]                enumArray,
+		java.lang.Integer[]                                                     arrayArray
+	) {
+		this.id = id;
+		this.stringArray = stringArray;
+		this.numberArray = numberArray;
+		this.dateArray = dateArray;
+		this.udtArray = udtArray;
+		this.enumArray = enumArray;
+		this.arrayArray = arrayArray;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -26,17 +44,9 @@ public class TArrays implements java.io.Serializable {
 		return this.id;
 	}
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
-
 	@javax.persistence.Column(name = "string_array")
 	public java.lang.String[] getStringArray() {
 		return this.stringArray;
-	}
-
-	public void setStringArray(java.lang.String[] stringArray) {
-		this.stringArray = stringArray;
 	}
 
 	@javax.persistence.Column(name = "number_array")
@@ -44,17 +54,9 @@ public class TArrays implements java.io.Serializable {
 		return this.numberArray;
 	}
 
-	public void setNumberArray(java.lang.Integer[] numberArray) {
-		this.numberArray = numberArray;
-	}
-
 	@javax.persistence.Column(name = "date_array")
 	public java.sql.Date[] getDateArray() {
 		return this.dateArray;
-	}
-
-	public void setDateArray(java.sql.Date[] dateArray) {
-		this.dateArray = dateArray;
 	}
 
 	@javax.persistence.Column(name = "udt_array")
@@ -62,25 +64,13 @@ public class TArrays implements java.io.Serializable {
 		return this.udtArray;
 	}
 
-	public void setUdtArray(org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[] udtArray) {
-		this.udtArray = udtArray;
-	}
-
 	@javax.persistence.Column(name = "enum_array")
 	public org.jooq.test.postgres.generatedclasses.enums.UCountry[] getEnumArray() {
 		return this.enumArray;
 	}
 
-	public void setEnumArray(org.jooq.test.postgres.generatedclasses.enums.UCountry[] enumArray) {
-		this.enumArray = enumArray;
-	}
-
 	@javax.persistence.Column(name = "array_array")
 	public java.lang.Integer[] getArrayArray() {
 		return this.arrayArray;
-	}
-
-	public void setArrayArray(java.lang.Integer[] arrayArray) {
-		this.arrayArray = arrayArray;
 	}
 }

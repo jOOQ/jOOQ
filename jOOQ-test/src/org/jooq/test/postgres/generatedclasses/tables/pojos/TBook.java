@@ -10,18 +10,42 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_book", schema = "public")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = 254221809;
+	private static final long serialVersionUID = -1087405330;
 
-	private java.lang.Integer                                         id;
-	private java.lang.Integer                                         authorId;
-	private java.lang.Integer                                         coAuthorId;
-	private java.lang.Integer                                         detailsId;
-	private java.lang.String                                          title;
-	private java.lang.Integer                                         publishedIn;
-	private org.jooq.test.postgres.generatedclasses.enums.TLanguage   languageId;
-	private java.lang.String                                          contentText;
-	private byte[]                                                    contentPdf;
-	private org.jooq.test.postgres.generatedclasses.enums.UBookStatus status;
+	private final java.lang.Integer                                         id;
+	private final java.lang.Integer                                         authorId;
+	private final java.lang.Integer                                         coAuthorId;
+	private final java.lang.Integer                                         detailsId;
+	private final java.lang.String                                          title;
+	private final java.lang.Integer                                         publishedIn;
+	private final org.jooq.test.postgres.generatedclasses.enums.TLanguage   languageId;
+	private final java.lang.String                                          contentText;
+	private final byte[]                                                    contentPdf;
+	private final org.jooq.test.postgres.generatedclasses.enums.UBookStatus status;
+
+	public TBook(
+		java.lang.Integer                                         id,
+		java.lang.Integer                                         authorId,
+		java.lang.Integer                                         coAuthorId,
+		java.lang.Integer                                         detailsId,
+		java.lang.String                                          title,
+		java.lang.Integer                                         publishedIn,
+		org.jooq.test.postgres.generatedclasses.enums.TLanguage   languageId,
+		java.lang.String                                          contentText,
+		byte[]                                                    contentPdf,
+		org.jooq.test.postgres.generatedclasses.enums.UBookStatus status
+	) {
+		this.id = id;
+		this.authorId = authorId;
+		this.coAuthorId = coAuthorId;
+		this.detailsId = detailsId;
+		this.title = title;
+		this.publishedIn = publishedIn;
+		this.languageId = languageId;
+		this.contentText = contentText;
+		this.contentPdf = contentPdf;
+		this.status = status;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -29,17 +53,9 @@ public class TBook implements java.io.Serializable {
 		return this.id;
 	}
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
-
 	@javax.persistence.Column(name = "author_id", nullable = false, precision = 32)
 	public java.lang.Integer getAuthorId() {
 		return this.authorId;
-	}
-
-	public void setAuthorId(java.lang.Integer authorId) {
-		this.authorId = authorId;
 	}
 
 	@javax.persistence.Column(name = "co_author_id", precision = 32)
@@ -47,17 +63,9 @@ public class TBook implements java.io.Serializable {
 		return this.coAuthorId;
 	}
 
-	public void setCoAuthorId(java.lang.Integer coAuthorId) {
-		this.coAuthorId = coAuthorId;
-	}
-
 	@javax.persistence.Column(name = "details_id", precision = 32)
 	public java.lang.Integer getDetailsId() {
 		return this.detailsId;
-	}
-
-	public void setDetailsId(java.lang.Integer detailsId) {
-		this.detailsId = detailsId;
 	}
 
 	@javax.persistence.Column(name = "title", nullable = false, length = 400)
@@ -65,17 +73,9 @@ public class TBook implements java.io.Serializable {
 		return this.title;
 	}
 
-	public void setTitle(java.lang.String title) {
-		this.title = title;
-	}
-
 	@javax.persistence.Column(name = "published_in", nullable = false, precision = 32)
 	public java.lang.Integer getPublishedIn() {
 		return this.publishedIn;
-	}
-
-	public void setPublishedIn(java.lang.Integer publishedIn) {
-		this.publishedIn = publishedIn;
 	}
 
 	@javax.persistence.Column(name = "language_id", nullable = false, precision = 32)
@@ -83,17 +83,9 @@ public class TBook implements java.io.Serializable {
 		return this.languageId;
 	}
 
-	public void setLanguageId(org.jooq.test.postgres.generatedclasses.enums.TLanguage languageId) {
-		this.languageId = languageId;
-	}
-
 	@javax.persistence.Column(name = "content_text")
 	public java.lang.String getContentText() {
 		return this.contentText;
-	}
-
-	public void setContentText(java.lang.String contentText) {
-		this.contentText = contentText;
 	}
 
 	@javax.persistence.Column(name = "content_pdf")
@@ -101,16 +93,8 @@ public class TBook implements java.io.Serializable {
 		return this.contentPdf;
 	}
 
-	public void setContentPdf(byte[] contentPdf) {
-		this.contentPdf = contentPdf;
-	}
-
 	@javax.persistence.Column(name = "status")
 	public org.jooq.test.postgres.generatedclasses.enums.UBookStatus getStatus() {
 		return this.status;
-	}
-
-	public void setStatus(org.jooq.test.postgres.generatedclasses.enums.UBookStatus status) {
-		this.status = status;
 	}
 }

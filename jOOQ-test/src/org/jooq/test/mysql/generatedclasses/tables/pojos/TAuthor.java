@@ -10,60 +10,52 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1386247847;
+	private static final long serialVersionUID = 1043763997;
 
-	private java.lang.Integer id;
-	private java.lang.String  firstName;
-	private java.lang.String  lastName;
-	private java.sql.Date     dateOfBirth;
-	private java.lang.Integer yearOfBirth;
-	private java.lang.String  address;
+	private final java.lang.Integer id;
+	private final java.lang.String  firstName;
+	private final java.lang.String  lastName;
+	private final java.sql.Date     dateOfBirth;
+	private final java.lang.Integer yearOfBirth;
+	private final java.lang.String  address;
+
+	public TAuthor(
+		java.lang.Integer id,
+		java.lang.String  firstName,
+		java.lang.String  lastName,
+		java.sql.Date     dateOfBirth,
+		java.lang.Integer yearOfBirth,
+		java.lang.String  address
+	) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.yearOfBirth = yearOfBirth;
+		this.address = address;
+	}
 
 	public java.lang.Integer getId() {
 		return this.id;
-	}
-
-	public void setId(java.lang.Integer id) {
-		this.id = id;
 	}
 
 	public java.lang.String getFirstName() {
 		return this.firstName;
 	}
 
-	public void setFirstName(java.lang.String firstName) {
-		this.firstName = firstName;
-	}
-
 	public java.lang.String getLastName() {
 		return this.lastName;
-	}
-
-	public void setLastName(java.lang.String lastName) {
-		this.lastName = lastName;
 	}
 
 	public java.sql.Date getDateOfBirth() {
 		return this.dateOfBirth;
 	}
 
-	public void setDateOfBirth(java.sql.Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
 	public java.lang.Integer getYearOfBirth() {
 		return this.yearOfBirth;
 	}
 
-	public void setYearOfBirth(java.lang.Integer yearOfBirth) {
-		this.yearOfBirth = yearOfBirth;
-	}
-
 	public java.lang.String getAddress() {
 		return this.address;
-	}
-
-	public void setAddress(java.lang.String address) {
-		this.address = address;
 	}
 }

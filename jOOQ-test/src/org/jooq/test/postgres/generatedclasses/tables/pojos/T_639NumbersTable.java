@@ -10,20 +10,48 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_639_numbers_table", schema = "public")
 public class T_639NumbersTable implements java.io.Serializable {
 
-	private static final long serialVersionUID = -876805676;
+	private static final long serialVersionUID = -801800503;
 
-	private java.lang.Integer    id;
-	private java.lang.Short      short_;
-	private java.lang.Integer    integer;
-	private java.lang.Long       long_;
-	private java.lang.Byte       byteDecimal;
-	private java.lang.Short      shortDecimal;
-	private java.lang.Integer    integerDecimal;
-	private java.lang.Long       longDecimal;
-	private java.math.BigInteger bigInteger;
-	private java.math.BigDecimal bigDecimal;
-	private java.lang.Float      float_;
-	private java.lang.Double     double_;
+	private final java.lang.Integer    id;
+	private final java.lang.Short      short_;
+	private final java.lang.Integer    integer;
+	private final java.lang.Long       long_;
+	private final java.lang.Byte       byteDecimal;
+	private final java.lang.Short      shortDecimal;
+	private final java.lang.Integer    integerDecimal;
+	private final java.lang.Long       longDecimal;
+	private final java.math.BigInteger bigInteger;
+	private final java.math.BigDecimal bigDecimal;
+	private final java.lang.Float      float_;
+	private final java.lang.Double     double_;
+
+	public T_639NumbersTable(
+		java.lang.Integer    id,
+		java.lang.Short      short_,
+		java.lang.Integer    integer,
+		java.lang.Long       long_,
+		java.lang.Byte       byteDecimal,
+		java.lang.Short      shortDecimal,
+		java.lang.Integer    integerDecimal,
+		java.lang.Long       longDecimal,
+		java.math.BigInteger bigInteger,
+		java.math.BigDecimal bigDecimal,
+		java.lang.Float      float_,
+		java.lang.Double     double_
+	) {
+		this.id = id;
+		this.short_ = short_;
+		this.integer = integer;
+		this.long_ = long_;
+		this.byteDecimal = byteDecimal;
+		this.shortDecimal = shortDecimal;
+		this.integerDecimal = integerDecimal;
+		this.longDecimal = longDecimal;
+		this.bigInteger = bigInteger;
+		this.bigDecimal = bigDecimal;
+		this.float_ = float_;
+		this.double_ = double_;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -31,17 +59,9 @@ public class T_639NumbersTable implements java.io.Serializable {
 		return this.id;
 	}
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
-
 	@javax.persistence.Column(name = "short", precision = 16)
 	public java.lang.Short getShort() {
 		return this.short_;
-	}
-
-	public void setShort(java.lang.Short short_) {
-		this.short_ = short_;
 	}
 
 	@javax.persistence.Column(name = "integer", precision = 32)
@@ -49,17 +69,9 @@ public class T_639NumbersTable implements java.io.Serializable {
 		return this.integer;
 	}
 
-	public void setInteger(java.lang.Integer integer) {
-		this.integer = integer;
-	}
-
 	@javax.persistence.Column(name = "long", precision = 64)
 	public java.lang.Long getLong() {
 		return this.long_;
-	}
-
-	public void setLong(java.lang.Long long_) {
-		this.long_ = long_;
 	}
 
 	@javax.persistence.Column(name = "byte_decimal", precision = 2)
@@ -67,17 +79,9 @@ public class T_639NumbersTable implements java.io.Serializable {
 		return this.byteDecimal;
 	}
 
-	public void setByteDecimal(java.lang.Byte byteDecimal) {
-		this.byteDecimal = byteDecimal;
-	}
-
 	@javax.persistence.Column(name = "short_decimal", precision = 4)
 	public java.lang.Short getShortDecimal() {
 		return this.shortDecimal;
-	}
-
-	public void setShortDecimal(java.lang.Short shortDecimal) {
-		this.shortDecimal = shortDecimal;
 	}
 
 	@javax.persistence.Column(name = "integer_decimal", precision = 9)
@@ -85,17 +89,9 @@ public class T_639NumbersTable implements java.io.Serializable {
 		return this.integerDecimal;
 	}
 
-	public void setIntegerDecimal(java.lang.Integer integerDecimal) {
-		this.integerDecimal = integerDecimal;
-	}
-
 	@javax.persistence.Column(name = "long_decimal", precision = 18)
 	public java.lang.Long getLongDecimal() {
 		return this.longDecimal;
-	}
-
-	public void setLongDecimal(java.lang.Long longDecimal) {
-		this.longDecimal = longDecimal;
 	}
 
 	@javax.persistence.Column(name = "big_integer", precision = 22)
@@ -103,17 +99,9 @@ public class T_639NumbersTable implements java.io.Serializable {
 		return this.bigInteger;
 	}
 
-	public void setBigInteger(java.math.BigInteger bigInteger) {
-		this.bigInteger = bigInteger;
-	}
-
 	@javax.persistence.Column(name = "big_decimal", precision = 22, scale = 5)
 	public java.math.BigDecimal getBigDecimal() {
 		return this.bigDecimal;
-	}
-
-	public void setBigDecimal(java.math.BigDecimal bigDecimal) {
-		this.bigDecimal = bigDecimal;
 	}
 
 	@javax.persistence.Column(name = "float", precision = 24)
@@ -121,16 +109,8 @@ public class T_639NumbersTable implements java.io.Serializable {
 		return this.float_;
 	}
 
-	public void setFloat(java.lang.Float float_) {
-		this.float_ = float_;
-	}
-
 	@javax.persistence.Column(name = "double", precision = 53)
 	public java.lang.Double getDouble() {
 		return this.double_;
-	}
-
-	public void setDouble(java.lang.Double double_) {
-		this.double_ = double_;
 	}
 }

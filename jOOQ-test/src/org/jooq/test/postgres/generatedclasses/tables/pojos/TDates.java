@@ -10,14 +10,30 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_dates", schema = "public")
 public class TDates implements java.io.Serializable {
 
-	private static final long serialVersionUID = -393297184;
+	private static final long serialVersionUID = 199004095;
 
-	private java.lang.Integer  id;
-	private java.sql.Date      d;
-	private java.sql.Time      t;
-	private java.sql.Timestamp ts;
-	private java.lang.Integer  dInt;
-	private java.lang.Long     tsBigint;
+	private final java.lang.Integer  id;
+	private final java.sql.Date      d;
+	private final java.sql.Time      t;
+	private final java.sql.Timestamp ts;
+	private final java.lang.Integer  dInt;
+	private final java.lang.Long     tsBigint;
+
+	public TDates(
+		java.lang.Integer  id,
+		java.sql.Date      d,
+		java.sql.Time      t,
+		java.sql.Timestamp ts,
+		java.lang.Integer  dInt,
+		java.lang.Long     tsBigint
+	) {
+		this.id = id;
+		this.d = d;
+		this.t = t;
+		this.ts = ts;
+		this.dInt = dInt;
+		this.tsBigint = tsBigint;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -25,17 +41,9 @@ public class TDates implements java.io.Serializable {
 		return this.id;
 	}
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
-
 	@javax.persistence.Column(name = "d")
 	public java.sql.Date getD() {
 		return this.d;
-	}
-
-	public void setD(java.sql.Date d) {
-		this.d = d;
 	}
 
 	@javax.persistence.Column(name = "t")
@@ -43,17 +51,9 @@ public class TDates implements java.io.Serializable {
 		return this.t;
 	}
 
-	public void setT(java.sql.Time t) {
-		this.t = t;
-	}
-
 	@javax.persistence.Column(name = "ts")
 	public java.sql.Timestamp getTs() {
 		return this.ts;
-	}
-
-	public void setTs(java.sql.Timestamp ts) {
-		this.ts = ts;
 	}
 
 	@javax.persistence.Column(name = "d_int", precision = 32)
@@ -61,16 +61,8 @@ public class TDates implements java.io.Serializable {
 		return this.dInt;
 	}
 
-	public void setDInt(java.lang.Integer dInt) {
-		this.dInt = dInt;
-	}
-
 	@javax.persistence.Column(name = "ts_bigint", precision = 64)
 	public java.lang.Long getTsBigint() {
 		return this.tsBigint;
-	}
-
-	public void setTsBigint(java.lang.Long tsBigint) {
-		this.tsBigint = tsBigint;
 	}
 }

@@ -8,60 +8,52 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class TDates implements java.io.Serializable {
 
-	private static final long serialVersionUID = 413900790;
+	private static final long serialVersionUID = 1956663933;
 
-	private java.lang.Integer  id;
-	private java.sql.Date      d;
-	private java.sql.Time      t;
-	private java.sql.Timestamp ts;
-	private java.lang.Integer  dInt;
-	private java.lang.Long     tsBigint;
+	private final java.lang.Integer  id;
+	private final java.sql.Date      d;
+	private final java.sql.Time      t;
+	private final java.sql.Timestamp ts;
+	private final java.lang.Integer  dInt;
+	private final java.lang.Long     tsBigint;
+
+	public TDates(
+		java.lang.Integer  id,
+		java.sql.Date      d,
+		java.sql.Time      t,
+		java.sql.Timestamp ts,
+		java.lang.Integer  dInt,
+		java.lang.Long     tsBigint
+	) {
+		this.id = id;
+		this.d = d;
+		this.t = t;
+		this.ts = ts;
+		this.dInt = dInt;
+		this.tsBigint = tsBigint;
+	}
 
 	public java.lang.Integer getId() {
 		return this.id;
-	}
-
-	public void setId(java.lang.Integer id) {
-		this.id = id;
 	}
 
 	public java.sql.Date getD() {
 		return this.d;
 	}
 
-	public void setD(java.sql.Date d) {
-		this.d = d;
-	}
-
 	public java.sql.Time getT() {
 		return this.t;
-	}
-
-	public void setT(java.sql.Time t) {
-		this.t = t;
 	}
 
 	public java.sql.Timestamp getTs() {
 		return this.ts;
 	}
 
-	public void setTs(java.sql.Timestamp ts) {
-		this.ts = ts;
-	}
-
 	public java.lang.Integer getDInt() {
 		return this.dInt;
 	}
 
-	public void setDInt(java.lang.Integer dInt) {
-		this.dInt = dInt;
-	}
-
 	public java.lang.Long getTsBigint() {
 		return this.tsBigint;
-	}
-
-	public void setTsBigint(java.lang.Long tsBigint) {
-		this.tsBigint = tsBigint;
 	}
 }

@@ -51,10 +51,6 @@ abstract class AbstractFieldProviderQueryPart<R extends Record> extends Abstract
      */
     private static final long serialVersionUID = -4629861305735726005L;
 
-    AbstractFieldProviderQueryPart(String name) {
-        this(name, null);
-    }
-
     AbstractFieldProviderQueryPart(String name, Schema schema) {
         super(name, schema);
     }

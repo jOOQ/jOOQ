@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.inline;
 
@@ -73,6 +74,20 @@ class Substring extends AbstractFunction<String> {
                 // Default behaviour
                 else {
                     break;
+                }
+            }
+
+            // [#722] For undocumented reasons, Ingres needs explicit casting
+            case INGRES: {
+                if (getArguments().length == 2) {
+                    return field("{substring}({0}, {cast}({1} {as integer}))",
+                        SQLDataType.VARCHAR,
+                        getArguments());
+                }
+                else {
+                    return field("{substring}({0}, {cast}({1} {as integer}), {cast}({2} {as integer}))",
+                        SQLDataType.VARCHAR,
+                        getArguments());
                 }
             }
 

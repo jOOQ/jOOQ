@@ -41,6 +41,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.Factory.abs;
@@ -570,7 +571,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     @Test
     public void testFunctionsOnNumbers() throws Exception {
 
+        // Some databases are limited or buggy
         boolean sqlite = (getDialect() == SQLITE);
+        boolean ingres = (getDialect() == INGRES);
 
         // The random function
         BigDecimal rand = create().select(rand()).fetchOne(rand());
@@ -581,17 +584,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         Field<Float> f2a = round(1.111f, 2);
         Field<Float> f3a = floor(1.111f);
         Field<Float> f4a = ceil(1.111f);
-        Field<Float> f5a = sqlite ? inline(1.0f) : trunc(1.111f);
-        Field<Float> f6a = sqlite ? inline(1.11f) : trunc(1.111f, 2);
-        Field<Float> f7a = sqlite ? inline(10.0f) : trunc(11.111f, -1);
+        Field<Float> f5a = sqlite || ingres ? inline(1.0f) : trunc(1.111f);
+        Field<Float> f6a = sqlite || ingres ? inline(1.11f) : trunc(1.111f, 2);
+        Field<Float> f7a = sqlite || ingres ? inline(10.0f) : trunc(11.111f, -1);
 
         Field<Double> f1b = round(-1.111);
         Field<Double> f2b = round(-1.111, 2);
         Field<Double> f3b = floor(-1.111);
         Field<Double> f4b = ceil(-1.111);
-        Field<Double> f5b = sqlite ? inline(1.0) : trunc(1.111);
-        Field<Double> f6b = sqlite ? inline(1.11) : trunc(1.111, 2);
-        Field<Double> f7b = sqlite ? inline(10.0) : trunc(11.111, -1);
+        Field<Double> f5b = sqlite || ingres ? inline(1.0) : trunc(1.111);
+        Field<Double> f6b = sqlite || ingres ? inline(1.11) : trunc(1.111, 2);
+        Field<Double> f7b = sqlite || ingres ? inline(10.0) : trunc(11.111, -1);
 
         Field<Float> f1c = round(2.0f);
         Field<Float> f2c = round(2.0f, 2);
@@ -602,14 +605,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         Field<Double> f3d = floor(-2.0);
         Field<Double> f4d = ceil(-2.0);
 
-        Field<Float> f1e = round(0.0f);
-        Field<Float> f2e = round(0.0f, 2);
-        Field<Float> f3e = floor(0.0f);
-        Field<Float> f4e = ceil(0.0f);
-        Field<Float> f1f = round(0.0f);
-        Field<Float> f2f = round(0.0f, 2);
-        Field<Float> f3f = floor(0.0f);
-        Field<Float> f4f = ceil(0.0f);
+        Field<Float> f1e = ingres ? inline(0.0f) : round(0.0f);
+        Field<Float> f2e = ingres ? inline(0.0f) : round(0.0f, 2);
+        Field<Float> f3e = ingres ? inline(0.0f) : floor(0.0f);
+        Field<Float> f4e = ingres ? inline(0.0f) : ceil(0.0f);
+        Field<Double> f1f = round(0.0);
+        Field<Double> f2f = round(0.0, 2);
+        Field<Double> f3f = floor(0.0);
+        Field<Double> f4f = ceil(0.0);
 
         // Some arbitrary checks on having multiple select clauses
         Record record =

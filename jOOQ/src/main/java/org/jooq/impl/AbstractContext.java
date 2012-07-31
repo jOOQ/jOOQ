@@ -57,12 +57,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractConfigurati
         super(configuration);
     }
 
-    AbstractContext(Configuration configuration, boolean declareFields, boolean declareTables) {
-        this(configuration);
-        this.declareFields = declareFields;
-        this.declareTables = declareTables;
-    }
-
     // ------------------------------------------------------------------------
     // XXX Context API
     // ------------------------------------------------------------------------

@@ -60,13 +60,6 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
         super(configuration);
     }
 
-    AbstractBindContext(BindContext context) {
-        this((Configuration) context);
-
-        declareFields(context.declareFields());
-        declareTables(context.declareTables());
-    }
-
     // ------------------------------------------------------------------------
     // BindContext API
     // ------------------------------------------------------------------------

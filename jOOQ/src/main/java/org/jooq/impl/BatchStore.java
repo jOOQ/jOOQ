@@ -205,7 +205,7 @@ class BatchStore implements Batch {
         return result;
     }
 
-    private void setAllUnchanged() {
+    private final void setAllUnchanged() {
         for (UpdatableRecord<?> record : records) {
             if (record instanceof AbstractRecord) {
                 ((AbstractRecord) record).setAllChanged(false);

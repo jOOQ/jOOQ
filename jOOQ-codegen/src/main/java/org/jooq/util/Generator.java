@@ -131,6 +131,16 @@ public interface Generator {
     void setGeneratePojos(boolean generatePojos);
 
     /**
+     * Whether immutable POJO's should be generated in addition to records
+     */
+    boolean generateImmutablePojos();
+
+    /**
+     * Whether immutable POJO's should be generated in addition to records
+     */
+    void setGenerateImmutablePojos(boolean generateImmutablePojos);
+
+    /**
      * Whether interfaces should be generated to be implemented by records and
      * POJO's
      */

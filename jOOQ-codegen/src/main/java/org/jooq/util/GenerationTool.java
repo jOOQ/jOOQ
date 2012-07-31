@@ -387,6 +387,8 @@ public class GenerationTool {
                 generator.setGenerateRecords(g.getGenerate().isRecords());
             if (g.getGenerate().isPojos() != null)
                 generator.setGeneratePojos(g.getGenerate().isPojos());
+            if (g.getGenerate().isImmutablePojos() != null)
+                generator.setGenerateImmutablePojos(g.getGenerate().isImmutablePojos());
             if (g.getGenerate().isInterfaces() != null)
                 generator.setGenerateInterfaces(g.getGenerate().isInterfaces());
             if (g.getGenerate().isDaos() != null)

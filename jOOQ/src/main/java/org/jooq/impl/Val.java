@@ -158,9 +158,6 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                     case H2:
                     case HSQLDB:
 
-                    // [#722] TODO This is probably not entirely right.
-                    case INGRES:
-
                     // [#1261] There are only a few corner-cases, where this is
                     // really needed. Check back on related CUBRID bugs
                     case CUBRID:

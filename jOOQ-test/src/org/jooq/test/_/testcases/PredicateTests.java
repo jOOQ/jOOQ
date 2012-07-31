@@ -319,8 +319,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                                       .fetchOne(count));
 
         switch (getDialect()) {
+            case INGRES:
             case SQLITE:
-                log.info("SKIPPING", "SQLite can't handle more than 999 variables");
+                log.info("SKIPPING", "SQLite/Ingres can't handle more than 999 variables");
                 break;
 
             default:

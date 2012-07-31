@@ -592,7 +592,8 @@ public class Reflect {
         Class<?>[] result = new Class[values.length];
 
         for (int i = 0; i < values.length; i++) {
-            result[i] = values[i].getClass();
+            Object value = values[i];
+            result[i] = value == null ? Object.class : value.getClass();
         }
 
         return result;

@@ -199,7 +199,7 @@ final class Util {
      * Use this rather than {@link Arrays#asList(Object...)} for
      * <code>null</code>-safety
      */
-    static final <T> List<T> list(T[] array) {
+    static final <T> List<T> list(T... array) {
         return array == null ? Collections.<T>emptyList() : Arrays.asList(array);
     }
 

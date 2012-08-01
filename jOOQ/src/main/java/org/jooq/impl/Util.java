@@ -53,7 +53,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -191,6 +193,14 @@ final class Util {
         catch (Exception e) {
             throw new IllegalStateException("Could not construct new record", e);
         }
+    }
+
+    /**
+     * Use this rather than {@link Arrays#asList(Object...)} for
+     * <code>null</code>-safety
+     */
+    static final <T> List<T> list(T[] array) {
+        return array == null ? Collections.<T>emptyList() : Arrays.asList(array);
     }
 
     /**

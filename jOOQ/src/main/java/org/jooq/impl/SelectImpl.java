@@ -56,6 +56,7 @@ import org.jooq.SelectConditionStep;
 import org.jooq.SelectConnectByConditionStep;
 import org.jooq.SelectForUpdateOfStep;
 import org.jooq.SelectHavingConditionStep;
+import org.jooq.SelectJoinPartitionByStep;
 import org.jooq.SelectJoinStep;
 import org.jooq.SelectOffsetStep;
 import org.jooq.SelectOnConditionStep;
@@ -77,7 +78,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     // Cascading interface implementations for Select behaviour
     SelectSelectStep,
-    SelectOnStep,
+    SelectJoinPartitionByStep,
     SelectOnConditionStep,
     SelectConditionStep,
     SelectConnectByConditionStep,
@@ -94,6 +95,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
      * A temporary member holding a join table
      */
     private transient TableLike<?>          joinTable;
+
+    /**
+     * A temporary member holding a join partition by expression
+     */
+    private transient Field<?>[]            joinPartitionBy;
 
     /**
      * A temporary member holding a join type
@@ -573,8 +579,9 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
         conditionStep = ConditionStep.ON;
         joinConditions = new ConditionProviderImpl();
         joinConditions.addConditions(conditions);
-        getQuery().addJoin(joinTable, joinType, joinConditions);
+        getQuery().addJoin(joinTable, joinType, new Condition[] { joinConditions }, joinPartitionBy);
         joinTable = null;
+        joinPartitionBy = null;
         joinType = null;
         return this;
     }
@@ -594,6 +601,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType);
         joinTable = null;
+        joinPartitionBy = null;
         joinType = null;
         return this;
     }
@@ -603,6 +611,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType, keyFields);
         joinTable = null;
+        joinPartitionBy = null;
         joinType = null;
         return this;
     }
@@ -612,6 +621,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType, key);
         joinTable = null;
+        joinPartitionBy = null;
         joinType = null;
         return this;
 
@@ -626,6 +636,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     public final SelectImpl using(Collection<? extends Field<?>> fields) {
         getQuery().addJoinUsing(joinTable, joinType, fields);
         joinTable = null;
+        joinPartitionBy = null;
         joinType = null;
         return this;
     }
@@ -654,6 +665,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
         conditionStep = ConditionStep.ON;
         joinTable = table;
         joinType = type;
+        joinPartitionBy = null;
         joinConditions = null;
         return this;
     }
@@ -681,6 +693,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     private final SelectImpl simpleJoin0(TableLike<?> table, JoinType type) {
         getQuery().addJoin(table, type);
         joinTable = null;
+        joinPartitionBy = null;
         joinType = null;
         return this;
     }
@@ -763,6 +776,17 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     @Override
     public final SelectImpl naturalRightOuterJoin(String sql, Object... bindings) {
         return naturalRightOuterJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl partitionBy(Field<?>... fields) {
+        joinPartitionBy = fields;
+        return this;
+    }
+
+    @Override
+    public final SelectImpl partitionBy(Collection<? extends Field<?>> fields) {
+        return partitionBy(fields.toArray(new Field[fields.size()]));
     }
 
     /**

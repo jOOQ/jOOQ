@@ -83,6 +83,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -1244,7 +1245,7 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     }
 
     @Test
-    public void testKeepDenseRank() {
+    public void testOracleKeepDenseRank() {
         assertEquals(
             Arrays.asList(3, 7),
             Arrays.asList(
@@ -1254,5 +1255,43 @@ public class jOOQOracleTest extends jOOQAbstractTest<
                     .from(TBook())
                     .fetchOne()
                     .into(Integer[].class)));
+    }
+
+    @Test
+    public void testOraclePartitionedOuterJoin() {
+
+        // Maybe, find a more sensible query for the test case...?
+        Result<Record> result1 =
+        create().select(
+                    TAuthor_FIRST_NAME(),
+                    TBook_TITLE())
+                .from(TAuthor()
+                    .leftOuterJoin(TBook())
+                    .partitionBy(TBook_TITLE())
+                    .on(TAuthor_ID().equal(TBook_AUTHOR_ID())))
+                .orderBy(
+                    TAuthor_FIRST_NAME(),
+                    TBook_ID())
+                .fetch();
+
+        assertEquals(8, result1.size());
+        assertEquals(BOOK_TITLES, result1.getValues(TBook_TITLE()).subList(0, 4));
+        assertEquals(Collections.nCopies(4, "George"), result1.getValues(TAuthor_FIRST_NAME()).subList(0, 4));
+        assertEquals(Collections.nCopies(4, "Paulo"), result1.getValues(TAuthor_FIRST_NAME()).subList(4, 8));
+
+        Result<Record> result2 =
+        create().select(
+                    TAuthor_FIRST_NAME(),
+                    TBook_TITLE())
+                .from(TAuthor())
+                .leftOuterJoin(TBook())
+                .partitionBy(TBook_TITLE())
+                .on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
+                .orderBy(
+                    TAuthor_FIRST_NAME(),
+                    TBook_ID())
+                .fetch();
+
+        assertEquals(result1, result2);
     }
 }

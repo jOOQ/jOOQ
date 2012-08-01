@@ -235,7 +235,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * <code>LEFT OUTER JOIN</code> a table to this table.
      */
     @Support
-    TableOnStep leftOuterJoin(TableLike<?> table);
+    TablePartitionByStep leftOuterJoin(TableLike<?> table);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -248,7 +248,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * @see Factory#table(String)
      */
     @Support
-    TableOnStep leftOuterJoin(String sql);
+    TablePartitionByStep leftOuterJoin(String sql);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -261,7 +261,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * @see Factory#table(String, Object...)
      */
     @Support
-    TableOnStep leftOuterJoin(String sql, Object... bindings);
+    TablePartitionByStep leftOuterJoin(String sql, Object... bindings);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -269,7 +269,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * This is only possible where the underlying RDBMS supports it
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    TableOnStep rightOuterJoin(TableLike<?> table);
+    TablePartitionByStep rightOuterJoin(TableLike<?> table);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -284,7 +284,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * @see Factory#table(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    TableOnStep rightOuterJoin(String sql);
+    TablePartitionByStep rightOuterJoin(String sql);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -299,7 +299,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * @see Factory#table(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    TableOnStep rightOuterJoin(String sql, Object... bindings);
+    TablePartitionByStep rightOuterJoin(String sql, Object... bindings);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.

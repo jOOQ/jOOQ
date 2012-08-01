@@ -125,6 +125,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.OInvalidType;
 import org.jooq.test.oracle.generatedclasses.test.udt.UAddressType;
+import org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType;
 import org.jooq.test.oracle.generatedclasses.test.udt.UInvalidTable;
 import org.jooq.test.oracle.generatedclasses.test.udt.UInvalidType;
 import org.jooq.test.oracle.generatedclasses.test.udt.UStreetType;
@@ -1019,6 +1020,8 @@ public class jOOQOracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleMemberProcedures() throws Exception {
+        jOOQAbstractTest.reset = false;
+
         UAuthorTypeRecord author1;
         UAuthorTypeRecord author2;
 
@@ -1074,6 +1077,24 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         assertEquals(1, (int) author1.getId());
         assertEquals("George", author1.getFirstName());
         assertEquals("Orwell", author1.getLastName());
+
+        // [#1584] Test STATIC MEMBER procedure calls
+        UAuthorTypeRecord author3 = UAuthorType.newAuthor(ora(), 3, "first", "last");
+        assertEquals(3, (int) author3.getId());
+        assertEquals("first", author3.getFirstName());
+        assertEquals("last", author3.getLastName());
+
+        UAuthorTypeRecord author4 = UAuthorType.getAuthor(ora(), 3);
+        assertEquals(author3, author4);
+        assertEquals(3, (int) author4.getId());
+        assertEquals("first", author4.getFirstName());
+        assertEquals("last", author4.getLastName());
+
+        UAuthorTypeRecord author5 = ora().select(UAuthorType.getAuthor(3)).fetchOne(UAuthorType.getAuthor(3));
+        assertEquals(author3, author5);
+        assertEquals(3, (int) author5.getId());
+        assertEquals("first", author5.getFirstName());
+        assertEquals("last", author5.getLastName());
     }
 
     @Test

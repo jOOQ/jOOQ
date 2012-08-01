@@ -234,7 +234,7 @@ public class DefaultGenerator extends AbstractGenerator {
         }
 
         if (database.getUDTs(schema).size() > 0) {
-            generateUDTDefinitions(schema);
+            generateUDTRecords(schema);
         }
 
         if (database.getUDTs(schema).size() > 0) {
@@ -737,12 +737,12 @@ public class DefaultGenerator extends AbstractGenerator {
     /**
      * Generating UDT record classes
      */
-    protected void generateUDTDefinitions(SchemaDefinition schema) {
+    protected void generateUDTRecords(SchemaDefinition schema) {
         log.info("Generating UDT records");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
             try {
-                generateUDTDefinition(udt);
+                generateUDTRecord(udt);
             } catch (Exception e) {
                 log.error("Error while generating UDT record " + udt, e);
             }
@@ -751,7 +751,7 @@ public class DefaultGenerator extends AbstractGenerator {
         watch.splitInfo("UDT records generated");
     }
 
-    protected void generateUDTDefinition(UDTDefinition udt) {
+    protected void generateUDTRecord(UDTDefinition udt) {
         log.info("Generating UDT record", strategy.getFileName(udt, Mode.RECORD));
 
         GenerationWriter out = new GenerationWriter(strategy.getFile(udt, Mode.RECORD));
@@ -777,14 +777,20 @@ public class DefaultGenerator extends AbstractGenerator {
 
         // [#799] Oracle UDT's can have member procedures
         for (RoutineDefinition routine : udt.getRoutines()) {
+
+            // Instance methods ship with a SELF parameter at the first position
+            // [#1584] Static methods don't have that
+            boolean instance = routine.getInParameters().size() > 0
+                            && routine.getInParameters().get(0).getInputName().toUpperCase().equals("SELF");
+
             try {
                 if (!routine.isSQLUsable()) {
                     // Instance execute() convenience method
-                    printConvenienceMethodProcedure(out, routine, true);
+                    printConvenienceMethodProcedure(out, routine, instance);
                 }
                 else {
                     // Instance execute() convenience method
-                    printConvenienceMethodFunction(out, routine, true);
+                    printConvenienceMethodFunction(out, routine, instance);
                 }
 
             } catch (Exception e) {

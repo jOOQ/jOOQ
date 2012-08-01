@@ -127,7 +127,14 @@ CREATE OR REPLACE TYPE u_author_type AS OBJECT (
   	book2 OUT u_book_type,
   	books OUT u_book_table),
 
-  member function count_books return number
+  member function count_books return number,
+  static procedure new_author (
+    p_id number,
+	p_first_name varchar2,
+	p_last_name varchar2,
+	p_author OUT u_author_type),
+
+  static function get_author (p_id number) return u_author_type
 )
 /
 
@@ -205,6 +212,28 @@ CREATE OR REPLACE TYPE BODY u_author_type AS
 
     return r;
   end count_books;
+
+  static procedure new_author (
+    p_id number,
+	p_first_name varchar2,
+	p_last_name varchar2,
+	p_author OUT u_author_type) is
+    result u_author_type;
+  begin
+  	insert into t_author (id, first_name, last_name)
+	values (p_id, p_first_name, p_last_name);
+
+	p_author := get_author(p_id);
+  end new_author;
+
+  static function get_author (p_id number) return u_author_type is
+  	result u_author_type;
+  begin
+  	result := u_author_type(p_id, null, null);
+	result.load;
+	return result;
+  end get_author;
+
 end;
 /
 

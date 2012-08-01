@@ -65,6 +65,12 @@
 		</script>
 		<!-- End of Woopra Code -->
 		<?php } ?>
+
+		<script>
+		$(document).ready(function() {
+		    $("a").filter("[href*='http']").filter(":not([href*='jooq.org'])").attr("target", "_blank");
+		});
+		</script>
 	</head>
 	<body onload="prettyPrint()">
 	    <div id="navigation">

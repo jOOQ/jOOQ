@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
  */
 public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> {
 
-	private static final long serialVersionUID = -1269981274;
+	private static final long serialVersionUID = 1373791556;
 
 
 	/**
@@ -68,6 +68,20 @@ public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 	}
 
 	/**
+	 * Call TEST.U_AUTHOR_TYPE.GET_AUTHOR
+	 *
+	 * @param pId
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord getAuthor(org.jooq.Configuration configuration, java.lang.Number pId) {
+		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor f = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor();
+		f.setPId(pId);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
 	 * Call TEST.U_AUTHOR_TYPE.GET_BOOKS
 	 *
 	 * @param self IN OUT parameter
@@ -98,6 +112,25 @@ public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 		p.execute(getConfiguration());
 		from(p.getSelf());
 		return p.getSelf();
+	}
+
+	/**
+	 * Call TEST.U_AUTHOR_TYPE.NEW_AUTHOR
+	 *
+	 * @param pId IN parameter
+	 * @param pFirstName IN parameter
+	 * @param pLastName IN parameter
+	 * @param pAuthor OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord newAuthor(org.jooq.Configuration configuration, java.lang.Number pId, java.lang.String pFirstName, java.lang.String pLastName) {
+		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.NewAuthor p = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.NewAuthor();
+		p.setPId(pId);
+		p.setPFirstName(pFirstName);
+		p.setPLastName(pLastName);
+
+		p.execute(configuration);
+		return p.getPAuthor();
 	}
 
 	public UAuthorTypeRecord() {

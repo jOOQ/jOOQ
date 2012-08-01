@@ -8,6 +8,8 @@
 	<xsl:output encoding="UTF-8" method="html" omit-xml-declaration="yes" indent="yes"/>
 
 	<xsl:variable name="apos">&apos;</xsl:variable>
+	<xsl:param name="relativePath"/>
+	<xsl:param name="root"/>
 
 	<!-- Main match -->
 
@@ -16,7 +18,7 @@
 &lt;?php
 // The following content has been XSL transformed from manual.xml using html-page.xsl
 // Please do not edit this content manually
-require '../frame.php';
+require '</xsl:text><xsl:value-of select="$relativePath"/><xsl:text disable-output-escaping="yes">frame.php';
 function getH1() {
     return "The jOOQ User Manual. Single Page";
 }

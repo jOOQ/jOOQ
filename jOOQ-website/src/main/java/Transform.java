@@ -65,7 +65,8 @@ import org.joox.Match;
  */
 @SuppressWarnings("resource")
 public class Transform {
-    private static FopFactory fopFactory = FopFactory.newInstance();
+    private static final FopFactory fopFactory = FopFactory.newInstance();
+    private static final String version = "2.5";
 
     public static void main(String[] args) throws Exception {
         System.out.println("Transforming multi-page manual");
@@ -83,8 +84,32 @@ public class Transform {
         pdf();
     }
 
+    private static String file(String name) {
+        if (version == null || version.equals("")) {
+            return name;
+        }
+
+        return name.replaceAll("\\.\\w{3}$", "-" + version + "$0");
+    }
+
+    private static String path(String path) {
+        return root() + path;
+    }
+
+    private static String root() {
+        if (version == null || version.equals("")) {
+            return "";
+        }
+
+        return "doc/" + version + "/";
+    }
+
+    private static String relative(String path) {
+        return StringUtils.join(Collections.nCopies(path.split("/").length, ".."), "/") + "/";
+    }
+
     public static void multiplePages() throws Exception {
-        InputStream isXML = Transform.class.getResourceAsStream("manual.xml");
+        InputStream isXML = Transform.class.getResourceAsStream(file("manual.xml"));
         InputStream isXSL = Transform.class.getResourceAsStream("html-pages.xsl");
 
         StreamSource xsl = new StreamSource(isXSL);
@@ -95,8 +120,9 @@ public class Transform {
         for (Match section : manual.find("section").each()) {
             Match sections = section.add(section.parents("section")).reverse();
 
-            String path = StringUtils.join(sections.ids(), "/");
-            String relativePath = StringUtils.join(Collections.nCopies(sections.size(), ".."), "/") + "/";
+            String path = path(StringUtils.join(sections.ids(), "/"));
+            String relativePath = relative(path);
+            String root = root();
             File dir = new File(path);
             dir.mkdirs();
 
@@ -108,6 +134,7 @@ public class Transform {
 
             transformer.setParameter("sectionID", section.id());
             transformer.setParameter("relativePath", relativePath);
+            transformer.setParameter("root", root);
             transformer.transform(source, target);
 
             out.close();
@@ -115,16 +142,18 @@ public class Transform {
     }
 
     public static void singlePage() throws Exception {
-        InputStream isXML = Transform.class.getResourceAsStream("manual.xml");
+        InputStream isXML = Transform.class.getResourceAsStream(file("manual.xml"));
         InputStream isXSL = Transform.class.getResourceAsStream("html-page.xsl");
 
         StreamSource xsl = new StreamSource(isXSL);
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer(xsl);
 
+        String relativePath = relative(path("manual-single-page"));
+        String root = root();
         Match manual = $(isXML);
 
-        File dir = new File("manual-single-page");
+        File dir = new File(path("manual-single-page"));
         dir.mkdirs();
 
         System.out.println("Transforming manual");
@@ -133,6 +162,8 @@ public class Transform {
         Source source = new DOMSource(manual.document());
         Result target = new StreamResult(out);
 
+        transformer.setParameter("relativePath", relativePath);
+        transformer.setParameter("root", root);
         transformer.transform(source, target);
 
         out.close();
@@ -143,7 +174,7 @@ public class Transform {
         // XML -> FO
         // ---------------------------------------------------------------------
         System.out.println("Transforming XML -> FO");
-        InputStream isXML = Transform.class.getResourceAsStream("manual.xml");
+        InputStream isXML = Transform.class.getResourceAsStream(file("manual.xml"));
         InputStream isXSL = Transform.class.getResourceAsStream("pdf.xsl");
 
         StreamSource xsl = new StreamSource(isXSL);
@@ -152,9 +183,9 @@ public class Transform {
 
         Match manual = $(isXML);
 
-        File dir = new File("manual-pdf");
+        File dir = new File(path("manual-pdf"));
         dir.mkdirs();
-        FileOutputStream fout = new FileOutputStream(new File(dir, "jOOQ-manual.fo.xml"));
+        FileOutputStream fout = new FileOutputStream(new File(dir, file("jOOQ-manual.fo.xml")));
 
         Source source = new DOMSource(manual.document());
         Result target = new StreamResult(fout);
@@ -176,7 +207,7 @@ public class Transform {
 
         // Setup output stream.  Note: Using BufferedOutputStream
         // for performance reasons (helpful with FileOutputStreams).
-        out = new FileOutputStream(new File(dir, "jOOQ-manual.pdf"));
+        out = new FileOutputStream(new File(dir, file("jOOQ-manual.pdf")));
         out = new BufferedOutputStream(out);
 
         // Construct fop with desired output format
@@ -186,7 +217,7 @@ public class Transform {
         transformer = factory.newTransformer(); // identity transformer
 
         // Setup input stream
-        Source src = new StreamSource(new File(dir, "jOOQ-manual.fo.xml"));
+        Source src = new StreamSource(new File(dir, file("jOOQ-manual.fo.xml")));
 
         // Resulting SAX events (the generated FO) must be piped through to FOP
         Result res = new SAXResult(fop.getDefaultHandler());
@@ -200,6 +231,6 @@ public class Transform {
         // Open the PDF and check it
         Runtime.getRuntime().exec(new String[] {
                 "C:\\Program Files (x86)\\Adobe\\Reader 9.0\\Reader\\AcroRd32.exe",
-                "C:\\Users\\lukas\\workspace\\jOOQ-website\\manual-pdf\\jOOQ-manual.pdf" });
+                file("C:\\Users\\lukas\\workspace\\jOOQ-website\\manual-pdf\\jOOQ-manual.pdf") });
     }
 }

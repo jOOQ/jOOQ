@@ -8,6 +8,7 @@
 	<xsl:output encoding="UTF-8" method="html" omit-xml-declaration="yes" indent="yes"/>
 	<xsl:param name="sectionID"/>
 	<xsl:param name="relativePath"/>
+	<xsl:param name="root"/>
 
 	<xsl:variable name="apos">&apos;</xsl:variable>
 
@@ -101,6 +102,7 @@ function printContent() {
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:text>&lt;?=$root?&gt;/</xsl:text>
+				<xsl:value-of select="$root"/>
 			</xsl:otherwise>
 		</xsl:choose>
 

@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.Factory.val;
 
 import java.util.Collection;
@@ -45,11 +46,13 @@ import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
+import org.jooq.SQLDialect;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
+import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.exception.InvalidResultException;
 
@@ -65,7 +68,14 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 3216746611562261641L;
+    private static final long serialVersionUID      = 3216746611562261641L;
+
+    /**
+     * [#1537] This constant is used internally by jOOQ to omit the RETURNING
+     * clause in {@link Factory#batchStore(UpdatableRecord...)} calls for
+     * {@link SQLDialect#POSTGRES}
+     */
+    static final String       OMIT_RETURNING_CLAUSE = "JOOQ.OMIT_RETURNING_CLAUSE";
 
     public TableRecordImpl(Table<R> table) {
         super(table);
@@ -118,7 +128,8 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
 
     @SuppressWarnings("unchecked")
     private final int storeInsert() {
-        InsertQuery<R> insert = create().insertQuery(getTable());
+        Factory create = create();
+        InsertQuery<R> insert = create.insertQuery(getTable());
 
         for (Field<?> field : getFields()) {
             if (getValue0(field).isChanged()) {
@@ -128,12 +139,17 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
 
         // [#814] Refresh identity and/or main unique key values
         // [#1002] Consider also identity columns of non-updatable records
-        Collection<Field<?>> key = getReturning();
-        insert.setReturning(key);
+        // [#1537] Avoid refreshing identity columns on batch inserts
+        Collection<Field<?>> key = null;
+        if (!TRUE.equals(create.getData(OMIT_RETURNING_CLAUSE))) {
+            key = getReturning();
+            insert.setReturning(key);
+        }
+
         int result = insert.execute();
 
         // If an insert was successful try fetching the generated IDENTITY value
-        if (!key.isEmpty() && result > 0) {
+        if (key != null && !key.isEmpty() && result > 0) {
             if (insert.getReturnedRecord() != null) {
                 for (Field<?> field : key) {
                     setValue0(field, new Value<Object>(insert.getReturnedRecord().getValue(field)));

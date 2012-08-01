@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
  */
 public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> implements org.jooq.Package {
 
-	private static final long serialVersionUID = -1044218711;
+	private static final long serialVersionUID = -1614034680;
 
 	/**
 	 * The singleton instance of TEST.U_AUTHOR_TYPE
@@ -77,6 +77,44 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
+	 * Call TEST.U_AUTHOR_TYPE.GET_AUTHOR
+	 *
+	 * @param pId
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord getAuthor(org.jooq.Configuration configuration, java.lang.Number pId) {
+		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor f = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor();
+		f.setPId(pId);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get TEST.U_AUTHOR_TYPE.GET_AUTHOR as a field
+	 *
+	 * @param pId
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> getAuthor(java.lang.Number pId) {
+		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor f = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor();
+		f.setPId(pId);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get TEST.U_AUTHOR_TYPE.GET_AUTHOR as a field
+	 *
+	 * @param pId
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> getAuthor(org.jooq.Field<? extends java.lang.Number> pId) {
+		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor f = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor();
+		f.setPId(pId);
+
+		return f.asField();
+	}
+
+	/**
 	 * Call TEST.U_AUTHOR_TYPE.GET_BOOKS
 	 *
 	 * @param self IN OUT parameter
@@ -105,6 +143,25 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 
 		p.execute(configuration);
 		return p.getSelf();
+	}
+
+	/**
+	 * Call TEST.U_AUTHOR_TYPE.NEW_AUTHOR
+	 *
+	 * @param pId IN parameter
+	 * @param pFirstName IN parameter
+	 * @param pLastName IN parameter
+	 * @param pAuthor OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord newAuthor(org.jooq.Configuration configuration, java.lang.Number pId, java.lang.String pFirstName, java.lang.String pLastName) {
+		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.NewAuthor p = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.NewAuthor();
+		p.setPId(pId);
+		p.setPFirstName(pFirstName);
+		p.setPLastName(pLastName);
+
+		p.execute(configuration);
+		return p.getPAuthor();
 	}
 
 	/**

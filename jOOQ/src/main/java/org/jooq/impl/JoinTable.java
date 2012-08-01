@@ -73,6 +73,7 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnConditionStep;
 import org.jooq.TableOnStep;
+import org.jooq.TablePartitionByStep;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -80,7 +81,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnConditionStep {
+class JoinTable extends AbstractTable<Record> implements TableOnConditionStep, TablePartitionByStep {
 
     /**
      * Generated UID
@@ -89,6 +90,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
 
     private final Table<?>              lhs;
     private final Table<?>              rhs;
+    private final FieldList             rhsPartitionBy;
 
     private final JoinType              type;
     private final ConditionProviderImpl condition;
@@ -99,6 +101,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
 
         this.lhs = lhs.asTable();
         this.rhs = rhs.asTable();
+        this.rhsPartitionBy = new FieldList();
         this.type = type;
 
         this.condition = new ConditionProviderImpl();
@@ -132,6 +135,15 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
                .sql(rhs instanceof JoinTable ? "(" : "")
                .sql(rhs)
                .sql(rhs instanceof JoinTable ? ")" : "");
+
+        // [#1645] The Oracle PARTITION BY clause can be put to the right of an
+        // OUTER JOINed table
+        if (!rhsPartitionBy.isEmpty()) {
+            context.formatSeparator()
+                   .keyword(" partition by (")
+                   .sql(rhsPartitionBy)
+                   .sql(")");
+        }
 
         // CROSS JOIN and NATURAL JOIN do not have any condition clauses
         if (!asList(CROSS_JOIN,
@@ -233,7 +245,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
 
     @Override
     public final void bind(BindContext context) throws DataAccessException {
-        context.bind(lhs).bind(rhs);
+        context.bind(lhs).bind(rhs).bind((QueryPart) rhsPartitionBy);
 
         if (!using.isEmpty()) {
             context.bind((QueryPart) using);
@@ -271,6 +283,17 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
     // ------------------------------------------------------------------------
     // Join API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final TableOnStep partitionBy(Field<?>... fields) {
+        return partitionBy(Util.list(fields));
+    }
+
+    @Override
+    public final TableOnStep partitionBy(Collection<? extends Field<?>> fields) {
+        rhsPartitionBy.addAll(fields);
+        return this;
+    }
 
     @Override
     public final JoinTable on(Condition... conditions) {

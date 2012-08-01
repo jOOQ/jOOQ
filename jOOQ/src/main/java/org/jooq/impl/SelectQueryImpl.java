@@ -140,6 +140,11 @@ class SelectQueryImpl extends AbstractSubSelect<Record> implements SelectQuery {
 
     @Override
     public final void addJoin(TableLike<?> table, JoinType type, Condition... conditions) {
+        addJoin(table, type, conditions, null);
+    }
+
+    @Override
+    public final void addJoin(TableLike<?> table, JoinType type, Condition[] conditions, Field<?>[] partitionBy) {
         // TODO: This and similar methods should be refactored, patterns extracted...
 
         int index = getFrom().size() - 1;
@@ -150,10 +155,10 @@ class SelectQueryImpl extends AbstractSubSelect<Record> implements SelectQuery {
                 joined = getFrom().get(index).join(table).on(conditions);
                 break;
             case LEFT_OUTER_JOIN:
-                joined = getFrom().get(index).leftOuterJoin(table).on(conditions);
+                joined = getFrom().get(index).leftOuterJoin(table).partitionBy(partitionBy).on(conditions);
                 break;
             case RIGHT_OUTER_JOIN:
-                joined = getFrom().get(index).rightOuterJoin(table).on(conditions);
+                joined = getFrom().get(index).rightOuterJoin(table).partitionBy(partitionBy).on(conditions);
                 break;
             case FULL_OUTER_JOIN:
                 joined = getFrom().get(index).fullOuterJoin(table).on(conditions);

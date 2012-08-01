@@ -108,6 +108,21 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
     void addJoin(TableLike<?> table, JoinType type, Condition... conditions);
 
     /**
+     * Joins the existing table product to a new table using a condition
+     * <p>
+     * This adds a <code>PARTITION BY</code> clause to the right hand side of a
+     * <code>OUTER JOIN</code> expression.
+     *
+     * @param table The joined table
+     * @param type The type of join
+     * @param conditions The joining conditions
+     * @param partitionBy The <code>PARTITION BY</code> expression
+     * @see TablePartitionByStep
+     */
+    @Support(ORACLE)
+    void addJoin(TableLike<?> table, JoinType type, Condition[] conditions, Field<?>[] partitionBy);
+
+    /**
      * Joins the existing table product to a new table with a <code>USING</code>
      * clause
      * <p>

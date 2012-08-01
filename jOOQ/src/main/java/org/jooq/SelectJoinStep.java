@@ -205,7 +205,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#leftOuterJoin(TableLike)
      */
     @Support
-    SelectOnStep leftOuterJoin(TableLike<?> table);
+    SelectJoinPartitionByStep leftOuterJoin(TableLike<?> table);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -221,7 +221,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#leftOuterJoin(String)
      */
     @Support
-    SelectOnStep leftOuterJoin(String sql);
+    SelectJoinPartitionByStep leftOuterJoin(String sql);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -237,7 +237,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#leftOuterJoin(String, Object...)
      */
     @Support
-    SelectOnStep leftOuterJoin(String sql, Object... bindings);
+    SelectJoinPartitionByStep leftOuterJoin(String sql, Object... bindings);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -249,7 +249,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#rightOuterJoin(TableLike)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectOnStep rightOuterJoin(TableLike<?> table);
+    SelectJoinPartitionByStep rightOuterJoin(TableLike<?> table);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -267,7 +267,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#rightOuterJoin(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectOnStep rightOuterJoin(String sql);
+    SelectJoinPartitionByStep rightOuterJoin(String sql);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -285,7 +285,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#rightOuterJoin(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectOnStep rightOuterJoin(String sql, Object... bindings);
+    SelectJoinPartitionByStep rightOuterJoin(String sql, Object... bindings);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last

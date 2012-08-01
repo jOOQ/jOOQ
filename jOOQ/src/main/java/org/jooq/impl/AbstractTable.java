@@ -55,6 +55,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
+import org.jooq.TablePartitionByStep;
 
 abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQueryPart<R> implements Table<R> {
 
@@ -199,32 +200,32 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     }
 
     @Override
-    public final TableOnStep leftOuterJoin(TableLike<?> table) {
+    public final TablePartitionByStep leftOuterJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.LEFT_OUTER_JOIN);
     }
 
     @Override
-    public final TableOnStep leftOuterJoin(String sql) {
+    public final TablePartitionByStep leftOuterJoin(String sql) {
         return leftOuterJoin(table(sql));
     }
 
     @Override
-    public final TableOnStep leftOuterJoin(String sql, Object... bindings) {
+    public final TablePartitionByStep leftOuterJoin(String sql, Object... bindings) {
         return leftOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final TableOnStep rightOuterJoin(TableLike<?> table) {
+    public final TablePartitionByStep rightOuterJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.RIGHT_OUTER_JOIN);
     }
 
     @Override
-    public final TableOnStep rightOuterJoin(String sql) {
+    public final TablePartitionByStep rightOuterJoin(String sql) {
         return rightOuterJoin(table(sql));
     }
 
     @Override
-    public final TableOnStep rightOuterJoin(String sql, Object... bindings) {
+    public final TablePartitionByStep rightOuterJoin(String sql, Object... bindings) {
         return rightOuterJoin(table(sql, bindings));
     }
 

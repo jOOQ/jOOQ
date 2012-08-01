@@ -33,6 +33,7 @@
 		<script type="text/javascript" src="<?=$root?>/js/prettify/lang-sql.js"></script>
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
+		<?php if (strpos($_SERVER['HTTP_HOST'], 'localhost') === false) { ?>
 		<script type="text/javascript">
 		  var _gaq = _gaq || [];
 		  _gaq.push(['_setAccount', 'UA-30716479-1']);
@@ -63,6 +64,7 @@
 		})();
 		</script>
 		<!-- End of Woopra Code -->
+		<?php } ?>
 	</head>
 	<body onload="prettyPrint()">
 	    <div id="navigation">

@@ -127,7 +127,9 @@ public class Transform {
             dir.mkdirs();
 
             System.out.println("Transforming section " + path);
-            FileOutputStream out = new FileOutputStream(new File(dir, "index.php"));
+            File file = new File(dir, "index.php");
+            file.delete();
+            FileOutputStream out = new FileOutputStream(file);
 
             Source source = new DOMSource(manual.document());
             Result target = new StreamResult(out);
@@ -157,7 +159,9 @@ public class Transform {
         dir.mkdirs();
 
         System.out.println("Transforming manual");
-        FileOutputStream out = new FileOutputStream(new File(dir, "index.php"));
+        File file = new File(dir, "index.php");
+        file.delete();
+        FileOutputStream out = new FileOutputStream(file);
 
         Source source = new DOMSource(manual.document());
         Result target = new StreamResult(out);
@@ -170,6 +174,7 @@ public class Transform {
     }
 
     public static void pdf() throws Exception {
+        if (true) return;
 
         // XML -> FO
         // ---------------------------------------------------------------------

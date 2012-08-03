@@ -4,18 +4,129 @@
 		<title>The jOOQ User Manual. Multiple Pages</title>
 		<content>
 			<h2 id="Overview"><a href="#Overview" name="Overview">#</a> Overview</h2>
-			<p>TODO: overview here</p>
+			<p>This manual is divided into six main sections:</p>
+
+			<ul>
+				<li>
+					<reference id="getting-started"/>
+					<p>
+						This section will get you started with jOOQ quickly. It contains
+						simple explanations about what jOOQ is, what jOOQ isn't and how
+						to set it up for the first time
+					</p>
+				</li>
+				<li>
+					<reference id="sql-building"/>
+					<p>
+						This section explains all about the jOOQ syntax used for building
+						queries. It explains the central factories, the supported SQL
+						statements and various other syntax elements
+					</p>
+				</li>
+				<li>
+					<reference id="code-generation"/>
+					<p>
+						This section explains how to configure and use the built-in source code
+						generator
+					</p>
+				</li>
+				<li>
+					<reference id="sql-execution"/>
+					<p>
+						This section will get you through the specifics of what can be done
+						with jOOQ at runtime, in order to execute queries, perform CRUD
+						operations, import and export data, and hook into the jOOQ execution
+						lifecycle for debugging
+					</p>
+				</li>
+				<li>
+					<reference id="tools"/>
+					<p>
+						This section is dedicated to tools that ship with jOOQ, such as the
+						jOOQ console
+					</p>
+				</li>
+				<li>
+					<reference id="reference"/>
+					<p>
+						This section is a reference for elements in this manual
+					</p>
+				</li>
+			</ul>
 		</content>
 
 		<sections>
 			<section id="getting-started">
 				<title>Getting started with jOOQ</title>
-				<content></content>
+				<content>
+				</content>
 
 				<sections>
+					<section id="the-manual">
+					    <title>How to read this manual</title>
+						<content>
+						</content>
+					</section>
+
+					<section id="the-sample-database">
+					    <title>The sample database used in this manual</title>
+						<content>
+							<h3>Example CREATE TABLE statements</h3>
+							<p>
+							For the examples in this manual, the same database will always be referred to. It essentially consists of these entities created using the Oracle dialect
+							</p>
+<sql>CREATE TABLE t_language (
+  id NUMBER(7) NOT NULL PRIMARY KEY,
+  cd CHAR(2) NOT NULL,
+  description VARCHAR2(50)
+)
+
+CREATE TABLE t_author (
+  id NUMBER(7) NOT NULL PRIMARY KEY,
+  first_name VARCHAR2(50),
+  last_name VARCHAR2(50) NOT NULL,
+  date_of_birth DATE,
+  year_of_birth NUMBER(7)
+)
+
+CREATE TABLE t_book (
+  id NUMBER(7) NOT NULL PRIMARY KEY,
+  author_id NUMBER(7) NOT NULL,
+  title VARCHAR2(400) NOT NULL,
+  published_in NUMBER(7) NOT NULL,
+  language_id NUMBER(7) NOT NULL,
+  FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID),
+  FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID)
+)
+
+CREATE TABLE t_book_store (
+  name VARCHAR2(400) NOT NULL UNIQUE
+)
+
+CREATE TABLE t_book_to_book_store (
+  book_store_name VARCHAR2(400) NOT NULL,
+  book_id INTEGER NOT NULL,
+  stock INTEGER,
+  PRIMARY KEY(book_store_name, book_id),
+  CONSTRAINT b2bs_book_store_id
+    FOREIGN KEY (book_store_name)
+    REFERENCES t_book_store (name)
+    ON DELETE CASCADE,
+  CONSTRAINT b2bs_book_id
+    FOREIGN KEY (book_id)
+    REFERENCES t_book (id)
+    ON DELETE CASCADE
+)</sql>
+							<p>
+								More entities, types (e.g. UDT's, ARRAY types, ENUM types, etc), stored procedures and packages are introduced for specific examples
+							</p>
+						</content>
+					</section>
+
 					<section id="use-cases">
 						<title>Different use cases for jOOQ</title>
-						<content></content>
+						<content>
+						</content>
 
 						<sections>
 							<section id="jooq-as-a-standalone-sql-builder">
@@ -50,6 +161,16 @@
 								<content></content>
 							</section>
 
+							<section id="jooq-in-modern-ides">
+								<title>Using jOOQ in modern IDEs</title>
+								<content></content>
+							</section>
+
+							<section id="jooq-with-spring">
+								<title>Using jOOQ with Spring</title>
+								<content></content>
+							</section>
+
 							<section id="a-simple-web-application">
 								<title>A simple web application with jOOQ</title>
 								<content></content>
@@ -61,59 +182,512 @@
 
 			<section id="sql-building">
 				<title>SQL building</title>
-				<content></content>
+				<content>
+					<h3>Overview</h3>
+					<p>
+					    SQL is a declarative language that is hard to integrate into procedural, object-oriented, functional or any other type of programming languages. jOOQ's philosophy is to give SQL the credit it deserves and integrate SQL itself as an <a href="http://en.wikipedia.org/wiki/Domain_Specific_Language">"internal domain specific language"</a> directly into Java.
+					</p>
+					<p>
+						With this philosophy in mind, SQL building is the main feature of jOOQ. All other features (such as <reference id="sql-execution"/> and <reference id="code-generation"/>) are mere convenience built on top of jOOQ's SQL building capabilities.
+					</p>
+					<p>
+						This section explains all about the various syntax elements involved with jOOQ's SQL building capabilities. For a complete overview of all syntax elements, please refer to the manual's section about <reference id="reference-bnf-notation"/>
+					</p>
+				</content>
 
 				<sections>
 					<section id="factory">
-						<title>Factory, Configuration and Settings</title>
-						<content></content>
+						<title>The Factory class</title>
+						<content>
+							<h3>The Factory and the jOOQ API</h3>
+							<p>
+								jOOQ exposes a lot of interfaces and hides most implementation facts from client code. The reasons for this are:
+							</p>
+							<ul>
+								<li>Interface-driven design. This allows for modelling queries in a fluent API most efficiently</li>
+								<li>Reduction of complexity for client code.</li>
+								<li>API guarantee. You only depend on the exposed interfaces, not concrete (potentially dialect-specific) implementations.</li>
+							</ul>
+							<p>
+								The <reference class="org.jooq.impl.Factory"/> class is the main class from where you will create all jOOQ objects.	The Factory serves two types of purposes:
+							</p>
+							<ol>
+								<li>It serves as a static factory for <reference id="table-expressions" title="table expressions"/>, <reference id="column-expressions" title="column expressions"/> (or "fields"), <reference id="conditional-expressions" title="conditional expressions"/> and many other <reference id="queryparts" title="QueryParts"/>.</li>
+								<li>It implements <reference class="org.jooq.Configuration"/>, an object that configures jOOQ's behaviour when executing queries (see <reference id="sql-execution"/> for more details). Factories allow for creating <reference id="sql-statements" title="SQL statements"/> that are already "configured" and ready for execution.</li>
+							</ol>
+
+							<h3>The static Factory API</h3>
+							<p>
+								With jOOQ 2.0, static factory methods have been introduced in order to make client code look more like SQL. Ideally, when working with jOOQ, you will simply static import all methods from the Factory class:
+							</p>
+							<java>import static org.jooq.impl.Factory.*;</java>
+							<p>
+							    Note, that when working with Eclipse, you could also add the Factory to your favourites. This will allow to access functions even more fluently:
+							</p>
+<java>concat(trim(FIRST_NAME), trim(LAST_NAME));
+// ... which is in fact the same as:
+Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</java>
+
+							<h3>The Factory as a Configuration object</h3>
+							<p>
+							    As any Configuration object, a Factory can be supplied with these objects:
+							</p>
+							<ul>
+								<li><reference class="org.jooq.SQLDialect"/> : The dialect of your database. This may be any of the currently supported database types (see <reference id="sql-dialect"/> for more details)</li>
+								<li><reference class="java.sql.Connection"/> : An optional JDBC Connection that will be re-used for the whole lifecycle of your Factory (see <reference id="connection-vs-datasource"/> for more details)</li>
+    							<li><reference class="java.sql.DataSource"/> : An optional JDBC DataSource that will be re-used for the whole lifecycle of your Factory. If you prefer using DataSources over Connections, jOOQ will internally fetch new Connections from your DataSource, conveniently closing them again after query execution. This is particularly useful in J2EE or Spring contexts (see <reference id="connection-vs-datasource"/> for more details)</li>
+    							<li><reference class="org.jooq.conf.Settings"/> : An optional runtime configuration (see <reference id="custom-settings"/> for more details)</li>
+							</ul>
+							<p>
+								As a Configuration object, a Factory can construct <reference id="sql-statements" title="statements"/>, for later <reference id="sql-execution" title="execution"/>. An example is given here:
+							</p>
+<java><![CDATA[// The Factory is "configured" with a Connection and a SQLDialect
+Factory create = new Factory(connection, dialect);
+
+// This select statement contains an internal reference to the Factory:
+Select<?> select = create.selectOne();
+
+// Using the internally referenced Factory, the select statement can now be executed:
+Result<?> result = select.fetch();]]></java>
+						</content>
 
 						<sections>
 							<section id="sql-dialect">
 								<title>SQL Dialect</title>
-								<content></content>
+								<content>
+									<h3>The SQL dialect corresponding to your database</h3>
+									<p>
+										While jOOQ tries to represent the SQL standard as much as possible, many features are vendor-specific to a given database and to its "SQL dialect". jOOQ models this using the <reference class="org.jooq.SQLDialect"/> enum type.
+									</p>
+									<p>
+										The SQL dialect is one of the main attributes of a <reference id="factory" title="Factory"/>. Queries created from such factories will assume dialect-specific behaviour when <reference id="sql-rendering" title="rendering SQL"/> and <reference id="variable-binding" title="binding bind values"/>.
+									</p>
+									<p>
+										Some parts of the jOOQ API are officially supported only by a given subset of the supported SQL dialects. For instance, the <reference id="connect-by-clause" title="Oracle CONNECT BY clause"/>, which is supported by the Oracle and CUBRID databases, is annotated with a <reference class="org.jooq.Support"/> annotation, as such:
+									</p>
+<java><![CDATA[/**
+ * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
+ */
+@Support({ CUBRID, ORACLE })
+SelectConnectByConditionStep connectBy(Condition condition);]]></java>
+									<p>
+									    jOOQ API methods which are not annotated with the <reference class="org.jooq.Support"/> annotation, or which are annotated with the Support annotation, but without any SQL dialects can be safely used in all SQL dialects. An example for this is the <reference id="select-statement" title="SELECT statement"/> factory method:
+									</p>
+<java><![CDATA[/**
+ * Create a new DSL select statement.
+ */
+@Support
+SelectSelectStep select(Field<?>... fields);]]></java>
+								</content>
 							</section>
 
 							<section id="connection-vs-datasource">
 								<title>Connection vs. DataSource</title>
-								<content></content>
+								<content>
+									<h3>Interact with JDBC Connections</h3>
+									<p>
+										While you can use jOOQ for <reference id="sql-building" title="SQL building"/> only, you can also run queries against a JDBC <reference class="java.sql.Connection"/>. Internally, jOOQ creates <reference class="java.sql.Statement"/> or <reference class="java.sql.PreparedStatement"/> objects from such a Connection, in order to execute statements. The normal operation mode is to provide a <reference id="factory" title="Factory"/> with a JDBC Connection, whose lifecycle you will control yourself. This means that jOOQ will not actively close connections, rollback or commit transactions.
+									</p>
+									<h3>Interact with JDBC DataSources</h3>
+									<p>
+										If you're in a J2EE or Spring context, however, you may wish to use a <reference class="javax.sql.DataSource"/> instead. Currently, Connections obtained from such a DataSource will be closed after query execution by jOOQ. The semantics of such a close operation should be the returning of the connection into a connection pool, not the actual closing of the underlying physical connection. Typically, this makes sense in an environment using distributed JTA transactions. An example of using DataSources with jOOQ can be seen in the tutorial section about <reference id="jooq-with-spring" title="using jOOQ with Spring"/>.
+									</p>
+								</content>
 							</section>
 
 							<section id="custom-settings">
 								<title>Custom Settings</title>
-								<content></content>
+								<content>
+									<h3>Factory settings</h3>
+									<p>
+										The jOOQ Factory allows for some optional configuration elements to be used by advanced users. The <reference class="org.jooq.conf.Settings" /> class is a JAXB-annotated type, that can be provided to a Factory in several ways:
+									</p>
+									<ul>
+										<li>In the constructor. This will override default settings below</li>
+										<li>From a location specified by a JVM parameter: -Dorg.jooq.settings</li>
+										<li>From the classpath at /jooq-settings.xml</li>
+										<li>From the settings defaults, as specified in <a href="http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd</a></li>
+									</ul>
+									<h3>Example</h3>
+									<p>
+										For example, if you want to indicate to jOOQ, that it should inline all bind variables, and execute static <reference class="java.sql.Statement"/> instead of binding its variables to <reference class="java.sql.PreparedStatement"/>, you can do so by using the following Factory:
+									</p>
+<java><![CDATA[Settings settings = new Settings();
+settings.setStatementType(StatementType.STATIC_STATEMENT);
+Factory create = new Factory(connection, dialect, settings);]]></java>
+									<p>
+										Subsequent sections of the manual contain some more in-depth explanations about these settings:
+									</p>
+									<ul>
+										<li>
+		     								<reference id="schema-mapping" title="Runtime schema and table mapping"/>
+		   								</li>
+		     							<li>
+		     								<reference id="execute-listeners" title="Execute listeners and SQL tracing"/>
+		     							</li>
+		     							<li>
+		     								<reference id="optimistic-locking" title="Execute CRUD with optimistic locking enabled"/>
+		     							</li>
+		     							<li>
+		     								<reference id="logging" title="Enabling DEBUG logging of all executed SQL"/>
+		     							</li>
+		   							</ul>
+		   							<p>
+										Please refer to the jOOQ runtime configuration XSD for more details:<br/>
+										<a href="http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd</a>
+									</p>
+								</content>
+							</section>
+
+							<section id="factory-subclasses">
+								<title>Factory subclasses</title>
+								<content>
+									<p>
+										There are a couple of subclasses for the general Factory. Each SQL dialect has its own dialect-specific factory. For instance, if you're only using the MySQL dialect, you can choose to create a new Factory using any of the following types:
+									</p>
+<java>// A general, dialect-unspecific factory
+Factory create = new Factory(connection, SQLDialect.MYSQL);
+
+// A MySQL-specific factory
+MySQLFactory create = new MySQLFactory(connection);</java>
+									<p>
+										The advantage of using a dialect-specific Factory lies in the fact,	that you have access to more proprietary RDMBS functionality. This may include:
+									</p>
+									<ul>
+		    							<li>MySQL's encryption functions</li>
+		    							<li>PL/SQL constructs, pgplsql, or any other dialect's ROUTINE-language (maybe in the future)</li>
+									</ul>
+									<p>
+										Another type of Factory subclasses are each generated schema's factories. If you generate your schema TEST, then you will have access to a TestFactory. By default, such a schema-specific Factory will not render the schema name.
+									</p>
+								</content>
 							</section>
 						</sections>
 					</section>
 
 					<section id="sql-statements">
 						<title>SQL Statements</title>
-						<content></content>
+						<content>
+							<h3>SQL statements as understood by jOOQ</h3>
+							<p>
+								jOOQ currently supports 6 types of SQL statements. All of these statements are constructed from a Factory instance with an optional <reference id="connection-vs-datasource" title="JDBC Connection or DataSource"/>. If supplied with a Connection or DataSource, they can be executed. Depending on the <reference id="query-vs-resultquery" title="query type"/>, executed queries can return results.
+							</p>
+						</content>
 
 						<sections>
 							<section id="dsl-and-non-dsl">
 								<title>jOOQ's DSL and non-DSL API</title>
-								<content></content>
+								<content>
+									<h3>The power of jOOQ's DSL API</h3>
+									<p>
+										jOOQ ships with its own DSL (or	<a href="http://en.wikipedia.org/wiki/Domain-specific_language" title="Domain Specific Language">Domain Specific Language</a>) that	simulates SQL in Java. This means, that you can	write SQL statements almost as if Java natively supported it, just like .NET's C# does with <a href="http://msdn.microsoft.com/en-us/library/bb425822.aspx">LINQ to SQL.</a>
+									</p>
+									<p>
+										Here is an example to illustrate what that means:
+									</p>
+<code-pair><sql><![CDATA[-- Select all books by authors born after 1920,
+-- named "Paulo" from a catalogue:
+SELECT *
+  FROM t_author a
+  JOIN t_book b ON a.id = b.author_id
+ WHERE a.year_of_birth > 1920
+   AND a.first_name = 'Paulo'
+ ORDER BY b.title]]></sql>
+<java><![CDATA[Result<Record> result =
+create.select()
+      .from(T_AUTHOR.as("a"))
+      .join(T_BOOK.as("b")).on(a.ID.equal(b.AUTHOR_ID))
+      .where(a.YEAR_OF_BIRTH.greaterThan(1920)
+      .and(a.FIRST_NAME.equal("Paulo")))
+      .orderBy(b.TITLE)
+      .fetch();]]></java></code-pair>
+
+									<p>
+										We'll see how the aliasing works later in the section about <reference id="aliasing" title="aliasing"/>
+									</p>
+
+									<h3>jOOQ as an internal domain specific language in Java</h3>
+									<p>
+										Many other frameworks have similar APIs with similar feature sets. Yet, what makes jOOQ special is its informal <reference id="reference-bnf-notation" title="BNF notation"/> modeling a unified SQL dialect suitable for many vendor-specific dialects, and implementing that BNF notation as a hierarchy of interfaces in Java. This concept is extremely powerful, when <reference id="jooq-in-modern-ides" title="using jOOQ in modern IDEs" /> with syntax completion. Not only can you code much faster, your SQL code will be compile-checked to a certain extent. An example of a DSL query equivalent to the previous one is given here:
+									</p>
+<java><![CDATA[Factory create = new Factory(connection, dialect);
+Result<?> result = create.select()
+                         .from(AUTHOR)
+                         .join(BOOK).on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+                         .fetch();]]></java>
+
+                         			<p>
+                         				Unlike other, simpler frameworks that use <a href="http://en.wikipedia.org/wiki/Fluent_interface">"fluent APIs"</a> or <a href="http://en.wikipedia.org/wiki/Method_chaining">"method chaining"</a>, jOOQ's BNF-based interface hierarchy will not allow bad query syntax. The following will not compile, for instance:
+                         			</p>
+<java><![CDATA[Factory create = new Factory(connection, dialect);
+Result<?> result = create.select()
+                         .join(BOOK).on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+                      //  ^^^^ "join" is not possible here
+                         .from(AUTHOR)
+                         .fetch();
+
+Result<?> result = create.select()
+                         .from(AUTHOR)
+                         .join(BOOK)
+                         .fetch();
+                      //  ^^^^^ "on" is missing here
+
+Result<?> result = create.select(rowNumber())
+                      //         ^^^^^^^^^ "over()" is missing here
+                         .from(AUTHOR)
+                         .fetch();]]></java>
+
+									<h3>History of SQL building and incremental query building</h3>
+									<p>
+										Historically, jOOQ started out as an object-oriented SQL builder library like any other. This meant that all queries and their syntactic components were modeled as so-called <reference id="queryparts" title="QueryParts"/>, which delegate <reference id="sql-rendering" title="SQL rendering"/> and <reference id="variable-binding" title="variable binding"/> to child components. This part of the API will be referred to as the non-DSL API, which is still maintained and used internally by jOOQ for incremental query building. An example of incremental query building is given here:
+									</p>
+<java><![CDATA[Factory create = new Factory(connection, dialect);
+SelectQuery query = create.selectQuery();
+query.addFrom(AUTHOR);
+
+// Join books only under certain circumstances
+if (join) {
+    query.addJoin(BOOK, BOOK.AUTHOR_ID.equal(AUTHOR.ID));
+}
+
+Result<?> result = query.fetch();]]></java>
+
+									<p>
+										This query is equivalent to the one shown before using the DSL syntax. In fact, internally, the DSL API constructs precisely this QueryObject. Note, that you can always access the SelectQuery object to switch between DSL and non-DSL APIs:
+									</p>
+
+<java><![CDATA[Factory create = new Factory(connection, dialect);
+SelectFinalStep select = create.select().from(AUTHOR);
+
+// Add the JOIN clause on the internal QueryObject representation
+SelectQuery query = select.getQuery();
+query.addJoin(BOOK, BOOK.AUTHOR_ID.equal(AUTHOR.ID));]]></java>
+								</content>
 							</section>
 
 							<section id="select-statement">
 								<title>The SELECT statement</title>
-								<content></content>
+								<content>
+									<h3>SELECT from ad-hoc table expressions</h3>
+									<p>
+										When you don't just perform <reference id="crud-with-updatablerecords" title="CRUD"/> (i.e. SELECT * FROM your_table WHERE ID = ?), you're usually generating new record types using custom projections. With jOOQ, this is as intuitive, as if using SQL directly. A more or less complete example of the "standard" SQL syntax, plus some extensions, is provided by a query like this:
+									</p>
+<code-pair>
+<sql>-- get all authors' first and last names, and the number
+-- of books they've written in German, if they have written
+-- more than five books in German in the last three years
+-- (from 2011), and sort those authors by last names
+-- limiting results to the second and third row, locking
+-- the rows for a subsequent update... whew!
+
+  SELECT AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, COUNT(*)
+    FROM AUTHOR
+    JOIN BOOK ON AUTHOR.ID = BOOK.AUTHOR_ID
+   WHERE BOOK.LANGUAGE = 'DE'
+     AND BOOK.PUBLISHED > '2008-01-01'
+GROUP BY AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME
+  HAVING COUNT(*) > 5
+ORDER BY AUTHOR.LAST_NAME ASC NULLS FIRST
+   LIMIT 2
+  OFFSET 1
+     FOR UPDATE</sql>
+<java>
+
+
+
+
+
+Factory create = new Factory(connection, dialect);
+
+create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
+      .from(AUTHOR)
+      .join(BOOK).on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+      .where(BOOK.LANGUAGE.equal("DE"))
+      .and(BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')))
+      .groupBy(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+      .having(count().greaterThan(5))
+      .orderBy(AUTHOR.LAST_NAME.asc().nullsFirst())
+      .limit(1)
+      .offset(2)
+      .forUpdate();</java>
+</code-pair>
+
+									<p>
+										Details about the various clauses of this query will be provided in subsequent sections
+									</p>
+
+									<h3>SELECT from single physical tables</h3>
+									<p>
+										A very similar, but limited API is available, if you want to select from single physical tables in order to retrieve <reference id="crud-with-updatablerecords" title="TableRecords or even UpdatableRecords"/>. The decision, which type of select to create is already made at the very first step, when you create the SELECT statement with the Factory:
+									</p>
+
+<java><![CDATA[public <R extends Record> SimpleSelectWhereStep<R> selectFrom(Table<R> table);]]></java>
+									<p>
+										As you can see, there is no way to further restrict/project the selected fields. This just selects all known TableFields in the supplied Table, and it also binds &lt;R extends Record&gt; to your Table's associated Record. An example of such a Query would then be:
+									</p>
+<java><![CDATA[Book book = create.selectFrom(BOOK)
+                  .where(BOOK.LANGUAGE.equal("DE"))
+                  .orderBy(BOOK.TITLE)
+                  .fetchAny();]]></java>
+
+                   					<p>
+                   						The simple SELECT API is limited in the way that it does not support any of these clauses:
+                   					</p>
+                   					<ul>
+                   						<li><reference id="select-clause"/></li>
+                   						<li><reference id="join-clause"/></li>
+                   						<li><reference id="group-by-clause"/></li>
+                   						<li><reference id="having-clause"/></li>
+                   					</ul>
+                   					<p>
+                   						In most parts of this manual, it is assumed that you do not use the simple SELECT API.
+                   					</p>
+								</content>
 
 								<sections>
 									<section id="select-clause">
 										<title>The SELECT clause</title>
-										<content></content>
+										<content>
+											<h3>The SELECT clause, projecting your own record types</h3>
+											<p>
+												The SELECT clause lets you project your own record types, referencing table fields, functions, arithmetic expressions, etc. The Factory provides several methods for expressing a SELECT clause:
+											</p>
+
+<code-pair><java><![CDATA[// You can provide a varargs Fields list to the SELECT clause:
+Select<?> select1 = create.select(BOOK.ID, BOOK.TITLE);
+Select<?> select2 = create.select(BOOK.ID, trim(BOOK.TITLE));]]></java>
+<sql><![CDATA[
+
+SELECT BOOK.ID, BOOK.TITLE
+SELECT BOOK.ID, TRIM(BOOK.TITLE)
+]]></sql></code-pair>
+
+											<p>
+												Some commonly used projections can be easily created using convenience methods:
+											</p>
+
+<code-pair><java><![CDATA[// Select commonly used values
+Select<?> select1 = create.selectCount();
+Select<?> select2 = create.selectZero();
+Select<?> select2 = create.selectOne();]]></java>
+<sql><![CDATA[
+
+SELECT COUNT(*)
+SELECT 0 -- Not a bind variable
+SELECT 1 -- Not a bind variable
+]]></sql></code-pair>
+
+											<p>
+												See more details about functions and expressions in the manual's section about <reference id="column-expressions"/>
+											</p>
+
+											<h3>The SELECT DISTINCT clause</h3>
+											<p>
+												The DISTINCT keyword can be included in the method name, constructing a SELECT clause
+											</p>
+
+<code-pair><java><![CDATA[Select<?> select1 = create.selectDistinct(BOOK.TITLE);]]></java>
+<sql><![CDATA[SELECT DISTINCT BOOK.TITLE]]></sql></code-pair>
+										</content>
 									</section>
 
 									<section id="from-clause">
 										<title>The FROM clause</title>
-										<content></content>
+										<content>
+											<h3>The FROM clause, allowing to specify a list of table expressions</h3>
+											<p>
+												The SQL FROM clause allows for specifying any number of <reference id="table-expressions" title="table expressions"/> to select data from. The following are examples of how to form normal FROM clauses:
+											</p>
+
+<code-pair>
+	<sql><![CDATA[SELECT 1 FROM BOOK
+SELECT 1 FROM BOOK, AUTHOR
+SELECT 1 FROM BOOK "b", AUTHOR "a"]]></sql>
+	<java><![CDATA[create.selectOne().from(BOOK);
+create.selectOne().from(BOOK, AUTHOR);
+create.selectOne().from(BOOK.as("b"), AUTHOR.as("a"));]]></java>
+</code-pair>
+
+											<p>
+												Read more about aliasing in the manual's section about <reference id="aliasing" title="aliasing"/>.
+											</p>
+
+											<h3>Selecting FROM DUAL with jOOQ</h3>
+											<p>
+												In many SQL dialects, FROM is a mandatory clause, in some it isn't. jOOQ allows you to omit the FROM clause, returning just one record. An example:
+											</p>
+
+<code-pair>
+	<sql><![CDATA[SELECT 1 FROM DUAL
+SELECT 1]]></sql>
+	<java><![CDATA[new Factory(SQLDialect.ORACLE).selectOne().getSQL();
+new Factory(SQLDialect.POSTGRES).selectOne().getSQL();]]></java>
+</code-pair>
+
+											<p>
+												Read more about dual or dummy tables in the manual's section about <reference id="dual" title="the DUAL table"/>. The following are examples of how to form normal FROM clauses:
+											</p>
+										</content>
 									</section>
 
 									<section id="join-clause">
 										<title>The JOIN clause</title>
-										<content></content>
+										<content>
+											<h3>Complex table expressions using the JOIN clause</h3>
+											<p>
+												jOOQ supports many different types of standard SQL JOIN operations:
+											</p>
+											<ul>
+												<li>[ INNER ] JOIN</li>
+												<li>LEFT [ OUTER ] JOIN</li>
+												<li>RIGHT [ OUTER ] JOIN</li>
+												<li>FULL OUTER JOIN</li>
+												<li>CROSS JOIN</li>
+												<li>NATURAL JOIN</li>
+												<li>NATURAL LEFT [ OUTER ] JOIN</li>
+												<li>NATURAL RIGHT [ OUTER ] JOIN</li>
+											</ul>
+
+											<p>
+												All of these JOIN methods can be called on <reference class="org.jooq.Table"/> types, or directly after the FROM clause for convenience. The following example joins AUTHOR and BOOK
+											</p>
+
+<java><![CDATA[Factory create = new Factory(connection, dialect);
+
+// Call "join" directly on the AUTHOR table
+Result<?> result = create.select()
+                         .from(AUTHOR.join(BOOK)
+                                     .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID)))
+                         .fetch();
+
+// Call "join" on the type returned by "from"
+Result<?> result = create.select()
+                         .from(AUTHOR)
+                         .join(BOOK)
+                         .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+                         .fetch();]]></java>
+
+											<p>
+												The two syntaxes will produce the same SQL statement. However, calling "join" on <reference class="org.jooq.Table"/> objects allows for more powerful, nested JOIN expressions (if you can handle the parentheses):
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT *
+FROM AUTHOR
+LEFT OUTER JOIN (
+  BOOK JOIN BOOK_TO_BOOK_STORE
+       ON BOOK_TO_BOOK_STORE.BOOK_ID = BOOK.ID
+)
+ON BOOK.AUTHOR_ID = AUTHOR.ID]]></sql>
+<java><![CDATA[// Nest joins and provide JOIN conditions only at the end
+create.select()
+      .from(AUTHOR
+      .leftOuterJoin(BOOK
+        .join(BOOK_TO_BOOK_STORE)
+        .on(BOOK_TO_BOOK_STORE.BOOK_ID.equal(BOOK.ID)))
+      .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID)));]]></java></code-pair>
+											<h3>Oracle's partitioned OUTER JOIN</h3>
+										</content>
 									</section>
 
 									<section id="where-clause">
@@ -388,6 +962,16 @@
 								<content></content>
 							</section>
 
+						    <section id="sql-rendering">
+							    <title>SQL rendering</title>
+								<content></content>
+							</section>
+
+						    <section id="variable-binding">
+							    <title>Variable binding</title>
+								<content></content>
+							</section>
+
 						    <section id="custom-queryparts">
 							    <title>Custom QueryParts</title>
 								<content></content>
@@ -633,17 +1217,27 @@
 				<content></content>
 
 				<sections>
-					<section id="data-types">
+					<section id="supported-rdbms">
+						<title>Supported RDBMS</title>
+						<content></content>
+					</section>
+
+					<section id="reference-data-types">
 						<title>Data types</title>
 						<content></content>
 					</section>
 
-					<section id="functions">
+					<section id="reference-functions">
 						<title>Functions</title>
 						<content></content>
 					</section>
 
-					<section id="glossary">
+					<section id="reference-bnf-notation">
+						<title>jOOQ's BNF pseudo-notation</title>
+						<content></content>
+					</section>
+
+					<section id="reference-glossary">
 						<title>Glossary</title>
 						<content></content>
 					</section>

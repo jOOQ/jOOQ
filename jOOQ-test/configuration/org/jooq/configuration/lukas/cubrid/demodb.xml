@@ -17,7 +17,6 @@
             <unsignedTypes>true</unsignedTypes>
         </database>
         <generate>
-            <relations>true</relations>
             <navigationMethods>true</navigationMethods>
             <deprecated>false</deprecated>
             <instanceFields>true</instanceFields>

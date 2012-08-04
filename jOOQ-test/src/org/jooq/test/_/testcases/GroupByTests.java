@@ -291,6 +291,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             // HAVING without GROUP BY is not supported by some dialects,
             // So this exception is OK
             switch (getDialect()) {
+
+                // [#1665] TODO: Add support for the empty GROUP BY () clause
                 case SQLITE:
                     log.info("SKIPPING", "HAVING without GROUP BY is not supported: " + e.getMessage());
                     break;

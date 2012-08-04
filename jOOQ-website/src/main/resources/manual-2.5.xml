@@ -278,6 +278,21 @@ SelectConnectByConditionStep connectBy(Condition condition);]]></java>
  */
 @Support
 SelectSelectStep select(Field<?>... fields);]]></java>
+
+									<h3>jOOQ and the Oracle SQL dialect</h3>
+									<p>
+										Oracle SQL is much more expressive than many other SQL dialects. It features many unique keywords, clauses and functions that are out of scope for the SQL standard. Some examples for this are
+									</p>
+									<ul>
+										<li>The <reference id="connect-by-clause" title="CONNECT BY clause"/>, for hierarchical queries</li>
+										<li>The <reference id="pivot-tables" title="PIVOT"/> keyword for creating PIVOT tables</li>
+										<li><reference id="oracle-packages" title="Packages"/>, <reference id="oracle-member-procedures" title="object-oriented user-defined types, member procedures"/> as described in the section about <reference id="stored-procedures" title="stored procedures and functions"/></li>
+										<li>Advanced analytical functions as described in the section about <reference id="window-functions" title="window functions"/></li>
+									</ul>
+
+									<p>
+										jOOQ has a historic affinity to Oracle's SQL extensions. If something is supported in Oracle SQL, it has a high probability of making it into the jOOQ API
+									</p>
 								</content>
 							</section>
 
@@ -408,7 +423,7 @@ create.select()
 
 									<h3>jOOQ as an internal domain specific language in Java</h3>
 									<p>
-										Many other frameworks have similar APIs with similar feature sets. Yet, what makes jOOQ special is its informal <reference id="reference-bnf-notation" title="BNF notation"/> modeling a unified SQL dialect suitable for many vendor-specific dialects, and implementing that BNF notation as a hierarchy of interfaces in Java. This concept is extremely powerful, when <reference id="jooq-in-modern-ides" title="using jOOQ in modern IDEs" /> with syntax completion. Not only can you code much faster, your SQL code will be compile-checked to a certain extent. An example of a DSL query equivalent to the previous one is given here:
+										Many other frameworks have similar APIs with similar feature sets. Yet, what makes jOOQ special is its informal <reference id="reference-bnf-notation" title="BNF notation"/> modelling a unified SQL dialect suitable for many vendor-specific dialects, and implementing that BNF notation as a hierarchy of interfaces in Java. This concept is extremely powerful, when <reference id="jooq-in-modern-ides" title="using jOOQ in modern IDEs" /> with syntax completion. Not only can you code much faster, your SQL code will be compile-checked to a certain extent. An example of a DSL query equivalent to the previous one is given here:
 									</p>
 <java><![CDATA[Factory create = new Factory(connection, dialect);
 Result<?> result = create.select()
@@ -686,38 +701,438 @@ create.select()
         .join(BOOK_TO_BOOK_STORE)
         .on(BOOK_TO_BOOK_STORE.BOOK_ID.equal(BOOK.ID)))
       .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID)));]]></java></code-pair>
+
+      										<ul>
+      											<li>See the section about <reference id="conditional-expressions" title="conditional expressions"/> to learn more about the many ways to create <reference class="org.jooq.Condition"/> objects in jOOQ.</li>
+      											<li>See the section about <reference id="table-expressions" title="table expressions"/> to learn about the various ways of referencing <reference class="org.jooq.Table"/> objects in jOOQ</li>
+      										</ul>
+
+											<h3>JOIN ON KEY, convenience provided by jOOQ</h3>
+											<p>
+												Surprisingly, SQL does not allow to formally JOIN on well-known foreign key relationship information. Naturally, when you join BOOK to AUTHOR, you will want to do that based on the BOOK.AUTHOR_ID foreign key to AUTHOR.ID primary key relation. Not being able to do this in SQL leads to a lot of repetitive code, re-writing the same JOIN predicate again and again - especially, when your foreign keys contain more than one column. With jOOQ, when you use <reference id="code-generation" title="code generation"/>, you can use foreign key constraint information in JOIN expressions as such:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT *
+FROM AUTHOR
+JOIN BOOK ON BOOK.AUTHOR_ID = AUTHOR.ID]]></sql>
+<java><![CDATA[create.select()
+      .from(AUTHOR)
+      .join(BOOK).onKey();]]></java></code-pair>
+
+      										<p>
+      											In case of ambiguity, you can also supply field references for your foreign keys, or the generated foreign key reference to the onKey() method.
+      										</p>
+
+											<h3>The JOIN USING syntax</h3>
+											<p>
+												Most often, you will provide jOOQ with JOIN conditions in the JOIN .. ON clause. SQL supports a different means of specifying how two tables are to be joined. This is the JOIN .. USING clause. Instead of a condition, you supply a set of fields whose names are common to both tables to the left and right of a JOIN operation. This can be useful when your database schema has a high degree of <a href="http://en.wikipedia.org/wiki/Database_normalization">relational normalisation</a>. An example:
+											</p>
+
+<code-pair>
+<sql><![CDATA[-- Assuming that both tables contain AUTHOR_ID columns
+SELECT *
+FROM AUTHOR
+JOIN BOOK USING (AUTHOR_ID)]]></sql>
+<java><![CDATA[
+
+create.select()
+      .from(AUTHOR)
+      .join(BOOK).using(AUTHOR.AUTHOR_ID);]]></java></code-pair>
+
+											<p>
+												In schemas with high degrees of normalisation, you may also choose to use NATURAL JOIN, which takes no JOIN arguments as it joins using all fields that are common to the table expressions to the left and to the right of the JOIN operator. An example:
+											</p>
+
+<code-pair>
+<sql><![CDATA[-- Assuming that both tables contain AUTHOR_ID columns
+SELECT *
+FROM AUTHOR
+NATURAL JOIN BOOK]]></sql>
+<java><![CDATA[
+
+create.select()
+      .from(AUTHOR)
+      .naturalJoin(BOOK);]]></java></code-pair>
+
 											<h3>Oracle's partitioned OUTER JOIN</h3>
+											<p>
+												Oracle SQL ships with a special syntax available for OUTER JOIN clauses. According to the <a href="http://docs.oracle.com/cd/B28359_01/server.111/b28286/statements_10002.htm#i2196190">Oracle documentation about partitioned outer joins</a> this can be used to fill gaps for simplified analytical calculations. jOOQ only supports putting the PARTITION BY clause to the right of the OUTER JOIN clause. The following example will create at least one record per AUTHOR and per existing value in BOOK.PUBLISHED_IN, regardless if an AUTHOR has actually published a book in that year.
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT *
+FROM AUTHOR
+LEFT OUTER JOIN BOOK
+PARTITION BY (PUBLISHED_IN)
+ON BOOK.AUTHOR_ID = AUTHOR.ID]]></sql>
+<java><![CDATA[create.select()
+      .from(AUTHOR)
+      .leftOuterJoin(BOOK)
+      .partitionBy(BOOK.PUBLISHED_IN)
+      .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID));]]></java></code-pair>
+
 										</content>
 									</section>
 
 									<section id="where-clause">
 										<title>The WHERE clause</title>
-										<content></content>
+										<content>
+											<h3>Apply filtering predicates in the WHERE clause</h3>
+											<p>
+												The WHERE clause can be used for JOIN or filter predicates, in order to restrict the data returned by the <reference id="table-expressions" title="table expressions"/> supplied to the previously specified <reference id="from-clause" title="from clause"/> and <reference id="join-clause" title="join clause"/>. Here is an example:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT *
+FROM BOOK
+WHERE AUTHOR_ID = 1
+AND TITLE = '1984']]></sql>
+<java><![CDATA[create.select()
+      .from(BOOK)
+      .where(BOOK.AUTHOR_ID.equal(1))
+      .and(BOOK.TITLE.equal("1984"));]]></java></code-pair>
+
+											<p>
+												The above syntax is convenience provided by jOOQ, allowing you to connect the <reference class="org.jooq.Condition"/> supplied in the WHERE clause with another condition using an AND operator. You can of course also create a more complex condition and supply that to the WHERE clause directly (observe the different placing of parentheses). The results will be the same:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT *
+FROM BOOK
+WHERE AUTHOR_ID = 1
+AND TITLE = '1984']]></sql>
+<java><![CDATA[create.select()
+      .from(BOOK)
+      .where(BOOK.AUTHOR_ID.equal(1).and(
+             BOOK.TITLE.equal("1984")));]]></java></code-pair>
+
+											<p>
+												You will find more information about creating <reference id="conditional-expressions" title="conditional expressions"/> later in the manual.
+											</p>
+										</content>
 									</section>
 
 									<section id="connect-by-clause">
 										<title>The CONNECT BY clause</title>
-										<content></content>
+										<content>
+											<h3>Oracle's syntax for creating hierarchical queries</h3>
+											<p>
+												The Oracle database knows a very succinct syntax for creating hierarchical queries: the CONNECT BY clause, which is fully supported by jOOQ, including all related functions and pseudo-columns. A more or less formal definition of this clause is given here:
+											</p>
+<sql>--   SELECT ..
+--     FROM ..
+--    WHERE ..
+ CONNECT BY [NOCYCLE] condition [AND condition, ...] [START WITH condition]
+-- GROUP BY ..</sql>
+
+											<p>
+												An example for an iterative query, iterating through values between 1 and 5 is this:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT LEVEL
+FROM DUAL
+CONNECT BY LEVEL <= 5]]></sql>
+<java><![CDATA[// Get a table with elements 1, 2, 3, 4, 5
+create.select(level())
+      .connectBy(level().lessOrEqual(5));]]></java></code-pair>
+
+											<p>
+												Here's a more complex example where you can recursively fetch directories in your database, and concatenate them to a path:
+											</p>
+<code-pair>
+<sql><![CDATA[SELECT SUBSTR(SYS_CONNECT_BY_PATH(DIRECTORY.NAME, '/'), 2)
+FROM DIRECTORY
+CONNECT BY PRIOR DIRECTORY.ID = DIRECTORY_PARENT_ID
+START WITH DIRECTORY.PARENT_ID IS NULL
+ORDER BY 1]]></sql>
+<java><![CDATA[create.select(sysConnectByPath(DIRECTORY.NAME, "/").substring(2))
+      .from(DIRECTORY)
+      .connectBy(prior(DIRECTORY.ID).equal(DIRECTORY.PARENT_ID))
+      .startWith(DIRECTORY.PARENT_ID.isNull())
+      .orderBy(one());]]></java>
+</code-pair>
+
+    										<p>
+    											The output might then look like this
+   											</p>
+
+<text>+------------------------------------------------+
+|substring                                       |
++------------------------------------------------+
+|C:                                              |
+|C:/eclipse                                      |
+|C:/eclipse/configuration                        |
+|C:/eclipse/dropins                              |
+|C:/eclipse/eclipse.exe                          |
++------------------------------------------------+
+|...21 record(s) truncated...
+</text>
+
+											<p>
+												Some of the supported functions and pseudo-columns are these (available from the <reference id="factory" title="Factory"/>):
+											</p>
+
+											<ul>
+												<li>LEVEL</li>
+												<li>CONNECT_BY_IS_CYCLE</li>
+												<li>CONNECT_BY_IS_LEAF</li>
+												<li>CONNECT_BY_ROOT</li>
+												<li>SYS_CONNECT_BY_PATH</li>
+												<li>PRIOR</li>
+											</ul>
+
+											<p>
+												Note that this syntax is also supported in the CUBRID database.
+											</p>
+										</content>
 									</section>
 
 									<section id="group-by-clause">
 										<title>The GROUP BY clause</title>
-										<content></content>
+										<content>
+											<h3>The GROUP BY clause used for grouping and aggregations</h3>
+											<p>
+												GROUP BY can be used to create unique groups of data, to form aggregations, to remove duplicates and for other reasons. It will transform your previously defined <reference id="table-expressions" title="set of table expressions"/>, and return only one record per unique group as specified in this clause. For instance, you can group books by BOOK.AUTHOR_ID:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT AUTHOR_ID, COUNT(*)
+FROM BOOK
+GROUP BY AUTHOR_ID]]></sql>
+<java><![CDATA[create.select(BOOK.AUTHOR_ID, count())
+      .from(BOOK)
+      .groupBy(AUTHOR_ID);]]></java></code-pair>
+
+											<p>
+												As defined in the SQL standard, when grouping, you may no longer project any columns that are not a formal part of the GROUP BY clause, or <reference id="aggregate-functions" title="aggregate functions"/>. The above example counts all books per author
+											</p>
+
+											<h3>MySQL's deviation from the SQL standard</h3>
+											<p>
+												MySQL has a peculiar way of not adhering to this standard behaviour. This is documented in the <a href="http://dev.mysql.com/doc/refman/5.6/en/group-by-hidden-columns.html">MySQL manual</a>. In short, with MySQL, you can also project any other field that are not part of the GROUP BY clause. The projected values will just be arbitrary values from within the group. You cannot rely on any ordering. For example:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT AUTHOR_ID, TITLE
+FROM BOOK
+GROUP BY AUTHOR_ID]]></sql>
+<java><![CDATA[create.select(BOOK.AUTHOR_ID, BOOK.TITLE)
+      .from(BOOK)
+      .groupBy(AUTHOR_ID);]]></java></code-pair>
+
+											<p>
+												This will return an arbitrary title per author. jOOQ supports this syntax, as jOOQ is not doing any checks internally, about the consistence of tables/fields/functions that you provide it.
+											</p>
+
+											<h3>ROLLUP(), CUBE() and GROUPING SETS()</h3>
+											<p>
+												Some databases support the SQL standard grouping functions and some extensions thereof. See the manual's section about <reference id="grouping-functions" title="grouping functions"/> for more details.
+											</p>
+										</content>
 									</section>
 
 									<section id="having-clause">
 										<title>The HAVING clause</title>
-										<content></content>
+										<content>
+											<h3>Restrict results from the GROUP BY clause using HAVING</h3>
+											<p>
+												The HAVING clause is commonly used to further restrict data resulting from a previously issued <reference id="group-by-clause" title="GROUP BY clause"/>. An example, selecting only those authors that have written at least two books:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT AUTHOR_ID, COUNT(*)
+FROM BOOK
+GROUP BY AUTHOR_ID
+HAVING COUNT(*) >= 2]]></sql>
+<java><![CDATA[create.select(BOOK.AUTHOR_ID, count(*))
+      .from(BOOK)
+      .groupBy(AUTHOR_ID)
+      .having(count().greaterOrEqual(2));]]></java></code-pair>
+
+											<p>
+												According to the SQL standard, you may omit the GROUP BY clause and still issue a HAVING clause. This will implicitly GROUP BY (). jOOQ also supports this syntax. The following example selects one record, only if there are at least 4 books in the books table:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT COUNT(*)
+FROM BOOK
+HAVING COUNT(*) >= 4]]></sql>
+<java><![CDATA[create.select(count(*))
+      .from(BOOK)
+      .having(count().greaterOrEqual(4));]]></java></code-pair>
+
+										</content>
 									</section>
 
 									<section id="order-by-clause">
 										<title>The ORDER BY clause</title>
-										<content></content>
+										<content>
+											<h3>The ORDER BY clause</h3>
+											<p>
+												Databases are allowed to return data in any arbitrary order, unless you explicitly declare that order in the ORDER BY clause. In jOOQ, this is straight-forward:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT AUTHOR_ID, TITLE
+FROM BOOK
+ORDER BY AUTHOR_ID ASC, TITLE DESC]]></sql>
+<java><![CDATA[create.select(BOOK.AUTHOR_ID, BOOK.TITLE)
+      .from(BOOK)
+      .orderBy(BOOK.AUTHOR_ID.asc(), BOOK.TITLE.desc());]]></java></code-pair>
+
+											<p>
+												Any jOOQ <reference id="column-expressions" title="column expression (or field)"/> can be transformed into an <reference class="org.jooq.SortField"/> by calling the asc() and desc() methods.
+											</p>
+
+											<h3>Ordering by field index</h3>
+											<p>
+												The SQL standard allows for specifying integer literals (<reference id="inlined-parameters" title="literals"/>, not <reference id="bind-values" title="bind values"/>!) to reference column indexes from the projection (<reference id="select-clause" title="SELECT clause"/>). This may be useful if you do not want to repeat a lengthy expression, by which you want to order - although most databases also allow for referencing <reference id="aliasing" title="aliased column references"/> in the ORDER BY clause. An example of this is given here:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT AUTHOR_ID, TITLE
+FROM BOOK
+ORDER BY 1 ASC, 2 DESC]]></sql>
+<java><![CDATA[create.select(BOOK.AUTHOR_ID, BOOK.TITLE)
+      .from(BOOK)
+      .orderBy(one().asc(), inline(2).desc());]]></java></code-pair>
+
+											<p>
+												Note, how one() is used as a convenience short-cut for inline(1)
+											</p>
+
+											<h3>Ordering and NULLS</h3>
+											<p>
+												A few databases support the SQL standard "null ordering" clause in sort specification lists, to define whether NULL values should come first or last in an ordered result.
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT AUTHOR_ID, CO_AUTHOR_ID, TITLE
+FROM BOOK
+ORDER BY AUTHOR_ID ASC,
+         CO_AUTHOR_ID ASC NULLS LAST]]></sql>
+<java><![CDATA[create.select(BOOK.AUTHOR_ID, BOOK.CO_AUTHOR_ID, BOOK.TITLE)
+      .from(BOOK)
+      .orderBy(BOOK.AUTHOR_ID.asc(),
+               BOOK.CO_AUTHOR_ID.asc().nullsLast());]]></java></code-pair>
+
+											<p>
+												If your database doesn't support this syntax, jOOQ simulates it using a <reference id="case-expressions" title="CASE expression"/> as follows
+											</p>
+<code-pair>
+<sql><![CDATA[SELECT AUTHOR_ID, CO_AUTHOR_ID, TITLE
+FROM BOOK
+ORDER BY AUTHOR_ID ASC,
+    CASE WHEN CO_AUTHOR_ID IS NULL THEN 1 ELSE 0 END ASC,
+         CO_AUTHOR_ID ASC]]></sql>
+<java><![CDATA[
+
+create.select(BOOK.AUTHOR_ID, BOOK.CO_AUTHOR_ID, BOOK.TITLE)
+      .from(BOOK)
+      .orderBy(BOOK.AUTHOR_ID.asc(),
+               BOOK.CO_AUTHOR_ID.asc().nullsLast());]]></java></code-pair>
+
+											<h3>Ordering using CASE expressions</h3>
+											<p>
+												Using <reference id="case-expressions" title="CASE expressions"/> in SQL ORDER BY clauses is a common pattern, if you want to introduce some sort indirection / sort mapping into your queries. As with SQL, you can add any type of <reference id="column-expressions" title="column expression"/> into your ORDER BY clause. For instance, if you have two favourite books that you always want to appear on top, you could write:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT *
+FROM BOOK
+ORDER BY CASE TITLE
+         WHEN '1984' THEN 0
+         WHEN 'Animal Farm' THEN 1
+         ELSE 2 END ASC]]></sql>
+<java><![CDATA[create.select()
+      .from(BOOK)
+      .orderBy(decode().value(BOOK.TITLE)
+                       .when("1984", 0)
+                       .when("Animal Farm", 1)
+                       .otherwise(2).asc());]]></java></code-pair>
+
+											<p>
+												But writing these things can become quite verbose. jOOQ supports a convenient syntax for specifying sort mappings. The same query can be written in jOOQ as such:
+											</p>
+
+<java><![CDATA[create.select()
+      .from(BOOK)
+      .orderBy(BOOK.TITLE.sortAsc("1984", "Animal Farm"));]]></java>
+
+      										<p>
+      											Of course, you can combine this feature with the previously discussed NULLS FIRST / NULLS LAST feature. So, if in fact these two books are the ones you like least, you can put all NULLS FIRST (all the other books):
+      										</p>
+
+<java><![CDATA[create.select()
+      .from(BOOK)
+      .orderBy(BOOK.TITLE.sortAsc("1984", "Animal Farm").nullsFirst());]]></java>
+
+											<h3>jOOQ's understanding of SELECT .. ORDER BY</h3>
+											<p>
+												The SQL standard defines that a "query expression" can be ordered, and that query expressions can contain <reference id="union-clause" title="UNION, INTERSECT and EXCEPT clauses"/>, whose subqueries cannot be ordered. While this is defined as such in the SQL standard, many databases allowing for the non-standard <reference id="limit-clause" title="LIMIT clause"/> in one way or another, do not adhere to this part of the SQL standard. Hence, jOOQ allows for ordering all SELECT statements, regardless whether they are constructed as a part of a UNION or not. Corner-cases are handled internally by jOOQ, by introducing synthetic subselects to adhere to the correct syntax, where this is needed.
+											</p>
+										</content>
 									</section>
 
 									<section id="limit-clause">
-										<title>The LIMIT clause</title>
-										<content></content>
+										<title>The LIMIT .. OFFSET clause</title>
+										<content>
+											<h3>The non-standard LIMIT .. OFFSET clause</h3>
+											<p>
+												While being extremely useful for every application that does paging, or just to limit result sets to reasonable sizes, this clause is not yet part of any SQL standard (up until SQL:2008). Hence, there exist a variety of possible implementations in various SQL dialects, concerning this limit clause. jOOQ chose to implement the LIMIT .. OFFSET clause as understood and supported by MySQL, H2, HSQLDB, Postgres, and SQLite. Here is an example of how to apply limits with jOOQ:
+											</p>
+
+<java><![CDATA[create.select().from(BOOK).limit(1).offset(2);]]></java>
+
+											<p>
+												This will limit the result to 1 books starting with the 2nd book (starting at offset 0!). limit() is supported in all dialects, offset() in all but Sybase ASE, which has no reasonable means to simulate it. This is how jOOQ simulates the above query in various SQL dialects:
+											</p>
+
+<sql><![CDATA[-- MySQL, H2, HSQLDB, Postgres, and SQLite
+SELECT * FROM BOOK LIMIT 1 OFFSET 2
+
+-- CUBRID supports a MySQL variant of the LIMIT .. OFFSET clause
+SELECT * FROM BOOK LIMIT 2, 1
+
+-- Derby
+SELECT * FROM BOOK OFFSET 2 ROWS FETCH NEXT 1 ROWS ONLY
+
+-- Ingres
+SELECT * FROM BOOK OFFSET 2 FETCH FIRST 1 ROWS ONLY
+
+-- Sybase SQL Anywhere
+SELECT TOP 1 ROWS START AT 3 * FROM BOOK
+
+-- DB2 (without OFFSET)
+SELECT * FROM BOOK FETCH FIRST 1 ROWS ONLY
+
+-- Sybase ASE, SQL Server (without OFFSET)
+SELECT TOP 1 * FROM BOOK
+
+-- DB2 (with OFFSET), SQL Server (with OFFSET), Oracle (actual query may vary)
+SELECT * FROM (
+  SELECT LIMIT_98843777.*, ROW_NUMBER() OVER (ORDER BY ID ASC) AS ROWNUM_98843777
+  FROM (
+    SELECT TOP 100 PERCENT *
+    FROM BOOK
+    ORDER BY ID ASC
+  ) AS LIMIT_98843777
+) AS OUTER_LIMIT_98843777
+WHERE ROWNUM_98843777 > 1
+AND ROWNUM_98843777 <= 3
+]]></sql>
+
+											<p>
+												As you can see, jOOQ will take care of the incredibly painful ROW_NUMBER() OVER() (or ROWNUM for Oracle) filtering in subselects for you, you'll just have to write limit(1).offset(2) in any dialect.
+											</p>
+
+											<h3>SQL Server's ORDER BY, TOP and subqueries</h3>
+											<p>
+												As can be seen in the above example, writing correct SQL can be quite tricky, depending on the SQL dialect. For instance, with SQL Server, you cannot have an ORDER BY clause in a subquery, unless you also have a TOP clause. This is illustrated by the fact that jOOQ renders a TOP 100 PERCENT clause for you. The same applies to the fact that ROW_NUMBER() OVER() needs an ORDER BY windowing clause, even if you don't provide one to the jOOQ query. By default, jOOQ adds ordering by the first column of your projection.
+											</p>
+										</content>
 									</section>
 
 									<section id="for-update-clause">
@@ -726,7 +1141,7 @@ create.select()
 									</section>
 
 									<section id="union-clause">
-										<title>UNIONs, intersections, etc.</title>
+										<title>UNION, INTERSECTION and EXCEPT</title>
 										<content></content>
 									</section>
 
@@ -861,12 +1276,20 @@ create.select()
 								<content></content>
 							</section>
 
+							<section id="grouping-functions">
+								<title>Grouping functions</title>
+								<content>
+									<h3>Creating GROUPING SETS for reporting</h3>
+									<p>The SQL standard defines </p>
+								</content>
+							</section>
+
 							<section id="user-defined-functions">
 								<title>User-defined functions</title>
 								<content></content>
 							</section>
 
-							<section id="case-expression">
+							<section id="case-expressions">
 								<title>The CASE expression</title>
 								<content></content>
 							</section>
@@ -1083,6 +1506,23 @@ create.select()
 				    <section id="batch-execution">
 						<title>Batch execution</title>
 						<content></content>
+					</section>
+
+				    <section id="stored-procedures">
+						<title>Stored procedures and functions</title>
+						<content></content>
+
+						<sections>
+							<section id="oracle-packages">
+								<title>Oracle Packages</title>
+								<content></content>
+							</section>
+
+							<section id="oracle-member-procedures">
+								<title>Oracle user-defined types and member procedures</title>
+								<content></content>
+							</section>
+						</sections>
 					</section>
 
 				    <section id="formatting">

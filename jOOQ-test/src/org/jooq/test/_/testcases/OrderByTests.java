@@ -129,25 +129,36 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .values(3, "Döblin")
                 .execute();
 
-        Result<A> authors =
+        Result<A> authors1 =
         create().selectFrom(TAuthor())
                 .orderBy(
                     TAuthor_FIRST_NAME().asc().nullsFirst())
                 .fetch();
 
-        assertNull(authors.getValue(0, TAuthor_FIRST_NAME()));
-        assertEquals("George", authors.getValue(1, TAuthor_FIRST_NAME()));
-        assertEquals("Paulo", authors.getValue(2, TAuthor_FIRST_NAME()));
+        assertNull(authors1.getValue(0, TAuthor_FIRST_NAME()));
+        assertEquals("George", authors1.getValue(1, TAuthor_FIRST_NAME()));
+        assertEquals("Paulo", authors1.getValue(2, TAuthor_FIRST_NAME()));
 
-        authors =
+        Result<A> authors2 =
         create().selectFrom(TAuthor())
                 .orderBy(
                     TAuthor_FIRST_NAME().asc().nullsLast())
                 .fetch();
 
-        assertEquals("George", authors.getValue(0, TAuthor_FIRST_NAME()));
-        assertEquals("Paulo", authors.getValue(1, TAuthor_FIRST_NAME()));
-        assertNull(authors.getValue(2, TAuthor_FIRST_NAME()));
+        assertEquals("George", authors2.getValue(0, TAuthor_FIRST_NAME()));
+        assertEquals("Paulo", authors2.getValue(1, TAuthor_FIRST_NAME()));
+        assertNull(authors2.getValue(2, TAuthor_FIRST_NAME()));
+
+        // [#1667] Check correct behaviour when bind values are involved
+        Result<A> authors3 =
+        create().selectFrom(TAuthor())
+                .orderBy(
+                    TAuthor_FIRST_NAME().substring(3).asc().nullsLast())
+                .fetch();
+
+        assertEquals("George", authors3.getValue(0, TAuthor_FIRST_NAME()));
+        assertEquals("Paulo", authors3.getValue(1, TAuthor_FIRST_NAME()));
+        assertNull(authors3.getValue(2, TAuthor_FIRST_NAME()));
     }
 
     @Test

@@ -1061,6 +1061,18 @@ ORDER BY CASE TITLE
       .from(BOOK)
       .orderBy(BOOK.TITLE.sortAsc("1984", "Animal Farm"));]]></java>
 
+											<p>
+												More complex sort indirections can be provided using a Map:
+											</p>
+
+<java><![CDATA[create.select()
+      .from(BOOK)
+      .orderBy(BOOK.TITLE.sort(new HashMap<String, Integer>() {{
+          put("1984", 1);
+          put("Animal Farm", 13);
+          put("The jOOQ book", 10);
+      }}));]]></java>
+
       										<p>
       											Of course, you can combine this feature with the previously discussed NULLS FIRST / NULLS LAST feature. So, if in fact these two books are the ones you like least, you can put all NULLS FIRST (all the other books):
       										</p>
@@ -1137,7 +1149,94 @@ AND ROWNUM_98843777 <= 3
 
 									<section id="for-update-clause">
 										<title>The FOR UPDATE clause</title>
-										<content></content>
+										<content>
+											<h3>Pessimistic (exclusive) locking with the FOR UPDATE clause</h3>
+											<p>
+												For inter-process synchronisation and other reasons, you may choose to use the SELECT .. FOR UPDATE clause to indicate to the database, that a set of cells or records should be locked by a given transaction for subsequent updates. With jOOQ, this can be achieved as such:
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT *
+FROM BOOK
+WHERE ID = 3
+FOR UPDATE]]></sql>
+<java><![CDATA[create.select()
+      .from(BOOK)
+      .where(BOOK.ID.equal(3))
+      .forUpdate();]]></java></code-pair>
+
+											<p>
+												The above example will produce a record-lock, locking the whole record for updates. Some databases also support cell-locks using FOR UPDATE OF ..
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT *
+FROM BOOK
+WHERE ID = 3
+FOR UPDATE OF TITLE]]></sql>
+<java><![CDATA[create.select()
+      .from(BOOK)
+      .where(BOOK.ID.equal(3))
+      .forUpdate().of(BOOK.TITLE);]]></java></code-pair>
+
+											<p>
+												Oracle goes a bit further and also allows to specify the actual locking behaviour. It features these additional clauses, which are all supported by jOOQ:
+											</p>
+											<ul>
+												<li>FOR UPDATE NOWAIT: This is the default behaviour. If the lock cannot be acquired, the query fails immediately</li>
+												<li>FOR UPDATE WAIT n: Try to wait for [n] seconds for the lock acquisition. The query will fail only afterwards</li>
+												<li>FOR UPDATE SKIP LOCKED: This peculiar syntax will skip all locked records. This is particularly useful when implementing queue tables with multiple consumers</li>
+											</ul>
+											<p>
+												With jOOQ, you can use those Oracle extensions as such:
+											</p>
+
+<java><![CDATA[create.select().from(BOOK).where(BOOK.ID.equal(3)).forUpdate().nowait();
+create.select().from(BOOK).where(BOOK.ID.equal(3)).forUpdate().wait(5);
+create.select().from(BOOK).where(BOOK.ID.equal(3)).forUpdate().skipLocked();]]></java>
+
+											<h3>FOR UPDATE in CUBRID and SQL Server</h3>
+											<p>
+												The SQL standard specifies a FOR UPDATE clause to be applicable for cursors. Most databases interpret this as being applicable for all SELECT statements. An exception to this rule are the CUBRID and SQL Server databases, that do not allow for any FOR UPDATE clause in a regular SQL SELECT statement. jOOQ simulates the FOR UPDATE behaviour, by locking record by record with JDBC. JDBC allows for specifying the flags TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE for any statement, and then using ResultSet.updateXXX() methods to produce a cell-lock / row-lock. Here’s a simplified example in JDBC:
+											</p>
+<java><![CDATA[PreparedStatement stmt = connection.prepareStatement(
+  "SELECT * FROM author WHERE id IN (3, 4, 5)",
+  ResultSet.TYPE_SCROLL_SENSITIVE,
+  ResultSet.CONCUR_UPDATABLE);
+ResultSet rs = stmt.executeQuery();
+
+while (rs.next()) {
+  // UPDATE the primary key for row-locks, or any other columns for cell-locks
+  rs.updateObject(1, rs.getObject(1));
+  rs.updateRow();
+
+  // Do more stuff with this record
+}]]></java>
+
+											<p>
+												The main drawback of this approach is the fact that the database has to maintain a scrollable cursor, whose records are locked one by one. This can cause a major risk of deadlocks or race conditions if the JDBC driver can recover from the unsuccessful locking, if two Java threads execute the following statements:
+											</p>
+
+<sql><![CDATA[-- thread 1
+SELECT * FROM author ORDER BY id ASC;
+
+-- thread 2
+SELECT * FROM author ORDER BY id DESC;]]></sql>
+
+											<p>
+												So use this technique with care, possibly only ever locking single rows!
+											</p>
+
+											<h3>Pessimistic (shared) locking with the FOR SHARE clause</h3>
+											<p>
+												Some databases (MySQL, Postgres) also allow to issue a non-exclusive lock explicitly using a FOR SHARE clause. This is also supported by jOOQ
+											</p>
+
+											<h3>Optimistic locking in jOOQ</h3>
+											<p>
+												Note, that jOOQ also supports optimistic locking, if you're doing simple CRUD. This is documented in the section's manual about <reference id="optimistic-locking" title="optimistic locking"/>.
+											</p>
+										</content>
 									</section>
 
 									<section id="union-clause">
@@ -1147,7 +1246,27 @@ AND ROWNUM_98843777 <= 3
 
 									<section id="oracle-hints">
 										<title>Oracle-style hints</title>
-										<content></content>
+										<content>
+											<h3>How to embed Oracle hints in SELECT</h3>
+											<p>
+												If you are closely coupling your application to an Oracle (or CUBRID) database,	you might need to be able to pass hints of the form /*+HINT*/ with your SQL statements to the Oracle database. For example:
+											</p>
+
+<sql>SELECT /*+ALL_ROWS*/ FIRST_NAME, LAST_NAME
+  FROM AUTHOR</sql>
+
+				  							<p>
+				  								This can be done in jOOQ using the .hint() clause in your SELECT statement:
+			  								</p>
+
+<java>create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+      .hint("/*+ALL_ROWS*/")
+      .from(AUTHOR);</java>
+
+											<p>
+												Note that you can pass any string in the .hint() clause. If you use that clause, the passed string will always be put in between the SELECT [DISTINCT] keywords and the actual projection list
+											</p>
+										</content>
 									</section>
 
 									<section id="nested-selects">
@@ -1209,6 +1328,57 @@ AND ROWNUM_98843777 <= 3
 								<content></content>
 							</section>
 
+							<section id="relational-division">
+								<title>jOOQ's relational division syntax</title>
+								<content>
+									<h3>Relational division</h3>
+									<p>
+									    There is one operation in relational algebra that is not given a lot of attention, because it is rarely used in real-world applications. It is the relational division, the opposite operation of the cross product (or, relational multiplication). The following is an approximate definition of a relational division:
+									</p>
+
+<config>Assume the following cross join / cartesian product
+C = A × B
+
+Then it can be said that
+A = C ÷ B
+B = C ÷ A</config>
+
+									<p>
+									   With jOOQ, you can simplify using relational divisions by using the following syntax:
+									</p>
+
+<java>C.divideBy(B).on(C.ID.equal(B.C_ID)).returning(C.TEXT)</java>
+
+									<p>
+										The above roughly translates to
+									</p>
+
+<sql>SELECT DISTINCT C.TEXT FROM C "c1"
+WHERE NOT EXISTS (
+  SELECT 1 FROM B
+  WHERE NOT EXISTS (
+    SELECT 1 FROM C "c2"
+    WHERE "c2".TEXT = "c1".TEXT
+    AND "c2".ID = B.C_ID
+  )
+)</sql>
+
+									<p>
+										Or in plain text: Find those TEXT values in C whose ID's correspond to all ID's in B. Note that from the above SQL statement, it is immediately clear that proper indexing is of the essence. Be sure to have indexes on all columns referenced from the on(...) and returning(...) clauses.
+									</p>
+
+									<p>
+										For more information about relational division and some nice, real-life examples, see
+									</p>
+
+									<ul>
+										<li><a href="http://en.wikipedia.org/wiki/Relational_algebra#Division" title="Wikipedia article on relational division">http://en.wikipedia.org/wiki/Relational_algebra#Division</a></li>
+										<li><a href="http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/" title="A nice summary of what relational division is and how it is best implemented in SQL">http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/</a></li>
+									</ul>
+								</content>
+
+							</section>
+
 							<section id="array-and-cursor-unnesting">
 								<title>Array and cursor unnesting</title>
 								<content></content>
@@ -1216,7 +1386,54 @@ AND ROWNUM_98843777 <= 3
 
 							<section id="dual">
 								<title>The DUAL table</title>
-								<content></content>
+								<content>
+									<h3>Selecting from DUAL</h3>
+									<p>
+										The SQL standard specifies that the <reference id="from-clause" title="FROM clause"/> is optional in a <reference id="select-statement" title="SELECT statement"/>. However, according to the standard, you may then no longer use some other clauses, such as the <reference id="where-clause" title="WHERE clause"/>. In the real world, there exist three types of databases:
+									</p>
+									<ul>
+										<li>The ones that always require a FROM clause</li>
+										<li>The ones that never require a FROM clause (and still allow a WHERE clause)</li>
+										<li>The ones that correctly implement the SQL standard</li>
+									</ul>
+									<p>
+										With jOOQ, you don't have to worry about the above distinction of SQL dialects. jOOQ never requires a FROM clause, but renders the necessary "DUAL" table, if needed. The following program shows how jOOQ renders "DUAL" tables
+									</p>
+
+<code-pair>
+	<sql><![CDATA[SELECT 1
+SELECT 1 FROM "db_root"
+SELECT 1 FROM "SYSIBM"."DUAL"
+SELECT 1 FROM "SYSIBM"."SYSDUMMY1"
+SELECT 1 FROM dual
+SELECT 1 FROM "INFORMATION_SCHEMA"."SYSTEM_USERS"
+SELECT 1 FROM (select 1 as dual) as dual
+SELECT 1 FROM dual
+SELECT 1 FROM dual
+SELECT 1
+SELECT 1
+SELECT 1
+SELECT 1 FROM [SYS].[DUMMY]
+]]></sql>
+	<java><![CDATA[new Factory(SQLDialect.ASE      ).selectOne().getSQL();
+new Factory(SQLDialect.CUBRID   ).selectOne().getSQL();
+new Factory(SQLDialect.DB2      ).selectOne().getSQL();
+new Factory(SQLDialect.DERBY    ).selectOne().getSQL();
+new Factory(SQLDialect.H2       ).selectOne().getSQL();
+new Factory(SQLDialect.HSQLDB   ).selectOne().getSQL();
+new Factory(SQLDialect.INGRES   ).selectOne().getSQL();
+new Factory(SQLDialect.MYSQL    ).selectOne().getSQL();
+new Factory(SQLDialect.ORACLE   ).selectOne().getSQL();
+new Factory(SQLDialect.POSTGRES ).selectOne().getSQL();
+new Factory(SQLDialect.SQLITE   ).selectOne().getSQL();
+new Factory(SQLDialect.SQLSERVER).selectOne().getSQL();
+new Factory(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
+</code-pair>
+
+									<p>
+										Note, that some databases (H2, MySQL) can normally do without "dual". However, there exist some corner-cases with complex nested SELECT statements, where this will cause syntax errors (or parser bugs). To stay on the safe side, jOOQ will always render "dual" in those dialects.
+									</p>
+								</content>
 							</section>
 						</sections>
 					</section>
@@ -1291,17 +1508,121 @@ AND ROWNUM_98843777 <= 3
 
 							<section id="case-expressions">
 								<title>The CASE expression</title>
-								<content></content>
+								<content>
+									<h3>The two flavours of CASE expressions</h3>
+									<p>
+										The CASE expression is part of the standard SQL syntax. While some RDBMS also offer an IF expression, or a DECODE function, you can always rely on the two types of CASE syntax:
+									</p>
+
+<code-pair>
+<sql><![CDATA[CASE WHEN T_AUTHOR.FIRST_NAME = 'Paulo'  THEN 'brazilian'
+     WHEN T_AUTHOR.FIRST_NAME = 'George' THEN 'english'
+                                         ELSE 'unknown'
+END
+
+-- OR:
+
+CASE T_AUTHOR.FIRST_NAME WHEN 'Paulo'  THEN 'brazilian'
+                         WHEN 'George' THEN 'english'
+                                       ELSE 'unknown'
+END]]></sql>
+<java><![CDATA[create.decode()
+      .when(T_AUTHOR.FIRST_NAME.equal("Paulo"), "brazilian")
+      .when(T_AUTHOR.FIRST_NAME.equal("George"), "english")
+      .otherwise("unknown");
+
+// OR:
+
+create.decode().value(T_AUTHOR.FIRST_NAME)
+               .when("Paulo", "brazilian")
+               .when("George", "english")
+               .otherwise("unknown");]]></java>
+</code-pair>
+
+								<p>
+									In jOOQ, both syntaxes are supported (The second one is simulated in Derby, which only knows the first one). Unfortunately, both case and else are reserved words in Java. jOOQ chose to use decode() from the Oracle DECODE function, and otherwise(), which means the same as else.
+								</p>
+
+								<p>
+									A CASE expression can be used anywhere where you can place a <reference id="column-expressions" title="column expression (or Field)"/>. For instance, you can SELECT the above expression, if you're selecting from AUTHOR:
+							 	</p>
+
+<sql>SELECT T_AUTHOR.FIRST_NAME, [... CASE EXPR ...] AS nationality
+  FROM T_AUTHOR</sql>
+
+								<h3>The Oracle DECODE() function</h3>
+								<p>
+									Oracle knows a more succinct, but maybe less readable DECODE() function with a variable number of arguments. This function roughly does the same as the second case expression syntax. jOOQ supports the DECODE() function and simulates it using CASE expressions in all dialects other than Oracle:
+								</p>
+
+<code-pair>
+<sql><![CDATA[-- Oracle:
+DECODE(FIRST_NAME, 'Paulo', 'brazilian',
+                   'George', 'english',
+                   'unknown');
+
+-- Other SQL dialects
+CASE T_AUTHOR.FIRST_NAME WHEN 'Paulo'  THEN 'brazilian'
+                         WHEN 'George' THEN 'english'
+                                       ELSE 'unknown'
+END]]></sql>
+<java><![CDATA[
+
+
+
+
+// Use the Oracle-style DECODE() function with jOOQ.
+// Note, that you will not be able to rely on type-safety
+create.decode(T_AUTHOR.FIRST_NAME,
+    "Paulo", "brazilian",
+    "George", "english",
+    "unknown");]]></java>
+</code-pair>
+
+		  							<h3>CASE clauses in an ORDER BY clause</h3>
+									<p>
+										Sort indirection is often implemented with a CASE clause of a SELECT's ORDER BY clause. See the manual's section about the <reference id="order-by-clause" title="ORDER BY clause"/> for more details.
+									</p>
+								</content>
 							</section>
 
 							<section id="sequences-and-serials">
 								<title>Sequences and serials</title>
-								<content></content>
-							</section>
+								<content>
+									<h3>Sequences as a source for identity values</h3>
+									<p>
+										Sequences implement the <reference class="org.jooq.Sequence"/> interface, providing essentially this functionality:
+									</p>
 
-							<section id="plain-sql">
-								<title>Plain SQL</title>
-								<content></content>
+<java><![CDATA[// Get a field for the CURRVAL sequence property
+Field<T> currval();
+
+// Get a field for the NEXTVAL sequence property
+Field<T> nextval();]]></java>
+
+									<p>
+										So if you have a sequence like this in Oracle:
+									</p>
+
+<sql>CREATE SEQUENCE s_author_id</sql>
+
+									<p>
+										You can then use your <reference id="codegen-sequences" title="generated sequence"/> object directly in a SQL statement as such:
+									</p>
+
+<java><![CDATA[// Reference the sequence in a SELECT statement:
+BigInteger nextID = create.select(s).fetchOne(S_AUTHOR_ID.nextval());
+
+// Reference the sequence in an INSERT statement:
+create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+      .values(S_AUTHOR_ID.nextval(), "William", "Shakespeare");
+]]></java>
+
+									<ul>
+										<li>For more information about generated sequences, refer to the manual's section about <reference id="codegen-sequences" title="generated sequences"/></li>
+										<li>For more information about executing standalone calls to sequences, refer to the manual's section about <reference id="sequence-execution" title="sequence execution"/></li>
+									</ul>
+								</content>
 							</section>
 						</sections>
 					</section>
@@ -1346,6 +1667,11 @@ AND ROWNUM_98843777 <= 3
 								<content></content>
 							</section>
 						</sections>
+					</section>
+
+					<section id="plain-sql">
+						<title>Plain SQL</title>
+						<content></content>
 					</section>
 
 					<section id="bind-values">
@@ -1429,6 +1755,26 @@ AND ROWNUM_98843777 <= 3
 						<content></content>
 					</section>
 
+				    <section id="codegen-globals">
+						<title>Generated global artefacts</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-tables">
+						<title>Generated tables</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-sequences">
+						<title>Generated sequences</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-procedures">
+						<title>Generated tables</title>
+						<content></content>
+					</section>
+
 				    <section id="master-data-types">
 						<title>Master data and enumeration tables</title>
 						<content></content>
@@ -1505,6 +1851,11 @@ AND ROWNUM_98843777 <= 3
 
 				    <section id="batch-execution">
 						<title>Batch execution</title>
+						<content></content>
+					</section>
+
+				    <section id="sequence-execution">
+						<title>Sequence execution</title>
 						<content></content>
 					</section>
 

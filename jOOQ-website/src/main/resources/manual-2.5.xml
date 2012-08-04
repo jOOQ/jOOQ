@@ -1268,11 +1268,6 @@ SELECT * FROM author ORDER BY id DESC;]]></sql>
 											</p>
 										</content>
 									</section>
-
-									<section id="nested-selects">
-										<title>Nested selects</title>
-										<content></content>
-									</section>
 								</sections>
 							</section>
 
@@ -1877,33 +1872,167 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 					</section>
 
 				    <section id="formatting">
-						<title>Formatting</title>
-						<content></content>
+						<title>Exporting to XML, CSV, JSON, HTML, Text</title>
+						<content>
+							<h3>Exporting with jOOQ</h3>
+							<p>
+								If you are using jOOQ for scripting purposes or in a slim, unlayered application server, you might be interested in using jOOQ's exporting functionality (see also the <reference id="importing" title="importing functionality"/>). You can export any Result&lt;Record&gt; into the formats discussed in the subsequent chapters of the manual
+							</p>
+						</content>
 
 						<sections>
-							<section id="text">
-								<title>Text</title>
-								<content></content>
+							<section id="formatting-xml">
+								<title>Exporting XML</title>
+								<content>
+									<h3>Export your results as XML</h3>
+
+<java>// Fetch books and format them as XML
+String xml = create.selectFrom(BOOK).fetch().formatXML();</java>
+
+									<p>
+										The above query will result in an XML document looking like the following one:
+									</p>
+
+<xml><![CDATA[<result xmlns="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">
+  <fields>
+    <field name="ID"/>
+    <field name="AUTHOR_ID"/>
+    <field name="TITLE"/>
+  </fields>
+  <records>
+    <record>
+      <value field="ID">1</value>
+      <value field="AUTHOR_ID">1</value>
+      <value field="TITLE">1984</value>
+    </record>
+    <record>
+      <value field="ID">2</value>
+      <value field="AUTHOR_ID">1</value>
+      <value field="TITLE">Animal Farm</value>
+    </record>
+  </records>
+</result>]]></xml>
+
+									<p>
+										The same result as an <reference class="org.w3c.dom.Document"/> can be obtained using the Result.intoXML() method:
+									</p>
+
+
+<java>// Fetch books and format them as XML
+Document xml = create.selectFrom(BOOK).fetch().intoXML();</java>
+
+									<p>
+										See the XSD schema definition here, for a formal definition of the XML export format:<br/>
+										<a href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>
+									</p>
+								</content>
 							</section>
 
-							<section id="csv">
-								<title>CSV</title>
-								<content></content>
+							<section id="formatting-csv">
+								<title>Exporting CSV</title>
+								<content>
+									<h3>Export your results as CSV</h3>
+
+<java>// Fetch books and format them as CSV
+String csv = create.selectFrom(BOOK).fetch().formatCSV();</java>
+
+									<p>
+										The above query will result in a CSV document looking like the following one:
+									</p>
+
+<text>ID,AUTHOR_ID,TITLE
+1,1,1984
+2,1,Animal Farm</text>
+
+									<p>
+										In addition to the standard behaviour, you can also specify a separator character, as well as a special string to represent NULL values (which cannot be represented in standard CSV):
+									</p>
+
+<java>// Use ";" as the separator character
+String csv = create.selectFrom(BOOK).fetch().formatCSV(';');
+
+// Specify "{null}" as a representation for NULL values
+String csv = create.selectFrom(BOOK).fetch().formatCSV(';', "{null}");</java>
+
+								</content>
 							</section>
 
-							<section id="xml">
-								<title>XML</title>
-								<content></content>
+							<section id="formatting-json">
+								<title>Exporting JSON</title>
+								<content>
+									<h3>Export your results as JSON</h3>
+
+<java>// Fetch books and format them as JSON
+String json = create.selectFrom(BOOK).fetch().formatJSON();</java>
+
+									<p>
+										The above query will result in a JSON document looking like the following one:
+									</p>
+
+<text>{fields:["ID","AUTHOR_ID","TITLE"],
+ records:[[1,1,"1984"],[2,1,"Animal Farm"]]}</text>
+								</content>
 							</section>
 
-							<section id="html">
-								<title>HTML</title>
-								<content></content>
+							<section id="formatting-html">
+								<title>Exporting HTML</title>
+								<content>
+ 									<h3>Export your results as HTML</h3>
+<java>// Fetch books and format them as HTML
+String html = create.selectFrom(BOOK).fetch().formatHTML();</java>
+
+									<p>
+										The above query will result in an HTML document looking like the following one
+									</p>
+
+<xml><![CDATA[<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>AUTHOR_ID</th>
+      <th>TITLE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>1984</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>Animal Farm</td>
+    </tr>
+  </tbody>
+</table>]]></xml>
+
+								</content>
 							</section>
 
-							<section id="json">
-								<title>JSON</title>
-								<content></content>
+							<section id="formatting-text">
+								<title>Exporting Text</title>
+								<content>
+									<h3>Export your results as text</h3>
+
+<java>// Fetch books and format them as text
+String text = create.selectFrom(BOOK).fetch().format();</java>
+
+									<p>
+										The above query will result in a text document looking like the following one
+									</p>
+
+<text>+---+---------+-----------+
+| ID|AUTHOR_ID|TITLE      |
++---+---------+-----------+
+|  1|        1|1984       |
+|  2|        1|Animal Farm|
++---+---------+-----------+</text>
+
+									<p>
+										A simple text representation can also be obtained by calling toString() on a Result object. See also the manual's section about <reference id="logging" title="DEBUG logging"/>
+									</p>
+								</content>
 							</section>
 						</sections>
 					</section>
@@ -1913,12 +2042,12 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 						<content></content>
 
 						<sections>
-							<section id="csv">
+							<section id="importing-csv">
 								<title>CSV</title>
 								<content></content>
 							</section>
 
-							<section id="xml">
+							<section id="importing-xml">
 								<title>XML</title>
 								<content></content>
 							</section>

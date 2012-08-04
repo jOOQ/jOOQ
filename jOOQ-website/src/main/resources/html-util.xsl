@@ -74,7 +74,7 @@
 								<xsl:value-of select="@anchor"/>
 							</xsl:when>
 
-							<xsl:when test="@class and starts-with(@class, 'java')">
+							<xsl:when test="@class and (starts-with(@class, 'java') or starts-with(@class, 'org.w3c.dom'))">
 								<xsl:text>http://download.oracle.com/javase/6/docs/api/</xsl:text>
 								<xsl:value-of select="translate(@class, '.', '/')"/>
 								<xsl:text>.html</xsl:text>

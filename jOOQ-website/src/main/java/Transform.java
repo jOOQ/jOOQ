@@ -41,6 +41,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -117,6 +119,18 @@ public class Transform {
         Transformer transformer = factory.newTransformer(xsl);
 
         Match manual = $(isXML);
+
+        List<String> ids = manual.find("section").ids();
+        HashSet<String> uniqueIds = new HashSet<String>(ids);
+
+        if (ids.size() != uniqueIds.size()) {
+            for (String id : uniqueIds) {
+                ids.remove(id);
+            }
+
+            throw new Exception("Duplicate section ids found! " + ids);
+        }
+
         for (Match section : manual.find("section").each()) {
             Match sections = section.add(section.parents("section")).reverse();
 

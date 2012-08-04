@@ -70,9 +70,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private Stack<Integer>           indentLock       = new Stack<Integer>();
 
     // [#1632] Cached values from Settings
-    private final RenderKeywordStyle renderKeywordStyle;
-    private final RenderNameStyle    renderNameStyle;
-    private final boolean            renderFormatted;
+    private final RenderKeywordStyle cachedRenderKeywordStyle;
+    private final RenderNameStyle    cachedRenderNameStyle;
+    private final boolean            cachedRenderFormatted;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration);
@@ -80,9 +80,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         Settings settings = configuration.getSettings();
 
         this.sql = new StringBuilder();
-        this.renderKeywordStyle = settings.getRenderKeywordStyle();
-        this.renderFormatted = Boolean.TRUE.equals(settings.isRenderFormatted());
-        this.renderNameStyle = settings.getRenderNameStyle();
+        this.cachedRenderKeywordStyle = settings.getRenderKeywordStyle();
+        this.cachedRenderFormatted = Boolean.TRUE.equals(settings.isRenderFormatted());
+        this.cachedRenderNameStyle = settings.getRenderNameStyle();
     }
 
     DefaultRenderContext(RenderContext context) {
@@ -90,6 +90,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
         inline(context.inline());
         namedParams(context.namedParams());
+        qualify(context.qualify());
+        castMode(context.castMode());
         declareFields(context.declareFields());
         declareTables(context.declareTables());
     }
@@ -120,7 +122,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext keyword(String keyword) {
-        if (RenderKeywordStyle.UPPER == renderKeywordStyle) {
+        if (RenderKeywordStyle.UPPER == cachedRenderKeywordStyle) {
             return sql(keyword.toUpperCase());
         }
         else {
@@ -130,7 +132,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext sql(String s) {
-        if (s != null && renderFormatted) {
+        if (s != null && cachedRenderFormatted) {
             sql.append(s.replaceAll("[\\n\\r]", "$0" + indentation()));
         }
         else {
@@ -154,7 +156,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatNewLine() {
-        if (renderFormatted) {
+        if (cachedRenderFormatted) {
             sql.append("\n");
             sql.append(indentation());
         }
@@ -168,7 +170,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatSeparator() {
-        if (renderFormatted) {
+        if (cachedRenderFormatted) {
             formatNewLine();
         }
         else {
@@ -190,7 +192,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentStart(int i) {
-        if (renderFormatted) {
+        if (cachedRenderFormatted) {
             indent += i;
         }
 
@@ -199,7 +201,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentEnd(int i) {
-        if (renderFormatted) {
+        if (cachedRenderFormatted) {
             indent -= i;
         }
 
@@ -208,7 +210,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentLockStart() {
-        if (renderFormatted) {
+        if (cachedRenderFormatted) {
             indentLock.push(indent);
             String[] lines = sql.toString().split("[\\n\\r]");
             indent = lines[lines.length - 1].length();
@@ -219,7 +221,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentLockEnd() {
-        if (renderFormatted) {
+        if (cachedRenderFormatted) {
             indent = indentLock.pop();
         }
 
@@ -234,13 +236,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             return this;
         }
 
-        if (RenderNameStyle.LOWER == renderNameStyle) {
+        if (RenderNameStyle.LOWER == cachedRenderNameStyle) {
             sql(literal.toLowerCase());
         }
-        else if (RenderNameStyle.UPPER == renderNameStyle) {
+        else if (RenderNameStyle.UPPER == cachedRenderNameStyle) {
             sql(literal.toUpperCase());
         }
-        else if (RenderNameStyle.AS_IS == renderNameStyle) {
+        else if (RenderNameStyle.AS_IS == cachedRenderNameStyle) {
             sql(literal);
         }
         else {

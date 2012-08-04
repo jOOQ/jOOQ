@@ -1159,7 +1159,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     public final String formatXML() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("<jooq-export:result xmlns:jooq-export=\"http://www.jooq.org/xsd/jooq-export-1.6.2.xsd\">");
+        sb.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-1.6.2.xsd\">");
         sb.append("<fields>");
 
         for (Field<?> field : getFields()) {
@@ -1195,7 +1195,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
 
         sb.append("</records>");
-        sb.append("</jooq-export:result>");
+        sb.append("</result>");
 
         return sb.toString();
     }
@@ -1212,8 +1212,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.newDocument();
 
-            Element eResult = document.createElement("jooq-export:result");
-            eResult.setAttribute("xmlns:jooq-export", "http://www.jooq.org/xsd/jooq-export-1.6.2.xsd");
+            Element eResult = document.createElement("result");
+            eResult.setAttribute("xmlns", "http://www.jooq.org/xsd/jooq-export-1.6.2.xsd");
             document.appendChild(eResult);
 
             Element eFields = document.createElement("fields");

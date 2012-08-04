@@ -479,6 +479,74 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition isNotNull();
 
     /**
+     * Create a condition to check if this field is <code>DISTINCT</code> from
+     * another value
+     * <p>
+     * If this is not supported by the underlying database, jOOQ will render
+     * this instead: <code><pre>
+     * CASE WHEN [this] IS     NULL AND [value] IS     NULL THEN 0
+     *      WHEN [this] IS     NULL AND [value] IS NOT NULL THEN 1
+     *      WHEN [this] IS NOT NULL AND [value] IS     NULL THEN 1
+     *      WHEN [this] =               [value]             THEN 0
+     *      ELSE                                                 1
+     * END
+     * </pre></code> SQL: <code>this is distinct from value</code>
+     */
+    @Support
+    Condition isDistinctFrom(T value);
+
+    /**
+     * Create a condition to check if this field is <code>DISTINCT</code> from
+     * another field
+     * <p>
+     * If this is not supported by the underlying database, jOOQ will render
+     * this instead: <code><pre>
+     * CASE WHEN [this] IS     NULL AND [field] IS     NULL THEN 0
+     *      WHEN [this] IS     NULL AND [field] IS NOT NULL THEN 1
+     *      WHEN [this] IS NOT NULL AND [field] IS     NULL THEN 1
+     *      WHEN [this] =               [field]             THEN 0
+     *      ELSE                                                 1
+     * END
+     * </pre></code> SQL: <code>this is distinct from field</code>
+     */
+    @Support
+    Condition isDistinctFrom(Field<T> field);
+
+    /**
+     * Create a condition to check if this field is <code>NOT DISTINCT</code>
+     * from another value
+     * <p>
+     * If this is not supported by the underlying database, jOOQ will render
+     * this instead: <code><pre>
+     * CASE WHEN [this] IS     NULL AND [value] IS     NULL THEN 1
+     *      WHEN [this] IS     NULL AND [value] IS NOT NULL THEN 0
+     *      WHEN [this] IS NOT NULL AND [value] IS     NULL THEN 0
+     *      WHEN [this] =               [value]             THEN 1
+     *      ELSE                                                 0
+     * END
+     * </pre></code> SQL: <code>this is not distinct from value</code>
+     */
+    @Support
+    Condition isNotDistinctFrom(T value);
+
+    /**
+     * Create a condition to check if this field is <code>NOT DISTINCT</code>
+     * from another field
+     * <p>
+     * If this is not supported by the underlying database, jOOQ will render
+     * this instead: <code><pre>
+     * CASE WHEN [this] IS     NULL AND [field] IS     NULL THEN 1
+     *      WHEN [this] IS     NULL AND [field] IS NOT NULL THEN 0
+     *      WHEN [this] IS NOT NULL AND [field] IS     NULL THEN 0
+     *      WHEN [this] =               [value]             THEN 1
+     *      ELSE                                                 0
+     * END
+     * </pre></code> SQL: <code>this is not distinct from field</code>
+     */
+    @Support
+    Condition isNotDistinctFrom(Field<T> field);
+
+    /**
      * Create a condition to check this field against known string literals for
      * <code>true</code>
      * <p>

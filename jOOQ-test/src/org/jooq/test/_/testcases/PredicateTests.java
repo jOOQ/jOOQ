@@ -147,6 +147,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testIsDistinctFrom() throws Exception {
+        assertEquals(0, create().select().where(val(null, Integer.class).isDistinctFrom((Integer) null)).fetch().size());
+        assertEquals(1, create().select().where(val(1).isDistinctFrom((Integer) null)).fetch().size());
+        assertEquals(1, create().select().where(val(null, Integer.class).isDistinctFrom(1)).fetch().size());
+        assertEquals(0, create().select().where(val(1).isDistinctFrom(1)).fetch().size());
+
+        assertEquals(1, create().select().where(val(null, Integer.class).isNotDistinctFrom((Integer) null)).fetch().size());
+        assertEquals(0, create().select().where(val(1).isNotDistinctFrom((Integer) null)).fetch().size());
+        assertEquals(0, create().select().where(val(null, Integer.class).isNotDistinctFrom(1)).fetch().size());
+        assertEquals(1, create().select().where(val(1).isNotDistinctFrom(1)).fetch().size());
+    }
+
+    @Test
     public void testLike() throws Exception {
         jOOQAbstractTest.reset = false;
 

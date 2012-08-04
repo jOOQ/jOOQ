@@ -227,6 +227,12 @@ public class jOOQTest {
             FIELD_ID1.in((Integer) null),
             FIELD_ID1.in((Field<Integer>) null));
         assertEquals(
+            FIELD_ID1.isDistinctFrom((Integer) null),
+            FIELD_ID1.isDistinctFrom((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.isNotDistinctFrom((Integer) null),
+            FIELD_ID1.isNotDistinctFrom((Field<Integer>) null));
+        assertEquals(
             FIELD_ID1.lessOrEqual((Integer) null),
             FIELD_ID1.lessOrEqual((Field<Integer>) null));
         assertEquals(

@@ -1752,3 +1752,5 @@ create or replace synonym p_unused_synonym for p_unused/
 create or replace synonym t_author_synonym_synonym for t_author_synonym/
 create or replace public synonym t_author_public_synonym for t_author/
 create or replace public synonym t_author for t_author/
+
+CREATE INDEX i_book_title_context ON t_book(title) INDEXTYPE IS CTXSYS.CONTEXT/

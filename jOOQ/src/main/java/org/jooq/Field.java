@@ -56,6 +56,7 @@ import java.util.Map;
 
 import org.jooq.impl.Factory;
 import org.jooq.types.Interval;
+import org.jooq.util.oracle.OracleFactory;
 
 /**
  * A field used in tables and conditions
@@ -814,14 +815,17 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * Note: This also works with numbers, for instance
      * <code>val(1133).contains(13)</code>
      * <p>
-     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method also to express the "ARRAY contains" operator. For example:
-     * <code><pre>
+     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
+     * also to express the "ARRAY contains" operator. For example: <code><pre>
      * // Use this expression
      * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
      *
      * // ... to render this SQL
      * ARRAY[1, 2, 3] @> ARRAY[1, 2]
      * </pre></code>
+     * <p>
+     * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
+     * function. Refer to {@link OracleFactory#contains(Field, String)} instead.
      *
      * @see Factory#escape(String, char)
      * @see #like(String, char)
@@ -838,14 +842,17 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * Note: This also works with numbers, for instance
      * <code>val(1133).contains(13)</code>
      * <p>
-     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method also to express the "ARRAY contains" operator. For example:
-     * <code><pre>
+     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
+     * also to express the "ARRAY contains" operator. For example: <code><pre>
      * // Use this expression
      * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
      *
      * // ... to render this SQL
      * ARRAY[1, 2, 3] @> ARRAY[1, 2]
      * </pre></code>
+     * <p>
+     * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
+     * function. Refer to {@link OracleFactory#contains(Field, String)} instead.
      *
      * @see Factory#escape(Field, char)
      * @see #like(Field, char)

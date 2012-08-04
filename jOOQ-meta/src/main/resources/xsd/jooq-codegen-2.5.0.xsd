@@ -319,7 +319,7 @@
         Primary key / foreign key relations should be generated and used.
         This is a prerequisite for various advanced features
         -->
-      <element name="relations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      <element name="relations" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
         Generate navigation methods to navigate foreign key relationships

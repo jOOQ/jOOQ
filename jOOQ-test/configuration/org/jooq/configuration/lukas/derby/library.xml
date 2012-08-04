@@ -114,7 +114,6 @@
             </forcedTypes>
         </database>
         <generate>
-            <relations>true</relations>
             <navigationMethods>true</navigationMethods>
             <deprecated>true</deprecated>
             <instanceFields>false</instanceFields>

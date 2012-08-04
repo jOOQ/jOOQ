@@ -44,7 +44,7 @@ package org.jooq.util;
 abstract class AbstractGenerator implements Generator {
 
     boolean                            generateDeprecated            = true;
-    boolean                            generateRelations             = false;
+    boolean                            generateRelations             = true;
     boolean                            generateNavigationMethods     = true;
     boolean                            generateInstanceFields        = true;
     boolean                            generateGeneratedAnnotation   = true;

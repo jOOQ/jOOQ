@@ -35,6 +35,9 @@
  */
 package org.jooq.util.oracle;
 
+import static org.jooq.SQLDialect.ORACLE;
+
+import java.math.BigDecimal;
 import java.sql.Connection;
 
 import javax.sql.DataSource;
@@ -42,6 +45,7 @@ import javax.sql.DataSource;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
+import org.jooq.Support;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.impl.SQLDataType;
@@ -148,6 +152,7 @@ public class OracleFactory extends Factory {
     /**
      * Retrieve the Oracle-specific <code>ROWNUM</code> pseudo-field
      */
+    @Support(ORACLE)
     public static Field<Integer> rownum() {
         return field("rownum", Integer.class);
     }
@@ -155,6 +160,7 @@ public class OracleFactory extends Factory {
     /**
      * Retrieve the Oracle-specific <code>ROWID</code> pseudo-field
      */
+    @Support(ORACLE)
     public static Field<String> rowid() {
         return field("rowid", String.class);
     }
@@ -166,6 +172,7 @@ public class OracleFactory extends Factory {
     /**
      * The Oracle-specific <code>SYS_CONTEXT</code> function
      */
+    @Support(ORACLE)
     public static Field<String> sysContext(String namespace, String parameter) {
         return function("sys_context", SQLDataType.VARCHAR, val(namespace), val(parameter));
     }
@@ -173,7 +180,69 @@ public class OracleFactory extends Factory {
     /**
      * The Oracle-specific <code>SYS_CONTEXT</code> function
      */
+    @Support(ORACLE)
     public static Field<String> sysContext(String namespace, String parameter, int length) {
         return function("sys_context", SQLDataType.VARCHAR, val(namespace), val(parameter), val(length));
     }
+
+    // -------------------------------------------------------------------------
+    // Oracle Text functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The Oracle-Text specific <code>CONTAINS</code> function
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> contains(Field<String> field, String query) {
+        return field("{contains}({0}, {1})", SQLDataType.NUMERIC, nullSafe(field), val(query));
+    }
+
+    /**
+     * The Oracle-Text specific <code>CONTAINS</code> function
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> contains(Field<String> field, String query, int label) {
+        return field("{contains}({0}, {1}, {2})", SQLDataType.NUMERIC, nullSafe(field), val(query), inline(label));
+    }
+
+    /**
+     * The Oracle-Text specific <code>MATCHES</code> function
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> matches(Field<String> field, String query) {
+        return field("{matches}({0}, {1})", SQLDataType.NUMERIC, nullSafe(field), val(query));
+    }
+
+    /**
+     * The Oracle-Text specific <code>CONTAINS</code> function
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> matches(Field<String> field, String query, int label) {
+        return field("{matches}({0}, {1}, {2})", SQLDataType.NUMERIC, nullSafe(field), val(query), inline(label));
+    }
+
+    /**
+     * The Oracle-Text specific <code>CATSEARCH</code> function
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> catsearch(Field<String> field, String textQuery, String structuredQuery) {
+        return field("{catsearch}({0}, {1}, {2})", SQLDataType.NUMERIC, nullSafe(field), val(textQuery), val(structuredQuery));
+    }
+
+    /**
+     * The Oracle-Text specific <code>SCORE</code> function
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> score(int label) {
+        return field("{score}({0})", SQLDataType.NUMERIC, inline(label));
+    }
+
+    /**
+     * The Oracle-Text specific <code>MATCH_SCORE</code> function
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> matchScore(int label) {
+        return field("{match_score}({0})", SQLDataType.NUMERIC, inline(label));
+    }
+
 }

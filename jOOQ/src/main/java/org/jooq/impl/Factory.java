@@ -1943,7 +1943,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Field<?>... fields) {
+    public final <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Field<?>... fields) {
         return mergeInto(table, Arrays.asList(fields));
     }
 
@@ -1951,7 +1951,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
+    public final <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
         return new MergeImpl<R>(this, table, fields);
     }
 
@@ -5896,14 +5896,14 @@ public class Factory implements FactoryOperations {
     /**
      * Null-safety of a field
      */
-    static <T> Field<T> nullSafe(Field<T> field) {
+    protected static <T> Field<T> nullSafe(Field<T> field) {
         return field == null ? val((T) null) : field;
     }
 
     /**
      * Null-safety of a field
      */
-    static Field<?>[] nullSafe(Field<?>... fields) {
+    protected static Field<?>[] nullSafe(Field<?>... fields) {
         Field<?>[] result = new Field<?>[fields.length];
 
         for (int i = 0; i < fields.length; i++) {
@@ -5917,7 +5917,7 @@ public class Factory implements FactoryOperations {
      * Get a default data type if a field is null
      */
     @SuppressWarnings("unchecked")
-    static <T> DataType<T> nullSafeDataType(Field<T> field) {
+    protected static <T> DataType<T> nullSafeDataType(Field<T> field) {
         return (DataType<T>) (field == null ? SQLDataType.OTHER : field.getDataType());
     }
 

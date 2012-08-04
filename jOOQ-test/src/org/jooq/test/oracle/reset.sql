@@ -97,3 +97,5 @@ INSERT INTO t_directory VALUES                     ( 1, null, 1, 'C:')/
 				INSERT INTO t_directory VALUES     (24,   19, 1, 'lib')/
 					INSERT INTO t_directory VALUES (25,   24, 0, 'javaws.jar')/
 					INSERT INTO t_directory VALUES (26,   24, 0, 'rt.jar')/
+
+ALTER INDEX i_book_title_context REBUILD/

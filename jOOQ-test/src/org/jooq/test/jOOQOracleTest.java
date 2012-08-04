@@ -76,6 +76,8 @@ import static org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.countBo
 import static org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.load;
 import static org.jooq.test.oracle2.generatedclasses.Tables.DATE_AS_TIMESTAMP_T_976;
 import static org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE;
+import static org.jooq.util.oracle.OracleFactory.contains;
+import static org.jooq.util.oracle.OracleFactory.score;
 import static org.jooq.util.oracle.OracleFactory.sysContext;
 
 import java.math.BigDecimal;
@@ -1293,5 +1295,22 @@ public class jOOQOracleTest extends jOOQAbstractTest<
                 .fetch();
 
         assertEquals(result1, result2);
+    }
+
+    @Test
+    public void testOracleText() throws Exception {
+
+        // [#816] CONTAINS() tests
+        Result<Record> result1 =
+        create().select(TBook_TITLE(), score(2))
+                .from(TBook())
+                .where(contains(TBook_TITLE(), "Alq%").greaterThan(BigDecimal.ZERO))
+                .or(contains(TBook_TITLE(), "O%", 2).greaterThan(BigDecimal.ZERO))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(1, result1.size());
+        assertEquals("O Alquimista", result1.getValue(0, TBook_TITLE()));
+        assertEquals(1, result1.getValue(0, score(2)).compareTo(BigDecimal.ZERO));
     }
 }

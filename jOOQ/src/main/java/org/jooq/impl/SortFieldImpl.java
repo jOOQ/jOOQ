@@ -174,6 +174,24 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
 
     @Override
     public final void bind(BindContext context) {
+
+        // [#1667] Some dialects simulate NULLS { FIRST | LAST } clauses. They
+        // will need to bind the sort field twice
+        if (nullsFirst || nullsLast) {
+            switch (context.getDialect()) {
+                case DB2:
+                case ASE:
+                case CUBRID:
+                case INGRES:
+                case MYSQL:
+                case SQLITE:
+                case SQLSERVER:
+                case SYBASE: {
+                    context.bind(field);
+                }
+            }
+        }
+
         context.bind(field);
     }
 }

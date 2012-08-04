@@ -1871,7 +1871,7 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 						</sections>
 					</section>
 
-				    <section id="formatting">
+				    <section id="exporting">
 						<title>Exporting to XML, CSV, JSON, HTML, Text</title>
 						<content>
 							<h3>Exporting with jOOQ</h3>
@@ -1881,7 +1881,7 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 						</content>
 
 						<sections>
-							<section id="formatting-xml">
+							<section id="exporting-xml">
 								<title>Exporting XML</title>
 								<content>
 									<h3>Export your results as XML</h3>
@@ -1928,7 +1928,7 @@ Document xml = create.selectFrom(BOOK).fetch().intoXML();</java>
 								</content>
 							</section>
 
-							<section id="formatting-csv">
+							<section id="exporting-csv">
 								<title>Exporting CSV</title>
 								<content>
 									<h3>Export your results as CSV</h3>
@@ -1957,7 +1957,7 @@ String csv = create.selectFrom(BOOK).fetch().formatCSV(';', "{null}");</java>
 								</content>
 							</section>
 
-							<section id="formatting-json">
+							<section id="exporting-json">
 								<title>Exporting JSON</title>
 								<content>
 									<h3>Export your results as JSON</h3>
@@ -1974,7 +1974,7 @@ String json = create.selectFrom(BOOK).fetch().formatJSON();</java>
 								</content>
 							</section>
 
-							<section id="formatting-html">
+							<section id="exporting-html">
 								<title>Exporting HTML</title>
 								<content>
  									<h3>Export your results as HTML</h3>
@@ -2010,7 +2010,7 @@ String html = create.selectFrom(BOOK).fetch().formatHTML();</java>
 								</content>
 							</section>
 
-							<section id="formatting-text">
+							<section id="exporting-text">
 								<title>Exporting Text</title>
 								<content>
 									<h3>Export your results as text</h3>
@@ -2038,18 +2038,126 @@ String text = create.selectFrom(BOOK).fetch().format();</java>
 					</section>
 
 				    <section id="importing">
-						<title>Importing</title>
-						<content></content>
+						<title>Importing data</title>
+						<content>
+							<h3>Importing data into your database using jOOQ</h3>
+							<p>
+								If you are using jOOQ for scripting purposes or in a slim, unlayered application server, you might be interested in using jOOQ's importing functionality (see also exporting functionality). You can import data directly into a table from the formats described in the subsequent sections of this manual.
+							</p>
+						</content>
 
 						<sections>
 							<section id="importing-csv">
-								<title>CSV</title>
-								<content></content>
+								<title>Importing CSV</title>
+								<content>
+									<h3>Importing CSV with jOOQ</h3>
+
+									<p>
+										The below CSV data represents two author records that may have been exported previously, by jOOQ's <reference id="exporting" title="exporting functionality"/>, and then modified in Microsoft Excel or any other spreadsheet tool:
+									</p>
+
+<text>ID;AUTHOR_ID;TITLE
+1;1;1984
+2;1;Animal Farm</text>
+
+									<p>
+										With jOOQ, you can load this data using various parameters from the	loader API. A simple load may look like this:
+									</p>
+
+<java>Factory create = new Factory(connection, dialect);
+
+// Load data into the AUTHOR table from an input stream
+// holding the CSV data.
+create.loadInto(AUTHOR)
+      .loadCSV(inputstream)
+      .fields(ID, AUTHOR_ID, TITLE)
+      .execute();</java>
+
+      								<p>
+      									Here are various other examples:
+   									</p>
+
+<java>// Ignore the AUTHOR_ID column from the CSV file when inserting
+create.loadInto(AUTHOR)
+      .loadCSV(inputstream)
+      .fields(ID, null, TITLE)
+      .execute();
+
+// Specify behaviour for duplicate records.
+create.loadInto(AUTHOR)
+
+      // choose any of these methods
+      .onDuplicateKeyUpdate()
+      .onDuplicateKeyIgnore()
+      .onDuplicateKeyError() // the default
+
+      .loadCSV(inputstream)
+      .fields(ID, null, TITLE)
+      .execute();
+
+// Specify behaviour when errors occur.
+create.loadInto(AUTHOR)
+
+      // choose any of these methods
+      .onErrorIgnore()
+      .onErrorAbort() // the default
+
+      .loadCSV(inputstream)
+      .fields(ID, null, TITLE)
+      .execute();
+
+// Specify transactional behaviour where this is possible
+// (e.g. not in container-managed transactions)
+create.loadInto(AUTHOR)
+
+      // choose any of these methods
+      .commitEach()
+      .commitAfter(10)
+      .commitAll()
+      .commitNone() // the default
+
+      .loadCSV(inputstream)
+      .fields(ID, null, TITLE)
+      .execute();</java>
+
+									<p>
+										Any of the above configuration methods can be combined to achieve the type of load you need. Please refer to the API's Javadoc to learn about more details. Errors that occur during the load are reported by the execute method's result:
+									</p>
+
+<java><![CDATA[Loader<Author> loader = /* .. */ .execute();
+
+// The number of processed rows
+int processed = loader.processed();
+
+// The number of stored rows (INSERT or UPDATE)
+int stored = loader.stored();
+
+// The number of ignored rows (due to errors, or duplicate rule)
+int ignored = loader.ignored();
+
+// The errors that may have occurred during loading
+List<LoaderError> errors = loader.errors();
+LoaderError error = errors.get(0);
+
+// The exception that caused the error
+DataAccessException exception = error.exception();
+
+// The row that caused the error
+int rowIndex = error.rowIndex();
+String[] row = error.row();
+
+// The query that caused the error
+Query query = error.query();]]></java>
+
+								</content>
 							</section>
 
 							<section id="importing-xml">
 								<title>XML</title>
-								<content></content>
+								<content>
+									<h3>Importing XML into jOOQ</h3>
+									<p>This is not yet supported</p>
+								</content>
 							</section>
 						</sections>
 					</section>

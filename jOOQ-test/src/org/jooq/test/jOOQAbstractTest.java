@@ -1414,6 +1414,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testIsDistinctFrom() throws Exception {
+        new PredicateTests(this).testIsDistinctFrom();
+    }
+
+    @Test
     public void testLike() throws Exception {
         new PredicateTests(this).testLike();
     }

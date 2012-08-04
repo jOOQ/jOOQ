@@ -1632,13 +1632,18 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 								<content></content>
 							</section>
 
-						    <section id="and-or-boolean-operators">
-							    <title>AND, OR boolean operators</title>
+						    <section id="comparison-predicate">
+							    <title>Comparison predicate</title>
 								<content></content>
 							</section>
 
-						    <section id="comparison-predicate">
-							    <title>Comparison predicate</title>
+						    <section id="null-predicate">
+							    <title>NULL predicate</title>
+								<content></content>
+							</section>
+
+						    <section id="distinct-predicate">
+							    <title>Distinct predicate</title>
 								<content></content>
 							</section>
 
@@ -1659,6 +1664,11 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 
 						    <section id="exists-predicate">
 							    <title>EXISTS predicate</title>
+								<content></content>
+							</section>
+
+						    <section id="and-or-boolean-operators">
+							    <title>AND, OR boolean operators</title>
 								<content></content>
 							</section>
 						</sections>
@@ -1731,58 +1741,6 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 								<content></content>
 							</section>
 						</sections>
-					</section>
-				</sections>
-			</section>
-
-			<section id="code-generation">
-				<title>Code generation</title>
-				<content></content>
-
-				<sections>
-				    <section id="codegen-configuration">
-						<title>Configuration</title>
-						<content></content>
-					</section>
-
-				    <section id="codegen-advanced">
-						<title>Advanced Configuration</title>
-						<content></content>
-					</section>
-
-				    <section id="codegen-globals">
-						<title>Generated global artefacts</title>
-						<content></content>
-					</section>
-
-				    <section id="codegen-tables">
-						<title>Generated tables</title>
-						<content></content>
-					</section>
-
-				    <section id="codegen-sequences">
-						<title>Generated sequences</title>
-						<content></content>
-					</section>
-
-				    <section id="codegen-procedures">
-						<title>Generated tables</title>
-						<content></content>
-					</section>
-
-				    <section id="master-data-types">
-						<title>Master data and enumeration tables</title>
-						<content></content>
-					</section>
-
-				    <section id="custom-data-types">
-						<title>Custom data types and type conversions</title>
-						<content></content>
-					</section>
-
-				    <section id="schema-mapping">
-						<title>Schema mapping</title>
-						<content></content>
 					</section>
 				</sections>
 			</section>
@@ -2206,6 +2164,58 @@ Query query = error.query();]]></java>
 
 				    <section id="performance-considerations">
 						<title>Performance considerations</title>
+						<content></content>
+					</section>
+				</sections>
+			</section>
+
+			<section id="code-generation">
+				<title>Code generation</title>
+				<content></content>
+
+				<sections>
+				    <section id="codegen-configuration">
+						<title>Configuration</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-advanced">
+						<title>Advanced Configuration</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-globals">
+						<title>Generated global artefacts</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-tables">
+						<title>Generated tables</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-sequences">
+						<title>Generated sequences</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-procedures">
+						<title>Generated tables</title>
+						<content></content>
+					</section>
+
+				    <section id="master-data-types">
+						<title>Master data and enumeration tables</title>
+						<content></content>
+					</section>
+
+				    <section id="custom-data-types">
+						<title>Custom data types and type conversions</title>
+						<content></content>
+					</section>
+
+				    <section id="schema-mapping">
+						<title>Schema mapping</title>
 						<content></content>
 					</section>
 				</sections>

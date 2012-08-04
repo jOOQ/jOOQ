@@ -62,6 +62,12 @@ public enum Comparator {
     GREATER_OR_EQUAL(">="),
 
     @Support
+    IS_DISTINCT_FROM("is distinct from"),
+
+    @Support
+    IS_NOT_DISTINCT_FROM("is not distinct from"),
+
+    @Support
     LIKE("like"),
 
     @Support

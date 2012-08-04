@@ -283,6 +283,26 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         return notEqual((T) null);
     }
 
+    @Override
+    public final Condition isDistinctFrom(T value) {
+        return isDistinctFrom(val(value, this));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Field<T> field) {
+        return new IsDistinctFrom<T>(this, nullSafe(field), Comparator.IS_DISTINCT_FROM);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(T value) {
+        return isNotDistinctFrom(val(value, this));
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Field<T> field) {
+        return new IsDistinctFrom<T>(this, nullSafe(field), Comparator.IS_NOT_DISTINCT_FROM);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public final Condition isTrue() {

@@ -37,6 +37,11 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.one;
@@ -511,7 +516,18 @@ implements
 
             // [#1665] Empty GROUP BY () clauses need parentheses
             if (getGroupBy().isEmpty()) {
-                context.sql("()");
+
+                // [#1681] TODO: Simulate this for Sybase ASE, Ingres
+
+                // Some dialects don't support empty GROUP BY () clauses
+                if (asList(CUBRID, DERBY, HSQLDB, MYSQL, POSTGRES, SQLITE).contains(context.getDialect())) {
+                    context.sql("1");
+                }
+
+                // Few dialects support the SQL standard empty grouping set
+                else {
+                    context.sql("()");
+                }
             }
             else {
                 context.sql(getGroupBy());

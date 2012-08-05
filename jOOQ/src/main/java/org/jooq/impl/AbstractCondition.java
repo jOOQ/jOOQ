@@ -43,6 +43,7 @@ import java.util.Arrays;
 
 import org.jooq.Condition;
 import org.jooq.Operator;
+import org.jooq.QueryPart;
 import org.jooq.Select;
 
 /**
@@ -55,8 +56,7 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
      */
     private static final long serialVersionUID = -6683692251799468624L;
 
-    AbstractCondition() {
-    }
+    AbstractCondition() {}
 
     @Override
     public final Condition and(Condition other) {
@@ -79,6 +79,11 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     }
 
     @Override
+    public final Condition and(String sql, QueryPart... parts) {
+        return and(condition(sql, parts));
+    }
+
+    @Override
     public final Condition or(String sql) {
         return or(condition(sql));
     }
@@ -86,6 +91,11 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     @Override
     public final Condition or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
+    }
+
+    @Override
+    public final Condition or(String sql, QueryPart... parts) {
+        return or(condition(sql, parts));
     }
 
     @Override

@@ -249,6 +249,11 @@ implements
     }
 
     @Override
+    public final MergeImpl<R> on(String sql, QueryPart... parts) {
+        return on(condition(sql, parts));
+    }
+
+    @Override
     public final MergeImpl<R> and(Condition condition) {
         on.addConditions(condition);
         return this;
@@ -262,6 +267,11 @@ implements
     @Override
     public final MergeImpl<R> and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
+    }
+
+    @Override
+    public final MergeImpl<R> and(String sql, QueryPart... parts) {
+        return and(condition(sql, parts));
     }
 
     @Override
@@ -293,6 +303,11 @@ implements
     @Override
     public final MergeImpl<R> or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
+    }
+
+    @Override
+    public final MergeImpl<R> or(String sql, QueryPart... parts) {
+        return or(condition(sql, parts));
     }
 
     @Override

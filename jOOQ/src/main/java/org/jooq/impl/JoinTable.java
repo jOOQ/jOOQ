@@ -314,6 +314,12 @@ class JoinTable extends AbstractTable<Record> implements TableOnConditionStep, T
     }
 
     @Override
+    public final JoinTable on(String sql, QueryPart... parts) {
+        and(sql, parts);
+        return this;
+    }
+
+    @Override
     public final JoinTable onKey() throws DataAccessException {
         List<?> leftToRight = lhs.getReferencesTo(rhs);
         List<?> rightToLeft = rhs.getReferencesTo(lhs);
@@ -397,6 +403,11 @@ class JoinTable extends AbstractTable<Record> implements TableOnConditionStep, T
     }
 
     @Override
+    public final JoinTable and(String sql, QueryPart... parts) {
+        return and(condition(sql, parts));
+    }
+
+    @Override
     public final JoinTable andNot(Condition c) {
         return and(c.not());
     }
@@ -425,6 +436,11 @@ class JoinTable extends AbstractTable<Record> implements TableOnConditionStep, T
     @Override
     public final JoinTable or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
+    }
+
+    @Override
+    public final JoinTable or(String sql, QueryPart... parts) {
+        return or(condition(sql, parts));
     }
 
     @Override

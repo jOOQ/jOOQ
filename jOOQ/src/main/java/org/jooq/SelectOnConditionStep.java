@@ -117,6 +117,20 @@ public interface SelectOnConditionStep extends SelectJoinStep {
     SelectOnConditionStep and(String sql, Object... bindings);
 
     /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#AND} operator and proceed to the next step.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#condition(String, QueryPart...)
+     */
+    @Support
+    SelectOnConditionStep and(String sql, QueryPart... parts);
+
+    /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
@@ -171,6 +185,20 @@ public interface SelectOnConditionStep extends SelectJoinStep {
      */
     @Support
     SelectOnConditionStep or(String sql, Object... bindings);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#OR} operator and proceed to the next step.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#condition(String, QueryPart...)
+     */
+    @Support
+    SelectOnConditionStep or(String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using

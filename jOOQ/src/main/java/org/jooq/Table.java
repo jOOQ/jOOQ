@@ -232,6 +232,19 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
     TableOnStep join(String sql, Object... bindings);
 
     /**
+     * <code>INNER JOIN</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, QueryPart...)
+     */
+    @Support
+    TableOnStep join(String sql, QueryPart... parts);
+
+    /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
      */
     @Support
@@ -262,6 +275,19 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      */
     @Support
     TablePartitionByStep leftOuterJoin(String sql, Object... bindings);
+
+    /**
+     * <code>LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, QueryPart...)
+     */
+    @Support
+    TablePartitionByStep leftOuterJoin(String sql, QueryPart... parts);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -302,6 +328,21 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
     TablePartitionByStep rightOuterJoin(String sql, Object... bindings);
 
     /**
+     * <code>RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, QueryPart...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    TablePartitionByStep rightOuterJoin(String sql, QueryPart... parts);
+
+    /**
      * <code>FULL OUTER JOIN</code> a table to this table.
      * <p>
      * This is only possible where the underlying RDBMS supports it
@@ -338,6 +379,21 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      */
     @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep fullOuterJoin(String sql, Object... bindings);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, QueryPart...)
+     */
+    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    TableOnStep fullOuterJoin(String sql, QueryPart... parts);
 
     /**
      * <code>CROSS JOIN</code> a table to this table.
@@ -393,6 +449,26 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
     Table<Record> crossJoin(String sql, Object... bindings);
 
     /**
+     * <code>CROSS JOIN</code> a table to this table.
+     * <p>
+     * If this syntax is unavailable, it is simulated with a regular
+     * <code>INNER JOIN</code>. The following two constructs are equivalent:
+     * <code><pre>
+     * A cross join B
+     * A join B on 1 = 1
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, QueryPart...)
+     */
+    @Support
+    Table<Record> crossJoin(String sql, QueryPart... parts);
+
+    /**
      * <code>NATURAL JOIN</code> a table to this table.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
@@ -432,6 +508,22 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      */
     @Support
     Table<Record> naturalJoin(String sql, Object... bindings);
+
+    /**
+     * <code>NATURAL JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, QueryPart...)
+     */
+    @Support
+    Table<Record> naturalJoin(String sql, QueryPart... parts);
 
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
@@ -475,6 +567,22 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
     Table<Record> naturalLeftOuterJoin(String sql, Object... bindings);
 
     /**
+     * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, QueryPart...)
+     */
+    @Support
+    Table<Record> naturalLeftOuterJoin(String sql, QueryPart... parts);
+
+    /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
@@ -514,4 +622,20 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
+
+    /**
+     * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, QueryPart...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
 }

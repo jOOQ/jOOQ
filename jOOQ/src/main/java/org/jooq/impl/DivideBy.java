@@ -50,6 +50,7 @@ import org.jooq.DivideByOnConditionStep;
 import org.jooq.DivideByOnStep;
 import org.jooq.Field;
 import org.jooq.Operator;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Select;
@@ -205,6 +206,12 @@ implements
     }
 
     @Override
+    public final DivideBy on(String sql, QueryPart... parts) {
+        and(sql, parts);
+        return this;
+    }
+
+    @Override
     public final DivideBy returning(Field<?>... fields) {
         return returning(Arrays.asList(fields));
     }
@@ -229,6 +236,11 @@ implements
     @Override
     public final DivideBy and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
+    }
+
+    @Override
+    public final DivideBy and(String sql, QueryPart... parts) {
+        return and(condition(sql, parts));
     }
 
     @Override
@@ -260,6 +272,11 @@ implements
     @Override
     public final DivideBy or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
+    }
+
+    @Override
+    public final DivideBy or(String sql, QueryPart... parts) {
+        return or(condition(sql, parts));
     }
 
     @Override

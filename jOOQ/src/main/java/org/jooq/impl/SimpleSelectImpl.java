@@ -46,6 +46,7 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.Param;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
@@ -126,6 +127,11 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingSelect<R>
     }
 
     @Override
+    public final SimpleSelectImpl<R> where(String sql, QueryPart... parts) {
+        return where(condition(sql, parts));
+    }
+
+    @Override
     public final SimpleSelectImpl<R> whereExists(Select<?> select) {
         return andExists(select);
     }
@@ -149,6 +155,11 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingSelect<R>
     @Override
     public final SimpleSelectImpl<R> and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
+    }
+
+    @Override
+    public final SimpleSelectImpl<R> and(String sql, QueryPart... parts) {
+        return and(condition(sql, parts));
     }
 
     @Override
@@ -180,6 +191,11 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingSelect<R>
     @Override
     public final SimpleSelectImpl<R> or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
+    }
+
+    @Override
+    public final SimpleSelectImpl<R> or(String sql, QueryPart... parts) {
+        return or(condition(sql, parts));
     }
 
     @Override

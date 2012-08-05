@@ -47,7 +47,6 @@ import static org.jooq.impl.Factory.groupingId;
 import static org.jooq.impl.Factory.groupingSets;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.rollup;
-import static org.jooq.impl.Factory.trueCondition;
 
 import java.util.Arrays;
 
@@ -101,7 +100,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(1, (int) create().selectOne()
                                       .from(TBook())
                                       .groupBy()
-                                      .having(trueCondition())
+                                      .having("1 = 1")
                                       .fetchOne(0, Integer.class));
 
         // Test a simple group by query

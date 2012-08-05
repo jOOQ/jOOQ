@@ -134,7 +134,7 @@ CREATE TABLE t_book_to_book_store (
 								<li>Typesafe database object referencing through generated schema, table, column, record, procedure, type, dao, pojo artefacts (see the chapter about <reference id="code-generation" title="code generation"/>)</li>
 								<li>Typesafe SQL construction through a complete API modelling SQL as a domain specific language in Java (see the chapter about <reference id="dsl-and-non-dsl" title="the DSL API"/>)</li>
 								<li>Convenient query execution through an improved API for result fetching (see the chapters about <reference id="fetching" title="the various types of data fetching"/>)</li>
-								<li>SQL dialect abstraction and SQL clause simulation to improve cross-database compatibility and to enable missing features in simpler databases (see the chapter about <reference id="sql-dialect" title="SQL dialects"/>)</li>
+								<li>SQL dialect abstraction and SQL clause simulation to improve cross-database compatibility and to enable missing features in simpler databases (see the chapter about <reference id="sql-dialects" title="SQL dialects"/>)</li>
 								<li>SQL logging and debugging using jOOQ as an integral part of your development process (see the chapters about <reference id="logging" title="logging"/> and about the <reference id="jooq-console" title="jOOQ Console"/>)</li>
 							</ul>
 							<p>
@@ -637,7 +637,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</java>
 							    As any Configuration object, a Factory can be supplied with these objects:
 							</p>
 							<ul>
-								<li><reference class="org.jooq.SQLDialect"/> : The dialect of your database. This may be any of the currently supported database types (see <reference id="sql-dialect"/> for more details)</li>
+								<li><reference class="org.jooq.SQLDialect"/> : The dialect of your database. This may be any of the currently supported database types (see <reference id="sql-dialects"/> for more details)</li>
 								<li><reference class="java.sql.Connection"/> : An optional JDBC Connection that will be re-used for the whole lifecycle of your Factory (see <reference id="connection-vs-datasource"/> for more details)</li>
     							<li><reference class="java.sql.DataSource"/> : An optional JDBC DataSource that will be re-used for the whole lifecycle of your Factory. If you prefer using DataSources over Connections, jOOQ will internally fetch new Connections from your DataSource, conveniently closing them again after query execution. This is particularly useful in J2EE or Spring contexts (see <reference id="connection-vs-datasource"/> for more details)</li>
     							<li><reference class="org.jooq.conf.Settings"/> : An optional runtime configuration (see <reference id="custom-settings"/> for more details)</li>
@@ -656,7 +656,7 @@ Result<?> result = select.fetch();]]></java>
 						</content>
 
 						<sections>
-							<section id="sql-dialect">
+							<section id="sql-dialects">
 								<title>SQL Dialect</title>
 								<content>
 									<h3>The SQL dialect corresponding to your database</h3>
@@ -1850,7 +1850,30 @@ new Factory(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 
 					<section id="column-expressions">
 						<title>Column expressions</title>
-						<content></content>
+						<content>
+							<h3>Column expressions in general</h3>
+							<p>
+								jOOQ allows you to freely create arbitrary column expressions using a fluent expression construction API. Many expressions can be formed as functions from <reference id="factory" title="Factory methods"/>, other expressions can be formed based on a pre-existing column expression. For example:
+							</p>
+							
+<java><![CDATA[// A regular table column expression
+Field<String> field1 = BOOK.TITLE;
+
+// A function created from the Factory using "prefix" notation
+Field<String> field2 = trim(BOOK.TITLE);
+
+// The same function created from a pre-existing Field using "postfix" notation
+Field<String> field3 = BOOK.TITLE.trim();
+
+// More complex function with advanced DSL syntax
+Field<String> field4 = listAgg(BOOK.TITLE)
+                          .withinGroupOrderBy(BOOK.ID.asc())
+                          .over().partitionBy(AUTHOR.ID);]]></java>
+
+							<p>
+								In general, it is up to you whether you want to use the "prefix" notation or the "postfix" notation to create new column expressions based on existing ones. The "SQL way" would be to use the "prefix notation", with functions created from the <reference id="factory" title="Factory"/>. The "Java way" or "object-oriented way" would be to use the "postfix" notation with functions created from <reference class="org.jooq.Field"/> objects. Both ways ultimately create the same query part, though.
+							</p>
+						</content>
 
 						<sections>
 							<section id="table-columns">
@@ -1864,17 +1887,129 @@ new Factory(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 							</section>
 
 							<section id="cast-expressions">
-								<title>Type casting</title>
-								<content></content>
+								<title>Cast expressions</title>
+								<content>
+									<h3>Enforcing a specific type when you need it</h3>
+									<p>
+										jOOQ's source code generator tries to find the most accurate type mapping between your vendor-specific data types and a matching Java type. For instance, most VARCHAR, CHAR, CLOB types will map to String. Most BINARY, BYTEA, BLOB types will map to byte[]. NUMERIC types will default to java.math.BigDecimal, but can also be any of java.math.BigInteger, Long, Integer, Short, Byte, Double, Float.
+									</p>
+									<p>
+										Sometimes, this automatic mapping might not be what you needed, or jOOQ cannot know the type of a field. In those cases you would write SQL type CASTs like this:
+									</p>
+									
+<sql>-- Let's say, your Postgres column LAST_NAME was VARCHAR(30)
+-- Then you could do this:
+SELECT CAST(T_AUTHOR.LAST_NAME AS TEXT) FROM DUAL</sql>
+
+									<p>
+										in jOOQ, you can write something like that:
+									</p>
+									
+<java>create.select(TAuthor.LAST_NAME.cast(PostgresDataType.TEXT));</java>
+
+									<p>
+										The same thing can be achieved by casting a Field directly to String.class, as TEXT is the default data type in Postgres to map to Java's String
+									</p>
+									
+<java>create.select(TAuthor.LAST_NAME.cast(String.class));</java>
+		
+									<p>
+										The complete CAST API in Field consists of these three methods:
+									</p>
+									
+<java><![CDATA[public interface Field<T> {
+
+    // Cast this field to the type of another field
+    <Z> Field<Z> cast(Field<Z> field);
+    
+    // Cast this field to a given DataType
+    <Z> Field<Z> cast(DataType<Z> type);
+    
+    // Cast this field to the default DataType for a given Class
+    <Z> Field<Z> cast(Class<? extends Z> type);
+}
+
+// And additional convenience methods in the Factory:
+public class Factory {
+    <T> Field<T> cast(Object object, Field<T> field);
+    <T> Field<T> cast(Object object, DataType<T> type);
+    <T> Field<T> cast(Object object, Class<? extends T> type);
+    <T> Field<T> castNull(Field<T> field);
+    <T> Field<T> castNull(DataType<T> type);
+    <T> Field<T> castNull(Class<? extends T> type);
+}]]></java>
+								</content>
 							</section>
 
 							<section id="arithmetic-expressions">
 								<title>Arithmetic expressions</title>
-								<content></content>
+								<content>
+									<h3>Numeric arithmetic expressions</h3>
+									<p>
+										Your database can do the math for you. Arithmetic operations are implemented just like <reference id="numeric-functions" title="numeric functions"/>, with similar limitations as far as type restrictions are concerned. You can use any of these operators:
+									</p>
+
+<config>  +  -  *  /  %</config>
+
+									<p>
+										In order to express a SQL query like this one:
+									</p>
+									
+<sql>SELECT ((1 + 2) * (5 - 3) / 2) % 10 FROM DUAL</sql>
+							
+									<p>
+										You can write something like this in jOOQ:
+									</p>
+									
+<java>create.select(val(1).add(2).mul(val(5).sub(3)).div(2).mod(10);</java>
+
+									<h3>Datetime arithmetic expressions</h3>
+									<p>
+										jOOQ also supports the Oracle-style syntax for adding days to a Field&lt;? extends java.util.Date&gt; 
+									</p>
+
+<code-pair>
+	<sql>SELECT SYSDATE + 3 FROM DUAL;</sql>
+	<java>create.select(currentTimestamp().add(3));</java>
+</code-pair>
+
+									<p>
+										For more advanced datetime arithmetic, use the Factory's timestampDiff() and dateDiff() functions, as well as jOOQ's built-in SQL standard INTERVAL data type support:
+									</p>
+									<ul>
+										<li>INTERVAL YEAR TO MONTH: <reference class="org.jooq.types.YearToMonth"/></li>
+										<li>INTERVAL DAY TO SECOND: <reference class="org.jooq.types.DayToSecond"/></li>
+									</ul>
+								</content>
+							</section>
+							
+							<section id="string-concatenation">
+								<title>String concatenation</title>
+								<content>
+									<h3>String concatenation</h3>
+									<p>
+										The SQL standard defines the concatenation operator to be an infix operator, similar to the ones we've seen in the chapter about <reference id="arithmetic-expressions" title="arithmetic expressions"/>. This operator looks like this: <code>||</code>. Some other dialects do not support this operator, but expect a <code>concat()</code> function, instead. jOOQ renders the right operator / function, depending on your <reference id="sql-dialects" title="SQL dialect"/>:
+									</p>
+									
+<code-pair>
+<sql>SELECT 'A' || 'B' || 'C' FROM DUAL
+-- Or in MySQL:
+SELECT concat('A', 'B', 'C') FROM DUAL</sql>
+<java>&#160;
+// For all RDBMS, including MySQL:
+create.select(concat("A", "B", "C"));
+</java>
+</code-pair>								
+								</content>
 							</section>
 
 							<section id="numeric-functions">
 								<title>Numeric functions</title>
+								<content></content>
+							</section>
+
+							<section id="bitwise-functions">
+								<title>Bitwise functions</title>
 								<content></content>
 							</section>
 
@@ -1895,7 +2030,93 @@ new Factory(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 
 							<section id="aggregate-functions">
 								<title>Aggregate functions</title>
-								<content></content>
+								<content>
+									<h3>Aggregate functions</h3>
+									<p>
+										Aggregate functions work just like functions, even if they have a slightly different semantics. Here are some example aggregate functions from the <reference id="factory" title="Factory"/>:
+									</p>
+
+<java><![CDATA[// Every-day, SQL standard aggregate functions
+AggregateFunction<Integer> count();
+AggregateFunction<Integer> count(Field<?> field);
+AggregateFunction<T> max(Field<T> field);
+AggregateFunction<T> min(Field<T> field);
+AggregateFunction<BigDecimal> sum(Field<? extends Number> field);
+AggregateFunction<BigDecimal> avg(Field<? extends Number> field);
+
+// DISTINCT keyword in aggregate functions
+AggregateFunction<Integer> countDistinct(Field<?> field);
+AggregateFunction<T> maxDistinct(Field<T> field);
+AggregateFunction<T> minDistinct(Field<T> field);
+AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field);
+AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field);
+
+// String aggregate functions
+AggregateFunction<String> groupConcat(Field<?> field);
+AggregateFunction<String> groupConcatDistinct(Field<?> field);
+OrderedAggregateFunction<String> listAgg(Field<?> field);
+OrderedAggregateFunction<String> listAgg(Field<?> field, String separator);
+
+// Statistical functions
+AggregateFunction<BigDecimal> median(Field<? extends Number> field);
+AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field);
+AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field);
+AggregateFunction<BigDecimal> varPop(Field<? extends Number> field);
+AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field);]]></java>
+
+									<p>
+										Here's an example, counting the number of books any author has written:
+									</p>
+
+<code-pair>
+<sql>SELECT AUTHOR_ID, COUNT(*)
+FROM BOOK
+GROUP BY AUTHOR_ID</sql>
+<java>create.select(BOOK.AUTHOR_ID, count())
+      .from(BOOK)
+      .groupBy(BOOK.AUTHOR_ID);</java>
+</code-pair>
+
+									<p>
+										Aggregate functions have strong limitations about when they may be used and when not. For instance, you can use aggregate functions in scalar queries. Typically, this means you only select aggregate functions, no <reference id="table-columns" title="regular columns"/> or other <reference id="column-expressions" title="column expressions"/>. Another use case is to use them along with a <reference id="group-by-clause" title="GROUP BY clause"/> as seen in the previous example. Note, that jOOQ does not check whether your using of aggregate functions is correct according to the SQL standards, or according to your database's behaviour.
+									</p>
+
+		                            <h3>Ordered aggregate functions</h3>
+		                            <p>
+		                            	Oracle and some other databases support "ordered aggregate functions". This means you can provide an ORDER BY clause to an aggregate function, which will be taken into consideration when aggregating. The best example for this is Oracle's <code>LISTAGG()</code> (also known as <code>GROUP_CONCAT</code> in other <reference id="sql-dialects" title="SQL dialects"/>). The following query groups by authors and concatenates their books' titles
+		                           	</p>
+<code-pair>
+<sql>SELECT   LISTAGG(TITLE, ', ')
+         WITHIN GROUP (ORDER BY TITLE)
+FROM     BOOK
+GROUP BY AUTHOR_ID</sql>
+<java>create.select(listAgg(BOOK.TITLE, ", ")
+      .withinGroupOrderBy(BOOK.TITLE))
+      .from(BOOK)
+      .groupBy(BOOK.AUTHOR_ID)</java>
+</code-pair>
+
+									<p>
+										The above query might yield:
+									</p>
+
+<text>+---------------------+
+| LISTAGG             |
++---------------------+
+| 1984, Animal Farm   |
+| O Alquimista, Brida |
++---------------------+</text>
+
+									<h3>User-defined aggregate functions</h3>
+									<p>
+										jOOQ also supports using your own user-defined aggregate functions. See the manual's section about <reference id="user-defined-aggregate-functions" title="user-defined aggregate functions"/> for more details.
+									</p>
+
+									<h3>Window functions / analytical functions</h3>
+									<p>
+										In those databases that support <reference id="window-functions" title="window functions"/>, jOOQ's <reference class="org.jooq.AggregateFunction"/> can be transformed into a window function / analytical function by calling <code>over()</code> on it. See the manual's section about <reference id="window-functions" title="window functions"/> for more details.
+									</p>
+								</content>
 							</section>
 
 							<section id="window-functions">

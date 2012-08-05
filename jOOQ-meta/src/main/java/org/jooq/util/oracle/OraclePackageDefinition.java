@@ -60,7 +60,7 @@ public class OraclePackageDefinition extends AbstractPackageDefinition {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
         for (Record record : create()
-                .selectDistinct(
+                .select(
                     ALL_PROCEDURES.PROCEDURE_NAME,
                     ALL_PROCEDURES.OBJECT_ID,
                     ALL_PROCEDURES.OVERLOAD,
@@ -70,7 +70,7 @@ public class OraclePackageDefinition extends AbstractPackageDefinition {
                 .and(ALL_PROCEDURES.OBJECT_NAME.equal(getName()))
                 .and(ALL_PROCEDURES.OBJECT_TYPE.equal("PACKAGE"))
                 .and(ALL_PROCEDURES.PROCEDURE_NAME.isNotNull())
-                .orderBy(ALL_PROCEDURES.PROCEDURE_NAME, ALL_PROCEDURES.OVERLOAD)
+                .orderBy(ALL_PROCEDURES.SUBPROGRAM_ID, ALL_PROCEDURES.OVERLOAD)
                 .fetch()) {
 
             result.add(new OracleRoutineDefinition(getSchema(),

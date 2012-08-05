@@ -58,6 +58,8 @@ import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
+import org.joox.Context;
+import org.joox.Each;
 import org.joox.Match;
 
 /**
@@ -110,6 +112,25 @@ public class Transform {
         return StringUtils.join(Collections.nCopies(path.split("/").length, ".."), "/") + "/";
     }
 
+    private static void replaceVariables(Match manual) {
+        manual.find("content").each(new Each() {
+            @Override
+            public void each(Context context) {
+                String content = $(context.element()).content();
+                boolean changed = false;
+
+                if (content.contains("{jooq-version}")) {
+                    content = content.replace("{jooq-version}", version + ".0");
+                    changed = true;
+                }
+
+                if (changed) {
+                    $(context.element()).content(content);
+                }
+            }
+        });
+    }
+
     public static void multiplePages() throws Exception {
         InputStream isXML = Transform.class.getResourceAsStream(file("manual.xml"));
         InputStream isXSL = Transform.class.getResourceAsStream("html-pages.xsl");
@@ -119,6 +140,7 @@ public class Transform {
         Transformer transformer = factory.newTransformer(xsl);
 
         Match manual = $(isXML);
+        replaceVariables(manual);
 
         List<String> ids = manual.find("section").ids();
         HashSet<String> uniqueIds = new HashSet<String>(ids);
@@ -170,6 +192,7 @@ public class Transform {
         String relativePath = relative(path("manual-single-page"));
         String root = root();
         Match manual = $(isXML);
+        replaceVariables(manual);
 
         File dir = new File(path("manual-single-page"));
         dir.mkdirs();
@@ -203,6 +226,7 @@ public class Transform {
         Transformer transformer = factory.newTransformer(xsl);
 
         Match manual = $(isXML);
+        replaceVariables(manual);
 
         File dir = new File(path("manual-pdf"));
         dir.mkdirs();

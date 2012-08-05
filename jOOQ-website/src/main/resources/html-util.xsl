@@ -162,10 +162,10 @@
 				<table width="100%" cellpadding="0" cellspacing="0">
 				<tr>
 					<td width="50%" class="left">
-						<xsl:apply-templates select="sql" mode="content"/>
+						<xsl:apply-templates select="./*[position() = 1]" mode="content"/>
 					</td>
 					<td width="50%" class="right">
-						<xsl:apply-templates select="java" mode="content"/>
+						<xsl:apply-templates select="./*[position() = 2]" mode="content"/>
 					</td>
 				</tr>
 				</table>

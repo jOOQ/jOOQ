@@ -2107,6 +2107,18 @@ GROUP BY AUTHOR_ID</sql>
 | O Alquimista, Brida |
 +---------------------+</text>
 
+									<h3>FIRST and LAST: Oracle's "ranked" aggregate functions</h3>
+									<p>
+										Oracle allows for restricting aggregate functions using the <code>KEEP()</code> clause, which is supported by jOOQ. In Oracle, some aggregate functions (MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV) can be restricted by this clause, hence <reference class="org.jooq.AggregateFunction"/> also allows for specifying it. Here are a couple of examples using this clause:
+									</p>
+
+<code-pair>
+<sql>SUM(BOOK.AMOUNT_SOLD)
+  KEEP(DENSE_RANK FIRST ORDER BY BOOK.AUTHOR_ID)</sql>
+<java>sum(BOOK.AMOUNT_SOLD)
+  .keepDenseRankFirstOrderBy(BOOK.AUTHOR_ID)</java>
+</code-pair>
+
 									<h3>User-defined aggregate functions</h3>
 									<p>
 										jOOQ also supports using your own user-defined aggregate functions. See the manual's section about <reference id="user-defined-aggregate-functions" title="user-defined aggregate functions"/> for more details.
@@ -2121,7 +2133,134 @@ GROUP BY AUTHOR_ID</sql>
 
 							<section id="window-functions">
 								<title>Window functions</title>
-								<content></content>
+								<content>
+									<h3>Window functions</h3>
+									<p>
+										Most major RDBMS support the concept of window functions. jOOQ knows of implementations in DB2, Oracle, Postgres, SQL Server, and Sybase SQL Anywhere, and supports most of their specific syntaxes. Note, that H2 and HSQLDB have implemented <code>ROW_NUMBER()</code> functions, without true windowing support.
+									</p>
+									<p>
+										As previously discussed, any <reference class="org.jooq.AggregateFunction"/> can be transformed into a window function using the <code>over()</code> method. See the chapter about <reference id="aggregate-functions" title="aggregate functions"/> for details. In addition to those, there are also some more window functions supported by jOOQ, as declared in the <reference id="factory" title="Factory"/>:
+									</p>
+
+<java><![CDATA[// Ranking functions
+    WindowOverStep<Integer>    rowNumber();
+    WindowOverStep<Integer>    rank();
+    WindowOverStep<Integer>    denseRank();
+    WindowOverStep<BigDecimal> percentRank();
+    
+// Windowing functions
+<T> WindowIgnoreNullsStep<T>   firstValue(Field<T> field);
+<T> WindowIgnoreNullsStep<T>   lastValue(Field<T> field)
+<T> WindowIgnoreNullsStep<T>   lead(Field<T> field);
+<T> WindowIgnoreNullsStep<T>   lead(Field<T> field, int offset);
+<T> WindowIgnoreNullsStep<T>   lead(Field<T> field, int offset, T defaultValue);
+<T> WindowIgnoreNullsStep<T>   lead(Field<T> field, int offset, Field<T> defaultValue);
+<T> WindowIgnoreNullsStep<T>   lag(Field<T> field);
+<T> WindowIgnoreNullsStep<T>   lag(Field<T> field, int offset);
+<T> WindowIgnoreNullsStep<T>   lag(Field<T> field, int offset, T defaultValue);
+<T> WindowIgnoreNullsStep<T>   lag(Field<T> field, int offset, Field<T> defaultValue);
+
+// Statistical functions
+    WindowOverStep<BigDecimal> cumeDist();
+    WindowOverStep<Integer>    ntile(int number);]]></java>	
+    								
+    								<p>
+    									SQL distinguishes between various window function types (e.g. "ranking functions"). Depending on the function, SQL expects mandatory <code>PARTITION BY</code> or <code>ORDER BY</code> clauses within the <code>OVER()</code> clause. jOOQ does not enforce those rules for two reasons:
+    								</p>
+    								<ul>
+    									<li>Your JDBC driver or database already checks SQL syntax semantics</li>
+    									<li>Not all databases behave correctly according to the SQL standard</li>
+    								</ul>
+    								<p>
+    									If possible, however, jOOQ tries to render missing clauses for you, if a given <reference id="sql-dialects" title="SQL dialect"/> is more restrictive.
+    								</p>
+    								<h3>Some examples</h3>
+									<p>
+										 Here are some simple examples of window functions with jOOQ:
+									</p>
+									
+<code-pair>
+<sql>-- Sample uses of ROW_NUMBER()
+ROW_NUMBER() OVER()
+ROW_NUMBER() OVER(PARTITION BY 1)
+ROW_NUMBER() OVER(ORDER BY BOOK.ID)
+ROW_NUMBER() OVER(PARTITION BY BOOK.AUTHOR_ID ORDER BY BOOK.ID)
+                  
+-- Sample uses of FIRST_VALUE
+FIRST_VALUE(BOOK.ID) OVER()
+FIRST_VALUE(BOOK.ID IGNORE NULLS) OVER()
+FIRST_VALUE(BOOK.ID RESPECT NULLS) OVER()
+</sql>
+<java>// Sample uses of rowNumber()
+rowNumber().over()
+rowNumber().over().partitionByOne()
+rowNumber().over().partitionBy(BOOK.AUTHOR_ID)
+rowNumber().over().partitionBy(BOOK.AUTHOR_ID).orderBy(BOOK.ID)
+                  
+// Sample uses of firstValue()
+firstValue(BOOK.ID).over()
+firstValue(BOOK.ID).ignoreNulls().over()
+firstValue(BOOK.ID).respectNulls().over()
+</java>
+</code-pair>
+    								
+									<h3>An advanced window function example</h3>
+									<p>
+										Window functions can be used for things like calculating a "running total". The following example fetches transactions and the running total for every transaction going back to the beginning of the transaction table (ordered by booked_at). Window functions are accessible from the previously seen <reference class="org.jooq.AggregateFunction"/> type using the <code>over()</code> method:
+									</p>
+
+<code-pair>
+<sql>SELECT booked_at, amount,
+   SUM(amount) OVER (PARTITION BY 1
+                     ORDER BY booked_at
+                     ROWS BETWEEN UNBOUNDED PRECEDING
+                     AND CURRENT ROW) AS total
+  FROM transactions</sql>
+<java>create.select(t.BOOKED_AT, t.AMOUNT,
+         sum(t.AMOUNT).over().partitionByOne()
+                      .orderBy(t.BOOKED_AT)
+                      .rowsBetweenUnboundedPreceding()
+                      .andCurrentRow().as("total")
+      .from(TRANSACTIONS.as("t"));</java>
+</code-pair>
+
+
+									<h3>Window functions created from ordered aggregate functions</h3>
+									<p>
+										In the previous chapter about <reference id="aggregate-functions" title="aggregate functions"/>, we have seen the concept of "ordered aggregate functions", such as Oracle's <code>LISTAGG()</code>. These functions have a window function / analytical function variant, as well. For example:
+									</p>
+									
+<code-pair>
+<sql>SELECT   LISTAGG(TITLE, ', ')
+         WITHIN GROUP (ORDER BY TITLE)
+         OVER (PARTITION BY BOOK.AUTHOR_ID)
+FROM     BOOK</sql>
+<java>create.select(listAgg(BOOK.TITLE, ", ")
+      .withinGroupOrderBy(BOOK.TITLE)
+      .over().partitionBy(BOOK.AUTHOR_ID))
+      .from(BOOK)</java>
+</code-pair>
+
+									<h3>Window functions created from Oracle's FIRST and LAST aggregate functions</h3>
+									<p>
+										In the previous chapter about <reference id="aggregate-functions" title="aggregate functions"/>, we have seen the concept of "FIRST and LAST aggregate functions". These functions have a window function / analytical function variant, as well. For example:
+									</p>
+
+<code-pair>
+<sql>SUM(BOOK.AMOUNT_SOLD)
+  KEEP(DENSE_RANK FIRST ORDER BY BOOK.AUTHOR_ID)
+  OVER(PARTITION BY 1)</sql>
+<java>sum(BOOK.AMOUNT_SOLD)
+  .keepDenseRankFirstOrderBy(BOOK.AUTHOR_ID)
+  .over().partitionByOne()</java>
+</code-pair>
+
+
+									<h3>Window functions created from user-defined aggregate functions</h3>
+									<p>
+										User-defined aggregate functions also implement <reference class="org.jooq.AggregateFunction"/>, hence they can also be transformed into window functions using <code>over()</code>. This is supported by Oracle in particular. See the manual's section about <reference id="user-defined-aggregate-functions" title="user-defined aggregate functions"/> for more details.
+									</p>
+								</content>
 							</section>
 
 							<section id="grouping-functions">

@@ -65,8 +65,12 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 
     private final BigDecimal objectId;
 
-	public OracleRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, BigDecimal objectId, String overload) {
-		super(schema, pkg, name, comment, overload);
+    public OracleRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, BigDecimal objectId, String overload) {
+        this(schema, pkg, name, comment, objectId, overload, false);
+    }
+
+	public OracleRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, BigDecimal objectId, String overload, boolean aggregate) {
+		super(schema, pkg, name, comment, overload, aggregate);
 
 		this.objectId = objectId;
 	}

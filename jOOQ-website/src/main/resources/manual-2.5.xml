@@ -1491,13 +1491,16 @@ new Factory(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 							<section id="grouping-functions">
 								<title>Grouping functions</title>
 								<content>
-									<h3>Creating GROUPING SETS for reporting</h3>
-									<p>The SQL standard defines </p>
 								</content>
 							</section>
 
 							<section id="user-defined-functions">
 								<title>User-defined functions</title>
+								<content></content>
+							</section>
+
+							<section id="user-defined-aggregate-functions">
+								<title>User-defined aggregate functions</title>
 								<content></content>
 							</section>
 

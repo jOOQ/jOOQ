@@ -35,7 +35,7 @@
  */
 package org.jooq.util.oracle;
 
-import static org.jooq.util.oracle.sys.Tables.ALL_ARGUMENTS;
+import static org.jooq.util.oracle.sys.Tables.ALL_PROCEDURES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -61,21 +61,25 @@ public class OraclePackageDefinition extends AbstractPackageDefinition {
 
         for (Record record : create()
                 .selectDistinct(
-                    ALL_ARGUMENTS.OBJECT_NAME,
-                    ALL_ARGUMENTS.OBJECT_ID,
-                    ALL_ARGUMENTS.OVERLOAD)
-                .from(ALL_ARGUMENTS)
-                .where(ALL_ARGUMENTS.OWNER.in(getSchema().getName()))
-                .and(ALL_ARGUMENTS.PACKAGE_NAME.equal(getName()))
-                .orderBy(ALL_ARGUMENTS.OBJECT_NAME, ALL_ARGUMENTS.OVERLOAD)
+                    ALL_PROCEDURES.PROCEDURE_NAME,
+                    ALL_PROCEDURES.OBJECT_ID,
+                    ALL_PROCEDURES.OVERLOAD,
+                    ALL_PROCEDURES.AGGREGATE)
+                .from(ALL_PROCEDURES)
+                .where(ALL_PROCEDURES.OWNER.in(getSchema().getName()))
+                .and(ALL_PROCEDURES.OBJECT_NAME.equal(getName()))
+                .and(ALL_PROCEDURES.OBJECT_TYPE.equal("PACKAGE"))
+                .and(ALL_PROCEDURES.PROCEDURE_NAME.isNotNull())
+                .orderBy(ALL_PROCEDURES.PROCEDURE_NAME, ALL_PROCEDURES.OVERLOAD)
                 .fetch()) {
 
             result.add(new OracleRoutineDefinition(getSchema(),
                 this,
-                record.getValue(ALL_ARGUMENTS.OBJECT_NAME),
+                record.getValue(ALL_PROCEDURES.PROCEDURE_NAME),
                 "",
-                record.getValue(ALL_ARGUMENTS.OBJECT_ID),
-                record.getValue(ALL_ARGUMENTS.OVERLOAD)));
+                record.getValue(ALL_PROCEDURES.OBJECT_ID),
+                record.getValue(ALL_PROCEDURES.OVERLOAD),
+                record.getValue(ALL_PROCEDURES.AGGREGATE, boolean.class)));
         }
 
         return result;

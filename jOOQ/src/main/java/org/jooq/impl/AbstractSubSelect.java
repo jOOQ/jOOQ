@@ -36,9 +36,11 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -485,6 +487,12 @@ implements
             context.formatSeparator()
                    .keyword("from ")
                    .sql(getFrom());
+
+            // [#1681] Sybase ASE and Ingres need a cross-joined dummy table
+            // To be able to GROUP BY () empty sets
+            if (grouping && getGroupBy().isEmpty() && asList(ASE, INGRES).contains(context.getDialect())) {
+                context.sql(", (select 1 as x) as empty_grouping_dummy_table");
+            }
         }
 
         context.declareTables(false);
@@ -517,10 +525,13 @@ implements
             // [#1665] Empty GROUP BY () clauses need parentheses
             if (getGroupBy().isEmpty()) {
 
-                // [#1681] TODO: Simulate this for Sybase ASE, Ingres
+                // [#1681] Use the constant field from the dummy table Sybase ASE, Ingres
+                if (asList(ASE, INGRES).contains(context.getDialect())) {
+                    context.sql("empty_grouping_dummy_table.x");
+                }
 
                 // Some dialects don't support empty GROUP BY () clauses
-                if (asList(CUBRID, DERBY, HSQLDB, MYSQL, POSTGRES, SQLITE).contains(context.getDialect())) {
+                else if (asList(CUBRID, DERBY, HSQLDB, MYSQL, POSTGRES, SQLITE).contains(context.getDialect())) {
                     context.sql("1");
                 }
 

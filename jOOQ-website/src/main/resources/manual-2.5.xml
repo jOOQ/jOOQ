@@ -2266,6 +2266,168 @@ FROM     BOOK</sql>
 							<section id="grouping-functions">
 								<title>Grouping functions</title>
 								<content>
+									<h3>ROLLUP() explained in SQL</h3>
+									<p>
+										The SQL standard defines special functions that can be used in the <reference id="group-by-clause" title="GROUP BY clause"/>: the grouping functions. These functions can be used to generate several groupings in a single clause. This can best be explained in SQL. Let's take ROLLUP() for instance:
+									</p>
+
+<code-pair>
+<sql><![CDATA[-- ROLLUP() with one argument 
+SELECT AUTHOR_ID, COUNT(*)
+FROM BOOK
+GROUP BY ROLLUP(AUTHOR_ID)
+
+
+-- ROLLUP() with two arguments
+SELECT AUTHOR_ID, PUBLISHED_IN, COUNT(*)
+FROM BOOK
+GROUP BY ROLLUP(AUTHOR_ID, PUBLISHED_IN)
+
+
+
+
+
+
+
+]]></sql>
+<sql><![CDATA[-- The same query using UNION ALL:
+  SELECT AUTHOR_ID, COUNT(*) FROM BOOK GROUP BY (AUTHOR_ID)
+UNION ALL
+  SELECT NULL, COUNT(*) FROM BOOK GROUP BY ()
+ORDER BY 1 NULLS LAST
+
+-- The same query using UNION ALL:
+  SELECT AUTHOR_ID, PUBLISHED_IN, COUNT(*) 
+  FROM BOOK GROUP BY (AUTHOR_ID, PUBLISHED_IN)
+UNION ALL
+  SELECT AUTHOR_ID, NULL, COUNT(*) 
+  FROM BOOK GROUP BY (AUTHOR_ID)
+UNION ALL
+  SELECT NULL, NULL, COUNT(*) 
+  FROM BOOK GROUP BY ()
+ORDER BY 1 NULLS LAST, 2 NULLS LAST
+]]></sql>
+</code-pair>
+
+									<p>
+										In English, the <code>ROLLUP()</code> grouping function provides <code>N+1</code> groupings, when <code>N</code> is the number of arguments to the <code>ROLLUP()</code> function. Each grouping has an additional group field from the <code>ROLLUP()</code> argument field list. The results of the second query might look something like this:
+									</p>
+									
+<text><![CDATA[+-----------+--------------+----------+
+| AUTHOR_ID | PUBLISHED_IN | COUNT(*) |
++-----------+--------------+----------+
+|         1 |         1945 |        1 | <- GROUP BY (AUTHOR_ID, PUBLISHED_IN)
+|         1 |         1948 |        1 | <- GROUP BY (AUTHOR_ID, PUBLISHED_IN)
+|         1 |         NULL |        2 | <- GROUP BY (AUTHOR_ID)
+|         2 |         1988 |        1 | <- GROUP BY (AUTHOR_ID, PUBLISHED_IN)
+|         2 |         1990 |        1 | <- GROUP BY (AUTHOR_ID, PUBLISHED_IN)
+|         2 |         NULL |        2 | <- GROUP BY (AUTHOR_ID)
+|      NULL |         NULL |        4 | <- GROUP BY ()
++-----------+--------------+----------+]]></text>
+
+									<h3>CUBE() explained in SQL</h3>
+									<p>
+										<code>CUBE()</code> is different from <code>ROLLUP()</code> in the way that it doesn't just create <code>N+1</code> groupings, it creates all <code>2^N</code> possible combinations between all group fields in the <code>CUBE()</code> function argument list. Let's re-consider our second query from before:
+									</p>
+
+<code-pair>
+<sql><![CDATA[-- CUBE() with two arguments
+SELECT AUTHOR_ID, PUBLISHED_IN, COUNT(*)
+FROM BOOK
+GROUP BY CUBE(AUTHOR_ID, PUBLISHED_IN)
+
+
+
+
+
+
+
+
+
+
+]]></sql>
+<sql><![CDATA[-- The same query using UNION ALL:
+  SELECT AUTHOR_ID, PUBLISHED_IN, COUNT(*) 
+  FROM BOOK GROUP BY (AUTHOR_ID, PUBLISHED_IN)
+UNION ALL
+  SELECT AUTHOR_ID, NULL, COUNT(*) 
+  FROM BOOK GROUP BY (AUTHOR_ID)
+UNION ALL
+  SELECT NULL, PUBLISHED_IN, COUNT(*) 
+  FROM BOOK GROUP BY (PUBLISHED_IN)
+UNION ALL
+  SELECT NULL, NULL, COUNT(*) 
+  FROM BOOK GROUP BY ()
+ORDER BY 1 NULLS FIRST, 2 NULLS FIRST
+]]></sql>
+</code-pair>
+
+									<p>
+										The results would then hold:
+									</p>
+
+<text><![CDATA[+-----------+--------------+----------+
+| AUTHOR_ID | PUBLISHED_IN | COUNT(*) |
++-----------+--------------+----------+
+|      NULL |         NULL |        2 | <- GROUP BY ()
+|      NULL |         1945 |        1 | <- GROUP BY (PUBLISHED_IN)
+|      NULL |         1948 |        1 | <- GROUP BY (PUBLISHED_IN)
+|      NULL |         1988 |        1 | <- GROUP BY (PUBLISHED_IN)
+|      NULL |         1990 |        1 | <- GROUP BY (PUBLISHED_IN)
+|         1 |         NULL |        2 | <- GROUP BY (AUTHOR_ID)
+|         1 |         1945 |        1 | <- GROUP BY (AUTHOR_ID, PUBLISHED_IN)
+|         1 |         1948 |        1 | <- GROUP BY (AUTHOR_ID, PUBLISHED_IN)
+|         2 |         NULL |        2 | <- GROUP BY (AUTHOR_ID)
+|         2 |         1988 |        1 | <- GROUP BY (AUTHOR_ID, PUBLISHED_IN)
+|         2 |         1990 |        1 | <- GROUP BY (AUTHOR_ID, PUBLISHED_IN)
++-----------+--------------+----------+]]></text>
+
+									<h3>GROUPING SETS()</h3>
+									<p>
+										<code>GROUPING SETS()</code> are the generalised way to create multiple groupings. From our previous examples 
+									</p>
+									<ul>
+										<li><code>ROLLUP(AUTHOR_ID, PUBLISHED_IN)</code> corresponds to <code>GROUPING SETS((AUTHOR_ID, PUBLISHED_IN), (AUTHOR_ID), ())</code></li>
+										<li><code>CUBE(AUTHOR_ID, PUBLISHED_IN)</code> corresponds to <code>GROUPING SETS((AUTHOR_ID, PUBLISHED_IN), (AUTHOR_ID), (PUBLISHED_IN), ())</code></li>
+									</ul>
+									<p>
+										This is nicely explained in the SQL Server manual pages about <code>GROUPING SETS()</code> and other grouping functions:<br/>
+										<a href="http://msdn.microsoft.com/en-us/library/bb510427(v=sql.105)">http://msdn.microsoft.com/en-us/library/bb510427(v=sql.105)</a>
+									</p>
+									
+									<h3>jOOQ's support for ROLLUP(), CUBE(), GROUPING SETS()</h3>
+									<p>
+										jOOQ fully supports all of these functions, as well as the utility functions <code>GROUPING()</code> and <code>GROUPING_ID()</code>, used for identifying the grouping set ID of a record. The <reference id="factory" title="Factory API"/> thus includes:
+									</p>
+									
+<java><![CDATA[// The various grouping function constructors
+Field<?> rollup(Field<?>... fields);
+Field<?> cube(Field<?>... fields);
+Field<?> groupingSets(Field<?>... fields);
+Field<?> groupingSets(Field<?>[]... fields);
+Field<?> groupingSets(Collection<Field<?>>... fields);
+
+// The utility functions generating IDs per GROUPING SET
+Field<Integer> grouping(Field<?>);
+Field<Integer> groupingId(Field<?>...);]]></java>
+
+									<h3>MySQL's and CUBRID's WITH ROLLUP syntax</h3>
+									<p>
+										MySQL and CUBRID don't know any grouping functions, but they support a <code>WITH ROLLUP</code> clause, that is equivalent to simple <code>ROLLUP()</code> grouping functions. jOOQ simulates <code>ROLLUP()</code> in MySQL and CUBRID, by rendering this <code>WITH ROLLUP</code> clause. The following two statements mean the same:
+									</p>
+									
+<code-pair>
+<sql><![CDATA[-- Statement 1: SQL standard
+GROUP BY ROLLUP(A, B, C)
+
+-- Statement 2: SQL standard
+GROUP BY A, ROLLUP(B, C)]]></sql>
+<sql><![CDATA[-- Statement 1: MySQL
+GROUP BY A, B, C WITH ROLLUP
+
+-- Statement 2: MySQL
+-- This is not supported in MySQL]]></sql>
+</code-pair>
 								</content>
 							</section>
 

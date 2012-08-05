@@ -140,7 +140,9 @@ public class Transform {
             File dir = new File(path);
             dir.mkdirs();
 
-            System.out.println("Transforming section " + path);
+            System.out.print("[");
+            System.out.print(StringUtils.isBlank(section.find("content").text()) ? " " : "x");
+            System.out.println("] Transforming section " + path);
             File file = new File(dir, "index.php");
             file.delete();
             FileOutputStream out = new FileOutputStream(file);

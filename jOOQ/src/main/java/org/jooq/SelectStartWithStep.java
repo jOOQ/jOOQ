@@ -38,6 +38,8 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.ORACLE;
 
+import org.jooq.impl.Factory;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -97,6 +99,8 @@ public interface SelectStartWithStep extends SelectGroupByStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#condition(String)
      */
     @Support({ CUBRID, ORACLE })
     SelectGroupByStep startWith(String sql);
@@ -109,7 +113,23 @@ public interface SelectStartWithStep extends SelectGroupByStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#condition(String, Object...)
      */
     @Support({ CUBRID, ORACLE })
     SelectGroupByStep startWith(String sql, Object... bindings);
+
+    /**
+     * Add an Oracle-specific <code>START WITH</code> clause to the query's
+     * <code>CONNECT BY</code> clause
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! *
+     *
+     * @see Factory#condition(String, QueryPart...)
+     */
+    @Support({ CUBRID, ORACLE })
+    SelectGroupByStep startWith(String sql, QueryPart... parts);
 }

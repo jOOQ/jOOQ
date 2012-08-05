@@ -83,6 +83,19 @@ public interface TableOnStep {
     TableOnConditionStep on(String sql, Object... bindings);
 
     /**
+     * Add an <code>ON</code> clause to the <code>JOIN</code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#condition(String, QueryPart...)
+     */
+    @Support
+    TableOnConditionStep on(String sql, QueryPart... parts);
+
+    /**
      * Join the table with the <code>USING(column [, column...])</code> syntax
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to simulate

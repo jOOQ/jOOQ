@@ -50,6 +50,7 @@ import org.jooq.ForeignKey;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Param;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.SelectConditionStep;
@@ -180,6 +181,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final SelectImpl from(String sql, QueryPart... parts) {
+        return from(table(sql, parts));
+    }
+
+    @Override
     public final SelectImpl where(Condition... conditions) {
         conditionStep = ConditionStep.WHERE;
         getQuery().addConditions(conditions);
@@ -201,6 +207,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     @Override
     public final SelectImpl where(String sql, Object... bindings) {
         return where(condition(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl where(String sql, QueryPart... parts) {
+        return where(condition(sql, parts));
     }
 
     @Override
@@ -243,6 +254,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     @Override
     public final SelectImpl and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl and(String sql, QueryPart... parts) {
+        return and(condition(sql, parts));
     }
 
     @Override
@@ -290,6 +306,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final SelectImpl or(String sql, QueryPart... parts) {
+        return or(condition(sql, parts));
+    }
+
+    @Override
     public final SelectImpl orNot(Condition condition) {
         return or(condition.not());
     }
@@ -322,6 +343,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final SelectImpl connectBy(String sql, QueryPart... parts) {
+        return connectBy(condition(sql, parts));
+    }
+
+    @Override
     public final SelectImpl connectByNoCycle(Condition condition) {
         conditionStep = ConditionStep.CONNECT_BY;
         getQuery().addConnectByNoCycle(condition);
@@ -339,6 +365,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final SelectImpl connectByNoCycle(String sql, QueryPart... parts) {
+        return connectByNoCycle(condition(sql, parts));
+    }
+
+    @Override
     public final SelectImpl startWith(Condition condition) {
         getQuery().setConnectByStartWith(condition);
         return this;
@@ -352,6 +383,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     @Override
     public final SelectImpl startWith(String sql, Object... bindings) {
         return startWith(condition(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl startWith(String sql, QueryPart... parts) {
+        return startWith(condition(sql, parts));
     }
 
     @Override
@@ -575,6 +611,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final SelectImpl having(String sql, QueryPart... parts) {
+        return having(condition(sql, parts));
+    }
+
+    @Override
     public final SelectImpl on(Condition... conditions) {
         conditionStep = ConditionStep.ON;
         joinConditions = new ConditionProviderImpl();
@@ -594,6 +635,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     @Override
     public final SelectImpl on(String sql, Object... bindings) {
         return on(condition(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl on(String sql, QueryPart... parts) {
+        return on(condition(sql, parts));
     }
 
     @Override
@@ -709,6 +755,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final SelectImpl join(String sql, QueryPart... parts) {
+        return join(table(sql, parts));
+    }
+
+    @Override
     public final SelectImpl leftOuterJoin(String sql) {
         return leftOuterJoin(table(sql));
     }
@@ -716,6 +767,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     @Override
     public final SelectImpl leftOuterJoin(String sql, Object... bindings) {
         return leftOuterJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl leftOuterJoin(String sql, QueryPart... parts) {
+        return leftOuterJoin(table(sql, parts));
     }
 
     @Override
@@ -729,6 +785,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final SelectImpl rightOuterJoin(String sql, QueryPart... parts) {
+        return rightOuterJoin(table(sql, parts));
+    }
+
+    @Override
     public final SelectOnStep fullOuterJoin(String sql) {
         return fullOuterJoin(table(sql));
     }
@@ -736,6 +797,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     @Override
     public final SelectOnStep fullOuterJoin(String sql, Object... bindings) {
         return fullOuterJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final SelectOnStep fullOuterJoin(String sql, QueryPart... parts) {
+        return fullOuterJoin(table(sql, parts));
     }
 
     @Override
@@ -749,6 +815,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final SelectJoinStep crossJoin(String sql, QueryPart... parts) {
+        return crossJoin(table(sql, parts));
+    }
+
+    @Override
     public final SelectImpl naturalJoin(String sql) {
         return naturalJoin(table(sql));
     }
@@ -756,6 +827,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     @Override
     public final SelectImpl naturalJoin(String sql, Object... bindings) {
         return naturalJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl naturalJoin(String sql, QueryPart... parts) {
+        return naturalJoin(table(sql, parts));
     }
 
     @Override
@@ -769,6 +845,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final SelectImpl naturalLeftOuterJoin(String sql, QueryPart... parts) {
+        return naturalLeftOuterJoin(table(sql, parts));
+    }
+
+    @Override
     public final SelectImpl naturalRightOuterJoin(String sql) {
         return naturalRightOuterJoin(table(sql));
     }
@@ -776,6 +857,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     @Override
     public final SelectImpl naturalRightOuterJoin(String sql, Object... bindings) {
         return naturalRightOuterJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl naturalRightOuterJoin(String sql, QueryPart... parts) {
+        return naturalRightOuterJoin(table(sql, parts));
     }
 
     @Override

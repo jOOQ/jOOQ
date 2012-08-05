@@ -49,6 +49,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.JoinType;
 import org.jooq.PivotForStep;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -200,6 +201,11 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     }
 
     @Override
+    public final TableOnStep join(String sql, QueryPart... parts) {
+        return join(table(sql, parts));
+    }
+
+    @Override
     public final TablePartitionByStep leftOuterJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.LEFT_OUTER_JOIN);
     }
@@ -212,6 +218,11 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     @Override
     public final TablePartitionByStep leftOuterJoin(String sql, Object... bindings) {
         return leftOuterJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final TablePartitionByStep leftOuterJoin(String sql, QueryPart... parts) {
+        return leftOuterJoin(table(sql, parts));
     }
 
     @Override
@@ -230,6 +241,11 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     }
 
     @Override
+    public final TablePartitionByStep rightOuterJoin(String sql, QueryPart... parts) {
+        return rightOuterJoin(table(sql, parts));
+    }
+
+    @Override
     public final TableOnStep fullOuterJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.FULL_OUTER_JOIN);
     }
@@ -242,6 +258,11 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     @Override
     public final TableOnStep fullOuterJoin(String sql, Object... bindings) {
         return fullOuterJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final TableOnStep fullOuterJoin(String sql, QueryPart... parts) {
+        return fullOuterJoin(table(sql, parts));
     }
 
     @Override
@@ -260,6 +281,11 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     }
 
     @Override
+    public final Table<Record> crossJoin(String sql, QueryPart... parts) {
+        return crossJoin(table(sql, parts));
+    }
+
+    @Override
     public final Table<Record> naturalJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.NATURAL_JOIN);
     }
@@ -272,6 +298,11 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     @Override
     public final Table<Record> naturalJoin(String sql, Object... bindings) {
         return naturalJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final Table<Record> naturalJoin(String sql, QueryPart... parts) {
+        return naturalJoin(table(sql, parts));
     }
 
     @Override
@@ -290,6 +321,11 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     }
 
     @Override
+    public final Table<Record> naturalLeftOuterJoin(String sql, QueryPart... parts) {
+        return naturalLeftOuterJoin(table(sql, parts));
+    }
+
+    @Override
     public final Table<Record> naturalRightOuterJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
     }
@@ -302,5 +338,10 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     @Override
     public final Table<Record> naturalRightOuterJoin(String sql, Object... bindings) {
         return naturalRightOuterJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts) {
+        return naturalRightOuterJoin(table(sql, parts));
     }
 }

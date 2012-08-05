@@ -47,6 +47,7 @@ import org.jooq.DeleteConditionStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.Operator;
 import org.jooq.Query;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -114,6 +115,11 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    public final DeleteImpl<R> where(String sql, QueryPart... parts) {
+        return where(condition(sql, parts));
+    }
+
+    @Override
     public final DeleteImpl<R> whereExists(Select<?> select) {
         return andExists(select);
     }
@@ -137,6 +143,11 @@ class DeleteImpl<R extends Record>
     @Override
     public final DeleteImpl<R> and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
+    }
+
+    @Override
+    public final DeleteImpl<R> and(String sql, QueryPart... parts) {
+        return and(condition(sql, parts));
     }
 
     @Override
@@ -168,6 +179,11 @@ class DeleteImpl<R extends Record>
     @Override
     public final DeleteImpl<R> or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
+    }
+
+    @Override
+    public final DeleteImpl<R> or(String sql, QueryPart... parts) {
+        return or(condition(sql, parts));
     }
 
     @Override

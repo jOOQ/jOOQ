@@ -81,6 +81,20 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     DivideByOnConditionStep and(String sql, Object... bindings);
 
     /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#AND} operator.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#condition(String, QueryPart...)
+     */
+    @Support
+    DivideByOnConditionStep and(String sql, QueryPart... parts);
+
+    /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator.
      */
@@ -135,6 +149,20 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      */
     @Support
     DivideByOnConditionStep or(String sql, Object... bindings);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#OR} operator.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#condition(String, QueryPart...)
+     */
+    @Support
+    DivideByOnConditionStep or(String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using

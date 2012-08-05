@@ -89,6 +89,25 @@ public interface Condition extends QueryPart {
     Condition and(String sql, Object... bindings);
 
     /**
+     * Combine this condition with another one using the {@link Operator#AND}
+     * operator.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The combined condition
+     * @see Factory#condition(String, QueryPart...)
+     */
+    @Support
+    Condition and(String sql, QueryPart... parts);
+
+    /**
      * Combine this condition with a negated other one using the
      * {@link Operator#AND} operator.
      *
@@ -160,6 +179,25 @@ public interface Condition extends QueryPart {
      */
     @Support
     Condition or(String sql, Object... bindings);
+    
+    /**
+     * Combine this condition with another one using the {@link Operator#OR}
+     * operator.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The combined condition
+     * @see Factory#condition(String, Object...)
+     */
+    @Support
+    Condition or(String sql, QueryPart... parts);
 
     /**
      * Combine this condition with a negated other one using the

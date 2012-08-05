@@ -95,6 +95,19 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R> {
     UpdateConditionStep<R> where(String sql, Object... bindings);
 
     /**
+     * Add conditions to the query
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#condition(String, QueryPart...)
+     */
+    @Support
+    UpdateConditionStep<R> where(String sql, QueryPart... parts);
+
+    /**
      * Add an EXISTS clause to the query
      */
     @Support

@@ -47,6 +47,7 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.Query;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -137,6 +138,11 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    public final UpdateImpl<R> where(String sql, QueryPart... parts) {
+        return where(condition(sql, parts));
+    }
+
+    @Override
     public final UpdateImpl<R> whereExists(Select<?> select) {
         return andExists(select);
     }
@@ -160,6 +166,11 @@ final class UpdateImpl<R extends Record>
     @Override
     public final UpdateImpl<R> and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
+    }
+
+    @Override
+    public final UpdateImpl<R> and(String sql, QueryPart... parts) {
+        return and(condition(sql, parts));
     }
 
     @Override
@@ -191,6 +202,11 @@ final class UpdateImpl<R extends Record>
     @Override
     public final UpdateImpl<R> or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
+    }
+
+    @Override
+    public final UpdateImpl<R> or(String sql, QueryPart... parts) {
+        return or(condition(sql, parts));
     }
 
     @Override

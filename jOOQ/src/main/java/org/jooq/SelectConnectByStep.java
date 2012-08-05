@@ -97,6 +97,8 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#condition(String)
      */
     @Support({ CUBRID, ORACLE })
     SelectConnectByConditionStep connectBy(String sql);
@@ -142,6 +144,8 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#condition(String)
      */
     @Support({ CUBRID, ORACLE })
     SelectConnectByConditionStep connectByNoCycle(String sql);

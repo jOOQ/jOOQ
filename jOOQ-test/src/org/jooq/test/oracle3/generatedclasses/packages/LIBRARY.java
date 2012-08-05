@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.packages;
  */
 public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1707209763;
+	private static final long serialVersionUID = 1890265536;
 
 	/**
 	 * The singleton instance of TEST.LIBRARY
@@ -169,6 +169,30 @@ public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.
 
 		p.execute(configuration);
 		return p;
+	}
+
+	/**
+	 * Get TEST.LIBRARY.SECOND_MAX as a field
+	 *
+	 * @param INPUT
+	 */
+	public static org.jooq.AggregateFunction<java.math.BigDecimal> call_SECOND_MAX(java.lang.Number INPUT) {
+		org.jooq.test.oracle3.generatedclasses.packages.library.SECOND_MAX f = new org.jooq.test.oracle3.generatedclasses.packages.library.SECOND_MAX();
+		f.setINPUT(INPUT);
+
+		return f.asAggregateFunction();
+	}
+
+	/**
+	 * Get TEST.LIBRARY.SECOND_MAX as a field
+	 *
+	 * @param INPUT
+	 */
+	public static org.jooq.AggregateFunction<java.math.BigDecimal> call_SECOND_MAX(org.jooq.Field<? extends java.lang.Number> INPUT) {
+		org.jooq.test.oracle3.generatedclasses.packages.library.SECOND_MAX f = new org.jooq.test.oracle3.generatedclasses.packages.library.SECOND_MAX();
+		f.setINPUT(INPUT);
+
+		return f.asAggregateFunction();
 	}
 	/**
 	 * No further instances allowed

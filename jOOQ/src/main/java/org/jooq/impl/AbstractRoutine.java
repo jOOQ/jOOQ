@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
@@ -668,6 +669,18 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
     public final Field<T> asField(String alias) {
         return asField().as(alias);
+    }
+
+    public final AggregateFunction<T> asAggregateFunction() {
+        Field<?>[] array = new Field<?>[getInParameters().size()];
+
+        int i = 0;
+        for (Parameter<?> p : getInParameters()) {
+            array[i] = getInValues().get(p);
+            i++;
+        }
+
+        return (AggregateFunction<T>) function(getName(), type, array);
     }
 
     /**

@@ -55,6 +55,7 @@ import static org.jooq.test.oracle.generatedclasses.test.Routines.fTables1;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.fTables4;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.pArrays1;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.pTables1;
+import static org.jooq.test.oracle.generatedclasses.test.Routines.secondMax;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_658_REF;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_725_LOB_TEST;
@@ -86,6 +87,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -108,7 +110,6 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSa
 import org.jooq.test.oracle.generatedclasses.test.Routines;
 import org.jooq.test.oracle.generatedclasses.test.Sequences;
 import org.jooq.test.oracle.generatedclasses.test.packages.Library;
-import org.jooq.test.oracle.generatedclasses.test.routines.F377;
 import org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord;
@@ -189,7 +190,6 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         try {
             Class.forName(VIncomplete.class.getName());
             Class.forName(VIncompleteRecord.class.getName());
-            Class.forName(F377.class.getName());
             Class.forName(UInvalidType.class.getName());
             Class.forName(UInvalidTypeRecord.class.getName());
             Class.forName(UInvalidTable.class.getName());
@@ -1312,5 +1312,28 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         assertEquals(1, result1.size());
         assertEquals("O Alquimista", result1.getValue(0, TBook_TITLE()));
         assertEquals(1, result1.getValue(0, score(2)).compareTo(BigDecimal.ZERO));
+    }
+
+    @Test
+    public void testOracleUserDefinedAggregateFunctions() throws Exception {
+
+        // Check the correctness of the aggregate function
+        List<Integer> result1 =
+        create().select(secondMax(TBook_ID()))
+                .from(TBook())
+                .groupBy(TBook_AUTHOR_ID())
+                .orderBy(TBook_AUTHOR_ID().asc())
+                .fetch(0, Integer.class);
+
+        assertEquals(asList(1, 3), result1);
+
+        // Check the correctness of the analytical function
+        List<Integer> result2 =
+        create().select(secondMax(TBook_ID()).over().partitionByOne())
+                .from(TBook())
+                .orderBy(TBook_AUTHOR_ID().asc())
+                .fetch(0, Integer.class);
+
+        assertEquals(asList(3, 3, 3, 3), result2);
     }
 }

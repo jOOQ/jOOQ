@@ -18,7 +18,7 @@
         <database>
             <name>org.jooq.util.oracle.OracleDatabase</name>
             <includes>.*</includes>
-            <excludes>T_BOOK_DETAILS,S_TRIGGERS_SEQUENCE,.*976.*</excludes>
+            <excludes>T_BOOK_DETAILS,S_TRIGGERS_SEQUENCE,.*976.*,U_SECOND_MAX</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
             <schemata>

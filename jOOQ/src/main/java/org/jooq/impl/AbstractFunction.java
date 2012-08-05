@@ -39,6 +39,7 @@ import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
 /**
@@ -76,7 +77,7 @@ abstract class AbstractFunction<T> extends AbstractField<T> {
         return false;
     }
 
-    final Field<T> getFunction(Configuration configuration) {
+    final QueryPart getFunction(Configuration configuration) {
         return getFunction0(configuration);
     }
 
@@ -84,5 +85,5 @@ abstract class AbstractFunction<T> extends AbstractField<T> {
         return arguments;
     }
 
-    abstract Field<T> getFunction0(Configuration configuration);
+    abstract QueryPart getFunction0(Configuration configuration);
 }

@@ -53,6 +53,7 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.jooq.AggregateFunction;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.DataType;
@@ -709,7 +710,9 @@ public class DefaultGenerator extends AbstractGenerator {
                 else {
 
                     // Static execute() convenience method
-                    printConvenienceMethodFunction(out, routine, false);
+                    if (!routine.isAggregate()) {
+                        printConvenienceMethodFunction(out, routine, false);
+                    }
 
                     // Static asField() convenience method
                     printConvenienceMethodFunctionAsField(out, routine, false);
@@ -796,7 +799,9 @@ public class DefaultGenerator extends AbstractGenerator {
                 }
                 else {
                     // Instance execute() convenience method
-                    printConvenienceMethodFunction(out, routine, instance);
+                    if (!routine.isAggregate()) {
+                        printConvenienceMethodFunction(out, routine, instance);
+                    }
                 }
 
             } catch (Exception e) {
@@ -1051,7 +1056,10 @@ public class DefaultGenerator extends AbstractGenerator {
         else {
 
             // Static execute() convenience method
-            printConvenienceMethodFunction(outR, routine, false);
+            // [#457] This doesn't make any sense for user-defined aggregates
+            if (!routine.isAggregate()) {
+                printConvenienceMethodFunction(outR, routine, false);
+            }
 
             // Static asField() convenience method
             printConvenienceMethodFunctionAsField(outR, routine, false);
@@ -1105,7 +1113,9 @@ public class DefaultGenerator extends AbstractGenerator {
                 }
                 else {
                     // Static execute() convenience method
-                    printConvenienceMethodFunction(outPkg, routine, false);
+                    if (!routine.isAggregate()) {
+                        printConvenienceMethodFunction(outPkg, routine, false);
+                    }
 
                     // Static asField() convenience method
                     printConvenienceMethodFunctionAsField(outPkg, routine, false);
@@ -2523,7 +2533,7 @@ public class DefaultGenerator extends AbstractGenerator {
 
         out.println("\t */");
         out.print("\tpublic static ");
-        out.print(Field.class);
+        out.print(function.isAggregate() ? AggregateFunction.class : Field.class);
         out.print("<");
         out.print(getJavaType(function.getReturnType()));
         out.print("> ");
@@ -2565,7 +2575,14 @@ public class DefaultGenerator extends AbstractGenerator {
         }
 
         out.println();
-        out.println("\t\treturn f.asField();");
+
+        if (function.isAggregate()) {
+            out.println("\t\treturn f.asAggregateFunction();");
+        }
+        else {
+            out.println("\t\treturn f.asField();");
+        }
+
         out.println("\t}");
     }
 

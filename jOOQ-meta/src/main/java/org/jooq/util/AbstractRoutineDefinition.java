@@ -64,11 +64,17 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
     protected List<ParameterDefinition> allParameters;
 
     private final PackageDefinition     pkg;
+    private final boolean               aggregate;
 
     public AbstractRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, String overload) {
+        this(schema, pkg, name, comment, overload, false);
+    }
+
+    public AbstractRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, String overload, boolean aggregate) {
         super(schema.getDatabase(), schema, name, comment, overload);
 
         this.pkg = pkg;
+        this.aggregate = aggregate;
     }
 
     @Override
@@ -154,6 +160,11 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
     @Override
     public final boolean isSQLUsable() {
         return getReturnValue() != null && getOutParameters().isEmpty();
+    }
+
+    @Override
+    public final boolean isAggregate() {
+        return aggregate;
     }
 
     protected final void addParameter(InOutDefinition inOut, ParameterDefinition parameter) {

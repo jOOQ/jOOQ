@@ -82,4 +82,9 @@ public interface RoutineDefinition extends Definition {
      */
     boolean isSQLUsable();
 
+    /**
+     * @return Whether this routine is an aggregate function
+     */
+    boolean isAggregate();
+
 }

@@ -126,6 +126,35 @@ CREATE TABLE t_book_to_book_store (
 					<section id="use-cases">
 						<title>Different use cases for jOOQ</title>
 						<content>
+							<h3>jOOQ's original intent</h3>
+							<p>
+								jOOQ has originally been created as a library for complete abstraction of JDBC and all database interaction. Various best practices that are frequently encountered in pre-existing software products are applied to this library. This included:
+							</p>
+							<ul>
+								<li>Typesafe database object referencing through generated schema, table, column, record, procedure, type, dao, pojo artefacts (see the chapter about <reference id="code-generation" title="code generation"/>)</li>
+								<li>Typesafe SQL construction through a complete API modelling SQL as a domain specific language in Java (see the chapter about <reference id="dsl-and-non-dsl" title="the DSL API"/>)</li>
+								<li>Convenient query execution through an improved API for result fetching (see the chapters about <reference id="fetching" title="the various types of data fetching"/>)</li>
+								<li>SQL dialect abstraction and SQL clause simulation to improve cross-database compatibility and to enable missing features in simpler databases (see the chapter about <reference id="sql-dialect" title="SQL dialects"/>)</li>
+								<li>SQL logging and debugging using jOOQ as an integral part of your development process (see the chapters about <reference id="logging" title="logging"/> and about the <reference id="jooq-console" title="jOOQ Console"/>)</li>
+							</ul>
+							<p>
+								Effectively, jOOQ was originally designed to replace any other database abstraction framework short of the ones handling connection pooling and transaction management.
+							</p>
+							
+							<h3>Use jOOQ the way you prefer</h3>
+							<p>
+								... but open source is community-driven. And the community has shown various ways of using jOOQ that diverge from its original intent. Some use cases encountered are:
+							</p>
+							<ul>
+								<li>Using Hibernate for 70% of the queries (i.e. <reference id="crud-with-updatablerecords" title="CRUD"/>) and jOOQ for the remaining 30% where SQL is really needed</li>
+								<li>Using jOOQ for SQL building and JDBC for SQL execution</li> 
+								<li>Using jOOQ for SQL building and Spring Data for SQL execution</li>
+								<li>Using jOOQ without the <reference id="code-generation" title="source code generator"/> to build the basis of a framework for dynamic SQL execution.</li> 
+							</ul>
+							
+							<p>
+								The following sections explain about various use cases for using jOOQ in your application.
+							</p>
 						</content>
 
 						<sections>
@@ -153,12 +182,387 @@ CREATE TABLE t_book_to_book_store (
 
 					<section id="tutorials">
 						<title>Tutorials</title>
-						<content></content>
+						<content>
+							<h3>Follow these various tutorials to get you into jOOQ quickly</h3>
+							<p>
+								Don't have time to read the full manual? Here are a couple of tutorials that will get you into the most essential parts of jOOQ as quick as possible.
+							</p>
+						</content>
 
 						<sections>
-							<section id="jooq-in-6-steps">
-								<title>jOOQ in 6 easy steps</title>
-								<content></content>
+							<section id="jooq-in-7-steps">
+								<title>jOOQ in 7 easy steps</title>
+								<content>
+									<h3>Download and run jOOQ in 7 easy steps</h3>
+									<p>
+										This manual section is intended for new users, in order to get a running application with jOOQ, quickly.
+									</p>
+								</content>
+								
+								<sections>
+									<section id="jooq-in-7-steps-step1">
+										<title>Step 1: Preparation</title>
+										<content>
+											<h3>Preparation: Download jOOQ and your SQL driver</h3>
+											<p>
+												If you haven't already downloaded them, download jOOQ:<br/>
+												<a href="https://sourceforge.net/projects/jooq/files/Release/" title="jOOQ download">https://sourceforge.net/projects/jooq/files/Release/</a>
+											</p>
+											
+											<p>
+												Alternatively, you can create a Maven dependency:
+											</p>
+<xml><![CDATA[
+<dependency>
+  <groupId>org.jooq</groupId>
+  <!-- artefacts are jooq, jooq-meta, jooq-codegen -->
+  <artifactId>jooq</artifactId>
+  <version>{jooq-version}</version>
+</dependency>]]></xml>
+
+											<p>
+												For this example, we'll be using MySQL. If you haven't already downloaded MySQL Connector/J, download it here:<br/>
+												<a href="http://dev.mysql.com/downloads/connector/j/" target="_blank" title="MySQL JDBC driver">http://dev.mysql.com/downloads/connector/j/</a>
+											</p>
+
+											<p>
+												If you don't have a MySQL instance up and running yet, get <a href="http://www.apachefriends.org/en/xampp.html" title="XAMPP">XAMPP</a> now! XAMPP is a simple installation bundle for Apache, MySQL, PHP and Perl
+											</p>
+										</content>
+									</section>
+									
+									<section id="jooq-in-7-steps-step2">
+										<title>Step 2: Your database</title>
+										<content>
+											<h3>Create a SQL database and a table</h3>
+											<p>
+												We're going to create a database called "guestbook" and a corresponding "posts" table. Connect to MySQL via your command line client and type the following:
+											</p>
+											
+<sql>
+CREATE DATABASE guestbook;
+
+CREATE TABLE `posts` (
+  `id` bigint(20) NOT NULL,
+  `body` varchar(255) DEFAULT NULL,
+  `timestamp` datetime DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+</sql>
+										</content>
+									</section>
+									
+									<section id="jooq-in-7-steps-step3">
+										<title>Step 3: Code generation</title>
+										<content>
+											<h3>Use jOOQ's code generator to generate classes from your guestbook database</h3>
+
+											<p>
+												In this step, we're going to use jOOQ's command line tools to generate classes that map to the Posts table we just created. More detailed information about how to set up the jOOQ code generator can be found here:<br/>
+												<reference id="code-generation" title="jOOQ manual pages about setting up the code generator"/>
+											</p>
+
+											<p>
+												The easiest way to generate a schema is to copy the jOOQ jar files (there should be 3) and the MySQL Connector jar file to a temporary directory. Then, create a guestbook.xml that looks like this:
+											</p>
+											
+<xml><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.5.0.xsd">
+  <!-- Configure the database connection here -->
+  <jdbc>
+    <driver>com.mysql.jdbc.Driver</driver>
+    <url>jdbc:mysql://localhost:3306/guestbook</url>
+    <user>root</user>
+    <password></password>
+  </jdbc>
+
+  <generator>
+    <!-- The default code generator. You can override this one, to generate your own code style
+         Defaults to org.jooq.util.DefaultGenerator -->
+    <name>org.jooq.util.DefaultGenerator</name>
+
+    <database>
+      <!-- The database type. The format here is:
+           org.util.[database].[database]Database -->
+      <name>org.jooq.util.mysql.MySQLDatabase</name>
+
+      <!-- The database schema (or in the absence of schema support, in your RDBMS this
+           can be the owner, user, database name) to be generated -->
+      <inputSchema>guestbook</inputSchema>
+
+      <!-- All elements that are generated from your schema (several Java regular expressions, separated by comma)
+           Watch out for case-sensitivity. Depending on your database, this might be important! -->
+      <includes>.*</includes>
+
+      <!-- All elements that are excluded from your schema (several Java regular expressions, separated by comma).
+              Excludes match before includes -->
+      <excludes></excludes>
+    </database>
+
+    <target>
+      <!-- The destination package of your generated classes (within the destination directory) -->
+      <packageName>test.generated</packageName>
+
+      <!-- The destination directory of your generated classes -->
+      <directory>C:/workspace/MySQLTest/src</directory>
+    </target>
+  </generator>
+</configuration>]]></xml>
+											<p>
+												Replace the username with whatever user has the appropriate privileges to query the database meta data. You'll also want to look at the other values and replace as necessary. Here are the two interesting properties:
+											</p>
+											<p>
+												<code>generator.target.package</code> - set this to the parent package you want to create for the generated classes. The setting of <code>test.generated</code> will cause the <code>test.generated.Posts</code> and <code>test.generated.PostsRecord</code> to be created
+											</p>
+											<p>
+												<code>generator.target.directory</code> - the directory to output to.
+											</p>
+											
+											<p>
+												Once you have the JAR files and guestbook.xml in your temp directory, type this (use colons instead of semi-colons on UNIX/Linux systems):
+											</p>
+
+<text>
+java -classpath jooq-{jooq-version}.jar;jooq-meta-{jooq-version}.jar;jooq-codegen-{jooq-version}.jar;mysql-connector-java-5.1.18-bin.jar;. org.jooq.util.GenerationTool /guestbook.xml
+</text>
+
+											<p>
+												Note the prefix slash before guestbook.xml. Even though it's in our working directory, we need to prepend a slash, as the configuration file is loaded from the classpath. Replace the filenames with your filenames. In this example, jOOQ {jooq-version} is being used. If everything has worked, you should see this in your console output:
+											</p>
+<text>
+Nov 1, 2011 7:25:06 PM org.jooq.impl.JooqLogger info
+INFO: Initialising properties  : /guestbook.xml
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Database parameters
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: ----------------------------------------------------------
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO:   dialect                : MYSQL
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO:   schema                 : guestbook
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO:   target dir             : /Users/jOOQ/Documents/workspace/MySQLTest/src
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO:   target package         : test.generated
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: ----------------------------------------------------------
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Emptying                 : /Users/jOOQ/workspace/MySQLTest/src/test/generated
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Generating classes in    : /Users/jOOQ/workspace/MySQLTest/src/test/generated
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Generating schema        : Guestbook.java
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Generating factory       : GuestbookFactory.java
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Schema generated         : Total: 122.18ms
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Sequences fetched        : 0 (0 included, 0 excluded)
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Masterdata tables fetched: 0 (0 included, 0 excluded)
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Tables fetched           : 5 (5 included, 0 excluded)
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Generating tables        : /Users/jOOQ/workspace/MySQLTest/src/test/generated/tables
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: ARRAYs fetched           : 0 (0 included, 0 excluded)
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Enums fetched            : 0 (0 included, 0 excluded)
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: UDTs fetched             : 0 (0 included, 0 excluded)
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Generating table         : Posts.java
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Tables generated         : Total: 680.464ms, +558.284ms
+Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
+INFO: Generating Keys          : /Users/jOOQ/workspace/MySQLTest/src/test/generated/tables
+Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
+INFO: Keys generated           : Total: 718.621ms, +38.157ms
+Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
+INFO: Generating records       : /Users/jOOQ/workspace/MySQLTest/src/test/generated/tables/records
+Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
+INFO: Generating record        : PostsRecord.java
+Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
+INFO: Table records generated  : Total: 782.545ms, +63.924ms
+Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
+INFO: Routines fetched         : 0 (0 included, 0 excluded)
+Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
+INFO: Packages fetched         : 0 (0 included, 0 excluded)
+Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
+INFO: GENERATION FINISHED!     : Total: 791.688ms, +9.143ms
+</text>
+										
+										</content>
+									</section>
+									
+									<section id="jooq-in-7-steps-step4">
+										<title>Step 4: Connect to your database</title>
+										<content>
+											<h3>Write a main class and establish a MySQL connection</h3>
+											<p>
+												Let's just write a vanilla main class in the project containing the generated classes:
+											</p>
+<java><![CDATA[// For convenience, always static import your generated tables and
+// jOOQ functions to decrease verbosity:
+import static test.generated.Tables.*;
+import static org.jooq.impl.Factory.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Connection conn = null;
+
+        String userName = "root";
+        String password = "";
+        String url = "jdbc:mysql://localhost:3306/guestbook";
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conn = DriverManager.getConnection(url, userName, password);
+        } catch (Exception e) {
+            // For the sake of this tutorial, let's keep exception handling simple
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ignore) {
+                }
+            }
+        }
+    }
+}]]></java>
+
+											<p>
+												This is pretty standard code for establishing a MySQL connection.
+											</p>
+										</content>
+									</section>
+									
+									<section id="jooq-in-7-steps-step5">
+										<title>Step 5: Querying</title>
+										<content>
+											<h3>Write a query using jOOQ's DSL API</h3>
+
+											<p>
+												Let's add a simple query:
+											</p>
+											
+<java><![CDATA[Factory create = new Factory(conn, SQLDialect.MYSQL);
+Result<Record> result = create.select().from(POSTS).fetch();]]></java>
+
+											<p>
+												First get an instance of <code>Factory</code> so we can write a simple <code>SELECT</code> query. We pass an instance of the MySQL connection to <code>Factory</code>. Note that the factory doesn't close the connection. We'll have to do that ourselves.
+											</p>
+											<p>
+												We then use jOOQ's DSL to return an instance of Result. We'll be using this result in the next step.
+											</p>
+										</content>
+									</section>
+									
+									<section id="jooq-in-7-steps-step6">
+										<title>Step 6: Iterating</title>
+										<content>
+											<h3>Iterate over the results of the previously executed query</h3>
+											<p>
+												After the line where we retrieve the results, let's iterate over the results and print out the data:
+											</p>
+
+<java><![CDATA[for (Record r : result) {
+    Long id = r.getValue(POSTS.ID);
+    String title = r.getValue(POSTS.TITLE);
+    String description = r.getValue(POSTS.BODY);
+
+    System.out.println("ID: " + id + " title: " + title + " desciption: " + description);
+}]]></java>
+
+											<p>
+												The full program should now look like this:
+											</p>
+											
+<java><![CDATA[package test;
+
+// For convenience, always static import your generated tables and
+// jOOQ functions to decrease verbosity:
+import static test.generated.Tables.*;
+import static org.jooq.impl.Factory.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import org.jooq.Record;
+import org.jooq.Result;
+
+import test.generated.GuestbookFactory;
+import test.generated.tables.Posts;
+
+public class Main {
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        Connection conn = null;
+
+        String userName = "root";
+        String password = "";
+        String url = "jdbc:mysql://localhost:3306/guestbook";
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conn = DriverManager.getConnection(url, userName, password);
+
+            GuestbookFactory create = new GuestbookFactory(conn);
+            Result&lt;Record&gt; result = create.select().from(POSTS).fetch();
+
+            for (Record r : result) {
+                Long id = r.getValue(POSTS.ID);
+                String title = r.getValue(POSTS.TITLE);
+                String description = r.getValue(POSTS.BODY);
+
+                System.out.println("ID: " + id + " title: " + title + " desciption: " + description);
+            }
+        } catch (Exception e) {
+            // For the sake of this tutorial, let's keep exception handling simple
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ignore) {
+                }
+            }
+        }
+    }
+}]]></java>
+										</content>
+									</section>
+									
+									<section id="jooq-in-7-steps-step7">
+										<title>Step 7: Explore!</title>
+										<content>
+											<h3>You're all set. Explore the rest of the library!</h3>
+											<p>
+												jOOQ has grown to be a comprehensive SQL library. For more information, please consider the manual:<br/>
+												<a href="http://www.jooq.org/manual/" title="jOOQ Manual">http://www.jooq.org/manual/</a>
+											</p>
+											<p>
+												... explore the Javadoc:<br/>
+												<a href="http://www.jooq.org/javadoc/latest/" title="jOOQ Javadoc">http://www.jooq.org/javadoc/latest/</a>
+											</p>
+											<p>
+												... or join the news group:<br/>
+												<a href="https://groups.google.com/forum/#!forum/jooq-user" title="jOOQ news group">https://groups.google.com/forum/#!forum/jooq-user</a>
+											</p>
+											<p>
+											    This tutorial is the courtesy of Ikai Lan. See the original source here:<br/>
+											    <a href="http://ikaisays.com/2011/11/01/getting-started-with-jooq-a-tutorial/" target="_blank" title="Ikai Lan's jOOQ tutorial">http://ikaisays.com/2011/11/01/getting-started-with-jooq-a-tutorial/</a>
+											</p>
+										</content>
+									</section>
+								</sections>
 							</section>
 
 							<section id="jooq-in-modern-ides">
@@ -279,6 +683,17 @@ SelectConnectByConditionStep connectBy(Condition condition);]]></java>
 @Support
 SelectSelectStep select(Field<?>... fields);]]></java>
 
+									<h3>jOOQ's SQL clause simulation capabilities</h3>
+									<p>
+										The aforementioned Support annotation does not only designate, which databases natively support a feature. It also indicates that a feature is simulated by jOOQ for some databases lacking this feature. An example of this is the <reference id="distinct-predicate" title="DISTINCT predicate"/>, a predicate syntax defined by SQL:1999 and implemented only by H2, HSQLDB, and Postgres:
+									</p>
+
+<sql><![CDATA[A IS DISTINCT FROM B]]></sql>
+
+									<p>
+										Nevertheless, the <code>IS DISTINCT FROM</code> predicate is supported in all dialects, as its semantics can be expressed with an equivalent <reference id="case-expressions" title="CASE expression"/>. For more details, see the manual's section about the <reference id="distinct-predicate" title="DISTINCT predicate"/>.
+									</p>
+									
 									<h3>jOOQ and the Oracle SQL dialect</h3>
 									<p>
 										Oracle SQL is much more expressive than many other SQL dialects. It features many unique keywords, clauses and functions that are out of scope for the SQL standard. Some examples for this are
@@ -1448,7 +1863,7 @@ new Factory(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 								<content></content>
 							</section>
 
-							<section id="casting">
+							<section id="cast-expressions">
 								<title>Type casting</title>
 								<content></content>
 							</section>
@@ -1679,7 +2094,145 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 
 					<section id="plain-sql">
 						<title>Plain SQL</title>
-						<content></content>
+						<content>
+							<h3>Plain SQL in jOOQ</h3>
+							<p>
+								A DSL is a nice thing to have, it feels "fluent" and "natural", especially if it models a well-known language, such as SQL. But a DSL is always expressed in a host language (Java in this case), which was not made for exactly the same purposes as its hosted DSL. If it were, then jOOQ would be implemented on a compiler-level, similar to LINQ in .NET. But it's not, and so, the DSL is limited by language constraints of its host language. We have seen many functionalities where the DSL becomes a bit verbose. This can be especially true for:
+							</p>
+							<ul>
+								<li><reference id="aliasing" title="aliasing"/></li>
+								<li><reference id="nested-selects" title="nested selects"/></li>
+								<li><reference id="arithmetic-expressions" title="arithmetic expressions"/></li>
+								<li><reference id="cast-expressions" title="casting"/></li>
+							</ul>
+							
+							<p>
+								You'll probably find other examples. If verbosity scares you off, don't worry. The verbose use-cases for jOOQ are rather rare, and when they come up, you do have an option. Just write SQL the way you're used to!
+							</p>
+							<p>
+								jOOQ allows you to embed SQL as a String into any supported <reference id="sql-statements" title="statement"/> in these contexts:
+							</p>
+							<ul>
+								<li>Plain SQL as a <reference id="conditional-expressions" title="conditional expression"/></li>
+								<li>Plain SQL as a <reference id="column-expressions" title="column expression"/></li>
+								<li>Plain SQL as a <reference id="column-expressions" title="function"/></li>
+								<li>Plain SQL as a <reference id="table-expressions" title="table expression"/></li>
+								<li>Plain SQL as a <reference id="query-vs-resultquery" title="query"/></li>
+							</ul>
+
+							<h3>The Factory plain SQL API</h3>
+							<p>
+								Plain SQL API methods are usually overloaded in three ways. Let's look at the <code>condition</code> query part constructor:
+							</p>
+<java><![CDATA[// Construct a condition without bind values
+// Example: condition("a = b")
+Condition condition(String sql);
+
+// Construct a condition with bind values
+// Example: condition("a = ?", 1);
+Condition condition(String sql, Object... bindings);
+
+// Construct a condition taking other jOOQ object arguments
+// Example: condition("a = {0}", val(1));
+Condition condition(String sql, QueryPart... parts);]]></java>
+							
+							<p>
+								Please refer to the <reference class="org.jooq.impl.Factory"/> Javadoc for more details. The following is a more complete listing of plain SQL construction methods from the Factory:
+							</p>
+
+<java><![CDATA[// A condition
+Condition condition(String sql);
+Condition condition(String sql, Object... bindings);
+Condition condition(String sql, QueryPart... parts);
+
+// A field with an unknown data type
+Field<Object> field(String sql);
+Field<Object> field(String sql, Object... bindings);
+Field<Object> field(String sql, QueryPart... parts);
+
+// A field with a known data type
+<T> Field<T> field(String sql, Class<T> type);
+<T> Field<T> field(String sql, Class<T> type, Object... bindings);
+<T> Field<T> field(String sql, Class<T> type, QueryPart... parts);
+<T> Field<T> field(String sql, DataType<T> type);
+<T> Field<T> field(String sql, DataType<T> type, Object... bindings);
+<T> Field<T> field(String sql, DataType<T> type, QueryPart... parts);
+
+// A field with a known name (properly escaped)
+Field<Object> fieldByName(String... fieldName);
+<T> Field<T>  fieldByName(Class<T> type, String... fieldName);
+<T> Field<T>  fieldByName(DataType<T> type, String... fieldName)
+
+// A function
+<T> Field<T> function(String name, Class<T> type, Field<?>... arguments);
+<T> Field<T> function(String name, DataType<T> type, Field<?>... arguments);
+
+// A table
+Table<?> table(String sql);
+Table<?> table(String sql, Object... bindings);
+Table<?> table(String sql, QueryPart... parts);
+
+// A table with a known name (properly escaped)
+Table<Record> tableByName(String... fieldName);
+
+// A query without results (update, insert, etc)
+Query query(String sql);
+Query query(String sql, Object... bindings);
+Query query(String sql, QueryPart... parts);
+
+// A query with results
+ResultQuery<Record> resultQuery(String sql);
+ResultQuery<Record> resultQuery(String sql, Object... bindings);
+ResultQuery<Record> resultQuery(String sql, QueryPart... parts);
+
+// A query with results. This is the same as resultQuery(...).fetch();
+Result<Record> fetch(String sql);
+Result<Record> fetch(String sql, Object... bindings);
+Result<Record> fetch(String sql, QueryPart... parts);]]></java>
+
+							<p>
+								Apart from the general factory methods, plain SQL is also available in various other contexts. For instance, when adding a .where("a = b") clause to a query. Hence, there exist several convenience methods where plain SQL can be inserted usefully. This is an example displaying all various use-cases in one single query:
+							</p>
+							
+<java><![CDATA[// You can use your table aliases in plain SQL fields
+// As long as that will produce syntactically correct SQL
+Field<?> LAST_NAME    = create.field("a.LAST_NAME");
+
+// You can alias your plain SQL fields
+Field<?> COUNT1       = create.field("count(*) x");
+
+// If you know a reasonable Java type for your field, you
+// can also provide jOOQ with that type
+Field<Integer> COUNT2 = create.field("count(*) y", Integer.class);
+
+       // Use plain SQL as select fields
+create.select(LAST_NAME, COUNT1, COUNT2)
+
+       // Use plain SQL as aliased tables (be aware of syntax!)
+      .from("t_author a")
+      .join("t_book b")
+
+       // Use plain SQL for conditions both in JOIN and WHERE clauses
+      .on("a.id = b.author_id")
+
+       // Bind a variable in plain SQL
+      .where("b.title != ?", "Brida")
+
+       // Use plain SQL again as fields in GROUP BY and ORDER BY clauses
+      .groupBy(LAST_NAME)
+      .orderBy(LAST_NAME);]]></java>
+
+							<h3>Important things to note about plain SQL!</h3>
+							<p>
+								There are some important things to keep in mind when using plain SQL:
+							</p>
+							<ul>
+								<li>jOOQ doesn't know what you're doing. You're on your own again!</li>
+								<li>You have to provide something that will be syntactically correct. If it's not, then jOOQ won't know. Only your JDBC driver or your RDBMS will detect the syntax error.</li>
+								<li>You have to provide consistency when you use variable binding. The number of ? must match the number of variables</li>
+								<li>Your SQL is inserted into jOOQ queries without further checks. Hence, jOOQ can't prevent SQL injection. </li>
+							</ul>
+						</content>
 					</section>
 
 					<section id="bind-values">

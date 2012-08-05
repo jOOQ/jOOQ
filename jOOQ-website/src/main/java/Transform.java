@@ -153,6 +153,7 @@ public class Transform {
             throw new Exception("Duplicate section ids found! " + ids);
         }
 
+        int blanks = 0, completed = 0;
         for (Match section : manual.find("section").each()) {
             Match sections = section.add(section.parents("section")).reverse();
 
@@ -162,8 +163,16 @@ public class Transform {
             File dir = new File(path);
             dir.mkdirs();
 
+            boolean blank = StringUtils.isBlank(section.find("content").text());
+            if (blank) {
+                blanks++;
+            }
+            else {
+                completed++;
+            }
+
             System.out.print("[");
-            System.out.print(StringUtils.isBlank(section.find("content").text()) ? " " : "x");
+            System.out.print(blank ? " " : "x");
             System.out.println("] Transforming section " + path);
             File file = new File(dir, "index.php");
             file.delete();
@@ -179,6 +188,7 @@ public class Transform {
 
             out.close();
         }
+        System.out.println("    Completed sections : " + completed + " / " + (blanks + completed) + " (" + (100 * completed / (blanks + completed)) + "%)");
     }
 
     public static void singlePage() throws Exception {

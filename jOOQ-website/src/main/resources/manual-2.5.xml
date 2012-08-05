@@ -1341,6 +1341,20 @@ GROUP BY AUTHOR_ID]]></sql>
 												This will return an arbitrary title per author. jOOQ supports this syntax, as jOOQ is not doing any checks internally, about the consistence of tables/fields/functions that you provide it.
 											</p>
 
+											<h3>Empty GROUP BY clauses</h3>
+											<p>
+												jOOQ supports empty <code>GROUP BY ()</code> clauses as well. This will result in <reference id="select-statement" title="SELECT statements"/> that return only one record.
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT COUNT(*)
+FROM BOOK
+GROUP BY ()]]></sql>
+<java><![CDATA[create.selectCount()
+      .from(BOOK)
+      .groupBy();]]></java></code-pair>
+
+											
 											<h3>ROLLUP(), CUBE() and GROUPING SETS()</h3>
 											<p>
 												Some databases support the SQL standard grouping functions and some extensions thereof. See the manual's section about <reference id="grouping-functions" title="grouping functions"/> for more details.

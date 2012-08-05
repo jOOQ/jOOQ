@@ -187,6 +187,9 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
 
     /**
      * Adds grouping fields
+     * <p>
+     * Calling this with an empty argument list will result in an empty
+     * <code>GROUP BY ()</code> clause being rendered.
      *
      * @param fields The grouping fields
      */
@@ -195,6 +198,9 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
 
     /**
      * Adds grouping fields
+     * <p>
+     * Calling this with an empty argument list will result in an empty
+     * <code>GROUP BY ()</code> clause being rendered.
      *
      * @param fields The grouping fields
      */

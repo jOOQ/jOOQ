@@ -105,6 +105,7 @@ class SelectQueryImpl extends AbstractSubSelect<Record> implements SelectQuery {
 
     @Override
     public final void addGroupBy(Collection<? extends Field<?>> fields) {
+        setGrouping();
         getGroupBy().addAll(fields);
     }
 

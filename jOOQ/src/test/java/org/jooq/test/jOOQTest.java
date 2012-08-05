@@ -1884,6 +1884,11 @@ public class jOOQTest {
         SelectQuery q = create.selectQuery();
         q.addFrom(TABLE1);
 
+        q.addGroupBy();
+        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" group by ()", r_refI().render(q));
+        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" group by ()", r_ref().render(q));
+        assertEquals(q, create.select().from(TABLE1).groupBy());
+
         q.addGroupBy(FIELD_ID1);
         assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" group by \"TABLE1\".\"ID1\"", r_refI().render(q));
         assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" group by \"TABLE1\".\"ID1\"", r_ref().render(q));

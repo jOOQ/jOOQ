@@ -96,13 +96,12 @@ implements
     private final ConditionProviderImpl connectBy;
     private boolean                     connectByNoCycle;
     private final ConditionProviderImpl connectByStartWith;
+    private boolean                     grouping;
     private final FieldList             groupBy;
     private final ConditionProviderImpl having;
     private final SortFieldList         orderBy;
     private boolean                     orderBySiblings;
     private final Limit                 limit;
-
-
 
     AbstractSubSelect(Configuration configuration) {
         this(configuration, null);
@@ -506,10 +505,17 @@ implements
 
         // GROUP BY and HAVING clause
         // --------------------------
-        if (!getGroupBy().isEmpty()) {
+        if (grouping) {
             context.formatSeparator()
-                   .keyword("group by ")
-                   .sql(getGroupBy());
+                   .keyword("group by ");
+
+            // [#1665] Empty GROUP BY () clauses need parentheses
+            if (getGroupBy().isEmpty()) {
+                context.sql("()");
+            }
+            else {
+                context.sql(getGroupBy());
+            }
         }
 
         if (!(getHaving().getWhere() instanceof TrueCondition)) {
@@ -722,6 +728,10 @@ implements
 
     final TableList getFrom() {
         return from;
+    }
+
+    final void setGrouping() {
+        grouping = true;
     }
 
     final FieldList getGroupBy() {

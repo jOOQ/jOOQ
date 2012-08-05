@@ -83,12 +83,18 @@ public interface SelectGroupByStep extends SelectHavingStep {
 
     /**
      * Add a <code>GROUP BY</code> clause to the query
+     * <p>
+     * Calling this with an empty argument list will result in an empty
+     * <code>GROUP BY ()</code> clause being rendered.
      */
     @Support
     SelectHavingStep groupBy(Field<?>... fields);
 
     /**
      * Add a <code>GROUP BY</code> clause to the query
+     * <p>
+     * Calling this with an empty argument list will result in an empty
+     * <code>GROUP BY ()</code> clause being rendered.
      */
     @Support
     SelectHavingStep groupBy(Collection<? extends Field<?>> fields);

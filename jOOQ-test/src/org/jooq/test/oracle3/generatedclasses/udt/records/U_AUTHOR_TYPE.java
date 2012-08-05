@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
  */
 public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -656553594;
+	private static final long serialVersionUID = 1676142712;
 
 
 	/**
@@ -68,6 +68,20 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 	}
 
 	/**
+	 * Call TEST.U_AUTHOR_TYPE.GET_AUTHOR
+	 *
+	 * @param P_ID
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE call_GET_AUTHOR(org.jooq.Configuration configuration, java.lang.Number P_ID) {
+		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_AUTHOR f = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_AUTHOR();
+		f.setP_ID(P_ID);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
 	 * Call TEST.U_AUTHOR_TYPE.GET_BOOKS
 	 *
 	 * @param SELF IN OUT parameter
@@ -98,6 +112,25 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 		p.execute(getConfiguration());
 		from(p.getSELF());
 		return p.getSELF();
+	}
+
+	/**
+	 * Call TEST.U_AUTHOR_TYPE.NEW_AUTHOR
+	 *
+	 * @param P_ID IN parameter
+	 * @param P_FIRST_NAME IN parameter
+	 * @param P_LAST_NAME IN parameter
+	 * @param P_AUTHOR OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE call_NEW_AUTHOR(org.jooq.Configuration configuration, java.lang.Number P_ID, java.lang.String P_FIRST_NAME, java.lang.String P_LAST_NAME) {
+		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.NEW_AUTHOR p = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.NEW_AUTHOR();
+		p.setP_ID(P_ID);
+		p.setP_FIRST_NAME(P_FIRST_NAME);
+		p.setP_LAST_NAME(P_LAST_NAME);
+
+		p.execute(configuration);
+		return p.getP_AUTHOR();
 	}
 
 	public U_AUTHOR_TYPE() {

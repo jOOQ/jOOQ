@@ -595,17 +595,6 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F377
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
-	 */
-	public static void call_F377(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle3.generatedclasses.routines.F377 p = new org.jooq.test.oracle3.generatedclasses.routines.F377();
-
-		p.execute(configuration);
-	}
-
-	/**
 	 * Call TEST.F378
 	 *
 	 * @param RETURN_VALUE OUT parameter
@@ -968,17 +957,6 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P377
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
-	 */
-	public static void call_P377(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle3.generatedclasses.routines.P377 p = new org.jooq.test.oracle3.generatedclasses.routines.P377();
-
-		p.execute(configuration);
-	}
-
-	/**
 	 * Call TEST.P391
 	 *
 	 * @param I1 IN parameter
@@ -998,6 +976,30 @@ public final class Routines {
 
 		p.execute(configuration);
 		return p;
+	}
+
+	/**
+	 * Get TEST.SECOND_MAX as a field
+	 *
+	 * @param INPUT
+	 */
+	public static org.jooq.AggregateFunction<java.math.BigDecimal> call_SECOND_MAX(java.lang.Number INPUT) {
+		org.jooq.test.oracle3.generatedclasses.routines.SECOND_MAX f = new org.jooq.test.oracle3.generatedclasses.routines.SECOND_MAX();
+		f.setINPUT(INPUT);
+
+		return f.asAggregateFunction();
+	}
+
+	/**
+	 * Get TEST.SECOND_MAX as a field
+	 *
+	 * @param INPUT
+	 */
+	public static org.jooq.AggregateFunction<java.math.BigDecimal> call_SECOND_MAX(org.jooq.Field<? extends java.lang.Number> INPUT) {
+		org.jooq.test.oracle3.generatedclasses.routines.SECOND_MAX f = new org.jooq.test.oracle3.generatedclasses.routines.SECOND_MAX();
+		f.setINPUT(INPUT);
+
+		return f.asAggregateFunction();
 	}
 
 	/**

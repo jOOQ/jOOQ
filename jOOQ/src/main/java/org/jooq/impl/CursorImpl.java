@@ -208,7 +208,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final <Z extends Record> List<Z> fetchInto(Table<Z> table) {
+    public final <Z extends Record> Result<Z> fetchInto(Table<Z> table) {
         return fetch().into(table);
     }
 

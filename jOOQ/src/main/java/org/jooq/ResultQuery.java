@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
@@ -77,6 +78,10 @@ public interface ResultQuery<R extends Record> extends Query {
      * <p>
      * This is the same as calling {@link #execute()} and then
      * {@link #getResult()}
+     * <p>
+     * The result and its contained records are attached to the original
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query
@@ -148,6 +153,10 @@ public interface ResultQuery<R extends Record> extends Query {
      * <p>
      * <code><pre>
      * String sql = "sp_help 'my_table'";</pre></code>
+     * <p>
+     * The result and its contained records are attached to the original
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
      *
      * @return The resulting records
      * @throws DataAccessException if something went wrong executing the query
@@ -423,19 +432,27 @@ public interface ResultQuery<R extends Record> extends Query {
 
     /**
      * Execute the query and return at most one resulting record.
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
      * @throws DataAccessException This exception is thrown
      *             <ul>
-     *             <li>if something went wrong executing the query</li>
-     *             <li>if the query returned more than one record</li>
+     *             <li>if something went wrong executing the query</li> <li>if
+     *             the query returned more than one record</li>
      *             </ul>
      */
     R fetchOne() throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting record.
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @return The first resulting record or <code>null</code> if the query
      *         returns no records.
@@ -477,6 +494,10 @@ public interface ResultQuery<R extends Record> extends Query {
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set.
+     * <p>
+     * The resulting records are attached to the original {@link Configuration}
+     * by default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @param <K> The key's generic field type
      * @param key The key field. Client code must assure that this field is
@@ -667,6 +688,10 @@ public interface ResultQuery<R extends Record> extends Query {
      * <p>
      * This is the same as calling <code>fetch().into(table)</code>. See
      * {@link Record#into(Table)} for more details
+     * <p>
+     * The result and its contained records are attached to the original
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
      *
      * @param <Z> The generic table record type.
      * @param table The table type.
@@ -678,6 +703,10 @@ public interface ResultQuery<R extends Record> extends Query {
 
     /**
      * Fetch results into a custom handler callback
+     * <p>
+     * The resulting records are attached to the original {@link Configuration}
+     * by default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
@@ -704,6 +733,10 @@ public interface ResultQuery<R extends Record> extends Query {
      * at the end of the {@link FutureResult}'s lifecycle. Use
      * {@link #fetchLater(ExecutorService)} instead, if you want control over
      * your executing threads.
+     * <p>
+     * The result and its contained records are attached to the original
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
      *
      * @return A future result
      * @throws DataAccessException if something went wrong executing the query
@@ -728,6 +761,10 @@ public interface ResultQuery<R extends Record> extends Query {
      * Use this method rather than {@link #fetchLater()}, in order to keep
      * control over thread lifecycles, if you manage threads in a J2EE container
      * or with Spring, for instance.
+     * <p>
+     * The result and its contained records are attached to the original
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
      *
      * @param executor A custom executor
      * @return A future result

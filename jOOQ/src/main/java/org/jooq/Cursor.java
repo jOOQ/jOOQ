@@ -40,6 +40,7 @@ import java.sql.ResultSet;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.MappingException;
 
@@ -72,6 +73,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
+     * <p>
+     * The result and its contained records are attached to the original
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
      *
      * @throws DataAccessException if something went wrong executing the query
      */
@@ -82,6 +87,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
+     * <p>
+     * The result and its contained records are attached to the original
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
      *
      * @param number The number of records to fetch. If this is <code>0</code>
      *            or negative an empty list is returned, the cursor is
@@ -96,6 +105,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @return The next record from the cursor, or <code>null</code> if there is
      *         no next record.
@@ -108,6 +121,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
@@ -117,6 +134,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
 
     /**
      * Fetch results into a custom handler callback
+     * <p>
+     * The resulting records are attached to the original {@link Configuration}
+     * by default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
@@ -161,6 +182,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This is the same as calling <code>fetchOne().into(table)</code>. See
      * {@link Record#into(Class)} for more details
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @param <Z> The generic table record type.
      * @param table The table type.
@@ -177,6 +202,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This is the same as calling <code>fetch().into(table)</code>. See
      * {@link Record#into(Class)} for more details
+     * <p>
+     * The result and its contained records are attached to the original
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
      *
      * @param <Z> The generic table record type.
      * @param table The table type.

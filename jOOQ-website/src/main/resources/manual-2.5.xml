@@ -2030,6 +2030,7 @@ create.select(concat("A", "B", "C"));
 							<section id="string-functions">
 								<title>String functions</title>
 								<content></content>
+								<!-- don't forget regex here! -->
 							</section>
 
 							<section id="date-and-time-functions">

@@ -934,7 +934,11 @@ public interface FactoryOperations extends Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new attached {@link UDTRecord}.
+     * Create a new {@link UDTRecord}.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @param <R> The generic record type
      * @param type The UDT describing records of type &lt;R&gt;
@@ -945,6 +949,10 @@ public interface FactoryOperations extends Configuration {
     /**
      * Create a new {@link Record} that can be inserted into the corresponding
      * table.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @param <R> The generic record type
      * @param table The table holding records of type &lt;R&gt;
@@ -957,6 +965,10 @@ public interface FactoryOperations extends Configuration {
      * corresponding table.
      * <p>
      * This performs roughly the inverse operation of {@link Record#into(Class)}
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @param <R> The generic record type
      * @param table The table holding records of type &lt;R&gt;
@@ -976,6 +988,10 @@ public interface FactoryOperations extends Configuration {
     /**
      * Execute and return all records for
      * <code><pre>SELECT * FROM [table]</pre></code>
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
      *
      * @throws DataAccessException if something went wrong executing the query
      */
@@ -985,6 +1001,10 @@ public interface FactoryOperations extends Configuration {
     /**
      * Execute and return all records for
      * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
      *
      * @throws DataAccessException if something went wrong executing the query
      */
@@ -994,6 +1014,10 @@ public interface FactoryOperations extends Configuration {
     /**
      * Execute and return zero or one record for
      * <code><pre>SELECT * FROM [table]</pre></code>
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
@@ -1004,6 +1028,10 @@ public interface FactoryOperations extends Configuration {
     /**
      * Execute and return zero or one record for
      * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
@@ -1014,6 +1042,10 @@ public interface FactoryOperations extends Configuration {
     /**
      * Execute and return zero or one record for
      * <code><pre>SELECT * FROM [table] LIMIT 1</pre></code>
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query

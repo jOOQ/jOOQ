@@ -187,6 +187,7 @@ final class Util {
                 result = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
             }
 
+            // [#1684] TODO: Do not attach configuration if settings say no
             result.attach(configuration);
             return result;
         }

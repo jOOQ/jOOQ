@@ -215,7 +215,7 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
-    <Z extends Record> List<Z> fetchInto(Table<Z> table) throws DataAccessException, MappingException;
+    <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException, MappingException;
 
     /**
      * Explicitly close the underlying {@link PreparedStatement} and

@@ -411,10 +411,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         S store4 = create.newRecord(TBookStore());
         store4.setValue(TBookStore_NAME(), "Barnes and Noble");
         failStoreRefreshDelete(store4);
+        store4 = create.fetchOne(TBookStore(), TBookStore_NAME().equal("Barnes and Noble"));
+        store4.setValue(TBookStore_NAME(), "ABC");
+        failStoreRefreshDelete(store4);
+        store4 = create.fetchOne(TBookStore(), TBookStore_NAME().equal("Barnes and Noble"));
         store4.attach(create);
-        store4.refresh();
         assertEquals(1, store4.delete());
         assertNull(create.fetchOne(TBookStore(), TBookStore_NAME().equal("Barnes and Noble")));
+        assertNull(create.fetchOne(TBookStore(), TBookStore_NAME().equal("ABC")));
     }
 
     private void failStoreRefreshDelete(S store) {

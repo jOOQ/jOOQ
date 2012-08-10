@@ -94,9 +94,9 @@ class DefaultBindContext extends AbstractBindContext {
      * href="http://stackoverflow.com/q/11439543/521799">http://stackoverflow
      * .com/q/11439543/521799</a>
      */
-    static ThreadLocal<Configuration> localConfiguration = new ThreadLocal<Configuration>();
+    static final ThreadLocal<Configuration> LOCAL_CONFIGURATION = new ThreadLocal<Configuration>();
 
-    private final PreparedStatement   stmt;
+    private final PreparedStatement         stmt;
 
     DefaultBindContext(Configuration configuration, PreparedStatement stmt) {
         super(configuration);
@@ -333,11 +333,11 @@ class DefaultBindContext extends AbstractBindContext {
             try {
                 // [#1544] Set the local configuration, in case an array needs
                 // to be serialised to SQLOutput
-                localConfiguration.set(this);
+                LOCAL_CONFIGURATION.set(this);
                 stmt.setObject(nextIndex(), value);
             }
             finally {
-                localConfiguration.remove();
+                LOCAL_CONFIGURATION.remove();
             }
         }
 

@@ -41,6 +41,7 @@ import java.sql.SQLOutput;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 
@@ -71,7 +72,22 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
 
     @Override
     public final String getSQLTypeName() throws SQLException {
-        return getUDT().getName();
+        StringBuilder sb = new StringBuilder();
+
+        // [#1693] This needs to return the fully qualified SQL type name, in
+        // case the connected user is not the owner of the UDT
+        Configuration configuration = DefaultBindContext.LOCAL_CONFIGURATION.get();
+        if (configuration != null) {
+            Schema schema = Util.getMappedSchema(configuration, getUDT().getSchema());
+
+            if (schema != null) {
+                sb.append(schema.getName());
+                sb.append(".");
+            }
+        }
+
+        sb.append(getUDT().getName());
+        return sb.toString();
     }
 
     @Override

@@ -206,17 +206,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         author.setValue(TAuthor_ID(), 15);
         author.setValue(TAuthor_LAST_NAME(), "Kästner");
 
-        assertEquals(1, create().executeInsert(TAuthor(), author));
+        assertEquals(1, create().executeInsert(author));
         author.refresh();
         assertEquals(Integer.valueOf(15), author.getValue(TAuthor_ID()));
         assertEquals("Kästner", author.getValue(TAuthor_LAST_NAME()));
 
-        assertEquals(0, create().executeUpdate(TAuthor(), author, TAuthor_ID().equal(15)));
+        assertEquals(0, create().executeUpdate(author, TAuthor_ID().equal(15)));
         author.setValue(TAuthor_FIRST_NAME(), "Erich");
-        assertEquals(1, create().executeUpdate(TAuthor(), author, TAuthor_ID().equal(15)));
+        assertEquals(1, create().executeUpdate(author, TAuthor_ID().equal(15)));
         author = create().fetchOne(TAuthor(), TAuthor_FIRST_NAME().equal("Erich"));
         assertEquals(Integer.valueOf(15), author.getValue(TAuthor_ID()));
         assertEquals("Erich", author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("Kästner", author.getValue(TAuthor_LAST_NAME()));
+
+        // [#1692] Check for new simplified update method
+        author.setValue(TAuthor_FIRST_NAME(), "Fritz");
+        assertEquals(1, create().executeUpdate(author));
+        author = create().fetchOne(TAuthor(), TAuthor_FIRST_NAME().equal("Fritz"));
+        assertEquals(Integer.valueOf(15), author.getValue(TAuthor_ID()));
+        assertEquals("Fritz", author.getValue(TAuthor_FIRST_NAME()));
         assertEquals("Kästner", author.getValue(TAuthor_LAST_NAME()));
 
         create().executeDelete(TAuthor(), TAuthor_LAST_NAME().equal("Kästner"));

@@ -204,7 +204,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     private final int storeUpdate(TableField<R, ?>[] keys) {
         UpdateQuery<R> update = create().updateQuery(getTable());
         addChangedValues(update);
-        addConditions(update, keys);
+        Util.addConditions(update, this, keys);
 
         // Don't store records if no value was set by client code
         if (!update.isExecutable()) return 0;
@@ -237,8 +237,8 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         TableField<R, ?> v = getUpdatableTable().getRecordVersion();
         TableField<R, ?> t = getUpdatableTable().getRecordTimestamp();
 
-        if (v != null) addCondition(query, v);
-        if (t != null) addCondition(query, t);
+        if (v != null) Util.addCondition(query, this, v);
+        if (t != null) Util.addCondition(query, this, t);
     }
 
     private final boolean isTimestampOrVersionAvailable() {
@@ -255,7 +255,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     public final int deleteUsing(TableField<R, ?>... keys) {
         try {
             DeleteQuery<R> delete = create().deleteQuery(getTable());
-            addConditions(delete, keys);
+            Util.addConditions(delete, this, keys);
 
             if (isExecuteWithOptimisticLocking()) {
 
@@ -288,7 +288,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     @Override
     public final void refreshUsing(TableField<R, ?>... keys) {
         SimpleSelectQuery<R> select = create().selectQuery(getTable());
-        addConditions(select, keys);
+        Util.addConditions(select, this, keys);
 
         if (select.execute() == 1) {
             AbstractRecord record = (AbstractRecord) select.getResult().get(0);
@@ -308,7 +308,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      */
     private final void checkIfChanged(TableField<R, ?>[] keys) {
         SimpleSelectQuery<R> select = create().selectQuery(getTable());
-        addConditions(select, keys);
+        Util.addConditions(select, this, keys);
 
         // [#1547] SQLite doesn't support FOR UPDATE. CUBRID and SQL Server
         // can simulate it, though!
@@ -359,22 +359,6 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     @SuppressWarnings("unchecked")
     private final <T> void setValue0(Field<T> field, Value<?> value) {
         setValue(field, (Value<T>) value);
-    }
-
-    /**
-     * Add primary key conditions to a query
-     */
-    private final void addConditions(ConditionProvider query, TableField<R, ?>[] keys) {
-        for (Field<?> field : keys) {
-            addCondition(query, field);
-        }
-    }
-
-    /**
-     * Add a field condition to a query
-     */
-    private final <T> void addCondition(ConditionProvider provider, Field<T> field) {
-        provider.addConditions(field.equal(getValue(field)));
     }
 
     /**

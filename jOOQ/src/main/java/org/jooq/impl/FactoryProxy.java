@@ -548,28 +548,49 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>> int executeInsert(Table<R> table, R record) {
         return getDelegate().executeInsert(table, record);
     }
 
     @Override
+    public final <R extends TableRecord<R>> int executeInsert(R record) throws DataAccessException {
+        return getDelegate().executeInsert(record);
+    }
+
+    @Override
+    @Deprecated
     public final <R extends TableRecord<R>> int executeUpdate(Table<R> table, R record) {
         return getDelegate().executeUpdate(table, record);
     }
 
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>, T> int executeUpdate(Table<R> table, R record, Condition condition) {
         return getDelegate().executeUpdate(table, record, condition);
     }
 
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>> int executeUpdateOne(Table<R> table, R record) {
         return getDelegate().executeUpdateOne(table, record);
     }
 
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>, T> int executeUpdateOne(Table<R> table, R record, Condition condition) {
         return getDelegate().executeUpdateOne(table, record, condition);
+    }
+
+    @Override
+    public final <R extends UpdatableRecord<R>> int executeUpdate(R record) throws DataAccessException {
+        return getDelegate().executeUpdate(record);
+    }
+
+    @Override
+    public final <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition)
+        throws DataAccessException {
+        return getDelegate().executeUpdate(record, condition);
     }
 
     @Override

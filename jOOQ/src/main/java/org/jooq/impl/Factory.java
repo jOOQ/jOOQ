@@ -4154,6 +4154,14 @@ public class Factory implements FactoryOperations {
     // ------------------------------------------------------------------------
 
     /**
+     * Get the rand() function
+     */
+    @Support
+    public static Field<BigDecimal> rand() {
+        return new Rand();
+    }
+
+    /**
      * Find the greatest among all values
      * <p>
      * This function has no equivalent in Adaptive Server, Derby, SQL Server and
@@ -6017,14 +6025,6 @@ public class Factory implements FactoryOperations {
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> currentUser() {
         return new CurrentUser();
-    }
-
-    /**
-     * Get the rand() function
-     */
-    @Support
-    public static Field<BigDecimal> rand() {
-        return new Rand();
     }
 
     // -------------------------------------------------------------------------

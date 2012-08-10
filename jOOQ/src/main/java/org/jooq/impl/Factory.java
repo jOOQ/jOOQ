@@ -6062,6 +6062,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>> int executeInsert(Table<R> table, R record) {
         InsertQuery<R> insert = insertQuery(table);
         insert.setRecord(record);
@@ -6072,6 +6073,17 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    public final <R extends TableRecord<R>> int executeInsert(R record) {
+        InsertQuery<R> insert = insertQuery(record.getTable());
+        insert.setRecord(record);
+        return insert.execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Deprecated
     public final <R extends TableRecord<R>> int executeUpdate(Table<R> table, R record) {
         return executeUpdate(table, record, trueCondition());
     }
@@ -6080,6 +6092,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>, T> int executeUpdate(Table<R> table, R record, Condition condition) {
         UpdateQuery<R> update = updateQuery(table);
         update.addConditions(condition);
@@ -6091,6 +6104,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>> int executeUpdateOne(Table<R> table, R record) {
         return filterUpdateOne(executeUpdate(table, record));
     }
@@ -6099,8 +6113,31 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>, T> int executeUpdateOne(Table<R> table, R record, Condition condition) {
         return filterUpdateOne(executeUpdate(table, record, condition));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final <R extends UpdatableRecord<R>> int executeUpdate(R record) {
+        UpdateQuery<R> update = updateQuery(record.getTable());
+        Util.addConditions(update, record, record.getTable().getMainKey().getFieldsArray());
+        update.setRecord(record);
+        return update.execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) {
+        UpdateQuery<R> update = updateQuery(record.getTable());
+        update.addConditions(condition);
+        update.setRecord(record);
+        return update.execute();
     }
 
     /**

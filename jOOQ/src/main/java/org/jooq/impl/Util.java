@@ -63,6 +63,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import org.jooq.ArrayRecord;
+import org.jooq.ConditionProvider;
 import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.DataType;
@@ -1083,5 +1084,21 @@ final class Util {
         else {
             return null;
         }
+    }
+
+    /**
+     * Add primary key conditions to a query
+     */
+    static final void addConditions(ConditionProvider query, Record record, Field<?>... keys) {
+        for (Field<?> field : keys) {
+            addCondition(query, record, field);
+        }
+    }
+
+    /**
+     * Add a field condition to a query
+     */
+    static final <T> void addCondition(ConditionProvider provider, Record record, Field<T> field) {
+        provider.addConditions(field.equal(record.getValue(field)));
     }
 }

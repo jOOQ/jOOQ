@@ -1059,9 +1059,31 @@ public interface FactoryOperations extends Configuration {
      *
      * @return The number of inserted records
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 2.5.0 [#1692] - Use {@link #executeInsert(TableRecord)}
+     *             instead
      */
+    @Deprecated
     @Support
     <R extends TableRecord<R>> int executeInsert(Table<R> table, R record) throws DataAccessException;
+
+    /**
+     * Insert one record
+     * <p>
+     * This executes something like the following statement:
+     * <code><pre>INSERT INTO [table] ... VALUES [record] </pre></code>
+     * <p>
+     * Unlike {@link TableRecord#storeUsing(TableField...)} or
+     * {@link UpdatableRecord#store()}, this does not change any of the argument
+     * <code>record</code>'s internal "changed" flags, such that a subsequent
+     * call to {@link TableRecord#storeUsing(TableField...)} or
+     * {@link UpdatableRecord#store()} might lead to another <code>INSERT</code>
+     * statement being executed.
+     *
+     * @return The number of inserted records
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends TableRecord<R>> int executeInsert(R record) throws DataAccessException;
 
     /**
      * Update a table
@@ -1069,7 +1091,9 @@ public interface FactoryOperations extends Configuration {
      *
      * @return The number of updated records
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 2.5.0 [#1692] - This "mass" update is no longer supported
      */
+    @Deprecated
     @Support
     <R extends TableRecord<R>> int executeUpdate(Table<R> table, R record) throws DataAccessException;
 
@@ -1079,7 +1103,10 @@ public interface FactoryOperations extends Configuration {
      *
      * @return The number of updated records
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 2.5.0 [#1692] - Use
+     *             {@link #executeUpdate(TableRecord, Condition)} instead
      */
+    @Deprecated
     @Support
     <R extends TableRecord<R>, T> int executeUpdate(Table<R> table, R record, Condition condition)
         throws DataAccessException;
@@ -1090,7 +1117,9 @@ public interface FactoryOperations extends Configuration {
      *
      * @return The number of updated records
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 2.5.0 [#1692] - This "mass" update is no longer supported
      */
+    @Deprecated
     @Support
     <R extends TableRecord<R>> int executeUpdateOne(Table<R> table, R record) throws DataAccessException;
 
@@ -1100,10 +1129,34 @@ public interface FactoryOperations extends Configuration {
      *
      * @return The number of updated records
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 2.5.0 [#1692] - The semantics of
+     *             {@link #executeUpdate(TableRecord, Condition)} has changed.
+     *             This method here is no longer necessary.
      */
+    @Deprecated
     @Support
     <R extends TableRecord<R>, T> int executeUpdateOne(Table<R> table, R record, Condition condition)
         throws DataAccessException;
+
+    /**
+     * Update a table
+     * <code><pre>UPDATE [table] SET [modified values in record] </pre></code>
+     *
+     * @return The number of updated records
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends UpdatableRecord<R>> int executeUpdate(R record) throws DataAccessException;
+
+    /**
+     * Update a table
+     * <code><pre>UPDATE [table] SET [modified values in record] WHERE [condition]</pre></code>
+     *
+     * @return The number of updated records
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) throws DataAccessException;
 
     /**
      * Delete records from a table <code><pre>DELETE FROM [table]</pre></code>

@@ -75,13 +75,13 @@
 							<p>
 							For the examples in this manual, the same database will always be referred to. It essentially consists of these entities created using the Oracle dialect
 							</p>
-<sql>CREATE TABLE t_language (
+<sql>CREATE TABLE language (
   id NUMBER(7) NOT NULL PRIMARY KEY,
   cd CHAR(2) NOT NULL,
   description VARCHAR2(50)
 )
 
-CREATE TABLE t_author (
+CREATE TABLE author (
   id NUMBER(7) NOT NULL PRIMARY KEY,
   first_name VARCHAR2(50),
   last_name VARCHAR2(50) NOT NULL,
@@ -89,32 +89,32 @@ CREATE TABLE t_author (
   year_of_birth NUMBER(7)
 )
 
-CREATE TABLE t_book (
+CREATE TABLE book (
   id NUMBER(7) NOT NULL PRIMARY KEY,
   author_id NUMBER(7) NOT NULL,
   title VARCHAR2(400) NOT NULL,
   published_in NUMBER(7) NOT NULL,
   language_id NUMBER(7) NOT NULL,
-  FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID),
-  FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID)
+  FOREIGN KEY (AUTHOR_ID) REFERENCES author(ID),
+  FOREIGN KEY (LANGUAGE_ID) REFERENCES language(ID)
 )
 
-CREATE TABLE t_book_store (
+CREATE TABLE book_store (
   name VARCHAR2(400) NOT NULL UNIQUE
 )
 
-CREATE TABLE t_book_to_book_store (
+CREATE TABLE book_to_book_store (
   book_store_name VARCHAR2(400) NOT NULL,
   book_id INTEGER NOT NULL,
   stock INTEGER,
   PRIMARY KEY(book_store_name, book_id),
   CONSTRAINT b2bs_book_store_id
     FOREIGN KEY (book_store_name)
-    REFERENCES t_book_store (name)
+    REFERENCES book_store (name)
     ON DELETE CASCADE,
   CONSTRAINT b2bs_book_id
     FOREIGN KEY (book_id)
-    REFERENCES t_book (id)
+    REFERENCES book (id)
     ON DELETE CASCADE
 )</sql>
 							<p>
@@ -815,28 +815,29 @@ MySQLFactory create = new MySQLFactory(connection);</java>
 									<p>
 										Here is an example to illustrate what that means:
 									</p>
+									
 <code-pair><sql><![CDATA[-- Select all books by authors born after 1920,
 -- named "Paulo" from a catalogue:
 SELECT *
-  FROM t_author a
-  JOIN t_book b ON a.id = b.author_id
+  FROM author a
+  JOIN book b ON a.id = b.author_id
  WHERE a.year_of_birth > 1920
    AND a.first_name = 'Paulo'
  ORDER BY b.title]]></sql>
 <java><![CDATA[Result<Record> result =
 create.select()
-      .from(T_AUTHOR.as("a"))
-      .join(T_BOOK.as("b")).on(a.ID.equal(b.AUTHOR_ID))
+      .from(AUTHOR.as("a"))
+      .join(BOOK.as("b")).on(a.ID.equal(b.AUTHOR_ID))
       .where(a.YEAR_OF_BIRTH.greaterThan(1920)
       .and(a.FIRST_NAME.equal("Paulo")))
       .orderBy(b.TITLE)
       .fetch();]]></java></code-pair>
 
 									<p>
-										We'll see how the aliasing works later in the section about <reference id="aliasing" title="aliasing"/>
+										We'll see how the aliasing works later in the section about <reference id="aliased-tables" title="aliased tables"/>
 									</p>
 
-									<h3>jOOQ as an internal domain specific language in Java</h3>
+									<h3>jOOQ as an internal domain specific language in Java (a.k.a. the DSL-API)</h3>
 									<p>
 										Many other frameworks have similar APIs with similar feature sets. Yet, what makes jOOQ special is its informal <reference id="reference-bnf-notation" title="BNF notation"/> modelling a unified SQL dialect suitable for many vendor-specific dialects, and implementing that BNF notation as a hierarchy of interfaces in Java. This concept is extremely powerful, when <reference id="jooq-in-modern-ides" title="using jOOQ in modern IDEs" /> with syntax completion. Not only can you code much faster, your SQL code will be compile-checked to a certain extent. An example of a DSL query equivalent to the previous one is given here:
 									</p>
@@ -867,7 +868,7 @@ Result<?> result = create.select(rowNumber())
                          .from(AUTHOR)
                          .fetch();]]></java>
 
-									<h3>History of SQL building and incremental query building</h3>
+									<h3>History of SQL building and incremental query building (a.k.a. the non-DSL API)</h3>
 									<p>
 										Historically, jOOQ started out as an object-oriented SQL builder library like any other. This meant that all queries and their syntactic components were modeled as so-called <reference id="queryparts" title="QueryParts"/>, which delegate <reference id="sql-rendering" title="SQL rendering"/> and <reference id="variable-binding" title="variable binding"/> to child components. This part of the API will be referred to as the non-DSL API, which is still maintained and used internally by jOOQ for incremental query building. An example of incremental query building is given here:
 									</p>
@@ -1039,8 +1040,25 @@ create.selectOne().from(BOOK.as("b"), AUTHOR.as("a"));]]></java>
 </code-pair>
 
 											<p>
-												Read more about aliasing in the manual's section about <reference id="aliasing" title="aliasing"/>.
+												Read more about aliasing in the manual's section about <reference id="aliased-tables" title="aliased tables"/>.
 											</p>
+											
+											<h3>More advanced table expressions</h3>
+											<p>
+												Apart from simple tables, you can pass any arbitrary <reference id="table-expressions" title="table expression"/> to the jOOQ FROM clause. This may include <reference id="array-and-cursor-unnesting" title="unnested cursors"/> in Oracle:
+											</p>
+
+<code-pair>
+	<sql><![CDATA[SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(null, null, 'ALLSTATS'));]]></sql>
+	<java><![CDATA[create.select()
+      .from(table(DbmsXplan.displayCursor(null, null, "ALLSTATS"));]]></java>
+</code-pair>
+
+											<p>
+												Note, in order to access the DbmsXplan package, you can use the <reference id="code-generation" title="code generator"/> to generate Oracle's SYS schema.
+											</p>
+
 
 											<h3>Selecting FROM DUAL with jOOQ</h3>
 											<p>
@@ -1417,7 +1435,7 @@ ORDER BY AUTHOR_ID ASC, TITLE DESC]]></sql>
 
 											<h3>Ordering by field index</h3>
 											<p>
-												The SQL standard allows for specifying integer literals (<reference id="inlined-parameters" title="literals"/>, not <reference id="bind-values" title="bind values"/>!) to reference column indexes from the projection (<reference id="select-clause" title="SELECT clause"/>). This may be useful if you do not want to repeat a lengthy expression, by which you want to order - although most databases also allow for referencing <reference id="aliasing" title="aliased column references"/> in the ORDER BY clause. An example of this is given here:
+												The SQL standard allows for specifying integer literals (<reference id="inlined-parameters" title="literals"/>, not <reference id="bind-values" title="bind values"/>!) to reference column indexes from the projection (<reference id="select-clause" title="SELECT clause"/>). This may be useful if you do not want to repeat a lengthy expression, by which you want to order - although most databases also allow for referencing <reference id="aliased-columns" title="aliased column references"/> in the ORDER BY clause. An example of this is given here:
 											</p>
 
 <code-pair>
@@ -1670,7 +1688,48 @@ SELECT * FROM author ORDER BY id DESC;]]></sql>
 
 									<section id="union-clause">
 										<title>UNION, INTERSECTION and EXCEPT</title>
-										<content></content>
+										<content>
+											<h3>Standard SQL set operators to combine results</h3>
+											<p>
+												SQL allows to perform set operations as understood in standard set theory on result sets. These operations include unions, intersections, subtractions. For two subselects to be combinable by such a set operator, each subselect must return a <reference id="table-expressions" title="table expression"/> of the same arity and type.
+											</p>
+											
+											<h3>UNION and UNION ALL</h3>
+											<p>
+												These operators combine two results into one. While UNION removes all duplicate records resulting from this combination, UNION ALL leaves subselect results as they are. Typically, you should prefer UNION ALL over UNION, if you don't really need to remove duplicates. The following example shows how to use such a UNION operation in jOOQ.
+											</p>
+
+<code-pair>
+<sql><![CDATA[SELECT * FROM BOOK WHERE ID = 3
+UNION ALL
+SELECT * FROM BOOK WHERE ID = 5]]></sql>
+<java><![CDATA[create.selectFrom(BOOK).where(BOOK.ID.equal(3))
+      .unionAll(
+create.selectFrom(BOOK).where(BOOK.ID.equal(5)));]]></java></code-pair>
+											
+											<h3>INTERSECT [ ALL ] and EXCEPT [ ALL ]</h3>
+											<p>
+												INTERSECT is the operation that produces only those tuples that are returned by both subselects. EXCEPT is the operation that returns only those tuples that are returned exclusively in the first subselect. Both operators will remove duplicates from their results. The SQL standard allows to specify the ALL keyword for both of these operators as well, but this is hardly supported in any database. jOOQ does not support INTERSECT ALL, EXEPT ALL operations either. 
+											</p>
+											
+											<h3>jOOQ's set operators and how they're different from standard SQL</h3>
+											<p>
+												As previously mentioned in the manual's section about the <reference id="order-by-clause" title="ORDER BY clause"/>, jOOQ has slightly changed the semantics of these set operators. While in SQL, a subselect may not contain any <reference id="order-by-clause" title="ORDER BY clause"/> or <reference id="limit-clause" title="LIMIT clause"/> (unless you wrap the subselect into a <reference id="nested-selects" title="nested SELECT"/>), jOOQ allows you to do so. In order to select both the youngest and the oldest author from the database, you can issue the following statement with jOOQ (rendered to the MySQL dialect):
+											</p>
+
+<code-pair>
+<sql><![CDATA[  (SELECT * FROM AUTHOR 
+   ORDER BY DATE_OF_BIRTH ASC LIMIT 1)
+UNION
+  (SELECT * FROM AUTHOR 
+   ORDER BY DATE_OF_BIRTH DESC LIMIT 1)]]></sql>
+<java><![CDATA[create.selectFrom(AUTHOR)
+      .orderBy(AUTHOR.DATE_OF_BIRTH.asc()).limit(1)
+      .union(
+create.selectFrom(AUTHOR)
+      .orderBy(AUTHOR.DATE_OF_BIRTH.desc()).limit(1));]]></java></code-pair>
+		
+										</content>
 									</section>
 
 									<section id="oracle-hints">
@@ -1737,6 +1796,48 @@ SELECT * FROM author ORDER BY id DESC;]]></sql>
 								<content></content>
 							</section>
 
+							<section id="aliased-tables">
+								<title>Aliased Tables</title>
+								<content>
+									<h3>The strength of the code generator with respect to aliasing</h3>
+									<p>
+										The strength of jOOQ's <reference id="code-generation" title="code generator"/> becomes more obvious when you perform table aliasing and dereference fields from generated aliased tables. This can best be shown by example:
+									</p>
+
+<code-pair><sql><![CDATA[-- Select all books by authors born after 1920,
+-- named "Paulo" from a catalogue:
+
+
+
+SELECT *
+  FROM author a
+  JOIN book b ON a.id = b.author_id
+ WHERE a.year_of_birth > 1920
+   AND a.first_name = 'Paulo'
+ ORDER BY b.title]]></sql>
+<java><![CDATA[// Declare your aliases before using them in SQL:
+Author a = AUTHOR.as("a");
+Book b = BOOK.as("b");
+
+// Use aliased tables in your statement
+create.select()
+      .from(a)
+      .join(b).on(a.ID.equal(b.AUTHOR_ID))
+      .where(a.YEAR_OF_BIRTH.greaterThan(1920)
+      .and(a.FIRST_NAME.equal("Paulo")))
+      .orderBy(b.TITLE);]]></java></code-pair>
+								
+									<p>
+										As you can see in the above example, calling as() on generated tables returns an object of the same type as the table. This means that the resulting object can be used to dereference fields from the aliased table. This is quite powerful in terms of having your Java compiler check the syntax of your SQL statements. If you remove a column from a table, dereferencing that column from that table alias will cause compilation errors.
+									</p>
+									
+									<h3>Dereferencing columns from other table expressions</h3>
+									<p>
+										TODO document this
+									</p>
+								</content>
+							</section>
+
 							<section id="joined-tables">
 								<title>Joined tables</title>
 								<content></content>
@@ -1748,8 +1849,21 @@ SELECT * FROM author ORDER BY id DESC;]]></sql>
 							</section>
 
 							<section id="pivot-tables">
-								<title>PIVOT tables</title>
-								<content></content>
+								<title>The Oracle 11g PIVOT clause</title>
+								<content>
+									<h3>PIVOT (aggregate FOR column IN (columns))</h3>
+									<p>
+										If you are closely coupling your application to an Oracle database, you can take advantage of some Oracle-specific features, such as the PIVOT clause, used for statistical analyses. The formal syntax definition is as follows:
+									</p>
+									
+<sql>-- SELECT ..
+     FROM table PIVOT (aggregateFunction [, aggregateFunction] FOR column IN (expression [, expression]))
+--  WHERE ..</sql>
+		
+									<p>
+										The PIVOT clause is available from the <reference class="org.jooq.Table"/> type, as pivoting is done directly on a table. Currently, only Oracle's PIVOT clause is supported. Support for SQL Server's slightly different PIVOT clause will be added later. Also, jOOQ may simulate PIVOT for other dialects in the future.
+									</p>
+								</content>
 							</section>
 
 							<section id="relational-division">
@@ -1805,7 +1919,31 @@ WHERE NOT EXISTS (
 
 							<section id="array-and-cursor-unnesting">
 								<title>Array and cursor unnesting</title>
-								<content></content>
+								<content>
+									<h3>ARRAY and CURSOR types in more advanced databases</h3>
+									<p>
+										The SQL standard specifies how SQL databases should implement ARRAY and TABLE types, as well as CURSOR types. Put simply, a CURSOR is a pointer to any materialised <reference id="table-expressions" title="table expression"/>. Depending on the cursor's features, this table expression can be scrolled through in both directions, records can be locked, updated, removed, inserted, etc. Often, CURSOR types contain tuples, whereas ARRAY and TABLE types contain simple scalar values, although that is not a requirement
+									</p>
+									
+									<p>
+										ARRAY types in SQL are similar to Java's array types. They contain a "component type" or "element type" and a "dimension". This sort of ARRAY type is implemented in H2, HSQLDB and Postgres and supported by jOOQ as such. Oracle uses strongly-typed arrays, which means that an ARRAY type (VARRAY or TABLE type) has a name and possibly a maximum capacity associated with it.
+									</p>
+
+									<h3>Unnesting array and cursor types</h3>									
+									<p>
+										The real power of these types become more obvious when you fetch them from <reference id="stored-procedures" title="stored procedures"/> to unnest them as <reference id="table-expressions" title="table expressions"/> and use them in your <reference id="from-clause" title="FROM clause"/>. An example is given here, where Oracle's DBMS_XPLAN package is used to fetch a cursor containing data about the most recent execution plan:
+									</p>									
+
+<code-pair>
+	<sql><![CDATA[SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(null, null, 'ALLSTATS'));]]></sql>
+	<java><![CDATA[create.select()
+      .from(table(DbmsXplan.displayCursor(null, null, "ALLSTATS"));]]></java>
+</code-pair>
+									<p>
+										Note, in order to access the DbmsXplan package, you can use the <reference id="code-generation" title="code generator"/> to generate Oracle's SYS schema.
+									</p>
+								</content>
 							</section>
 
 							<section id="dual">
@@ -1892,11 +2030,31 @@ Field<String> field4 = listAgg(BOOK.TITLE)
 						<sections>
 							<section id="table-columns">
 								<title>Table columns</title>
-								<content></content>
+								<content>
+									<h3>Table columns</h3>
+									<p>
+										Table columns are the most simple implementations of a <reference id="column-expressions" title="column expression"/>. They are mainly produced by jOOQ's <reference id="code-generation" title="code generator"/> and can be dereferenced from the generated tables. This manual is full of examples involving table columns. Another example is given in this query:
+									</p>
+
+<code-pair>
+	<sql><![CDATA[SELECT BOOK.ID, BOOK.TITLE
+FROM BOOK
+WHERE BOOK.TITLE LIKE '%SQL%'
+ORDER BY BOOK.TITLE]]></sql>
+	<java><![CDATA[create.select(BOOK.ID, BOOK.TITLE)
+	  .from(BOOK)
+	  .where(BOOK.TITLE.like("%SQL%"))
+	  .orderBy(BOOK.TITLE);]]></java>
+</code-pair>
+
+									<p>
+										Table columns implement a more specific interface called <reference class="org.jooq.TableField"/>, which is parameterised with its associated &lt;R extends Record&gt; record type.
+									</p>
+								</content>
 							</section>
 
-							<section id="aliasing">
-								<title>Aliasing</title>
+							<section id="aliased-columns">
+								<title>Aliased columns</title>
 								<content></content>
 							</section>
 
@@ -1913,7 +2071,7 @@ Field<String> field4 = listAgg(BOOK.TITLE)
 									
 <sql>-- Let's say, your Postgres column LAST_NAME was VARCHAR(30)
 -- Then you could do this:
-SELECT CAST(T_AUTHOR.LAST_NAME AS TEXT) FROM DUAL</sql>
+SELECT CAST(AUTHOR.LAST_NAME AS TEXT) FROM DUAL</sql>
 
 									<p>
 										in jOOQ, you can write something like that:
@@ -2017,19 +2175,152 @@ create.select(concat("A", "B", "C"));
 								</content>
 							</section>
 
+							<section id="general-functions">
+								<title>General functions</title>
+								<content>
+									<h3>General functions supported by jOOQ</h3>
+									<p>
+										There are a variety of general functions supported by jOOQ As discussed in the chapter about <reference id="sql-dialects" title="SQL dialects"/> functions are mostly simulated in your database, in case they are not natively supported.
+									</p>
+									<p>
+										This is a list of general functions supported by jOOQ's <reference id="factory" title="Factory"/>:
+									</p>
+									<ul>
+										<li><strong>COALESCE</strong>: Get the first non-null value in a list of arguments.</li>
+										<li><strong>NULLIF</strong>: Return NULL if both arguments are equal, or the first argument, otherwise.</li>
+										<li><strong>NVL</strong>: Get the first non-null value among two arguments.</li>
+										<li><strong>NVL2</strong>: Get the second argument if the first is null, or the third argument, otherwise.</li>
+									</ul>
+																
+									<p>
+										Please refer to the <reference class="org.jooq.impl.Factory" title="Factory Javadoc"/> for more details.
+									</p>
+								</content>
+							</section>
+							
 							<section id="numeric-functions">
 								<title>Numeric functions</title>
-								<content></content>
+								<content>
+									<h3>Numeric functions supported by jOOQ</h3>
+									<p>
+										Math can be done efficiently in the database before returning results to your Java application. In addition to the <reference id="arithmetic-expressions" title="arithmetic expressions" /> discussed previously, jOOQ also supports a variety of numeric functions. As discussed in the chapter about <reference id="sql-dialects" title="SQL dialects"/> numeric functions (as any function type) are mostly simulated in your database, in case they are not natively supported.
+									</p>
+									<p>
+										This is a list of numeric functions supported by jOOQ's <reference id="factory" title="Factory"/>:
+									</p>
+									
+									<ul>
+										<li><strong>ABS</strong>: Get the absolute value of a value.</li>
+										<li><strong>ACOS</strong>: Get the arc cosine of a value.</li>
+										<li><strong>ASIN</strong>: Get the arc sine of a value.</li>
+										<li><strong>ATAN</strong>: Get the arc tangent of a value.</li>
+										<li><strong>ATAN2</strong>: Get the atan2 function of two values.</li>
+										<li><strong>CEIL</strong>: Get the smalles integer value larger than a given numeric value.</li>
+										<li><strong>COS</strong>: Get the cosine of a value.</li>
+										<li><strong>COSH</strong>: Get the hyperbolic cosine of a value.</li>
+										<li><strong>COT</strong>: Get the cotangent of a value.</li>
+										<li><strong>COTH</strong>: Get the hyperbolic cotangent of a value.</li>
+										<li><strong>DEG</strong>: Transform radians into degrees.</li>
+										<li><strong>EXP</strong>: Calculate e^value.</li>
+										<li><strong>FLOOR</strong>: Get the largest integer value smaller than a given numeric value.</li>
+										<li><strong>GREATEST</strong>: Finds the greatest among all argument values (can also be used with non-numeric values).</li>
+										<li><strong>LEAST</strong>: Finds the least among all argument values (can also be used with non-numeric values).</li>
+										<li><strong>LN</strong>: Get the natural logarithm of a value.</li>
+										<li><strong>LOG</strong>: Get the logarithm of a value given a base.</li>
+										<li><strong>POWER</strong>: Calculate value^exponent.</li>
+										<li><strong>RAD</strong>: Transform degrees into radians.</li>
+										<li><strong>ROUND</strong>: Rounds a value to the nearest integer.</li>
+										<li><strong>SIGN</strong>: Get the sign of a value (-1, 0, 1).</li>
+										<li><strong>SIN</strong>: Get the sine of a value.</li>
+										<li><strong>SINH</strong>: Get the hyperbolic sine of a value.</li>
+										<li><strong>SQRT</strong>: Calculate the square root of a value.</li>
+										<li><strong>TAN</strong>: Get the tangent of a value.</li>
+										<li><strong>TANH</strong>: Get the hyperbolic tangent of a value.</li>
+										<li><strong>TRUNC</strong>: Truncate the decimals off a given value.</li>
+									</ul>
+									
+									<p>
+										Please refer to the <reference class="org.jooq.impl.Factory" title="Factory Javadoc"/> for more details.
+									</p>
+								</content>
 							</section>
 
 							<section id="bitwise-functions">
 								<title>Bitwise functions</title>
-								<content></content>
+								<content>
+									<h3>Bitwise functions supported by jOOQ</h3>
+									<p>
+										Interestingly, bitwise functions and bitwise arithmetic is not very popular among SQL databases. Most databases only support a few bitwise operations, while others ship with the full set of operators. jOOQ's API includes most bitwise operations as listed below. In order to avoid ambiguities with <reference id="conditional-expressions" title="conditional operators"/>, all bitwise functions are prefixed with "bit"
+									</p>
+									<ul>
+										<li><strong>BIT_COUNT</strong>: Count the number of bits set to 1 in a number</li>
+										<li><strong>BIT_AND</strong>: Set only those bits that are set in two numbers</li>
+										<li><strong>BIT_OR</strong>: Set all bits that are set in at least one number</li>
+										<li><strong>BIT_NAND</strong>: Set only those bits that are set in two numbers, and inverse the result</li>
+										<li><strong>BIT_NOR</strong>: Set all bits that are set in at least one number, and inverse the result</li>
+										<li><strong>BIT_NOT</strong>: Inverse the bits in a number</li>
+										<li><strong>BIT_XOR</strong>: Set all bits that are set in at exactly one number</li>
+										<li><strong>BIT_XNOR</strong>: Set all bits that are set in at exactly one number, and inverse the result</li>
+										<li><strong>SHL</strong>: Shift bits to the left</li>
+										<li><strong>SHR</strong>: Shift bits to the right</li>
+									</ul>
+									
+									<h3>Some background about bitwise operation simulation</h3>
+									<p>
+										As stated before, not all databases support all of these bitwise operations. jOOQ simulates them wherever this is possible. More details can be seen in this blog post: <br/>
+										<a href="http://blog.jooq.org/2011/10/30/the-comprehensive-sql-bitwise-operations-compatibility-list/">http://blog.jooq.org/2011/10/30/the-comprehensive-sql-bitwise-operations-compatibility-list/</a>
+									</p>
+									
+								</content>
 							</section>
 
 							<section id="string-functions">
 								<title>String functions</title>
-								<content></content>
+								<content>
+									<h3>String functions supported by jOOQ</h3>
+									<p>
+										String formatting can be done efficiently in the database before returning results to your Java application. As discussed in the chapter about <reference id="sql-dialects" title="SQL dialects"/> string functions (as any function type) are mostly simulated in your database, in case they are not natively supported.
+									</p>
+									<p>
+										This is a list of numeric functions supported by jOOQ's <reference id="factory" title="Factory"/>:
+									</p>
+									
+									<ul>
+										<li><strong>ASCII</strong>: Get the ASCII code of a character.</li>
+										<li><strong>BIT_LENGTH</strong>: Get the length of a string in bits.</li>
+										<li><strong>CHAR_LENGTH</strong>: Get the length of a string in characters.</li>
+										<li><strong>CONCAT</strong>: Concatenate several strings.</li>
+										<li><strong>ESCAPE</strong>: Escape a string for use with the <reference id="like-predicate" title="LIKE predicate"/>.</li>
+										<li><strong>LENGTH</strong>: Get the length of a string.</li>
+										<li><strong>LOWER</strong>: Get a string in lower case letters.</li>
+										<li><strong>LPAD</strong>: Pad a string on the left side.</li>
+										<li><strong>LTRIM</strong>: Trim a string on the left side.</li>
+										<li><strong>OCTET_LENGTH</strong>: Get the length of a string in octets.</li>
+										<li><strong>POSITION</strong>: Find a string within another string.</li>
+										<li><strong>REPEAT</strong>: Repeat a string a given number of times.</li>
+										<li><strong>REPLACE</strong>: Replace a string within another string.</li>
+										<li><strong>RPAD</strong>: Pad a string on the right side.</li>
+										<li><strong>RTRIM</strong>: Trim a string on the right side.</li>
+										<li><strong>SUBSTRING</strong>: Get a substring of a string.</li>
+										<li><strong>TRIM</strong>: Trim a string on both sides.</li>
+										<li><strong>UPPER</strong>: Get a string in upper case letters.</li>
+									</ul>
+									
+									<p>
+										Please refer to the <reference class="org.jooq.impl.Factory" title="Factory Javadoc"/> for more details.
+									</p>
+									
+									<h3>Regular expressions, REGEXP, REGEXP_LIKE, etc.</h3>
+									<p>
+										Various databases have some means of searching through columns using regular expressions if the <reference id="like-predicate" title="LIKE predicate"/> does not provide sufficient pattern matching power. While there are many different functions and operators in the various databases, jOOQ settled for the SQL:2008 standard REGEX_LIKE operator. Being an operator (and not a function), you should use the corresponding method on <reference class="org.jooq.Field"/>:
+									</p>
+									
+<java><![CDATA[create.selectFrom(BOOK).where(TITLE.likeRegex("^.*SQL.*$"));]]></java>
+
+									<p>
+										Note that the SQL standard specifies that patterns should follow the XQuery standards. In the real world, the POSIX regular expression standard is the most used one, some use Java regular expressions, and only a few ones use Perl regular expressions. jOOQ does not make any assumptions about regular expression syntax. For cross-database compatibility, please read the relevant databaes manuals carefully, to learn about the appropriate syntax. Please refer to the <reference class="org.jooq.impl.Factory" title="Factory Javadoc"/> for more details.
+									</p>
+								</content>
 								<!-- don't forget regex here! -->
 							</section>
 
@@ -2465,25 +2756,25 @@ GROUP BY A, B, C WITH ROLLUP
 									</p>
 
 <code-pair>
-<sql><![CDATA[CASE WHEN T_AUTHOR.FIRST_NAME = 'Paulo'  THEN 'brazilian'
-     WHEN T_AUTHOR.FIRST_NAME = 'George' THEN 'english'
-                                         ELSE 'unknown'
+<sql><![CDATA[CASE WHEN AUTHOR.FIRST_NAME = 'Paulo'  THEN 'brazilian'
+     WHEN AUTHOR.FIRST_NAME = 'George' THEN 'english'
+                                       ELSE 'unknown'
 END
 
 -- OR:
 
-CASE T_AUTHOR.FIRST_NAME WHEN 'Paulo'  THEN 'brazilian'
-                         WHEN 'George' THEN 'english'
-                                       ELSE 'unknown'
+CASE AUTHOR.FIRST_NAME WHEN 'Paulo'  THEN 'brazilian'
+                       WHEN 'George' THEN 'english'
+                                     ELSE 'unknown'
 END]]></sql>
 <java><![CDATA[create.decode()
-      .when(T_AUTHOR.FIRST_NAME.equal("Paulo"), "brazilian")
-      .when(T_AUTHOR.FIRST_NAME.equal("George"), "english")
+      .when(AUTHOR.FIRST_NAME.equal("Paulo"), "brazilian")
+      .when(AUTHOR.FIRST_NAME.equal("George"), "english")
       .otherwise("unknown");
 
 // OR:
 
-create.decode().value(T_AUTHOR.FIRST_NAME)
+create.decode().value(AUTHOR.FIRST_NAME)
                .when("Paulo", "brazilian")
                .when("George", "english")
                .otherwise("unknown");]]></java>
@@ -2497,8 +2788,8 @@ create.decode().value(T_AUTHOR.FIRST_NAME)
 									A CASE expression can be used anywhere where you can place a <reference id="column-expressions" title="column expression (or Field)"/>. For instance, you can SELECT the above expression, if you're selecting from AUTHOR:
 							 	</p>
 
-<sql>SELECT T_AUTHOR.FIRST_NAME, [... CASE EXPR ...] AS nationality
-  FROM T_AUTHOR</sql>
+<sql>SELECT AUTHOR.FIRST_NAME, [... CASE EXPR ...] AS nationality
+  FROM AUTHOR</sql>
 
 								<h3>The Oracle DECODE() function</h3>
 								<p>
@@ -2512,9 +2803,9 @@ DECODE(FIRST_NAME, 'Paulo', 'brazilian',
                    'unknown');
 
 -- Other SQL dialects
-CASE T_AUTHOR.FIRST_NAME WHEN 'Paulo'  THEN 'brazilian'
-                         WHEN 'George' THEN 'english'
-                                       ELSE 'unknown'
+CASE AUTHOR.FIRST_NAME WHEN 'Paulo'  THEN 'brazilian'
+                       WHEN 'George' THEN 'english'
+                                     ELSE 'unknown'
 END]]></sql>
 <java><![CDATA[
 
@@ -2523,7 +2814,7 @@ END]]></sql>
 
 // Use the Oracle-style DECODE() function with jOOQ.
 // Note, that you will not be able to rely on type-safety
-create.decode(T_AUTHOR.FIRST_NAME,
+create.decode(AUTHOR.FIRST_NAME,
     "Paulo", "brazilian",
     "George", "english",
     "unknown");]]></java>
@@ -2610,6 +2901,7 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 						    <section id="like-predicate">
 							    <title>LIKE predicate</title>
 								<content></content>
+								<!-- Mention jOOQ's convenience predicates, here, such as startsWith, endsWith, etc. -->
 							</section>
 
 						    <section id="in-predicate">
@@ -2637,7 +2929,7 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 								A DSL is a nice thing to have, it feels "fluent" and "natural", especially if it models a well-known language, such as SQL. But a DSL is always expressed in a host language (Java in this case), which was not made for exactly the same purposes as its hosted DSL. If it were, then jOOQ would be implemented on a compiler-level, similar to LINQ in .NET. But it's not, and so, the DSL is limited by language constraints of its host language. We have seen many functionalities where the DSL becomes a bit verbose. This can be especially true for:
 							</p>
 							<ul>
-								<li><reference id="aliasing" title="aliasing"/></li>
+								<li><reference id="aliased-columns" title="aliasing"/></li>
 								<li><reference id="nested-selects" title="nested selects"/></li>
 								<li><reference id="arithmetic-expressions" title="arithmetic expressions"/></li>
 								<li><reference id="cast-expressions" title="casting"/></li>
@@ -2746,8 +3038,8 @@ Field<Integer> COUNT2 = create.field("count(*) y", Integer.class);
 create.select(LAST_NAME, COUNT1, COUNT2)
 
        // Use plain SQL as aliased tables (be aware of syntax!)
-      .from("t_author a")
-      .join("t_book b")
+      .from("author a")
+      .join("book b")
 
        // Use plain SQL for conditions both in JOIN and WHERE clauses
       .on("a.id = b.author_id")

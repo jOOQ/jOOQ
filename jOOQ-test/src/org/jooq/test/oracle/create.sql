@@ -1348,9 +1348,6 @@ END p377;
 /
 
 CREATE OR REPLACE PACKAGE library AS
-	FUNCTION SECOND_MAX (input NUMBER) RETURN NUMBER
-      AGGREGATE USING U_SECOND_MAX;
-	
 	PROCEDURE pkg_p_author_exists (author_name VARCHAR2, result OUT NUMBER);
 	PROCEDURE pkg_p_author_exists (author_name VARCHAR2, result OUT NUMBER, unused IN OUT NUMBER);
 	FUNCTION pkg_f_author_exists (author_name VARCHAR2) RETURN NUMBER;

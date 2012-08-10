@@ -10,68 +10,12 @@ package org.jooq.test.oracle.generatedclasses.test.packages;
  */
 public final class Library extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -1965855288;
+	private static final long serialVersionUID = 1264882467;
 
 	/**
 	 * The singleton instance of TEST.LIBRARY
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.packages.Library LIBRARY = new org.jooq.test.oracle.generatedclasses.test.packages.Library();
-
-	/**
-	 * Get TEST.LIBRARY.SECOND_MAX as a field
-	 *
-	 * @param input
-	 */
-	public static org.jooq.AggregateFunction<java.math.BigDecimal> secondMax(java.lang.Number input) {
-		org.jooq.test.oracle.generatedclasses.test.packages.library.SecondMax f = new org.jooq.test.oracle.generatedclasses.test.packages.library.SecondMax();
-		f.setInput(input);
-
-		return f.asAggregateFunction();
-	}
-
-	/**
-	 * Get TEST.LIBRARY.SECOND_MAX as a field
-	 *
-	 * @param input
-	 */
-	public static org.jooq.AggregateFunction<java.math.BigDecimal> secondMax(org.jooq.Field<? extends java.lang.Number> input) {
-		org.jooq.test.oracle.generatedclasses.test.packages.library.SecondMax f = new org.jooq.test.oracle.generatedclasses.test.packages.library.SecondMax();
-		f.setInput(input);
-
-		return f.asAggregateFunction();
-	}
-
-	/**
-	 * Call TEST.LIBRARY.PKG_P_AUTHOR_EXISTS
-	 *
-	 * @param authorName IN parameter
-	 * @param result OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
-	 */
-	public static java.math.BigDecimal pkgPAuthorExists1(org.jooq.Configuration configuration, java.lang.String authorName) {
-		org.jooq.test.oracle.generatedclasses.test.packages.library.PkgPAuthorExists1 p = new org.jooq.test.oracle.generatedclasses.test.packages.library.PkgPAuthorExists1();
-		p.setAuthorName(authorName);
-
-		p.execute(configuration);
-		return p.getResult();
-	}
-
-	/**
-	 * Call TEST.LIBRARY.PKG_P_AUTHOR_EXISTS
-	 *
-	 * @param authorName IN parameter
-	 * @param result OUT parameter
-	 * @param unused IN OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
-	 */
-	public static org.jooq.test.oracle.generatedclasses.test.packages.library.PkgPAuthorExists2 pkgPAuthorExists2(org.jooq.Configuration configuration, java.lang.String authorName, java.lang.Number unused) {
-		org.jooq.test.oracle.generatedclasses.test.packages.library.PkgPAuthorExists2 p = new org.jooq.test.oracle.generatedclasses.test.packages.library.PkgPAuthorExists2();
-		p.setAuthorName(authorName);
-		p.setUnused(unused);
-
-		p.execute(configuration);
-		return p;
-	}
 
 	/**
 	 * Call TEST.LIBRARY.PKG_F_AUTHOR_EXISTS
@@ -190,6 +134,38 @@ public final class Library extends org.jooq.impl.PackageImpl {
 		org.jooq.test.oracle.generatedclasses.test.packages.library.PkgF378 p = new org.jooq.test.oracle.generatedclasses.test.packages.library.PkgF378();
 		p.setI(i);
 		p.setIo(io);
+
+		p.execute(configuration);
+		return p;
+	}
+
+	/**
+	 * Call TEST.LIBRARY.PKG_P_AUTHOR_EXISTS
+	 *
+	 * @param authorName IN parameter
+	 * @param result OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.math.BigDecimal pkgPAuthorExists1(org.jooq.Configuration configuration, java.lang.String authorName) {
+		org.jooq.test.oracle.generatedclasses.test.packages.library.PkgPAuthorExists1 p = new org.jooq.test.oracle.generatedclasses.test.packages.library.PkgPAuthorExists1();
+		p.setAuthorName(authorName);
+
+		p.execute(configuration);
+		return p.getResult();
+	}
+
+	/**
+	 * Call TEST.LIBRARY.PKG_P_AUTHOR_EXISTS
+	 *
+	 * @param authorName IN parameter
+	 * @param result OUT parameter
+	 * @param unused IN OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.test.packages.library.PkgPAuthorExists2 pkgPAuthorExists2(org.jooq.Configuration configuration, java.lang.String authorName, java.lang.Number unused) {
+		org.jooq.test.oracle.generatedclasses.test.packages.library.PkgPAuthorExists2 p = new org.jooq.test.oracle.generatedclasses.test.packages.library.PkgPAuthorExists2();
+		p.setAuthorName(authorName);
+		p.setUnused(unused);
 
 		p.execute(configuration);
 		return p;

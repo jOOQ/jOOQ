@@ -332,22 +332,26 @@ public class OracleDatabase extends AbstractDatabase {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
         for (Record record : create().select(
-                    ALL_PROCEDURES.OWNER,
-                    ALL_PROCEDURES.OBJECT_NAME,
-                    ALL_PROCEDURES.OBJECT_ID,
+                    ALL_OBJECTS.OWNER,
+                    ALL_OBJECTS.OBJECT_NAME,
+                    ALL_OBJECTS.OBJECT_ID,
                     ALL_PROCEDURES.AGGREGATE)
-                .from(ALL_PROCEDURES)
-                .where(ALL_PROCEDURES.OWNER.upper().in(getInputSchemata())
-                .and(ALL_PROCEDURES.OBJECT_TYPE.in("FUNCTION", "PROCEDURE")))
+                .from(ALL_OBJECTS)
+                .leftOuterJoin(ALL_PROCEDURES)
+                    .on(ALL_OBJECTS.OWNER.equal(ALL_PROCEDURES.OWNER))
+                    .and(ALL_OBJECTS.OBJECT_TYPE.equal(ALL_PROCEDURES.OBJECT_TYPE))
+                    .and(ALL_OBJECTS.OBJECT_NAME.equal(ALL_PROCEDURES.OBJECT_NAME))
+                .where(ALL_OBJECTS.OWNER.upper().in(getInputSchemata())
+                    .and(ALL_OBJECTS.OBJECT_TYPE.in("FUNCTION", "PROCEDURE")))
                 .orderBy(
-                    ALL_PROCEDURES.OWNER,
-                    ALL_PROCEDURES.OBJECT_NAME,
-                    ALL_PROCEDURES.OBJECT_ID)
+                    ALL_OBJECTS.OWNER,
+                    ALL_OBJECTS.OBJECT_NAME,
+                    ALL_OBJECTS.OBJECT_ID)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(ALL_PROCEDURES.OWNER));
-            String objectName = record.getValue(ALL_PROCEDURES.OBJECT_NAME);
-            BigDecimal objectId = record.getValue(ALL_PROCEDURES.OBJECT_ID);
+            SchemaDefinition schema = getSchema(record.getValue(ALL_OBJECTS.OWNER));
+            String objectName = record.getValue(ALL_OBJECTS.OBJECT_NAME);
+            BigDecimal objectId = record.getValue(ALL_OBJECTS.OBJECT_ID);
             boolean aggregate = record.getValue(ALL_PROCEDURES.AGGREGATE, boolean.class);
 
             result.add(new OracleRoutineDefinition(schema, null, objectName, "", objectId, null, aggregate));

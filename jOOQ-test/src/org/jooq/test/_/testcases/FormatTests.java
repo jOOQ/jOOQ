@@ -154,6 +154,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(asList("1", "2", "a", null), asList(result1.get(1).intoArray()));
         assertEquals(asList("1", "2", "a", "b"), asList(result1.get(2).intoArray()));
 
+        // [#1688] Check correct behaviour when passing array instances, not classes
+        String[] array1a = new String[2];
+        String[] array2a = new String[3];
+        String[] array3a = new String[4];
+
+        String[] array1b = result1.get(0).into(array1a);
+        String[] array2b = result1.get(1).into(array2a);
+        String[] array3b = result1.get(2).into(array3a);
+
+        assertEquals(asList("1", "", "a", "b"), asList(array1b));
+        assertEquals(asList("1", "2", "a", null), asList(array2b));
+        assertEquals(asList("1", "2", "a", "b"), asList(array3b));
+
+        assertTrue(array1a != array1b);
+        assertTrue(array2a != array2b);
+        assertTrue(array3a == array3b);
+
         // Factory.fetchFromCSV() should be the inverse of Result.formatCSV()
         // ... apart from the loss of type information
         String csv = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch().formatCSV();

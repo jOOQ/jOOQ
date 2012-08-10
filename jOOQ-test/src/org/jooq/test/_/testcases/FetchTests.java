@@ -421,38 +421,52 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             assertEquals(calendars.get(index).cal1.getTime().getTime(), calendars.get(index).primitiveLong1);
         }
 
-        A author = create().newRecord(TAuthor());
-        DatesWithAnnotations dates = author.into(DatesWithAnnotations.class);
+        A author1 = create().newRecord(TAuthor());
+        A author2 = create().newRecord(TAuthor());
+        author2.setValue(TAuthor_DATE_OF_BIRTH(), new Date(1L));
 
-        assertNull(dates.cal1);
-        assertNull(dates.cal2);
-        assertNull(dates.cal3);
-        assertNull(dates.date1);
-        assertNull(dates.date2);
-        assertNull(dates.date3);
-        assertNull(dates.long1);
-        assertNull(dates.long2);
-        assertNull(dates.long3);
-        assertEquals(0L, dates.primitiveLong1);
-        assertEquals(0L, dates.primitiveLong2);
-        assertEquals(0L, dates.primitiveLong3);
+        DatesWithAnnotations dates1 = author1.into(DatesWithAnnotations.class);
+        DatesWithAnnotations dates2 = author2.into(DatesWithAnnotations.class);
 
-        author = create().newRecord(TAuthor());
-        author.setValue(TAuthor_DATE_OF_BIRTH(), new Date(1L));
-        dates = author.into(DatesWithAnnotations.class);
+        checkDatesWithAnnotations(dates1, dates2);
 
-        assertEquals(1L, dates.cal1.getTime().getTime());
-        assertEquals(1L, dates.cal2.getTime().getTime());
-        assertEquals(1L, dates.cal3.getTime().getTime());
-        assertEquals(1L, dates.date1.getTime());
-        assertEquals(1L, dates.date2.getTime());
-        assertEquals(1L, dates.date3.getTime());
-        assertEquals(1L, (long) dates.long1);
-        assertEquals(1L, (long) dates.long2);
-        assertEquals(1L, (long) dates.long3);
-        assertEquals(1L, dates.primitiveLong1);
-        assertEquals(1L, dates.primitiveLong2);
-        assertEquals(1L, dates.primitiveLong3);
+        // [#1688] Check both types of into() methods
+        DatesWithAnnotations dates3a = new DatesWithAnnotations();
+        DatesWithAnnotations dates4a = new DatesWithAnnotations();
+        DatesWithAnnotations dates3b = author1.into(dates3a);
+        DatesWithAnnotations dates4b = author2.into(dates4a);
+
+        assertTrue(dates3a == dates3b);
+        assertTrue(dates4a == dates4b);
+        checkDatesWithAnnotations(dates3b, dates4b);
+    }
+
+    private void checkDatesWithAnnotations(DatesWithAnnotations dates1, DatesWithAnnotations dates2) {
+        assertNull(dates1.cal1);
+        assertNull(dates1.cal2);
+        assertNull(dates1.cal3);
+        assertNull(dates1.date1);
+        assertNull(dates1.date2);
+        assertNull(dates1.date3);
+        assertNull(dates1.long1);
+        assertNull(dates1.long2);
+        assertNull(dates1.long3);
+        assertEquals(0L, dates1.primitiveLong1);
+        assertEquals(0L, dates1.primitiveLong2);
+        assertEquals(0L, dates1.primitiveLong3);
+
+        assertEquals(1L, dates2.cal1.getTime().getTime());
+        assertEquals(1L, dates2.cal2.getTime().getTime());
+        assertEquals(1L, dates2.cal3.getTime().getTime());
+        assertEquals(1L, dates2.date1.getTime());
+        assertEquals(1L, dates2.date2.getTime());
+        assertEquals(1L, dates2.date3.getTime());
+        assertEquals(1L, (long) dates2.long1);
+        assertEquals(1L, (long) dates2.long2);
+        assertEquals(1L, (long) dates2.long3);
+        assertEquals(1L, dates2.primitiveLong1);
+        assertEquals(1L, dates2.primitiveLong2);
+        assertEquals(1L, dates2.primitiveLong3);
     }
 
     @Test
@@ -684,25 +698,38 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         // [#933] Map values to char / Character
         A author1 = create().newRecord(TAuthor());
-        CharWithAnnotations c1 = author1.into(CharWithAnnotations.class);
-        assertEquals((char) 0, c1.id1);
-        assertEquals(null, c1.id2);
-        assertEquals((char) 0, c1.last1);
-        assertEquals(null, c1.last2);
 
-        author1.setValue(TAuthor_ID(), 1);
-        author1.setValue(TAuthor_LAST_NAME(), "a");
-        CharWithAnnotations c2 = author1.into(CharWithAnnotations.class);
-        assertEquals('1', c2.id1);
-        assertEquals('1', c2.id2.charValue());
-        assertEquals('a', c2.last1);
-        assertEquals('a', c2.last2.charValue());
+        // [#1688] Check both types of into() methods
+        for (CharWithAnnotations c1 : asList(
+                author1.into(CharWithAnnotations.class),
+                author1.into(new CharWithAnnotations()))) {
 
-        A author2 = create().newRecord(TAuthor(), c2);
-        assertEquals('1', author2.getValue(TAuthor_ID(), char.class).charValue());
-        assertEquals('1', author2.getValue(TAuthor_ID(), Character.class).charValue());
-        assertEquals('a', author2.getValue(TAuthor_LAST_NAME(), char.class).charValue());
-        assertEquals('a', author2.getValue(TAuthor_LAST_NAME(), Character.class).charValue());
+            assertEquals((char) 0, c1.id1);
+            assertEquals(null, c1.id2);
+            assertEquals((char) 0, c1.last1);
+            assertEquals(null, c1.last2);
+        }
+
+        A author2 = create().newRecord(TAuthor());
+        author2.setValue(TAuthor_ID(), 1);
+        author2.setValue(TAuthor_LAST_NAME(), "a");
+
+        // [#1688] Check both types of into() methods
+        for (CharWithAnnotations c2 : asList(
+                author2.into(CharWithAnnotations.class),
+                author2.into(new CharWithAnnotations()))) {
+
+            assertEquals('1', c2.id1);
+            assertEquals('1', c2.id2.charValue());
+            assertEquals('a', c2.last1);
+            assertEquals('a', c2.last2.charValue());
+
+            A author3 = create().newRecord(TAuthor(), c2);
+            assertEquals('1', author3.getValue(TAuthor_ID(), char.class).charValue());
+            assertEquals('1', author3.getValue(TAuthor_ID(), Character.class).charValue());
+            assertEquals('a', author3.getValue(TAuthor_LAST_NAME(), char.class).charValue());
+            assertEquals('a', author3.getValue(TAuthor_LAST_NAME(), Character.class).charValue());
+        }
 
         // [#934] Static members are not to be considered
         assertEquals(create().newRecord(TBook()), create().newRecord(TBook(), new StaticWithAnnotations()));

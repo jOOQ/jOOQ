@@ -612,18 +612,18 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <E> E into(E object) {
         if (object == null) {
             throw new NullPointerException("Cannot copy Record into null");
         }
 
-        @SuppressWarnings("unchecked")
         Class<E> type = (Class<E>) object.getClass();
 
         try {
             if (type.isArray()) {
-                return intoArray((Object[]) object, type.getComponentType());
+                return (E) intoArray((Object[]) object, type.getComponentType());
             }
             else {
                 return intoMutablePOJO(type, object);
@@ -648,19 +648,19 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
      * may make sense to supply <code>String[]</code>, <code>Integer[]</code>
      * etc.
      */
+    @SuppressWarnings("unchecked")
     private final <T> T intoArray(Class<? extends T> type) {
         int size = getFields().size();
         Class<?> componentType = type.getComponentType();
         Object[] result = (Object[]) Array.newInstance(componentType, size);
 
-        return intoArray(result, componentType);
+        return (T) intoArray(result, componentType);
     }
 
     /**
      * Convert this record into an array of a given component type.
      */
-    @SuppressWarnings("unchecked")
-    private final <T> T intoArray(Object[] result, Class<?> componentType) {
+    private final Object[] intoArray(Object[] result, Class<?> componentType) {
         int size = getFields().size();
 
         // Just as in Collection.toArray(Object[]), return a new array in case
@@ -673,7 +673,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
             result[i] = Convert.convert(getValue(i), componentType);
         }
 
-        return (T) result;
+        return result;
     }
 
     /**

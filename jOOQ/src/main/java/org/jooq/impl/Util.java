@@ -80,6 +80,7 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.LoggerListener;
@@ -189,12 +190,27 @@ final class Util {
             }
 
             // [#1684] TODO: Do not attach configuration if settings say no
-            result.attach(configuration);
+            if (attachRecords(configuration)) {
+                result.attach(configuration);
+            }
+
             return result;
         }
         catch (Exception e) {
             throw new IllegalStateException("Could not construct new record", e);
         }
+    }
+
+    private static boolean attachRecords(Configuration configuration) {
+        if (configuration != null) {
+            Settings settings = configuration.getSettings();
+
+            if (settings != null) {
+                return !FALSE.equals(settings.isAttachRecords());
+            }
+        }
+
+        return true;
     }
 
     /**

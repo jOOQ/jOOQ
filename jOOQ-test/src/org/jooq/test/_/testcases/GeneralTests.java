@@ -381,19 +381,43 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     @Test
     public void testAttachable() throws Exception {
         jOOQAbstractTest.reset = false;
-
         Factory create = create();
 
-        S store = create.newRecord(TBookStore());
-        assertNotNull(store);
+        S store1 = create.newRecord(TBookStore());
+        assertNotNull(store1);
 
-        store.setValue(TBookStore_NAME(), "Barnes and Noble");
-        assertEquals(1, store.store());
+        store1.setValue(TBookStore_NAME(), "Barnes and Noble");
+        assertEquals(1, store1.store());
 
-        store = create.newRecord(TBookStore());
-        store.setValue(TBookStore_NAME(), "Barnes and Noble");
-        store.attach(null);
+        S store2 = create.newRecord(TBookStore());
+        store2.setValue(TBookStore_NAME(), "Barnes and Noble");
+        store2.attach(null);
+        failStoreRefreshDelete(store2);
 
+        store2.attach(create);
+        store2.refresh();
+        assertEquals(1, store2.delete());
+        assertNull(create.fetchOne(TBookStore(), TBookStore_NAME().equal("Barnes and Noble")));
+
+        // [#1685] Create or fetch detached records
+        create = create(new Settings().withAttachRecords(false));
+
+        S store3 = create.newRecord(TBookStore());
+        store3.setValue(TBookStore_NAME(), "Barnes and Noble");
+        failStoreRefreshDelete(store3);
+        store3.attach(create);
+        assertEquals(1, store3.store());
+
+        S store4 = create.newRecord(TBookStore());
+        store4.setValue(TBookStore_NAME(), "Barnes and Noble");
+        failStoreRefreshDelete(store4);
+        store4.attach(create);
+        store4.refresh();
+        assertEquals(1, store4.delete());
+        assertNull(create.fetchOne(TBookStore(), TBookStore_NAME().equal("Barnes and Noble")));
+    }
+
+    private void failStoreRefreshDelete(S store) {
         try {
             store.store();
             fail();
@@ -411,11 +435,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             fail();
         }
         catch (DetachedException expected) {}
-
-        store.attach(create);
-        store.refresh();
-        assertEquals(1, store.delete());
-        assertNull(create.fetchOne(TBookStore(), TBookStore_NAME().equal("Barnes and Noble")));
     }
 
     @Test

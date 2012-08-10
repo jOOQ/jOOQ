@@ -1122,7 +1122,9 @@ public interface Record extends FieldProvider, Store<Object> {
     Object[] intoArray();
 
     /**
-     * Map resulting records onto a custom type. The mapping algorithm is this:
+     * Map resulting records onto a custom type.
+     * <p>
+     * The mapping algorithm is this:
      * <h3>If <code>type</code> is an array:</h3> The resulting array is of the
      * nature described in {@link #intoArray()}. Arrays more specific than
      * <code>Object[]</code> can be specified as well, e.g.
@@ -1197,6 +1199,22 @@ public interface Record extends FieldProvider, Store<Object> {
      * @see #from(Object)
      */
     <E> E into(Class<? extends E> type) throws MappingException;
+
+    /**
+     * Map resulting records onto a custom type.
+     * <p>
+     * This is the same as {@link #into(Class)}, except that no new object is
+     * instanciated as a result. Instead, you can provide your own custom POJO
+     * instance.
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @throws MappingException wrapping any reflection exception that might
+     *             have occurred while mapping records
+     * @throws NullPointerException if <code>object</code> is <code>null</code>
+     * @see #from(Object)
+     */
+    <E> E into(E object) throws MappingException;
 
     /**
      * Map resulting records onto a custom record type. The mapping algorithm is

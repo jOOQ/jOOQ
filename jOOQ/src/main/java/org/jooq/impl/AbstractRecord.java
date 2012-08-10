@@ -612,6 +612,35 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         }
     }
 
+    @Override
+    public final <E> E into(E object) {
+        if (object == null) {
+            throw new NullPointerException("Cannot copy Record into null");
+        }
+
+        @SuppressWarnings("unchecked")
+        Class<E> type = (Class<E>) object.getClass();
+
+        try {
+            if (type.isArray()) {
+                return intoArray((Object[]) object, type.getComponentType());
+            }
+            else {
+                return intoMutablePOJO(type, object);
+            }
+        }
+
+        // Pass MappingExceptions on to client code
+        catch (MappingException e) {
+            throw e;
+        }
+
+        // All other reflection exceptions are intercepted
+        catch (Exception e) {
+            throw new MappingException("An error ocurred when mapping record to " + type, e);
+        }
+    }
+
     /**
      * Convert this record into an array of a given type.
      * <p>
@@ -619,11 +648,26 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
      * may make sense to supply <code>String[]</code>, <code>Integer[]</code>
      * etc.
      */
-    @SuppressWarnings("unchecked")
     private final <T> T intoArray(Class<? extends T> type) {
         int size = getFields().size();
         Class<?> componentType = type.getComponentType();
         Object[] result = (Object[]) Array.newInstance(componentType, size);
+
+        return intoArray(result, componentType);
+    }
+
+    /**
+     * Convert this record into an array of a given component type.
+     */
+    @SuppressWarnings("unchecked")
+    private final <T> T intoArray(Object[] result, Class<?> componentType) {
+        int size = getFields().size();
+
+        // Just as in Collection.toArray(Object[]), return a new array in case
+        // sizes don't match
+        if (size > result.length) {
+            result = (Object[]) Array.newInstance(componentType, size);
+        }
 
         for (int i = 0; i < size; i++) {
             result[i] = Convert.convert(getValue(i), componentType);

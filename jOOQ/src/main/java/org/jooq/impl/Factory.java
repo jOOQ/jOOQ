@@ -165,6 +165,19 @@ import org.jooq.types.DayToSecond;
  * Condition condition = Factory.exists(new Factory().select(...));
  * </pre></code>
  * <p>
+ * <h3>Factory and static imports</h3> For increased fluency and readability of
+ * your jOOQ client code, it is recommended that you static import all methods
+ * from the <code>Factory</code>. For example: <code><pre>
+ * import static org.jooq.impl.Factory.*;
+ *
+ * public class Main {
+ *   public static void main(String[] args) {
+ *     new Factory(dialect).select(val("Hello"), inline("World"));
+ *     //              Factory.val ^^^           ^^^^^^ Factory.inline
+ *   }
+ * }
+ * </pre></code>
+ * <p>
  * A <code>Factory</code> holds a reference to a JDBC {@link Connection} and
  * operates upon that connection. This means, that a <code>Factory</code> is
  * <i>not</i> thread-safe, since a JDBC Connection is not thread-safe either.

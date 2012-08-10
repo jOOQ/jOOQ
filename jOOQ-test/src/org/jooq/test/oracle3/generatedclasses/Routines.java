@@ -595,6 +595,17 @@ public final class Routines {
 	}
 
 	/**
+	 * Call TEST.F377
+	 *
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static void call_F377(org.jooq.Configuration configuration) {
+		org.jooq.test.oracle3.generatedclasses.routines.F377 p = new org.jooq.test.oracle3.generatedclasses.routines.F377();
+
+		p.execute(configuration);
+	}
+
+	/**
 	 * Call TEST.F378
 	 *
 	 * @param RETURN_VALUE OUT parameter
@@ -952,6 +963,17 @@ public final class Routines {
 	public static void call_P1490(org.jooq.Configuration configuration, java.lang.Number value) {
 		org.jooq.test.oracle3.generatedclasses.routines.P1490 p = new org.jooq.test.oracle3.generatedclasses.routines.P1490();
 		p.setvalue(value);
+
+		p.execute(configuration);
+	}
+
+	/**
+	 * Call TEST.P377
+	 *
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static void call_P377(org.jooq.Configuration configuration) {
+		org.jooq.test.oracle3.generatedclasses.routines.P377 p = new org.jooq.test.oracle3.generatedclasses.routines.P377();
 
 		p.execute(configuration);
 	}

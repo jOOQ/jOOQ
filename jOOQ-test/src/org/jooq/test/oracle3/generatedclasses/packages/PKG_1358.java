@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.packages;
  */
 public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -604048591;
+	private static final long serialVersionUID = -1389765455;
 
 	/**
 	 * The singleton instance of TEST.PKG_1358
@@ -83,19 +83,6 @@ public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.la
 	}
 
 	/**
-	 * Call TEST.PKG_1358.P3
-	 *
-	 * @param K IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
-	 */
-	public static void call_P3(org.jooq.Configuration configuration, java.lang.String K) {
-		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P3 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P3();
-		p.setK(K);
-
-		p.execute(configuration);
-	}
-
-	/**
 	 * Call TEST.PKG_1358.P21
 	 *
 	 * @param I IN parameter
@@ -104,6 +91,19 @@ public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.la
 	public static void call_P21(org.jooq.Configuration configuration, java.lang.String I) {
 		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P21 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P21();
 		p.setI(I);
+
+		p.execute(configuration);
+	}
+
+	/**
+	 * Call TEST.PKG_1358.P3
+	 *
+	 * @param K IN parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static void call_P3(org.jooq.Configuration configuration, java.lang.String K) {
+		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P3 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P3();
+		p.setK(K);
 
 		p.execute(configuration);
 	}

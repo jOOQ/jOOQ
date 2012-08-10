@@ -10,27 +10,12 @@ package org.jooq.test.oracle2.generatedclasses.packages;
  */
 public final class DateAsTimestampPkg_976 extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = 2128797908;
+	private static final long serialVersionUID = 1637124186;
 
 	/**
 	 * The singleton instance of TEST.PKG_976
 	 */
 	public static final org.jooq.test.oracle2.generatedclasses.packages.DateAsTimestampPkg_976 DATE_AS_TIMESTAMP_PKG_976 = new org.jooq.test.oracle2.generatedclasses.packages.DateAsTimestampPkg_976();
-
-	/**
-	 * Call TEST.PKG_976.P_976
-	 *
-	 * @param dateAsTimestampi IN parameter
-	 * @param dateAsTimestampo OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
-	 */
-	public static java.sql.Timestamp p_976(org.jooq.Configuration configuration, java.sql.Timestamp dateAsTimestampi) {
-		org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampP_976 p = new org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampP_976();
-		p.setI(dateAsTimestampi);
-
-		p.execute(configuration);
-		return p.getO();
-	}
 
 	/**
 	 * Call TEST.PKG_976.F_976
@@ -68,6 +53,21 @@ public final class DateAsTimestampPkg_976 extends org.jooq.impl.PackageImpl {
 		f.setI(dateAsTimestampi);
 
 		return f.asField();
+	}
+
+	/**
+	 * Call TEST.PKG_976.P_976
+	 *
+	 * @param dateAsTimestampi IN parameter
+	 * @param dateAsTimestampo OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.sql.Timestamp p_976(org.jooq.Configuration configuration, java.sql.Timestamp dateAsTimestampi) {
+		org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampP_976 p = new org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampP_976();
+		p.setI(dateAsTimestampi);
+
+		p.execute(configuration);
+		return p.getO();
 	}
 	/**
 	 * No further instances allowed

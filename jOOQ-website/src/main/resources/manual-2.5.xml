@@ -2229,6 +2229,7 @@ create.select(concat("A", "B", "C"));
 										<li><strong>LOG</strong>: Get the logarithm of a value given a base.</li>
 										<li><strong>POWER</strong>: Calculate value^exponent.</li>
 										<li><strong>RAD</strong>: Transform degrees into radians.</li>
+										<li><strong>RAND</strong>: Get a random number.</li>
 										<li><strong>ROUND</strong>: Rounds a value to the nearest integer.</li>
 										<li><strong>SIGN</strong>: Get the sign of a value (-1, 0, 1).</li>
 										<li><strong>SIN</strong>: Get the sine of a value.</li>
@@ -2326,12 +2327,40 @@ create.select(concat("A", "B", "C"));
 
 							<section id="date-and-time-functions">
 								<title>Date and time functions</title>
-								<content></content>
+								<content>
+									<h3>Date and time functions supported by jOOQ</h3>
+									<p>
+										This is a list of date and time functions supported by jOOQ's <reference id="factory" title="Factory"/>:
+									</p>
+									
+									<ul>
+										<li><strong>CURRENT_DATE</strong>: Get current date as a DATE object.</li>
+										<li><strong>CURRENT_TIME</strong>: Get current time as a TIME object.</li>
+										<li><strong>CURRENT_TIMESTAMP</strong>: Get current date as a TIMESTAMP object.</li>
+										<li><strong>DATE_ADD</strong>: Add a number of days or an interval to a date.</li>
+										<li><strong>DATE_DIFF</strong>: Get the difference in days between two dates.</li>
+										<li><strong>TIMESTAMP_ADD</strong>: Add a number of days or an interval to a timestamp.</li>
+										<li><strong>TIMESTAMP_DIFF</strong>: Get the difference as an INTERVAL DAY TO SECOND between two dates.</li>
+									</ul>
+									
+									<h3>Intervals in jOOQ</h3>
+									<p>
+										jOOQ fills a gap opened by JDBC, which neglects an important SQL data type as defined by the SQL standards: INTERVAL types. See the manual's section about <reference id="data-types-intervals" title="INTERVAL data types"/> for more details.
+									</p>
+								</content>
 							</section>
 
 							<section id="system-functions">
 								<title>System functions</title>
-								<content></content>
+								<content>
+									<h3>System functions supported by jOOQ</h3>
+									<p>
+										This is a list of system functions supported by jOOQ's <reference id="factory" title="Factory"/>:
+									</p>
+									<ul>
+										<li><strong>CURRENT_USER</strong>: Get current user.</li>
+									</ul>
+								</content>
 							</section>
 
 							<section id="aggregate-functions">
@@ -3648,6 +3677,39 @@ Query query = error.query();]]></java>
 					<section id="reference-data-types">
 						<title>Data types</title>
 						<content></content>
+						
+						<sections>
+							<section id="data-types-intervals">
+								<title>INTERVAL data types</title>
+								<content>
+									<h3>Intervals in jOOQ</h3>
+									<p>
+										jOOQ fills a gap opened by JDBC, which neglects an important SQL data type as defined by the SQL standards: INTERVAL types. SQL knows two different types of intervals:
+									</p>
+									<ul>
+										<li><strong>YEAR TO MONTH</strong>: This interval type models a number of months and years</li>
+										<li><strong>DAY TO SECOND</strong>: This interval type models a number of days, hours, minutes, seconds and milliseconds</li>
+									</ul>
+									
+									<p>
+										Both interval types ship with a variant of subtypes, such as DAY TO HOUR, HOUR TO SECOND, etc. jOOQ models these types as Java objects extending <reference class="java.lang.Number"/>: <reference class="org.jooq.types.YearToMonth"/> (where Number.intValue() corresponds to the absolute number of months) and <reference class="org.jooq.types.DayToSecond"/> (where Number.intValue() corresponds to the absolute number of milliseconds)
+									</p>
+									
+									<h3>Interval arithmetic</h3>
+									<p>
+										In addition to the <reference id="arithmetic-expressions" title="arithmetic expressions"/> documented previously, interval arithmetic is also supported by jOOQ. Essentially, the following operations are supported:
+									</p>
+									<ul>
+										<li>DATETIME - DATETIME => INTERVAL</li>
+										<li>DATETIME + or - INTERVAL => DATETIME</li>
+										<li>INTERVAL + DATETIME => DATETIME</li>
+										<li>INTERVAL + - INTERVAL => INTERVAL</li>
+										<li>INTERVAL * or / NUMERIC => INTERVAL</li>
+										<li>NUMERIC * INTERVAL => INTERVAL</li>
+									</ul>
+								</content>
+							</section>
+						</sections>
 					</section>
 
 					<section id="reference-functions">

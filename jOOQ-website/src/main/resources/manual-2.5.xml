@@ -56,6 +56,41 @@
 		</content>
 
 		<sections>
+			<section id="preface">
+				<title>Preface</title>
+				<content>
+					<h3>jOOQ's reason of being</h3>
+					<p>
+						Java and SQL have come a long way. While SQL is an ancient yet established and well-understood technology, Java is becoming legacy too, with all the new flashy languages built on top of the JVM, Python, Ruby, .NET and various other options. Yet, there is still one ongoing fight with many solutions that end up frustrating their users in one way or another.
+					</p>
+					<p>
+						So far, there had been almost no database abstraction framework or library, that truly respected SQL as a first class citizen among languages. Most frameworks, including the industry standards JPA, EJB, Hibernate, JDO, Criteria Query, and many others try to hide SQL itself, minimising its scope to things called JPQL, HQL, JDOQL and various other inferior query languages
+					</p>
+					<p>
+						jOOQ is not like that. jOOQ claims that:
+					</p>
+
+<text>SQL was never meant to be abstracted. To be confined in the narrow boundaries of heavy mappers, hiding the beauty and simplicity of relational data. SQL was never meant to be object-oriented. SQL was never meant to be anything other than... SQL!</text>					
+
+					<h3>jOOQ compared with LINQ, SLICK</h3>
+					<p>
+						Other platforms incorporate ideas such as LINQ (with LINQ-to-SQL), or SLICK, to better integrate querying as a concept into their language. By querying, they understand querying of arbitrary targets, such as SQL, XML, Collections and other heterogeneous data stores. jOOQ claims that this is going the wrong way too.
+					</p>
+					<p>
+ 						In more advanced querying use-cases (more than simple CRUD and the occasional JOIN), people will want to profit from the expressivity of SQL the way SQL intends things to happen - and in a way that powerful databases such as Oracle or SQL Server are capable of heavily optimising queries due to their established query transformation capabilities in cost-based optimisers. Due to the relational nature of SQL, this is quite different from what high-level languages such as Scala (or Java) can offer.
+ 					</p>
+ 					<p>
+ 						It is very hard to formally express and validate joins and the ad-hoc table expression types they create. It gets even harder when you want support for more advanced table expressions, such as pivot tables, unnested cursors, or just arbitrary projections from nested selects. With a very strong typing model, these features will probably stay out of scope.
+ 					</p>
+ 					<p>
+ 						jOOQ explicitly rejects such strong typing models (Java is even less expressive than Scala in that field) in favour of SQL feature scope. The dialect-specific SQL elements are hard enough to generate from a common API.
+					</p>
+ 					<p>
+ 						So in essence, the decision of creating an API that looks like SQL or one that looks like Scala is a definite decision in favour of one or the other platform. While it will be easier to evolve SLICK in similar ways as LINQ (or QueryDSL in the Java world), SQL feature scope that clearly communicates its underlying intent will be very hard to add, later on (e.g. how would you model Oracle's partitioned outer join syntax? How would you model ANSI/ISO SQL:1999 grouping sets? How can you support scalar subquery caching? etc...).					
+					</p>
+				</content>
+			</section>
+			
 			<section id="getting-started">
 				<title>Getting started with jOOQ</title>
 				<content>
@@ -65,10 +100,70 @@
 					<section id="the-manual">
 					    <title>How to read this manual</title>
 						<content>
+							<h3>Conventions used in this manual</h3>
+							<p>
+								This section helps you correctly interpret this manual in the context of jOOQ.
+							</p>
+							
+							<h3>Code blocks</h3>
+							<p>
+								The following are code blocks:
+							</p>
+							
+<sql><![CDATA[-- A SQL code block
+SELECT 1 FROM DUAL]]></sql>
+
+<java><![CDATA[// A Java code block
+for (int i = 0; i < 10; i++);]]></java>
+
+<xml><![CDATA[<!-- An XML code block -->
+<hello what="world"></hello>]]></xml>		
+
+<config><![CDATA[# A config file code block
+org.jooq.property=value]]></config>		
+
+							<p>
+								These are useful to provide examples in code. Often, with jOOQ, it is even more useful to compare SQL code with its corresponding Java/jOOQ code. When this is done, the blocks are aligned side-by-side, with SQL usually being on the left, and Java on the right:
+							</p>					
+							
+<code-pair>
+<sql><![CDATA[-- In SQL:
+SELECT 1 FROM DUAL]]></sql>
+<java><![CDATA[// Using jOOQ:
+create.select()]]></java>
+</code-pair>
+
+							<h3>Code block contents</h3>
+							<p>
+								The contents of code blocks follow conventions, too. If nothing else is mentioned next to any given code block, then the following can be assumed:
+							</p>
+							
+							
+<sql><![CDATA[-- SQL assumptions
+------------------
+
+-- If nothing else is specified, assume that the Oracle syntax is used 
+SELECT 1 FROM DUAL]]></sql>
+							
+<java><![CDATA[// Java assumptions
+// ----------------
+ 
+// Whenever you see "standalone functions", assume they were static imported from org.jooq.impl.Factory 
+exists(); max(); min(); val(); inline(); // correspond to Factory.exists(); Factory.max(); Factory.min(); etc...
+
+// Whenever you see BOOK/Book, AUTHOR/Author and similar entities, assume they were (static) imported from the generated sample schema
+BOOK.TITLE, AUTHOR.LAST_NAME // correspond to com.example.generated.Tables.BOOK.TITLE, com.example.generated.Tables.BOOK.TITLE
+
+// Whenever you see "create" being used in Java code, assume that this is an instance of org.jooq.impl.Factory:
+Factory create = new Factory(SQLDialect.ORACLE, connection);]]></java>
+
+							<p>
+								See the manual's section about <reference id="sample-database" title="the sample database used in this manual"/> to learn more about the sample database.
+							</p>
 						</content>
 					</section>
 
-					<section id="the-sample-database">
+					<section id="sample-database">
 					    <title>The sample database used in this manual</title>
 						<content>
 							<h3>Example CREATE TABLE statements</h3>
@@ -3055,7 +3150,7 @@ orExists(Select<?>)       // Combine conditions with OR. Convenience for adding 
 orNot(Condition)          // Combine conditions with OR. Convenience for adding an inverted condition to the right-hand side
 orNotExists(Select<?>)    // Combine conditions with OR. Convenience for adding an inverted exists predicate to the right-hand side
 
-not()                     // Invert a condition]]></java>
+not()                     // Invert a condition (synonym for Factory.not(Condition)]]></java>
 								</content>
 							</section>
 
@@ -3346,12 +3441,93 @@ BOOK.TITLE.endsWith("abc")]]></java>
 
 						    <section id="in-predicate">
 							    <title>IN predicate</title>
-								<content></content>
+								<content>
+									<h3>IN predicate semi-joins and anti-joins</h3>
+									<p>
+										In SQL, apart from comparing a value against several values, the IN predicate can be used to create semi-joins or anti-joins. jOOQ knows the following methods on the <reference class="org.jooq.Field" /> interface, to construct such IN predicates:
+									</p>
+
+<java><![CDATA[in(Collection<T>)    // Construct an IN predicate from a collection of bind values
+in(T...)             // Construct an IN predicate from bind values
+in(Field<?>...)      // Construct an IN predicate from column expressions
+in(Select<?>)        // Construct an IN predicate from a subselect
+notIn(Collection<T>) // Construct a NOT IN predicate from a collection of bind values
+notIn(T...)          // Construct a NOT IN predicate from bind values
+notIn(Field<?>...)   // Construct a NOT IN predicate from column expressions
+notIn(Select<?>)     // Construct a NOT IN predicate from a subselect]]></java>
+
+									<p>
+										A sample IN predicate might look like this:
+									</p>
+									
+<code-pair>
+<sql><![CDATA[TITLE     IN ('Animal Farm', '1984')
+TITLE NOT IN ('Animal Farm', '1984')]]></sql>
+<java><![CDATA[BOOK.TITLE.in("Animal Farm", "1984")
+BOOK.TITLE.notIn("Animal Farm", "1984")]]></java>
+</code-pair>
+
+									
+									<h3>NOT IN and NULL values</h3>
+									<p>
+										Beware that you should probably not have any NULL values in the right hand side of a NOT IN predicate, as the whole expression would evaluate to NULL, which is rarely desired. This can be shown informally using the following reasoning:
+									</p>
+									
+<sql>-- The following conditional expressions are formally or informally equivalent
+A NOT IN (B, C)
+A != ANY(B, C)
+A != B AND A != C
+
+-- Substitute C for NULL, you'll get
+A NOT IN (B, NULL)   -- Substitute C for NULL
+A != B AND A != NULL -- From the above rules
+A != B AND NULL      -- [ANY] != NULL yields NULL
+NULL                 -- [ANY] AND NULL yields NULL</sql>
+
+									<p>
+										A good way to prevent this from happening is to use the <reference id="exists-predicate" title="EXISTS predicate"/> for anti-joins, which is NULL-value insensitive. See the manual's section about <reference id="conditional-expressions" title="conditional expressions"/> to see a boolean truth table.
+									</p>
+								</content>
 							</section>
 
 						    <section id="exists-predicate">
 							    <title>EXISTS predicate</title>
-								<content></content>
+								<content>
+									<h3>EXISTS predicate semi-joins and anti-joins</h3>
+									<p>
+										Slightly less intuitive, yet more powerful than the previously discussed <reference id="in-predicate" title="IN predicate"/> is the EXISTS predicate, that can be used to form semi-joins or anti-joins. With jOOQ, the EXISTS predicate can be formed in various ways:
+									</p>
+									<ul>
+										<li>From the <reference id="factory" title="Factory"/>, using static methods. This is probably the most used case</li>
+										<li>From a <reference id="conditional-expressions" title="conditional expression"/> using <reference id="boolean-operators" title="convenience methods attached to boolean operators"/></li>
+										<li>From a <reference id="select-statement" title="SELECT statement"/> using <reference id="where-clause" title="convenience methods attached to the where clause"/>, and from other clauses</li>
+									</ul>
+									
+									<p>
+										An example of an EXISTS predicate can be seen here:
+									</p>
+
+<code-pair>
+<sql><![CDATA[    EXISTS (SELECT 1 FROM BOOK 
+            WHERE AUTHOR_ID = 3)
+NOT EXISTS (SELECT 1 FROM BOOK 
+            WHERE AUTHOR_ID = 3)]]></sql>
+<java><![CDATA[   exists(create.selectOne().from(BOOK)
+                .where(BOOK.AUTHOR_ID.equal(3)));
+notExists(create.selectOne().from(BOOK)
+                .where(BOOK.AUTHOR_ID.equal(3)));]]></java>
+</code-pair>
+
+									<p>
+										Note that in SQL, the projection of a subselect in an EXISTS predicate is irrelevant. To help you write queries like the above, you can use jOOQ's selectZero() or selectOne() <reference id="factory" title="Factory"/> methods
+									</p>
+									
+									<h3>Performance of IN vs. EXISTS</h3>
+									<p>
+										In theory, the two types of predicates can perform equally well. If your database system ships with a sophisticated cost-based optimiser, it will be able to transform one predicate into the other, if you have all necessary constraints set (e.g. referential constraints, not null constraints). However, in reality, performance between the two might differ substantially. An interesting blog post investigating this topic on the MySQL database can be seen here:<br/>
+										<a href="http://blog.jooq.org/2012/07/27/not-in-vs-not-exists-vs-left-join-is-null-mysql/">http://blog.jooq.org/2012/07/27/not-in-vs-not-exists-vs-left-join-is-null-mysql/</a>
+									</p>
+								</content>
 							</section>
 
 						    <section id="array-predicates">

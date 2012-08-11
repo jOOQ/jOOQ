@@ -488,11 +488,11 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
-     * CASE WHEN [this] IS     NULL AND [value] IS     NULL THEN 0
-     *      WHEN [this] IS     NULL AND [value] IS NOT NULL THEN 1
-     *      WHEN [this] IS NOT NULL AND [value] IS     NULL THEN 1
-     *      WHEN [this] =               [value]             THEN 0
-     *      ELSE                                                 1
+     * CASE WHEN [this] IS     NULL AND [value] IS     NULL THEN FALSE
+     *      WHEN [this] IS     NULL AND [value] IS NOT NULL THEN TRUE
+     *      WHEN [this] IS NOT NULL AND [value] IS     NULL THEN TRUE
+     *      WHEN [this] =               [value]             THEN FALSE
+     *      ELSE                                                 TRUE
      * END
      * </pre></code> SQL: <code>this is distinct from value</code>
      */
@@ -505,11 +505,11 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
-     * CASE WHEN [this] IS     NULL AND [field] IS     NULL THEN 0
-     *      WHEN [this] IS     NULL AND [field] IS NOT NULL THEN 1
-     *      WHEN [this] IS NOT NULL AND [field] IS     NULL THEN 1
-     *      WHEN [this] =               [field]             THEN 0
-     *      ELSE                                                 1
+     * CASE WHEN [this] IS     NULL AND [field] IS     NULL THEN FALSE
+     *      WHEN [this] IS     NULL AND [field] IS NOT NULL THEN TRUE
+     *      WHEN [this] IS NOT NULL AND [field] IS     NULL THEN TRUE
+     *      WHEN [this] =               [field]             THEN FALSE
+     *      ELSE                                                 TRUE
      * END
      * </pre></code> SQL: <code>this is distinct from field</code>
      */
@@ -522,11 +522,11 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
-     * CASE WHEN [this] IS     NULL AND [value] IS     NULL THEN 1
-     *      WHEN [this] IS     NULL AND [value] IS NOT NULL THEN 0
-     *      WHEN [this] IS NOT NULL AND [value] IS     NULL THEN 0
-     *      WHEN [this] =               [value]             THEN 1
-     *      ELSE                                                 0
+     * CASE WHEN [this] IS     NULL AND [value] IS     NULL THEN TRUE
+     *      WHEN [this] IS     NULL AND [value] IS NOT NULL THEN FALSE
+     *      WHEN [this] IS NOT NULL AND [value] IS     NULL THEN FALSE
+     *      WHEN [this] =               [value]             THEN TRUE
+     *      ELSE                                                 FALSE
      * END
      * </pre></code> SQL: <code>this is not distinct from value</code>
      */
@@ -539,11 +539,11 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
-     * CASE WHEN [this] IS     NULL AND [field] IS     NULL THEN 1
-     *      WHEN [this] IS     NULL AND [field] IS NOT NULL THEN 0
-     *      WHEN [this] IS NOT NULL AND [field] IS     NULL THEN 0
-     *      WHEN [this] =               [value]             THEN 1
-     *      ELSE                                                 0
+     * CASE WHEN [this] IS     NULL AND [field] IS     NULL THEN TRUE
+     *      WHEN [this] IS     NULL AND [field] IS NOT NULL THEN FALSE
+     *      WHEN [this] IS NOT NULL AND [field] IS     NULL THEN FALSE
+     *      WHEN [this] =               [value]             THEN TRUE
+     *      ELSE                                                 FALSE
      * END
      * </pre></code> SQL: <code>this is not distinct from field</code>
      */

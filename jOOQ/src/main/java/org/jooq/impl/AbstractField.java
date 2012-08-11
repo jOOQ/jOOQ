@@ -559,6 +559,96 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition eq(T value) {
+        return equal(value);
+    }
+
+    @Override
+    public final Condition eq(Field<T> field) {
+        return equal(field);
+    }
+
+    @Override
+    public final Condition eq(Select<?> query) {
+        return equal(query);
+    }
+
+    @Override
+    public final Condition ne(T value) {
+        return notEqual(value);
+    }
+
+    @Override
+    public final Condition ne(Field<T> field) {
+        return notEqual(field);
+    }
+
+    @Override
+    public final Condition ne(Select<?> query) {
+        return notEqual(query);
+    }
+
+    @Override
+    public final Condition lt(T value) {
+        return lessThan(value);
+    }
+
+    @Override
+    public final Condition lt(Field<T> field) {
+        return lessThan(field);
+    }
+
+    @Override
+    public final Condition lt(Select<?> query) {
+        return lessThan(query);
+    }
+
+    @Override
+    public final Condition le(T value) {
+        return lessOrEqual(value);
+    }
+
+    @Override
+    public final Condition le(Field<T> field) {
+        return lessOrEqual(field);
+    }
+
+    @Override
+    public final Condition le(Select<?> query) {
+        return lessOrEqual(query);
+    }
+
+    @Override
+    public final Condition gt(T value) {
+        return greaterThan(value);
+    }
+
+    @Override
+    public final Condition gt(Field<T> field) {
+        return greaterThan(field);
+    }
+
+    @Override
+    public final Condition gt(Select<?> query) {
+        return greaterThan(query);
+    }
+
+    @Override
+    public final Condition ge(T value) {
+        return greaterOrEqual(value);
+    }
+
+    @Override
+    public final Condition ge(Field<T> field) {
+        return greaterOrEqual(field);
+    }
+
+    @Override
+    public final Condition ge(Select<?> query) {
+        return greaterOrEqual(query);
+    }
+
+    @Override
     public final Condition equal(T value) {
         return equal(val(value, this));
     }

@@ -377,7 +377,7 @@ public abstract class jOOQAbstractTest<
 
         autocommit = connection.getAutoCommit();
 
-        if (false && !initialised) {
+        if (!initialised) {
             initialised = true;
             execute(getCreateScript());
         }

@@ -3001,7 +3001,7 @@ BOOK.TITLE.notEqual("Animal Farm")]]></java>
 							</section>
 
 						    <section id="boolean-operators">
-							    <title>AND, OR boolean operators</title>
+							    <title>AND, OR, NOT boolean operators</title>
 								<content>
 									<h3>Connecting conditions using boolean operators</h3>
 									<p>
@@ -3034,6 +3034,7 @@ Condition c = AUTHOR.LAST_NAME.equal("Orwell");
 Condition combined1 = a.or(b);             // These OR-connected conditions form a new condition, which is wrapped in parentheses
 Condition combined2 = combined1.andNot(c); // The left-hand side of the AND NOT () operator is already wrapped in parentheses]]></java>
 
+									<h3>The Condition API</h3>
 									<p>
 										Here are all boolean operators on the <reference class="org.jooq.Condition"/> interface:
 									</p>
@@ -3060,17 +3061,168 @@ not()                     // Invert a condition]]></java>
 
 						    <section id="comparison-predicate">
 							    <title>Comparison predicate</title>
-								<content></content>
+								<content>
+									<h3>Comparing values with basic comparison operators</h3>
+									<p>
+										In SQL, comparison predicates are formed using common comparison operators:
+									</p>
+									<ul>
+										<li><strong>=</strong> to test for equality</li>
+										<li><strong>&lt;&gt;</strong> or <strong>!=</strong> to test for non-equality</li>
+										<li><strong>&gt;</strong> to test for being strictly greater</li>
+										<li><strong>&gt;=</strong> to test for being greater or equal</li>
+										<li><strong>&lt;</strong> to test for being strictly less</li>
+										<li><strong>&lt;=</strong> to test for being less or equal</li>
+									</ul>
+									
+									<p>
+										Unfortunately, Java does not support operator overloading, hence these operators are also implemented as methods in jOOQ, like any other SQL syntax elements. The relevant parts of the <reference class="org.jooq.Field"/> interface are these:
+									</p>
+									
+<java><![CDATA[eq or equal(T);                  // =  (some bind value)
+eq or equal(Field<T>);           // =  (some column expression)
+eq or equal(Select<T>);          // =  (some scalar SELECT statement)
+ne or notEqual(T);               // <> (some bind value)
+ne or notEqual(Field<T>);        // <> (some column expression)
+ne or notEqual(Select<T>);       // <> (some scalar SELECT statement)
+lt or lessThan(T);               // <  (some bind value)
+lt or lessThan(Field<T>);        // <  (some column expression)
+lt or lessThan(Select<T>);       // <  (some scalar SELECT statement)
+le or lessOrEqual(T);            // <= (some bind value)
+le or lessOrEqual(Field<T>);     // <= (some column expression)
+le or lessOrEqual(Select<T>);    // <= (some scalar SELECT statement)
+gt or greaterThan(T);            // >  (some bind value)
+gt or greaterThan(Field<T>);     // >  (some column expression)
+gt or greaterThan(Select<T>);    // >  (some scalar SELECT statement)
+ge or greaterOrEqual(T);         // >= (some bind value)
+ge or greaterOrEqual(Field<T>);  // >= (some column expression)
+ge or greaterOrEqual(Select<T>); // >= (some scalar SELECT statement)]]></java>
+
+									<p>
+										Note that every operator is represented by two methods. A verbose one (such as equal()) and a two-character one (such as eq()). Both methods are the same. You may choose either one, depending on your taste. The manual will always use the more verbose one.
+									</p>
+									
+									<h3>NULL in jOOQ's comparison predicates</h3>
+									<p>
+										jOOQ has a special way of dealing with null bind values, when you pass them to comparison predicates equal() and notEqual(). For convenience, jOOQ will render <reference id="null-predicate" title="IS NULL or IS NOT NULL"/> predicates.
+									</p>
+
+									<h3>jOOQ's convenience methods using comparison operators</h3>
+									<p>
+										In addition to the above, jOOQ provides a few convenience methods for common operations performed on strings using comparison predicates:
+									</p>
+									
+<code-pair>
+<sql><![CDATA[-- case insensitivity
+LOWER(TITLE)  = LOWER('animal farm')
+LOWER(TITLE) <> LOWER('animal farm')]]></sql>
+<java><![CDATA[// case insensitivity
+BOOK.TITLE.equalIgnoreCase("animal farm")
+BOOK.TITLE.notEqualIgnoreCase("animal farm")]]></java>
+</code-pair>
+								</content>
+							</section>
+
+						    <section id="quantified-comparison-predicate">
+							    <title>Quantified comparison predicate</title>
+								<content>
+									<h3>Compare row values with non-scalar table subqueries</h3>
+									<p>
+										If the right-hand side of a <reference id="comparison-predicate" title="comparison predicate"/> turns out to be a non-scalar table subquery, you can wrap that subquery in a quantifier, such as ALL, ANY, or SOME. Note that the SQL standard defines ANY and SOME to be equivalent. jOOQ settled for the more intuitive ANY and doesn't support SOME. Here are some examples, supported by jOOQ:
+									</p>
+
+<code-pair>
+<sql><![CDATA[TITLE = ANY('Animal Farm', '1982')
+PUBLISHED_IN > ALL(1920, 1940)]]></sql>
+<java><![CDATA[BOOK.TITLE.equalAny("Animal Farm", "1982");
+BOOK.PUBLISHED_IN.greaterThanAll(1920, 1940);]]></java>
+</code-pair>
+
+									<p>
+										For the example, the right-hand side of the quantified comparison predicates were filled with argument lists. But it is easy to imagine that the source of values results from a <reference id="nested-selects" title="subselect"/>.
+									</p>
+
+									<h3>ANY and the IN predicate</h3>
+									<p>
+										It is interesting to note that the SQL standard defines the <reference id="in-predicate" title="IN predicate"/> in terms of the ANY-quantified predicate. The following two expressions are equivalent:
+									</p>
+									
+<code-pair>
+<sql><![CDATA[[ROW VALUE EXPRESSION] IN [IN PREDICATE VALUE]]]></sql>
+<sql><![CDATA[[ROW VALUE EXPRESSION] = ANY [IN PREDICATE VALUE]]]></sql>
+</code-pair>
+
+									<p>
+										Typically, the <reference id="in-predicate" title="IN predicate"/> is more readable than the quantified comparison predicate.
+									</p>
+								</content>
 							</section>
 
 						    <section id="null-predicate">
 							    <title>NULL predicate</title>
-								<content></content>
+								<content>
+									<h3>Checking for NULL values in SQL</h3>
+									<p>
+										In SQL, you cannot compare NULL with any value using <reference id="comparison-predicate" title="comparison predicates"/>, as the result would yield NULL again, which is neither TRUE nor FALSE (see also the manual's section about <reference id="conditional-expressions" title="conditional expressions"/>). In order to test a <reference id="column-expressions" title="column expression"/> for NULL, use the NULL predicate as such:
+									</p>
+									
+<code-pair>
+<sql><![CDATA[TITLE IS NULL
+TITLE IS NOT NULL]]></sql>
+<java><![CDATA[BOOK.TITLE.isNull()
+BOOK.TITLE.isNotNull()]]></java>
+</code-pair>
+
+								</content>
 							</section>
 
 						    <section id="distinct-predicate">
 							    <title>DISTINCT predicate</title>
-								<content></content>
+								<content>
+									<h3>A NULL-safe comparison predicate</h3>
+									<p>
+										Some databases support the DISTINCT predicate, which serves as a convenient, NULL-safe <reference id="comparison-predicate" title="comparison predicate"/>. With the DISTINCT predicate, the following truth table can be assumed:
+									</p>
+									<ul>
+										<li>[ANY] IS DISTINCT FROM NULL yields TRUE</li>
+										<li>[ANY] IS NOT DISTINCT FROM NULL yields FALSE</li>
+										<li>NULL IS DISTINCT FROM NULL yields FALSE</li>
+										<li>NULL IS NOT DISTINCT FROM NULL yields TRUE</li>
+									</ul>
+									<p>
+										For instance, you can compare two fields for distinctness, ignoring the fact that any of the two could be NULL, which would lead to funny results. This is supported by jOOQ as such:
+									</p>
+
+<code-pair>
+<sql><![CDATA[TITLE IS DISTINCT FROM SUB_TITLE
+TITLE IS NOT DISTINCT FROM SUB_TITLE]]></sql>
+<java><![CDATA[BOOK.TITLE.isDistinctFrom(BOOK.SUB_TITLE)
+BOOK.TITLE.isNotDistinctFrom(BOOK.SUB_TITLE)]]></java>
+</code-pair>
+
+									<p>
+										If your database does not natively support the DISTINCT predicate, jOOQ simulates it with an equivalent <reference id="case-expressions" title="CASE expression"/>, modelling the above truth table:
+									</p>
+	
+<code-pair>								
+<sql><![CDATA[-- [A] IS DISTINCT FROM [B] 
+CASE WHEN [A] IS     NULL AND [B] IS     NULL THEN FALSE
+     WHEN [A] IS     NULL AND [B] IS NOT NULL THEN TRUE
+     WHEN [A] IS NOT NULL AND [B] IS     NULL THEN TRUE
+     WHEN [A] =               [B]             THEN FALSE
+     ELSE                                          TRUE
+END
+]]></sql>
+<sql><![CDATA[-- [A] IS NOT DISTINCT FROM [B] 
+CASE WHEN [A] IS     NULL AND [B] IS     NULL THEN TRUE
+     WHEN [A] IS     NULL AND [B] IS NOT NULL THEN FALSE
+     WHEN [A] IS NOT NULL AND [B] IS     NULL THEN FALSE
+     WHEN [A] =               [B]             THEN TRUE
+     ELSE                                          FALSE
+END
+]]></sql>
+</code-pair>							
+								</content>
 							</section>
 
 						    <section id="between-predicate">

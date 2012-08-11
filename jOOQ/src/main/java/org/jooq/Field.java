@@ -459,7 +459,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Field<T> mod(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
-    // Conditions created from this field
+    // NULL predicates
     // ------------------------------------------------------------------------
 
     /**
@@ -477,6 +477,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support
     Condition isNotNull();
+
+    // ------------------------------------------------------------------------
+    // DISTINCT predicates
+    // ------------------------------------------------------------------------
 
     /**
      * Create a condition to check if this field is <code>DISTINCT</code> from
@@ -546,101 +550,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     @Support
     Condition isNotDistinctFrom(Field<T> field);
 
-    /**
-     * Create a condition to check this field against known string literals for
-     * <code>true</code>
-     * <p>
-     * SQL:
-     * <code>lcase(this) in ("1", "y", "yes", "true", "on", "enabled")</code>
-     */
-    @Support
-    Condition isTrue();
-
-    /**
-     * Create a condition to check this field against known string literals for
-     * <code>false</code>
-     * <p>
-     * SQL:
-     * <code>lcase(this) in ("0", "n", "no", "false", "off", "disabled")</code>
-     */
-    @Support
-    Condition isFalse();
-
-    /**
-     * Create a condition to pattern-check this field against a value
-     * <p>
-     * SQL: <code>this like value</code>
-     */
-    @Support
-    Condition like(Field<String> value);
-
-    /**
-     * Create a condition to pattern-check this field against a value
-     * <p>
-     * SQL: <code>this like value escape 'e'</code>
-     */
-    @Support
-    Condition like(Field<String> value, char escape);
-
-    /**
-     * Create a condition to pattern-check this field against a value
-     * <p>
-     * SQL: <code>this like value</code>
-     */
-    @Support
-    Condition like(String value);
-
-    /**
-     * Create a condition to pattern-check this field against a value
-     * <p>
-     * SQL: <code>this like value escape 'e'</code>
-     */
-    @Support
-    Condition like(String value, char escape);
-
-    /**
-     * Create a condition to case-insensitively pattern-check this field against
-     * a value
-     * <p>
-     * This translates to <code>this ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(value)</code> in all other dialects.
-     */
-    @Support
-    Condition likeIgnoreCase(Field<String> value);
-
-    /**
-     * Create a condition to case-insensitively pattern-check this field against
-     * a value
-     * <p>
-     * This translates to <code>this ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(value)</code> in all other dialects.
-     */
-    @Support
-    Condition likeIgnoreCase(Field<String> value, char escape);
-
-    /**
-     * Create a condition to case-insensitively pattern-check this field against
-     * a value
-     * <p>
-     * This translates to <code>this ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(value)</code> in all other dialects.
-     */
-    @Support
-    Condition likeIgnoreCase(String value);
-
-    /**
-     * Create a condition to case-insensitively pattern-check this field against
-     * a value
-     * <p>
-     * This translates to <code>this ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(value)</code> in all other dialects.
-     */
-    @Support
-    Condition likeIgnoreCase(String value, char escape);
+    // ------------------------------------------------------------------------
+    // LIKE_REGEX predicates
+    // ------------------------------------------------------------------------
 
     /**
      * Create a condition to regex-pattern-check this field against a pattern
@@ -779,6 +691,106 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition likeRegex(Field<String> pattern);
 
     /**
+     * Create a condition to regex-pattern-check this field against a pattern
+     * <p>
+     * See {@link #likeRegex(String)} for more details
+     *
+     * @see #likeRegex(String)
+     */
+    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    Condition notLikeRegex(String pattern);
+
+    /**
+     * Create a condition to regex-pattern-check this field against a pattern
+     * <p>
+     * See {@link #likeRegex(String)} for more details
+     *
+     * @see #likeRegex(Field)
+     */
+    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    Condition notLikeRegex(Field<String> pattern);
+
+    // ------------------------------------------------------------------------
+    // LIKE predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this like value</code>
+     */
+    @Support
+    Condition like(Field<String> value);
+
+    /**
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this like value escape 'e'</code>
+     */
+    @Support
+    Condition like(Field<String> value, char escape);
+
+    /**
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this like value</code>
+     */
+    @Support
+    Condition like(String value);
+
+    /**
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this like value escape 'e'</code>
+     */
+    @Support
+    Condition like(String value, char escape);
+
+    /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition likeIgnoreCase(Field<String> value);
+
+    /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition likeIgnoreCase(Field<String> value, char escape);
+
+    /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition likeIgnoreCase(String value);
+
+    /**
+     * Create a condition to case-insensitively pattern-check this field against
+     * a value
+     * <p>
+     * This translates to <code>this ilike value</code> in
+     * {@link SQLDialect#POSTGRES}, or to
+     * <code>lower(this) like lower(value)</code> in all other dialects.
+     */
+    @Support
+    Condition likeIgnoreCase(String value, char escape);
+
+    /**
      * Create a condition to pattern-check this field against a value
      * <p>
      * SQL: <code>this not like value</code>
@@ -853,26 +865,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support
     Condition notLikeIgnoreCase(String value, char escape);
-
-    /**
-     * Create a condition to regex-pattern-check this field against a pattern
-     * <p>
-     * See {@link #likeRegex(String)} for more details
-     *
-     * @see #likeRegex(String)
-     */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
-    Condition notLikeRegex(String pattern);
-
-    /**
-     * Create a condition to regex-pattern-check this field against a pattern
-     * <p>
-     * See {@link #likeRegex(String)} for more details
-     *
-     * @see #likeRegex(Field)
-     */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
-    Condition notLikeRegex(Field<String> pattern);
 
     /**
      * Convenience method for {@link #like(String, char)} including proper
@@ -988,6 +980,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Condition endsWith(Field<T> value);
 
+    // ------------------------------------------------------------------------
+    // IN predicates
+    // ------------------------------------------------------------------------
+
     /**
      * Create a condition to check this field against several values
      * <p>
@@ -1076,6 +1072,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     @Support
     Condition notIn(Select<?> query);
 
+    // ------------------------------------------------------------------------
+    // BETWEEN predicates
+    // ------------------------------------------------------------------------
+
     /**
      * Create a condition to check this field against some bounds
      * <p>
@@ -1108,6 +1108,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     @Support
     Condition notBetween(Field<T> minValue, Field<T> maxValue);
 
+    // ------------------------------------------------------------------------
+    // Comparison predicates
+    // ------------------------------------------------------------------------
+
     /**
      * <code>this = value</code>
      * <p>
@@ -1125,6 +1129,126 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition equal(Field<T> field);
 
     /**
+     * <code>this = (Select<?> ...)</code>
+     */
+    @Support
+    Condition equal(Select<?> query);
+
+    /**
+     * <code>this != value</code>
+     * <p>
+     * If <code>value == null</code>, then this will return a condition
+     * equivalent to {@link #isNotNull()} for convenience. SQL's ternary
+     * <code>NULL</code> logic is rarely of use for Java programmers.
+     */
+    @Support
+    Condition notEqual(T value);
+
+    /**
+     * <code>this != field</code>
+     */
+    @Support
+    Condition notEqual(Field<T> field);
+
+    /**
+     * <code>this != (Select<?> ...)</code>
+     */
+    @Support
+    Condition notEqual(Select<?> query);
+
+    /**
+     * <code>this < value</code>
+     */
+    @Support
+    Condition lessThan(T value);
+
+    /**
+     * <code>this < field</code>
+     */
+    @Support
+    Condition lessThan(Field<T> field);
+
+    /**
+     * <code>this < (Select<?> ...)</code>
+     */
+    @Support
+    Condition lessThan(Select<?> query);
+
+    /**
+     * <code>this <= value</code>
+     */
+    @Support
+    Condition lessOrEqual(T value);
+
+    /**
+     * <code>this <= field</code>
+     */
+    @Support
+    Condition lessOrEqual(Field<T> field);
+
+    /**
+     * <code>this <= (Select<?> ...)</code>
+     */
+    @Support
+    Condition lessOrEqual(Select<?> query);
+
+    /**
+     * <code>this > value</code>
+     */
+    @Support
+    Condition greaterThan(T value);
+
+    /**
+     * <code>this > field</code>
+     */
+    @Support
+    Condition greaterThan(Field<T> field);
+
+    /**
+     * <code>this > (Select<?> ...)</code>
+     */
+    @Support
+    Condition greaterThan(Select<?> query);
+
+    /**
+     * <code>this >= value</code>
+     */
+    @Support
+    Condition greaterOrEqual(T value);
+
+    /**
+     * <code>this >= field</code>
+     */
+    @Support
+    Condition greaterOrEqual(Field<T> field);
+
+    /**
+     * <code>this >= (Select<?> ...)</code>
+     */
+    @Support
+    Condition greaterOrEqual(Select<?> query);
+
+    /**
+     * Create a condition to check this field against known string literals for
+     * <code>true</code>
+     * <p>
+     * SQL:
+     * <code>lcase(this) in ("1", "y", "yes", "true", "on", "enabled")</code>
+     */
+    @Support
+    Condition isTrue();
+
+    /**
+     * Create a condition to check this field against known string literals for
+     * <code>false</code>
+     * <p>
+     * SQL:
+     * <code>lcase(this) in ("0", "n", "no", "false", "off", "disabled")</code>
+     */
+    @Support
+    Condition isFalse();
+
+    /**
      * <code>lower(this) = lower(value)</code>
      */
     @Support
@@ -1137,10 +1261,20 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition equalIgnoreCase(Field<String> value);
 
     /**
-     * <code>this = (Select<?> ...)</code>
+     * <code>lower(this) != lower(value)</code>
      */
     @Support
-    Condition equal(Select<?> query);
+    Condition notEqualIgnoreCase(String value);
+
+    /**
+     * <code>lower(this) != lower(value)</code>
+     */
+    @Support
+    Condition notEqualIgnoreCase(Field<String> value);
+
+    // ------------------------------------------------------------------------
+    // Quantified comparison predicates
+    // ------------------------------------------------------------------------
 
     /**
      * <code>this = any (Select<?> ...)</code>
@@ -1200,40 +1334,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition equalAll(Field<T[]> array);
 
     /**
-     * <code>this != value</code>
-     * <p>
-     * If <code>value == null</code>, then this will return a condition
-     * equivalent to {@link #isNotNull()} for convenience. SQL's ternary
-     * <code>NULL</code> logic is rarely of use for Java programmers.
-     */
-    @Support
-    Condition notEqual(T value);
-
-    /**
-     * <code>this != field</code>
-     */
-    @Support
-    Condition notEqual(Field<T> field);
-
-    /**
-     * <code>lower(this) != lower(value)</code>
-     */
-    @Support
-    Condition notEqualIgnoreCase(String value);
-
-    /**
-     * <code>lower(this) != lower(value)</code>
-     */
-    @Support
-    Condition notEqualIgnoreCase(Field<String> value);
-
-    /**
-     * <code>this != (Select<?> ...)</code>
-     */
-    @Support
-    Condition notEqual(Select<?> query);
-
-    /**
      * <code>this != any (Select<?> ...)</code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -1289,24 +1389,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support({ H2, HSQLDB, POSTGRES })
     Condition notEqualAll(Field<T[]> array);
-
-    /**
-     * <code>this < value</code>
-     */
-    @Support
-    Condition lessThan(T value);
-
-    /**
-     * <code>this < field</code>
-     */
-    @Support
-    Condition lessThan(Field<T> field);
-
-    /**
-     * <code>this < (Select<?> ...)</code>
-     */
-    @Support
-    Condition lessThan(Select<?> query);
 
     /**
      * <code>this < any (Select<?> ...)</code>
@@ -1366,24 +1448,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition lessThanAll(Field<T[]> array);
 
     /**
-     * <code>this <= value</code>
-     */
-    @Support
-    Condition lessOrEqual(T value);
-
-    /**
-     * <code>this <= field</code>
-     */
-    @Support
-    Condition lessOrEqual(Field<T> field);
-
-    /**
-     * <code>this <= (Select<?> ...)</code>
-     */
-    @Support
-    Condition lessOrEqual(Select<?> query);
-
-    /**
      * <code>this <= any (Select<?> ...)</code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -1441,24 +1505,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition lessOrEqualAll(Field<T[]> array);
 
     /**
-     * <code>this > value</code>
-     */
-    @Support
-    Condition greaterThan(T value);
-
-    /**
-     * <code>this > field</code>
-     */
-    @Support
-    Condition greaterThan(Field<T> field);
-
-    /**
-     * <code>this > (Select<?> ...)</code>
-     */
-    @Support
-    Condition greaterThan(Select<?> query);
-
-    /**
      * <code>this > any (Select<?> ...)</code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -1514,24 +1560,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support({ H2, HSQLDB, POSTGRES })
     Condition greaterThanAll(Field<T[]> array);
-
-    /**
-     * <code>this >= value</code>
-     */
-    @Support
-    Condition greaterOrEqual(T value);
-
-    /**
-     * <code>this >= field</code>
-     */
-    @Support
-    Condition greaterOrEqual(Field<T> field);
-
-    /**
-     * <code>this >= (Select<?> ...)</code>
-     */
-    @Support
-    Condition greaterOrEqual(Select<?> query);
 
     /**
      * <code>this >= any (Select<?> ...)</code>

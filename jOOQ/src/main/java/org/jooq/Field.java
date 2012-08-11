@@ -1135,6 +1135,34 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition equal(Select<?> query);
 
     /**
+     * <code>this = value</code>
+     * <p>
+     * If <code>value == null</code>, then this will return a condition
+     * equivalent to {@link #isNull()} for convenience. SQL's ternary
+     * <code>NULL</code> logic is rarely of use for Java programmers.
+     *
+     * @see #equal(Object)
+     */
+    @Support
+    Condition eq(T value);
+
+    /**
+     * <code>this = field</code>
+     *
+     * @see #equal(Field)
+     */
+    @Support
+    Condition eq(Field<T> field);
+
+    /**
+     * <code>this = (Select<?> ...)</code>
+     *
+     * @see #equal(Select)
+     */
+    @Support
+    Condition eq(Select<?> query);
+
+    /**
      * <code>this != value</code>
      * <p>
      * If <code>value == null</code>, then this will return a condition
@@ -1157,6 +1185,34 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition notEqual(Select<?> query);
 
     /**
+     * <code>this != value</code>
+     * <p>
+     * If <code>value == null</code>, then this will return a condition
+     * equivalent to {@link #isNotNull()} for convenience. SQL's ternary
+     * <code>NULL</code> logic is rarely of use for Java programmers.
+     *
+     * @see #notEqual(Object)
+     */
+    @Support
+    Condition ne(T value);
+
+    /**
+     * <code>this != field</code>
+     *
+     * @see #notEqual(Field)
+     */
+    @Support
+    Condition ne(Field<T> field);
+
+    /**
+     * <code>this != (Select<?> ...)</code>
+     *
+     * @see #notEqual(Select)
+     */
+    @Support
+    Condition ne(Select<?> query);
+
+    /**
      * <code>this < value</code>
      */
     @Support
@@ -1173,6 +1229,30 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support
     Condition lessThan(Select<?> query);
+
+    /**
+     * <code>this < value</code>
+     *
+     * @see #lessThan(Object)
+     */
+    @Support
+    Condition lt(T value);
+
+    /**
+     * <code>this < field</code>
+     *
+     * @see #lessThan(Field)
+     */
+    @Support
+    Condition lt(Field<T> field);
+
+    /**
+     * <code>this < (Select<?> ...)</code>
+     *
+     * @see #lessThan(Select)
+     */
+    @Support
+    Condition lt(Select<?> query);
 
     /**
      * <code>this <= value</code>
@@ -1193,6 +1273,30 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition lessOrEqual(Select<?> query);
 
     /**
+     * <code>this <= value</code>
+     *
+     * @see #lessOrEqual(Object)
+     */
+    @Support
+    Condition le(T value);
+
+    /**
+     * <code>this <= field</code>
+     *
+     * @see #lessOrEqual(Field)
+     */
+    @Support
+    Condition le(Field<T> field);
+
+    /**
+     * <code>this <= (Select<?> ...)</code>
+     *
+     * @see #lessOrEqual(Select)
+     */
+    @Support
+    Condition le(Select<?> query);
+
+    /**
      * <code>this > value</code>
      */
     @Support
@@ -1211,6 +1315,30 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition greaterThan(Select<?> query);
 
     /**
+     * <code>this > value</code>
+     *
+     * @see #greaterThan(Object)
+     */
+    @Support
+    Condition gt(T value);
+
+    /**
+     * <code>this > field</code>
+     *
+     * @see #greaterThan(Field)
+     */
+    @Support
+    Condition gt(Field<T> field);
+
+    /**
+     * <code>this > (Select<?> ...)</code>
+     *
+     * @see #greaterThan(Select)
+     */
+    @Support
+    Condition gt(Select<?> query);
+
+    /**
      * <code>this >= value</code>
      */
     @Support
@@ -1227,6 +1355,30 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support
     Condition greaterOrEqual(Select<?> query);
+
+    /**
+     * <code>this >= value</code>
+     *
+     * @see #greaterOrEqual(Object)
+     */
+    @Support
+    Condition ge(T value);
+
+    /**
+     * <code>this >= field</code>
+     *
+     * @see #greaterOrEqual(Field)
+     */
+    @Support
+    Condition ge(Field<T> field);
+
+    /**
+     * <code>this >= (Select<?> ...)</code>
+     *
+     * @see #greaterOrEqual(Select)
+     */
+    @Support
+    Condition ge(Select<?> query);
 
     /**
      * Create a condition to check this field against known string literals for

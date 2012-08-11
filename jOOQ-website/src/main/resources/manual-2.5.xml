@@ -893,6 +893,34 @@ SelectFinalStep select = create.select().from(AUTHOR);
 // Add the JOIN clause on the internal QueryObject representation
 SelectQuery query = select.getQuery();
 query.addJoin(BOOK, BOOK.AUTHOR_ID.equal(AUTHOR.ID));]]></java>
+
+									<h3>Mutability</h3>
+									<p>
+										Note, that for historic reasons, the DSL API mixes mutable and immutable behaviour with respect to the internal representation of the <reference id="queryparts" title="QueryPart"/> being constructed. While creating <reference id="conditional-expressions" title="conditional expressions"/>, <reference id="column-expressions" title="column expressions"/> (such as functions) assumes immutable behaviour, creating <reference id="sql-statements" title="SQL statements"/> does not. In other words, the following can be said:
+									</p>
+									
+<java><![CDATA[// Conditional expressions (immutable)
+// -----------------------------------
+Condition a = BOOK.TITLE.equal("1984");
+Condition b = BOOK.TITLE.equal("Animal Farm");
+
+// The following can be said
+a       != a.or(b); // or() does not modify a
+a.or(b) != a.or(b); // or() always creates new objects
+
+// Statements (mutable)
+// --------------------
+SelectFromStep s1 = create.select();
+SelectJoinStep s2 = s1.from(BOOK);
+SelectJoinStep s3 = s1.from(AUTHOR);
+
+// The following can be said
+s1 == s2; // The internal object is always the same
+s2 == s3; // The internal object is always the same]]></java>
+
+									<p>
+										Mutability may be removed in a future version of jOOQ.
+									</p>
 								</content>
 							</section>
 
@@ -2899,12 +2927,135 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 
 					<section id="conditional-expressions">
 					    <title>Conditional expressions</title>
-						<content></content>
+						<content>
+							<h3>Conditions and their use cases in the jOOQ API</h3>
+							<p>
+								Conditions or conditional expressions are widely used in SQL and in the jOOQ API. They can be used in
+							</p>
+							<ul>
+								<li>The <reference id="case-expressions" title="CASE expression"/></li>
+								<li>The <reference id="join-clause" title="JOIN clause"/> (or JOIN .. ON clause, to be precise) of a <reference id="select-statement" title="SELECT statement"/>, <reference id="update-statement" title="UPDATE statement"/>, <reference id="delete-statement" title="DELETE statement"/></li>
+								<li>The <reference id="where-clause" title="WHERE clause"/> of a <reference id="select-statement" title="SELECT statement"/>, <reference id="update-statement" title="UPDATE statement"/>, <reference id="delete-statement" title="DELETE statement"/></li>
+								<li>The <reference id="connect-by-clause" title="CONNECT BY clause"/> of a <reference id="select-statement" title="SELECT statement"/></li>
+								<li>The <reference id="having-clause" title="HAVING clause"/> of a <reference id="select-statement" title="SELECT statement"/></li>
+								<li>The <reference id="merge-statement" title="MERGE statement"/>'s ON clause</li>
+							</ul>
+							
+							<h3>Boolean types in SQL</h3>
+							<p>
+								Before SQL:1999, boolean types did not really exist in SQL. They were modelled by 0 and 1 numeric/char values. With SQL:1999, true booleans were introduced and are now supported by most databases. In short, these are possible boolean values:
+							</p>
+							<ul>
+								<li>1 or TRUE</li>
+								<li>0 or FALSE</li>
+								<li>NULL or UNKNOWN</li>
+							</ul>
+							<p>
+								It is important to know that SQL differs from many other languages in the way it interprets the NULL boolean value. Most importantly, the following facts are to be remembered:
+							</p>
+							<ul>
+								<li>[ANY] = NULL yields NULL (not FALSE)</li>
+								<li>[ANY] != NULL yields NULL (not TRUE)</li>
+								<li>NULL = NULL yields NULL (not TRUE)</li>
+								<li>NULL != NULL yields NULL (not FALSE)</li>
+							</ul>
+							<p>
+								For simplified NULL handling, please refer to the section about the <reference id="distinct-predicate" title="DISTINCT predicate"/>.
+							</p>
+							<p>
+								Note that jOOQ does not model these values as actual <reference id="column-expressions" title="column expression"/> compatible.
+							</p>
+						</content>
 
 						<sections>
 						    <section id="condition-building">
 							    <title>Condition building</title>
-								<content></content>
+								<content>
+									<h3>How to create conditional expressions with jOOQ</h3>
+									<p>
+										With jOOQ, most <reference id="conditional-expressions" title="conditional expressions"/> are built from <reference id="column-expressions" title="column expressions"/>, calling various methods on them. For instance, to build a <reference id="comparison-predicate" title="comparison predicate"/>, you can write the following expression:
+									</p>
+
+<code-pair>
+<sql><![CDATA[TITLE  = 'Animal Farm'
+TITLE != 'Animal Farm']]></sql>
+<java><![CDATA[BOOK.TITLE.equal("Animal Farm")
+BOOK.TITLE.notEqual("Animal Farm")]]></java>
+</code-pair>
+
+									<h3>Create conditions from the Factory</h3>
+									<p>
+										There are a few types of conditions, that can be created statically from the <reference id="factory" title="Factory"/>. These are:
+									</p>
+									<ul>
+										<li><reference id="plain-sql" title="plain SQL conditions"/>, that allow you to phrase your own SQL string <reference id="conditional-expressions" title="conditional expression"/></li>
+										<li>The <reference id="exists-predicate" title="EXISTS predicate"/>, a standalone predicate that creates a conditional expression</li>
+										<li>Constant TRUE and FALSE conditional expressions</li>
+									</ul>
+
+									<h3>Connect conditions using boolean operators</h3>
+									<p>
+										Conditions can also be connected using <reference id="boolean-operators" title="boolean operators"/> as will be discussed in a subsequent chapter.
+									</p>
+								</content>
+							</section>
+
+						    <section id="boolean-operators">
+							    <title>AND, OR boolean operators</title>
+								<content>
+									<h3>Connecting conditions using boolean operators</h3>
+									<p>
+										In SQL, as in most other languages, <reference id="conditional-expressions" title="conditional expressions"/> can be connected using the AND and OR binary operators, as well as the NOT unary operator, to form new conditional expressions. In jOOQ, this is modelled as such: 
+									</p>
+
+<code-pair>
+<sql><![CDATA[-- A simple conditional expression
+TITLE = 'Animal Farm' OR TITLE = '1984'
+
+-- A more complex conditional expression
+        (TITLE = 'Animal Farm' OR TITLE = '1984') 
+AND NOT (AUTHOR.LAST_NAME = 'Orwell')]]></sql>
+<java><![CDATA[// A simple boolean connection
+BOOK.TITLE.equal("Animal Farm").or(BOOK.TITLE.equal("1984"))
+
+// A more complex conditional expression
+BOOK.TITLE.equal("Animal Farm").or(BOOK.TITLE.equal("1984"))
+    .andNot(AUTHOR.LAST_NAME.equal("Orwell"))]]></java>
+</code-pair>
+
+									<p>
+										The above example shows that the number of parentheses in Java can quickly explode. Proper indentation may become crucial in making such code readable. In order to understand how jOOQ composes combined conditional expressions, let's assign component expressions first:
+									</p>
+
+<java><![CDATA[Condition a = BOOK.TITLE.equal("Animal Farm");
+Condition b = BOOK.TITLE.equal("1984");
+Condition c = AUTHOR.LAST_NAME.equal("Orwell");
+
+Condition combined1 = a.or(b);             // These OR-connected conditions form a new condition, which is wrapped in parentheses
+Condition combined2 = combined1.andNot(c); // The left-hand side of the AND NOT () operator is already wrapped in parentheses]]></java>
+
+									<p>
+										Here are all boolean operators on the <reference class="org.jooq.Condition"/> interface:
+									</p>
+									
+<java><![CDATA[and(Condition)            // Combine conditions with AND
+and(String)               // Combine conditions with AND. Convenience for adding plain SQL to the right-hand side
+and(String, Object...)    // Combine conditions with AND. Convenience for adding plain SQL to the right-hand side
+and(String, QueryPart...) // Combine conditions with AND. Convenience for adding plain SQL to the right-hand side
+andExists(Select<?>)      // Combine conditions with AND. Convenience for adding an exists predicate to the right-hand side
+andNot(Condition)         // Combine conditions with AND. Convenience for adding an inverted condition to the right-hand side
+andNotExists(Select<?>)   // Combine conditions with AND. Convenience for adding an inverted exists predicate to the right-hand side
+
+or(Condition)             // Combine conditions with OR
+or(String)                // Combine conditions with OR. Convenience for adding plain SQL to the right-hand side
+or(String, Object...)     // Combine conditions with OR. Convenience for adding plain SQL to the right-hand side
+or(String, QueryPart...)  // Combine conditions with OR. Convenience for adding plain SQL to the right-hand side
+orExists(Select<?>)       // Combine conditions with OR. Convenience for adding an exists predicate to the right-hand side
+orNot(Condition)          // Combine conditions with OR. Convenience for adding an inverted condition to the right-hand side
+orNotExists(Select<?>)    // Combine conditions with OR. Convenience for adding an inverted exists predicate to the right-hand side
+
+not()                     // Invert a condition]]></java>
+								</content>
 							</section>
 
 						    <section id="comparison-predicate">
@@ -2918,7 +3069,7 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 							</section>
 
 						    <section id="distinct-predicate">
-							    <title>Distinct predicate</title>
+							    <title>DISTINCT predicate</title>
 								<content></content>
 							</section>
 
@@ -2929,8 +3080,73 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 
 						    <section id="like-predicate">
 							    <title>LIKE predicate</title>
-								<content></content>
-								<!-- Mention jOOQ's convenience predicates, here, such as startsWith, endsWith, etc. -->
+								<content>
+									<h3>The LIKE predicate</h3>
+									<p>
+										LIKE predicates are popular for simple wildcard-enabled pattern matching. Supported wildcards in all SQL databases are:
+									</p>
+									<ul>
+										<li><strong>_</strong>: (single-character wildcard)</li>
+										<li><strong>%</strong>: (multi-character wildcard)</li>
+									</ul>
+									<p>
+										With jOOQ, the LIKE predicate can be created from any <reference id="column-expressions" title="column expression"/> as such:
+									</p>
+
+<code-pair>
+<sql><![CDATA[TITLE     LIKE '%abc%'
+TITLE NOT LIKE '%abc%']]></sql>
+<java><![CDATA[BOOK.TITLE.like("%abc%")
+BOOK.TITLE.notLike("%abc%")]]></java>
+</code-pair>
+									
+									<h3>Escaping operands with the LIKE predicate</h3>
+									<p>
+										Often, your pattern may contain any of the wildcard characters "_" and "%", in case of which you may want to escape them. jOOQ does not automatically escape patterns in like() and notLike() methods. Instead, you can explicitly define an escape character as such:
+									</p>
+
+<code-pair>
+<sql><![CDATA[TITLE     LIKE '%The !%-Sign Book%' ESCAPE '!'
+TITLE NOT LIKE '%The !%-Sign Book%' ESCAPE '!']]></sql>
+<java><![CDATA[BOOK.TITLE.like("%The !%-Sign Book%", '!')
+BOOK.TITLE.notLike("%The !%-Sign Book%", '!')]]></java>
+</code-pair>
+
+									<p>
+										In the above predicate expressions, the exclamation mark character is passed as the escape character to escape wildcard characters "!_" and "!%", as well as to escape the escape character itself: "!!"
+									</p>
+									<p>
+										Please refer to your database manual for more details about escaping patterns with the LIKE predicate.
+									</p>
+									
+									<h3>jOOQ's convenience methods using the LIKE predicate</h3>
+									<p>
+										In addition to the above, jOOQ provides a few convenience methods for common operations performed on strings using the LIKE predicate. Typical operations are "contains predicates", "starts with predicates", "ends with predicates", etc. Here is the full convenience API wrapping LIKE predicates:
+									</p>
+									
+<code-pair>
+<sql><![CDATA[-- case insensitivity
+LOWER(TITLE) LIKE LOWER('%abc%')
+LOWER(TITLE) NOT LIKE LOWER('%abc%')
+
+-- contains and similar methods
+TITLE LIKE '%' || 'abc' || '%'
+TITLE LIKE 'abc' || '%'
+TITLE LIKE '%' || 'abc']]></sql>
+<java><![CDATA[// case insensitivity
+BOOK.TITLE.likeIgnoreCase("%abc%")
+BOOK.TITLE.notLikeIgnoreCase("%abc%")
+
+// contains and similar methods
+BOOK.TITLE.contains("abc")
+BOOK.TITLE.startsWith("abc")
+BOOK.TITLE.endsWith("abc")]]></java>
+</code-pair>
+
+									<p>
+										Note, that jOOQ escapes % and _ characters in value in some of the above predicate implementations. For simplicity, this has been omitted in this manual.
+									</p>
+								</content>
 							</section>
 
 						    <section id="in-predicate">
@@ -2943,8 +3159,8 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 								<content></content>
 							</section>
 
-						    <section id="and-or-boolean-operators">
-							    <title>AND, OR boolean operators</title>
+						    <section id="array-predicates">
+							    <title>ARRAY predicates</title>
 								<content></content>
 							</section>
 						</sections>

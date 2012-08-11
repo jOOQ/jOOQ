@@ -545,7 +545,17 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition between(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), false);
+        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), false, false);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(T minValue, T maxValue) {
+        return betweenSymmetric(val(minValue, this), val(maxValue, this));
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Field<T> minValue, Field<T> maxValue) {
+        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), false, true);
     }
 
     @Override
@@ -555,7 +565,17 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notBetween(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), true);
+        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), true, false);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(T minValue, T maxValue) {
+        return notBetweenSymmetric(val(minValue, this), val(maxValue, this));
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Field<T> minValue, Field<T> maxValue) {
+        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), true, true);
     }
 
     @Override

@@ -1095,6 +1095,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * Create a condition to check this field against some bounds
      * <p>
+     * SQL: <code>this between symmetric minValue and maxValue</code>
+     */
+    @Support
+    Condition betweenSymmetric(T minValue, T maxValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this between symmetric minValue and maxValue</code>
+     */
+    @Support
+    Condition betweenSymmetric(Field<T> minValue, Field<T> maxValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
      * SQL: <code>this not between minValue and maxValue</code>
      */
     @Support
@@ -1107,6 +1123,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support
     Condition notBetween(Field<T> minValue, Field<T> maxValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this not between symmetric minValue and maxValue</code>
+     */
+    @Support
+    Condition notBetweenSymmetric(T minValue, T maxValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this not between symmetric minValue and maxValue</code>
+     */
+    @Support
+    Condition notBetweenSymmetric(Field<T> minValue, Field<T> maxValue);
 
     // ------------------------------------------------------------------------
     // Comparison predicates

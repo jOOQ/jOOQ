@@ -212,6 +212,9 @@ public class jOOQTest {
             FIELD_ID1.between((Integer) null, null),
             FIELD_ID1.between((Field<Integer>) null, null));
         assertEquals(
+            FIELD_ID1.betweenSymmetric((Integer) null, null),
+            FIELD_ID1.betweenSymmetric((Field<Integer>) null, null));
+        assertEquals(
             FIELD_ID1.div((Integer) null),
             FIELD_ID1.div((Field<Integer>) null));
         assertEquals(
@@ -244,6 +247,12 @@ public class jOOQTest {
         assertEquals(
             FIELD_ID1.mul((Integer) null),
             FIELD_ID1.mul((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.notBetween((Integer) null, null),
+            FIELD_ID1.notBetween((Field<Integer>) null, null));
+        assertEquals(
+            FIELD_ID1.notBetweenSymmetric((Integer) null, null),
+            FIELD_ID1.notBetweenSymmetric((Field<Integer>) null, null));
         assertEquals(
             FIELD_ID1.notEqual((Integer) null),
             FIELD_ID1.notEqual((Field<Integer>) null));

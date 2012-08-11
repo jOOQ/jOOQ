@@ -3227,7 +3227,50 @@ END
 
 						    <section id="between-predicate">
 							    <title>BETWEEN predicate</title>
-								<content></content>
+								<content>
+									<h3>Comparing a value against a bounded range</h3>
+									<p>
+										The BETWEEN predicate can be seen as syntactic sugar for a pair of <reference id="comparison-predicate" title="comparison predicates"/>. According to the SQL standard, the following two predicates are equivalent:
+									</p>
+									
+<code-pair>
+<sql><![CDATA[[A] BETWEEN [B] AND [C]]]></sql>
+<sql><![CDATA[[A] >= [B] AND [A] <= [C]]]></sql>
+</code-pair>
+
+									<p>
+										Note the inclusiveness of range boundaries in the definition of the BETWEEN predicate. Intuitively, this is supported in jOOQ as such:
+									</p>
+
+<code-pair>
+<sql><![CDATA[PUBLISHED_IN     BETWEEN 1920 AND 1940
+PUBLISHED_IN NOT BETWEEN 1920 AND 1940]]></sql>
+<java><![CDATA[BOOK.PUBLISHED_IN.between(1920, 1940)
+BOOK.PUBLISHED_IN.notBetween(1920, 1940)]]></java>
+</code-pair>
+
+									<h3>BETWEEN SYMMETRIC</h3>
+									<p>
+										The SQL standard defines the SYMMETRIC keyword to be used along with BETWEEN to indicate that you do not care which bound of the range is larger than the other. A database system should simply swap range bounds, in case the first bound is greater than the second one. jOOQ supports this keyword as well, simulating it if necessary.
+									</p>
+									
+<code-pair>
+<sql><![CDATA[PUBLISHED_IN     BETWEEN SYMMETRIC 1940 AND 1920
+PUBLISHED_IN NOT BETWEEN SYMMETRIC 1940 AND 1920]]></sql>
+<java><![CDATA[BOOK.PUBLISHED_IN.betweenSymmetric(1940, 1920)
+BOOK.PUBLISHED_IN.notBetweenSymmetric(1940, 1920)]]></java>
+</code-pair>
+
+									<p>
+										The simulation is done trivially:
+									</p>
+									
+<code-pair>
+<sql><![CDATA[[A] BETWEEN SYMMETRIC [B] AND [C]]]></sql>
+<sql><![CDATA[([A] BETWEEN [B] AND [C]) OR ([A] BETWEEN [C] AND [B])]]></sql>
+</code-pair>
+
+								</content>
 							</section>
 
 						    <section id="like-predicate">

@@ -36,8 +36,19 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+
 import org.jooq.BindContext;
 import org.jooq.Field;
+import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 
 /**
@@ -47,30 +58,54 @@ class BetweenCondition<T> extends AbstractCondition {
 
     private static final long serialVersionUID = -4666251100802237878L;
 
+    private final boolean     symmetric;
     private final boolean     not;
     private final Field<T>    field;
     private final Field<T>    minValue;
     private final Field<T>    maxValue;
 
-    BetweenCondition(Field<T> field, Field<T> minValue, Field<T> maxValue, boolean not) {
+    BetweenCondition(Field<T> field, Field<T> minValue, Field<T> maxValue, boolean not, boolean symmetric) {
         this.field = field;
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.not = not;
+        this.symmetric = symmetric;
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(field).bind(minValue).bind(maxValue);
+        if (symmetric && asList(CUBRID, DB2, DERBY, H2, MYSQL, ORACLE, SQLSERVER, SQLITE).contains(context.getDialect())) {
+            simulateSymmetric().bind(context);
+        }
+        else {
+            context.bind(field).bind(minValue).bind(maxValue);
+        }
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(field)
-               .keyword(not ? " not" : "")
-               .keyword(" between ")
-               .sql(minValue)
-               .keyword(" and ")
-               .sql(maxValue);
+
+        // TODO: Sybase SQL Anywhere? Sybase ASE
+        if (symmetric && asList(CUBRID, DB2, DERBY, H2, MYSQL, ORACLE, SQLSERVER, SQLITE).contains(context.getDialect())) {
+            simulateSymmetric().toSQL(context);
+        }
+        else {
+            context.sql(field)
+                   .keyword(not ? " not" : "")
+                   .keyword(" between ")
+                   .keyword(symmetric ? "symmetric " : "")
+                   .sql(minValue)
+                   .keyword(" and ")
+                   .sql(maxValue);
+        }
+    }
+
+    private final QueryPartInternal simulateSymmetric() {
+        if (not) {
+            return (QueryPartInternal) field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue));
+        }
+        else {
+            return (QueryPartInternal) field.between(minValue, maxValue).or(field.between(maxValue, minValue));
+        }
     }
 }

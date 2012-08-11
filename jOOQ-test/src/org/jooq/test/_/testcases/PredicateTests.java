@@ -407,6 +407,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Arrays.asList(2, 3), create().select()
             .from(TBook())
             .where(TBook_ID().between(2, 3))
+            .and(TBook_ID().betweenSymmetric(2, 3))
+            .and(TBook_ID().betweenSymmetric(3, 2))
             .orderBy(TBook_ID()).fetch(TBook_ID()));
 
         assertEquals(Arrays.asList(3, 4), create().select()
@@ -418,6 +420,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Arrays.asList(1, 4), create().select()
             .from(TBook())
             .where(TBook_ID().notBetween(2, 3))
+            .and(TBook_ID().notBetweenSymmetric(2, 3))
+            .and(TBook_ID().notBetweenSymmetric(3, 2))
             .orderBy(TBook_ID()).fetch(TBook_ID()));
 
         assertEquals(Arrays.asList(1, 2), create().select()

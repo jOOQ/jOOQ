@@ -50,6 +50,7 @@ import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.min;
+import static org.jooq.impl.Factory.not;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.replace;
 import static org.jooq.impl.Factory.round;
@@ -766,21 +767,26 @@ public class jOOQTest {
 
     @Test
     public void testNotCondition() throws Exception {
-        Condition c = FIELD_ID1.equal(10).not();
-        assertEquals("not(\"TABLE1\".\"ID1\" = 10)", r_refI().render(c));
-        assertEquals("not(\"TABLE1\".\"ID1\" = ?)", r_ref().render(c));
+        Condition c1 = FIELD_ID1.equal(10).not();
+        Condition c2 = not(FIELD_ID1.equal(10));
+        assertEquals(c1, c2);
 
-        assertEquals("not(not(\"TABLE1\".\"ID1\" = 10))", r_refI().render(c.not()));
-        assertEquals("not(not(\"TABLE1\".\"ID1\" = ?))", r_ref().render(c.not()));
+        for (Condition c : Arrays.asList(c1, c2)) {
+            assertEquals("not(\"TABLE1\".\"ID1\" = 10)", r_refI().render(c));
+            assertEquals("not(\"TABLE1\".\"ID1\" = ?)", r_ref().render(c));
 
-        context.checking(new Expectations() {{
-            oneOf(statement).setInt(1, 10);
-        }});
+            assertEquals("not(not(\"TABLE1\".\"ID1\" = 10))", r_refI().render(c.not()));
+            assertEquals("not(not(\"TABLE1\".\"ID1\" = ?))", r_ref().render(c.not()));
 
-        int i = b_ref().bind(c).peekIndex();
-        assertEquals(2, i);
+            context.checking(new Expectations() {{
+                oneOf(statement).setInt(1, 10);
+            }});
 
-        context.assertIsSatisfied();
+            int i = b_ref().bind(c).peekIndex();
+            assertEquals(2, i);
+
+            context.assertIsSatisfied();
+        }
     }
 
     @Test

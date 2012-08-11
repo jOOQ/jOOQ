@@ -1803,6 +1803,16 @@ public class Factory implements FactoryOperations {
         return new SelectQueryAsExistsCondition(query, ExistsOperator.NOT_EXISTS);
     }
 
+    /**
+     * Invert a condition
+     * <p>
+     * This is the same as calling {@link Condition#not()}
+     */
+    @Support
+    public static Condition not(Condition condition) {
+        return condition.not();
+    }
+
     // -------------------------------------------------------------------------
     // XXX Global Query factory
     // -------------------------------------------------------------------------

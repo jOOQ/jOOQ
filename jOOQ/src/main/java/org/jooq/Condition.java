@@ -179,7 +179,7 @@ public interface Condition extends QueryPart {
      */
     @Support
     Condition or(String sql, Object... bindings);
-    
+
     /**
      * Combine this condition with another one using the {@link Operator#OR}
      * operator.
@@ -231,6 +231,8 @@ public interface Condition extends QueryPart {
 
     /**
      * Invert this condition
+     * <p>
+     * This is the same as calling {@link Factory#not(Condition)}
      *
      * @return This condition, inverted
      */

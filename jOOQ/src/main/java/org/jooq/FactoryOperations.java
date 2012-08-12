@@ -966,6 +966,12 @@ public interface FactoryOperations extends Configuration {
      * <p>
      * This performs roughly the inverse operation of {@link Record#into(Class)}
      * <p>
+     * The resulting record will have its internal "changed" flags set to true
+     * for all values. This means that {@link UpdatableRecord#store()} will
+     * perform an <code>INSERT</code> statement. If you wish to store the record
+     * using an <code>UPDATE</code> statement, use
+     * {@link #executeUpdate(UpdatableRecord)} instead.
+     * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.

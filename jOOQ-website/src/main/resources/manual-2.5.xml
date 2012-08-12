@@ -4123,11 +4123,78 @@ Query query = error.query();]]></java>
 
 				    <section id="crud-with-updatablerecords">
 						<title>CRUD with UpdatableRecords</title>
-						<content></content>
+						<content>
+							<h3>CRUD: Create, Read, Update, Delete</h3>
+							<p>
+								Your database application probably consists of 50% - 80% CRUD, whereas only the remaining 20% - 50% of querying is actual querying. Most often, you will operate on records of tables without using any advanced relational concepts. This is called CRUD for
+							</p>
+							<ul>
+								<li>Create (<reference id="insert-statement" title="INSERT"/>)</li>
+								<li>Read (<reference id="select-statement" title="SELECT"/>)</li>
+								<li>Update (<reference id="update-statement" title="UPDATE"/>)</li>
+								<li>Delete (<reference id="delete-statement" title="DELETE"/>)</li>
+							</ul>
+							<p>								
+								CRUD always uses the same patterns, regardless of the nature of underlying tables. This again, leads to a lot of boilerplate code, if you have to issue your statements yourself. Like Hibernate / JPA and other ORMs, jOOQ facilitates CRUD using a specific API involving <reference class="org.jooq.UpdatableRecord"/> types.
+							</p>
+							
+							<h3>Primary keys and updatability</h3>
+							<p>
+								In normalised databases, every table has a primary key by which a tuple/record within that table can be uniquely identified. In simple cases, this is a (possibly auto-generated) number called ID. But in many cases, primary keys include several non-numeric columns. An important feature of such keys is the fact that in most databases, they are enforced using an index that allows for very fast random access to the table. A typical way to access / modify / delete a book is this:
+							</p>
+							
+<sql><![CDATA[-- Inserting uses a previously generated key value or generates it afresh
+INSERT INTO BOOK (ID, TITLE) VALUES (5, 'Animal Farm');
+
+-- Other operations can use a previously generated key value
+SELECT * FROM BOOK WHERE ID = 5;
+UPDATE BOOK SET TITLE = '1984' WHERE ID = 5;
+DELETE FROM BOOK WHERE ID = 5;]]></sql>
+							
+							<p>
+								Normalised databases assume that a primary key is unique "forever", i.e. that a key, once inserted into a table, will never be changed or re-inserted after deletion. In order to use jOOQ's <reference id="simple-crud" title="CRUD"/> operations correctly, you should design your database accordingly.
+							</p>
+							
+							<h3>Main UNIQUE keys</h3>
+							<p>
+								In SQL, a primary key is always also a unique key. In fact, unique keys have very similar properties as primary keys. For instance, they can be referenced from other tables' foreign keys in most databases. In the absence of a formal primary key, jOOQ assumes that the first unique key it encounters will serve as a primary key substitute. This is called the "main key" in jOOQ. In other words, a main key is:
+							</p>
+							<ul>
+								<li>The primary key, if available</li>
+								<li>The first unique key, otherwise</li>
+							</ul>
+							
+							<p>
+								For simplicity, the term "primary key" will be used in the sense of such a "main unique key" in this manual.
+							</p>
+						</content>
 
 						<sections>
 							<section id="simple-crud">
 								<title>Simple CRUD</title>
+								<content>
+									<h3>Simple CRUD performed with jOOQ</h3>
+									<p>
+										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, it will generate <reference class="org.jooq.UpdatableRecord"/> implementations for every table that has a primary key. When <reference id="fetching" title="fetching"/> such a record form the database, these records are "attached" to the <reference id="factory" title="Factory" /> that created them. This means that they hold an internal reference to the same database connection that was used to fetch them. This connection is used internally by any of the following methods of the UpdatableRecord:
+									</p>
+									
+<java><![CDATA[// Refresh a record from the database.
+void refresh() throws DataAccessException;
+
+// Store (insert or update) a record to the database.
+int store() throws DataAccessException;
+
+// Delete a record from the database
+int delete() throws DataAccessException;]]></java>
+									
+									<p>
+										See the manual's section about <reference id="serializability" title="serializability"/> for some more insight on "attached" objects. 
+									</p>
+								</content>
+							</section>
+
+							<section id="identity-values">
+								<title>IDENTITY values</title>
 								<content></content>
 							</section>
 
@@ -4150,6 +4217,11 @@ Query query = error.query();]]></java>
 
 				    <section id="daos">
 						<title>DAOs</title>
+						<content></content>
+					</section>
+
+				    <section id="exception-handling">
+						<title>Exception handling</title>
 						<content></content>
 					</section>
 
@@ -4266,6 +4338,31 @@ Query query = error.query();]]></java>
 						<content></content>
 						
 						<sections>
+							<section id="data-types-unsigned">
+								<title>Unsigned integer types</title>
+								<content>
+									<h3>Unsigned integers in jOOQ</h3>
+									<p>
+										Some databases explicitly support unsigned integer data types. In most normal JDBC-based applications, they would just be mapped to their signed counterparts letting bit-wise shifting and tweaking to the user. jOOQ ships with a set of unsigned <reference class="java.lang.Number"/> implementations modelling the following types:
+									</p>
+									<ul>
+										<li><reference class="org.jooq.tools.unsigned.UByte"/>: Unsigned byte, an 8-bit unsigned integer</li>
+										<li><reference class="org.jooq.tools.unsigned.UShort"/>: Unsigned short, a 16-bit unsigned integer</li>
+										<li><reference class="org.jooq.tools.unsigned.UInteger"/>: Unsigned int, a 32-bit unsigned integer</li>
+										<li><reference class="org.jooq.tools.unsigned.ULong"/>: Unsigned long, a 64-bit unsigned integer</li>
+									</ul>
+									<p>
+										Each of these wrapper types extends <reference class="java.lang.Number"/>, wrapping a higher-level integer type, internally:
+									</p>
+									<ul>
+										<li>UByte wraps <reference class="java.lang.Short"/></li>
+										<li>UShort wraps <reference class="java.lang.Integer"/></li>
+										<li>UInteger wraps <reference class="java.lang.Long"/></li>
+										<li>ULong wraps <reference class="java.math.BigInteger"/></li>
+									</ul>
+								</content>
+							</section>
+							
 							<section id="data-types-intervals">
 								<title>INTERVAL data types</title>
 								<content>

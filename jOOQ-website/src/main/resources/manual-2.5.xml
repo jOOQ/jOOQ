@@ -157,6 +157,12 @@ BOOK.TITLE, AUTHOR.LAST_NAME // correspond to com.example.generated.Tables.BOOK.
 // Whenever you see "create" being used in Java code, assume that this is an instance of org.jooq.impl.Factory:
 Factory create = new Factory(SQLDialect.ORACLE, connection);]]></java>
 
+							<h3>Settings</h3>
+							<p>
+								jOOQ allows to override runtime behaviour using <reference class="org.jooq.conf.Settings"/>. If nothing is specified, the default runtime settings are assumed.
+							</p>
+							
+							<h3>Sample database</h3>
 							<p>
 								See the manual's section about <reference id="sample-database" title="the sample database used in this manual"/> to learn more about the sample database.
 							</p>
@@ -1079,10 +1085,10 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
 									<p>
 										As you can see, there is no way to further restrict/project the selected fields. This just selects all known TableFields in the supplied Table, and it also binds &lt;R extends Record&gt; to your Table's associated Record. An example of such a Query would then be:
 									</p>
-<java><![CDATA[Book book = create.selectFrom(BOOK)
-                  .where(BOOK.LANGUAGE.equal("DE"))
-                  .orderBy(BOOK.TITLE)
-                  .fetchAny();]]></java>
+<java><![CDATA[BookRecord book = create.selectFrom(BOOK)
+                        .where(BOOK.LANGUAGE.equal("DE"))
+                        .orderBy(BOOK.TITLE)
+                        .fetchAny();]]></java>
 
                    					<p>
                    						The simple SELECT API is limited in the way that it does not support any of these clauses:
@@ -4190,11 +4196,91 @@ int delete() throws DataAccessException;]]></java>
 									<p>
 										See the manual's section about <reference id="serializability" title="serializability"/> for some more insight on "attached" objects. 
 									</p>
+									
+									<h3>Storing</h3>
+									<p>
+										Storing a record will perform an <reference id="insert-statement" title="INSERT statement"/> or an <reference id="update-statement" title="UPDATE statement"/>. In general, new records are always inserted, whereas records loaded from the database are always updated. This is best visualised in code:
+									</p>
+
+<java><![CDATA[// Create a new record
+BookRecord book1 = create.newRecord(BOOK);
+
+// Insert the record: INSERT INTO BOOK (TITLE) VALUES ('1984');
+book1.setTitle("1984");
+book1.store();
+
+// Update the record: UPDATE BOOK SET PUBLISHED_IN = 1984 WHERE ID = [id]
+book1.setPublishedIn(1948);
+book1.store();
+
+// Get the (possibly) auto-generated ID from the record
+Integer id = book1.getId();
+
+// Get another instance of the same book
+BookRecord book2 = create.fetchOne(BOOK, BOOK.ID.equal(id));
+
+// Update the record: UPDATE BOOK SET TITLE = 'Animal Farm' WHERE ID = [id]
+book2.setTitle("Animal Farm");
+book2.store();]]></java>
+									
+									<p>
+										Some remarks about storing:
+									</p>
+									<ul>
+										<li>jOOQ sets only modified values in <reference id="insert-statement" title="INSERT statements"/> or <reference id="update-statement" title="UPDATE statements"/>. This allows for default values to be applied to inserted records, as specified in CREATE TABLE DDL statements.</li>
+										<li>When store() performs an <reference id="insert-statement" title="INSERT statement"/>, jOOQ attempts to load any generated keys from the database back into the record. For more details, see the manual's section about <reference id="identity-values" title="IDENTITY values"/>.</li>
+										<li>When loading records from <reference id="pojos" title="POJOs"/>, jOOQ will assume the record is a new record. It will hence attempt to INSERT it.</li>
+										<li>When you activate <reference id="optimistic-locking" title="optimistic locking"/>, storing a record may fail, if the underlying database record has been changed in the mean time.</li>
+									</ul>
+																		
+									<h3>Deleting</h3>
+									<p>
+										Deleting a record will remove it from the database. Here's how you delete records:
+									</p>
+									
+<java><![CDATA[// Get a previously inserted book
+BookRecord book = create.fetchOne(BOOK, BOOK.ID.equal(5));
+
+// Delete the book
+book.delete();]]></java>
+									
+									<h3>Refreshing</h3>
+									<p>
+										Refreshing a record from the database means that jOOQ will issue a <reference id="select-statement" title="SELECT statement"/> to refresh all record values that are not the primary key. This is particularly useful when you use jOOQ's <reference id="optimistic-locking" title="optimistic locking"/> feature, in case a modified record is "stale" and cannot be stored to the database, because the underlying database record has changed in the mean time.
+									</p>
+									<p>
+										In order to perform a refresh, use the following Java code:
+									</p>									
+
+<java><![CDATA[// Fetch an updatable record from the database
+BookRecord book = create.fetchOne(BOOK, BOOK.ID.equal(5));
+
+// Refresh the record
+book.refresh();]]></java>
+
+									<h3>CRUD and SELECT statements</h3>
+									<p>
+										CRUD operations can be combined with regular querying, if you select records from single database tables, as explained in the manual's section about <reference id="select-statement" title="SELECT statements"/>. For this, you will need to use the selectFrom() method from the <reference id="factory" title="Factory"/>:
+									</p>
+									
+<java><![CDATA[// Loop over records returned from a SELECT statement
+for (BookRecord book : create.fetch(BOOK, BOOK.PUBLISHED_IN.equal(1948))) {
+
+  // Perform actions on BookRecords depending on some conditions
+  if ("Orwell".equals(book.fetchAuthorByAuthorId().getLastName())) {
+    book.delete();
+  }
+}]]></java>
 								</content>
 							</section>
 
 							<section id="identity-values">
 								<title>IDENTITY values</title>
+								<content></content>
+							</section>
+
+							<section id="navigation-methods">
+								<title>Navigation methods</title>
 								<content></content>
 							</section>
 

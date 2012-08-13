@@ -90,6 +90,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.ArrayRecord;
+import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -166,7 +167,7 @@ import org.junit.Test;
  */
 public class jOOQOracleTest extends jOOQAbstractTest<
         TAuthorRecord,
-        Object,
+        org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,
@@ -208,6 +209,11 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     @Override
     protected OracleFactory create(Settings settings) {
         return new OracleFactory(getConnection(), settings);
+    }
+
+    @Override
+    protected DAO<TAuthorRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor, Integer> TAuthorDao() {
+        return new org.jooq.test.oracle.generatedclasses.test.tables.daos.TAuthorDao(create());
     }
 
     @Override

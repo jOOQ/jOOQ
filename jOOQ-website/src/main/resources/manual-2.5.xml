@@ -1890,17 +1890,173 @@ create.selectFrom(AUTHOR)
 
 							<section id="insert-statement">
 								<title>The INSERT statement</title>
-								<content></content>
+								<content>
+									<h3>INSERT Statements</h3>
+									<p>
+										The INSERT statement is used to insert new records into a database table. Records can either be supplied using a VALUES() constructor, or a SELECT statement. jOOQ supports both types of INSERT statements. An example of an INSERT statement using a VALUES() constructor is given here:
+									</p>
+
+
+<code-pair>
+<sql>INSERT INTO AUTHOR 
+       (ID, FIRST_NAME, LAST_NAME)
+VALUES (100, 'Hermann', 'Hesse');</sql>
+<java>create.insertInto(AUTHOR,
+        AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+      .values(100, "Hermann", "Hesse");</java></code-pair>
+
+									<h3>INSERT multiple rows with the VALUES() constructor</h3>
+									<p>
+										The SQL standard specifies that multiple rows can be supplied to the VALUES() constructor in an INSERT statement. Here's an example of a multi-record INSERT
+									</p>
+<code-pair>
+<sql>INSERT INTO AUTHOR
+       (ID, FIRST_NAME, LAST_NAME)
+VALUES (100, 'Hermann', 'Hesse'),
+       (101, 'Alfred', 'Döblin');</sql>
+<java>create.insertInto(AUTHOR,
+        AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+      .values(100, "Hermann", "Hesse")
+      .values(101, "Alfred", "Döblin");</java></code-pair>
+
+									<p>
+										jOOQ tries to stay close to actual SQL. In detail, however, Java's expressiveness is limited. That's why the values() clause is repeated for every record in multi-record inserts. 
+									</p>
+									<p> 
+										Some RDBMS do not support inserting several records in a single statement. In those cases, jOOQ simulates multi-record INSERTs using the following SQL:
+									</p>
+
+<code-pair>
+<sql>INSERT INTO AUTHOR
+    (ID, FIRST_NAME, LAST_NAME)
+SELECT 100, 'Hermann', 'Hesse' FROM DUAL UNION ALL
+SELECT 101, 'Alfred', 'Döblin' FROM DUAL;</sql>
+<java>create.insertInto(AUTHOR,
+        AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+      .values(100, "Hermann", "Hesse")
+      .values(101, "Alfred", "Döblin");
+</java></code-pair>
+
+									<h3>INSERT using jOOQ's alternative syntax</h3>
+									<p>
+										MySQL (and some other RDBMS) allow for using a non-SQL-standard, UPDATE-like syntax for INSERT statements. This is also supported in jOOQ, should you prefer that syntax. The above INSERT statement can also be expressed as follows:
+									</p>
+
+<java>create.insertInto(AUTHOR)
+      .set(AUTHOR.ID, 100)
+      .set(AUTHOR.FIRST_NAME, "Hermann")
+      .set(AUTHOR.LAST_NAME, "Hesse")
+      .newRecord()
+      .set(AUTHOR.ID, 101)
+      .set(AUTHOR.FIRST_NAME, "Alfred")
+      .set(AUTHOR.LAST_NAME, "Döblin");</java>
+      
+									<p>
+										As you can see, this syntax is a bit more verbose, but also more type-safe, as every field can be matched with its value. Internally, the two syntaxes are strictly equivalent.
+									</p>
+
+									<h3>MySQL's INSERT .. ON DUPLICATE KEY UPDATE</h3>
+									<p>
+										The MySQL database supports a very convenient way to INSERT or UPDATE a record. This is a non-standard extension to the SQL syntax, which is supported by jOOQ and simulated in other RDBMS, where this is possible (i.e. if they support the SQL standard <reference id="merge-statement" title="MERGE statement"/>). Here is an example how to use the ON DUPLICATE KEY UPDATE clause:
+									</p>
+									
+<java>// Add a new author called "Koontz" with ID 3.
+// If that ID is already present, update the author's name
+create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.LAST_NAME)
+      .values(3, "Koontz")
+      .onDuplicateKeyUpdate()
+      .set(AUTHOR.LAST_NAME, "Koontz");</java>
+
+									<h3>The synthetic ON DUPLICATE KEY IGNORE clause</h3>
+							
+									<p>
+										The MySQL database also supports an INSERT IGNORE INTO clause. This is supported by jOOQ using the more convenient SQL syntax variant of ON DUPLICATE KEY IGNORE, which can be equally simulated in other databases using a <reference id="merge-statement" title="MERGE statement"/>:
+									</p>
+									
+<java>// Add a new author called "Koontz" with ID 3.
+// If that ID is already present, ignore the INSERT statement
+create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.LAST_NAME)
+      .values(3, "Koontz")
+      .onDuplicateKeyIgnore();</java>
+
+      								<h3>Postgres's INSERT .. RETURNING</h3>
+									<p>
+										The Postgres database has native support for an INSERT .. RETURNING clause. This is a very powerful concept that is simulated for all other dialects using JDBC's <reference class="java.sql.Statement" anchor="#getGeneratedKeys()" title="getGeneratedKeys()"/> method. Take this example:
+									</p>
+
+<java><![CDATA[// Add another author, with a generated ID
+Record<?> record =
+create.insertInto(AUTHOR, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+      .values("Charlotte", "Roche")
+      .returning(AUTHOR.ID)
+      .fetchOne();
+
+System.out.println(record.getValue(AUTHOR.ID));
+
+// For some RDBMS, this also works when inserting several values
+// The following should return a 2x2 table
+Result<?> result =
+create.insertInto(AUTHOR, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+      .values("Johann Wolfgang", "von Goethe")
+      .values("Friedrich", "Schiller")
+      // You can request any field. Also trigger-generated values
+      .returning(AUTHOR.ID, AUTHOR.CREATION_DATE)
+      .fetch();]]></java>
+
+		      						<p>
+		      							Some databases have poor support for returning generated keys after INSERTs. In those cases, jOOQ might need to issue another <reference id="select-statement" title="SELECT statement"/> in order to fetch an @@identity value. Be aware, that this can lead to race-conditions in those databases that cannot properly return generated ID values. For more information, please consider the jOOQ Javadoc for the returning() clause.
+		      						</p>
+
+									<h3>The INSERT SELECT statement</h3>
+							
+									<p>
+										In some occasions, you may prefer the INSERT SELECT syntax, for instance, when you copy records from one table to another:
+									</p>
+									
+<java>create.insertInto(AUTHOR_ARCHIVE)
+      .select(create.selectFrom(AUTHOR).where(AUTHOR.DECEASED.isTrue()));</java>
+								
+								</content>
 							</section>
 
 							<section id="update-statement">
 								<title>The UPDATE statement</title>
-								<content></content>
+								<content>
+									<h3>UPDATE Statements</h3>
+									<p>
+										The UPDATE statement is used to modify one or several pre-existing records in a database table. UPDATE statements are only possible on single tables. Support for multi-table updates will be implemented in the near future. An example update query is given here:
+									</p>
+
+<code-pair>
+<sql>UPDATE AUTHOR
+   SET FIRST_NAME = 'Hermann',
+       LAST_NAME = 'Hesse'
+ WHERE ID = 3;</sql>
+<java>create.update(AUTHOR)
+      .set(AUTHOR.FIRST_NAME, "Hermann")
+      .set(AUTHOR.LAST_NAME, "Hesse")
+      .where(AUTHOR.ID.equal(3));</java>
+</code-pair>
+								
+								</content>
 							</section>
 
 							<section id="delete-statement">
 								<title>The DELETE statement</title>
-								<content></content>
+								<content>
+									<h3>DELETE Statements</h3>
+									<p>
+										The DELETE statement physically removes records from a database table. DELETE statements are only possible on single tables. Support for multi-table deletes will be implemented in the near future. An example delete query is given here:
+									</p>
+
+<code-pair>
+<sql>DELETE AUTHOR
+ WHERE ID = 100;</sql>
+<java>create.delete(AUTHOR)
+      .where(AUTHOR.ID.equal(100));</java>
+</code-pair>
+
+								</content>
 							</section>
 
 							<section id="merge-statement">
@@ -1917,21 +2073,18 @@ create.selectFrom(AUTHOR)
 <code-pair>
 <sql>-- Check if there is already an author called 'Hitchcock'
 -- If there is, rename him to John. If there isn't add him.
-
-MERGE INTO T_AUTHOR
+MERGE INTO AUTHOR
 USING (SELECT 1 FROM DUAL)
 ON (LAST_NAME = 'Hitchcock')
 WHEN MATCHED THEN UPDATE SET FIRST_NAME = 'John'
-WHEN NOT MATCHED THEN INSERT (LAST_NAME)
-                      VALUES ('Hitchcock')</sql>
-<java>create.mergeInto(T_AUTHOR)
+WHEN NOT MATCHED THEN INSERT (LAST_NAME) VALUES ('Hitchcock')</sql>
+<java>create.mergeInto(AUTHOR)
       .using(create().selectOne())
-      .on(T_AUTHOR.LAST_NAME.equal("Hitchcock"))
+      .on(AUTHOR.LAST_NAME.equal("Hitchcock"))
       .whenMatchedThenUpdate()
-      .set(T_AUTHOR.FIRST_NAME, "John")
-      .whenNotMatchedThenInsert(T_AUTHOR.LAST_NAME)
-      .values("Hitchcock")
-      .execute();
+      .set(AUTHOR.FIRST_NAME, "John")
+      .whenNotMatchedThenInsert(AUTHOR.LAST_NAME)
+      .values("Hitchcock");
 
 </java></code-pair>
 
@@ -1944,13 +2097,13 @@ WHEN NOT MATCHED THEN INSERT (LAST_NAME)
 <sql>-- Check if there is already an author called 'Hitchcock'
 -- If there is, rename him to John. If there isn't add him.
 
-MERGE INTO T_AUTHOR (FIRST_NAME, LAST_NAME)
+MERGE INTO AUTHOR (FIRST_NAME, LAST_NAME)
 KEY (LAST_NAME)
 VALUES ('John', 'Hitchcock')</sql>
-<java>create.mergeInto(T_AUTHOR,
-                 T_AUTHOR.FIRST_NAME,
-                 T_AUTHOR.LAST_NAME)
-      .key(T_AUTHOR.LAST_NAME)
+<java>create.mergeInto(AUTHOR,
+                 AUTHOR.FIRST_NAME,
+                 AUTHOR.LAST_NAME)
+      .key(AUTHOR.LAST_NAME)
       .values("John", "Hitchcock")
       .execute();
 </java></code-pair>

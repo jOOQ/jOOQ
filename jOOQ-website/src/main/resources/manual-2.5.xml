@@ -5569,7 +5569,22 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 							
 							<section id="data-types-xml">
 								<title>XML data types</title>
-								<content></content>
+								<content>
+									<h3>XML data types</h3>
+									<p>
+										XML data types are currently not supported
+									</p>
+								</content>
+							</section>
+							
+							<section id="data-types-geospacial">
+								<title>Geospacial data types</title>
+								<content>
+									<h3>Geospacial data types</h3>
+									<p>
+										Geospacial data types are currently not supported
+									</p>
+								</content>
 							</section>
 							
 							<section id="data-types-cursors">

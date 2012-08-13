@@ -3148,7 +3148,87 @@ GROUP BY A, B, C WITH ROLLUP
 
 							<section id="user-defined-aggregate-functions">
 								<title>User-defined aggregate functions</title>
-								<content></content>
+								<content>
+									<h3>User-defined aggregate functions</h3>
+									<p>
+										Some databases support user-defined aggregate functions, which can then be used along with <reference id="group-by-clause" title="GROUP BY clauses"/> or as <reference id="window-functions" title="window functions"/>. An example for such a database is Oracle. With Oracle, you can define the following OBJECT type (the example was taken from the <a href="http://docs.oracle.com/cd/B28359_01/appdev.111/b28425/ext_agg_ref.htm">Oracle 11g documentation</a>): 
+									</p>
+									
+<sql><![CDATA[CREATE TYPE U_SECOND_MAX AS OBJECT
+(
+  MAX NUMBER, -- highest value seen so far
+  SECMAX NUMBER, -- second highest value seen so far
+  STATIC FUNCTION ODCIAggregateInitialize(sctx IN OUT U_SECOND_MAX) RETURN NUMBER,
+  MEMBER FUNCTION ODCIAggregateIterate(self IN OUT U_SECOND_MAX, value IN NUMBER) RETURN NUMBER,
+  MEMBER FUNCTION ODCIAggregateTerminate(self IN U_SECOND_MAX, returnValue OUT NUMBER, flags IN NUMBER) RETURN NUMBER,
+  MEMBER FUNCTION ODCIAggregateMerge(self IN OUT U_SECOND_MAX, ctx2 IN U_SECOND_MAX) RETURN NUMBER
+);
+
+CREATE OR REPLACE TYPE BODY U_SECOND_MAX IS
+STATIC FUNCTION ODCIAggregateInitialize(sctx IN OUT U_SECOND_MAX)
+RETURN NUMBER IS
+BEGIN
+  SCTX := U_SECOND_MAX(0, 0);
+  RETURN ODCIConst.Success;
+END;
+
+MEMBER FUNCTION ODCIAggregateIterate(self IN OUT U_SECOND_MAX, value IN NUMBER) RETURN NUMBER IS
+BEGIN
+  IF VALUE > SELF.MAX THEN
+    SELF.SECMAX := SELF.MAX;
+    SELF.MAX := VALUE;
+  ELSIF VALUE > SELF.SECMAX THEN
+    SELF.SECMAX := VALUE;
+  END IF;
+  RETURN ODCIConst.Success;
+END;
+
+MEMBER FUNCTION ODCIAggregateTerminate(self IN U_SECOND_MAX, returnValue OUT NUMBER, flags IN NUMBER) RETURN NUMBER IS
+BEGIN
+  RETURNVALUE := SELF.SECMAX;
+  RETURN ODCIConst.Success;
+END;
+
+MEMBER FUNCTION ODCIAggregateMerge(self IN OUT U_SECOND_MAX, ctx2 IN U_SECOND_MAX) RETURN NUMBER IS
+BEGIN
+  IF CTX2.MAX > SELF.MAX THEN
+    IF CTX2.SECMAX > SELF.SECMAX THEN
+      SELF.SECMAX := CTX2.SECMAX;
+    ELSE
+      SELF.SECMAX := SELF.MAX;
+    END IF;
+    SELF.MAX := CTX2.MAX;
+  ELSIF CTX2.MAX > SELF.SECMAX THEN
+    SELF.SECMAX := CTX2.MAX;
+  END IF;
+  RETURN ODCIConst.Success;
+END;
+END;]]></sql>
+
+									<p>
+										The above OBJECT type is then available to function declarations as such:
+									</p>
+
+<sql><![CDATA[
+CREATE FUNCTION SECOND_MAX (input NUMBER) RETURN NUMBER
+PARALLEL_ENABLE AGGREGATE USING U_SECOND_MAX;]]></sql>
+
+									<h3>Using the generated aggregate function</h3>
+									<p>
+										jOOQ's <reference id="code-generation" title="code generator"/> will detect such aggregate functions and generate them differently from regular <reference id="user-defined-functions" title="user-defined functions"/>. They implement the <reference class="org.jooq.AggregateFunction"/> type, as mentioned in the manual's section about <reference id="aggregate-functions" title="aggregate functions"/>. Here's how you can use the SECOND_MAX() aggregate function with jOOQ:
+									</p>
+				
+<code-pair>					
+<sql><![CDATA[-- Get the second-latest publishing date by author
+SELECT SECOND_MAX(PUBLISHED_IN) 
+FROM BOOK
+GROUP BY AUTHOR_ID]]></sql>
+<java><![CDATA[// Routines.secondMax() can be static-imported
+create.select(secondMax(BOOK.PUBLISHED_IN))
+      .from(BOOK)
+      .groupBy(BOOK.AUTHOR_ID)]]></java>
+</code-pair>
+								</content>
 							</section>
 
 							<section id="case-expressions">
@@ -4018,8 +4098,8 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 								<content></content>
 							</section>
 
-							<section id="arrays-and-maps">
-								<title>Arrays and Maps</title>
+							<section id="arrays-maps-and-lists">
+								<title>Arrays, Maps and Lists</title>
 								<content></content>
 							</section>
 
@@ -5548,7 +5628,10 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 				<sections>
 					<section id="supported-rdbms">
 						<title>Supported RDBMS</title>
-						<content></content>
+						<content>
+							<h3>A list of supported databases</h3>
+							<h3>Feature matrix</h3>
+						</content>
 					</section>
 
 					<section id="reference-data-types">

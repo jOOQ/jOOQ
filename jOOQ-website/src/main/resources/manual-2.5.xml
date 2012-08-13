@@ -4056,8 +4056,75 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 					</section>
 
 				    <section id="batch-execution">
-						<title>Batch execution</title>
-						<content></content>
+						<title>Using JDBC batch operations</title>
+						<content>
+							<h3>JDBC batch operations</h3>
+							<p>
+								With JDBC, you can easily execute several statements at once using the addBatch() method. Essentially, there are two modes in JDBC
+							</p>
+
+							<ul>
+								<li>Execute several queries without bind values</li>
+								<li>Execute one query several times with bind values</li>
+							</ul>
+
+							<p>
+								In code, this looks like the following snippet:
+							</p>
+<java><![CDATA[// 1. several queries
+// ------------------
+Statement stmt = connection.createStatement();
+stmt.addBatch("INSERT INTO author VALUES (1, 'Erich Gamma')");
+stmt.addBatch("INSERT INTO author VALUES (2, 'Richard Helm')");
+stmt.addBatch("INSERT INTO author VALUES (3, 'Ralph Johnson')");
+stmt.addBatch("INSERT INTO author VALUES (4, 'John Vlissides')");
+int[] result = stmt.executeBatch();
+
+// 2. a single query
+// -----------------
+PreparedStatement stmt = connection.prepareStatement("INSERT INTO autho VALUES (?, ?)");
+stmt.setInt(1, 1);
+stmt.setString(2, "Erich Gamma");
+stmt.addBatch();
+
+stmt.setInt(1, 2);
+stmt.setString(2, "Richard Helm");
+stmt.addBatch();
+
+stmt.setInt(1, 3);
+stmt.setString(2, "Ralph Johnson");
+stmt.addBatch();
+
+stmt.setInt(1, 4);
+stmt.setString(2, "John Vlissides");
+stmt.addBatch();
+
+int[] result = stmt.executeBatch();]]></java>
+
+
+							<h3>This will also be supported by jOOQ</h3>
+							<p>
+								jOOQ supports executing queries in batch mode as follows:
+							</p>
+							
+<java><![CDATA[// 1. several queries
+// ------------------
+create.batch(
+	create.insertInto(AUTHOR, ID, NAME).values(1, "Erich Gamma"),
+	create.insertInto(AUTHOR, ID, NAME).values(2, "Richard Helm"),
+	create.insertInto(AUTHOR, ID, NAME).values(3, "Ralph Johnson"),
+	create.insertInto(AUTHOR, ID, NAME).values(4, "John Vlissides"))
+.execute();
+
+// 2. a single query
+// -----------------
+create.batch(create.insertInto(AUTHOR, ID, NAME).values("?", "?"))
+	  .bind(1, "Erich Gamma")
+	  .bind(2, "Richard Helm")
+	  .bind(3, "Ralph Johnson")
+	  .bind(4, "John Vlissides")
+	  .execute();]]></java>
+						</content>
 					</section>
 
 				    <section id="sequence-execution">

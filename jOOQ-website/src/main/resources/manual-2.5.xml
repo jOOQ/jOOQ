@@ -1905,12 +1905,84 @@ create.selectFrom(AUTHOR)
 
 							<section id="merge-statement">
 								<title>The MERGE statement</title>
-								<content></content>
+								<content>
+									<h3>MERGE Statement</h3>
+									<p>
+										The MERGE statement is one of the most advanced standardised SQL constructs, which is supported by DB2, HSQLDB, Oracle, SQL Server and Sybase (MySQL has the similar INSERT .. ON DUPLICATE KEY UPDATE construct)
+									</p>
+									<p>
+										The point of the standard MERGE statement is to take a TARGET table, and merge (INSERT, UPDATE) data from a SOURCE table into it. DB2, Oracle, SQL Server and Sybase also allow for DELETING some data and for adding many additional clauses. With jOOQ {jooq-version}, only Oracle's MERGE extensions are supported. Here is an example:
+									</p>
+
+<code-pair>
+<sql>-- Check if there is already an author called 'Hitchcock'
+-- If there is, rename him to John. If there isn't add him.
+
+MERGE INTO T_AUTHOR
+USING (SELECT 1 FROM DUAL)
+ON (LAST_NAME = 'Hitchcock')
+WHEN MATCHED THEN UPDATE SET FIRST_NAME = 'John'
+WHEN NOT MATCHED THEN INSERT (LAST_NAME)
+                      VALUES ('Hitchcock')</sql>
+<java>create.mergeInto(T_AUTHOR)
+      .using(create().selectOne())
+      .on(T_AUTHOR.LAST_NAME.equal("Hitchcock"))
+      .whenMatchedThenUpdate()
+      .set(T_AUTHOR.FIRST_NAME, "John")
+      .whenNotMatchedThenInsert(T_AUTHOR.LAST_NAME)
+      .values("Hitchcock")
+      .execute();
+
+</java></code-pair>
+
+		                            <h3>MERGE Statement (H2-specific syntax)</h3>
+									<p>
+									    The H2 database ships with a somewhat less powerful but a little more intuitive syntax for its own version of the MERGE statement. An example more or less equivalent to the previous one can be seen here:
+									</p>
+									
+<code-pair>
+<sql>-- Check if there is already an author called 'Hitchcock'
+-- If there is, rename him to John. If there isn't add him.
+
+MERGE INTO T_AUTHOR (FIRST_NAME, LAST_NAME)
+KEY (LAST_NAME)
+VALUES ('John', 'Hitchcock')</sql>
+<java>create.mergeInto(T_AUTHOR,
+                 T_AUTHOR.FIRST_NAME,
+                 T_AUTHOR.LAST_NAME)
+      .key(T_AUTHOR.LAST_NAME)
+      .values("John", "Hitchcock")
+      .execute();
+</java></code-pair>
+
+		                            <p>
+		                                This syntax can be fully simulated by jOOQ for all other databases that support the SQL standard. For more information about the H2 MERGE syntax, see the documentation here:<br/>
+		                                <a href="http://www.h2database.com/html/grammar.html#merge">http://www.h2database.com/html/grammar.html#merge</a>
+		                            </p>
+								
+								</content>
 							</section>
 
 							<section id="truncate-statement">
 								<title>The TRUNCATE statement</title>
-								<content></content>
+								<content>
+									<h3>TRUNCATE Statement</h3>
+									<p>
+										The TRUNCATE statement is the only DDL statement supported by jOOQ so far. It is popular in many databases when you want to bypass constraints for table truncation. Databases may behave differently, when a truncated table is referenced by other tables. For instance, they may fail if records from a truncated table are referenced, even with ON DELETE CASCADE clauses in place. Please, consider your database manual to learn more about its TRUNCATE implementation.
+									</p>
+									<p>
+										The TRUNCATE syntax is trivial:
+									</p>
+
+<code-pair>
+	<sql>TRUNCATE TABLE AUTHOR;</sql>
+	<java>create.truncate(AUTHOR).execute();</java>
+</code-pair>
+									
+									<p>
+										TRUNCATE is not supported by Ingres and SQLite. jOOQ will execute a DELETE FROM AUTHOR statement instead.
+									</p>
+								</content>
 							</section>
 						</sections>
 					</section>

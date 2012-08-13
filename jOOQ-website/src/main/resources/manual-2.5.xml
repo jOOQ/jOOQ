@@ -682,6 +682,27 @@ public class Main {
 							</section>
 						</sections>
 					</section>
+					
+					<section id="dependencies">
+						<title>Dependencies</title>
+						<content>
+							<h3>Dependencies on third-party libraries</h3>
+							<p>
+								jOOQ has no dependencies on any third-party libraries. This rule has some exceptions:
+							</p>
+							<ul>
+								<li><reference id="logging" title="logging APIs"/> are referenced as "optional dependencies". jOOQ tries to find slf4j or log4j on the classpath. If it fails, it will use the <reference class="java.util.logging.Logger"/></li>
+								<li>Oracle ojdbc types used for array creation are loaded using reflection.</li>
+								<li>Small libraries with compatible licenses are incorporated into jOOQ (<a href="http://code.google.com/p/joor/">jOOR</a>, <a href="http://code.google.com/p/joou/">jOOU</a>, <a href="http://opencsv.sourceforge.net/">OpenCSV</a>, <a href="http://code.google.com/p/json-simple/">json simple</a>, <a href="http://commons.apache.org/lang/">commons-lang</a>)</li>
+								<li>javax.persistence and javax.validation will be needed if you activate the relevant <reference id="code-generation" title="code generation flags"/></li>
+							</ul>
+							
+							<h3>Build your own</h3>
+							<p>
+								In order to build jOOQ, please download the sources from <a href="https://github.com/jOOQ/jOOQ">https://github.com/jOOQ/jOOQ</a> and use Maven to build it, preferably in Eclipse.
+							</p>
+						</content>
+					</section>
 				</sections>
 			</section>
 
@@ -4528,22 +4549,262 @@ for (BookRecord book : create.fetch(BOOK, BOOK.PUBLISHED_IN.equal(1948))) {
 
 				    <section id="daos">
 						<title>DAOs</title>
-						<content></content>
+						<content>
+							<h3>Using generated DAOs with jOOQ</h3>
+							<p>
+								If you're using jOOQ's <reference id="code-generation" title="code generator"/>, you can configure it to generate <reference id="pojos" title="POJOs" /> and DAOs for you. jOOQ then generates one DAO per <reference id="crud-with-updatablerecords" title="UpdatableRecord"/>, i.e. per table with a single-column primary key. Generated DAOs implement a common jOOQ type called <reference class="org.jooq.DAO"/>. This type contains the following methods:
+							</p>
+							
+<java><![CDATA[// <R> corresponds to the DAO's related table
+// <P> corresponds to the DAO's related generated POJO type
+// <T> corresponds to the DAO's related table's primary key type. Note that multi-column primary keys are not yet supported by DAOs
+public interface DAO<R extends TableRecord<R>, P, T> {
+
+    // These methods allow for inserting POJOs
+    void insert(P object) throws DataAccessException;
+    void insert(P... objects) throws DataAccessException;
+    void insert(Collection<P> objects) throws DataAccessException;
+    
+    // These methods allow for updating POJOs based on their primary key
+    void update(P object) throws DataAccessException;
+    void update(P... objects) throws DataAccessException;
+    void update(Collection<P> objects) throws DataAccessException;
+    
+    // These methods allow for deleting POJOs based on their primary key
+    void delete(P... objects) throws DataAccessException;
+    void delete(Collection<P> objects) throws DataAccessException;
+    void deleteById(T... ids) throws DataAccessException;
+    void deleteById(Collection<T> ids) throws DataAccessException;
+    
+    // These methods allow for checking record existence
+    boolean exists(P object) throws DataAccessException;
+    boolean existsById(T id) throws DataAccessException;
+    long count() throws DataAccessException;
+    
+    // These methods allow for retrieving POJOs by primary key or by some other field
+    List<P> findAll() throws DataAccessException;
+    P findById(T id) throws DataAccessException;
+    <Z> List<P> fetch(Field<Z> field, Z... values) throws DataAccessException;
+    <Z> P fetchOne(Field<Z> field, Z value) throws DataAccessException;
+
+    // These methods provide DAO meta-information
+    Table<R> getTable();
+    Class<P> getType();
+}]]></java>
+
+							<p>
+								Besides these base methods, generated DAO classes implement various useful fetch methods. An incomplete example is given here, for the BOOK table:
+							</p>
+
+<java><![CDATA[// An example generated BookDao class
+public class BookDao extends DAOImpl<BookRecord, Book, Integer> {
+
+    // Columns with primary / unique keys produce fetchOne() methods    
+    public Book fetchOneById(Integer value) { ... }
+
+    // Other columns produce fetch() methods, returning several records
+    public List<Book> fetchByAuthorId(Integer... values) { ... }
+    public List<Book> fetchByTitle(String... values) { ... }
+}]]></java>
+							<p>
+								Note that you can further subtype those pre-generated DAO classes, to add more useful DAO methods to them. Using such a DAO is simple:
+							</p>
+							
+<java><![CDATA[// Initialise a Factory
+Factory create = new Factory(SQLDialect.ORACLE, connection);
+
+// Initialise the DAO with the Factory
+BookDao bookDao = new BookDao(create);
+
+// Start using the DAO
+Book book = bookDao.findById(5);
+
+// Modify and update the POJO
+book.setTitle("1984");
+book.setPublishedIn(1948);
+bookDao.update(book);
+
+// Delete it again
+bookDao.delete(book);]]></java>
+
+						</content>
 					</section>
 
 				    <section id="exception-handling">
 						<title>Exception handling</title>
-						<content></content>
+						<content>
+							<h3>Checked vs. unchecked exceptions</h3>
+							<p>
+								This is an eternal and religious debate. Pros and cons have been discussed time and again, and it still is a matter of taste, today. In this case, jOOQ clearly takes a side. jOOQ's exception strategy is simple:
+							</p>
+							<ul>
+								<li>All "system exceptions" are unchecked. If in the middle of a transaction involving business logic, there is no way that you can recover sensibly from a lost database connection, or a constraint violation that indicates a bug in your understanding of your database model.</li>
+								<li>All "business exceptions" are checked. Business exceptions are true exceptions that you should handle (e.g. not enough funds to complete a transaction).</li>
+							</ul>
+							<p>
+								With jOOQ, it's simple. All of jOOQ's exceptions are "system exceptions", hence they are all unchecked.
+							</p>
+							
+							<h3>jOOQ's DataAccessException</h3>
+							<p>
+								jOOQ uses its own <reference class="org.jooq.exception.DataAccessException"/> to wrap any underlying <reference class="java.sql.SQLException"/> that might have occurred. Note that all methods in jOOQ that may cause such a DataAccessException document this both in the Javadoc as well as in their method signature.
+							</p>
+							<p>
+								DataAccessException is subtyped several times as follows:
+							</p>
+							<ul>
+								<li><strong>DataAccessException</strong>: General exception usually originating from a <reference class="java.sql.SQLException"/></li>
+								<li><strong>DataChangedException</strong>: An exception indicating that the database's underlying record has been changed in the mean time (see <reference id="optimistic-locking" title="optimistic locking"/>)</li>
+								<li><strong>DataTypeException</strong>: Something went wrong during type conversion</li>
+								<li><strong>DetachedException</strong>: A SQL statement was executed on a "detached" <reference id="crud-with-updatablerecords" title="UpdatableRecord"/> or a "detached" <reference id="sql-statements" title="SQL statement"/>.</li>
+								<li><strong>InvalidResultException</strong>: An operation was performed expecting only one result, but several results were returned.</li>
+								<li><strong>MappingException</strong>: Something went wrong when loading a record from a <reference id="pojos" title="POJO"/> or when mapping a record into a POJO</li>
+							</ul>
+							
+							<h3>Override jOOQ's exception handling</h3>
+							<p>
+								The following section about <reference id="execute-listeners" title="execute listeners"/> documents means of overriding jOOQ's exception handling, if you wish to deal separately with some types of constraint violations, or if you raise business errors from your database, etc.
+							</p>
+						</content>
 					</section>
 
 				    <section id="execute-listeners">
 						<title>ExecuteListeners</title>
-						<content></content>
+						<content>
+							<h3>ExecuteListener</h3>
+							<p>
+								The <reference id="custom-settings" title="jOOQ Factory Settings"/> let you specify a list of <reference class="org.jooq.ExecuteListener"/> classes. The ExecuteListener is essentially an event listener for Query, Routine, or ResultSet render, prepare, bind, execute, fetch steps. It is a base type for loggers, debuggers, profilers, data collectors, triggers, etc. Advanced ExecuteListeners can also provide custom implementations of Connection, PreparedStatement and ResultSet to jOOQ in apropriate methods.
+							</p>
+							<p>
+								For convenience and better backwards-compatibility, consider extending <reference class="org.jooq.impl.DefaultExecuteListener"/> instead of implementing this interface.
+							</p>
+							<p>
+								Here is a sample implementation of an ExecuteListener, that is simply counting the number of queries per type that are being executed using jOOQ:
+							</p>
+
+<java><![CDATA[package com.example;
+
+// Extending DefaultExecuteListener, which provides empty implementations for all methods...
+public class StatisticsListener extends DefaultExecuteListener {
+    public static Map<ExecuteType, Integer> STATISTICS = new HashMap<ExecuteType, Integer>();
+
+    // Count "start" events for every type of query executed by jOOQ
+    @Override
+    public void start(ExecuteContext ctx) {
+        synchronized (STATISTICS) {
+            Integer count = STATISTICS.get(ctx.type());
+    
+            if (count == null) {
+                count = 0;
+            }
+    
+            STATISTICS.put(ctx.type(), count + 1);
+        }
+    }
+}]]></java>
+
+							<p>
+								Now, configure jOOQ's runtime to load your listener
+							</p>
+
+<xml><![CDATA[<settings>
+  <executeListeners>
+    <executeListener>com.example.StatisticsListener</executeListener>
+  </executeListeners>
+</settings>]]></xml>
+
+							<p>
+								And log results any time with a snippet like this:
+							</p>
+
+<java><![CDATA[log.info("STATISTICS");
+log.info("----------");
+
+for (ExecuteType type : ExecuteType.values()) {
+    log.info(type.name(), StatisticsListener.STATISTICS.get(type) + " executions");
+}]]></java>
+                            <p>
+                            	This may result in the following log output:
+                            </p>
+
+<config>15:16:52,982  INFO - TEST STATISTICS
+15:16:52,982  INFO - ---------------
+15:16:52,983  INFO - READ                     : 919 executions
+15:16:52,983  INFO - WRITE                    : 117 executions
+15:16:52,983  INFO - DDL                      : 2 executions
+15:16:52,983  INFO - BATCH                    : 4 executions
+15:16:52,983  INFO - ROUTINE                  : 21 executions
+15:16:52,983  INFO - OTHER                    : 30 executions</config>
+
+							<p>
+								Please read the <reference class="org.jooq.ExecuteListener" title="ExecuteListener Javadoc"/> for more details
+							</p>
+							<p>
+								See also the manual's sections about <reference id="logging" title="logging"/> and the <reference id="jooq-console" title="jOOQ Console"/> for more sample implementations of actual ExecuteListeners.
+							</p>
+						</content>
 					</section>
 
 				    <section id="logging">
 						<title>Logging</title>
-						<content></content>
+						<content>
+							<h3>SQL debugging and tracing with jOOQ</h3>
+							<p>
+								jOOQ logs all SQL queries and fetched result sets to its internal DEBUG logger, which is implemented as an <reference id="execute-listeners" title="execute listener"/>. By default, execute logging is activated in the <reference id="custom-settings" title="jOOQ Factory Settings"/>. In order to see any DEBUG log output, put either log4j or slf4j on jOOQ's classpath along with their respective configuration. A sample log4j configuration can be seen here:
+							</p>
+							
+<xml><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<log4j:configuration>
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n" />
+        </layout>
+    </appender>
+
+    <root>
+        <priority value="debug" />
+        <appender-ref ref="stdout" />
+    </root>
+</log4j:configuration>]]></xml>
+
+							<p>
+								With the above configuration, let's fetch some data with jOOQ
+							</p>
+							
+<java><![CDATA[// Using H2, this time
+create.select(BOOK.ID, BOOK.TITLE).from(BOOK).orderBy(BOOK.ID).limit(1, 2).fetch();]]></java>
+
+							<p>
+								The above query may result in the following log output:
+							</p>
+
+<text><![CDATA[Executing query          : select "T_BOOK"."ID", "T_BOOK"."TITLE" from "T_BOOK" order by "T_BOOK"."ID" asc, limit ? offset ?
+-> with bind values      : select "T_BOOK"."ID", "T_BOOK"."TITLE" from "T_BOOK" order by "T_BOOK"."ID" asc, limit 2 offset 1
+Query executed           : Total: 1.439ms
+Fetched result           : +----+------------+
+                         : |  ID|TITLE       |
+                         : +----+------------+
+                         : |   2|Animal Farm |
+                         : |   3|O Alquimista|
+                         : +----+------------+
+Finishing                : Total: 4.814ms, +3.375ms
+]]></text>
+
+							<p>
+								Essentially, jOOQ will log
+							</p>
+							<ul>
+								<li>The SQL statement as rendered to the prepared statement</li>
+								<li>The SQL statement with inlined bind values (for improved debugging)</li>
+								<li>The query execution time</li>
+								<li>The first 5 records of the result. This is formatted using <reference id="exporting-text" title="jOOQ's text export"/></li>
+								<li>The total execution + fetching time</li>
+							</ul>
+
+							<p>
+								If you wish to use your own logger (e.g. avoiding printing out sensitive data), you can deactivate jOOQ's logger using <reference id="custom-settings" title="your custom settings"/> and implement your own <reference id="execute-listeners" title="execute listener logger"/>.
+							</p>
+						</content>
 					</section>
 
 				    <section id="performance-considerations">

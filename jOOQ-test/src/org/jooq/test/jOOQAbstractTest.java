@@ -109,6 +109,7 @@ import org.jooq.test._.testcases.OrderByTests;
 import org.jooq.test._.testcases.PlainSQLTests;
 import org.jooq.test._.testcases.PredicateTests;
 import org.jooq.test._.testcases.RenderAndBindTests;
+import org.jooq.test._.testcases.ResultTests;
 import org.jooq.test._.testcases.RoutineAndUDTTests;
 import org.jooq.test._.testcases.SchemaAndMappingTests;
 import org.jooq.test._.testcases.SelectTests;
@@ -962,6 +963,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testDistinctQuery() throws Exception {
         new SelectTests(this).testDistinctQuery();
+    }
+
+    @Test
+    public void testResultSort() throws Exception {
+        new ResultTests(this).testResultSort();
     }
 
     @Test

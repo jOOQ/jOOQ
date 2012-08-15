@@ -79,7 +79,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     public void testResultSort() throws Exception {
         Result<B> result = create().fetch(TBook());
 
-        class C implements Comparator<Integer> {
+        assertTrue(result == result.sortAsc(TBook_ID()));
+        assertEquals(asList(1, 2, 3, 4), result.getValues(TBook_ID()));
+
+        assertTrue(result == result.sortDesc(TBook_ID()));
+        assertEquals(asList(4, 3, 2, 1), result.getValues(TBook_ID()));
+
+        class C1 implements Comparator<Integer> {
 
             @Override
             public int compare(Integer o1, Integer o2) {
@@ -92,16 +98,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             }
         }
 
-        assertTrue(result == result.sortAsc(TBook_ID()));
-        assertEquals(asList(1, 2, 3, 4), result.getValues(TBook_ID()));
-
-        assertTrue(result == result.sortDesc(TBook_ID()));
-        assertEquals(asList(4, 3, 2, 1), result.getValues(TBook_ID()));
-
-        assertTrue(result == result.sortAsc(TBook_ID(), new C()));
+        assertTrue(result == result.sortAsc(TBook_ID(), new C1()));
         assertEquals(asList(2, 3, 4, 1), result.getValues(TBook_ID()));
 
-        assertTrue(result == result.sortDesc(TBook_ID(), new C()));
+        assertTrue(result == result.sortDesc(TBook_ID(), new C1()));
+        assertEquals(asList(1, 4, 3, 2), result.getValues(TBook_ID()));
+
+        class C2 implements Comparator<B> {
+
+            private final C1 c1 = new C1();
+
+            @Override
+            public int compare(B book1, B book2) {
+                return c1.compare(book1.getValue(TBook_ID()), book2.getValue(TBook_ID()));
+            }
+        }
+
+        assertTrue(result == result.sortAsc(new C2()));
+        assertEquals(asList(2, 3, 4, 1), result.getValues(TBook_ID()));
+
+        assertTrue(result == result.sortDesc(new C2()));
         assertEquals(asList(1, 4, 3, 2), result.getValues(TBook_ID()));
     }
 }

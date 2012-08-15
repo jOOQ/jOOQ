@@ -1875,4 +1875,47 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      */
     ResultSet intoResultSet();
 
+    /**
+     * Sort this result by one of its contained fields.
+     * <p>
+     * <code>nulls</code> are sorted last by this method.
+     *
+     * @param field The sort field
+     * @return The result itself
+     */
+    <T extends Comparable<? super T>> Result<R> sortAsc(Field<T> field);
+
+    /**
+     * Reverse-sort this result by one of its contained fields.
+     * <p>
+     * <code>nulls</code> are sorted last by this method.
+     *
+     * @param field The sort field
+     * @return The result itself
+     */
+    <T extends Comparable<? super T>> Result<R> sortDesc(Field<T> field);
+
+    /**
+     * Sort this result by one of its contained fields using a comparator.
+     * <p>
+     * <code>null</code> sorting must be handled by the supplied
+     * <code>comparator</code>.
+     *
+     * @param field The sort field
+     * @param comparator The comparator used to sort this result.
+     * @return The result itself
+     */
+    <T> Result<R> sortAsc(Field<T> field, java.util.Comparator<? super T> comparator);
+
+    /**
+     * Reverse-sort this result by one of its contained fields using a comparator.
+     * <p>
+     * <code>null</code> sorting must be handled by the supplied
+     * <code>comparator</code>.
+     *
+     * @param field The sort field
+     * @param comparator The comparator used to sort this result.
+     * @return The result itself
+     */
+    <T> Result<R> sortDesc(Field<T> field, java.util.Comparator<? super T> comparator);
 }

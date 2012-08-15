@@ -51,6 +51,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -1319,6 +1321,67 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @Override
     public final ResultSet intoResultSet() {
         return new ResultSetImpl(this);
+    }
+
+    @Override
+    public final <T extends Comparable<? super T>> Result<R> sortAsc(Field<T> field) {
+        return sortAsc(field, new NaturalComparator<T>());
+    }
+
+    @Override
+    public final <T> Result<R> sortAsc(Field<T> field, Comparator<? super T> comparator) {
+        Collections.sort(this, new RecordComparator<T>(getIndex(field), comparator));
+        return this;
+    }
+
+    @Override
+    public final <T extends Comparable<? super T>> Result<R> sortDesc(Field<T> field) {
+        return sortAsc(field, Collections.reverseOrder(new NaturalComparator<T>()));
+    }
+
+    @Override
+    public final <T> Result<R> sortDesc(Field<T> field, Comparator<? super T> comparator) {
+        return sortAsc(field, Collections.reverseOrder(comparator));
+    }
+
+    /**
+     * A comparator for records, wrapping another comparator for &lt;T&gt;
+     */
+    private class RecordComparator<T> implements Comparator<R> {
+
+        private final Comparator<? super T> comparator;
+        private final int fieldIndex;
+
+        RecordComparator(int fieldIndex, Comparator<? super T> comparator) {
+            this.fieldIndex = fieldIndex;
+            this.comparator = comparator;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public int compare(R record1, R record2) {
+            return comparator.compare((T) record1.getValue(fieldIndex), (T) record2.getValue(fieldIndex));
+        }
+    }
+
+    /**
+     * A natural comparator
+     */
+    private class NaturalComparator<T extends Comparable<? super T>> implements Comparator<T> {
+
+        @Override
+        public int compare(T o1, T o2) {
+            if (o1 == null && o2 == null) {
+                return 0;
+            }
+            else if (o1 == null) {
+                return -1;
+            }
+            else if (o2 == null) {
+                return 1;
+            }
+            return o1.compareTo(o2);
+        }
     }
 
     // -------------------------------------------------------------------------

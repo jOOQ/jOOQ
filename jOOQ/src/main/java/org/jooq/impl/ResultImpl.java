@@ -1330,7 +1330,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <T> Result<R> sortAsc(Field<T> field, Comparator<? super T> comparator) {
-        Collections.sort(this, new RecordComparator<T>(getIndex(field), comparator));
+        return sortAsc(new RecordComparator<T, R>(getIndex(field), comparator));
+    }
+
+    @Override
+    public final Result<R> sortAsc(Comparator<? super R> comparator) {
+        Collections.sort(this, comparator);
         return this;
     }
 
@@ -1344,10 +1349,15 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return sortAsc(field, Collections.reverseOrder(comparator));
     }
 
+    @Override
+    public final Result<R> sortDesc(Comparator<? super R> comparator) {
+        return sortAsc(Collections.reverseOrder(comparator));
+    }
+
     /**
      * A comparator for records, wrapping another comparator for &lt;T&gt;
      */
-    private class RecordComparator<T> implements Comparator<R> {
+    private static class RecordComparator<T, R extends Record> implements Comparator<R> {
 
         private final Comparator<? super T> comparator;
         private final int fieldIndex;
@@ -1367,7 +1377,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     /**
      * A natural comparator
      */
-    private class NaturalComparator<T extends Comparable<? super T>> implements Comparator<T> {
+    private static class NaturalComparator<T extends Comparable<? super T>> implements Comparator<T> {
 
         @Override
         public int compare(T o1, T o2) {

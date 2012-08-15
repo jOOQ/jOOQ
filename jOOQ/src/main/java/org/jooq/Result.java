@@ -1918,4 +1918,20 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The result itself
      */
     <T> Result<R> sortDesc(Field<T> field, java.util.Comparator<? super T> comparator);
+
+    /**
+     * Sort this result using a comparator that can compare records.
+     *
+     * @param comparator The comparator used to sort this result.
+     * @return The result itself
+     */
+    Result<R> sortAsc(java.util.Comparator<? super R> comparator);
+
+    /**
+     * Reverse-sort this result using a comparator that can compare records.
+     *
+     * @param comparator The comparator used to sort this result.
+     * @return The result itself
+     */
+    Result<R> sortDesc(java.util.Comparator<? super R> comparator);
 }

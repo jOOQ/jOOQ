@@ -63,6 +63,7 @@ import javax.sql.DataSource;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.Factory;
 
@@ -1027,6 +1028,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     @Support
     <R extends Record> R fetchOne(Table<R> table) throws DataAccessException;
@@ -1041,6 +1043,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     @Support
     <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException;
@@ -1489,6 +1492,7 @@ public interface FactoryOperations extends Configuration {
      *         <code>null</code>, even if the database returns no
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     @Support
     Record fetchOne(String sql) throws DataAccessException;
@@ -1516,6 +1520,7 @@ public interface FactoryOperations extends Configuration {
      * @return The results from the executed query. This may be
      *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     @Support
     Record fetchOne(String sql, Object... bindings) throws DataAccessException;
@@ -1547,6 +1552,7 @@ public interface FactoryOperations extends Configuration {
      * @return The results from the executed query. This may be
      *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     @Support
     Record fetchOne(String sql, QueryPart... parts) throws DataAccessException;

@@ -41,6 +41,7 @@ import org.jooq.util.ase.ASEFactory;
 import org.jooq.util.cubrid.CUBRIDFactory;
 import org.jooq.util.db2.DB2Factory;
 import org.jooq.util.derby.DerbyFactory;
+import org.jooq.util.firebird.FirebirdFactory;
 import org.jooq.util.h2.H2Factory;
 import org.jooq.util.hsqldb.HSQLDBFactory;
 import org.jooq.util.ingres.IngresFactory;
@@ -86,6 +87,14 @@ public enum SQLDialect {
      * The Apache Derby SQL dialect
      */
     DERBY("Derby", DerbyFactory.class),
+
+    /**
+     * The Firebird SQL dialect
+     *
+     * @deprecated - [#430] Firebird support is experimental. Use at your own risk!
+     */
+    @Deprecated
+    FIREBIRD("Firebird", FirebirdFactory.class),
 
     /**
      * The H2 SQL dialect

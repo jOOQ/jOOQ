@@ -94,6 +94,10 @@
 			<section id="getting-started">
 				<title>Getting started with jOOQ</title>
 				<content>
+					<h3>Getting started with jOOQ</h3>
+					<p>
+						These chapters contain a quick overview of how to get started with this manual and with jOOQ. While the subsequent chapters contain a lot of reference information, this chapter here just wraps up the essentials.
+					</p>
 				</content>
 
 				<sections>
@@ -229,7 +233,7 @@ CREATE TABLE book_to_book_store (
 						<content>
 							<h3>jOOQ's original intent</h3>
 							<p>
-								jOOQ has originally been created as a library for complete abstraction of JDBC and all database interaction. Various best practices that are frequently encountered in pre-existing software products are applied to this library. This included:
+								jOOQ has originally been created as a library for complete abstraction of JDBC and all database interaction. Various best practices that are frequently encountered in pre-existing software products are applied to this library. This includes:
 							</p>
 							<ul>
 								<li>Typesafe database object referencing through generated schema, table, column, record, procedure, type, dao, pojo artefacts (see the chapter about <reference id="code-generation" title="code generation"/>)</li>
@@ -239,7 +243,7 @@ CREATE TABLE book_to_book_store (
 								<li>SQL logging and debugging using jOOQ as an integral part of your development process (see the chapters about <reference id="logging" title="logging"/> and about the <reference id="jooq-console" title="jOOQ Console"/>)</li>
 							</ul>
 							<p>
-								Effectively, jOOQ was originally designed to replace any other database abstraction framework short of the ones handling connection pooling and transaction management.
+								Effectively, jOOQ was originally designed to replace any other database abstraction framework short of the ones handling connection pooling and transaction management (see also the <reference id="reference-credits" title="credits for other database abstraction libraries"/>)
 							</p>
 							
 							<h3>Use jOOQ the way you prefer</h3>
@@ -261,22 +265,158 @@ CREATE TABLE book_to_book_store (
 						<sections>
 							<section id="jooq-as-a-standalone-sql-builder">
 								<title>jOOQ as a SQL builder</title>
-								<content></content>
+								<content>
+									<h3>Use jOOQ to simply construct valid SQL for any database</h3>
+									<p>
+										This is the most simple of all use cases, allowing for construction of valid SQL for any database. In this use case, you will not use <reference id="jooq-as-a-sql-builder-with-code-generation" title="jOOQ's code generator"/> and probably not even <reference id="jooq-as-a-sql-executor" title="jOOQ's query execution facilities"/>. Instead, you'll use jOOQ to wrap strings, literals and other user-defined objects into an object-oriented, type-safe AST modelling your SQL statements. An example is given here: 
+									</p>
+									
+<java><![CDATA[// Fetch a SQL string from a jOOQ Query in order to manually execute it with another tool.
+String sql = create.select(fieldByName("BOOK", "TITLE"), fieldByName("AUTHOR", "FIRST_NAME"), fieldByName("AUTHOR", "LAST_NAME"))
+                   .from(tableByName("BOOK"))
+                   .join(tableByName("AUTHOR"))
+                   .on(fieldByName("BOOK", "AUTHOR_ID").equal("AUTHOR", "ID"))
+                   .where(fieldByName("BOOK", "PUBLISHED_IN").equal(1948))
+                   .getSQL();]]></java>
+                   
+                   					<p>
+                   						The SQL string that you can generate as such can then be executed using JDBC directly, using Spring's JdbcTemplate, using Apache DbUtils and many other tools.
+                   					</p>
+                   					<p>
+                   						If you wish to use jOOQ only as a SQL builder, the following sections of the manual will be of interest to you:
+                  					</p>
+                  					<ul>
+                  						<li><reference id="sql-building" title="SQL building"/>: This section contains a lot of information about creating SQL statements using the jOOQ API</li>
+                  						<li><reference id="plain-sql" title="Plain SQL"/>: This section contains information useful in particular to those that want to supply <reference id="table-expressions" title="table expressions"/>, <reference id="column-expressions" title="column expressions"/>, etc. as plain SQL to jOOQ, rather than through generated artefacts</li>
+                  					</ul>
+								</content>
 							</section>
 
 							<section id="jooq-as-a-sql-builder-with-code-generation">
 								<title>jOOQ as a SQL builder with code generation</title>
-								<content></content>
+								<content>
+									<h3>Use jOOQ to construct valid SQL against a compilable database schema</h3>
+									<p>
+										In addition to using jOOQ as a <reference id="jooq-as-a-standalone-sql-builder" title="standalone SQL builder"/>, you can also use jOOQ's code generation features in order to compile your SQL statements using a Java compiler against an actual database schema. This adds a lot of power and expressiveness to just simply constructing SQL using custom strings and literals, as you can be sure that all database artefacts actually exist in the database, and that their type is correct. An example is given here: 
+									</p>
+
+<java><![CDATA[// Fetch a SQL string from a jOOQ Query in order to manually execute it with another tool.
+String sql = create.select(BOOK.TITLE, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+                   .from(BOOK)
+                   .join(AUTHOR)
+                   .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+                   .where(BOOK.PUBLISHED_IN.equal(1948))
+                   .getSQL();]]></java>
+                   
+                   					<p>
+                   						The SQL string that you can generate as such can then be executed using JDBC directly, using Spring's JdbcTemplate, using Apache DbUtils and many other tools.
+                   					</p>
+                   					<p>
+                   						If you wish to use jOOQ only as a SQL builder with code generation, the following sections of the manual will be of interest to you:
+                  					</p>
+                  					<ul>
+                  						<li><reference id="sql-building" title="SQL building"/>: This section contains a lot of information about creating SQL statements using the jOOQ API</li>
+                  						<li><reference id="code-generation" title="Code generation"/>: This section contains the necessary information to run jOOQ's code generator against your developer database</li>
+                  					</ul>
+								</content>
 							</section>
 
 							<section id="jooq-as-a-sql-executor">
 								<title>jOOQ as a SQL executor</title>
-								<content></content>
+								<content>
+									<h3>Use jOOQ to execute your SQL</h3>
+									<p>
+										Instead of any tool mentioned in the previous chapters, you can also use jOOQ directly to execute your jOOQ-generated SQL statements. This will add a lot of convenience on top of the previously discussed API for typesafe SQL construction, when you can re-use the information from generated classes to fetch records and custom data types. An example is given here:
+									</p>
+									
+<java><![CDATA[// Execute the SQL statement directly with jOOQ
+Result<Record> result = create.select(BOOK.TITLE, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+			                  .from(BOOK)
+			                  .join(AUTHOR)
+			                  .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+			                  .where(BOOK.PUBLISHED_IN.equal(1948))
+			                  .fetch();]]></java>
+
+									<p>
+										jOOQ doesn't stop here, though! You can execute any SQL with jOOQ. In other words, you can use any other SQL building tool and run the SQL statements with jOOQ. An example is given here:
+									</p>
+
+<java><![CDATA[// Use your favourite tool to construct SQL strings:
+String sql = "SELECT title, first_name, last_name FROM book JOIN author ON book.author_id = author.id WHERE book.published_in = 1984";
+
+// Fetch results using jOOQ
+Result<Record> result = create.fetch(sql);
+
+// Or execute that SQL with JDBC, fetching the ResultSet with jOOQ:
+ResultSet rs = connection.createStatement().executeQuery(sql);
+Result<Record> result = create.fetch(rs);]]></java>
+
+									<p>
+                   						If you wish to use jOOQ as a SQL executor with (or without) code generation, the following sections of the manual will be of interest to you:
+                  					</p>
+                  					<ul>
+                  						<li><reference id="sql-building" title="SQL building"/>: This section contains a lot of information about creating SQL statements using the jOOQ API</li>
+                  						<li><reference id="code-generation" title="Code generation"/>: This section contains the necessary information to run jOOQ's code generator against your developer database</li>
+                  						<li><reference id="sql-execution" title="SQL execution"/>: This section contains a lot of information about executing SQL statements using the jOOQ API</li>
+                  						<li><reference id="fetching"/>: This section contains some useful information about the various ways of fetching data with jOOQ</li>
+                  					</ul>
+								</content>
 							</section>
 
 							<section id="jooq-for-crud">
 								<title>jOOQ for CRUD</title>
-								<content></content>
+								<content>
+									<h3>jOOQ for CRUD</h3>
+									<p>
+										This is probably the most complete use-case for jOOQ: Use all of jOOQ's features. Apart from jOOQ's fluent API for query construction, jOOQ can also help you execute everyday CRUD operations. An example is given here:
+									</p>
+
+<java><![CDATA[// Fetch all authors
+for (AuthorRecord author : create.fetch(AUTHOR)) {
+  
+  // Check if the author has written more than 5 books
+  if (author.fetchBookListByAuthorId().size() > 5) {
+    
+    // Congratulate the author by email:
+	if (author.getMailSent()) {
+      sendCongratulationMail(author);
+    
+      // Don't send the mail twice, so store that flag in the database
+      author.setMailSent(true);
+      author.store();
+    }
+  }
+}]]></java>
+
+									<p>
+                   						If you wish to use all of jOOQ's features, the following sections of the manual will be of interest to you (including all sub-sections):
+                  					</p>
+                  					<ul>
+                  						<li><reference id="sql-building" title="SQL building"/>: This section contains a lot of information about creating SQL statements using the jOOQ API</li>
+                  						<li><reference id="code-generation" title="Code generation"/>: This section contains the necessary information to run jOOQ's code generator against your developer database</li>
+                  						<li><reference id="sql-execution" title="SQL execution"/>: This section contains a lot of information about executing SQL statements using the jOOQ API</li>
+                  					</ul>
+								</content>
+							</section>
+							
+							<section id="jooq-for-pros">
+								<title>jOOQ for PROs</title>
+								<content>
+									<h3>jOOQ for PROs that need tooling along with their power-user SQL</h3>
+									<p>
+										jOOQ isn't just a library that helps you <reference id="sql-building" title="build"/> and <reference id="sql-execution" title="execute"/> SQL against your <reference id="code-generation" title="generated, compilable schema"/>. jOOQ ships with a lot of tools. Here are some of the most important tools shipped with jOOQ:
+									</p>
+									<ul>
+										<li><reference id="jooq-console" title="jOOQ Console"/>: This small application hooks into jOOQ's execute listener support to allow for tracing, debugging and introspecting any SQL statement executed through the jOOQ API. This includes setting breakpoints, introspecting bind values, running probe SQL statements, ad-hoc patching of SQL, measuring execution times, exporting stack traces. Use this tool to better know your SQL!</li>
+										<li><reference id="execute-listeners" title="jOOQ's Execute Listeners"/>: jOOQ allows you to hook your custom execute listeners into jOOQ's SQL statement execution lifecycle in order to centrally coordinate any arbitrary operation performed on SQL being executed. Use this for logging, identity generation, SQL tracing, performance measurements, etc.</li>
+										<li><reference id="logging" title="Logging"/>: jOOQ has a standard DEBUG logger built-in, for logging and tracing all your executed SQL statements and fetched result sets</li>
+										<li><reference id="stored-procedures" title="Stored Procedures"/>: jOOQ supports stored procedures and functions of your favourite database. All routines and user-defined types are generated and can be included in jOOQ's SQL building API as function references.</li>
+										<li><reference id="exporting" title="Exporting"/> and <reference id="importing" title="Importing"/>: jOOQ ships with an API to easily export/import data in various formats</li>
+									</ul>
+									<p>
+										If you're a power user of your favourite, feature-rich database, jOOQ will help you access all of your database's vendor-specific features, such as OLAP features, stored procedures, user-defined types, vendor-specific SQL, functions, etc. Examples are given throughout this manual.
+									</p>
+								</content>
 							</section>
 						</sections>
 					</section>
@@ -5754,14 +5894,27 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 						</sections>
 					</section>
 
-					<section id="reference-functions">
-						<title>Functions</title>
-						<content></content>
-					</section>
-
 					<section id="reference-bnf-notation">
 						<title>jOOQ's BNF pseudo-notation</title>
 						<content></content>
+					</section>
+
+					<section id="reference-credits">
+						<title>Credits</title>
+						<content>
+							<h3>Credits to other database abstraction libraries</h3>
+							<p>
+								jOOQ lives in a very challenging ecosystem. The Java to SQL interface is still one of the most important system interfaces. Yet there are still a lot of open questions, best practices and no "true" standard has been established. This situation gave way to a lot of tools, APIs, utilities which essentially tackle the same problem domain as jOOQ. jOOQ has gotten great inspiration from pre-existing tools and this section should give them some credit. Here is a list of inspirational tools in alphabetical order:
+							</p>
+							<ul>
+								<li><a href="http://avaje.org">Avajé EBean</a>: Play! Framework's preferred ORM has a feature called asynchronous query execution. This idea made it into jOOQ as <reference class="org.jooq.ResultQuery" anchor="#fetchLater()"/></li>
+								<li><a href="http://www.hibernate.org">Hibernate</a>: The de-facto standard (JPA) with its useful table-to-POJO mapping features have influenced jOOQ's <reference class="org.jooq.ResultQuery" anchor="#fetchInto(java.lang.Class)"/> facilities</li>
+								<li><a href="http://www.h2database.com/html/jaqu.html">JaQu</a>: H2's own fluent API for querying databases</li>
+								<li><a href="http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html">JPA</a>: The de-facto standard in the javax.persistence packages, supplied by Oracle. Its annotations are useful to jOOQ as well.</li>
+								<li><a href="http://www.querydsl.com">QueryDSL</a>: A "LINQ-port" to Java. It has a similar fluent API, a similar code-generation facility, yet quite a different purpose. While jOOQ is all about SQL, QueryDSL (like LINQ) is mostly about querying.</li>
+								<li><a href="http://www.springsource.org/features/data-access">Spring Data</a>: Spring's JdbcTemplate knows RowMappers, which are reflected by jOOQ's <reference class="org.jooq.RecordHandler"/></li>
+							</ul>
+						</content>
 					</section>
 
 					<section id="reference-glossary">

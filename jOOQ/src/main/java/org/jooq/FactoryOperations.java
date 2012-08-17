@@ -1149,7 +1149,7 @@ public interface FactoryOperations extends Configuration {
 
     /**
      * Update a table
-     * <code><pre>UPDATE [table] SET [modified values in record] </pre></code>
+     * <code><pre>UPDATE [table] SET [modified values in record] WHERE [record is supplied record] </pre></code>
      *
      * @return The number of updated records
      * @throws DataAccessException if something went wrong executing the query
@@ -1168,11 +1168,35 @@ public interface FactoryOperations extends Configuration {
     <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) throws DataAccessException;
 
     /**
-     * Delete records from a table <code><pre>DELETE FROM [table]</pre></code>
+     * Delete a record from a table
+     * <code><pre>DELETE FROM [table] WHERE [record is supplied record]</pre></code>
      *
      * @return The number of deleted records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
+    <R extends UpdatableRecord<R>> int executeDelete(R record) throws DataAccessException;
+
+    /**
+     * Delete a record from a table
+     * <code><pre>DELETE FROM [table] WHERE [condition]</pre></code>
+     *
+     * @return The number of deleted records
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) throws DataAccessException;
+
+    /**
+     * Delete records from a table <code><pre>DELETE FROM [table]</pre></code>
+     *
+     * @return The number of deleted records
+     * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 2.5.0 [#1692] - The semantics of
+     *             {@link #executeDelete(TableRecord, Condition)} has changed.
+     *             This method here is no longer necessary.
+     */
+    @Deprecated
     @Support
     <R extends TableRecord<R>> int executeDelete(Table<R> table) throws DataAccessException;
 
@@ -1181,8 +1205,12 @@ public interface FactoryOperations extends Configuration {
      * <code><pre>DELETE FROM [table] WHERE [condition]</pre></code>
      *
      * @return The number of deleted records
-     * @throws DataAccessException if something went wrong executing the query
+     * @throws DataAccessException if something went wrong executing the query.
+     * @deprecated - 2.5.0 [#1692] - The semantics of
+     *             {@link #executeDelete(TableRecord, Condition)} has changed.
+     *             This method here is no longer necessary.
      */
+    @Deprecated
     @Support
     <R extends TableRecord<R>, T> int executeDelete(Table<R> table, Condition condition) throws DataAccessException;
 
@@ -1191,7 +1219,11 @@ public interface FactoryOperations extends Configuration {
      *
      * @return The number of deleted records
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 2.5.0 [#1692] - The semantics of
+     *             {@link #executeDelete(TableRecord, Condition)} has changed.
+     *             This method here is no longer necessary.
      */
+    @Deprecated
     @Support
     <R extends TableRecord<R>> int executeDeleteOne(Table<R> table) throws DataAccessException;
 
@@ -1201,7 +1233,11 @@ public interface FactoryOperations extends Configuration {
      *
      * @return The number of deleted records
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 2.5.0 [#1692] - The semantics of
+     *             {@link #executeDelete(TableRecord, Condition)} has changed.
+     *             This method here is no longer necessary.
      */
+    @Deprecated
     @Support
     <R extends TableRecord<R>, T> int executeDeleteOne(Table<R> table, Condition condition) throws DataAccessException;
 

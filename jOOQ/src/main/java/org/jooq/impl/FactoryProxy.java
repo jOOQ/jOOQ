@@ -423,17 +423,17 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
-    public final Cursor<Record> fetchLazy(String sql) throws DataAccessException {
+    public final Cursor<Record> fetchLazy(String sql) {
         return getDelegate().fetchLazy(sql);
     }
 
     @Override
-    public final Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException {
+    public final Cursor<Record> fetchLazy(String sql, Object... bindings) {
         return getDelegate().fetchLazy(sql, bindings);
     }
 
     @Override
-    public final Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException {
+    public final Cursor<Record> fetchLazy(String sql, QueryPart... parts) {
         return getDelegate().fetchLazy(sql, parts);
     }
 
@@ -468,27 +468,27 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
-    public final int execute(String sql) throws DataAccessException {
+    public final int execute(String sql) {
         return getDelegate().execute(sql);
     }
 
     @Override
-    public final int execute(String sql, Object... bindings) throws DataAccessException {
+    public final int execute(String sql, Object... bindings) {
         return getDelegate().execute(sql, bindings);
     }
 
     @Override
-    public final int execute(String sql, QueryPart... parts) throws DataAccessException {
+    public final int execute(String sql, QueryPart... parts) {
         return getDelegate().execute(sql, parts);
     }
 
     @Override
-    public final ResultQuery<Record> resultQuery(String sql) throws DataAccessException {
+    public final ResultQuery<Record> resultQuery(String sql) {
         return getDelegate().resultQuery(sql);
     }
 
     @Override
-    public final ResultQuery<Record> resultQuery(String sql, Object... bindings) throws DataAccessException {
+    public final ResultQuery<Record> resultQuery(String sql, Object... bindings) {
         return getDelegate().resultQuery(sql, bindings);
     }
 
@@ -554,7 +554,7 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
-    public final <R extends TableRecord<R>> int executeInsert(R record) throws DataAccessException {
+    public final <R extends TableRecord<R>> int executeInsert(R record) {
         return getDelegate().executeInsert(record);
     }
 
@@ -583,93 +583,106 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
-    public final <R extends UpdatableRecord<R>> int executeUpdate(R record) throws DataAccessException {
+    public final <R extends UpdatableRecord<R>> int executeUpdate(R record) {
         return getDelegate().executeUpdate(record);
     }
 
     @Override
-    public final <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition)
-        throws DataAccessException {
+    public final <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) {
         return getDelegate().executeUpdate(record, condition);
     }
 
     @Override
+    public final <R extends UpdatableRecord<R>> int executeDelete(R record) {
+        return getDelegate().executeDelete(record);
+    }
+
+    @Override
+    public final <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) {
+        return getDelegate().executeDelete(record, condition);
+    }
+
+    @Override
+    @Deprecated
     public final <R extends TableRecord<R>> int executeDelete(Table<R> table) {
         return getDelegate().executeDelete(table);
     }
 
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>, T> int executeDelete(Table<R> table, Condition condition) {
         return getDelegate().executeDelete(table, condition);
     }
 
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>> int executeDeleteOne(Table<R> table) {
         return getDelegate().executeDeleteOne(table);
     }
 
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>, T> int executeDeleteOne(Table<R> table, Condition condition) {
         return getDelegate().executeDeleteOne(table, condition);
     }
 
     @Override
-    public final int getTransactionIsolation() throws DataAccessException {
+    public final int getTransactionIsolation() {
         return getDelegate().getTransactionIsolation();
     }
 
     @Override
-    public final void setTransactionIsolation(int level) throws DataAccessException {
+    public final void setTransactionIsolation(int level) {
         getDelegate().setTransactionIsolation(level);
     }
 
     @Override
-    public final int getHoldability() throws DataAccessException {
+    public final int getHoldability() {
         return getDelegate().getHoldability();
     }
 
     @Override
-    public final void setHoldability(int holdability) throws DataAccessException {
+    public final void setHoldability(int holdability) {
         getDelegate().setHoldability(holdability);
     }
 
     @Override
-    public final boolean getAutoCommit() throws DataAccessException {
+    public final boolean getAutoCommit() {
         return getDelegate().getAutoCommit();
     }
 
     @Override
-    public final void setAutoCommit(boolean autoCommit) throws DataAccessException {
+    public final void setAutoCommit(boolean autoCommit) {
         getDelegate().setAutoCommit(autoCommit);
     }
 
     @Override
-    public final void releaseSavepoint(Savepoint savepoint) throws DataAccessException {
+    public final void releaseSavepoint(Savepoint savepoint) {
         getDelegate().releaseSavepoint(savepoint);
     }
 
     @Override
-    public final Savepoint setSavepoint(String name) throws DataAccessException {
+    public final Savepoint setSavepoint(String name) {
         return getDelegate().setSavepoint(name);
     }
 
     @Override
-    public final Savepoint setSavepoint() throws DataAccessException {
+    public final Savepoint setSavepoint() {
         return getDelegate().setSavepoint();
     }
 
     @Override
-    public final void rollback(Savepoint savepoint) throws DataAccessException {
+    public final void rollback(Savepoint savepoint) {
         getDelegate().rollback(savepoint);
     }
 
     @Override
-    public final void rollback() throws DataAccessException {
+    public final void rollback() {
         getDelegate().rollback();
     }
 
     @Override
-    public final void commit() throws DataAccessException {
+    public final void commit() {
         getDelegate().commit();
     }
 

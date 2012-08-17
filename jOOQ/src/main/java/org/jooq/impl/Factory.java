@@ -6167,6 +6167,27 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    public final <R extends UpdatableRecord<R>> int executeDelete(R record) {
+        DeleteQuery<R> delete = deleteQuery(record.getTable());
+        Util.addConditions(delete, record, record.getTable().getMainKey().getFieldsArray());
+        return delete.execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) {
+        DeleteQuery<R> delete = deleteQuery(record.getTable());
+        delete.addConditions(condition);
+        return delete.execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Deprecated
     public final <R extends TableRecord<R>> int executeDelete(Table<R> table) {
         return executeDelete(table, trueCondition());
     }
@@ -6175,8 +6196,9 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>, T> int executeDelete(Table<R> table, Condition condition)
-        {
+        throws DataAccessException{
         DeleteQuery<R> delete = deleteQuery(table);
         delete.addConditions(condition);
         return delete.execute();
@@ -6186,6 +6208,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>> int executeDeleteOne(Table<R> table) {
         return executeDeleteOne(table, trueCondition());
     }
@@ -6194,6 +6217,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public final <R extends TableRecord<R>, T> int executeDeleteOne(Table<R> table, Condition condition) {
         DeleteQuery<R> delete = deleteQuery(table);
         delete.addConditions(condition);

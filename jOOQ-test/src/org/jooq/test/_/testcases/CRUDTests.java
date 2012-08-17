@@ -227,7 +227,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals("Fritz", author.getValue(TAuthor_FIRST_NAME()));
         assertEquals("Kästner", author.getValue(TAuthor_LAST_NAME()));
 
-        create().executeDelete(TAuthor(), TAuthor_LAST_NAME().equal("Kästner"));
+        create().executeDelete(author);
         assertEquals(null, create().fetchOne(TAuthor(), TAuthor_FIRST_NAME().equal("Erich")));
     }
 
@@ -692,7 +692,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         testStoreWithOptimisticLock0(TBook(), TBook_ID(), TBook_TITLE());
 
         // Avoid referential integrity problems for subsequent test
-        create().executeDelete(TBook());
+        create().delete(TBook()).execute();
         testStoreWithOptimisticLock0(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME());
     }
 

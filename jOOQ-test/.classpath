@@ -29,6 +29,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/rsyntaxtextarea-2.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jaybird-2.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/connector-api-1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr-runtime-3.4.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-console"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-meta"/>
 	<classpathentry kind="output" path="bin"/>

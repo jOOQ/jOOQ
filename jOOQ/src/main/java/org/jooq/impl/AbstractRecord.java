@@ -56,7 +56,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
@@ -66,6 +68,7 @@ import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.reflect.Reflect;
@@ -588,6 +591,24 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     @Override
     public final Object[] intoArray() {
         return into(Object[].class);
+    }
+
+    @Override
+    public final Map<String, Object> intoMap() {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+        List<Field<?>> f = getFields();
+        int size = f.size();
+
+        for (int i = 0; i < size; i++) {
+            Field<?> field = f.get(i);
+
+            if (map.put(field.getName(), getValue(i)) != null) {
+                throw new InvalidResultException("Field " + field.getName() + " is not unique in Record : " + this);
+            }
+        }
+
+        return map;
     }
 
     @Override

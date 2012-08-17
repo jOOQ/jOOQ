@@ -77,6 +77,7 @@ import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.Store;
 import org.jooq.Table;
+import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
@@ -1273,6 +1274,44 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return StringUtils.replaceEach(string,
             new String[] { "\"", "'", "<", ">", "&" },
             new String[] { "&quot;", "&apos;", "&lt;", "&gt;", "&amp;"});
+    }
+
+    @Override
+    public final List<Map<String, Object>> intoMaps() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+        for (R record : this) {
+            list.add(record.intoMap());
+        }
+
+        return list;
+
+    }
+
+    @Override
+    public final <K> Map<K, R> intoMap(Field<K> key) {
+        Map<K, R> map = new LinkedHashMap<K, R>();
+
+        for (R record : this) {
+            if (map.put(record.getValue(key), record) != null) {
+                throw new InvalidResultException("Key " + key + " is not unique in Result for " + this);
+            }
+        }
+
+        return map;
+    }
+
+    @Override
+    public final <K, V> Map<K, V> intoMap(Field<K> key, Field<V> value) {
+        Map<K, V> map = new LinkedHashMap<K, V>();
+
+        for (R record : this) {
+            if (map.put(record.getValue(key), record.getValue(value)) != null) {
+                throw new InvalidResultException("Key " + key + " is not unique in Result for " + this);
+            }
+        }
+
+        return map;
     }
 
     @Override

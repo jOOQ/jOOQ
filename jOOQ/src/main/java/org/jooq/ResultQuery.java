@@ -439,6 +439,8 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
+     * @see Result#intoMaps()
+     * @see Record#intoMap()
      */
     List<Map<String, Object>> fetchMaps() throws DataAccessException;
 
@@ -450,6 +452,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
+     * @see Result#intoMaps()
+     * @see Record#intoMap()
      */
     Map<String, Object> fetchOneMap() throws DataAccessException;
 
@@ -471,6 +475,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
+     * @see Result#intoMap(Field, Field)
      */
     <K> Map<K, R> fetchMap(Field<K> key) throws DataAccessException;
 

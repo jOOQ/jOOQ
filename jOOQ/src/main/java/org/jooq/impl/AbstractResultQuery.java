@@ -433,6 +433,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <K, V> Map<K, List<V>> fetchGroups(Field<K> key, Field<V> value) {
+        return fetch().intoGroups(key, value);
+    }
+
+    @Override
     public final Object[][] fetchArrays() {
         return fetch().intoArray();
     }

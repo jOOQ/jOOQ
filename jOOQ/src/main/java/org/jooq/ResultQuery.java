@@ -485,7 +485,8 @@ public interface ResultQuery<R extends Record> extends Query {
      * columns as key and another one of the result's columns as value
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
-     * result set.
+     * result set. Use {@link #fetchGroups(Field, Field)} instead, if your keys
+     * are non-unique
      *
      * @param <K> The key's generic field type
      * @param <V> The value's generic field type
@@ -518,6 +519,23 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Result#intoGroups(Field)
      */
     <K> Map<K, Result<R>> fetchGroups(Field<K> key) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with one of the result's
+     * columns as key and another one of the result's columns as value
+     * <p>
+     * Unlike {@link #fetchMap(Field, Field)}, this method allows for non-unique
+     * keys in the result set.
+     *
+     * @param <K> The key's generic field type
+     * @param <V> The value's generic field type
+     * @param key The key field.
+     * @param value The value field
+     * @return A Map containing the results
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoGroups(Field, Field)
+     */
+    <K, V> Map<K, List<V>> fetchGroups(Field<K> key, Field<V> value) throws DataAccessException;
 
     /**
      * Execute the query and return the generated result as an Object matrix

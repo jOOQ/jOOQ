@@ -1319,15 +1319,35 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         Map<K, Result<R>> map = new LinkedHashMap<K, Result<R>>();
 
         for (R record : this) {
-            K value = record.getValue(key);
-            Result<R> result = map.get(value);
+            K val = record.getValue(key);
+            Result<R> result = map.get(val);
 
             if (result == null) {
                 result = new ResultImpl<R>(configuration, fields);
-                map.put(value, result);
+                map.put(val, result);
             }
 
             result.add(record);
+        }
+
+        return map;
+    }
+
+    @Override
+    public final <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value) {
+        Map<K, List<V>> map = new LinkedHashMap<K, List<V>>();
+
+        for (R record : this) {
+            K k = record.getValue(key);
+            V v = record.getValue(value);
+            List<V> result = map.get(k);
+
+            if (result == null) {
+                result = new ArrayList<V>();
+                map.put(k, result);
+            }
+
+            result.add(v);
         }
 
         return map;

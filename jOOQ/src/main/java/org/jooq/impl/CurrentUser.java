@@ -64,6 +64,7 @@ class CurrentUser extends AbstractFunction<String> {
 
             case DB2:
             case DERBY:
+            case FIREBIRD:
             case HSQLDB:
             case INGRES:
             case POSTGRES:

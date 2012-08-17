@@ -68,6 +68,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
 
             case DB2:
             case DERBY:
+            case FIREBIRD:
             case HSQLDB:
             case INGRES:
             case POSTGRES:

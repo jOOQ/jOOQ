@@ -67,38 +67,30 @@ public class FirebirdDataType<T> extends AbstractDataType<T> {
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    // TODO Below are HSQLDB data types. Fix this
-
-    public static final FirebirdDataType<Byte>        TINYINT               = new FirebirdDataType<Byte>(SQLDataType.TINYINT, "tinyint");
     public static final FirebirdDataType<Short>       SMALLINT              = new FirebirdDataType<Short>(SQLDataType.SMALLINT, "smallint");
-    public static final FirebirdDataType<Integer>     INT                   = new FirebirdDataType<Integer>(SQLDataType.INTEGER, "int");
     public static final FirebirdDataType<Integer>     INTEGER               = new FirebirdDataType<Integer>(SQLDataType.INTEGER, "integer");
+    public static final FirebirdDataType<Integer>     INT                   = new FirebirdDataType<Integer>(SQLDataType.INTEGER, "int");
+    public static final FirebirdDataType<Long>        INT64                 = new FirebirdDataType<Long>(SQLDataType.BIGINT, "int64");
     public static final FirebirdDataType<Long>        BIGINT                = new FirebirdDataType<Long>(SQLDataType.BIGINT, "bigint");
-    public static final FirebirdDataType<Double>      DOUBLE                = new FirebirdDataType<Double>(SQLDataType.DOUBLE, "double");
     public static final FirebirdDataType<Double>      DOUBLEPRECISION       = new FirebirdDataType<Double>(SQLDataType.DOUBLE, "double precision");
-    public static final FirebirdDataType<Double>      FLOAT                 = new FirebirdDataType<Double>(SQLDataType.FLOAT, "float");
-    public static final FirebirdDataType<Float>       REAL                  = new FirebirdDataType<Float>(SQLDataType.REAL, "real");
+    public static final FirebirdDataType<Float>       FLOAT                 = new FirebirdDataType<Float>(SQLDataType.REAL, "float");
     public static final FirebirdDataType<Boolean>     BOOLEAN               = new FirebirdDataType<Boolean>(SQLDataType.BOOLEAN, "boolean");
-    public static final FirebirdDataType<Boolean>     BIT                   = new FirebirdDataType<Boolean>(SQLDataType.BIT, "bit");
     public static final FirebirdDataType<BigDecimal>  DECIMAL               = new FirebirdDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
     public static final FirebirdDataType<BigDecimal>  NUMERIC               = new FirebirdDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric");
-    public static final FirebirdDataType<String>      VARCHAR               = new FirebirdDataType<String>(SQLDataType.VARCHAR, "varchar", "varchar(32672)");
-    public static final FirebirdDataType<String>      LONGVARCHAR           = new FirebirdDataType<String>(SQLDataType.LONGVARCHAR, "longvarchar");
+    public static final FirebirdDataType<String>      VARCHAR               = new FirebirdDataType<String>(SQLDataType.VARCHAR, "varchar");
+    public static final FirebirdDataType<String>      CHARACTERVARYING      = new FirebirdDataType<String>(SQLDataType.VARCHAR, "character varying");
     public static final FirebirdDataType<String>      CHAR                  = new FirebirdDataType<String>(SQLDataType.CHAR, "char");
     public static final FirebirdDataType<String>      CHARACTER             = new FirebirdDataType<String>(SQLDataType.CHAR, "character");
-    public static final FirebirdDataType<String>      CHARACTERVARYING      = new FirebirdDataType<String>(SQLDataType.VARCHAR, "character varying", "character varying(32672)");
-    public static final FirebirdDataType<String>      CLOB                  = new FirebirdDataType<String>(SQLDataType.CLOB, "clob");
-    public static final FirebirdDataType<String>      CHARLARGEOBJECT       = new FirebirdDataType<String>(SQLDataType.CLOB, "char large object", "clob");
-    public static final FirebirdDataType<String>      CHARACTERLARGEOBJECT  = new FirebirdDataType<String>(SQLDataType.CLOB, "character large object", "clob");
+    public static final FirebirdDataType<String>      CLOB                  = new FirebirdDataType<String>(SQLDataType.CLOB, "blob sub_type text");
     public static final FirebirdDataType<Date>        DATE                  = new FirebirdDataType<Date>(SQLDataType.DATE, "date");
     public static final FirebirdDataType<Time>        TIME                  = new FirebirdDataType<Time>(SQLDataType.TIME, "time");
     public static final FirebirdDataType<Timestamp>   TIMESTAMP             = new FirebirdDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp");
-    public static final FirebirdDataType<Timestamp>   DATETIME              = new FirebirdDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime");
-    public static final FirebirdDataType<byte[]>      LONGVARBINARY         = new FirebirdDataType<byte[]>(SQLDataType.LONGVARBINARY, "longvarbinary");
-    public static final FirebirdDataType<byte[]>      VARBINARY             = new FirebirdDataType<byte[]>(SQLDataType.VARBINARY, "varbinary", "varbinary(32672)");
-    public static final FirebirdDataType<byte[]>      BINARY                = new FirebirdDataType<byte[]>(SQLDataType.BINARY, "binary");
     public static final FirebirdDataType<byte[]>      BLOB                  = new FirebirdDataType<byte[]>(SQLDataType.BLOB, "blob");
-    public static final FirebirdDataType<byte[]>      BINARYLARGEOBJECT     = new FirebirdDataType<byte[]>(SQLDataType.BLOB, "binary large object", "blob");
+
+    // TODO Below are HSQLDB data types. Fix this
+
+    public static final FirebirdDataType<Byte>        TINYINT               = new FirebirdDataType<Byte>(SQLDataType.TINYINT, "tinyint");
+    public static final FirebirdDataType<Boolean>     BIT                   = new FirebirdDataType<Boolean>(SQLDataType.BIT, "bit");
     public static final FirebirdDataType<Object>      OTHER                 = new FirebirdDataType<Object>(SQLDataType.OTHER, "other");
     public static final FirebirdDataType<YearToMonth> INTERVALYEARTOMONTH   = new FirebirdDataType<YearToMonth>(SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
     public static final FirebirdDataType<DayToSecond> INTERVALDAYTOSECOND   = new FirebirdDataType<DayToSecond>(SQLDataType.INTERVALDAYTOSECOND, "interval day to second");

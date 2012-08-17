@@ -40,6 +40,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -3736,7 +3737,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitCount(Field)
      */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
     public static Field<Integer> bitCount(Number value) {
         return bitCount(val(value));
     }
@@ -3758,7 +3759,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * More efficient algorithms are very welcome
      */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
     public static Field<Integer> bitCount(Field<? extends Number> field) {
         return new BitCount(nullSafe(field));
     }
@@ -3768,7 +3769,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNot(T value) {
         return bitNot(val(value));
     }
@@ -3779,7 +3780,7 @@ public class Factory implements FactoryOperations {
      * Most dialects natively support this using <code>~[field]</code>. jOOQ
      * simulates this operator in some dialects using <code>-[field] - 1</code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNot(Field<T> field) {
         return new Neg<T>(nullSafe(field), ExpressionOperator.BIT_NOT);
     }
@@ -3789,7 +3790,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitAnd(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, T value2) {
         return bitAnd(val(value1), val(value2));
     }
@@ -3799,7 +3800,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitAnd(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, Field<T> value2) {
         return bitAnd(val(value1), nullSafe(value2));
     }
@@ -3809,7 +3810,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitAnd(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> value1, T value2) {
         return bitAnd(nullSafe(value1), val(value2));
     }
@@ -3824,7 +3825,7 @@ public class Factory implements FactoryOperations {
      * ... or the and function elsewhere:
      * <code><pre>bitand([field1], [field2])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_AND, nullSafe(field1), nullSafe(field2));
     }
@@ -3835,7 +3836,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, T value2) {
         return bitNand(val(value1), val(value2));
     }
@@ -3846,7 +3847,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, Field<T> value2) {
         return bitNand(val(value1), nullSafe(value2));
     }
@@ -3857,7 +3858,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> value1, T value2) {
         return bitNand(nullSafe(value1), val(value2));
     }
@@ -3874,7 +3875,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_NAND, nullSafe(field1), nullSafe(field2));
     }
@@ -3884,7 +3885,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitOr(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitOr(T value1, T value2) {
         return bitOr(val(value1), val(value2));
     }
@@ -3894,7 +3895,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitOr(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitOr(T value1, Field<T> value2) {
         return bitOr(val(value1), nullSafe(value2));
     }
@@ -3904,7 +3905,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitOr(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitOr(Field<T> value1, T value2) {
         return bitOr(nullSafe(value1), val(value2));
     }
@@ -3919,7 +3920,7 @@ public class Factory implements FactoryOperations {
      * ... or the or function elsewhere:
      * <code><pre>bitor([field1], [field2])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitOr(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_OR, nullSafe(field1), nullSafe(field2));
     }
@@ -3930,7 +3931,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNor(T value1, T value2) {
         return bitNor(val(value1), val(value2));
     }
@@ -3940,7 +3941,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNor(T value1, Field<T> value2) {
         return bitNor(val(value1), nullSafe(value2));
     }
@@ -3950,7 +3951,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNor(Field<T> value1, T value2) {
         return bitNor(nullSafe(value1), val(value2));
     }
@@ -3967,7 +3968,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNor(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_NOR, nullSafe(field1), nullSafe(field2));
     }
@@ -3977,7 +3978,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitXor(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXor(T value1, T value2) {
         return bitXor(val(value1), val(value2));
     }
@@ -3987,7 +3988,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitXor(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXor(T value1, Field<T> value2) {
         return bitXor(val(value1), nullSafe(value2));
     }
@@ -3997,7 +3998,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitXor(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXor(Field<T> value1, T value2) {
         return bitXor(nullSafe(value1), val(value2));
     }
@@ -4012,7 +4013,7 @@ public class Factory implements FactoryOperations {
      * ... or the xor function elsewhere:
      * <code><pre>bitxor([field1], [field2])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXor(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_XOR, nullSafe(field1), nullSafe(field2));
     }
@@ -4023,7 +4024,7 @@ public class Factory implements FactoryOperations {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXNor(T value1, T value2) {
         return bitXNor(val(value1), val(value2));
     }
@@ -4034,7 +4035,7 @@ public class Factory implements FactoryOperations {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXNor(T value1, Field<T> value2) {
         return bitXNor(val(value1), nullSafe(value2));
     }
@@ -4045,7 +4046,7 @@ public class Factory implements FactoryOperations {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXNor(Field<T> value1, T value2) {
         return bitXNor(nullSafe(value1), val(value2));
     }
@@ -4060,7 +4061,7 @@ public class Factory implements FactoryOperations {
      * ... or the not xor function elsewhere:
      * <code><pre>bitnot(bitxor([field1], [field2]))</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXNor(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_XNOR, nullSafe(field1), nullSafe(field2));
     }
@@ -4071,7 +4072,7 @@ public class Factory implements FactoryOperations {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shl(T value1, T value2) {
         return shl(val(value1), val(value2));
     }
@@ -4082,7 +4083,7 @@ public class Factory implements FactoryOperations {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shl(T value1, Field<T> value2) {
         return shl(val(value1), nullSafe(value2));
     }
@@ -4093,7 +4094,7 @@ public class Factory implements FactoryOperations {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shl(Field<T>value1, T value2) {
         return shl(nullSafe(value1), val(value2));
     }
@@ -4107,7 +4108,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shl(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.SHL, nullSafe(field1), nullSafe(field2));
     }
@@ -4118,7 +4119,7 @@ public class Factory implements FactoryOperations {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shr(T value1, T value2) {
         return shr(val(value1), val(value2));
     }
@@ -4129,7 +4130,7 @@ public class Factory implements FactoryOperations {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shr(T value1, Field<T> value2) {
         return shr(val(value1), nullSafe(value2));
     }
@@ -4140,7 +4141,7 @@ public class Factory implements FactoryOperations {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shr(Field<T> value1, T value2) {
         return shr(nullSafe(value1), val(value2));
     }
@@ -4154,7 +4155,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, H2, FIREBIRD, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shr(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.SHR, nullSafe(field1), nullSafe(field2));
     }

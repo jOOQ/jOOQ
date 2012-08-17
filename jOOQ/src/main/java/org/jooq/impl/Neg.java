@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -79,6 +80,11 @@ class Neg<T> extends AbstractField<T> {
         }
         else if (operator == BIT_NOT && dialect == DB2) {
             context.keyword("bitnot(")
+                   .sql(field)
+                   .sql(")");
+        }
+        else if (operator == BIT_NOT && dialect == FIREBIRD) {
+            context.keyword("bin_not(")
                    .sql(field)
                    .sql(")");
         }

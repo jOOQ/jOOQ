@@ -38,6 +38,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -132,11 +133,20 @@ class Expression<T> extends AbstractFunction<T> {
         if (BIT_AND == operator && asList(DB2, H2, HSQLDB, ORACLE).contains(dialect)) {
             return function("bitand", getDataType(), getArguments());
         }
+        else if (BIT_AND == operator && FIREBIRD == dialect) {
+            return function("bin_and", getDataType(), getArguments());
+        }
         else if (BIT_XOR == operator && asList(DB2, H2, HSQLDB).contains(dialect)) {
             return function("bitxor", getDataType(), getArguments());
         }
+        else if (BIT_XOR == operator && FIREBIRD == dialect) {
+            return function("bin_xor", getDataType(), getArguments());
+        }
         else if (BIT_OR == operator && asList(DB2, H2, HSQLDB).contains(dialect)) {
             return function("bitor", getDataType(), getArguments());
+        }
+        else if (BIT_OR == operator && FIREBIRD == dialect) {
+            return function("bin_or", getDataType(), getArguments());
         }
 
         // Oracle has to simulate or/xor
@@ -157,6 +167,14 @@ class Expression<T> extends AbstractFunction<T> {
         }
         else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect)) {
             return lhs.div(Factory.power(two(), rhsAsNumber()));
+        }
+
+        // Some dialects support shifts as functions
+        else if (SHL == operator && FIREBIRD == dialect) {
+            return function("bin_shl", getDataType(), getArguments());
+        }
+        else if (SHR == operator && FIREBIRD == dialect) {
+            return function("bin_shr", getDataType(), getArguments());
         }
 
         // These operators are not supported in any dialect

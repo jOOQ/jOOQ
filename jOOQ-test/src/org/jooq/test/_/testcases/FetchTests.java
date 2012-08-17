@@ -213,6 +213,32 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(4, (int) entry22.getValue().get(1).getValue(TBook_ID()));
 
         assertFalse(it.hasNext());
+
+        // Key -> Value Map
+        // ----------------
+
+        // Grouping by BOOK.ID
+        Map<Integer, List<String>> map3 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchGroups(TBook_ID(), TBook_TITLE());
+        ArrayList<List<String>> map3Values = new ArrayList<List<String>>(map3.values());
+
+        assertEquals(4, map3.size());
+        assertEquals(BOOK_IDS, new ArrayList<Integer>(map3.keySet()));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(1, map3Values.get(i).size());
+            assertEquals(BOOK_TITLES.get(i), map3Values.get(i).get(0));
+        }
+
+        // Grouping by BOOK.AUTHOR_ID
+        Map<Integer, List<String>> map4 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchGroups(TBook_AUTHOR_ID(), TBook_TITLE());
+        ArrayList<List<String>> map4Values = new ArrayList<List<String>>(map4.values());
+
+        assertEquals(2, map4.size());
+        assertEquals(AUTHOR_IDS, new ArrayList<Integer>(map4.keySet()));
+        for (int i = 0; i < 2; i++) {
+            assertEquals(2, map4Values.get(i).size());
+            assertEquals(BOOK_TITLES.get(i * 2 + 0), map4Values.get(i).get(0));
+            assertEquals(BOOK_TITLES.get(i * 2 + 1), map4Values.get(i).get(1));
+        }
     }
 
     @Test

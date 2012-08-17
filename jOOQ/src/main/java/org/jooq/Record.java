@@ -44,6 +44,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Column;
 
@@ -1121,6 +1122,13 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return This record as an array
      */
     Object[] intoArray();
+
+    /**
+     * Return this record as a name/value map.
+     *
+     * @return This record as a map
+     */
+    Map<String, Object> intoMap();
 
     /**
      * Map resulting records onto a custom type.

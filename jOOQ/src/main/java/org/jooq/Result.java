@@ -44,7 +44,9 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
+import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 
@@ -1788,6 +1790,48 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     Document intoXML();
 
     /**
+     * Return the generated result as a list of name/value maps.
+     *
+     * @return The result.
+     * @see Record#intoMap()
+     */
+    List<Map<String, Object>> intoMaps();
+
+    /**
+     * Return a {@link Map} with one of the result's columns as key and the
+     * corresponding records as value.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the key turns out to be
+     * non-unique in the result set.
+     *
+     * @param <K> The key's generic field type
+     * @param key The key field. Client code must assure that this field is
+     *            unique in the result set.
+     * @return A Map containing the results
+     * @throws InvalidResultException if the key field returned two or more
+     *             equal values from the result set.
+     */
+    <K> Map<K, R> intoMap(Field<K> key);
+
+    /**
+     * Return a {@link Map} with one of the result's columns as key and another
+     * one of the result's columns as value
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the key turns out to be
+     * non-unique in the result set.
+     *
+     * @param <K> The key's generic field type
+     * @param <V> The value's generic field type
+     * @param key The key field. Client code must assure that this field is
+     *            unique in the result set.
+     * @param value The value field
+     * @return A Map containing the results
+     * @throws InvalidResultException if the key field returned two or more
+     *             equal values from the result set.
+     */
+    <K, V> Map<K, V> intoMap(Field<K> key, Field<V> value);
+
+    /**
      * Convert this result into an array of arrays
      * <p>
      * The resulting array has the same number of first-dimension elements as
@@ -1908,7 +1952,8 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     <T> Result<R> sortAsc(Field<T> field, java.util.Comparator<? super T> comparator);
 
     /**
-     * Reverse-sort this result by one of its contained fields using a comparator.
+     * Reverse-sort this result by one of its contained fields using a
+     * comparator.
      * <p>
      * <code>null</code> sorting must be handled by the supplied
      * <code>comparator</code>.

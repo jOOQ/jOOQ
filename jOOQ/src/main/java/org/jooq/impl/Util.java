@@ -56,7 +56,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.persistence.Column;
@@ -82,6 +84,7 @@ import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;

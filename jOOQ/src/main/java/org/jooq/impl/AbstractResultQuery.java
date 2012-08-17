@@ -50,7 +50,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -410,54 +409,22 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final <K> Map<K, R> fetchMap(Field<K> key) {
-        Map<K, R> map = new LinkedHashMap<K, R>();
-
-        for (R record : fetch()) {
-            if (map.put(record.getValue(key), record) != null) {
-                throw new InvalidResultException("Key " + key + " is not unique in Result for " + this);
-            }
-        }
-
-        return map;
+        return fetch().intoMap(key);
     }
 
     @Override
     public final <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) {
-        Map<K, V> map = new LinkedHashMap<K, V>();
-
-        for (Map.Entry<K, R> entry : fetchMap(key).entrySet()) {
-            map.put(entry.getKey(), entry.getValue().getValue(value));
-        }
-
-        return map;
+        return fetch().intoMap(key, value);
     }
 
     @Override
     public final List<Map<String, Object>> fetchMaps() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-        for (R record : fetch()) {
-            list.add(convertToMap(record));
-        }
-
-        return list;
+        return fetch().intoMaps();
     }
 
     @Override
     public final Map<String, Object> fetchOneMap() {
-        return convertToMap(fetchOne());
-    }
-
-    private final Map<String, Object> convertToMap(R record) {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-
-        for (Field<?> field : record.getFields()) {
-            if (map.put(field.getName(), record.getValue(field)) != null) {
-                throw new InvalidResultException("Field " + field.getName() + " is not unique in Record for " + this);
-            }
-        }
-
-        return map;
+        return fetchOne().intoMap();
     }
 
     @Override

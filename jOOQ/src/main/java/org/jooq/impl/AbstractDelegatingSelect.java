@@ -238,6 +238,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final <K> Map<K, Result<R>> fetchGroups(Field<K> key) {
+        return getDelegate().fetchGroups(key);
+    }
+
+    @Override
     public final Object[][] fetchArrays() {
         return getDelegate().fetchArrays();
     }
@@ -368,7 +373,7 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
-    public final int getIndex(Field<?> field) throws IllegalArgumentException {
+    public final int getIndex(Field<?> field) {
         return getDelegate().asTable().getIndex(field);
     }
 }

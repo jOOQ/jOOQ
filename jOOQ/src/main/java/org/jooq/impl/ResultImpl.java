@@ -1315,6 +1315,25 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final <K> Map<K, Result<R>> intoGroups(Field<K> key) {
+        Map<K, Result<R>> map = new LinkedHashMap<K, Result<R>>();
+
+        for (R record : this) {
+            K value = record.getValue(key);
+            Result<R> result = map.get(value);
+
+            if (result == null) {
+                result = new ResultImpl<R>(configuration, fields);
+                map.put(value, result);
+            }
+
+            result.add(record);
+        }
+
+        return map;
+    }
+
+    @Override
     public final Object[][] intoArray() throws MappingException {
         int size = size();
         Object[][] array = new Object[size][];

@@ -37,6 +37,7 @@ package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.FIREBIRD;
 
 import java.io.File;
 import java.io.InputStream;
@@ -343,6 +344,11 @@ public abstract class jOOQAbstractTest<
 
                 // There is no IF EXISTS clause in CUBRID's DROP VIEW statement
                 else if (getDialect() == CUBRID && sql.trim().startsWith("DROP")) {
+                    continue;
+                }
+
+                // There is no IF EXISTS clause in Firebird's DROP statements
+                else if (getDialect() == FIREBIRD && sql.trim().startsWith("DROP")) {
                     continue;
                 }
 

@@ -1802,7 +1802,8 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * corresponding records as value.
      * <p>
      * An {@link InvalidResultException} is thrown, if the key turns out to be
-     * non-unique in the result set.
+     * non-unique in the result set. Use {@link #intoGroups(Field)} instead, if
+     * your keys are non-unique
      *
      * @param <K> The key's generic field type
      * @param key The key field. Client code must assure that this field is
@@ -1830,6 +1831,19 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *             equal values from the result set.
      */
     <K, V> Map<K, V> intoMap(Field<K> key, Field<V> value);
+
+    /**
+     * Return a {@link Map} with one of the result's columns as key and a list
+     * of corresponding records as value.
+     * <p>
+     * Unlike {@link #intoMap(Field)}, this method allows for non-unique keys in
+     * the result set.
+     *
+     * @param <K> The key's generic field type
+     * @param key The key field.
+     * @return A Map containing the results
+     */
+    <K> Map<K, Result<R>> intoGroups(Field<K> key);
 
     /**
      * Convert this result into an array of arrays

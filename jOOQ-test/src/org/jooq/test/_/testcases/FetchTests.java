@@ -183,6 +183,39 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testFetchGroups() throws Exception {
+        // Key -> Record Map
+        // -----------------
+
+        // Grouping by BOOK.ID
+        Map<Integer, Result<B>> map1 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchGroups(TBook_ID());
+        for (Entry<Integer, Result<B>> entry : map1.entrySet()) {
+            assertEquals(1, entry.getValue().size());
+            assertEquals(entry.getKey(), entry.getValue().get(0).getValue(TBook_ID()));
+        }
+        assertEquals(4, map1.size());
+        assertEquals(BOOK_IDS, new ArrayList<Integer>(map1.keySet()));
+
+        // Grouping by BOOK.AUTHOR_ID
+        Map<Integer, Result<B>> map2 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchGroups(TBook_AUTHOR_ID());
+        assertEquals(2, map2.size());
+        assertEquals(AUTHOR_IDS, new ArrayList<Integer>(map2.keySet()));
+
+        Iterator<Entry<Integer, Result<B>>> it = map2.entrySet().iterator();
+        Entry<Integer, Result<B>> entry21 = it.next();
+        assertEquals(2, entry21.getValue().size());
+        assertEquals(1, (int) entry21.getValue().get(0).getValue(TBook_ID()));
+        assertEquals(2, (int) entry21.getValue().get(1).getValue(TBook_ID()));
+
+        Entry<Integer, Result<B>> entry22 = it.next();
+        assertEquals(2, entry22.getValue().size());
+        assertEquals(3, (int) entry22.getValue().get(0).getValue(TBook_ID()));
+        assertEquals(4, (int) entry22.getValue().get(1).getValue(TBook_ID()));
+
+        assertFalse(it.hasNext());
+    }
+
+    @Test
     public void testFetchArray() throws Exception {
 
         // fetchOne

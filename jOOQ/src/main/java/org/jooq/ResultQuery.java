@@ -462,7 +462,8 @@ public interface ResultQuery<R extends Record> extends Query {
      * columns as key and the corresponding records as value.
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
-     * result set.
+     * result set. Use {@link #fetchGroups(Field)} instead, if your keys are
+     * non-unique
      * <p>
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
@@ -475,7 +476,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
-     * @see Result#intoMap(Field, Field)
+     * @see Result#intoMap(Field)
      */
     <K> Map<K, R> fetchMap(Field<K> key) throws DataAccessException;
 
@@ -495,8 +496,28 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
+     * @see Result#intoMap(Field, Field)
      */
     <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with one of the result's
+     * columns as key and a list of corresponding records as value.
+     * <p>
+     * Unlike {@link #fetchMap(Field)}, this method allows for non-unique keys
+     * in the result set.
+     * <p>
+     * The resulting records are attached to the original {@link Configuration}
+     * by default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @param <K> The key's generic field type
+     * @param key The key field.
+     * @return A Map containing the results
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoGroups(Field)
+     */
+    <K> Map<K, Result<R>> fetchGroups(Field<K> key) throws DataAccessException;
 
     /**
      * Execute the query and return the generated result as an Object matrix

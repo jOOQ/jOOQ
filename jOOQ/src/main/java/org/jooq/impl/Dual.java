@@ -72,6 +72,10 @@ class Dual extends AbstractTable<Record> {
             case SQLSERVER:
                 break;
 
+            case FIREBIRD:
+                context.literal("RDB$DATABASE");
+                break;
+
             case HSQLDB:
                 context.literal("INFORMATION_SCHEMA")
                        .sql(".")

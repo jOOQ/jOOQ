@@ -46,6 +46,7 @@ import java.util.concurrent.ExecutorService;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
+import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 
 /**
@@ -286,11 +287,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the query returned more than one value</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     <T> T fetchOne(Field<T> field) throws DataAccessException;
 
@@ -303,11 +301,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the query returned more than one value</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     <T> T fetchOne(Field<?> field, Class<? extends T> type) throws DataAccessException;
 
@@ -320,11 +315,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the query returned more than one value</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
 
@@ -337,11 +329,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the query returned more than one value</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     Object fetchOne(int fieldIndex) throws DataAccessException;
 
@@ -354,11 +343,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the query returned more than one value</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws DataAccessException;
 
@@ -371,11 +357,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the query returned more than one value</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     <U> U fetchOne(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
 
@@ -388,11 +371,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the query returned more than one value</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     Object fetchOne(String fieldName) throws DataAccessException;
 
@@ -405,11 +385,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the query returned more than one value</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     <T> T fetchOne(String fieldName, Class<? extends T> type) throws DataAccessException;
 
@@ -422,11 +399,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the query returned more than one value</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     <U> U fetchOne(String fieldName, Converter<?, U> converter) throws DataAccessException;
 
@@ -439,11 +413,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the query returned more than one record</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     R fetchOne() throws DataAccessException;
 
@@ -465,11 +436,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * maps.
      *
      * @return The result.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li>
-     *             <li>if several fields share the same name</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key field returned two or more
+     *             equal values from the result set.
      */
     List<Map<String, Object>> fetchMaps() throws DataAccessException;
 
@@ -479,12 +448,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li>
-     *             <li>if the query returned more than one record</li>
-     *             <li>if several fields share the same name</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     Map<String, Object> fetchOneMap() throws DataAccessException;
 
@@ -503,12 +468,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * @param key The key field. Client code must assure that this field is
      *            unique in the result set.
      * @return A Map containing the results
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the key field returned two or more equal values from the
-     *             result set.</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key field returned two or more
+     *             equal values from the result set.
      */
     <K> Map<K, R> fetchMap(Field<K> key) throws DataAccessException;
 
@@ -525,12 +487,9 @@ public interface ResultQuery<R extends Record> extends Query {
      *            unique in the result set.
      * @param value The value field
      * @return A Map containing the results
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the key field returned two or more equal values from the
-     *             result set.</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key field returned two or more
+     *             equal values from the result set.
      */
     <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) throws DataAccessException;
 
@@ -659,11 +618,8 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
-     * @throws DataAccessException This exception is thrown
-     *             <ul>
-     *             <li>if something went wrong executing the query</li> <li>if
-     *             the query returned more than one record</li>
-     *             </ul>
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      */
     Object[] fetchOneArray() throws DataAccessException;
 

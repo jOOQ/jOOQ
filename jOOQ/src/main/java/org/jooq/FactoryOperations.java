@@ -813,6 +813,7 @@ public interface FactoryOperations extends Configuration {
      * supported, it is simulated using an equivalent <code>DELETE</code>
      * statement. This is particularly true for these dialects:
      * <ul>
+     * <li> {@link SQLDialect#FIREBIRD}</li>
      * <li> {@link SQLDialect#INGRES}</li>
      * <li> {@link SQLDialect#SQLITE}</li>
      * </ul>

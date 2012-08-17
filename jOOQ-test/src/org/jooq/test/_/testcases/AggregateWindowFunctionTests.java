@@ -129,6 +129,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             case ASE:
             case CUBRID:
             case DERBY:
+            case FIREBIRD:
             case H2:
             case INGRES:
             case MYSQL:
@@ -201,6 +202,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         // ------------------------------------------------------------
         switch (getDialect()) {
             case DERBY:
+            case FIREBIRD:
             case SQLITE:
                 log.info("SKIPPING", "Statistical aggregate functions");
                 break;

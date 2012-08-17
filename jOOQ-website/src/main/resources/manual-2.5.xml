@@ -4302,17 +4302,186 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 
 			<section id="sql-execution">
 				<title>SQL execution</title>
-				<content></content>
+				<content>
+					<h3>SQL execution with jOOQ</h3>
+					<p>
+						In a previous section of the manual, we've seen how jOOQ can be used to <reference id="sql-building" title="build SQL"/> that can be executed with any API including JDBC or ... jOOQ. This section of the manual deals with various means of actually executing SQL with jOOQ.
+					</p>
+					
+					<h3>SQL execution with JDBC</h3>
+					<p>
+						JDBC calls executable objects "<reference class="java.sql.Statement"/>". It distinguishes between three types of statements:
+					</p>
+					<ul>
+						<li><reference class="java.sql.Statement"/>, or "static statement": This statement type is used for any arbitrary type of SQL statement. It is particularly useful with <reference id="inlined-parameters" title="inlined parameters"/></li>
+						<li><reference class="java.sql.PreparedStatement"/>: This statement type is used for any arbitrary type of SQL statement. It is particularly useful with <reference id="indexed-parameters" title="indexed parameters"/> (note that JDBC does not support <reference id="named-parameters" title="named parameters"/>)</li>
+						<li><reference class="java.sql.CallableStatement"/>: This statement type is used for SQL statements that are "called" rather than "executed". In particular, this includes calls to <reference id="stored-procedures" title="stored procedures"/>. Callable statements can register OUT parameters</li>
+					</ul>
+					<p>
+						Today, the JDBC API may look weird to users being used to object-oriented design. While statements hide a lot of SQL dialect-specific implementation details quite well, they assume a lot of knowledge about the internal state of a statement. For instance, you can use the <reference class="java.sql.PreparedStatement" anchor="#addBatch()" title="PreparedStatement.addBatch()"/> method, to add a the prepared statement being created to an "internal list" of batch statements. Instead of returning a new type, this method forces user to reflect on the prepared statement's internal state or "mode".
+					</p>
+					
+					<h3>jOOQ is wrapping JDBC</h3>
+					<p>						
+						These things are abstracted away by jOOQ, which exposes such concepts in a more object-oriented way. For more details about jOOQ's batch query execution, see the manual's section about <reference id="batch-execution" title="batch execution"/>.
+					</p> 
+					<p>
+						The following sections of this manual will show how jOOQ is wrapping JDBC for SQL execution
+					</p>
+				</content>
 
 				<sections>
 				    <section id="query-vs-resultquery">
 						<title>Query vs. ResultQuery</title>
-						<content></content>
+						<content>
+							<h3>Query vs. ResultQuery</h3>
+							<p>
+								Unlike JDBC, jOOQ has a lot of knowledge about a SQL query's structure and internals (see the manual's section about <reference id="sql-building" title="SQL building"/>). Hence, jOOQ distinguishes between these two fundamental types of queries. While every <reference class="org.jooq.Query"/> can be executed, only <reference class="org.jooq.ResultQuery"/> can return results (see the manual's section about <reference id="fetching" title="fetching"/> to learn more about fetching results).
+							</p>
+							
+							<h3>Similarities with JDBC</h3>
+							<p>
+								Even if there are two general types of Query, there are a lot of similarities between JDBC and jOOQ. Just to name a few:
+							</p>
+							<ul>
+								<li>Both APIs return the number of affected records in non-result queries. JDBC: <reference class="java.sql.Statement" anchor="#executeUpdate(java.lang.String)" title="Statement.executeUpdate()"/>, jOOQ: <reference class="org.jooq.Query" anchor="#execute()" title="Query.execute()"/></li>
+								<li>Both APIs return a scrollable result set type from result queries. JDBC: <reference class="java.sql.ResultSet"/>, jOOQ: <reference class="org.jooq.Result"/></li>
+							</ul>
+							
+							<h3>Differences to JDBC</h3>
+							<p>
+								Some of the most important differences between JDBC and jOOQ are listed here:
+							</p>
+							<ul>
+								<li><reference id="exception-handling" title="Exception handling"/>: While SQL uses the checked <reference class="java.sql.SQLException"/>, jOOQ wraps all exceptions in an unchecked <reference class="org.jooq.exception.DataAccessException"/></li>
+								<li><reference class="org.jooq.Result"/>: Unlike its JDBC counter-part, this type implements <reference class="java.util.List"/> and is fully loaded into Java memory, freeing resources as early as possible. Just like statements, this means that users don't have to deal with a "weird" internal result set state.</li>
+								<li><reference class="org.jooq.Cursor"/>: If you want more fine-grained control over how many records are fetched into memory at once, you can still do that using jOOQ's <reference id="lazy-fetching" title="lazy fetching"/> feature</li>
+								<li><reference id="statement-type" title="Statement type"/>: jOOQ does not formally distinguish between static statements and prepared statements. By default, all statements are prepared statements in jOOQ, internally. Executing a statement as a static statement can be done simply using a <reference id="custom-settings" title="custom settings flag"/></li>
+							</ul>
+						</content>
 					</section>
 
 				    <section id="fetching">
 						<title>Fetching</title>
-						<content></content>
+						<content>
+							<h3>The power of fetching data with jOOQ</h3>
+							<p>
+								Fetching is something that has been completely neglegted by JDBC and also by various other database abstraction libraries. Fetching is much more than just looping or listing records or mapped objects. There are so many ways you may want to fetch data from a database, it should be considered a first-class feature of any database abstraction API. Just to name a few, here are some of jOOQ's fetching modes:
+							</p>
+							<ul>
+								<li><reference id="record-vs-tablerecord" title="Untyped vs. typed fetching"/>: Sometimes you care about the returned type of your records, sometimes (with arbitrary projections) you don't.</li>
+								<li><reference id="arrays-maps-and-lists" title="Fetching arrays, maps, or lists"/>: Instead of letting you transform your result sets into any more suitable data type, a library should do that work for you.</li>
+								<li><reference id="recordhandler" title="Fetching through callbacks"/>: This is an entirely different fetching paradigm. With Java 8's lambda expressions, this will become even more powerful.</li>
+								<li><reference id="pojos" title="Fetching custom POJOs"/>: This is what made Hibernate and JPA so strong. Automatic mapping of tables to custom POJOs.</li>
+								<li><reference id="lazy-fetching" title="Lazy vs. eager fetching"/>: It should be easy to distinguish these two fetch modes.</li>
+								<li><reference id="many-fetching" title="Fetching many results"/>: Some databases allow for returning many result sets from a single query. JDBC can handle this but it's very verbose. A list of results should be returned instead.</li>
+								<li><reference id="later-fetching" title="Fetching data asynchronously"/>: Some queries take too long to execute to wait for their results. You should be able to spawn query execution in a separate process.</li>
+							</ul>
+							
+							<h3>Convenience and how ResultQuery, Result, and Record share API</h3>
+							<p>
+								The term "fetch" is always reused in jOOQ when you can fetch data from the database. An <reference class="org.jooq.ResultQuery"/> provides many overloaded means of fetching data:
+							</p>
+							
+							<h3>Various modes of fetching</h3>
+							<p>
+								These modes of fetching are also documented in subsequent sections of the manual
+							</p>
+							
+<java><![CDATA[// The "standard" fetch
+Result<R> fetch();    
+
+// The "standard" fetch when you know your query returns only one record
+R fetchOne();
+
+// The "standard" fetch when you only want to fetch the first record
+R fetchAny();
+
+// Create a "lazy" Cursor, that keeps an open underlying JDBC ResultSet
+Cursor<R> fetchLazy();
+Cursor<R> fetchLazy(int fetchSize);
+
+// Create a java.util.concurrent.Future, to handle asynchronous execution of the ResultQuery
+FutureResult<R> fetchLater();
+FutureResult<R> fetchLater(ExecutorService executor);
+
+// Fetch several results at once
+List<Result<Record>> fetchMany();
+
+// Fetch records into a custom callback
+<H extends RecordHandler<R>> H fetchInto(H handler);
+
+// Execute a ResultQuery with jOOQ, but return a JDBC ResultSet, not a jOOQ object
+ResultSet fetchResultSet();]]></java>
+							
+							<h3>Fetch convenience</h3>
+							<p>
+								These means of fetching are also available from <reference class="org.jooq.Result"/> and <reference class="org.jooq.Record"/> APIs
+							</p>
+
+<java><![CDATA[// These methods are convenience for fetching only a single field, possibly converting results to another type
+<T>    List<T> fetch(Field<T> field);
+<T>    List<T> fetch(Field<?> field, Class<? extends T> type);
+<T, U> List<U> fetch(Field<T> field, Converter<? super T, U> converter);
+       List<?> fetch(int fieldIndex);
+<T>    List<T> fetch(int fieldIndex, Class<? extends T> type);
+<U>    List<U> fetch(int fieldIndex, Converter<?, U> converter);
+       List<?> fetch(String fieldName);
+<T>    List<T> fetch(String fieldName, Class<? extends T> type);
+<U>    List<U> fetch(String fieldName, Converter<?, U> converter);
+
+// These methods are convenience for fetching only a single field, possibly converting results to another type
+// Instead of returning lists, these return arrays
+<T>    T[]      fetchArray(Field<T> field);
+<T>    T[]      fetchArray(Field<?> field, Class<? extends T> type);
+<T, U> U[]      fetchArray(Field<T> field, Converter<? super T, U> converter);
+       Object[] fetchArray(int fieldIndex);
+<T>    T[]      fetchArray(int fieldIndex, Class<? extends T> type);
+<U>    U[]      fetchArray(int fieldIndex, Converter<?, U> converter);
+       Object[] fetchArray(String fieldName);
+<T>    T[]      fetchArray(String fieldName, Class<? extends T> type);
+<U>    U[]      fetchArray(String fieldName, Converter<?, U> converter);
+
+// These methods are convenience for fetching only a single field from a single record, possibly converting results to another type
+<T>    T      fetchOne(Field<T> field);
+<T>    T      fetchOne(Field<?> field, Class<? extends T> type);
+<T, U> U      fetchOne(Field<T> field, Converter<? super T, U> converter);
+       Object fetchOne(int fieldIndex);
+<T>    T      fetchOne(int fieldIndex, Class<? extends T> type);
+<U>    U      fetchOne(int fieldIndex, Converter<?, U> converter);
+       Object fetchOne(String fieldName);
+<T>    T      fetchOne(String fieldName, Class<? extends T> type);
+<U>    U      fetchOne(String fieldName, Converter<?, U> converter);]]></java>
+
+							<h3>Fetch transformations</h3>
+							<p>
+								These means of fetching are also available from <reference class="org.jooq.Result"/> and <reference class="org.jooq.Record"/> APIs
+							</p>
+							
+<java><![CDATA[// Transform your Records into arrays, Results into matrices
+       Object[][] fetchArrays();
+       Object[]   fetchOneArray();
+       
+// Transform your Result object into maps
+<K>    Map<K, R> fetchMap(Field<K> key);
+<K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value);
+       List<Map<String, Object>> fetchMaps();
+       Map<String, Object> fetchOneMap();
+
+// Transform your Result object into groups
+<K>    Map<K, Result<R>> fetchGroups(Field<K> key);
+<K, V> Map<K, List<V>>   fetchGroups(Field<K> key, Field<V> value);
+
+// Transform your Records into custom POJOs
+<E>    List<E> fetchInto(Class<? extends E> type), MappingException;
+
+// Transform your records into another table type
+<Z extends Record> Result<Z> fetchInto(Table<Z> table);]]></java>
+
+							<p>
+								Note, that apart from the <reference class="org.jooq.ResultQuery" anchor="#fetchLazy()" title="fetchLazy()"/> methods, all fetch() methods will immediately close underlying JDBC result sets.
+							</p>
+						</content>
 
 						<sections>
 							<section id="record-vs-tablerecord">
@@ -4345,6 +4514,11 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 								<content></content>
 							</section>
 
+							<section id="later-fetching">
+								<title>Later fetching</title>
+								<content></content>
+							</section>
+
 							<section id="resultset-fetching">
 								<title>ResultSet fetching</title>
 								<content></content>
@@ -4355,6 +4529,12 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 								<content></content>
 							</section>
 						</sections>
+					</section>
+					
+					<section id="statement-type">
+						<title>Static statements vs. Prepared Statements</title>
+						<content>
+						</content>
 					</section>
 
 				    <section id="batch-execution">

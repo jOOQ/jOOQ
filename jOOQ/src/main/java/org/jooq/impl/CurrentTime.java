@@ -65,6 +65,7 @@ class CurrentTime extends AbstractFunction<Time> {
 
             case DB2:
             case DERBY:
+            case FIREBIRD:
             case HSQLDB:
             case INGRES:
             case POSTGRES:

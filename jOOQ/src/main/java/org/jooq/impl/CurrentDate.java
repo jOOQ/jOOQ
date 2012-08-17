@@ -65,6 +65,7 @@ class CurrentDate extends AbstractFunction<Date> {
 
             case DB2:
             case DERBY:
+            case FIREBIRD:
             case HSQLDB:
             case INGRES:
             case POSTGRES:

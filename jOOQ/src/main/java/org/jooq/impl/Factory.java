@@ -6033,7 +6033,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> currentUser() {
         return new CurrentUser();
     }

@@ -332,7 +332,22 @@
 		</fo:basic-link>
 	</xsl:template>
 
-	<xsl:template match="reference[@class and starts-with(@class, 'java')]" mode="content">
+	<xsl:template match="reference[@class and starts-with(@class, 'javax.persistence')]" mode="content">
+		<fo:basic-link xsl:use-attribute-sets="a">
+			<xsl:attribute name="external-destination">
+				<xsl:text>url('</xsl:text>
+				<xsl:text>http://docs.oracle.com/javaee/6/api/</xsl:text>
+				<xsl:value-of select="translate(@class, '.', '/')"/>
+				<xsl:text>.html</xsl:text>
+				<xsl:value-of select="@anchor"/>
+				<xsl:text>')</xsl:text>
+			</xsl:attribute>
+
+			<xsl:apply-templates select="." mode="reference-content"/>
+		</fo:basic-link>
+	</xsl:template>
+
+	<xsl:template match="reference[@class and (starts-with(@class, 'java') or starts-with(@class, 'org.w3c.dom'))]" mode="content">
 		<fo:basic-link xsl:use-attribute-sets="a">
 			<xsl:attribute name="external-destination">
 				<xsl:text>url('</xsl:text>

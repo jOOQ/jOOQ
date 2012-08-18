@@ -1261,7 +1261,7 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
                    						<li><reference id="having-clause"/></li>
                    					</ul>
                    					<p>
-                   						In most parts of this manual, it is assumed that you do not use the simple SELECT API.
+                   						In most parts of this manual, it is assumed that you do not use the simple SELECT API. For more information about the simple SELECT API, see the manual's section about <reference id="record-vs-tablerecord" title="fetching strongly or weakly typed records"/>.
                    					</p>
 								</content>
 
@@ -4486,22 +4486,315 @@ ResultSet fetchResultSet();]]></java>
 						<sections>
 							<section id="record-vs-tablerecord">
 								<title>Record vs. TableRecord</title>
-								<content></content>
+								<content>
+									<h3>SQL is more expressive than Java</h3>
+									<p>
+										jOOQ understands that SQL is much more expressive than Java, when it comes to the declarative typing of <reference id="table-expressions" title="table expressions"/>. As a declarative language, SQL allows for creating ad-hoc tuples (records with indexed columns) and records (records with named columns). In Java, this is not possible to the same extent. Yet, still, sometimes you wish to use strongly typed records, when you know that you're selecting only from a single table
+									</p>
+									
+									<h3>Fetching strongly or weakly typed records</h3>
+									<p>
+										When fetching data only from a single table, the <reference id="table-expressions" title="table expression's"/> type is known to jOOQ if you use jOOQ's <reference id="code-generation" title="code generator"/> to generate <reference id="codegen-records" title="TableRecords"/> for your database tables. In order to fetch such strongly typed records, you will have to use the <reference id="select-statement" title="simple select API"/>:
+									</p>
+
+<java><![CDATA[// Use the selectFrom() method:
+BookRecord book = create.selectFrom(BOOK).where(BOOK.ID.equal(1)).fetchOne();
+
+// Typesafe field access is now possible:
+System.out.println("Title       : " + book.getTitle());
+System.out.println("Published in: " + book.getPublishedIn());]]></java>
+									
+									<p>
+										When you use the <reference class="org.jooq.FactoryOperations" anchor="#selectFrom(org.jooq.Table)" title="Factory.selectFrom()"/> method, jOOQ will return the record type supplied with the argument table. Beware though, that you will no longer be able to use any clause that modifies the type of your <reference id="table-expressions" title="table expression"/>. This includes: 
+									</p>
+									<ul>
+                   						<li><reference id="select-clause" title="The SELECT clause"/></li>
+                   						<li><reference id="join-clause" title="The JOIN clause"/></li>
+                   						<li><reference id="group-by-clause" title="The GROUP BY clause"/></li>
+                   						<li><reference id="having-clause" title="The HAVING clause"/></li>
+                   					</ul>		
+                   												
+									<h3>Scala's tuple classes</h3>
+									<p>
+										With the introduction of generics in Java 5, it is possible in principle, to pre-define a set of tuple types. This is what Scala does. In essence, tuple types look something like this:
+									</p>
+									
+<java><![CDATA[// Tuple with arity 1
+public interface Tuple1<T1> extends Tuple {
+    T1 get1(); void set1(T1 t1);
+}
+
+// Tuple with arity 2
+public interface Tuple2<T1, T2> extends Tuple {
+    T1 get1(); void set1(T1 t1);
+    T2 get2(); void set2(T2 t2);
+}
+
+// Tuple with arity 3
+public interface Tuple3<T1, T2, T3> extends Tuple {
+    T1 get1(); void set1(T1 t1);
+    T2 get2(); void set2(T2 t2);
+    T3 get3(); void set3(T3 t3);
+}
+
+// Fictional sample application with Java:
+for (Tuple<Integer, String, Date>> tuple : create
+        .select(BOOK.ID, BOOK.TITLE, BOOK.PUBLICATION_DATE)
+        .from(BOOK)
+        .orderBy(BOOK.ID)
+        .fetch()) {
+
+    Integer id           = tuple.get1();
+    String title         = tuple.get2();
+    Date publicationDate = tuple.get3();
+}
+
+// Fictional sample application with Scala:
+for (tuple <- create
+              select (BOOK.ID, BOOK.TITLE, BOOK.PUBLICATION_DATE)
+              from BOOK
+              orderBy BOOK.ID
+              fetch) {
+
+    val id              = tuple._1; // Type is Int
+    val title           = tuple._2; // Type is String
+    val publicationDate = tuple._3; // Type is Date
+}]]></java>
+
+									<p>
+										It is worth mentioning that Scala is much stronger in inferring types than Java. Yet still, this becomes quickly impracticable as
+									</p>
+									<ul>
+										<li>We will run out of pre-defined tuple types for large arities</li>
+										<li>Tuples are not as expressive as records (named tuples)</li>
+										<li>With Java's weak type inference (no val/var keywords), tuples quickly become very verbose in Java</li>
+									</ul>
+									<p>
+										For these reasons jOOQ does not support generic tuples.
+									</p>
+								</content>
 							</section>
 
 							<section id="arrays-maps-and-lists">
 								<title>Arrays, Maps and Lists</title>
-								<content></content>
+								<content>
+									<h3>Convenience fetch methods to fetch arrays, maps, and lists</h3>
+									<p>
+										By default, jOOQ returns an <reference class="org.jooq.Result"/> object, which is essentially a <reference class="java.util.List"/> of <reference class="org.jooq.Record"/>. Often, you will find yourself wanting to transform this result object into a type that corresponds more to your specific needs. Or you just want to list all values of one specific column. Here are some examples to illustrate those use cases:
+									</p>
+									
+<java><![CDATA[// Fetching only book titles (the two calls are equivalent):
+List<String> titles1 = create.select().from(BOOK).fetch().getValues(BOOK.TITLE);
+List<String> titles2 = create.select().from(BOOK).fetch(BOOK.TITLE);
+String[]     titles3 = create.select().from(BOOK).fetchArray(BOOK.TITLE);
+
+// Fetching only book IDs, converted to Long
+List<Long> ids1 = create.select().from(BOOK).fetch().getValues(BOOK.ID, Long.class);
+List<Long> ids2 = create.select().from(BOOK).fetch(BOOK.ID, Long.class);
+Long[]     ids3 = create.select().from(BOOK).fetchArray(BOOK.ID, Long.class);
+
+// Fetching book IDs and mapping each ID to their records or titles
+Map<Integer, BookRecord> map1 = create.selectFrom(BOOK).fetch().intoMap(BOOK.ID);
+Map<Integer, BookRecord> map2 = create.selectFrom(BOOK).fetchMap(BOOK.ID);
+Map<Integer, String>     map3 = create.selectFrom(BOOK).fetch().intoMap(BOOK.ID, BOOK.TITLE);
+Map<Integer, String>     map4 = create.selectFrom(BOOK).fetchMap(BOOK.ID, BOOK.TITLE);
+
+// Group by AUTHOR_ID and list all books written by any author:       
+Map<Integer, Result<BookRecord>> group1 = create.selectFrom(BOOK).fetch().intoGroups(BOOK.AUTHOR_ID);
+Map<Integer, Result<BookRecord>> group2 = create.selectFrom(BOOK).fetchGroups(BOOK.AUTHOR_ID);
+Map<Integer, List<String>>       group3 = create.selectFrom(BOOK).fetch().intoGroups(BOOK.AUTHOR_ID, BOOK.TITLE);
+Map<Integer, List<String>>       group4 = create.selectFrom(BOOK).fetchGroups(BOOK.AUTHOR_ID, BOOK.TITLE);]]></java>									
+
+									<p>
+										Note that most of these convenience methods are available both through <reference class="org.jooq.ResultQuery"/> and <reference class="org.jooq.Result"/>, some are even available through <reference class="org.jooq.Record"/> as well.
+									</p>
+								</content>
 							</section>
 
 							<section id="recordhandler">
 								<title>RecordHandler</title>
-								<content></content>
+								<content>
+									<h3>Write callbacks to receive records as input</h3>
+									<p>
+										In a more functional operating mode, you might want to write callbacks that receive records from your select statement results in order to do some processing. This is a common data access pattern in Spring's JdbcTemplate, and it is also available in jOOQ. With jOOQ, you can implement your own <reference class="org.jooq.RecordHandler"/> classes and plug them into jOOQ's <reference class="org.jooq.ResultQuery"/>:
+									</p>
+									
+<java><![CDATA[// Write callbacks to receive records from select statements
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetch()
+      .into(new RecordHandler<BookRecord>() {
+          @Override
+          public void next(BookRecord book) {
+              Util.doThingsWithBook(book);
+          }
+      });
+      
+// Or more concisely
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetchInto(new RecordHandler<BookRecord>() {...});
+      
+// Or even more concisely with Java 8's lambda expressions:
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetchInto(book -> { Util.doThingsWithBook(book); }; );
+]]></java>
+								</content>
 							</section>
 
 							<section id="pojos">
 								<title>POJOs</title>
-								<content></content>
+								<content>
+									<h3>Using POJOs or keeping your DTOs clear of jOOQ dependencies</h3>
+									<p>
+										Fetching data in records is fine as long as your application is not really layered, or as long as you're still writing code in the DAO layer. But if you have a more advanced application architecture, you may not want to allow for jOOQ artefacts to leak into other layers. You may choose to write POJOs (Plain Old Java Objects) as your primary DTOs (Data Transfer Objects), without any dependencies on jOOQ's <reference class="org.jooq.Record"/> types, which may even potentially hold a reference to a <reference id="factory" title="Factory"/>, and thus a JDBC <referenc class="java.sql.Connection"/>. Like Hibernate/JPA, jOOQ allows you to operate with POJOs. Unlike Hibernate/JPA, jOOQ does not "attach" those POJOs or create proxies with any magic in them.
+									</p>
+									<p>
+										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, you can configure it to <reference id="codegen-pojos" title="generate POJOs"/> for you, but you're not required to use those generated POJOs. You can use your own.
+									</p>
+									
+									<h3>Using JPA-annotated POJOs</h3>									
+									<p>
+										jOOQ tries to find JPA annotations on your POJO types. If it finds any, they are used as the primary source for mapping meta-information. Only the <reference class="javax.persistence.Column"/> annotation is used and understood by jOOQ. An example:
+									</p>
+
+<java><![CDATA[// A JPA-annotated POJO class
+public class MyBook {
+  @Column(name = "ID")
+  public int myId;
+  
+  @Column(name = "TITLE")
+  public String myTitle;
+}
+
+// The various "into()" methods allow for fetching records into your custom POJOs:
+MyBook myBook        = create.select().from(BOOK).fetchAny().into(MyBook.class); 
+List<MyBook> myBooks = create.select().from(BOOK).fetch().into(MyBook.class);
+List<MyBook> myBooks = create.select().from(BOOK).fetchInto(MyBook.class);]]></java>									
+									
+									<p>
+										Just as with any other JPA implementation, you can put the <reference class="javax.persistence.Column"/> annotation on any class member, including attributes, setters and getters. Please refer to the <reference class="org.jooq.Record" anchor="#into(java.lang.Class)" title="Record.into()"/> Javadoc for more details.
+									</p>
+									
+									<h3>Using simple POJOs</h3>
+									<p>
+										If jOOQ does not find any JPA-annotations, columns are mapped to the "best-matching" constructor, attribute or setter. An example illustrates this:
+									</p>
+									
+<java><![CDATA[// A "mutable" POJO class
+public class MyBook1 {
+  public int id;
+  public String title;
+}
+
+// The various "into()" methods allow for fetching records into your custom POJOs:
+MyBook1 myBook        = create.select().from(BOOK).fetchAny().into(MyBook1.class); 
+List<MyBook1> myBooks = create.select().from(BOOK).fetch().into(MyBook1.class);
+List<MyBook1> myBooks = create.select().from(BOOK).fetchInto(MyBook1.class);	
+									
+// An "immutable" POJO class
+public class MyBook2 {
+  public final int id;
+  public final String title;
+  
+  public MyBook2(int id, String title) {
+    this.id = id;
+    this.title = title;
+  }
+}
+
+// With "immutable" POJO classes, there must be an exact match between projected fields and available constructors:
+MyBook2 myBook        = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetchAny().into(MyBook2.class); 
+List<MyBook2> myBooks = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetch().into(MyBook2.class);
+List<MyBook2> myBooks = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetchInto(MyBook2.class);]]></java>	
+									
+									<p>
+										Please refer to the <reference class="org.jooq.Record" anchor="#into(java.lang.Class)" title="Record.into()"/> Javadoc for more details.
+									</p>
+
+									<h3>Using proxyable types</h3>
+									<p>
+										jOOQ also allows for fetching data into abstract classes or interfaces, or in other words, "proxyable" types. This means that jOOQ will return a <reference class="java.util.HashMap"/> wrapped in a <reference class="java.lang.reflect.Proxy"/> implementing your custom type. An example of this is given here:
+									</p>
+									
+<java><![CDATA[// A "proxyable" type
+public interface MyBook3 {
+  int getId(); 
+  void setId(int id);
+  
+  String getTitle();
+  void setTitle(String title);
+}
+
+// The various "into()" methods allow for fetching records into your custom POJOs:
+MyBook3 myBook        = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetchAny().into(MyBook3.class); 
+List<MyBook3> myBooks = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetch().into(MyBook3.class);
+List<MyBook3> myBooks = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetchInto(MyBook3.class);]]></java>									
+
+									<p>
+										Please refer to the <reference class="org.jooq.Record" anchor="#into(java.lang.Class)" title="Record.into()"/> Javadoc for more details.
+									</p>
+
+									<h3>Loading POJOs back into Records to store them</h3>
+									<p>
+										The above examples show how to fetch data into your own custom POJOs / DTOs. When you have modified the data contained in POJOs, you probably want to store those modifications back to the database. An example of this is given here:
+									</p>
+
+<java><![CDATA[// A "mutable" POJO class
+public class MyBook {
+  public int id;
+  public String title;
+}
+
+// Create a new POJO instance
+MyBook myBook = new MyBook();
+myBook.id = 10;
+myBook.title = "Animal Farm";
+
+// Load a jOOQ-generated BookRecord from your POJO
+BookRecord book = create.newRecord(BOOK, myBook); 
+
+// Insert it (implicitly)
+book.store();
+
+// Insert it (explicitly)
+create.executeInsert(book);
+
+// or update it (ID = 10)
+create.executeUpdate(book);]]></java>
+							
+									<p>
+										Note: Because of your manual setting of ID = 10, jOOQ's store() method will asume that you want to insert a new record. See the manual's section about <reference id="crud-with-updatablerecords" title="CRUD with UpdatableRecords"/> for more details on this.
+									</p>
+											
+									<h3>Interaction with DAOs</h3>
+									<p>
+										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, you can configure it to <reference id="codegen-daos" title="generate DAOs"/> for you. Those DAOs operate on <reference id="codegen-pojos" title="generated POJOs"/>. An example of using such a DAO is given here:
+									</p>
+
+<java><![CDATA[// Initialise a Factory
+Factory create = new Factory(SQLDialect.ORACLE, connection);
+
+// Initialise the DAO with the Factory
+BookDao bookDao = new BookDao(create);
+
+// Start using the DAO
+Book book = bookDao.findById(5);
+
+// Modify and update the POJO
+book.setTitle("1984");
+book.setPublishedIn(1948);
+bookDao.update(book);
+
+// Delete it again
+bookDao.delete(book);]]></java>
+									
+									<h3>More complex data structures</h3>
+									<p>
+										jOOQ currently doesn't support more complex data structures, the way Hibernate/JPA attempt to map relational data onto POJOs. While future developments in this direction are not excluded, jOOQ claims that generic mapping strategies lead to an enormous additional complexity that only serves very few use cases. You are likely to find a solution using any of jOOQ's various <reference id="fetching" title="fetching modes"/>, with only little boiler-plate code on the client side.
+									</p>
+								</content>
 							</section>
 
 							<section id="lazy-fetching">
@@ -5967,6 +6260,26 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 						<content></content>
 					</section>
 
+				    <section id="codegen-records">
+						<title>Generated records</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-pojos">
+						<title>Generated POJOs</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-interfaces">
+						<title>Generated Interfaces</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-daos">
+						<title>Generated POJOs</title>
+						<content></content>
+					</section>
+
 				    <section id="codegen-sequences">
 						<title>Generated sequences</title>
 						<content></content>
@@ -6173,6 +6486,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 								<li><a href="http://www.hibernate.org">Hibernate</a>: The de-facto standard (JPA) with its useful table-to-POJO mapping features have influenced jOOQ's <reference class="org.jooq.ResultQuery" anchor="#fetchInto(java.lang.Class)"/> facilities</li>
 								<li><a href="http://www.h2database.com/html/jaqu.html">JaQu</a>: H2's own fluent API for querying databases</li>
 								<li><a href="http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html">JPA</a>: The de-facto standard in the javax.persistence packages, supplied by Oracle. Its annotations are useful to jOOQ as well.</li>
+								<li><a href="http://onewebsql.com">OneWebSQL</a>: A commercial SQL abstraction API with support for DAO source code generation, which was integrated also in jOOQ</li>
 								<li><a href="http://www.querydsl.com">QueryDSL</a>: A "LINQ-port" to Java. It has a similar fluent API, a similar code-generation facility, yet quite a different purpose. While jOOQ is all about SQL, QueryDSL (like LINQ) is mostly about querying.</li>
 								<li><a href="http://www.springsource.org/features/data-access">Spring Data</a>: Spring's JdbcTemplate knows RowMappers, which are reflected by jOOQ's <reference class="org.jooq.RecordHandler"/></li>
 							</ul>

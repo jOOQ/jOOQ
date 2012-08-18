@@ -4331,17 +4331,12 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 				</content>
 
 				<sections>
-				    <section id="query-vs-resultquery">
-						<title>Query vs. ResultQuery</title>
+					<section id="comparison-with-jdbc">
+						<title>Comparison between jOOQ and JDBC</title>
 						<content>
-							<h3>Query vs. ResultQuery</h3>
-							<p>
-								Unlike JDBC, jOOQ has a lot of knowledge about a SQL query's structure and internals (see the manual's section about <reference id="sql-building" title="SQL building"/>). Hence, jOOQ distinguishes between these two fundamental types of queries. While every <reference class="org.jooq.Query"/> can be executed, only <reference class="org.jooq.ResultQuery"/> can return results (see the manual's section about <reference id="fetching" title="fetching"/> to learn more about fetching results).
-							</p>
-							
 							<h3>Similarities with JDBC</h3>
 							<p>
-								Even if there are two general types of Query, there are a lot of similarities between JDBC and jOOQ. Just to name a few:
+								Even if there are <reference id="query-vs-resultquery" title="two general types of Query"/>, there are a lot of similarities between JDBC and jOOQ. Just to name a few:
 							</p>
 							<ul>
 								<li>Both APIs return the number of affected records in non-result queries. JDBC: <reference class="java.sql.Statement" anchor="#executeUpdate(java.lang.String)" title="Statement.executeUpdate()"/>, jOOQ: <reference class="org.jooq.Query" anchor="#execute()" title="Query.execute()"/></li>
@@ -4353,11 +4348,30 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 								Some of the most important differences between JDBC and jOOQ are listed here:
 							</p>
 							<ul>
+								<li><reference id="query-vs-resultquery" title="Query vs. ResultQuery"/>: JDBC does not formally distinguish between queries that can return results, and queries that cannot. The same API is used for both. This greatly reduces the possibility for <reference id="fetching" title="fetching convenience methods"/></li>
 								<li><reference id="exception-handling" title="Exception handling"/>: While SQL uses the checked <reference class="java.sql.SQLException"/>, jOOQ wraps all exceptions in an unchecked <reference class="org.jooq.exception.DataAccessException"/></li>
 								<li><reference class="org.jooq.Result"/>: Unlike its JDBC counter-part, this type implements <reference class="java.util.List"/> and is fully loaded into Java memory, freeing resources as early as possible. Just like statements, this means that users don't have to deal with a "weird" internal result set state.</li>
 								<li><reference class="org.jooq.Cursor"/>: If you want more fine-grained control over how many records are fetched into memory at once, you can still do that using jOOQ's <reference id="lazy-fetching" title="lazy fetching"/> feature</li>
 								<li><reference id="statement-type" title="Statement type"/>: jOOQ does not formally distinguish between static statements and prepared statements. By default, all statements are prepared statements in jOOQ, internally. Executing a statement as a static statement can be done simply using a <reference id="custom-settings" title="custom settings flag"/></li>
 							</ul>
+						</content>
+					</section>
+				    
+				    <section id="query-vs-resultquery">
+						<title>Query vs. ResultQuery</title>
+						<content>
+							<h3>Query vs. ResultQuery</h3>
+							<p>
+								Unlike JDBC, jOOQ has a lot of knowledge about a SQL query's structure and internals (see the manual's section about <reference id="sql-building" title="SQL building"/>). Hence, jOOQ distinguishes between these two fundamental types of queries. While every <reference class="org.jooq.Query"/> can be executed, only <reference class="org.jooq.ResultQuery"/> can return results (see the manual's section about <reference id="fetching" title="fetching"/> to learn more about fetching results). With plain SQL, the distinction can be made clear most easily:
+							</p>
+							
+<java><![CDATA[// Create a Query object and execute it:
+Query query = create.query("DELETE FROM BOOK");
+query.execute();
+
+// Create a ResultQuery object and execute it, fetching results:
+ResultQuery<Record> resultQuery = create.resultQuery("SELECT * FROM BOOK");
+Result<Record> resultQuery.fetch();]]></java>
 						</content>
 					</section>
 
@@ -4799,12 +4813,113 @@ bookDao.delete(book);]]></java>
 
 							<section id="lazy-fetching">
 								<title>Lazy fetching</title>
-								<content></content>
+								<content>
+									<h3>Keeping underlying cursors open to reduce traffic</h3>
+									<p>
+										Unlike JDBC's <reference class="java.sql.ResultSet"/>, jOOQ's <reference class="org.jooq.Result"/> does not represent an open database cursor with various fetch modes and scroll modes, that needs to be closed after usage. jOOQ's results are simple in-memory Java <reference class="java.util.List"/> objects, containing all of the result values. If your result sets are large, or if you have a lot of network latency, you may wish to fetch records one-by-one, or in small chunks. jOOQ supports a <reference class="org.jooq.Cursor"/> type for that purpose. In order to obtain such a reference, use the <reference class="org.jooq.ResultQuery" anchor="#fetchLazy()" title="ResultQuery.fetchLazy()"/> method. An example is given here:
+									</p>
+									
+<java><![CDATA[// Obtain a Cursor reference:
+Cursor<BookRecord> cursor = null;
+
+try {
+    cursor = create.selectFrom(BOOK).fetchLazy();
+
+    // Cursor has similar methods as Iterator<R>
+    while (cursor.hasNext()) {
+        BookRecord book = cursor.fetchOne();
+        
+        Util.doThingsWithBook(book);
+    }
+}
+
+// Close the cursor and the cursor's underlying JDBC ResultSet
+finally {
+    if (cursor != null) {
+        cursor.close();
+    }
+}]]></java>
+
+									<p>
+										As a <reference class="org.jooq.Cursor"/> holds an internal reference to an open <reference class="java.sql.ResultSet"/>, it may need to be closed at the end of iteration. If a cursor is completely scrolled through, it will conveniently close the underlying ResultSet. However, you should not rely on that.
+									</p>
+									
+									<h3>Cursors ship with all the other fetch features</h3>
+									<p>
+										Like <reference class="org.jooq.ResultQuery"/> or <reference class="org.jooq.Result"/>, <reference class="org.jooq.Cursor"/> gives access to all of the other fetch features that we've seen so far, i.e.
+									</p>
+									<ul>
+										<li><reference id="record-vs-tablerecord" title="Strongly or weakly typed records"/>: Cursors are also typed with the &lt;R&gt; type, allowing to fetch custom, generated <reference class="org.jooq.TableRecord"/> or plain <reference class="org.jooq.Record"/> types.</li>
+										<li><reference id="recordhandler" title="RecordHandler callbacks"/>: You can use your own <reference class="org.jooq.RecordHandler"/> callbacks to receive lazily fetched records.</li>
+										<li><reference id="pojos" title="POJOs"/>: You can fetch data into your own custom POJO types.</li>
+									</ul>
+								</content>
 							</section>
 
 							<section id="many-fetching">
 								<title>Many fetching</title>
-								<content></content>
+								<content>
+									<h3>Fetching several result sets from a single query</h3>
+									<p>
+										Many databases support returning several result sets, or cursors, from single queries. An example for this is Sybase ASE's sp_help command:
+									</p>
+<text><![CDATA[> sp_help 'author'
+
++--------+-----+-----------+-------------+-------------------+
+|Name    |Owner|Object_type|Object_status|Create_date        |
++--------+-----+-----------+-------------+-------------------+
+|  author|dbo  |user table | -- none --  |Sep 22 2011 11:20PM|
++--------+-----+-----------+-------------+-------------------+
+
++-------------+-------+------+----+-----+-----+
+|Column_name  |Type   |Length|Prec|Scale|...  |
++-------------+-------+------+----+-----+-----+
+|id           |int    |     4|NULL| NULL|    0|
+|first_name   |varchar|    50|NULL| NULL|    1|
+|last_name    |varchar|    50|NULL| NULL|    0|
+|date_of_birth|date   |     4|NULL| NULL|    1|
+|year_of_birth|int    |     4|NULL| NULL|    1|
++-------------+-------+------+----+-----+-----+]]></text>
+
+
+									<p>
+										The correct (and verbose) way to do this with JDBC is as follows:
+									</p>
+									
+<java><![CDATA[ResultSet rs = statement.executeQuery();
+
+// Repeat until there are no more result sets
+for (;;) {
+
+  // Empty the current result set
+  while (rs.next()) {
+    // [ .. do something with it .. ]
+  }
+
+  // Get the next result set, if available
+  if (statement.getMoreResults()) {
+    rs = statement.getResultSet();
+  }
+  else {
+    break;
+  }
+}
+
+// Be sure that all result sets are closed
+statement.getMoreResults(Statement.CLOSE_ALL_RESULTS);
+statement.close();]]></java>
+
+									<p>
+										As previously discussed in the chapter about <reference id="comparison-with-jdbc" title="differences between jOOQ and JDBC"/>, jOOQ does not rely on an internal state of any JDBC object, which is "externalised" by Javadoc. Instead, it has a straight-forward API allowing you to do the above in a one-liner: 
+									</p>
+									
+<java><![CDATA[// Get some information about the author table, its columns, keys, indexes, etc
+List<Result<Record>> results = create.fetchMany("sp_help 'author'");]]></java>
+
+									<p>
+										Using generics, the resulting structure is immediately clear.
+									</p>									
+								</content>
 							</section>
 
 							<section id="later-fetching">

@@ -52,6 +52,9 @@ import org.jooq.exception.MappingException;
  * <p>
  * Client code must close this {@link Cursor} in order to close the underlying
  * {@link PreparedStatement} and {@link ResultSet}
+ * <p>
+ * Note: Unlike usual implementations of {@link Iterable}, a <code>Cursor</code>
+ * can only provide one {@link Iterator}!
  *
  * @param <R> The cursor's record type
  * @author Lukas Eder

@@ -444,7 +444,10 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Object[] fetchArray(int fieldIndex) {
-        return fetch(fieldIndex).toArray();
+        Result<R> fetch = fetch();
+        Class<?> type = fetch.getField(fieldIndex).getType();
+        List<?> list = fetch.getValues(fieldIndex);
+        return list.toArray((Object[]) Array.newInstance(type, list.size()));
     }
 
     @SuppressWarnings("unchecked")
@@ -461,7 +464,10 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Object[] fetchArray(String fieldName) {
-        return fetch(fieldName).toArray();
+        Result<R> fetch = fetch();
+        Class<?> type = fetch.getField(fieldName).getType();
+        List<?> list = fetch.getValues(fieldName);
+        return list.toArray((Object[]) Array.newInstance(type, list.size()));
     }
 
     @SuppressWarnings("unchecked")

@@ -366,13 +366,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals("10", fetch4.getValue("p"));
         assertEquals("10", fetch4.getValue(fetch4.getField("p")));
 
+        // [#1722] Check the actual returned type of arrays, also
         Object[] fetch5 = q.fetchArray("p");
         assertEquals(1, fetch5.length);
         assertEquals("10", fetch5[0]);
+        assertTrue(fetch5 instanceof String[]);
 
         Object[] fetch6 = q.fetchArray(0);
         assertEquals(1, fetch6.length);
         assertEquals("10", fetch6[0]);
+        assertTrue(fetch6 instanceof String[]);
 
         Long[] fetch7 = q.fetchArray(0, Long.class);
         assertEquals(1, fetch7.length);

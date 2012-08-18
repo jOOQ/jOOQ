@@ -267,15 +267,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         // fetch single field
         // ------------------
+
+        // [#1722] Check the actual returned type of arrays, also
+        String[] array1 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchArray(TBook_TITLE());
         assertEquals(create().selectFrom(TBook()).orderBy(TBook_ID()).fetch(TBook_TITLE()),
-        Arrays.asList(create().selectFrom(TBook()).orderBy(TBook_ID()).fetchArray(TBook_TITLE())));
+        Arrays.asList(array1));
 
-        assertEquals(create().selectFrom(TBook()).orderBy(TBook_ID()).fetch(1),
-        Arrays.asList(create().selectFrom(TBook()).orderBy(TBook_ID()).fetchArray(1)));
+        Object[] array2 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchArray(1);
+        assertEquals(create().selectFrom(TBook()).orderBy(TBook_ID()).fetch(1), Arrays.asList(array2));
+        assertTrue(array2 instanceof Integer[]);
 
+        Object[] array3 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchArray(TBook_ID().getName());
         assertEquals(create().selectFrom(TBook()).orderBy(TBook_ID()).fetch(TBook_ID().getName()),
-        Arrays.asList(create().selectFrom(TBook()).orderBy(TBook_ID()).fetchArray(TBook_ID().getName())));
-
+            Arrays.asList(array3));
+        assertTrue(array3 instanceof Integer[]);
     }
 
     @Test

@@ -555,7 +555,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * You can access data like this
      * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
      *
-     * @return The resulting values.
+     * @return The resulting values. This may be an array type more concrete
+     *         than <code>Object[]</code>, depending on whether jOOQ has any
+     *         knowledge about <code>fieldIndex</code>'s actual type.
      * @throws DataAccessException if something went wrong executing the query
      */
     Object[] fetchArray(int fieldIndex) throws DataAccessException;
@@ -589,7 +591,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * You can access data like this
      * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
      *
-     * @return The resulting values.
+     * @return The resulting values. This may be an array type more concrete
+     *         than <code>Object[]</code>, depending on whether jOOQ has any
+     *         knowledge about <code>fieldName</code>'s actual type.
      * @throws DataAccessException if something went wrong executing the query
      */
     Object[] fetchArray(String fieldName) throws DataAccessException;

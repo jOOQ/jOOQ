@@ -4924,17 +4924,181 @@ List<Result<Record>> results = create.fetchMany("sp_help 'author'");]]></java>
 
 							<section id="later-fetching">
 								<title>Later fetching</title>
-								<content></content>
+								<content>
+									<h3>Asynchronously execute your SQL statements</h3>
+									<p>
+										Some queries take very long to execute, yet they are not crucial for the continuation of the main program. For instance, you could be generating a complicated report in a Swing application, and while this report is being calculated in your database, you want to display a background progress bar, allowing the user to pursue some other work. This can be achived simply with jOOQ, by creating a <reference class="org.jooq.FutureResult"/>, a type that extends <reference class="java.util.concurrent.Future"/>. An example is given here:
+									</p>
+									
+<java><![CDATA[// Spawn off this query in a separate process:
+FutureResult<BookRecord> future = create.selectFrom(BOOK).where(... complex predicates ...).fetchLater();
+
+// This example actively waits for the result to be done
+while (!future.isDone()) {
+    progressBar.increment(1);
+    Thread.sleep(50);
+}
+
+// The result should be ready, now
+Result<BookRecord> result = future.get();]]></java>
+
+									<p>
+										Note, that instead of letting jOOQ spawn a new thread, you can also provide jOOQ with your own <reference class="java.util.concurrent.ExecutorService"/>:
+									</p>
+									
+<java><![CDATA[// Spawn off this query in a separate process:
+ExecutorService service = // [...]
+FutureResult<BookRecord> future = create.selectFrom(BOOK).where(... complex predicates ...).fetchLater(service);]]></java>
+
+								</content>
 							</section>
 
 							<section id="resultset-fetching">
 								<title>ResultSet fetching</title>
-								<content></content>
+								<content>
+									<h3>Fetch data into JDBC ResultSets, rather than jOOQ Results</h3>
+									<p>
+										When interacting with legacy applications, you may prefer to have jOOQ return a <reference class="java.sql.ResultSet"/>, rather than jOOQ's own <reference class="org.jooq.Result"/> types. This can be done simply, in two ways:
+									</p>
+									
+<java><![CDATA[// jOOQ's Cursor type exposes the underlying ResultSet:
+ResultSet rs1 = create.selectFrom(BOOK).fetchLazy().resultSet();
+
+// But you can also directly access that ResultSet from ResultQuery:
+ResultSet rs2 = create.selectFrom(BOOK).fetchResultSet();
+
+// Don't forget to close these, though!
+rs1.close();
+rs2.close();]]></java>
+
+									<h3>Transform jOOQ's Result into a JDBC ResultSet</h3>
+									<p>
+										Instead of operating on a JDBC ResultSet holding an open resource from your database, you can also let jOOQ's <reference class="org.jooq.Result"/> wrap itself in a <reference class="java.sql.ResultSet"/>. The advantage of this is that the so-created ResultSet has no open connection to the database. It is a completely in-memory ResultSet:								
+									</p>
+
+<java><![CDATA[// Transform a jOOQ Result into a ResultSet
+Result<BookRecord> result = create.selectFrom(BOOK).fetch();
+ResultSet rs = result.intoResultSet();]]></java>
+
+									<h3>The inverse: Fetch data from a legacy ResultSet using jOOQ</h3>
+									<p>
+										The inverse of the above is possible too. Maybe, a legacy part of your application produces JDBC <reference class="java.sql.ResultSet"/>, and you want to turn them into a <reference class="org.jooq.Result"/>: 
+									</p>
+
+<java><![CDATA[// Transform a JDBC ResultSet into a jOOQ Result
+ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM BOOK");
+
+// As a Result:
+Result<Record> result = create.fetch(rs);
+
+// As a Cursor
+Cursor<Record> cursor = create.fetchLazy(rs);]]></java>
+
+								</content>
 							</section>
 
 							<section id="data-type-conversion">
 								<title>Data type conversion</title>
-								<content></content>
+								<content>
+									<h3>Converting JDBC-compatible data types in your own custom data types</h3>
+									<p>
+										Apart from a few extra features (see the manual's section about <reference id="master-data-types" title="master data types"/> and <reference id="codegen-udts" title="user-defined types"/>), jOOQ only supports basic types as supported by the JDBC API. In your application, you may choose to transform these data types into your own ones, without writing too much boiler-plate code. This can be done using jOOQ's <reference class="org.jooq.Converter"/> types. A converter essentially allows for two-way conversion between two Java data types &lt;T&gt; and &lt;U&gt;. By convention, the &lt;T&gt; type corresponds to the type in your database whereas the &gt;U&gt; type corresponds to your own user type. The Converter API is given here:
+									</p>
+									
+<java><![CDATA[public interface Converter<T, U> extends Serializable {
+
+    /**
+     * Convert a database object to a user object
+     */
+    U from(T databaseObject);
+
+    /**
+     * Convert a user object to a database object
+     */
+    T to(U userObject);
+
+    /**
+     * The database type
+     */
+    Class<T> fromType();
+
+    /**
+     * The user type
+     */
+    Class<U> toType();
+}]]></java>
+
+									<p>
+										Such a converter can be used in many parts of the jOOQ API. Some examples have been illustrated in the manual's section about <reference id="fetching" title="fetching"/>.
+									</p>
+									
+									<h3>A Converter for GregorianCalendar</h3>
+									<p>
+										Here is a some more elaborate example involving a Converter for <reference class="java.util.GregorianCalendar"/>: 
+									</p>
+									
+<java><![CDATA[// You may prefer Java Calendars over JDBC Timestamps
+public class CalendarConverter implements Converter<Timestamp, GregorianCalendar> {
+
+    @Override
+    public GregorianCalendar from(Timestamp databaseObject) {
+        GregorianCalendar calendar = (GregorianCalendar) Calendar.getInstance();
+        calendar.setTimeInMillis(databaseObject.getTime());
+        return calendar;
+    }
+
+    @Override
+    public Timestamp to(GregorianCalendar userObject) {
+        return new Timestamp(userObject.getTime().getTime());
+    }
+
+    @Override
+    public Class<Timestamp> fromType() {
+        return Timestamp.class;
+    }
+
+    @Override
+    public Class<GregorianCalendar> toType() {
+        return GregorianCalendar.class;
+    }
+}
+
+// Now you can fetch calendar values from jOOQ's API:
+List<GregorianCalendar> dates1 = create.selectFrom(BOOK).fetch().getValues(BOOK.PUBLISHING_DATE, new CalendarConverter());
+List<GregorianCalendar> dates2 = create.selectFrom(BOOK).fetch(BOOK.PUBLISHING_DATE, new CalendarConverter());
+]]></java>									
+									
+									<h3>Enum Converters</h3>
+									<p>
+										jOOQ ships with a built-in default <reference class="org.jooq.impl.EnumConverter"/>, that you can use to map VARCHAR values to enum literals or NUMBER values to enum ordinals (both modes are supported). Let's say, you want to map a YES / NO / MAYBE column to a custom Enum:
+									</p>
+									
+<java><![CDATA[// Define your Enum
+public enum YNM {
+    YES, NO, MAYBE
+}
+
+// Define your converter
+public class YNMConverter extends EnumConverter<String, YNM> {
+    public YNMConverter() {
+        super(String.class, YNM.class);
+    }
+}
+
+// And you're all set for converting records to your custom Enum:
+for (BookRecord book : create.selectFrom(BOOK).fetch()) {
+    switch (book.getValue(BOOK.I_LIKE, new YNMConverter())) {
+        case YES:    System.out.println("I like this book             : " + book.getTitle()); break;
+        case NO:     System.out.println("I didn't like this book      : " + book.getTitle()); break;
+        case MAYBE:  System.out.println("I'm not sure about this book : " + book.getTitle()); break;
+    }
+}]]></java>
+									
+									<h3>Using Converters in generated source code</h3>
+									<p>
+										jOOQ also allows for generated source code to reference your own custom converters, in order to permanently replace a <reference id="table-columns" title="table column's"/> &lt;T&gt; type by your own, custom &lt;U&gt; type. See the manual's section about <reference id="custom-data-types" title="custom data types"/> for details.
+									</p>
+								</content>
 							</section>
 						</sections>
 					</section>
@@ -4942,6 +5106,48 @@ List<Result<Record>> results = create.fetchMany("sp_help 'author'");]]></java>
 					<section id="statement-type">
 						<title>Static statements vs. Prepared Statements</title>
 						<content>
+							<h3>Static statements vs. Prepared Statements</h3>
+							<p>
+								With JDBC, you have full control over your SQL statements. You can decide yourself, if you want to execute a static <reference class="java.sql.Statement"/> without bind values, or a <reference class="java.sql.PreparedStatement"/> with (or without) bind values. But you have to decide early, which way to go. And you'll have to prevent SQL injection and syntax errors manually, when inlining your bind variables.
+							</p>
+							<p>
+								With jOOQ, this is easier. As a matter of fact, it is plain simple. With jOOQ, you can just set a flag in your <reference id="factory" title="Factory's"/> <reference id="custom-settings" title="Settings"/>, and all queries produced by that factory will be executed as static statements, with all bind values inlined. An example is given here:
+							</p>
+							
+<code-pair>
+<sql><![CDATA[
+
+
+
+
+
+
+-- These statements are rendered by the two factories:
+SELECT ? FROM DUAL WHERE ? = ?
+SELECT 1 FROM DUAL WHERE 1 = 1]]></sql>
+<java><![CDATA[// This Factory executes PreparedStatements
+Factory prepare = new Factory(SQLDialect.ORACLE, connection);
+
+// This Factory exeecutes static Statements
+Factory inlined = new Factory(SQLDialect.ORACLE, connection, 
+  new Settings().withStatementType(StatementType.STATIC_STATEMENT));
+  
+prepare.select(val(1)).where(val(1).equal(1)).fetch();
+inlined.select(val(1)).where(val(1).equal(1)).fetch();]]></java>
+</code-pair>
+
+							<h3>Reasons for choosing one or the other</h3>
+							<p>
+								Not all databases are equal. Some databases show improved performance if you use <reference class="java.sql.PreparedStatement"/>, as the database will then be able to re-use execution plans for identical SQL statements, regardless of actual bind values. This heavily improves the time it takes for soft-parsing a SQL statement. In other situations, assuming that bind values are irrelevant for SQL execution plans may be a bad idea, as you might run into "bind value peeking" issues. You may be better off spending the extra cost for a new hard-parse of your SQL statement and instead having the database fine-tune the new plan to the concrete bind values.
+							</p>
+							<p>
+								Whichever aproach is more optimal for you cannot be decided by jOOQ. In most cases, prepared statements are probably better. But you always have the option of forcing jOOQ to render inlined bind values.
+							</p>
+							
+							<h3>Inlining bind values on a per-bind-value basis</h3>
+							<p>
+								Note that you don't have to inline all your bind values at once. If you know that a bind value is not really a variable and should be inlined explicitly, you can do so by using <reference class="org.jooq.impl.Factory" anchor="#inline(Object)" title="Factory.inline()"/>, as documented in the manual's section about <reference id="inlined-parameters" title="inlined parameters"/>
+							</p>
 						</content>
 					</section>
 
@@ -6401,7 +6607,12 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 					</section>
 
 				    <section id="codegen-procedures">
-						<title>Generated tables</title>
+						<title>Generated procedures</title>
+						<content></content>
+					</section>
+
+				    <section id="codegen-udts">
+						<title>Generated UDTs</title>
 						<content></content>
 					</section>
 

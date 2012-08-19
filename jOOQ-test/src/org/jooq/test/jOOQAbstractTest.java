@@ -1366,8 +1366,43 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testFunctionsOnStrings() throws Exception {
-        new FunctionTests(this).testFunctionsOnStrings();
+    public void testFunctionsOnStrings_TRIM() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_TRIM();
+    }
+
+    @Test
+    public void testFunctionsOnStrings_UPPER_LOWER() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_UPPER_LOWER();
+    }
+
+    @Test
+    public void testFunctionsOnStrings_CONCAT() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_CONCAT();
+    }
+
+    @Test
+    public void testFunctionsOnStrings_REPLACE() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_REPLACE();
+    }
+
+    @Test
+    public void testFunctionsOnStrings_RPAD_LPAD() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_RPAD_LPAD();
+    }
+
+    @Test
+    public void testFunctionsOnStrings_SUBSTRING() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_SUBSTRING();
+    }
+
+    @Test
+    public void testFunctionsOnStrings_REPEAT() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_REPEAT();
+    }
+
+    @Test
+    public void testFunctionsOnStrings_ASCII() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_ASCII();
     }
 
     @Test

@@ -478,6 +478,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             .from(TBook())
             .where(val(2).in(TBook_ID(), TBook_AUTHOR_ID()))
             .orderBy(TBook_ID()).fetch(TBook_ID()));
+    }
+
+    @Test
+    public void testQuantifiedPredicates() throws Exception {
 
         // = { ALL | ANY | SOME }
         switch (getDialect()) {

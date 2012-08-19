@@ -89,7 +89,6 @@ public class FirebirdDataType<T> extends AbstractDataType<T> {
 
     // TODO Below are HSQLDB data types. Fix this
 
-    public static final FirebirdDataType<Byte>        TINYINT               = new FirebirdDataType<Byte>(SQLDataType.TINYINT, "tinyint");
     public static final FirebirdDataType<Boolean>     BIT                   = new FirebirdDataType<Boolean>(SQLDataType.BIT, "bit");
     public static final FirebirdDataType<Object>      OTHER                 = new FirebirdDataType<Object>(SQLDataType.OTHER, "other");
     public static final FirebirdDataType<YearToMonth> INTERVALYEARTOMONTH   = new FirebirdDataType<YearToMonth>(SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
@@ -99,6 +98,7 @@ public class FirebirdDataType<T> extends AbstractDataType<T> {
     // Compatibility types for supported SQLDataTypes
     // -------------------------------------------------------------------------
 
+    protected static final FirebirdDataType<Byte>   __TINYINT              = new FirebirdDataType<Byte>(SQLDataType.TINYINT, "smallint");
     protected static final FirebirdDataType<String> __NCHAR                = new FirebirdDataType<String>(SQLDataType.NCHAR, "char");
     protected static final FirebirdDataType<String> __NCLOB                = new FirebirdDataType<String>(SQLDataType.NCLOB, "clob");
     protected static final FirebirdDataType<String> __LONGNVARCHAR         = new FirebirdDataType<String>(SQLDataType.LONGNVARCHAR, "longvarchar");

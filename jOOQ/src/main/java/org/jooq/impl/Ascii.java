@@ -61,6 +61,9 @@ class Ascii extends AbstractFunction<Integer> {
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
+            case FIREBIRD:
+                return function("ascii_val", SQLDataType.INTEGER, string);
+
             // TODO [#862] [#864] simulate this for some dialects
             case DERBY:
             case INGRES:

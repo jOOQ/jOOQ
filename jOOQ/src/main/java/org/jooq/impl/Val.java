@@ -40,6 +40,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -300,7 +301,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
 
                 // [#1153] Some dialects don't support boolean literals
                 // TRUE and FALSE
-                if (asList(ASE, DB2, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect)) {
+                if (asList(ASE, DB2, FIREBIRD, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect)) {
                     context.sql(((Boolean) val) ? "1" : "0");
                 }
                 else {

@@ -795,18 +795,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     @Test
     public void testH2Merge() throws Exception {
         switch (getDialect()) {
-            // Native support by H2
-            case H2:
-
-            // Simulation through SQL MERGE
-            case DB2:
-            case HSQLDB:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-                break;
-
-            default:
+            case ASE:
+            case CUBRID:
+            case DERBY:
+            case INGRES:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
                 log.info("SKIPPING", "H2-specific MERGE syntax test");
                 return;
         }

@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.RenderContext.CastMode.NEVER;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.val;
 
 import org.jooq.BindContext;
@@ -100,6 +101,20 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
+            // ROWS .. TO ..
+            // -------------
+            case FIREBIRD: {
+                context.castMode(NEVER)
+                       .formatSeparator()
+                       .keyword("rows ")
+                       .sql(getLowerRownum().add(inline(1)))
+                       .keyword(" to ")
+                       .sql(getUpperRownum())
+                       .castMode(castMode);
+
+                break;
+            }
+
             case DERBY: {
 
                 // Casts are not supported here...
@@ -139,19 +154,6 @@ class Limit extends AbstractQueryPart {
                        .sql(numberOfRows)
                        .keyword(" start at ")
                        .sql(offsetPlusOne)
-                       .inline(inline);
-
-                break;
-            }
-
-            // Nice FIRST .. SKIP support
-            // --------------------------
-            case FIREBIRD: {
-                context.inline(true)
-                       .keyword("first ")
-                       .sql(numberOfRows)
-                       .keyword(" skip ")
-                       .sql(offsetOrZero)
                        .inline(inline);
 
                 break;
@@ -238,6 +240,14 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
+            // No bind variables in the FIRST .. SKIP clause
+            // ---------------------------------------------
+            case FIREBIRD: {
+                context.bind(getLowerRownum());
+                context.bind(getUpperRownum());
+                break;
+            }
+
             // These dialects don't support bind variables at all
             case ASE:
             case INGRES: {
@@ -258,12 +268,6 @@ class Limit extends AbstractQueryPart {
                     context.bind(getUpperRownum());
                 }
 
-                break;
-            }
-
-            // No bind variables in the FIRST .. SKIP clause
-            // ---------------------------------------------
-            case FIREBIRD: {
                 break;
             }
 

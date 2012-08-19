@@ -97,7 +97,7 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * This is the same as calling {@link #limit(int, int)} with offset = 0, or
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SimpleSelectOffsetStep<R> limit(Param<Integer> numberOfRows);
 
     /**
@@ -126,7 +126,7 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * this may be simulated with a <code>ROW_NUMBER()</code> window function and
      * nested <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SimpleSelectForUpdateStep<R> limit(int offset, Param<Integer> numberOfRows);
 
     /**
@@ -141,7 +141,7 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * this may be simulated with a <code>ROW_NUMBER()</code> window function and
      * nested <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SimpleSelectForUpdateStep<R> limit(Param<Integer> offset, int numberOfRows);
 
     /**
@@ -156,6 +156,6 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * this may be simulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SimpleSelectForUpdateStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
 }

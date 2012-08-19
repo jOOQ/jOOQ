@@ -60,8 +60,7 @@ class Replace extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
         Field<?>[] args = getArguments();
 
-        // [#861] Many dialects don't ship with a single-argument replace
-        // function:
+        // [#861] Most dialects don't ship with a two-argument replace function:
         switch (configuration.getDialect()) {
             case ASE: {
                 if (args.length == 2) {
@@ -73,6 +72,7 @@ class Replace extends AbstractFunction<String> {
             }
 
             case DB2:
+            case FIREBIRD:
             case HSQLDB:
             case INGRES:
             case MYSQL:

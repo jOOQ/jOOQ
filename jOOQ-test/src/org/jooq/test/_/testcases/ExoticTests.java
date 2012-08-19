@@ -105,6 +105,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             case CUBRID:
             case DB2:
             case DERBY:
+            case FIREBIRD:
             case H2:
             case HSQLDB:
             case INGRES:

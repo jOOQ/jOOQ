@@ -1682,15 +1682,18 @@ public class Factory implements FactoryOperations {
     // -------------------------------------------------------------------------
 
     /**
-     * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
-     * {@link Result}. After fetching all data, the JDBC ResultSet will be
-     * closed.
-     *
-     * @param rs The JDBC ResultSet to fetch data from
-     * @return The resulting jOOQ Result
+     * {@inheritDoc}
      */
     @Override
     public final Result<Record> fetch(ResultSet rs) {
+        return fetchLazy(rs).fetch();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Cursor<Record> fetchLazy(ResultSet rs) {
         ExecuteContext ctx = new DefaultExecuteContext(this);
         ExecuteListener listener = new ExecuteListeners(ctx);
 
@@ -1698,7 +1701,7 @@ public class Factory implements FactoryOperations {
             FieldProvider fields = new MetaDataFieldProvider(this, rs.getMetaData());
 
             ctx.resultSet(rs);
-            return new CursorImpl<Record>(ctx, listener, fields).fetch();
+            return new CursorImpl<Record>(ctx, listener, fields);
         }
         catch (SQLException e) {
             ctx.sqlException(e);

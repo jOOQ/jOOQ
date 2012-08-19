@@ -74,8 +74,9 @@ class InCondition<T> extends AbstractCondition {
             // [#798] Oracle and some other dialects can only hold 1000 values
             // in an IN (...) clause
             switch (context.getDialect()) {
-                case ORACLE:
+                case FIREBIRD:
                 case INGRES:
+                case ORACLE:
                 case SQLSERVER: {
                     context.sql("(")
                            .formatIndentLockStart();

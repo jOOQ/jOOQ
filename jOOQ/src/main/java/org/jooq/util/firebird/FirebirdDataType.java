@@ -43,8 +43,6 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 import org.jooq.DataType;
-import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.AbstractDataType;
 import org.jooq.impl.SQLDataType;
@@ -98,11 +96,16 @@ public class FirebirdDataType<T> extends AbstractDataType<T> {
     // Compatibility types for supported SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final FirebirdDataType<Byte>   __TINYINT              = new FirebirdDataType<Byte>(SQLDataType.TINYINT, "smallint");
-    protected static final FirebirdDataType<String> __NCHAR                = new FirebirdDataType<String>(SQLDataType.NCHAR, "char");
-    protected static final FirebirdDataType<String> __NCLOB                = new FirebirdDataType<String>(SQLDataType.NCLOB, "clob");
-    protected static final FirebirdDataType<String> __LONGNVARCHAR         = new FirebirdDataType<String>(SQLDataType.LONGNVARCHAR, "longvarchar");
-    protected static final FirebirdDataType<String> __NVARCHAR             = new FirebirdDataType<String>(SQLDataType.NVARCHAR, "varchar", "varchar(32672)");
+    protected static final FirebirdDataType<byte[]>  __BINARY               = new FirebirdDataType<byte[]>(SQLDataType.BINARY, "blob");
+    protected static final FirebirdDataType<Double>  __FLOAT                = new FirebirdDataType<Double>(SQLDataType.FLOAT, "double precision");
+    protected static final FirebirdDataType<String>  __LONGNVARCHAR         = new FirebirdDataType<String>(SQLDataType.LONGNVARCHAR, "blob sub_type text");
+    protected static final FirebirdDataType<byte[]>  __LONGVARBINARY        = new FirebirdDataType<byte[]>(SQLDataType.LONGVARBINARY, "blob");
+    protected static final FirebirdDataType<String>  __LONGVARCHAR          = new FirebirdDataType<String>(SQLDataType.LONGVARCHAR, "varchar", "varchar(32672)");
+    protected static final FirebirdDataType<String>  __NCHAR                = new FirebirdDataType<String>(SQLDataType.NCHAR, "char");
+    protected static final FirebirdDataType<String>  __NCLOB                = new FirebirdDataType<String>(SQLDataType.NCLOB, "clob");
+    protected static final FirebirdDataType<String>  __NVARCHAR             = new FirebirdDataType<String>(SQLDataType.NVARCHAR, "varchar", "varchar(32672)");
+    protected static final FirebirdDataType<Byte>    __TINYINT              = new FirebirdDataType<Byte>(SQLDataType.TINYINT, "smallint");
+    protected static final FirebirdDataType<byte[]>  __VARBINARY            = new FirebirdDataType<byte[]>(SQLDataType.VARBINARY, "blob");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
@@ -113,11 +116,6 @@ public class FirebirdDataType<T> extends AbstractDataType<T> {
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
-
-    public static final FirebirdDataType<String>         VARCHARIGNORECASE = new FirebirdDataType<String>(SQLDataType.VARCHAR, "varchar_ignorecase", "varchar_ignorecase(32672)");
-    public static final FirebirdDataType<Object>         OBJECT            = new FirebirdDataType<Object>(SQLDataType.OTHER, "object");
-    public static final FirebirdDataType<Result<Record>> ROW               = new FirebirdDataType<Result<Record>>(SQLDataType.RESULT, "row");
-
 
     private FirebirdDataType(SQLDataType<T> sqlDataType, String typeName) {
         super(SQLDialect.FIREBIRD, sqlDataType, sqlDataType.getType(), typeName);

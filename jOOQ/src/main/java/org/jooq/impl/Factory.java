@@ -2651,7 +2651,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<String> rtrim(Field<String> field) {
-        return function("rtrim", SQLDataType.VARCHAR, nullSafe(field));
+        return new RTrim(nullSafe(field));
     }
 
     /**
@@ -2671,8 +2671,8 @@ public class Factory implements FactoryOperations {
      * <code><pre>ltrim([field])</pre></code>
      */
     @Support
-    public static Field<String> ltrim(Field<String> value) {
-        return function("ltrim", SQLDataType.VARCHAR, nullSafe(value));
+    public static Field<String> ltrim(Field<String> field) {
+        return new LTrim(nullSafe(field));
     }
 
     /**

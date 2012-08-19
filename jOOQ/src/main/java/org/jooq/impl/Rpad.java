@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.inline;
 
@@ -95,6 +96,11 @@ class Rpad extends AbstractFunction<String> {
                     field, length, field, character, character, character, length, field);
             }
 
+            // According to the Firebird documentation, LPAD outcomes should be
+            // cast to truncate large results...
+            case FIREBIRD: {
+                return field("cast(rpad({0}, {1}, {2}) as varchar(4000))", SQLDataType.VARCHAR, field, length, character);
+            }
 
             default: {
                 return function("rpad", SQLDataType.VARCHAR, field, length, character);

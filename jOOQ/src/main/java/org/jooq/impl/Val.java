@@ -153,9 +153,9 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                     // These dialects can hardly detect the type of a bound constant.
                     case DB2:
                     case DERBY:
+                    case FIREBIRD:
 
                     // These dialects have some trouble, when they mostly get it right.
-                    case FIREBIRD:
                     case H2:
                     case HSQLDB:
 

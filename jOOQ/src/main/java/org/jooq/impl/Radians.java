@@ -65,6 +65,7 @@ class Radians extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
+            case FIREBIRD:
             case INGRES:
             case ORACLE:
             case SQLITE:

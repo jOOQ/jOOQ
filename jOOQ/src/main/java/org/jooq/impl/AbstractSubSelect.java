@@ -39,6 +39,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MYSQL;
@@ -533,7 +534,7 @@ implements
                 }
 
                 // Some dialects don't support empty GROUP BY () clauses
-                else if (asList(CUBRID, DERBY, HSQLDB, MYSQL, POSTGRES, SQLITE).contains(context.getDialect())) {
+                else if (asList(CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES, SQLITE).contains(context.getDialect())) {
                     context.sql("1");
                 }
 

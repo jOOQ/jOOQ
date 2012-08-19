@@ -962,6 +962,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testQuantifiedPredicates() throws Exception {
+        new PredicateTests(this).testQuantifiedPredicates();
+    }
+
+    @Test
     public void testIgnoreCase() throws Exception {
         new PredicateTests(this).testIgnoreCase();
     }

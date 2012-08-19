@@ -52,7 +52,8 @@ import java.util.Collection;
  * <p>
  * This implemented differently for every dialect:
  * <ul>
- * <li>Postgres has native support for <code>INSERT .. RETURNING</code> clauses</li>
+ * <li>Firebird and Postgres have native support for
+ * <code>INSERT .. RETURNING</code> clauses</li>
  * <li>HSQLDB, Oracle, and DB2 JDBC drivers allow for retrieving any table
  * column as "generated key" in one statement</li>
  * <li>Derby, H2, Ingres, MySQL, SQL Server only allow for retrieving IDENTITY

@@ -1934,7 +1934,7 @@ create.select().from(BOOK).where(BOOK.ID.equal(3)).forUpdate().skipLocked();]]><
 
 											<h3>FOR UPDATE in CUBRID and SQL Server</h3>
 											<p>
-												The SQL standard specifies a FOR UPDATE clause to be applicable for cursors. Most databases interpret this as being applicable for all SELECT statements. An exception to this rule are the CUBRID and SQL Server databases, that do not allow for any FOR UPDATE clause in a regular SQL SELECT statement. jOOQ simulates the FOR UPDATE behaviour, by locking record by record with JDBC. JDBC allows for specifying the flags TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE for any statement, and then using ResultSet.updateXXX() methods to produce a cell-lock / row-lock. Here’s a simplified example in JDBC:
+												The SQL standard specifies a FOR UPDATE clause to be applicable for cursors. Most databases interpret this as being applicable for all SELECT statements. An exception to this rule are the CUBRID and SQL Server databases, that do not allow for any FOR UPDATE clause in a regular SQL SELECT statement. jOOQ simulates the FOR UPDATE behaviour, by locking record by record with JDBC. JDBC allows for specifying the flags TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE for any statement, and then using ResultSet.updateXXX() methods to produce a cell-lock / row-lock. Here's a simplified example in JDBC:
 											</p>
 <java><![CDATA[PreparedStatement stmt = connection.prepareStatement(
   "SELECT * FROM author WHERE id IN (3, 4, 5)",
@@ -5225,22 +5225,213 @@ create.batch(create.insertInto(AUTHOR, ID, NAME).values("?", "?"))
 
 				    <section id="sequence-execution">
 						<title>Sequence execution</title>
-						<content></content>
+						<content>
+							<h3>Fetch values from a database sequence or serial</h3>
+							<p>
+								Most databases support sequences of some sort, to provide you with unique values to be used for primary keys and other enumerations. If you're using jOOQ's <reference id="code-generation" title="code generator"/>, it will generate a sequence object per sequence for you. There are two ways of using such a sequence object:
+							</p>
+
+							<h3>Standalone calls to sequences</h3>
+							<p>
+								Instead of actually phrasing a select statement, you can also use the <reference id="factory" title="Factory's"/> convenience methods:
+							</p>							
+							
+<java><![CDATA[// Fetch the next value from a sequence
+BigInteger nextID = create.nextval(S_AUTHOR_ID);
+
+// Fetch the current value from a sequence
+BigInteger currID = create.currval(S_AUTHOR_ID);]]></java>
+							
+							<h3>Inlining sequence references in SQL</h3>
+							<p>
+								You can inline sequence references in jOOQ SQL statements. The following are examples of how to do that:
+							</p>
+							
+<java><![CDATA[// Reference the sequence in a SELECT statement:
+BigInteger nextID = create.select(s).fetchOne(S_AUTHOR_ID.nextval());
+
+// Reference the sequence in an INSERT statement:
+create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+      .values(S_AUTHOR_ID.nextval(), "William", "Shakespeare");
+]]></java>
+
+							<p>
+								For more info about inlining sequence references in SQL statements, please refer to the manual's section about <reference id="sequences-and-serials" title="sequences and serials"/>.
+							</p>
+						</content>
 					</section>
 
 				    <section id="stored-procedures">
 						<title>Stored procedures and functions</title>
-						<content></content>
+						<content>
+							<h3>Procedures vs. functions</h3>
+							<p>
+								Many RDBMS support the concept of "routines", usually calling them procedures and/or functions. These concepts have been around in programming languages for a while, also outside of databases. Famous languages distinguishing procedures from functions are:
+							</p>
+							<ul>
+								<li>Ada</li>
+								<li>BASIC</li>
+								<li>Pascal</li>
+								<li>etc...</li>
+							</ul>
+							<p>
+								The general distinction between (stored) procedures and (stored) functions can be summarised like this:
+							</p>
+							
+							<h3>Procedures</h3>
+							<ul>
+								<li>Are called using JDBC CallableStatement</li>
+								<li>Have no return value</li>
+								<li>Usually support OUT parameters</li>
+							</ul>
+							
+							<h3>Functions</h3>
+							<ul>
+								<li>Can be used in SQL statements</li>
+								<li>Have a return value</li>
+								<li>Usually don't support OUT parameters</li>
+							</ul>
+							
+							<h3>Exceptions to these rules</h3>
+							<ul>
+								<li>DB2, H2, and HSQLDB don't allow for JDBC escape syntax when calling functions. Functions must be used in a SELECT statement</li>
+								<li>H2 only knows functions (without OUT parameters)</li>
+								<li>Oracle functions may have OUT parameters</li>
+								<li>Oracle knows functions that must not be used in SQL statements for transactional reasons</li>
+								<li>Postgres only knows functions (with all features combined). OUT parameters can also be interpreted as return values, which is quite elegant/surprising, depending on your taste</li>
+								<li>The Sybase jconn3 JDBC driver doesn't handle null values correctly when using the JDBC escape syntax on functions</li>
+							</ul>
+							<p>
+								In general, it can be said that the field of routines (procedures / functions) is far from being standardised in modern RDBMS even if the SQL:2008 standard specifies things quite well. Every database has its ways and JDBC only provides little abstraction over the great variety of procedures / functions implementations, especially when advanced data types such as cursors / UDT's / arrays are involved.
+							</p>
+							<p>
+								To simplify things a little bit, jOOQ handles both procedures and functions the same way, using a more general <reference class="org.jooq.Routine"/> type.
+							</p>
+							
+							<h3>Using jOOQ for standalone calls to stored procedures and functions</h3>
+							<p>
+								If you're using jOOQ's <reference id="code-generation" title="code generator"/>, it will generate <reference class="org.jooq.Routine"/> objects for you. Let's consider the following example:
+							</p>
+							
+<sql><![CDATA[-- Check whether there is an author in T_AUTHOR by that name and get his ID
+CREATE OR REPLACE PROCEDURE author_exists (author_name VARCHAR2, result OUT NUMBER, id OUT NUMBER);]]></sql>
+
+							<p>
+								The generated artefacts can then be used as follows:
+							</p>
+							
+<java><![CDATA[// Make an explicit call to the generated procedure object:
+AuthorExists procedure = new AuthorExists();
+
+// All IN and IN OUT parameters generate setters
+procedure.setAuthorName("Paulo");
+procedure.execute(configuration);
+
+// All OUT and IN OUT parameters generate getters
+assertEquals(new BigDecimal("1"), procedure.getResult());
+assertEquals(new BigDecimal("2"), procedure.getId();]]></java>							
+							
+							<p>
+								But you can also call the procedure using a generated convenience method in a global Routines class:
+							</p>
+
+<java><![CDATA[// The generated Routines class contains static methods for every procedure.
+// Results are also returned in a generated object, holding getters for every OUT or IN OUT parameter.
+AuthorExists result = Routines.authorExists("Paulo");
+
+// All OUT and IN OUT parameters generate getters
+assertEquals(new BigDecimal("1"), procedure.getResult());
+assertEquals(new BigDecimal("2"), procedure.getId();]]></java>			
+
+							<p>
+								For more details about <reference id="code-generation" title="code generation"/> for procedures, see the manual's section about <reference id="codegen-procedures" title="procedures and code generation"/>.
+							</p>				
+							
+							<h3>Inlining stored function references in SQL</h3>
+							<p>
+								Unlike procedures, functions can be inlined in SQL statements to generate <reference id="column-expressions" title="column expressions"/> or <reference id="table-expressions" title="table expressions"/>, if you're using <reference id="array-and-cursor-unnesting" title="unnesting operators"/>. Assume you have a function like this:
+							</p>
+
+<sql><![CDATA[-- Check whether there is an author in T_AUTHOR by that name and get his ID
+CREATE OR REPLACE FUNCTION author_exists (author_name VARCHAR2) RETURN NUMBER;]]></sql>
+							
+							<p>
+								The generated artefacts can then be used as follows:
+							</p>
+							
+<code-pair>
+<sql><![CDATA[-- This is the rendered SQL
+
+SELECT AUTHOR_EXISTS('Paulo') FROM DUAL]]></sql>
+<java><![CDATA[// Use the static-imported method from Routines:
+boolean exists = 
+create.select(authorExists("Paulo")).fetchOne(0, boolean.class);]]></java>							
+</code-pair>
+							
+							<p>
+								For more info about inlining stored function references in SQL statements, please refer to the manual's section about <reference id="user-defined-functions" title="user-defined functions"/>.
+							</p>
+						</content>
 
 						<sections>
 							<section id="oracle-packages">
 								<title>Oracle Packages</title>
-								<content></content>
+								<content>
+									<h3>Packages in Oracle</h3>
+									<p>
+										Oracle uses the concept of a PACKAGE to group several procedures/functions into a sort of namespace. The <a href="http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt" title="SQL 92 standard">SQL 92 standard</a> talks about "modules", to represent this concept, even if this is rarely implemented as such. This is reflected in jOOQ by the use of Java sub-packages in the <reference id="code-generation" title="source code generation"/> destination package. Every Oracle package will be reflected by
+									</p>
+									<ul>
+										<li>A Java package holding classes for formal Java representations of the procedure/function in that package</li>
+										<li>A Java class holding convenience methods to facilitate calling those procedures/functions</li>
+									</ul>
+									<p>
+										Apart from this, the generated source code looks exactly like the one for standalone procedures/functions.
+									</p>
+									<p>
+										For more details about <reference id="code-generation" title="code generation"/> for procedures and packages see the manual's section about <reference id="codegen-procedures" title="procedures and code generation"/>.
+									</p>
+								</content>
 							</section>
 
 							<section id="oracle-member-procedures">
 								<title>Oracle user-defined types and member procedures</title>
-								<content></content>
+								<content>
+									<h3>Member functions and procedures in Oracle</h3>
+									<p>
+										Oracle UDTs can have object-oriented structures including member functions and procedures. With Oracle, you can do things like this:
+									</p>
+									
+<sql><![CDATA[CREATE OR REPLACE TYPE u_author_type AS OBJECT (
+  id NUMBER(7),
+  first_name VARCHAR2(50),
+  last_name VARCHAR2(50),
+
+  MEMBER PROCEDURE LOAD,
+  MEMBER FUNCTION count_books RETURN NUMBER
+)
+
+-- The type body is omitted for the example]]></sql>
+
+									<p>
+										These member functions and procedures can simply be mapped to Java methods:
+									</p>
+
+<java><![CDATA[// Create an empty, attached UDT record from the Factory
+UAuthorType author = create.newRecord(U_AUTHOR_TYPE);
+
+// Set the author ID and load the record using the LOAD procedure
+author.setId(1);
+author.load();
+
+// The record is now updated with the LOAD implementation's content
+assertNotNull(author.getFirstName());
+assertNotNull(author.getLastName());]]></java>
+
+									<p>
+										For more details about <reference id="code-generation" title="code generation"/> for UDTs see the manual's section about <reference id="codegen-udts" title="user-defined types and code generation"/>.
+									</p>								
+								</content>
 							</section>
 						</sections>
 					</section>

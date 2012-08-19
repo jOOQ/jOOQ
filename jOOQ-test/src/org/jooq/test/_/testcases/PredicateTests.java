@@ -304,6 +304,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             case ASE:
             case DB2:
             case DERBY:
+            case FIREBIRD:
             case INGRES:
             case SQLITE:
             case SQLSERVER:

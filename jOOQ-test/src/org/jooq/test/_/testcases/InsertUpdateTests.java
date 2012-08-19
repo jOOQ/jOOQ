@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -930,7 +931,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             create().truncate(TAuthor()).execute();
 
             // The above should fail if foreign keys are supported
-            if (!Arrays.asList(CUBRID, INGRES, SQLITE).contains(getDialect())) {
+            if (!Arrays.asList(CUBRID, FIREBIRD, INGRES, SQLITE).contains(getDialect())) {
                 fail();
             }
         } catch (Exception expected) {

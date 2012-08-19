@@ -400,7 +400,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
-    public void testFunctionsOnStrings() throws Exception {
+    public void testFunctionsOnStrings_TRIM() throws Exception {
 
         // Trimming
         assertEquals("abc", create().select(trim("abc")).fetchOne(0));
@@ -409,10 +409,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals("abc", create().select(trim("  abc  ")).fetchOne(0));
         assertEquals("  abc", create().select(rtrim("  abc  ")).fetchOne(0));
         assertEquals("abc  ", create().select(ltrim("  abc  ")).fetchOne(0));
+    }
+
+    @Test
+    public void testFunctionsOnStrings_UPPER_LOWER() throws Exception {
 
         // Lower / Upper
         assertEquals("abc", create().select(lower("ABC")).fetchOne(0));
         assertEquals("ABC", create().select(upper("abc")).fetchOne(0));
+    }
+
+    @Test
+    public void testFunctionsOnStrings_CONCAT() throws Exception {
 
         // String concatenation
         assertEquals("abc", create().select(concat("a", "b", "c")).fetchOne(0));
@@ -422,6 +430,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             .where(TAuthor_FIRST_NAME().equal("George")).fetchOne(0));
 
         assertEquals("1ab45", create().select(concat(val(1), val("ab"), val(45))).fetchOne(0));
+    }
+
+    @Test
+    public void testFunctionsOnStrings_REPLACE() throws Exception {
 
         // Standard String functions
         SelectQuery q = create().selectQuery();
@@ -472,6 +484,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 assertEquals(Integer.valueOf(3), record.getValue(octetLength));
                 break;
         }
+    }
+
+    @Test
+    public void testFunctionsOnStrings_RPAD_LPAD() throws Exception {
 
         // RPAD, LPAD
         switch (getDialect()) {
@@ -494,6 +510,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 break;
             }
         }
+    }
+
+    @Test
+    public void testFunctionsOnStrings_SUBSTRING() throws Exception {
 
         // SUBSTRING
         Record result = create().select(
@@ -517,6 +537,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         assertEquals("eorge", result.getValue(substring(TAuthor_FIRST_NAME(), 2)));
         assertEquals("eo", result.getValue(substring(TAuthor_FIRST_NAME(), 2, 2)));
+    }
+
+    @Test
+    public void testFunctionsOnStrings_REPEAT() throws Exception {
 
         // REPEAT
         switch (getDialect()) {
@@ -525,7 +549,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 break;
 
             default: {
-                result = create().select(
+                Record result = create().select(
                     repeat("a", 1),
                     repeat("ab", 2),
                     repeat("abc", 3)).fetchOne();
@@ -535,6 +559,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 break;
             }
         }
+    }
+
+    @Test
+    public void testFunctionsOnStrings_ASCII() throws Exception {
 
         // ASCII
         switch (getDialect()) {
@@ -545,16 +573,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 break;
 
             default:
-                record =
+                Record record =
                 create().select(
                     ascii("A"),
                     ascii("a"),
                     ascii("-"),
                     ascii(" ")).fetchOne();
-                assertEquals((int) 'A', (int) record.getValueAsInteger(0));
-                assertEquals((int) 'a', (int) record.getValueAsInteger(1));
-                assertEquals((int) '-', (int) record.getValueAsInteger(2));
-                assertEquals((int) ' ', (int) record.getValueAsInteger(3));
+                assertEquals('A', (int) record.getValueAsInteger(0));
+                assertEquals('a', (int) record.getValueAsInteger(1));
+                assertEquals('-', (int) record.getValueAsInteger(2));
+                assertEquals(' ', (int) record.getValueAsInteger(3));
 
                 break;
         }

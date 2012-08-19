@@ -82,6 +82,9 @@ class DateDiff extends AbstractFunction<Integer> {
             case DERBY:
                 return field("{fn {timestampdiff}({sql_tsi_day}, {0}, {1}) }", getDataType(), date2, date1);
 
+            case FIREBIRD:
+                return field("{datediff}(day, {0}, {1})", getDataType(), date2, date1);
+
             case H2:
             case HSQLDB:
                 return field("{datediff}('day', {0}, {1})", getDataType(), date2, date1);

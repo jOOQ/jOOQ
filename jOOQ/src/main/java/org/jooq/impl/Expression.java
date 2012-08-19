@@ -129,6 +129,10 @@ class Expression<T> extends AbstractFunction<T> {
     final Field<T> getFunction0(Configuration configuration) {
         SQLDialect dialect = configuration.getDialect();
 
+        // ---------------------------------------------------------------------
+        // XXX: Bitwise operators
+        // ---------------------------------------------------------------------
+
         // DB2, H2 and HSQLDB know functions, instead of operators
         if (BIT_AND == operator && asList(DB2, H2, HSQLDB, ORACLE).contains(dialect)) {
             return function("bitand", getDataType(), getArguments());
@@ -188,6 +192,10 @@ class Expression<T> extends AbstractFunction<T> {
             return (Field<T>) bitNot(bitXor(lhsAsNumber(), rhsAsNumber()));
         }
 
+        // ---------------------------------------------------------------------
+        // XXX: Date time arithmetic operators
+        // ---------------------------------------------------------------------
+
         // [#585] Date time arithmetic for numeric or interval RHS
         else if (asList(ADD, SUBTRACT).contains(operator) &&
              lhs.getDataType().isDateTime() &&
@@ -196,6 +204,10 @@ class Expression<T> extends AbstractFunction<T> {
 
             return new DateExpression();
         }
+
+        // ---------------------------------------------------------------------
+        // XXX: Other operators
+        // ---------------------------------------------------------------------
 
         // Use the default operator expression for all other cases
         else {
@@ -362,6 +374,15 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                case FIREBIRD: {
+                    if (rhs.get(0).getType() == YearToMonth.class) {
+                        return field("{dateadd}({month}, {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
+                    }
+                    else {
+                        return field("{dateadd}({millisecond}, {0}, {1})", getDataType(), val(sign * (long) rhsAsDTS().getTotalMilli()), lhs);
+                    }
+                }
+
                 case H2: {
                     if (rhs.get(0).getType() == YearToMonth.class) {
                         return field("{dateadd}('month', {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
@@ -399,6 +420,7 @@ class Expression<T> extends AbstractFunction<T> {
         private final Field<T> getNumberExpression(Configuration configuration) {
             switch (configuration.getDialect()) {
                 case ASE:
+                case FIREBIRD:
                 case SQLSERVER:
                 case SYBASE: {
                     if (operator == ADD) {

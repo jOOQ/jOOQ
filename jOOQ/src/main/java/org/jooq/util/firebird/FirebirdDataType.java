@@ -68,15 +68,14 @@ public class FirebirdDataType<T> extends AbstractDataType<T> {
     public static final FirebirdDataType<Short>       SMALLINT              = new FirebirdDataType<Short>(SQLDataType.SMALLINT, "smallint");
     public static final FirebirdDataType<Integer>     INTEGER               = new FirebirdDataType<Integer>(SQLDataType.INTEGER, "integer");
     public static final FirebirdDataType<Integer>     INT                   = new FirebirdDataType<Integer>(SQLDataType.INTEGER, "int");
-    public static final FirebirdDataType<Long>        INT64                 = new FirebirdDataType<Long>(SQLDataType.BIGINT, "int64");
     public static final FirebirdDataType<Long>        BIGINT                = new FirebirdDataType<Long>(SQLDataType.BIGINT, "bigint");
     public static final FirebirdDataType<Double>      DOUBLEPRECISION       = new FirebirdDataType<Double>(SQLDataType.DOUBLE, "double precision");
     public static final FirebirdDataType<Float>       FLOAT                 = new FirebirdDataType<Float>(SQLDataType.REAL, "float");
     public static final FirebirdDataType<Boolean>     BOOLEAN               = new FirebirdDataType<Boolean>(SQLDataType.BOOLEAN, "boolean");
     public static final FirebirdDataType<BigDecimal>  DECIMAL               = new FirebirdDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
     public static final FirebirdDataType<BigDecimal>  NUMERIC               = new FirebirdDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric");
-    public static final FirebirdDataType<String>      VARCHAR               = new FirebirdDataType<String>(SQLDataType.VARCHAR, "varchar", "varchar(32672)");
-    public static final FirebirdDataType<String>      CHARACTERVARYING      = new FirebirdDataType<String>(SQLDataType.VARCHAR, "character varying", "varchar(32672)");
+    public static final FirebirdDataType<String>      VARCHAR               = new FirebirdDataType<String>(SQLDataType.VARCHAR, "varchar", "varchar(2000)");
+    public static final FirebirdDataType<String>      CHARACTERVARYING      = new FirebirdDataType<String>(SQLDataType.VARCHAR, "character varying", "varchar(2000)");
     public static final FirebirdDataType<String>      CHAR                  = new FirebirdDataType<String>(SQLDataType.CHAR, "char");
     public static final FirebirdDataType<String>      CHARACTER             = new FirebirdDataType<String>(SQLDataType.CHAR, "character");
     public static final FirebirdDataType<String>      CLOB                  = new FirebirdDataType<String>(SQLDataType.CLOB, "blob sub_type text");
@@ -100,10 +99,10 @@ public class FirebirdDataType<T> extends AbstractDataType<T> {
     protected static final FirebirdDataType<Double>  __FLOAT                = new FirebirdDataType<Double>(SQLDataType.FLOAT, "double precision");
     protected static final FirebirdDataType<String>  __LONGNVARCHAR         = new FirebirdDataType<String>(SQLDataType.LONGNVARCHAR, "blob sub_type text");
     protected static final FirebirdDataType<byte[]>  __LONGVARBINARY        = new FirebirdDataType<byte[]>(SQLDataType.LONGVARBINARY, "blob");
-    protected static final FirebirdDataType<String>  __LONGVARCHAR          = new FirebirdDataType<String>(SQLDataType.LONGVARCHAR, "varchar", "varchar(32672)");
+    protected static final FirebirdDataType<String>  __LONGVARCHAR          = new FirebirdDataType<String>(SQLDataType.LONGVARCHAR, "varchar", "varchar(2000)");
     protected static final FirebirdDataType<String>  __NCHAR                = new FirebirdDataType<String>(SQLDataType.NCHAR, "char");
     protected static final FirebirdDataType<String>  __NCLOB                = new FirebirdDataType<String>(SQLDataType.NCLOB, "clob");
-    protected static final FirebirdDataType<String>  __NVARCHAR             = new FirebirdDataType<String>(SQLDataType.NVARCHAR, "varchar", "varchar(32672)");
+    protected static final FirebirdDataType<String>  __NVARCHAR             = new FirebirdDataType<String>(SQLDataType.NVARCHAR, "varchar", "varchar(2000)");
     protected static final FirebirdDataType<Byte>    __TINYINT              = new FirebirdDataType<Byte>(SQLDataType.TINYINT, "smallint");
     protected static final FirebirdDataType<byte[]>  __VARBINARY            = new FirebirdDataType<byte[]>(SQLDataType.VARBINARY, "blob");
 

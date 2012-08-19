@@ -54,6 +54,7 @@ import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.dateAdd;
 import static org.jooq.impl.Factory.dateDiff;
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.timestampAdd;
 import static org.jooq.impl.Factory.timestampDiff;
@@ -120,6 +121,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
     public DataTypeTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         super(delegate);
+    }
+
+    @Test
+    public void testCharCasts() throws Exception {
+
+        // [#1241] Casting to CHAR. Some dialects don't like that. They should
+        // be casting to VARCHAR instead
+        assertEquals("abc",
+        create().select(field("cast('abc' as char(3))", SQLDataType.CHAR))
+                .where(field("cast('abc' as char(3))", SQLDataType.CHAR).equal("abc"))
+                .fetchOne(0, String.class));
     }
 
     @Test

@@ -887,6 +887,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCharCasts() throws Exception {
+        new DataTypeTests(this).testCharCasts();
+    }
+
+    @Test
     public void testNestedCasting() throws Exception {
         new DataTypeTests(this).testNestedCasting();
     }

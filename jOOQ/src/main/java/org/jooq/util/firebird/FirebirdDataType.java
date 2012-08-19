@@ -77,8 +77,8 @@ public class FirebirdDataType<T> extends AbstractDataType<T> {
     public static final FirebirdDataType<Boolean>     BOOLEAN               = new FirebirdDataType<Boolean>(SQLDataType.BOOLEAN, "boolean");
     public static final FirebirdDataType<BigDecimal>  DECIMAL               = new FirebirdDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
     public static final FirebirdDataType<BigDecimal>  NUMERIC               = new FirebirdDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric");
-    public static final FirebirdDataType<String>      VARCHAR               = new FirebirdDataType<String>(SQLDataType.VARCHAR, "varchar");
-    public static final FirebirdDataType<String>      CHARACTERVARYING      = new FirebirdDataType<String>(SQLDataType.VARCHAR, "character varying");
+    public static final FirebirdDataType<String>      VARCHAR               = new FirebirdDataType<String>(SQLDataType.VARCHAR, "varchar", "varchar(32672)");
+    public static final FirebirdDataType<String>      CHARACTERVARYING      = new FirebirdDataType<String>(SQLDataType.VARCHAR, "character varying", "varchar(32672)");
     public static final FirebirdDataType<String>      CHAR                  = new FirebirdDataType<String>(SQLDataType.CHAR, "char");
     public static final FirebirdDataType<String>      CHARACTER             = new FirebirdDataType<String>(SQLDataType.CHAR, "character");
     public static final FirebirdDataType<String>      CLOB                  = new FirebirdDataType<String>(SQLDataType.CLOB, "blob sub_type text");

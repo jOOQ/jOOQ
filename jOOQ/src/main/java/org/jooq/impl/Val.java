@@ -155,6 +155,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                     case DERBY:
 
                     // These dialects have some trouble, when they mostly get it right.
+                    case FIREBIRD:
                     case H2:
                     case HSQLDB:
 

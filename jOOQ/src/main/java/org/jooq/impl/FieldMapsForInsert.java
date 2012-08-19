@@ -81,6 +81,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
                 // Some dialects don't support multi-record inserts
                 case ASE:
+                case FIREBIRD:
                 case INGRES:
                 case ORACLE:
                 case SQLITE:

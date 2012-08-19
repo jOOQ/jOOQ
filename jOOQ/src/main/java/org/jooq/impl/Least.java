@@ -70,7 +70,6 @@ class Least<T> extends AbstractFunction<T> {
 
             case ASE:
             case DERBY:
-            case FIREBIRD:
             case SQLSERVER:
             case SYBASE: {
                 Field<T> first = (Field<T>) getArguments()[0];
@@ -90,6 +89,9 @@ class Least<T> extends AbstractFunction<T> {
                         .otherwise(other);
                 }
             }
+
+            case FIREBIRD:
+                return function("minvalue", getDataType(), getArguments());
 
             case SQLITE:
                 return function("min", getDataType(), getArguments());

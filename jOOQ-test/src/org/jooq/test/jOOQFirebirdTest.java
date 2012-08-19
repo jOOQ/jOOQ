@@ -713,14 +713,11 @@ public class jOOQFirebirdTest extends jOOQAbstractTest<
             FirebirdDataType.INT,
             FirebirdDataType.INTEGER,
             FirebirdDataType.NUMERIC,
-            FirebirdDataType.OBJECT,
             FirebirdDataType.OTHER,
             FirebirdDataType.SMALLINT,
             FirebirdDataType.TIME,
             FirebirdDataType.TIMESTAMP,
-            FirebirdDataType.TINYINT,
             FirebirdDataType.VARCHAR,
-            FirebirdDataType.VARCHARIGNORECASE,
         };
     }
 }

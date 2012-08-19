@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MYSQL;
@@ -1342,9 +1343,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         // Interval tests
         // --------------
         if (getDialect() == ASE ||
+            getDialect() == CUBRID ||
             getDialect() == DB2 ||
             getDialect() == DERBY ||
-            getDialect() == CUBRID ||
+            getDialect() == FIREBIRD ||
             getDialect() == H2 ||
             getDialect() == INGRES || // [#1285] TODO: Fix this for Ingres
             getDialect() == MYSQL ||

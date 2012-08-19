@@ -1132,10 +1132,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     @Test
     public void testFetchResultSet() throws Exception {
         for (int i = 0; i < 2; i++) {
+            // Fetching ResultSets into Results
             assertEquals(
                 create().fetch("select * from t_author order by id"),
                 create().fetch(create().resultQuery("select * from t_author order by id").fetchResultSet()));
 
+            // [#1723] Fetching ResultSets into Cursors
+            Cursor<Record> c1 = create().fetchLazy("select * from t_author order by id");
+            Cursor<Record> c2 = create().fetchLazy(create().resultQuery("select * from t_author order by id").fetchResultSet());
+
+            for (int j = 0; j < 2; j++) {
+                assertTrue(c1.hasNext());
+                assertTrue(c2.hasNext());
+                assertEquals(c1.fetchOne(), c2.fetchOne());
+            }
+
+            assertFalse(c1.hasNext());
+            assertFalse(c2.hasNext());
+
+            // Fetching ResultSets
             ResultSet rs = create().resultQuery("select * from t_author order by id").fetchResultSet();
             assertTrue(rs.next());
             assertEquals(1, rs.getInt(1));

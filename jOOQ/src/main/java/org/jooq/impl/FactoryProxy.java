@@ -398,6 +398,11 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
+    public final Cursor<Record> fetchLazy(ResultSet rs) {
+        return getDelegate().fetchLazy(rs);
+    }
+
+    @Override
     public final Result<Record> fetchFromCSV(String string) {
         return null;
     }

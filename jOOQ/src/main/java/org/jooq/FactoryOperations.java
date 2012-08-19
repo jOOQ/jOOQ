@@ -221,6 +221,10 @@ public interface FactoryOperations extends Configuration {
      * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
      * {@link Result}. After fetching all data, the JDBC ResultSet will be
      * closed.
+     * <p>
+     * Use {@link #fetchLazy(ResultSet)}, to fetch one <code>Record</code> at a
+     * time, instead of load the entire <code>ResultSet</code> into a jOOQ
+     * <code>Result</code> at once.
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @return The resulting jOOQ Result
@@ -228,6 +232,21 @@ public interface FactoryOperations extends Configuration {
      */
     @Support
     Result<Record> fetch(ResultSet rs) throws DataAccessException;
+
+    /**
+     * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Result}. After fetching all data, the JDBC ResultSet will be
+     * closed.
+     * <p>
+     * Use {@link #fetch(ResultSet)}, to load the entire <code>ResultSet</code>
+     * into a jOOQ <code>Result</code> at once.
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    Cursor<Record> fetchLazy(ResultSet rs) throws DataAccessException;
 
     /**
      * Fetch all data from a CSV string.

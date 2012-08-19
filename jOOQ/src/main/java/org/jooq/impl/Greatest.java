@@ -71,6 +71,7 @@ class Greatest<T> extends AbstractFunction<T> {
 
             case ASE:
             case DERBY:
+            case FIREBIRD:
             case SQLSERVER:
             case SYBASE: {
                 Field<T> first = (Field<T>) getArguments()[0];

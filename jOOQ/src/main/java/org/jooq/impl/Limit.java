@@ -54,11 +54,12 @@ class Limit extends AbstractQueryPart {
      * Generated UID
      */
     private static final long serialVersionUID = 2053741242981425602L;
+
     private Field<Integer>    numberOfRows;
     private Field<Integer>    offset;
     private Field<Integer>    offsetOrZero     = val(0);
     private Field<Integer>    offsetPlusOne    = val(1);
-    private boolean           rendersParams;;
+    private boolean           rendersParams;
 
     @Override
     public final void toSQL(RenderContext context) {
@@ -138,6 +139,19 @@ class Limit extends AbstractQueryPart {
                        .sql(numberOfRows)
                        .keyword(" start at ")
                        .sql(offsetPlusOne)
+                       .inline(inline);
+
+                break;
+            }
+
+            // Nice FIRST .. SKIP support
+            // --------------------------
+            case FIREBIRD: {
+                context.inline(true)
+                       .keyword("first ")
+                       .sql(numberOfRows)
+                       .keyword(" skip ")
+                       .sql(offsetOrZero)
                        .inline(inline);
 
                 break;
@@ -244,6 +258,12 @@ class Limit extends AbstractQueryPart {
                     context.bind(getUpperRownum());
                 }
 
+                break;
+            }
+
+            // No bind variables in the FIRST .. SKIP clause
+            // ---------------------------------------------
+            case FIREBIRD: {
                 break;
             }
 

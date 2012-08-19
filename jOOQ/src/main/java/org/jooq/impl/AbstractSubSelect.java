@@ -216,8 +216,9 @@ implements
                     break;
                 }
 
-                // Sybase has TOP .. START AT support, but only without bind
-                // variables
+                // Sybase has TOP .. START AT support (no bind values)
+                // Firebird has FIRST .. SKIP support (no bind values)
+                case FIREBIRD:
                 case SYBASE: {
 
                     // Native TOP support, without OFFSET and without bind values
@@ -462,6 +463,7 @@ implements
                 break;
             }
 
+            case FIREBIRD:
             case SYBASE: {
                 if (getLimit().isApplicable() && !getLimit().rendersParams()) {
                     context.sql(getLimit()).sql(" ");

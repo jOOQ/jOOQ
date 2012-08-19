@@ -38,6 +38,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -103,7 +104,7 @@ public interface OrderProvider {
      * This clause can be used only along with Oracle's <code>CONNECT BY</code>
      * clause, to indicate that the hierarchical ordering should be preserved
      * and elements of each hierarchy should be ordered among themselves.
-     * 
+     *
      * @param orderBySiblings
      */
     @Support({ CUBRID, ORACLE })
@@ -152,7 +153,7 @@ public interface OrderProvider {
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(int offset, int numberOfRows);
 
     /**

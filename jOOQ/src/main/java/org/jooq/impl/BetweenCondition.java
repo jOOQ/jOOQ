@@ -40,6 +40,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
@@ -74,7 +75,7 @@ class BetweenCondition<T> extends AbstractCondition {
 
     @Override
     public final void bind(BindContext context) {
-        if (symmetric && asList(CUBRID, DB2, DERBY, H2, MYSQL, ORACLE, SQLSERVER, SQLITE).contains(context.getDialect())) {
+        if (symmetric && asList(CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLSERVER, SQLITE).contains(context.getDialect())) {
             simulateSymmetric().bind(context);
         }
         else {
@@ -86,7 +87,7 @@ class BetweenCondition<T> extends AbstractCondition {
     public final void toSQL(RenderContext context) {
 
         // TODO: Sybase SQL Anywhere? Sybase ASE
-        if (symmetric && asList(CUBRID, DB2, DERBY, H2, MYSQL, ORACLE, SQLSERVER, SQLITE).contains(context.getDialect())) {
+        if (symmetric && asList(CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLSERVER, SQLITE).contains(context.getDialect())) {
             simulateSymmetric().toSQL(context);
         }
         else {

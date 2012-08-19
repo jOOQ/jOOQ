@@ -544,9 +544,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             // JDBC bug
             case CUBRID:
             case DERBY:
+
+            // TODO Firebird supports the INSERT .. RETURNING syntax, but doesn't
+            // support true multi-record inserts. This should be fixed in Firebird
+            case FIREBIRD:
             case H2:
             case INGRES:
             case ORACLE:
+
             // TODO [#832] Fix this. This might be a driver issue for Sybase
             case SQLITE:
             case SQLSERVER:

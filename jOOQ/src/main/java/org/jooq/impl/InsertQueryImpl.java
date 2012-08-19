@@ -342,6 +342,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         if (!returning.isEmpty()) {
             switch (context.getDialect()) {
+                case FIREBIRD:
                 case POSTGRES:
                     context.formatSeparator()
                            .keyword("returning ")
@@ -361,6 +362,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .bind(updateMap);
 
         switch (context.getDialect()) {
+            case FIREBIRD:
             case POSTGRES:
                 context.bind((QueryPart) returning);
                 break;
@@ -442,6 +444,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             switch (ctx.getDialect()) {
 
                 // Postgres uses the RETURNING clause in SQL
+                case FIREBIRD:
                 case POSTGRES:
                 // SQLite will select last_insert_rowid() after the INSER
                 case SQLITE:
@@ -547,8 +550,10 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     }
                 }
 
-                // Postgres can execute the INSERT .. RETURNING clause like
-                // a select clause. JDBC support is not implemented
+                // Firebird and Postgres can execute the INSERT .. RETURNING
+                // clause like a select clause. JDBC support is not implemented
+                // in the Postgres JDBC driver
+                case FIREBIRD:
                 case POSTGRES: {
                     listener.executeStart(ctx);
                     rs = ctx.statement().executeQuery();

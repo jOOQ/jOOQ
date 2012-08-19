@@ -136,7 +136,7 @@ public interface OrderProvider {
      *
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(Param<Integer> numberOfRows);
 
     /**
@@ -171,7 +171,7 @@ public interface OrderProvider {
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(Param<Integer> offset, int numberOfRows);
 
     /**
@@ -189,7 +189,7 @@ public interface OrderProvider {
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(int offset, Param<Integer> numberOfRows);
 
     /**
@@ -207,7 +207,7 @@ public interface OrderProvider {
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(Param<Integer> offset, Param<Integer> numberOfRows);
 
 }

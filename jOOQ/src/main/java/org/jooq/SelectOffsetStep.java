@@ -112,6 +112,6 @@ public interface SelectOffsetStep extends SelectForUpdateStep {
      * simulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SelectForUpdateStep offset(Param<Integer> offset);
 }

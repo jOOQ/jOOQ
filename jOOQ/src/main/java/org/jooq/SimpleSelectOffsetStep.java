@@ -89,6 +89,6 @@ public interface SimpleSelectOffsetStep<R extends Record> extends SimpleSelectFo
      * simulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SimpleSelectForUpdateStep<R> offset(Param<Integer> offset);
 }

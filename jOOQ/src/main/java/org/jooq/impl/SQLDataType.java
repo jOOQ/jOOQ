@@ -55,6 +55,7 @@ import org.jooq.util.ase.ASEDataType;
 import org.jooq.util.cubrid.CUBRIDDataType;
 import org.jooq.util.db2.DB2DataType;
 import org.jooq.util.derby.DerbyDataType;
+import org.jooq.util.firebird.FirebirdDataType;
 import org.jooq.util.h2.H2DataType;
 import org.jooq.util.hsqldb.HSQLDBDataType;
 import org.jooq.util.ingres.IngresDataType;
@@ -313,6 +314,7 @@ public final class SQLDataType<T> extends AbstractDataType<T> {
             Class.forName(CUBRIDDataType.class.getName());
             Class.forName(DB2DataType.class.getName());
             Class.forName(DerbyDataType.class.getName());
+            Class.forName(FirebirdDataType.class.getName());
             Class.forName(H2DataType.class.getName());
             Class.forName(HSQLDBDataType.class.getName());
             Class.forName(IngresDataType.class.getName());

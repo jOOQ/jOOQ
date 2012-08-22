@@ -46,6 +46,7 @@ import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.param;
+import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
 
 import java.math.BigDecimal;
@@ -55,6 +56,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Collections;
 
 import org.jooq.Insert;
 import org.jooq.Record;
@@ -212,6 +214,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(1, result3.size());
         assertEquals("10", result3.getValue(0, 0));
         assertEquals(null, result3.getValue(0, 1));
+    }
+
+    @Test
+    public void testManyVarcharBindValues() throws Exception {
+
+        // [#1726] Check if large amounts of VARCHAR bind values can be handled
+        Record record = create().select(Collections.nCopies(1000, val("abc"))).fetchOne();
+        assertEquals(1000, record.size());
+        assertEquals(Collections.nCopies(1000, "abc"), asList(record.intoArray()));
     }
 
     @Test

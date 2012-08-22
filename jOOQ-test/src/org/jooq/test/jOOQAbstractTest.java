@@ -1561,6 +1561,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testManyVarcharBindValues() throws Exception {
+        new RenderAndBindTests(this).testManyVarcharBindValues();
+    }
+
+    @Test
     public void testSelectBindValues() throws Exception {
         new RenderAndBindTests(this).testSelectBindValues();
     }

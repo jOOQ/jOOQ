@@ -233,16 +233,32 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             toSQL(context, getValue(), getType());
         }
 
+        // [#1727] VARCHAR types should be cast to their actual lengths
+        else if (getValue() != null && type == SQLDataType.VARCHAR) {
+
+            // Multiply by 4 to be sure that even UTF-32 collations will fit
+            // But don't use larger numbers than Derby's upper limit 32672
+            toSQLCast(context, getDataType(context), Math.min(32672, 4 * ((String) getValue()).length()));
+        }
+
         // In all other cases, the bind variable can be cast normally
         else {
             toSQLCast(context, getDataType(context), 0, 0);
         }
     }
 
-    private void toSQLCast(RenderContext context, DataType<?> type, int precision, int scale) {
-        context.sql("cast(");
+    private void toSQLCast(RenderContext context, DataType<?> type, int length) {
+        context.keyword("cast(");
         toSQL(context, getValue(), getType());
-        context.sql(" as ")
+        context.keyword(" as ")
+               .sql(type.getCastTypeName(context, length))
+               .sql(")");
+    }
+
+    private void toSQLCast(RenderContext context, DataType<?> type, int precision, int scale) {
+        context.keyword("cast(");
+        toSQL(context, getValue(), getType());
+        context.keyword(" as ")
                .sql(type.getCastTypeName(context, precision, scale))
                .sql(")");
     }

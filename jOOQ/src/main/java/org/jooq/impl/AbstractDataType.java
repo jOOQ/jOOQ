@@ -321,6 +321,20 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     @Override
+    public /* final */ String getCastTypeName(Configuration configuration, int length) {
+        String result = getCastTypeName(configuration);
+
+        if (length != 0) {
+
+            // Remove existing length information, first
+            result = result.replaceAll("\\([^\\)]*\\)", "");
+            result += "(" + length + ")";
+        }
+
+        return result;
+    }
+
+    @Override
     public /* final */ String getCastTypeName(Configuration configuration, int precision, int scale) {
         String result = getCastTypeName(configuration);
 

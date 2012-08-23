@@ -233,17 +233,37 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             toSQL(context, getValue(), getType());
         }
 
-        // [#1727] VARCHAR types should be cast to their actual lengths
-        else if (getValue() != null && type == SQLDataType.VARCHAR) {
-
-            // Multiply by 4 to be sure that even UTF-32 collations will fit
-            // But don't use larger numbers than Derby's upper limit 32672
-            toSQLCast(context, getDataType(context), Math.min(32672, 4 * ((String) getValue()).length()));
+        // [#1727] VARCHAR types should be cast to their actual lengths in some
+        // dialects
+        else if (getValue() != null && type == SQLDataType.VARCHAR && asList(FIREBIRD).contains(context.getDialect())) {
+            toSQLCast(context, getDataType(context), getValueLength());
         }
 
         // In all other cases, the bind variable can be cast normally
         else {
             toSQLCast(context, getDataType(context), 0, 0);
+        }
+    }
+
+    private int getValueLength() {
+        String string = (String) getValue();
+        if (string == null) {
+            return 1;
+        }
+
+        else {
+            int length = string.length();
+
+            // If non 7-bit ASCII characters are present, multiply the length by
+            // 4 to be sure that even UTF-32 collations will fit. But don't use
+            // larger numbers than Derby's upper limit 32672
+            for (int i = 0; i < length; i++) {
+                if (string.charAt(i) > 127) {
+                    return Math.min(32672, 4 * length);
+                }
+            }
+
+            return Math.min(32672, length);
         }
     }
 

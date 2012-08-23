@@ -79,7 +79,7 @@ import org.jooq.util.h2.information_schema.tables.TypeInfo;
 public class H2Database extends AbstractDatabase {
 
     @Override
-    public Factory create() {
+    protected Factory create0() {
         return new InformationSchemaFactory(getConnection());
     }
 

@@ -80,7 +80,7 @@ public class SybaseDatabase extends AbstractDatabase {
     private static final JooqLogger log = JooqLogger.getLogger(SybaseDatabase.class);
 
     @Override
-    public Factory create() {
+    protected Factory create0() {
         return new Factory(getConnection(), SQLDialect.SYBASE);
     }
 

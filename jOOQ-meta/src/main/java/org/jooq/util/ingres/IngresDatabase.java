@@ -84,7 +84,7 @@ import org.jooq.util.ingres.ingres.tables.Iitables;
 public class IngresDatabase extends AbstractDatabase {
 
     @Override
-    public Factory create() {
+    protected Factory create0() {
         return new $ingresFactory(getConnection());
     }
 

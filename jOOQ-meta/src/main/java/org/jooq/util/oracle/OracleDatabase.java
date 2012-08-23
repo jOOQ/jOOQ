@@ -393,7 +393,7 @@ public class OracleDatabase extends AbstractDatabase {
      * {@inheritDoc}
      */
     @Override
-    public Factory create() {
+    protected Factory create0() {
         return new SysFactory(getConnection());
     }
 }

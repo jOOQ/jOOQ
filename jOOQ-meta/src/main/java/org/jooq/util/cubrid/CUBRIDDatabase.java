@@ -255,7 +255,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
     }
 
     @Override
-    public Factory create() {
+    protected Factory create0() {
         return new CUBRIDFactory(getConnection());
     }
 }

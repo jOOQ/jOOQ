@@ -193,9 +193,10 @@ class Val<T> extends AbstractField<T> implements Param<T> {
      */
     private void toSQLCast(RenderContext context) {
         SQLDataType<T> type = getDataType(context).getSQLDataType();
+        SQLDialect dialect = context.getDialect();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals
-        if (getValue() != null && getType() == BigDecimal.class && asList(CUBRID, DB2, DERBY, HSQLDB).contains(context.getDialect())) {
+        if (getValue() != null && getType() == BigDecimal.class && asList(CUBRID, DB2, DERBY, HSQLDB).contains(dialect)) {
 
             // Add precision / scale on BigDecimals
             int scale = ((BigDecimal) getValue()).scale();
@@ -209,19 +210,19 @@ class Val<T> extends AbstractField<T> implements Param<T> {
 
             // If the bind value is set, it can be used to derive the cast type
             if (value != null) {
-                toSQLCast(context, FieldTypeHelper.getDataType(context.getDialect(), value.getClass()), 0, 0);
+                toSQLCast(context, FieldTypeHelper.getDataType(dialect, value.getClass()), 0, 0);
             }
 
             // [#632] [#722] Current integration tests show that Ingres and
             // Sybase can do without casting in most cases.
-            else if (asList(INGRES, SYBASE).contains(context.getDialect())) {
+            else if (asList(INGRES, SYBASE).contains(dialect)) {
                 context.sql(getBindVariable(context));
             }
 
             // Derby and DB2 must have a type associated with NULL. Use VARCHAR
             // as a workaround. That's probably not correct in all cases, though
             else {
-                toSQLCast(context, FieldTypeHelper.getDataType(context.getDialect(), String.class), 0, 0);
+                toSQLCast(context, FieldTypeHelper.getDataType(dialect, String.class), 0, 0);
             }
         }
 
@@ -229,13 +230,13 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         // above case where the type is OTHER
         // [#1125] Also with temporal data types, casting is needed some times
         // [#1130] TODO type can be null for ARRAY types, etc.
-        else if (context.getDialect() == POSTGRES && (type == null || !type.isTemporal())) {
+        else if (dialect == POSTGRES && (type == null || !type.isTemporal())) {
             toSQL(context, getValue(), getType());
         }
 
         // [#1727] VARCHAR types should be cast to their actual lengths in some
         // dialects
-        else if (getValue() != null && type == SQLDataType.VARCHAR && asList(FIREBIRD).contains(context.getDialect())) {
+        else if (getValue() != null && (type == SQLDataType.VARCHAR || type == SQLDataType.CHAR) && asList(FIREBIRD).contains(dialect)) {
             toSQLCast(context, getDataType(context), getValueLength());
         }
 

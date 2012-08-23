@@ -76,7 +76,7 @@ public class ASEDatabase extends AbstractDatabase {
     private static final JooqLogger log = JooqLogger.getLogger(ASEDatabase.class);
 
     @Override
-    public Factory create() {
+    protected Factory create0() {
         return new DboFactory(getConnection());
     }
 

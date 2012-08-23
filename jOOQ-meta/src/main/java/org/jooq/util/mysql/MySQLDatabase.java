@@ -326,7 +326,7 @@ public class MySQLDatabase extends AbstractDatabase {
     }
 
     @Override
-    public Factory create() {
+    protected Factory create0() {
         return new MySQLFactory(getConnection());
     }
 }

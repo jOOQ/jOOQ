@@ -58,6 +58,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Collections;
 
+import org.jooq.Field;
 import org.jooq.Insert;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -223,6 +224,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         Record record = create().select(Collections.nCopies(1000, val("abc"))).fetchOne();
         assertEquals(1000, record.size());
         assertEquals(Collections.nCopies(1000, "abc"), asList(record.intoArray()));
+
+        assertEquals(1, create().selectOne()
+            .where(val("abc").in(Collections.nCopies(1000, val("abc")).toArray(new Field[0])))
+            .fetchOne(0));
     }
 
     @Test

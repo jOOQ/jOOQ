@@ -90,7 +90,7 @@ import org.jooq.util.db2.syscat.tables.Tables;
 public class DB2Database extends AbstractDatabase {
 
     @Override
-    public Factory create() {
+    protected Factory create0() {
         return new SyscatFactory(getConnection());
     }
 

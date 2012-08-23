@@ -80,7 +80,7 @@ public class SQLiteDatabase extends AbstractDatabase {
     }
 
     @Override
-    public Factory create() {
+    protected Factory create0() {
         return new SQLiteFactory(getConnection());
     }
 

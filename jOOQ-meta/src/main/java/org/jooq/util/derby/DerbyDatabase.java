@@ -319,7 +319,7 @@ public class DerbyDatabase extends AbstractDatabase {
     }
 
     @Override
-    public Factory create() {
+    protected Factory create0() {
         return new SysFactory(getConnection());
     }
 }

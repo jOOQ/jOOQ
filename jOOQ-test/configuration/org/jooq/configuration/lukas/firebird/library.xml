@@ -17,9 +17,9 @@
     <generator>
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
-            <name>org.jooq.util.hsqldb.HSQLDBDatabase</name>
+            <name>org.jooq.util.firebird.FirebirdDatabase</name>
             <includes>.*</includes>
-            <excludes>T_BOOK_DETAILS,S_TRIGGERS_SEQUENCE</excludes>
+            <excludes>T_BOOK_DETAILS,S_TRIGGERS_SEQUENCE,^MON.*,^RDB.*</excludes>
             <recordVersionFields>REC_VERSION</recordVersionFields>
             <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
             <dateAsTimestamp>false</dateAsTimestamp>
@@ -182,7 +182,7 @@
             <jpaAnnotations>false</jpaAnnotations>
         </generate>
         <target>
-            <packageName>org.jooq.test.hsqldb.generatedclasses</packageName>
+            <packageName>org.jooq.test.firebird.generatedclasses</packageName>
             <directory>./src</directory>
         </target>
     </generator>

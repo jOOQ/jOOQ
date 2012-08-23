@@ -90,10 +90,7 @@ public enum SQLDialect {
 
     /**
      * The Firebird SQL dialect
-     *
-     * @deprecated - [#430] Firebird support is experimental. Use at your own risk!
      */
-    @Deprecated
     FIREBIRD("Firebird", FirebirdFactory.class),
 
     /**

@@ -1475,7 +1475,15 @@ public class DefaultGenerator extends AbstractGenerator {
             out.println(" alias) {");
 
             out.print("\t\tsuper(alias, ");
-            out.print(strategy.getFullJavaIdentifier(schema));
+
+            // [#1730] Prevent compilation errors
+            if (schema.isDefaultSchema()) {
+                out.print("null");
+            }
+            else {
+                out.print(strategy.getFullJavaIdentifier(schema));
+            }
+
             out.print(", ");
             out.print(strategy.getFullJavaIdentifier(table));
             out.println(");");

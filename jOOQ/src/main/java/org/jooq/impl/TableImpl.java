@@ -60,7 +60,11 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     private final AliasProviderImpl<Table<R>> alias;
 
     public TableImpl(String name) {
-        this(name, null);
+        this(name, null, null);
+    }
+
+    public TableImpl(String name, Table<R> aliased) {
+        this(name, null, aliased);
     }
 
     public TableImpl(String name, Schema schema) {

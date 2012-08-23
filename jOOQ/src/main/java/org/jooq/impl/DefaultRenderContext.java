@@ -254,6 +254,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 case CUBRID:
                 case DB2:
                 case DERBY:
+                case FIREBIRD:
                 case H2:
                 case HSQLDB:
                 case INGRES:

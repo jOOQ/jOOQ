@@ -13,29 +13,9 @@ package org.jooq.util.firebird.rdb;
 public final class Tables {
 
 	/**
-	 * The table RDB$BACKUP_HISTORY
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$backupHistory RDB$BACKUP_HISTORY = org.jooq.util.firebird.rdb.tables.Rdb$backupHistory.RDB$BACKUP_HISTORY;
-
-	/**
 	 * The table RDB$CHARACTER_SETS
 	 */
 	public static final org.jooq.util.firebird.rdb.tables.Rdb$characterSets RDB$CHARACTER_SETS = org.jooq.util.firebird.rdb.tables.Rdb$characterSets.RDB$CHARACTER_SETS;
-
-	/**
-	 * The table RDB$CHECK_CONSTRAINTS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$checkConstraints RDB$CHECK_CONSTRAINTS = org.jooq.util.firebird.rdb.tables.Rdb$checkConstraints.RDB$CHECK_CONSTRAINTS;
-
-	/**
-	 * The table RDB$COLLATIONS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$collations RDB$COLLATIONS = org.jooq.util.firebird.rdb.tables.Rdb$collations.RDB$COLLATIONS;
-
-	/**
-	 * The table RDB$DATABASE
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$database RDB$DATABASE = org.jooq.util.firebird.rdb.tables.Rdb$database.RDB$DATABASE;
 
 	/**
 	 * The table RDB$DEPENDENCIES
@@ -43,79 +23,14 @@ public final class Tables {
 	public static final org.jooq.util.firebird.rdb.tables.Rdb$dependencies RDB$DEPENDENCIES = org.jooq.util.firebird.rdb.tables.Rdb$dependencies.RDB$DEPENDENCIES;
 
 	/**
-	 * The table RDB$EXCEPTIONS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$exceptions RDB$EXCEPTIONS = org.jooq.util.firebird.rdb.tables.Rdb$exceptions.RDB$EXCEPTIONS;
-
-	/**
 	 * The table RDB$FIELDS
 	 */
 	public static final org.jooq.util.firebird.rdb.tables.Rdb$fields RDB$FIELDS = org.jooq.util.firebird.rdb.tables.Rdb$fields.RDB$FIELDS;
 
 	/**
-	 * The table RDB$FIELD_DIMENSIONS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$fieldDimensions RDB$FIELD_DIMENSIONS = org.jooq.util.firebird.rdb.tables.Rdb$fieldDimensions.RDB$FIELD_DIMENSIONS;
-
-	/**
-	 * The table RDB$FILES
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$files RDB$FILES = org.jooq.util.firebird.rdb.tables.Rdb$files.RDB$FILES;
-
-	/**
-	 * The table RDB$FILTERS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$filters RDB$FILTERS = org.jooq.util.firebird.rdb.tables.Rdb$filters.RDB$FILTERS;
-
-	/**
-	 * The table RDB$FORMATS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$formats RDB$FORMATS = org.jooq.util.firebird.rdb.tables.Rdb$formats.RDB$FORMATS;
-
-	/**
-	 * The table RDB$FUNCTIONS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$functions RDB$FUNCTIONS = org.jooq.util.firebird.rdb.tables.Rdb$functions.RDB$FUNCTIONS;
-
-	/**
-	 * The table RDB$FUNCTION_ARGUMENTS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$functionArguments RDB$FUNCTION_ARGUMENTS = org.jooq.util.firebird.rdb.tables.Rdb$functionArguments.RDB$FUNCTION_ARGUMENTS;
-
-	/**
-	 * The table RDB$GENERATORS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$generators RDB$GENERATORS = org.jooq.util.firebird.rdb.tables.Rdb$generators.RDB$GENERATORS;
-
-	/**
 	 * The table RDB$INDEX_SEGMENTS
 	 */
 	public static final org.jooq.util.firebird.rdb.tables.Rdb$indexSegments RDB$INDEX_SEGMENTS = org.jooq.util.firebird.rdb.tables.Rdb$indexSegments.RDB$INDEX_SEGMENTS;
-
-	/**
-	 * The table RDB$INDICES
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$indices RDB$INDICES = org.jooq.util.firebird.rdb.tables.Rdb$indices.RDB$INDICES;
-
-	/**
-	 * The table RDB$LOG_FILES
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$logFiles RDB$LOG_FILES = org.jooq.util.firebird.rdb.tables.Rdb$logFiles.RDB$LOG_FILES;
-
-	/**
-	 * The table RDB$PAGES
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$pages RDB$PAGES = org.jooq.util.firebird.rdb.tables.Rdb$pages.RDB$PAGES;
-
-	/**
-	 * The table RDB$PROCEDURES
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$procedures RDB$PROCEDURES = org.jooq.util.firebird.rdb.tables.Rdb$procedures.RDB$PROCEDURES;
-
-	/**
-	 * The table RDB$PROCEDURE_PARAMETERS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$procedureParameters RDB$PROCEDURE_PARAMETERS = org.jooq.util.firebird.rdb.tables.Rdb$procedureParameters.RDB$PROCEDURE_PARAMETERS;
 
 	/**
 	 * The table RDB$REF_CONSTRAINTS
@@ -136,46 +51,6 @@ public final class Tables {
 	 * The table RDB$RELATION_FIELDS
 	 */
 	public static final org.jooq.util.firebird.rdb.tables.Rdb$relationFields RDB$RELATION_FIELDS = org.jooq.util.firebird.rdb.tables.Rdb$relationFields.RDB$RELATION_FIELDS;
-
-	/**
-	 * The table RDB$ROLES
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$roles RDB$ROLES = org.jooq.util.firebird.rdb.tables.Rdb$roles.RDB$ROLES;
-
-	/**
-	 * The table RDB$SECURITY_CLASSES
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$securityClasses RDB$SECURITY_CLASSES = org.jooq.util.firebird.rdb.tables.Rdb$securityClasses.RDB$SECURITY_CLASSES;
-
-	/**
-	 * The table RDB$TRANSACTIONS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$transactions RDB$TRANSACTIONS = org.jooq.util.firebird.rdb.tables.Rdb$transactions.RDB$TRANSACTIONS;
-
-	/**
-	 * The table RDB$TRIGGERS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$triggers RDB$TRIGGERS = org.jooq.util.firebird.rdb.tables.Rdb$triggers.RDB$TRIGGERS;
-
-	/**
-	 * The table RDB$TRIGGER_MESSAGES
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$triggerMessages RDB$TRIGGER_MESSAGES = org.jooq.util.firebird.rdb.tables.Rdb$triggerMessages.RDB$TRIGGER_MESSAGES;
-
-	/**
-	 * The table RDB$TYPES
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$types RDB$TYPES = org.jooq.util.firebird.rdb.tables.Rdb$types.RDB$TYPES;
-
-	/**
-	 * The table RDB$USER_PRIVILEGES
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$userPrivileges RDB$USER_PRIVILEGES = org.jooq.util.firebird.rdb.tables.Rdb$userPrivileges.RDB$USER_PRIVILEGES;
-
-	/**
-	 * The table RDB$VIEW_RELATIONS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$viewRelations RDB$VIEW_RELATIONS = org.jooq.util.firebird.rdb.tables.Rdb$viewRelations.RDB$VIEW_RELATIONS;
 
 	/**
 	 * No instances

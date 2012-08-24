@@ -13,14 +13,14 @@ package org.jooq.util.firebird.rdb;
 public final class Tables {
 
 	/**
-	 * The table RDB$DEPENDENCIES
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$dependencies RDB$DEPENDENCIES = org.jooq.util.firebird.rdb.tables.Rdb$dependencies.RDB$DEPENDENCIES;
-
-	/**
 	 * The table RDB$FIELDS
 	 */
 	public static final org.jooq.util.firebird.rdb.tables.Rdb$fields RDB$FIELDS = org.jooq.util.firebird.rdb.tables.Rdb$fields.RDB$FIELDS;
+
+	/**
+	 * The table RDB$GENERATORS
+	 */
+	public static final org.jooq.util.firebird.rdb.tables.Rdb$generators RDB$GENERATORS = org.jooq.util.firebird.rdb.tables.Rdb$generators.RDB$GENERATORS;
 
 	/**
 	 * The table RDB$INDEX_SEGMENTS

@@ -35,6 +35,7 @@
  */
 package org.jooq.util.firebird;
 
+import static org.jooq.util.firebird.rdb.Tables.RDB$GENERATORS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$REF_CONSTRAINTS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$RELATIONS;
@@ -45,12 +46,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DataTypeDefinition;
+import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
+import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
@@ -131,7 +134,7 @@ public class FirebirdDatabase extends AbstractDatabase {
         Rdb$indexSegments isp = RDB$INDEX_SEGMENTS.as("isp");
         Rdb$indexSegments isf = RDB$INDEX_SEGMENTS.as("isf");
 
-        Result<Record> fetch = create()
+        for (Record record : create()
                 .selectDistinct(
                     fk.RDB$CONSTRAINT_NAME.trim().as("fk"),
                     fk.RDB$RELATION_NAME.trim().as("fkTable"),
@@ -147,10 +150,7 @@ public class FirebirdDatabase extends AbstractDatabase {
                 .orderBy(
                     fk.RDB$CONSTRAINT_NAME.asc(),
                     isf.RDB$FIELD_POSITION.asc())
-                .fetch();
-
-        System.out.println(fetch.format(1000));
-        for (Record record : fetch) {
+                .fetch()) {
 
             String pkName = record.getValue("pk", String.class);
             String pkTable = record.getValue("pkTable", String.class);
@@ -179,6 +179,20 @@ public class FirebirdDatabase extends AbstractDatabase {
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
+
+        for (String sequenceName : create()
+                .select(RDB$GENERATORS.RDB$GENERATOR_NAME.trim())
+                .from(RDB$GENERATORS)
+                .orderBy(1)
+                .fetch(RDB$GENERATORS.RDB$GENERATOR_NAME.trim())) {
+
+            SchemaDefinition schema = getSchemata().get(0);
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                this, schema, FirebirdDataType.BIGINT.getTypeName(), 0, 0, 0);
+
+            result.add(new DefaultSequenceDefinition(schema, sequenceName, type ));
+        }
+
         return result;
     }
 
@@ -186,13 +200,11 @@ public class FirebirdDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-        for (Record recTableName : create()
+        for (String tableName : create()
                 .select(RDB$RELATIONS.RDB$RELATION_NAME.trim())
                 .from(RDB$RELATIONS)
                 .orderBy(1)
-                .fetch()) {
-
-            String tableName = recTableName.getValueAsString(0);
+                .fetch(0, String.class)) {
 
             TableDefinition tableDef = new FirebirdTableDefinition(getSchemata().get(0), tableName, "");
             result.add(tableDef);

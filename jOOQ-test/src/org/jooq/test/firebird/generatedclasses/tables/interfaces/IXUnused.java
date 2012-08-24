@@ -10,21 +10,29 @@ public interface IXUnused extends java.io.Serializable {
 
 	/**
 	 * The table column <code>X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>X_UNUSED.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
 	 * The table column <code>X_UNUSED.NAME</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setName(java.lang.String value);
 
 	/**
 	 * The table column <code>X_UNUSED.NAME</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.String getName();
 
@@ -40,11 +48,23 @@ public interface IXUnused extends java.io.Serializable {
 
 	/**
 	 * The table column <code>X_UNUSED.ID_REF</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES X_UNUSED (NAME, ID)
+	 * </pre></code>
 	 */
 	public void setIdRef(java.lang.Integer value);
 
 	/**
 	 * The table column <code>X_UNUSED.ID_REF</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES X_UNUSED (NAME, ID)
+	 * </pre></code>
 	 */
 	public java.lang.Integer getIdRef();
 
@@ -130,11 +150,23 @@ public interface IXUnused extends java.io.Serializable {
 
 	/**
 	 * The table column <code>X_UNUSED.NAME_REF</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES X_UNUSED (NAME, ID)
+	 * </pre></code>
 	 */
 	public void setNameRef(java.lang.String value);
 
 	/**
 	 * The table column <code>X_UNUSED.NAME_REF</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES X_UNUSED (NAME, ID)
+	 * </pre></code>
 	 */
 	public java.lang.String getNameRef();
 

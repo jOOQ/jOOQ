@@ -10,31 +10,59 @@ public interface ITBook extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_BOOK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>T_BOOK.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
 	 * The table column <code>T_BOOK.AUTHOR_ID</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES T_AUTHOR (ID)
+	 * </pre></code>
 	 */
 	public void setAuthorId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>T_BOOK.AUTHOR_ID</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES T_AUTHOR (ID)
+	 * </pre></code>
 	 */
 	public java.lang.Integer getAuthorId();
 
 	/**
 	 * The table column <code>T_BOOK.CO_AUTHOR_ID</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
+	 * FOREIGN KEY (CO_AUTHOR_ID)
+	 * REFERENCES T_AUTHOR (ID)
+	 * </pre></code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>T_BOOK.CO_AUTHOR_ID</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
+	 * FOREIGN KEY (CO_AUTHOR_ID)
+	 * REFERENCES T_AUTHOR (ID)
+	 * </pre></code>
 	 */
 	public java.lang.Integer getCoAuthorId();
 
@@ -70,13 +98,25 @@ public interface ITBook extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_BOOK.LANGUAGE_ID</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES T_LANGUAGE (ID)
+	 * </pre></code>
 	 */
-	public void setLanguageId(java.lang.Integer value);
+	public void setLanguageId(org.jooq.test.firebird.generatedclasses.enums.TLanguage value);
 
 	/**
 	 * The table column <code>T_BOOK.LANGUAGE_ID</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES T_LANGUAGE (ID)
+	 * </pre></code>
 	 */
-	public java.lang.Integer getLanguageId();
+	public org.jooq.test.firebird.generatedclasses.enums.TLanguage getLanguageId();
 
 	/**
 	 * The table column <code>T_BOOK.CONTENT_TEXT</code>

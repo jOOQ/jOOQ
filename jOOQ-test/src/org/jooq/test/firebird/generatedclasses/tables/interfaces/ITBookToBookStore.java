@@ -10,21 +10,53 @@ public interface ITBookToBookStore extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_B2BS_BS_NAME
+	 * FOREIGN KEY (BOOK_STORE_NAME)
+	 * REFERENCES T_BOOK_STORE (NAME)
+	 * </pre></code>
 	 */
 	public void setBookStoreName(java.lang.String value);
 
 	/**
 	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_B2BS_BS_NAME
+	 * FOREIGN KEY (BOOK_STORE_NAME)
+	 * REFERENCES T_BOOK_STORE (NAME)
+	 * </pre></code>
 	 */
 	public java.lang.String getBookStoreName();
 
 	/**
 	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_B2BS_B_ID
+	 * FOREIGN KEY (BOOK_ID)
+	 * REFERENCES T_BOOK (ID)
+	 * </pre></code>
 	 */
 	public void setBookId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_B2BS_B_ID
+	 * FOREIGN KEY (BOOK_ID)
+	 * REFERENCES T_BOOK (ID)
+	 * </pre></code>
 	 */
 	public java.lang.Integer getBookId();
 

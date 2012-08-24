@@ -1137,17 +1137,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 create().fetch("select * from t_author order by id"),
                 create().fetch(create().resultQuery("select * from t_author order by id").fetchResultSet()));
 
-            // [#1723] Fetching ResultSets into Cursors
-            Cursor<Record> c1 = create().fetchLazy("select * from t_author order by id");
+            // [#1723] Fetching ResultSets into Cursors (Firebird can't have two
+            // open Cursors in parallel...
+            Result<Record> c1 = create().fetch("select * from t_author order by id");
             Cursor<Record> c2 = create().fetchLazy(create().resultQuery("select * from t_author order by id").fetchResultSet());
 
             for (int j = 0; j < 2; j++) {
-                assertTrue(c1.hasNext());
                 assertTrue(c2.hasNext());
-                assertEquals(c1.fetchOne(), c2.fetchOne());
+                assertEquals(c1.remove(0), c2.fetchOne());
             }
 
-            assertFalse(c1.hasNext());
             assertFalse(c2.hasNext());
 
             // Fetching ResultSets

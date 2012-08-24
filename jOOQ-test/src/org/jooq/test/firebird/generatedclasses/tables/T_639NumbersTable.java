@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 761587035;
+	private static final long serialVersionUID = -326738085;
 
 	/**
 	 * The singleton instance of T_639_NUMBERS_TABLE
@@ -29,11 +29,6 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
-
-	/**
-	 * The table column <code>T_639_NUMBERS_TABLE.BYTE</code>
-	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> BYTE = createField("BYTE", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.SHORT</code>
@@ -69,11 +64,6 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG_DECIMAL = createField("LONG_DECIMAL", org.jooq.impl.SQLDataType.BIGINT, this);
-
-	/**
-	 * The table column <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>
-	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>

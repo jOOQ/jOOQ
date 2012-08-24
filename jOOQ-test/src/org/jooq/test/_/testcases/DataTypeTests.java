@@ -1259,7 +1259,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         create().insertInto(T639())
                 .set(T639_ID(), 1)
                 .set(T639_BIG_DECIMAL(), new BigDecimal("1234.5670"))
-                .set(T639_BIG_INTEGER(), new BigInteger("1234567890"))
                 .set(T639_BYTE_DECIMAL(), (byte) 2)
                 .set(T639_INTEGER(), 3)
                 .set(T639_INTEGER_DECIMAL(), 4)
@@ -1268,6 +1267,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .set(T639_SHORT(), (short) 7)
                 .set(T639_SHORT_DECIMAL(), (short) 8);
 
+        if (T639_BIG_INTEGER() != null) set.set(T639_BIG_INTEGER(), new BigInteger("1234567890"));
         if (T639_BYTE() != null) set.set(T639_BYTE(), (byte) 9);
         if (T639_DOUBLE() != null) set.set(T639_DOUBLE(), 10.125);
         if (T639_FLOAT() != null) set.set(T639_FLOAT(), 11.375f);
@@ -1277,7 +1277,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         T639 record = create().fetchOne(T639());
         assertEquals(1, (int) record.getValue(T639_ID()));
         assertTrue(new BigDecimal("1234.567").compareTo(record.getValue(T639_BIG_DECIMAL())) == 0);
-        assertEquals(new BigInteger("1234567890"), record.getValue(T639_BIG_INTEGER()));
         assertEquals(2, (byte) record.getValue(T639_BYTE_DECIMAL()));
         assertEquals(3, (int) record.getValue(T639_INTEGER()));
         assertEquals(4, (int) record.getValue(T639_INTEGER_DECIMAL()));
@@ -1286,6 +1285,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(7, (short) record.getValue(T639_SHORT()));
         assertEquals(8, (short) record.getValue(T639_SHORT_DECIMAL()));
 
+        if (T639_BIG_INTEGER() != null) assertEquals(new BigInteger("1234567890"), record.getValue(T639_BIG_INTEGER()));
         if (T639_BYTE() != null) assertEquals(9, (byte) record.getValue(T639_BYTE()));
         if (T639_DOUBLE() != null) assertEquals(10.125, (double) record.getValue(T639_DOUBLE()));
         if (T639_FLOAT() != null) assertEquals(11.375f, (float) record.getValue(T639_FLOAT()));

@@ -251,12 +251,12 @@ public class jOOQFirebirdTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigInteger> T639_BIG_INTEGER() {
-        return T_639_NUMBERS_TABLE.BIG_INTEGER;
+        return null;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE() {
-        return T_639_NUMBERS_TABLE.BYTE;
+        return null;
     }
 
     @Override

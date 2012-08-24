@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
  */
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = 1679304408;
+	private static final long serialVersionUID = -1832099286;
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.ID</code>
@@ -98,7 +98,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * The table column <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
 	 */
 	@Override
-	public void setByteDecimal(java.lang.Integer value) {
+	public void setByteDecimal(java.lang.Byte value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE_DECIMAL, value);
 	}
 
@@ -106,7 +106,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * The table column <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
 	 */
 	@Override
-	public java.lang.Integer getByteDecimal() {
+	public java.lang.Byte getByteDecimal() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE_DECIMAL);
 	}
 
@@ -114,7 +114,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * The table column <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
 	 */
 	@Override
-	public void setShortDecimal(java.lang.Integer value) {
+	public void setShortDecimal(java.lang.Short value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT_DECIMAL, value);
 	}
 
@@ -122,7 +122,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * The table column <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
 	 */
 	@Override
-	public java.lang.Integer getShortDecimal() {
+	public java.lang.Short getShortDecimal() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT_DECIMAL);
 	}
 
@@ -178,7 +178,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
 	 */
 	@Override
-	public void setBigDecimal(java.lang.Long value) {
+	public void setBigDecimal(java.math.BigDecimal value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL, value);
 	}
 
@@ -186,7 +186,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
 	 */
 	@Override
-	public java.lang.Long getBigDecimal() {
+	public java.math.BigDecimal getBigDecimal() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL);
 	}
 

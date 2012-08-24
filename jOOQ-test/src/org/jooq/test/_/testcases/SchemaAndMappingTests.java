@@ -156,6 +156,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     @Test
     public void testSchemaMapping() throws Exception {
         switch (getDialect()) {
+            case FIREBIRD:
             case SQLITE:
                 log.info("SKIPPING", "SchemaMapping tests");
                 return;

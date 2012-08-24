@@ -10,21 +10,37 @@ public interface IXTestCase_64_69 extends java.io.Serializable {
 
 	/**
 	 * The table column <code>X_TEST_CASE_64_69.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>X_TEST_CASE_64_69.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
 	 * The table column <code>X_TEST_CASE_64_69.UNUSED_ID</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_X_TEST_CASE_64_69
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES X_UNUSED (ID)
+	 * </pre></code>
 	 */
 	public void setUnusedId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>X_TEST_CASE_64_69.UNUSED_ID</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_X_TEST_CASE_64_69
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES X_UNUSED (ID)
+	 * </pre></code>
 	 */
 	public java.lang.Integer getUnusedId();
 }

@@ -36,11 +36,20 @@
 
 package org.jooq.test;
 
-import static org.jooq.test.sqlite.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
-import static org.jooq.test.sqlite.generatedclasses.Tables.T_BOOLEANS;
-import static org.jooq.test.sqlite.generatedclasses.Tables.T_DATES;
-import static org.jooq.test.sqlite.generatedclasses.Tables.V_AUTHOR;
-import static org.jooq.test.sqlite.generatedclasses.Tables.V_BOOK;
+import static org.jooq.test.firebird.generatedclasses.Tables.T_639_NUMBERS_TABLE;
+import static org.jooq.test.firebird.generatedclasses.Tables.T_658_REF;
+import static org.jooq.test.firebird.generatedclasses.Tables.T_725_LOB_TEST;
+import static org.jooq.test.firebird.generatedclasses.Tables.T_785;
+import static org.jooq.test.firebird.generatedclasses.Tables.T_AUTHOR;
+import static org.jooq.test.firebird.generatedclasses.Tables.T_BOOK;
+import static org.jooq.test.firebird.generatedclasses.Tables.T_BOOK_STORE;
+import static org.jooq.test.firebird.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.firebird.generatedclasses.Tables.T_BOOLEANS;
+import static org.jooq.test.firebird.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.firebird.generatedclasses.Tables.T_TRIGGERS;
+import static org.jooq.test.firebird.generatedclasses.Tables.V_AUTHOR;
+import static org.jooq.test.firebird.generatedclasses.Tables.V_BOOK;
+import static org.jooq.test.firebird.generatedclasses.Tables.V_LIBRARY;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -64,30 +73,19 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test.sqlite.generatedclasses.tables.TAuthor;
-import org.jooq.test.sqlite.generatedclasses.tables.TBook;
-import org.jooq.test.sqlite.generatedclasses.tables.TBookStore;
-import org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore;
-import org.jooq.test.sqlite.generatedclasses.tables.TBooleans;
-import org.jooq.test.sqlite.generatedclasses.tables.TTriggers;
-import org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable;
-import org.jooq.test.sqlite.generatedclasses.tables.T_658Ref;
-import org.jooq.test.sqlite.generatedclasses.tables.T_725LobTest;
-import org.jooq.test.sqlite.generatedclasses.tables.T_785;
-import org.jooq.test.sqlite.generatedclasses.tables.VLibrary;
-import org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.T_658RefRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.T_785Record;
-import org.jooq.test.sqlite.generatedclasses.tables.records.VLibraryRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.TAuthorRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.TBooleansRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.TTriggersRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.T_658RefRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.T_725LobTestRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.T_785Record;
+import org.jooq.test.firebird.generatedclasses.tables.records.VLibraryRecord;
+import org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
@@ -128,32 +126,32 @@ public class jOOQFirebirdTest extends jOOQAbstractTest<
 
     @Override
     protected UpdatableTable<TAuthorRecord> TAuthor() {
-        return TAuthor.T_AUTHOR;
+        return T_AUTHOR;
     }
 
     @Override
     protected TableField<TAuthorRecord, String> TAuthor_LAST_NAME() {
-        return TAuthor.LAST_NAME;
+        return T_AUTHOR.LAST_NAME;
     }
 
     @Override
     protected TableField<TAuthorRecord, String> TAuthor_FIRST_NAME() {
-        return TAuthor.FIRST_NAME;
+        return T_AUTHOR.FIRST_NAME;
     }
 
     @Override
     protected TableField<TAuthorRecord, Date> TAuthor_DATE_OF_BIRTH() {
-        return TAuthor.DATE_OF_BIRTH;
+        return T_AUTHOR.DATE_OF_BIRTH;
     }
 
     @Override
     protected TableField<TAuthorRecord, Integer> TAuthor_YEAR_OF_BIRTH() {
-        return TAuthor.YEAR_OF_BIRTH;
+        return T_AUTHOR.YEAR_OF_BIRTH;
     }
 
     @Override
     protected TableField<TAuthorRecord, Integer> TAuthor_ID() {
-        return TAuthor.ID;
+        return T_AUTHOR.ID;
     }
 
     @Override
@@ -163,32 +161,32 @@ public class jOOQFirebirdTest extends jOOQAbstractTest<
 
     @Override
     protected UpdatableTable<TBookRecord> TBook() {
-        return TBook.T_BOOK;
+        return T_BOOK;
     }
 
     @Override
     protected TableField<TBookRecord, Integer> TBook_ID() {
-        return TBook.ID;
+        return T_BOOK.ID;
     }
 
     @Override
     protected TableField<TBookRecord, Integer> TBook_AUTHOR_ID() {
-        return TBook.AUTHOR_ID;
+        return T_BOOK.AUTHOR_ID;
     }
 
     @Override
     protected TableField<TBookRecord, String> TBook_TITLE() {
-        return TBook.TITLE;
+        return T_BOOK.TITLE;
     }
 
     @Override
     protected UpdatableTable<TBookStoreRecord> TBookStore() {
-        return TBookStore.T_BOOK_STORE;
+        return T_BOOK_STORE;
     }
 
     @Override
     protected TableField<TBookStoreRecord, String> TBookStore_NAME() {
-        return TBookStore.NAME;
+        return T_BOOK_STORE.NAME;
     }
 
     @Override
@@ -203,112 +201,112 @@ public class jOOQFirebirdTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_BOOK_ID() {
-        return TBookToBookStore.BOOK_ID;
+        return T_BOOK_TO_BOOK_STORE.BOOK_ID;
     }
 
     @Override
     protected TableField<TBookToBookStoreRecord, String> TBookToBookStore_BOOK_STORE_NAME() {
-        return TBookToBookStore.BOOK_STORE_NAME;
+        return T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME;
     }
 
     @Override
     protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_STOCK() {
-        return TBookToBookStore.STOCK;
+        return T_BOOK_TO_BOOK_STORE.STOCK;
     }
 
     @Override
     protected Table<T_725LobTestRecord> T725() {
-        return T_725LobTest.T_725_LOB_TEST;
+        return T_725_LOB_TEST;
     }
 
     @Override
     protected TableField<T_725LobTestRecord, Integer> T725_ID() {
-        return T_725LobTest.ID;
+        return T_725_LOB_TEST.ID;
     }
 
     @Override
     protected TableField<T_725LobTestRecord, byte[]> T725_LOB() {
-        return T_725LobTest.LOB;
+        return T_725_LOB_TEST.LOB;
     }
 
     @Override
     protected Table<T_658RefRecord> T658() {
-        return T_658Ref.T_658_REF;
+        return T_658_REF;
     }
 
     @Override
     protected Table<T_639NumbersTableRecord> T639() {
-        return T_639NumbersTable.T_639_NUMBERS_TABLE;
+        return T_639_NUMBERS_TABLE;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Integer> T639_ID() {
-        return T_639NumbersTable.ID;
+        return T_639_NUMBERS_TABLE.ID;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigDecimal> T639_BIG_DECIMAL() {
-        return T_639NumbersTable.BIG_DECIMAL;
+        return T_639_NUMBERS_TABLE.BIG_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigInteger> T639_BIG_INTEGER() {
-        return T_639NumbersTable.BIG_INTEGER;
+        return T_639_NUMBERS_TABLE.BIG_INTEGER;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE() {
-        return T_639NumbersTable.BYTE;
+        return T_639_NUMBERS_TABLE.BYTE;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE_DECIMAL() {
-        return T_639NumbersTable.BYTE_DECIMAL;
+        return T_639_NUMBERS_TABLE.BYTE_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Short> T639_SHORT() {
-        return T_639NumbersTable.SHORT;
+        return T_639_NUMBERS_TABLE.SHORT;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Short> T639_SHORT_DECIMAL() {
-        return T_639NumbersTable.SHORT_DECIMAL;
+        return T_639_NUMBERS_TABLE.SHORT_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Integer> T639_INTEGER() {
-        return T_639NumbersTable.INTEGER;
+        return T_639_NUMBERS_TABLE.INTEGER;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Integer> T639_INTEGER_DECIMAL() {
-        return T_639NumbersTable.INTEGER_DECIMAL;
+        return T_639_NUMBERS_TABLE.INTEGER_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Long> T639_LONG() {
-        return T_639NumbersTable.LONG;
+        return T_639_NUMBERS_TABLE.LONG;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Long> T639_LONG_DECIMAL() {
-        return T_639NumbersTable.LONG_DECIMAL;
+        return T_639_NUMBERS_TABLE.LONG_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Double> T639_DOUBLE() {
-        return T_639NumbersTable.DOUBLE;
+        return T_639_NUMBERS_TABLE.DOUBLE;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Float> T639_FLOAT() {
-        return T_639NumbersTable.FLOAT;
+        return T_639_NUMBERS_TABLE.FLOAT;
     }
 
     @Override
     protected Table<T_785Record> T785() {
-        return T_785.T_785;
+        return T_785;
     }
 
     @Override
@@ -363,57 +361,57 @@ public class jOOQFirebirdTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBooleansRecord, Integer> TBooleans_ID() {
-        return TBooleans.ID;
+        return T_BOOLEANS.ID;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_10> TBooleans_BOOLEAN_10() {
-        return TBooleans.ONE_ZERO;
+        return T_BOOLEANS.ONE_ZERO;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_TF_LC> TBooleans_Boolean_TF_LC() {
-        return TBooleans.TRUE_FALSE_LC;
+        return T_BOOLEANS.TRUE_FALSE_LC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_TF_UC> TBooleans_Boolean_TF_UC() {
-        return TBooleans.TRUE_FALSE_UC;
+        return T_BOOLEANS.TRUE_FALSE_UC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_YN_LC> TBooleans_Boolean_YN_LC() {
-        return TBooleans.Y_N_LC;
+        return T_BOOLEANS.Y_N_LC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_YN_UC> TBooleans_Boolean_YN_UC() {
-        return TBooleans.Y_N_UC;
+        return T_BOOLEANS.Y_N_UC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_YES_NO_LC> TBooleans_Boolean_YES_NO_LC() {
-        return TBooleans.YES_NO_LC;
+        return T_BOOLEANS.YES_NO_LC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_YES_NO_UC> TBooleans_Boolean_YES_NO_UC() {
-        return TBooleans.YES_NO_UC;
+        return T_BOOLEANS.YES_NO_UC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_VC() {
-        return TBooleans.VC_BOOLEAN;
+        return T_BOOLEANS.VC_BOOLEAN;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_C() {
-        return TBooleans.C_BOOLEAN;
+        return T_BOOLEANS.C_BOOLEAN;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_N() {
-        return TBooleans.N_BOOLEAN;
+        return T_BOOLEANS.N_BOOLEAN;
     }
 
     @Override
@@ -468,22 +466,22 @@ public class jOOQFirebirdTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBookRecord, ?> TBook_LANGUAGE_ID() {
-        return TBook.LANGUAGE_ID;
+        return T_BOOK.LANGUAGE_ID;
     }
 
     @Override
     protected TableField<TBookRecord, Integer> TBook_PUBLISHED_IN() {
-        return TBook.PUBLISHED_IN;
+        return T_BOOK.PUBLISHED_IN;
     }
 
     @Override
     protected TableField<TBookRecord, String> TBook_CONTENT_TEXT() {
-        return TBook.CONTENT_TEXT;
+        return T_BOOK.CONTENT_TEXT;
     }
 
     @Override
     protected TableField<TBookRecord, byte[]> TBook_CONTENT_PDF() {
-        return TBook.CONTENT_PDF;
+        return T_BOOK.CONTENT_PDF;
     }
 
     @Override
@@ -493,17 +491,17 @@ public class jOOQFirebirdTest extends jOOQAbstractTest<
 
     @Override
     protected Table<VLibraryRecord> VLibrary() {
-        return VLibrary.V_LIBRARY;
+        return V_LIBRARY;
     }
 
     @Override
     protected TableField<VLibraryRecord, String> VLibrary_TITLE() {
-        return VLibrary.TITLE;
+        return V_LIBRARY.TITLE;
     }
 
     @Override
     protected TableField<VLibraryRecord, String> VLibrary_AUTHOR() {
-        return VLibrary.AUTHOR;
+        return V_LIBRARY.AUTHOR;
     }
 
     @Override
@@ -543,22 +541,22 @@ public class jOOQFirebirdTest extends jOOQAbstractTest<
 
     @Override
     protected UpdatableTable<TTriggersRecord> TTriggers() {
-        return TTriggers.T_TRIGGERS;
+        return T_TRIGGERS;
     }
 
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_ID_GENERATED() {
-        return TTriggers.ID_GENERATED;
+        return T_TRIGGERS.ID_GENERATED;
     }
 
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_ID() {
-        return TTriggers.ID;
+        return T_TRIGGERS.ID;
     }
 
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
-        return TTriggers.COUNTER;
+        return T_TRIGGERS.COUNTER;
     }
 
     @Override

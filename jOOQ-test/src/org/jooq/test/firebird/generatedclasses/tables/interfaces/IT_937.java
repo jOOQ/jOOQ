@@ -10,11 +10,15 @@ public interface IT_937 extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_937.T_937</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setT_937(java.lang.Integer value);
 
 	/**
 	 * The table column <code>T_937.T_937</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getT_937();
 }

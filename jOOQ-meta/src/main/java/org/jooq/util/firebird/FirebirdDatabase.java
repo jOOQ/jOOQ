@@ -35,18 +35,17 @@
  */
 package org.jooq.util.firebird;
 
-import static org.jooq.util.firebird.rdb.Tables.RDB$DEPENDENCIES;
 import static org.jooq.util.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
+import static org.jooq.util.firebird.rdb.Tables.RDB$REF_CONSTRAINTS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$RELATIONS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$RELATION_CONSTRAINTS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -59,10 +58,9 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
-import org.jooq.util.firebird.rdb.tables.Rdb$dependencies;
 import org.jooq.util.firebird.rdb.tables.Rdb$indexSegments;
+import org.jooq.util.firebird.rdb.tables.Rdb$refConstraints;
 import org.jooq.util.firebird.rdb.tables.Rdb$relationConstraints;
-import org.jooq.util.firebird.rdb.tables.Rdb$relations;
 import org.jooq.util.jaxb.Schema;
 
 /**
@@ -84,95 +82,89 @@ public class FirebirdDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        Rdb$relations r = RDB$RELATIONS.as("r");
-        Rdb$relationConstraints rc = RDB$RELATION_CONSTRAINTS.as("rc");
-        Rdb$indexSegments is = RDB$INDEX_SEGMENTS.as("is");
+    protected void loadPrimaryKeys(DefaultRelations r) throws SQLException {
+        for (Record record : fetchKeys("PRIMARY KEY")) {
+            String tableName = record.getValue(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim());
+            String fieldName = record.getValue(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim());
+            String key = record.getValue(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim());
 
-        for (String tableName : create()
-                .select(r.RDB$RELATION_NAME.trim())
-                .from(r)
-                .where(r.RDB$VIEW_BLR.isNull())
-                .orderBy(1)
-                .fetch(r.RDB$RELATION_NAME.trim())) {
-
-            for (String fieldName : create()
-                    .select(is.RDB$FIELD_NAME)
-                    .from(rc)
-                    .join(is).on(is.RDB$INDEX_NAME.eq(rc.RDB$INDEX_NAME))
-                    .where(rc.RDB$RELATION_NAME.eq(tableName))
-                    .and(rc.RDB$CONSTRAINT_TYPE.eq("PRIMARY KEY"))
-                    .fetch(is.RDB$FIELD_NAME)) {
-
-                String key = "PK_" + tableName + "_" + fieldName;
-
-                TableDefinition td = this.getTable(this.getSchemata().get(0), tableName);
-                if (td != null) {
-                    ColumnDefinition cd = td.getColumn(fieldName);
-                    relations.addPrimaryKey(key, cd);
-                }
+            TableDefinition td = getTable(this.getSchemata().get(0), tableName);
+            if (td != null) {
+                ColumnDefinition cd = td.getColumn(fieldName);
+                r.addPrimaryKey(key, cd);
             }
         }
     }
 
     @Override
     protected void loadUniqueKeys(DefaultRelations r) throws SQLException {
+        for (Record record : fetchKeys("UNIQUE")) {
+            String tableName = record.getValue(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim());
+            String fieldName = record.getValue(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim());
+            String key = record.getValue(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim());
+
+            TableDefinition td = getTable(this.getSchemata().get(0), tableName);
+            if (td != null) {
+                ColumnDefinition cd = td.getColumn(fieldName);
+                r.addUniqueKey(key, cd);
+            }
+        }
     }
 
+    private List<Record> fetchKeys(String constraintType) {
+        return create()
+            .select(
+                RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim(),
+                RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim(),
+                RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim())
+            .from(RDB$RELATION_CONSTRAINTS)
+            .join(RDB$INDEX_SEGMENTS)
+            .on(RDB$INDEX_SEGMENTS.RDB$INDEX_NAME.eq(RDB$RELATION_CONSTRAINTS.RDB$INDEX_NAME))
+            .where(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_TYPE.eq(constraintType))
+            .fetch();
+    }
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-        Rdb$relationConstraints rc = RDB$RELATION_CONSTRAINTS.as("rc");
-        Rdb$dependencies d1 = RDB$DEPENDENCIES.as("d1");
-        Rdb$dependencies d2 = RDB$DEPENDENCIES.as("d2");
+        Rdb$relationConstraints pk = RDB$RELATION_CONSTRAINTS.as("pk");
+        Rdb$relationConstraints fk = RDB$RELATION_CONSTRAINTS.as("fk");
+        Rdb$refConstraints rc = RDB$REF_CONSTRAINTS.as("rc");
+        Rdb$indexSegments isp = RDB$INDEX_SEGMENTS.as("isp");
+        Rdb$indexSegments isf = RDB$INDEX_SEGMENTS.as("isf");
 
-        for (TableDefinition table : getTables(getSchemata().get(0))) {
-            Map<String, Integer> map = new HashMap<String, Integer>();
+        Result<Record> fetch = create()
+                .selectDistinct(
+                    fk.RDB$CONSTRAINT_NAME.trim().as("fk"),
+                    fk.RDB$RELATION_NAME.trim().as("fkTable"),
+                    isf.RDB$FIELD_NAME.trim().as("fkField"),
+                    pk.RDB$CONSTRAINT_NAME.trim().as("pk"),
+                    pk.RDB$RELATION_NAME.trim().as("pkTable"))
+                .from(fk)
+                .join(rc).on(fk.RDB$CONSTRAINT_NAME.eq(rc.RDB$CONSTRAINT_NAME))
+                .join(pk).on(pk.RDB$CONSTRAINT_NAME.eq(rc.RDB$CONST_NAME_UQ))
+                .join(isp).on(isp.RDB$INDEX_NAME.eq(pk.RDB$INDEX_NAME))
+                .join(isf).on(isf.RDB$INDEX_NAME.eq(fk.RDB$INDEX_NAME))
+                .where(isp.RDB$FIELD_POSITION.eq(isf.RDB$FIELD_POSITION))
+                .orderBy(
+                    fk.RDB$CONSTRAINT_NAME.asc(),
+                    isf.RDB$FIELD_POSITION.asc())
+                .fetch();
 
-            for (Record record : create()
-                    .selectDistinct(
-                        rc.RDB$CONSTRAINT_NAME,
-                        rc.RDB$RELATION_NAME,
-                        d1.RDB$FIELD_NAME,
-                        d2.RDB$DEPENDED_ON_NAME,
-                        d2.RDB$FIELD_NAME)
-                    .from(rc)
-                    .leftOuterJoin(d1).on(d1.RDB$DEPENDED_ON_NAME.eq(rc.RDB$RELATION_NAME))
-                    .leftOuterJoin(d2).on(d1.RDB$DEPENDENT_NAME.eq(d2.RDB$DEPENDENT_NAME))
-                    .where(rc.RDB$CONSTRAINT_TYPE.eq("FOREIGN KEY"))
-                    .and(d1.RDB$DEPENDED_ON_NAME.ne(d2.RDB$DEPENDED_ON_NAME))
-                    .and(d1.RDB$FIELD_NAME.ne(d2.RDB$FIELD_NAME))
-                    .and(rc.RDB$RELATION_NAME.eq(table.getName()))
-                    .fetch()) {
+        System.out.println(fetch.format(1000));
+        for (Record record : fetch) {
 
-                String fkPrefix =
-                    "FK_" + record.getValue(rc.RDB$RELATION_NAME) +
-                    "_TO_" + record.getValue(d2.RDB$DEPENDED_ON_NAME);
+            String pkName = record.getValue("pk", String.class);
+            String pkTable = record.getValue("pkTable", String.class);
 
-                Integer sequence = map.get(fkPrefix);
-                if (sequence == null) {
-                    sequence = new Integer(0);
-                    map.put(fkPrefix, sequence);
-                } else {
-                    sequence = sequence + 1;
-                }
+            String fkName = record.getValue("fk", String.class);
+            String fkTable = record.getValue("fkTable", String.class);
+            String fkField = record.getValue("fkField", String.class);
 
-                String fkName = fkPrefix + "_" + sequence;
-                String tableName = table.getName();
-                String fieldName = record.getValue(d1.RDB$FIELD_NAME);
-                String foreignTableName = record.getValue(d2.RDB$DEPENDED_ON_NAME);
-                String foreignFieldName = record.getValue(d2.RDB$FIELD_NAME);
+            TableDefinition tdReferencing = getTable(getSchemata().get(0), fkTable, true);
+            TableDefinition tdReferenced = getTable(getSchemata().get(0), pkTable, true);
 
-                TableDefinition tdReferencing = getTable(getSchemata().get(0), tableName, true);
-                TableDefinition tdReferenced = getTable(getSchemata().get(0), foreignTableName, true);
-
-                if (tdReferenced != null) {
-                    String pkName = "PK_" + foreignTableName + "_" + foreignFieldName;
-
-                    if (tdReferencing != null) {
-                        ColumnDefinition referencingColumn = tdReferencing.getColumn(fieldName);
-                        relations.addForeignKey(fkName, pkName, referencingColumn, getSchemata().get(0));
-                    }
-                }
+            if (tdReferenced != null && tdReferencing != null) {
+                ColumnDefinition referencingColumn = tdReferencing.getColumn(fkField);
+                relations.addForeignKey(fkName, pkName, referencingColumn, getSchemata().get(0));
             }
         }
     }

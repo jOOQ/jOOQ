@@ -10,11 +10,15 @@ public interface ITBooleans extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_BOOLEANS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>T_BOOLEANS.ID</code>
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 

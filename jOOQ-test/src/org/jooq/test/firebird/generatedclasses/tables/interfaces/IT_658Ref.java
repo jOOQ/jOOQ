@@ -10,61 +10,133 @@ public interface IT_658Ref extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_658_REF.REF_11</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_11
+	 * FOREIGN KEY (REF_11)
+	 * REFERENCES T_658_11 (ID)
+	 * </pre></code>
 	 */
-	public void setRef_11(java.lang.String value);
+	public void setRef_11(org.jooq.test.firebird.generatedclasses.enums.T_658_11 value);
 
 	/**
 	 * The table column <code>T_658_REF.REF_11</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_11
+	 * FOREIGN KEY (REF_11)
+	 * REFERENCES T_658_11 (ID)
+	 * </pre></code>
 	 */
-	public java.lang.String getRef_11();
+	public org.jooq.test.firebird.generatedclasses.enums.T_658_11 getRef_11();
 
 	/**
 	 * The table column <code>T_658_REF.REF_21</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_21
+	 * FOREIGN KEY (REF_21)
+	 * REFERENCES T_658_21 (ID)
+	 * </pre></code>
 	 */
-	public void setRef_21(java.lang.Integer value);
+	public void setRef_21(org.jooq.test.firebird.generatedclasses.enums.T_658_21 value);
 
 	/**
 	 * The table column <code>T_658_REF.REF_21</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_21
+	 * FOREIGN KEY (REF_21)
+	 * REFERENCES T_658_21 (ID)
+	 * </pre></code>
 	 */
-	public java.lang.Integer getRef_21();
+	public org.jooq.test.firebird.generatedclasses.enums.T_658_21 getRef_21();
 
 	/**
 	 * The table column <code>T_658_REF.REF_31</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_31
+	 * FOREIGN KEY (REF_31)
+	 * REFERENCES T_658_31 (ID)
+	 * </pre></code>
 	 */
-	public void setRef_31(java.lang.Long value);
+	public void setRef_31(org.jooq.test.firebird.generatedclasses.enums.T_658_31 value);
 
 	/**
 	 * The table column <code>T_658_REF.REF_31</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_31
+	 * FOREIGN KEY (REF_31)
+	 * REFERENCES T_658_31 (ID)
+	 * </pre></code>
 	 */
-	public java.lang.Long getRef_31();
+	public org.jooq.test.firebird.generatedclasses.enums.T_658_31 getRef_31();
 
 	/**
 	 * The table column <code>T_658_REF.REF_12</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_12
+	 * FOREIGN KEY (REF_12)
+	 * REFERENCES T_658_12 (ID)
+	 * </pre></code>
 	 */
-	public void setRef_12(java.lang.String value);
+	public void setRef_12(org.jooq.test.firebird.generatedclasses.enums.T_658_12 value);
 
 	/**
 	 * The table column <code>T_658_REF.REF_12</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_12
+	 * FOREIGN KEY (REF_12)
+	 * REFERENCES T_658_12 (ID)
+	 * </pre></code>
 	 */
-	public java.lang.String getRef_12();
+	public org.jooq.test.firebird.generatedclasses.enums.T_658_12 getRef_12();
 
 	/**
 	 * The table column <code>T_658_REF.REF_22</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_22
+	 * FOREIGN KEY (REF_22)
+	 * REFERENCES T_658_22 (ID)
+	 * </pre></code>
 	 */
-	public void setRef_22(java.lang.Integer value);
+	public void setRef_22(org.jooq.test.firebird.generatedclasses.enums.T_658_22 value);
 
 	/**
 	 * The table column <code>T_658_REF.REF_22</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_22
+	 * FOREIGN KEY (REF_22)
+	 * REFERENCES T_658_22 (ID)
+	 * </pre></code>
 	 */
-	public java.lang.Integer getRef_22();
+	public org.jooq.test.firebird.generatedclasses.enums.T_658_22 getRef_22();
 
 	/**
 	 * The table column <code>T_658_REF.REF_32</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_32
+	 * FOREIGN KEY (REF_32)
+	 * REFERENCES T_658_32 (ID)
+	 * </pre></code>
 	 */
-	public void setRef_32(java.lang.Long value);
+	public void setRef_32(org.jooq.test.firebird.generatedclasses.enums.T_658_32 value);
 
 	/**
 	 * The table column <code>T_658_REF.REF_32</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_658_32
+	 * FOREIGN KEY (REF_32)
+	 * REFERENCES T_658_32 (ID)
+	 * </pre></code>
 	 */
-	public java.lang.Long getRef_32();
+	public org.jooq.test.firebird.generatedclasses.enums.T_658_32 getRef_32();
 }

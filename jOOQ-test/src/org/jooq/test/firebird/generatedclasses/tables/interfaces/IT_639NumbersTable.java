@@ -65,22 +65,22 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
 	 */
-	public void setByteDecimal(java.lang.Integer value);
+	public void setByteDecimal(java.lang.Byte value);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
 	 */
-	public java.lang.Integer getByteDecimal();
+	public java.lang.Byte getByteDecimal();
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
 	 */
-	public void setShortDecimal(java.lang.Integer value);
+	public void setShortDecimal(java.lang.Short value);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
 	 */
-	public java.lang.Integer getShortDecimal();
+	public java.lang.Short getShortDecimal();
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>
@@ -115,12 +115,12 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
 	 */
-	public void setBigDecimal(java.lang.Long value);
+	public void setBigDecimal(java.math.BigDecimal value);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
 	 */
-	public java.lang.Long getBigDecimal();
+	public java.math.BigDecimal getBigDecimal();
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.FLOAT</code>

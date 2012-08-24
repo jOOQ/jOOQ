@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -1547584521;
+	private static final long serialVersionUID = 761587035;
 
 	/**
 	 * The singleton instance of T_639_NUMBERS_TABLE
@@ -53,12 +53,12 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> BYTE_DECIMAL = createField("BYTE_DECIMAL", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Byte> BYTE_DECIMAL = createField("BYTE_DECIMAL", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> SHORT_DECIMAL = createField("SHORT_DECIMAL", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT_DECIMAL = createField("SHORT_DECIMAL", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>
@@ -78,7 +78,7 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.BIGINT, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigDecimal> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.DECIMAL, this);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.FLOAT</code>

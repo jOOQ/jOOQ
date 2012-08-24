@@ -68,6 +68,8 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
         Rdb$relationFields r = RDB$RELATION_FIELDS.as("r");
         Rdb$fields f = RDB$FIELDS.as("f");
 
+        // Inspiration for the below query was taken from jaybird's
+        // DatabaseMetaData implementation
         for (Record record : create().select(
                 r.RDB$FIELD_NAME.trim(),
                 r.RDB$DESCRIPTION,
@@ -76,17 +78,34 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 r.RDB$FIELD_POSITION,
                 f.RDB$FIELD_LENGTH,
                 f.RDB$FIELD_PRECISION,
-                f.RDB$FIELD_SCALE,
+                f.RDB$FIELD_SCALE.neg().as("FIELD_SCALE"),
+
+                // FIELD_TYPE
                 decode().value(f.RDB$FIELD_TYPE)
-                        .when((short) 7, "SMALLINT")
-                        .when((short) 8, "INTEGER")
+                        .when((short) 7, decode()
+                            .when(f.RDB$FIELD_SUB_TYPE.eq((short) 1), "NUMERIC")
+                            .when(f.RDB$FIELD_SUB_TYPE.eq((short) 0)
+                             .and(f.RDB$FIELD_SCALE.lt((short) 0)), "NUMERIC")
+                            .when(f.RDB$FIELD_SUB_TYPE.eq((short) 2), "DECIMAL")
+                            .otherwise("SMALLINT"))
+                        .when((short) 8, decode()
+                            .when(f.RDB$FIELD_SUB_TYPE.eq((short) 1), "NUMERIC")
+                            .when(f.RDB$FIELD_SUB_TYPE.eq((short) 0)
+                             .and(f.RDB$FIELD_SCALE.lt((short) 0)), "NUMERIC")
+                            .when(f.RDB$FIELD_SUB_TYPE.eq((short) 2), "DECIMAL")
+                            .otherwise("INTEGER"))
                         .when((short) 9, "QUAD")
                         .when((short) 10, "FLOAT")
                         .when((short) 11, "D_FLOAT")
                         .when((short) 12, "DATE")
                         .when((short) 13, "TIME")
                         .when((short) 14, "CHAR")
-                        .when((short) 16, "INT64")
+                        .when((short) 16, decode()
+                            .when(f.RDB$FIELD_SUB_TYPE.eq((short) 1), "NUMERIC")
+                            .when(f.RDB$FIELD_SUB_TYPE.eq((short) 0)
+                             .and(f.RDB$FIELD_SCALE.lt((short) 0)), "NUMERIC")
+                            .when(f.RDB$FIELD_SUB_TYPE.eq((short) 2), "DECIMAL")
+                            .otherwise("BIGINT"))
                         .when((short) 27, "DOUBLE")
                         .when((short) 35, "TIMESTAMP")
                         .when((short) 37, "VARCHAR")
@@ -107,9 +126,9 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     getDatabase(),
                     getSchema(),
                     record.getValueAsString("FIELD_TYPE"),
+                    record.getValue(f.RDB$FIELD_LENGTH),
                     record.getValue(f.RDB$FIELD_PRECISION),
-                    record.getValue(f.RDB$FIELD_PRECISION),
-                    record.getValue(f.RDB$FIELD_SCALE));
+                    record.getValue("FIELD_SCALE", Integer.class));
 
             ColumnDefinition column = new DefaultColumnDefinition(
                     getDatabase().getTable(getSchema(), getName()),

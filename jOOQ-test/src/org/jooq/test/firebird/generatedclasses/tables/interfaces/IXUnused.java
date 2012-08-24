@@ -173,12 +173,12 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * The table column <code>X_UNUSED.FIELD 737</code>
 	 */
-	public void setField_737(java.lang.Long value);
+	public void setField_737(java.math.BigDecimal value);
 
 	/**
 	 * The table column <code>X_UNUSED.FIELD 737</code>
 	 */
-	public java.lang.Long getField_737();
+	public java.math.BigDecimal getField_737();
 
 	/**
 	 * The table column <code>X_UNUSED.CONNECTION</code>

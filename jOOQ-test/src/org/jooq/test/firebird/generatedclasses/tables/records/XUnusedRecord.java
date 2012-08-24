@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
  */
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 1068920284;
+	private static final long serialVersionUID = 1672170278;
 
 	/**
 	 * The table column <code>X_UNUSED.ID</code>
@@ -309,7 +309,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>X_UNUSED.FIELD 737</code>
 	 */
 	@Override
-	public void setField_737(java.lang.Long value) {
+	public void setField_737(java.math.BigDecimal value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.FIELD_737, value);
 	}
 
@@ -317,7 +317,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>X_UNUSED.FIELD 737</code>
 	 */
 	@Override
-	public java.lang.Long getField_737() {
+	public java.math.BigDecimal getField_737() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.FIELD_737);
 	}
 

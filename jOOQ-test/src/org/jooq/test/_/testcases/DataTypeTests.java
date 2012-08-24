@@ -1297,8 +1297,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         }
         else {
             create().insertInto(T639(), T639_ID(), T639_BIG_DECIMAL())
-                    .values(2, new BigDecimal("123456789012345.67899"))
-                    .values(3, new BigDecimal("999999999999999.99999"))
+                    .values(2, new BigDecimal("1234567890.67899"))
+                    .values(3, new BigDecimal("9999999999.99999"))
                     .values(4, new BigDecimal("1.00001"))
                     .values(5, new BigDecimal("0.00001"))
                     .values(6, new BigDecimal("0.00001"))
@@ -1312,8 +1312,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                     .fetch();
 
             assertEquals(Arrays.asList(2, 3, 4, 5, 6), result.getValues(0));
-            assertEquals(new BigDecimal("123456789012345.67899"), result.getValue(0, 1));
-            assertEquals(new BigDecimal("999999999999999.99999"), result.getValue(1, 1));
+            assertEquals(new BigDecimal("1234567890.67899"), result.getValue(0, 1));
+            assertEquals(new BigDecimal("9999999999.99999"), result.getValue(1, 1));
             assertEquals(new BigDecimal("1.00001"), result.getValue(2, 1));
             assertEquals(new BigDecimal("0.00001"), result.getValue(3, 1));
             assertEquals(new BigDecimal("0.00001"), result.getValue(4, 1));

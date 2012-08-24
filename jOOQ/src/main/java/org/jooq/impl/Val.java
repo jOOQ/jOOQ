@@ -197,11 +197,16 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         SQLDialect dialect = context.getDialect();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals
-        if (getValue() != null && getType() == BigDecimal.class && asList(CUBRID, DB2, DERBY, HSQLDB).contains(dialect)) {
+        if (getValue() != null && getType() == BigDecimal.class && asList(CUBRID, DB2, DERBY, FIREBIRD, HSQLDB).contains(dialect)) {
 
             // Add precision / scale on BigDecimals
             int scale = ((BigDecimal) getValue()).scale();
             int precision = scale + ((BigDecimal) getValue()).precision();
+
+            // Firebird's max precision is 18
+            if (dialect == FIREBIRD) {
+                precision = Math.min(precision, 18);
+            }
 
             toSQLCast(context, getDataType(context), precision, scale);
         }

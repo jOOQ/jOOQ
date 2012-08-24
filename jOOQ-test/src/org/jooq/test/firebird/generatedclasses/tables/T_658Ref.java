@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
  */
 public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = -20662192;
+	private static final long serialVersionUID = -1181905868;
 
 	/**
 	 * The singleton instance of T_658_REF
@@ -35,11 +35,8 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.firebird.gen
 
 	/**
 	 * The table column <code>T_658_REF.REF_31</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_658RefRecord, java.lang.Object> REF_31 = createField("REF_31", org.jooq.util.firebird.FirebirdDataType.getDefaultDataType("INT64"), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_658RefRecord, java.lang.Long> REF_31 = createField("REF_31", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
 	 * The table column <code>T_658_REF.REF_12</code>
@@ -53,11 +50,8 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.firebird.gen
 
 	/**
 	 * The table column <code>T_658_REF.REF_32</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_658RefRecord, java.lang.Object> REF_32 = createField("REF_32", org.jooq.util.firebird.FirebirdDataType.getDefaultDataType("INT64"), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_658RefRecord, java.lang.Long> REF_32 = createField("REF_32", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	public T_658Ref() {
 		super("T_658_REF");

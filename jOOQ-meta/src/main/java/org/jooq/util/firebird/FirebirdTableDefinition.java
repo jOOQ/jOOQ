@@ -36,7 +36,6 @@
 package org.jooq.util.firebird;
 
 import static org.jooq.impl.Factory.decode;
-import static org.jooq.util.firebird.rdb.Tables.RDB$CHARACTER_SETS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$FIELDS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$RELATION_FIELDS;
 
@@ -50,7 +49,6 @@ import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.SchemaDefinition;
-import org.jooq.util.firebird.rdb.tables.Rdb$characterSets;
 import org.jooq.util.firebird.rdb.tables.Rdb$fields;
 import org.jooq.util.firebird.rdb.tables.Rdb$relationFields;
 
@@ -69,7 +67,6 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
 
         Rdb$relationFields r = RDB$RELATION_FIELDS.as("r");
         Rdb$fields f = RDB$FIELDS.as("f");
-        Rdb$characterSets c = RDB$CHARACTER_SETS.as("c");
 
         for (Record record : create().select(
                 r.RDB$FIELD_NAME.trim(),
@@ -81,26 +78,27 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 f.RDB$FIELD_PRECISION,
                 f.RDB$FIELD_SCALE,
                 decode().value(f.RDB$FIELD_TYPE)
-                        .when((short) 261, "BLOB")
-                        .when((short) 14, "CHAR")
-                        .when((short) 40, "CSTRING")
-                        .when((short) 11, "D_FLOAT")
-                        .when((short) 27, "DOUBLE")
-                        .when((short) 10, "FLOAT")
-                        .when((short) 16, "INT64")
+                        .when((short) 7, "SMALLINT")
                         .when((short) 8, "INTEGER")
                         .when((short) 9, "QUAD")
-                        .when((short) 7, "SMALLINT")
+                        .when((short) 10, "FLOAT")
+                        .when((short) 11, "D_FLOAT")
                         .when((short) 12, "DATE")
                         .when((short) 13, "TIME")
+                        .when((short) 14, "CHAR")
+                        .when((short) 16, "INT64")
+                        .when((short) 27, "DOUBLE")
                         .when((short) 35, "TIMESTAMP")
                         .when((short) 37, "VARCHAR")
+                        .when((short) 40, "CSTRING")
+                        .when((short) 261, decode().value(f.RDB$FIELD_SUB_TYPE)
+                            .when((short) 0, "BLOB")
+                            .when((short) 1, "BLOB SUB_TYPE TEXT")
+                            .otherwise("BLOB"))
                         .otherwise("UNKNOWN").as("FIELD_TYPE"),
-                    f.RDB$FIELD_SUB_TYPE,
-                    c.RDB$CHARACTER_SET_NAME)
+                    f.RDB$FIELD_SUB_TYPE)
                 .from(r)
                 .leftOuterJoin(f).on(r.RDB$FIELD_SOURCE.equal(f.RDB$FIELD_NAME))
-                .leftOuterJoin(c).on(f.RDB$CHARACTER_SET_ID.equal(c.RDB$CHARACTER_SET_ID))
                 .where(r.RDB$RELATION_NAME.equal(getName()))
                 .orderBy(r.RDB$FIELD_POSITION)
                 .fetch()) {

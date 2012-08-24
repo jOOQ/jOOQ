@@ -69,7 +69,10 @@ public class FirebirdDataType<T> extends AbstractDataType<T> {
     public static final FirebirdDataType<Integer>     INTEGER               = new FirebirdDataType<Integer>(SQLDataType.INTEGER, "integer");
     public static final FirebirdDataType<Integer>     INT                   = new FirebirdDataType<Integer>(SQLDataType.INTEGER, "int");
     public static final FirebirdDataType<Long>        BIGINT                = new FirebirdDataType<Long>(SQLDataType.BIGINT, "bigint");
+    public static final FirebirdDataType<Long>        INT64                 = new FirebirdDataType<Long>(SQLDataType.BIGINT, "int64");
     public static final FirebirdDataType<Double>      DOUBLEPRECISION       = new FirebirdDataType<Double>(SQLDataType.DOUBLE, "double precision");
+    public static final FirebirdDataType<Double>      DOUBLE                = new FirebirdDataType<Double>(SQLDataType.DOUBLE, "double");
+    public static final FirebirdDataType<Double>      D_FLOAT               = new FirebirdDataType<Double>(SQLDataType.DOUBLE, "d_float");
     public static final FirebirdDataType<Float>       FLOAT                 = new FirebirdDataType<Float>(SQLDataType.REAL, "float");
     public static final FirebirdDataType<Boolean>     BOOLEAN               = new FirebirdDataType<Boolean>(SQLDataType.BOOLEAN, "boolean");
     public static final FirebirdDataType<BigDecimal>  DECIMAL               = new FirebirdDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");

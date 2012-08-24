@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
  */
 public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_658RefRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_658Ref {
 
-	private static final long serialVersionUID = 33287543;
+	private static final long serialVersionUID = 2124011373;
 
 	/**
 	 * The table column <code>T_658_REF.REF_11</code>
@@ -44,23 +44,17 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 
 	/**
 	 * The table column <code>T_658_REF.REF_31</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public void setRef_31(java.lang.Object value) {
+	public void setRef_31(java.lang.Long value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.T_658Ref.T_658_REF.REF_31, value);
 	}
 
 	/**
 	 * The table column <code>T_658_REF.REF_31</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public java.lang.Object getRef_31() {
+	public java.lang.Long getRef_31() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_658Ref.T_658_REF.REF_31);
 	}
 
@@ -98,23 +92,17 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 
 	/**
 	 * The table column <code>T_658_REF.REF_32</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public void setRef_32(java.lang.Object value) {
+	public void setRef_32(java.lang.Long value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.T_658Ref.T_658_REF.REF_32, value);
 	}
 
 	/**
 	 * The table column <code>T_658_REF.REF_32</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public java.lang.Object getRef_32() {
+	public java.lang.Long getRef_32() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_658Ref.T_658_REF.REF_32);
 	}
 

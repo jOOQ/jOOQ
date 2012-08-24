@@ -60,17 +60,11 @@ public interface ITDates extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_DATES.TS_BIGINT</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public void setTsBigint(java.lang.Object value);
+	public void setTsBigint(java.lang.Long value);
 
 	/**
 	 * The table column <code>T_DATES.TS_BIGINT</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public java.lang.Object getTsBigint();
+	public java.lang.Long getTsBigint();
 }

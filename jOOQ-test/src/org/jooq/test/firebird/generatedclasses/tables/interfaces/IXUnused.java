@@ -30,19 +30,13 @@ public interface IXUnused extends java.io.Serializable {
 
 	/**
 	 * The table column <code>X_UNUSED.BIG_INTEGER</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public void setBigInteger(java.lang.Object value);
+	public void setBigInteger(java.lang.Long value);
 
 	/**
 	 * The table column <code>X_UNUSED.BIG_INTEGER</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public java.lang.Object getBigInteger();
+	public java.lang.Long getBigInteger();
 
 	/**
 	 * The table column <code>X_UNUSED.ID_REF</code>
@@ -146,19 +140,13 @@ public interface IXUnused extends java.io.Serializable {
 
 	/**
 	 * The table column <code>X_UNUSED.FIELD 737</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public void setField_737(java.lang.Object value);
+	public void setField_737(java.lang.Long value);
 
 	/**
 	 * The table column <code>X_UNUSED.FIELD 737</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public java.lang.Object getField_737();
+	public java.lang.Long getField_737();
 
 	/**
 	 * The table column <code>X_UNUSED.CONNECTION</code>

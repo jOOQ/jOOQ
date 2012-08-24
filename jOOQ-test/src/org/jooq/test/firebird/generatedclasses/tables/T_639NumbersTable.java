@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 1578311905;
+	private static final long serialVersionUID = 74212133;
 
 	/**
 	 * The singleton instance of T_639_NUMBERS_TABLE
@@ -45,11 +45,8 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.fir
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> LONG = createField("LONG", org.jooq.util.firebird.FirebirdDataType.getDefaultDataType("INT64"), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG = createField("LONG", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
@@ -68,27 +65,18 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.fir
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> LONG_DECIMAL = createField("LONG_DECIMAL", org.jooq.util.firebird.FirebirdDataType.getDefaultDataType("INT64"), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG_DECIMAL = createField("LONG_DECIMAL", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.util.firebird.FirebirdDataType.getDefaultDataType("INT64"), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.util.firebird.FirebirdDataType.getDefaultDataType("INT64"), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.FLOAT</code>
@@ -97,11 +85,8 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.fir
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.DOUBLE</code>
-	 * <p>
-	 * The SQL type of this item (DOUBLE) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> DOUBLE = createField("DOUBLE", org.jooq.util.firebird.FirebirdDataType.getDefaultDataType("DOUBLE"), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Double> DOUBLE = createField("DOUBLE", org.jooq.impl.SQLDataType.DOUBLE, this);
 
 	public T_639NumbersTable() {
 		super("T_639_NUMBERS_TABLE");

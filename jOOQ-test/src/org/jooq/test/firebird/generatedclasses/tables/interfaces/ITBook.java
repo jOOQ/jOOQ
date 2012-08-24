@@ -81,12 +81,12 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * The table column <code>T_BOOK.CONTENT_TEXT</code>
 	 */
-	public void setContentText(byte[] value);
+	public void setContentText(java.lang.String value);
 
 	/**
 	 * The table column <code>T_BOOK.CONTENT_TEXT</code>
 	 */
-	public byte[] getContentText();
+	public java.lang.String getContentText();
 
 	/**
 	 * The table column <code>T_BOOK.CONTENT_PDF</code>

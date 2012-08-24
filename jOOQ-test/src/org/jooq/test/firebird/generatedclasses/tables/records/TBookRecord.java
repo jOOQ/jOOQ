@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 127601451;
+	private static final long serialVersionUID = 854746721;
 
 	/**
 	 * The table column <code>T_BOOK.ID</code>
@@ -126,7 +126,7 @@ public class TBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	 * The table column <code>T_BOOK.CONTENT_TEXT</code>
 	 */
 	@Override
-	public void setContentText(byte[] value) {
+	public void setContentText(java.lang.String value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT, value);
 	}
 
@@ -134,7 +134,7 @@ public class TBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	 * The table column <code>T_BOOK.CONTENT_TEXT</code>
 	 */
 	@Override
-	public byte[] getContentText() {
+	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT);
 	}
 

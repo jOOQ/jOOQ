@@ -30,19 +30,13 @@ public interface IT_658Ref extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_658_REF.REF_31</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public void setRef_31(java.lang.Object value);
+	public void setRef_31(java.lang.Long value);
 
 	/**
 	 * The table column <code>T_658_REF.REF_31</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public java.lang.Object getRef_31();
+	public java.lang.Long getRef_31();
 
 	/**
 	 * The table column <code>T_658_REF.REF_12</code>
@@ -66,17 +60,11 @@ public interface IT_658Ref extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_658_REF.REF_32</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public void setRef_32(java.lang.Object value);
+	public void setRef_32(java.lang.Long value);
 
 	/**
 	 * The table column <code>T_658_REF.REF_32</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public java.lang.Object getRef_32();
+	public java.lang.Long getRef_32();
 }

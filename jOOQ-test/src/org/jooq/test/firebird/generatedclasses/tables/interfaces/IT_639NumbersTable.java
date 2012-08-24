@@ -50,19 +50,13 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public void setLong(java.lang.Object value);
+	public void setLong(java.lang.Long value);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public java.lang.Object getLong();
+	public java.lang.Long getLong();
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
@@ -96,51 +90,33 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public void setLongDecimal(java.lang.Object value);
+	public void setLongDecimal(java.lang.Long value);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public java.lang.Object getLongDecimal();
+	public java.lang.Long getLongDecimal();
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public void setBigInteger(java.lang.Object value);
+	public void setBigInteger(java.lang.Long value);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public java.lang.Object getBigInteger();
+	public java.lang.Long getBigInteger();
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public void setBigDecimal(java.lang.Object value);
+	public void setBigDecimal(java.lang.Long value);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public java.lang.Object getBigDecimal();
+	public java.lang.Long getBigDecimal();
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.FLOAT</code>
@@ -154,17 +130,11 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.DOUBLE</code>
-	 * <p>
-	 * The SQL type of this item (DOUBLE) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public void setDouble(java.lang.Object value);
+	public void setDouble(java.lang.Double value);
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.DOUBLE</code>
-	 * <p>
-	 * The SQL type of this item (DOUBLE) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public java.lang.Object getDouble();
+	public java.lang.Double getDouble();
 }

@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
  */
 public class T_639NumbersTableRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = 1238378358;
+	private static final long serialVersionUID = -2123036434;
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.ID</code>
@@ -76,23 +76,17 @@ public class T_639NumbersTableRecord extends org.jooq.impl.TableRecordImpl<org.j
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public void setLong(java.lang.Object value) {
+	public void setLong(java.lang.Long value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG, value);
 	}
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public java.lang.Object getLong() {
+	public java.lang.Long getLong() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG);
 	}
 
@@ -146,67 +140,49 @@ public class T_639NumbersTableRecord extends org.jooq.impl.TableRecordImpl<org.j
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public void setLongDecimal(java.lang.Object value) {
+	public void setLongDecimal(java.lang.Long value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG_DECIMAL, value);
 	}
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public java.lang.Object getLongDecimal() {
+	public java.lang.Long getLongDecimal() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG_DECIMAL);
 	}
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public void setBigInteger(java.lang.Object value) {
+	public void setBigInteger(java.lang.Long value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER, value);
 	}
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public java.lang.Object getBigInteger() {
+	public java.lang.Long getBigInteger() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER);
 	}
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public void setBigDecimal(java.lang.Object value) {
+	public void setBigDecimal(java.lang.Long value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL, value);
 	}
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public java.lang.Object getBigDecimal() {
+	public java.lang.Long getBigDecimal() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL);
 	}
 
@@ -228,23 +204,17 @@ public class T_639NumbersTableRecord extends org.jooq.impl.TableRecordImpl<org.j
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.DOUBLE</code>
-	 * <p>
-	 * The SQL type of this item (DOUBLE) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public void setDouble(java.lang.Object value) {
+	public void setDouble(java.lang.Double value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.DOUBLE, value);
 	}
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.DOUBLE</code>
-	 * <p>
-	 * The SQL type of this item (DOUBLE) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public java.lang.Object getDouble() {
+	public java.lang.Double getDouble() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.DOUBLE);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
  */
 public class TDatesRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = 1262945353;
+	private static final long serialVersionUID = -1738997213;
 
 	/**
 	 * The table column <code>T_DATES.ID</code>
@@ -92,23 +92,17 @@ public class TDatesRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fi
 
 	/**
 	 * The table column <code>T_DATES.TS_BIGINT</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public void setTsBigint(java.lang.Object value) {
+	public void setTsBigint(java.lang.Long value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES.TS_BIGINT, value);
 	}
 
 	/**
 	 * The table column <code>T_DATES.TS_BIGINT</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public java.lang.Object getTsBigint() {
+	public java.lang.Long getTsBigint() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES.TS_BIGINT);
 	}
 

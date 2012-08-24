@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -185301459;
+	private static final long serialVersionUID = 732177841;
 
 	/**
 	 * The singleton instance of T_BOOK
@@ -61,7 +61,7 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.firebird.genera
 	/**
 	 * The table column <code>T_BOOK.CONTENT_TEXT</code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.BLOB, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, this);
 
 	/**
 	 * The table column <code>T_BOOK.CONTENT_PDF</code>

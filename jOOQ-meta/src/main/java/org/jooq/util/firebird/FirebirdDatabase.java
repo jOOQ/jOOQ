@@ -109,7 +109,7 @@ public class FirebirdDatabase extends AbstractDatabase {
                 TableDefinition td = this.getTable(this.getSchemata().get(0), tableName);
                 if (td != null) {
                     ColumnDefinition cd = td.getColumn(fieldName);
-                    relations.addPrimaryKey(fieldName, cd);
+                    relations.addPrimaryKey(key, cd);
                 }
             }
         }

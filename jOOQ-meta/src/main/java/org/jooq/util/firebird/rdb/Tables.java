@@ -13,11 +13,6 @@ package org.jooq.util.firebird.rdb;
 public final class Tables {
 
 	/**
-	 * The table RDB$CHARACTER_SETS
-	 */
-	public static final org.jooq.util.firebird.rdb.tables.Rdb$characterSets RDB$CHARACTER_SETS = org.jooq.util.firebird.rdb.tables.Rdb$characterSets.RDB$CHARACTER_SETS;
-
-	/**
 	 * The table RDB$DEPENDENCIES
 	 */
 	public static final org.jooq.util.firebird.rdb.tables.Rdb$dependencies RDB$DEPENDENCIES = org.jooq.util.firebird.rdb.tables.Rdb$dependencies.RDB$DEPENDENCIES;

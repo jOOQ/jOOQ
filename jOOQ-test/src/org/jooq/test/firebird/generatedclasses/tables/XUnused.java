@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1536412499;
+	private static final long serialVersionUID = -1006548203;
 
 	/**
 	 * The singleton instance of X_UNUSED
@@ -35,11 +35,8 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.firebird.gene
 
 	/**
 	 * The table column <code>X_UNUSED.BIG_INTEGER</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord, java.lang.Object> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.util.firebird.FirebirdDataType.getDefaultDataType("INT64"), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord, java.lang.Long> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
 	 * The table column <code>X_UNUSED.ID_REF</code>
@@ -93,11 +90,8 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.firebird.gene
 
 	/**
 	 * The table column <code>X_UNUSED.FIELD 737</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord, java.lang.Object> FIELD_737 = createField("FIELD 737", org.jooq.util.firebird.FirebirdDataType.getDefaultDataType("INT64"), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord, java.lang.Long> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
 	 * The table column <code>X_UNUSED.CONNECTION</code>

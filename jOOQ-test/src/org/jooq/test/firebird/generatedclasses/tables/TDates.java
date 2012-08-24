@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1344756192;
+	private static final long serialVersionUID = 1909938427;
 
 	/**
 	 * The singleton instance of T_DATES
@@ -50,11 +50,8 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.firebird.gener
 
 	/**
 	 * The table column <code>T_DATES.TS_BIGINT</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord, java.lang.Object> TS_BIGINT = createField("TS_BIGINT", org.jooq.util.firebird.FirebirdDataType.getDefaultDataType("INT64"), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	public TDates() {
 		super("T_DATES");

@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
  */
 public class XUnusedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 1015346682;
+	private static final long serialVersionUID = 1535368668;
 
 	/**
 	 * The table column <code>X_UNUSED.ID</code>
@@ -44,23 +44,17 @@ public class XUnusedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 
 	/**
 	 * The table column <code>X_UNUSED.BIG_INTEGER</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public void setBigInteger(java.lang.Object value) {
+	public void setBigInteger(java.lang.Long value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.BIG_INTEGER, value);
 	}
 
 	/**
 	 * The table column <code>X_UNUSED.BIG_INTEGER</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public java.lang.Object getBigInteger() {
+	public java.lang.Long getBigInteger() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.BIG_INTEGER);
 	}
 
@@ -226,23 +220,17 @@ public class XUnusedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 
 	/**
 	 * The table column <code>X_UNUSED.FIELD 737</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public void setField_737(java.lang.Object value) {
+	public void setField_737(java.lang.Long value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.FIELD_737, value);
 	}
 
 	/**
 	 * The table column <code>X_UNUSED.FIELD 737</code>
-	 * <p>
-	 * The SQL type of this item (INT64) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
 	@Override
-	public java.lang.Object getField_737() {
+	public java.lang.Long getField_737() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.FIELD_737);
 	}
 

@@ -23,16 +23,6 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>T_639_NUMBERS_TABLE.BYTE</code>
-	 */
-	public void setByte(java.lang.Short value);
-
-	/**
-	 * The table column <code>T_639_NUMBERS_TABLE.BYTE</code>
-	 */
-	public java.lang.Short getByte();
-
-	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.SHORT</code>
 	 */
 	public void setShort(java.lang.Short value);
@@ -101,16 +91,6 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	 * The table column <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
 	 */
 	public java.lang.Long getLongDecimal();
-
-	/**
-	 * The table column <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>
-	 */
-	public void setBigInteger(java.lang.Long value);
-
-	/**
-	 * The table column <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>
-	 */
-	public java.lang.Long getBigInteger();
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>

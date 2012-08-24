@@ -8,7 +8,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
  */
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -1832099286;
+	private static final long serialVersionUID = -236764286;
 
 	/**
 	 * The table column <code>T_639_NUMBERS_TABLE.ID</code>
@@ -28,22 +28,6 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	@Override
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
-	}
-
-	/**
-	 * The table column <code>T_639_NUMBERS_TABLE.BYTE</code>
-	 */
-	@Override
-	public void setByte(java.lang.Short value) {
-		setValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE, value);
-	}
-
-	/**
-	 * The table column <code>T_639_NUMBERS_TABLE.BYTE</code>
-	 */
-	@Override
-	public java.lang.Short getByte() {
-		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE);
 	}
 
 	/**
@@ -156,22 +140,6 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	@Override
 	public java.lang.Long getLongDecimal() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG_DECIMAL);
-	}
-
-	/**
-	 * The table column <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>
-	 */
-	@Override
-	public void setBigInteger(java.lang.Long value) {
-		setValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER, value);
-	}
-
-	/**
-	 * The table column <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>
-	 */
-	@Override
-	public java.lang.Long getBigInteger() {
-		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER);
 	}
 
 	/**

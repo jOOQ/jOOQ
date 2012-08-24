@@ -808,17 +808,23 @@ public class Main {
 
 							<section id="jooq-in-modern-ides">
 								<title>Using jOOQ in modern IDEs</title>
-								<content></content>
+								<content>
+									<p>Feel free to contribute a tutorial!</p>
+								</content>
 							</section>
 
 							<section id="jooq-with-spring">
 								<title>Using jOOQ with Spring</title>
-								<content></content>
+								<content>
+									<p>Feel free to contribute a tutorial!</p>
+								</content>
 							</section>
 
 							<section id="a-simple-web-application">
 								<title>A simple web application with jOOQ</title>
-								<content></content>
+								<content>
+									<p>Feel free to contribute a tutorial!</p>
+								</content>
 							</section>
 						</sections>
 					</section>
@@ -4239,22 +4245,181 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 
 					<section id="bind-values">
 					    <title>Bind values and parameters</title>
-						<content></content>
+						<content>
+							<h3>Bind values</h3>
+							<p>
+								Bind values are used in SQL / JDBC for various reasons. Among the most obvious ones are:
+							</p>
+							<ul>
+								<li>
+									Protection against SQL injection. Instead of inlining values possibly originating from user input, you bind those values to your prepared statement and let the JDBC driver / database take care of handling security aspects.
+								</li>
+								<li>
+									Increased speed. Advanced databases such as Oracle can keep execution plans of similar queries in a dedicated cache to prevent hard-parsing your query again and again. In many cases, the actual value of a bind variable does not influence the execution plan, hence it can be reused. Preparing a statement will thus be faster
+								</li>
+								<li>
+									On a JDBC level, you can also reuse the SQL string and prepared statement object instead of constructing it again, as you can bind new values to the prepared statement. jOOQ currently does not cache prepared statements, internally.
+								</li>
+							</ul>
+							
+							<p>
+								The following sections explain how you can introduce bind values in jOOQ, and how you can control the way they are rendered and bound to SQL.
+							</p>
+						</content>
 
 						<sections>
 						    <section id="indexed-parameters">
 							    <title>Indexed parameters</title>
-								<content></content>
+								<content>
+									<h3>JDBC PreparedStatements and binding by index</h3>
+									<p>
+										JDBC only knows indexed bind values. A typical example for using bind values with JDBC is this:
+									</p>
+									
+<java><![CDATA[PreparedStatement stmt = connection.prepareStatement("SELECT * FROM BOOK WHERE ID = ? AND TITLE = ?");
+
+// bind values to the above statement for appropriate indexes 
+stmt.setInt(1, 5);
+stmt.setString(2, "Animal Farm");
+stmm.executeQuery();]]></java>
+
+									<p>
+										With dynamic SQL, keeping track of the number of question marks and their corresponding index may turn out to be hard. jOOQ abstracts this and lets you provide the bind value right where it is needed. A trivial example is this:
+									</p>
+									
+<java><![CDATA[create.select().from(BOOK).where(BOOK.ID.equal(5)).and(BOOK.TITLE.equal("Animal Farm"));
+
+// This notation is in fact a short form for the equivalent:
+create.select().from(BOOK).where(BOOK.ID.equal(val(5))).and(BOOK.TITLE.equal(val("Animal Farm")));]]></java>
+
+									<p>
+										Note the using of <reference class="org.jooq.impl.Factory" anchor="#val(java.lang.Object)" title="Factory.val()"/> to explicitly create an indexed bind value. You don't have to worry about that index. When the query is <reference id="sql-rendering" title="rendered"/>, each bind value will render a question mark. When the query <reference id="variable-binding" title="binds its variables"/>, each bind value will generate the appropriate bind value index. 
+									</p>
+									
+									<h3>Extract bind values from a query</h3>
+									<p>
+										Should you decide to run the above query outside of jOOQ, using your own <reference class="java.sql.PreparedStatement"/>, you can do so as follows:
+									</p>
+									
+<java><![CDATA[Select<?> select = create.select().from(BOOK).where(BOOK.ID.equal(5)).and(BOOK.TITLE.equal("Animal Farm"));
+
+// Render the SQL statement:
+String sql = select.getSQL();
+assertEquals("SELECT * FROM BOOK WHERE ID = ? AND TITLE = ?", sql);
+
+// Get the bind values:
+List<Object> values = select.getBindValues();
+assertEquals(2, values.size());
+assertEquals(5, values.get(0));
+assertEquals("Animal Farm", values.get(1));]]></java>
+
+									<p>
+										You can also extract specific bind values by index from a query, if you wish to modify their underlying value after creating a query. This can be achieved as such:
+									</p>
+
+<java><![CDATA[Select<?> select = create.select().from(BOOK).where(BOOK.ID.equal(5)).and(BOOK.TITLE.equal("Animal Farm"));
+Param<?> param = select.getParam("2");
+
+// You could now modify the Query's underlying bind value:
+if ("Animal Farm".equals(param.getValue())) {
+    param.setConverted("1984");
+}]]></java>
+
+									<p>
+										For more details about jOOQ's internals, see the manual's section about <reference id="queryparts" title="QueryParts"/>.
+									</p>
+								</content>
 							</section>
 
 						    <section id="named-parameters">
 							    <title>Named parameters</title>
-								<content></content>
+								<content>
+									<h3>Named parameters in Spring data and other SQL abstractions</h3>
+									<p>
+										Some SQL access abstractions that are built on top of JDBC, or some that bypass JDBC may support named parameters. jOOQ allows you to give names to your parameters as well, although those names are not rendered to SQL strings by default. Here is an example of how to create named parameters using the <reference class="org.jooq.Param"/> type:
+									</p>
+
+<java><![CDATA[// Create a query with a named parameter. You can then use that name for accessing the parameter again
+Query query1 = create.select().from(AUTHOR).where(LAST_NAME.equal(param("lastName", "Poe")));
+Param<?> param1 = query.getParam("lastName");
+
+// Or, keep a reference to the typed parameter in order not to lose the <T> type information:
+Param<String> param2 = param("lastName", "Poe");
+Query query2 = create.select().from(AUTHOR).where(LAST_NAME.equal(param2));
+
+// You can now change the bind value directly on the Param reference:
+param2.setValue("Orwell");]]></java>
+
+									<p>
+										The <reference class="org.jooq.Query"/> interface also allows for setting new bind values directly, without accessing the Param type:
+									</p>
+
+<java><![CDATA[Query query1 = create.select().from(T_AUTHOR).where(LAST_NAME.equal("Poe"));
+query1.bind(1, "Orwell");
+
+// Or, with named parameters
+Query query2 = create.select().from(T_AUTHOR).where(LAST_NAME.equal(param("lastName", "Poe")));
+query2.bind("lastName", "Orwell");]]></java>
+
+									<p>
+										In order to actually render named parameter names in generated SQL, use the <reference class="org.jooq.impl.Factory" anchor="#renderNamedParams(org.jooq.QueryPart)" title="Factory.renderNamedParams()"/> method:
+									</p>
+
+<code-pair>
+<java><![CDATA[create.renderNamedParams(
+    create.select()
+          .from(T_AUTHOR)
+          .where(LAST_NAME.equal(
+                 param("lastName", "Poe"))));]]></java>
+<sql><![CDATA[-- The named bind variable can be rendered
+
+SELECT *
+FROM T_AUTHOR
+WHERE LAST_NAME = :lastName]]></sql>
+</code-pair>
+								</content>
 							</section>
 
 						    <section id="inlined-parameters">
 							    <title>Inlined parameters</title>
-								<content></content>
+								<content>
+									<h3>Safe inlining your variables to SQL statements</h3>
+									<p>
+										Sometimes, you may wish to avoid rendering bind variables while still using custom values in SQL. jOOQ refers to that as "inlined" bind values. When bind values are inlined, they render the actual value in SQL rather than a JDBC question mark. Bind value inlining can be achieved in two ways:
+									</p>
+									<ul>
+										<li>
+											By using the <reference id="custom-settings" title="Settings"/> and setting the <reference class="org.jooq.conf.StatementType"/> to STATIC_STATEMENT. This will inline all bind values for SQL statements rendered from such a Factory.
+										</li>
+										<li>
+											By using <reference class="org.jooq.impl.Factory" anchor="#inline(java.lang.Object)" title="Factory.inline()"/> methods.
+										</li>
+									</ul>
+									<p>
+										In both cases, your inlined bind values will be properly escaped to avoid SQL syntax errors and SQL injection. Some examples:
+									</p>
+
+<java><![CDATA[
+// Use dedicated calls to inline() in order to specify
+// single bind values to be rendered as inline values
+// --------------------------------------------------
+create.select()
+      .from(T_AUTHOR)
+      .where(LAST_NAME.equal(inline("Poe")));
+
+// Or render the whole query with inlined values
+// --------------------------------------------------
+Settings settings = new Settings()
+    .withStatementType(StatementType.STATIC_STATEMENT);
+
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+
+// Run queries that omit rendering schema names
+create.select()
+      .from(T_AUTHOR)
+      .where(LAST_NAME.equal("Poe"));]]></java>
+								</content>
 							</section>
 
 						    <section id="sql-injection-and-plain-sql-queryparts">

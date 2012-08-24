@@ -94,6 +94,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     public void testUse() throws Exception {
         switch (getDialect()) {
             case ASE:
+            case FIREBIRD:
             case SQLITE:
             case SQLSERVER:
                 log.info("SKIPPING", "USE test");

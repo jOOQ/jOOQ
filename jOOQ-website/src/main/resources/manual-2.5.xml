@@ -4424,21 +4424,102 @@ create.select()
 
 						    <section id="sql-injection-and-plain-sql-queryparts">
 							    <title>SQL injection and plain SQL QueryParts</title>
-								<content></content>
+								<content>
+									<h3>SQL injection and plain SQL QueryParts</h3>
+									<p>
+										Special care needs to be taken when using <reference id="plain-sql" title="plain SQL QueryParts"/>. While jOOQ's API allows you to specify bind values for use with plain SQL, you're not forced to do that. For instance, both of the following queries will lead to the same, valid result:
+									</p>
+									
+<java><![CDATA[// This query will use bind values, internally.
+create.fetch("SELECT * FROM BOOK WHERE ID = ? AND TITLE = ?", 5 "Animal Farm");
+
+// This query will not use bind values, internally.
+create.fetch("SELECT * FROM BOOK WHERE ID = 5 AND TITLE = 'Animal Farm'");]]></java>
+
+									<p>
+										All methods in the jOOQ API that allow for plain (unescaped, untreated) SQL contain a warning message in their relevant Javadoc, to remind you of the risk of SQL injection in what is otherwise a SQL-injection-safe API.
+									</p>
+								</content>
 							</section>
 						</sections>
 					</section>
 
 					<section id="queryparts">
 					    <title>QueryParts</title>
-						<content></content>
+						<content>
+							<h3>Everything is a QueryPart</h3>
+							<p>
+								A <reference class="org.jooq.Query" /> and all its contained objects is a <reference class="org.jooq.QueryPart" />. QueryParts essentially provide this functionality:
+							</p>
+							<ul>
+								<li>they can <reference id="sql-rendering" title="render SQL"/> using the <reference class="org.jooq.QueryPartInternal" anchor="#toSQL(org.jooq.RenderContext)" title="toSQL(RenderContext)"/> method</li>
+								<li>they can <reference id="variable-binding" title="bind variables"/> using the <reference class="org.jooq.QueryPartInternal" anchor="#bind(org.jooq.BindContext)" title="bind(BindContext)"/> method</li>
+							</ul>
+
+							<p>
+								Both of these methods are contained in jOOQ's internal API's <reference class="org.jooq.QueryPartInternal"/>, which is internally implemented by every QueryPart. QueryPart internals are best illustrated with an example.
+							</p>
+
+						   	<h3>Example: CompareCondition</h3>
+						   	<p>
+						   		A simple example can be provided by checking out jOOQ's internal representation of a (simplified) <reference id="comparison-predicate" title="CompareCondition"/>. It is used for any <reference class="org.jooq.Condition"/> comparing two fields as for example the T_AUTHOR.ID = T_BOOK.AUTHOR_ID condition here:
+					   		</p>
+<sql>-- [...]
+FROM T_AUTHOR
+JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
+-- [...]</sql>
+
+							<p>
+								This is how jOOQ implements such a condition:
+							</p>
+
+<java><![CDATA[@Override
+public final void bind(BindContext context) throws DataAccessException {
+    // The CompareCondition itself does not bind any variables.
+    // But the two fields involved in the condition might do so...
+    context.bind(field1).bind(field2);
+}
+
+@Override
+public final void toSQL(RenderContext context) {
+    // The CompareCondition delegates rendering of the Fields to the Fields
+    // themselves and connects them using the Condition's comparator operator:
+    context.sql(field1)
+           .sql(" ");
+
+    // If the second field is null, some convenience behaviour can be
+    // implemented here
+    if (field2.isNullLiteral()) {
+        switch (comparator) {
+            case EQUALS:
+                context.sql("is null");
+                break;
+
+            case NOT_EQUALS:
+                context.sql("is not null");
+                break;
+
+            default:
+                throw new IllegalStateException("Cannot compare null with " + comparator);
+        }
+    }
+
+    // By default, also delegate the right hand side's SQL rendering to the
+    // underlying field
+    else {
+        context.sql(comparator.toSQL())
+               .sql(" ")
+               .sql(field2);
+    }
+}
+]]></java>
+
+							<p>
+								The following sections explain some more details about <reference id="sql-rendering" title="SQL rendering"/> and <reference id="variable-binding" title="variable binding"/>, as well as other implementation details about QueryParts in general.
+							</p>
+						</content>
 
 						<sections>
-						    <section id="jooq-architecture">
-							    <title>jOOQ architecture</title>
-								<content></content>
-							</section>
-
 						    <section id="sql-rendering">
 							    <title>SQL rendering</title>
 								<content></content>

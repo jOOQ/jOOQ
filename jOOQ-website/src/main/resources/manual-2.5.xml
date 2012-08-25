@@ -6357,12 +6357,75 @@ for (BookRecord book : create.fetch(BOOK, BOOK.PUBLISHED_IN.equal(1948))) {
 
 							<section id="navigation-methods">
 								<title>Navigation methods</title>
-								<content></content>
+								<content>
+									<h3>Generated foreign key navigation methods</h3>
+									<p>
+										When using jOOQ's <reference id="code-generation" title="code generator"/> along with its <reference id="codegen-records" title="record generation capabilities"/>, generated records can have navigation methods contained in them, if properly <reference id="codegen-advanced" title="configured"/>. These navigation methods allow for "navigating" inbound or outbound foreign key references by executing an appropriate query. An example is given here: 
+									</p>
+				
+<code-pair>
+<sql><![CDATA[CREATE TABLE book (
+  AUTHOR_ID NUMBER(7) NOT NULL,
+  
+  -- [...]
+  
+  FOREIGN KEY (AUTHOR_ID) REFERENCES author(ID)
+)]]></sql>
+<java><![CDATA[BookRecord book = create.fetch(BOOK, BOOK.ID.equal(5));
+
+// Find the author of a book
+AuthorRecord author = book.fetchAuthor();
+
+// Find other books by that author
+List<BookRecord> books = author.fetchBookList();]]></java>
+</code-pair>					
+
+									<p>
+										These methods are safe for use with several foreign keys referencing the same tables:
+									</p>
+				
+<code-pair>
+<sql><![CDATA[CREATE TABLE book (
+  AUTHOR_ID NUMBER(7) NOT NULL,
+  CO_AUTHOR_ID NUMBER(7) NOT NULL,
+  
+  -- [...]
+  
+  FOREIGN KEY (AUTHOR_ID) REFERENCES author(ID),
+  FOREIGN KEY (CO_AUTHOR_ID) REFERENCES author(ID)
+)]]></sql>
+<java><![CDATA[BookRecord book = create.fetch(BOOK, BOOK.ID.equal(5));
+
+// Find the author of a book
+AuthorRecord author   = book.fetchAuthorByAuthorId();
+AuthorRecord coAuthor = book.fetchAuthorByCoAuthorId();
+
+// Find other books by those authors
+List<BookRecord> books = author.fetchBookListByAuthorId();
+List<BookRecord> books = coAuthor.fetchBookListByCoAuthorId();]]></java>
+</code-pair>					
+
+									<p>
+										Note that, unlike in Hibernate, jOOQ's generated navigation methods will always lazy-fetch relevant records, without caching any results. In other words, every time you run such a fetch method, a new query will be issued.
+									</p>
+									<p>
+										These fetch methods only work on "attached" records. See the manual's section about <reference id="serializability" title="serializability"/> for some more insight on "attached" objects.
+									</p>
+								</content>
 							</section>
 
 							<section id="non-updatable-records">
 								<title>Non-updatable records</title>
-								<content></content>
+								<content>
+									<h3>Tables without UNIQUE keys, and updatability</h3>
+									<p>
+										Tables without UNIQUE keys are considered non-updatable by jOOQ, as jOOQ has no way of uniquely identifying such a record within the database. If you're using jOOQ's <reference id="code-generation" title="code generator"/>, such tables will generate <reference class="org.jooq.TableRecord"/> classes, instead of <reference class="org.jooq.UpdatableRecord"/> classes. When you fetch <reference id="record-vs-tablerecord" title="typed records"/> from such a table, the returned records will not allow for calling any of the <reference id="crud-with-updatablerecords" title="store(), refresh(), delete()"/> methods. 
+									</p>
+									
+									<p>
+										Note, that some databases use internal rowid or object-id values to identify such records. jOOQ does not support these vendor-specific record meta-data.
+									</p>
+								</content>
 							</section>
 
 							<section id="optimistic-locking">

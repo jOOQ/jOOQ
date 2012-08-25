@@ -38,7 +38,7 @@
 
 	<xsl:attribute-set name="h1">
 		<xsl:attribute name="font-family">Special Elite</xsl:attribute>
-		<xsl:attribute name="font-size">18pt</xsl:attribute>
+		<xsl:attribute name="font-size">20pt</xsl:attribute>
 		<xsl:attribute name="padding-top">12pt</xsl:attribute>
 		<xsl:attribute name="padding-bottom">12pt</xsl:attribute>
 		<xsl:attribute name="page-break-after">avoid</xsl:attribute>
@@ -54,7 +54,7 @@
 
 	<xsl:attribute-set name="h3">
 		<xsl:attribute name="font-family">Special Elite</xsl:attribute>
-		<xsl:attribute name="font-size">16pt</xsl:attribute>
+		<xsl:attribute name="font-size">15pt</xsl:attribute>
 		<xsl:attribute name="padding-top">10pt</xsl:attribute>
 		<xsl:attribute name="padding-bottom">10pt</xsl:attribute>
 		<xsl:attribute name="page-break-after">avoid</xsl:attribute>
@@ -69,6 +69,7 @@
 
 	<xsl:attribute-set name="p">
 		<xsl:attribute name="font-size">11pt</xsl:attribute>
+		<xsl:attribute name="text-align">justify</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="ul">
@@ -78,7 +79,7 @@
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="ol-toc">
-		<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+		<xsl:attribute name="margin-bottom">3pt</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="ol">
@@ -87,7 +88,7 @@
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="li-toc">
-		<xsl:attribute name="font-size">11pt</xsl:attribute>
+		<xsl:attribute name="font-size">9pt</xsl:attribute>
 		<xsl:attribute name="page-break-inside">avoid</xsl:attribute>
 	</xsl:attribute-set>
 
@@ -406,6 +407,10 @@
 
 	<xsl:template match="p" mode="content">
 		<fo:block xsl:use-attribute-sets="p">
+			<xsl:if test="following-sibling::node()[name(.) = 'p']">
+				<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+			</xsl:if>
+			
 			<xsl:apply-templates mode="content"/>
 		</fo:block>
 	</xsl:template>
@@ -464,12 +469,12 @@
 			  	<fo:table-row>
 			    	<fo:table-cell>
 			      		<fo:block>
-			      			<xsl:apply-templates select="sql" mode="content" />
+			      			<xsl:apply-templates select="*[position() = 1]" mode="content" />
 			      		</fo:block>
 			    	</fo:table-cell>
 			    	<fo:table-cell>
 			     		<fo:block>
-			     			<xsl:apply-templates select="java" mode="content" />
+			     			<xsl:apply-templates select="*[position() = 2]" mode="content" />
 			     		</fo:block>
 			    	</fo:table-cell>
 			  	</fo:table-row>
@@ -483,6 +488,11 @@
         </fo:block>
 	</xsl:template>
 
+	<!-- Ignore code blocks, render contents as such -->
+	<xsl:template match="code" mode="content">
+		<xsl:apply-templates mode="content"/>
+	</xsl:template>
+
 	<xsl:template match="@*|node()" mode="content">
 		<xsl:copy>
             <xsl:apply-templates select="@*|node()" mode="content"/>
@@ -490,35 +500,33 @@
     </xsl:template>
 
    	<xsl:template match="section" mode="toc">
-		<xsl:if test="count(sections/section) &gt; 0">
+   		<xsl:for-each select=".//section">
 			<fo:block xsl:use-attribute-sets="ol-toc">
 				<fo:list-block>
-					<xsl:for-each select="sections/section">
-						<fo:list-item>
-			          		<fo:list-item-label>
-			          			<fo:block xsl:use-attribute-sets="li-toc">
-			            			<xsl:number format="1." />
-		            			</fo:block>
-			          		</fo:list-item-label>
-			          		<fo:list-item-body start-indent="body-start()">
-			          			<fo:block xsl:use-attribute-sets="li-toc">
-			          				<fo:block text-align-last="justify">
-				          				<fo:inline>
-				          					<fo:basic-link internal-destination="{@id}">
-						            			<xsl:value-of select="title" />
-						            			<fo:leader leader-pattern="dots"/>
-						            			<fo:page-number-citation ref-id="{@id}"/>
-					            			</fo:basic-link>
-				          				</fo:inline>
-			          				</fo:block>
-			            			<xsl:apply-templates select="." mode="toc"/>
-			            		</fo:block>
-			          		</fo:list-item-body>
-			        	</fo:list-item>
-					</xsl:for-each>
+					<fo:list-item>
+		          		<fo:list-item-label>
+		          			<fo:block xsl:use-attribute-sets="li-toc">
+	            			</fo:block>
+		          		</fo:list-item-label>
+		          		<fo:list-item-body>
+		          			<fo:block xsl:use-attribute-sets="li-toc">
+		          				<fo:block text-align-last="justify">
+			          				<fo:inline>
+			          					<fo:basic-link internal-destination="{@id}">
+					          				<xsl:apply-templates select="." mode="chapter-number"/>
+					          				<xsl:text>  </xsl:text>
+					            			<xsl:value-of select="title" />
+					            			<fo:leader leader-pattern="dots"/>
+					            			<fo:page-number-citation ref-id="{@id}"/>
+				            			</fo:basic-link>
+			          				</fo:inline>
+		          				</fo:block>
+		            		</fo:block>
+		          		</fo:list-item-body>
+		        	</fo:list-item>
 				</fo:list-block>
 			</fo:block>
-		</xsl:if>
+   		</xsl:for-each>
 	</xsl:template>
 
 	<xsl:template match="section" mode="chapter-number">

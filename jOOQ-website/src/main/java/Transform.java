@@ -117,6 +117,9 @@ public class Transform {
             @Override
             public void each(Context context) {
                 String content = $(context.element()).content();
+
+                // Work around a jOOX bug
+                content = content.replaceAll("^<content>((?s:.*))</content>$", "$1");
                 boolean changed = false;
 
                 if (content.contains("{jooq-version}")) {
@@ -223,7 +226,6 @@ public class Transform {
     }
 
     public static void pdf() throws Exception {
-        if (true) return;
 
         // XML -> FO
         // ---------------------------------------------------------------------
@@ -237,6 +239,7 @@ public class Transform {
 
         Match manual = $(isXML);
         replaceVariables(manual);
+        checkCodeBlockLengths(manual);
 
         File dir = new File(path("manual-pdf"));
         dir.mkdirs();
@@ -262,7 +265,8 @@ public class Transform {
 
         // Setup output stream.  Note: Using BufferedOutputStream
         // for performance reasons (helpful with FileOutputStreams).
-        out = new FileOutputStream(new File(dir, file("jOOQ-manual.pdf")));
+        File file = new File(dir, file("jOOQ-manual.pdf"));
+        out = new FileOutputStream(file);
         out = new BufferedOutputStream(out);
 
         // Construct fop with desired output format
@@ -286,6 +290,21 @@ public class Transform {
         // Open the PDF and check it
         Runtime.getRuntime().exec(new String[] {
                 "C:\\Program Files (x86)\\Adobe\\Reader 9.0\\Reader\\AcroRd32.exe",
-                file("C:\\Users\\lukas\\workspace\\jOOQ-website\\manual-pdf\\jOOQ-manual.pdf") });
+                file.getAbsolutePath() });
+    }
+
+    private static void checkCodeBlockLengths(Match manual) {
+        manual.xpath("//pre|//java|//sql|//text|//xml|//config").each(new Each() {
+            @Override
+            public void each(Context context) {
+                String content = $(context.element()).content();
+
+                for (String line : content.split("[\\r\\n]")) {
+                    if (line.length() > 128) {
+                        System.out.println("WARNING: Code block line length exceeds 128 characters : (" + line.length() + ") " + line);
+                    }
+                }
+            }
+        });
     }
 }

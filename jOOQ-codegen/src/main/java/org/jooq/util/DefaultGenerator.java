@@ -111,6 +111,7 @@ import org.jooq.util.GeneratorStrategy.Mode;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public class DefaultGenerator extends AbstractGenerator {
 
     private static final JooqLogger log   = JooqLogger.getLogger(DefaultGenerator.class);

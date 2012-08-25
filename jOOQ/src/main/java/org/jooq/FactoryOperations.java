@@ -1101,12 +1101,10 @@ public interface FactoryOperations extends Configuration {
      * This executes something like the following statement:
      * <code><pre>INSERT INTO [table] ... VALUES [record] </pre></code>
      * <p>
-     * Unlike {@link TableRecord#storeUsing(TableField...)} or
-     * {@link UpdatableRecord#store()}, this does not change any of the argument
-     * <code>record</code>'s internal "changed" flags, such that a subsequent
-     * call to {@link TableRecord#storeUsing(TableField...)} or
-     * {@link UpdatableRecord#store()} might lead to another <code>INSERT</code>
-     * statement being executed.
+     * Unlike {@link UpdatableRecord#store()}, this does not change any of the
+     * argument <code>record</code>'s internal "changed" flags, such that a
+     * subsequent call to {@link UpdatableRecord#store()} might lead to another
+     * <code>INSERT</code> statement being executed.
      *
      * @return The number of inserted records
      * @throws DataAccessException if something went wrong executing the query

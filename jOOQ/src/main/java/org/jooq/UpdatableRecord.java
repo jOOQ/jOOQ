@@ -196,7 +196,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * @throws DataAccessException if something went wrong executing the query
      * @throws DataChangedException If optimistic locking is enabled and the
      *             record has already been changed/deleted in the database
-     * @see #storeUsing(TableField...)
      */
     int store() throws DataAccessException, DataChangedException;
 
@@ -254,7 +253,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * @throws DataAccessException if something went wrong executing the query
      * @throws DataChangedException If optimistic locking is enabled and the
      *             record has already been changed/deleted in the database
-     * @see #deleteUsing(TableField...)
      */
     int delete() throws DataAccessException, DataChangedException;
 
@@ -274,7 +272,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      *             <li>something went wrong executing the query</li> <li>the
      *             record does not exist anymore in the database</li>
      *             </ul>
-     * @see #refreshUsing(TableField...)
      */
     void refresh() throws DataAccessException;
 

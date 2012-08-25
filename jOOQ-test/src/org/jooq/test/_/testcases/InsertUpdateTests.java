@@ -129,7 +129,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     /**
      * Extracted method for very similar tests with T_IDENTITY, T_IDENTITY_PK
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     private <R extends TableRecord<R>> void testInsertIdentity0(Table<R> table, TableField<R, Integer> id, TableField<R, Integer> val) throws Exception {
 
         // Plain insert
@@ -460,7 +460,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals("Hitchcock", author.getValue(TAuthor_LAST_NAME()));
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     @Test
     public void testInsertReturning() throws Exception {
         if (TTriggers() == null) {

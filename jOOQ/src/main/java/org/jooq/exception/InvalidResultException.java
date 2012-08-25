@@ -53,7 +53,6 @@ import org.jooq.UpdatableRecord;
  * {@link ResultQuery#fetchMap(org.jooq.Field)} and the database returns several
  * records per key.</li>
  * <li>When you refresh a {@link TableRecord} using
- * {@link TableRecord#refreshUsing(org.jooq.TableField...)}, or
  * {@link UpdatableRecord#refresh()}, and the record does not exist anymore in
  * the database.</li>
  * </ul>

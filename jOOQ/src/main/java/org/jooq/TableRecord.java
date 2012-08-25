@@ -171,7 +171,10 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * @throws DataAccessException if something went wrong executing the query
      * @throws DataChangedException If optimistic locking is enabled and the
      *             record has already been changed/deleted in the database
+     * @deprecated - 2.5.0 [#1736] - These methods will be made part of jOOQ's
+     *             internal API soon. Do not reuse these methods.
      */
+    @Deprecated
     int storeUsing(TableField<R, ?>... keys) throws DataAccessException, DataChangedException;
 
     /**
@@ -226,7 +229,10 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * @throws DataAccessException if something went wrong executing the query
      * @throws DataChangedException If optimistic locking is enabled and the
      *             record has already been changed/deleted in the database
+     * @deprecated - 2.5.0 [#1736] - These methods will be made part of jOOQ's
+     *             internal API soon. Do not reuse these methods.
      */
+    @Deprecated
     int deleteUsing(TableField<R, ?>... keys) throws DataAccessException, DataChangedException;
 
     /**
@@ -245,6 +251,9 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      *             record does not exist anymore in the database</li> <li>the
      *             provided keys return several records.</li>
      *             </ul>
+     * @deprecated - 2.5.0 [#1736] - These methods will be made part of jOOQ's
+     *             internal API soon. Do not reuse these methods.
      */
+    @Deprecated
     void refreshUsing(TableField<R, ?>... keys) throws DataAccessException;
 }

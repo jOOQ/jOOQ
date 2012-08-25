@@ -613,7 +613,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         if (v) assertEquals(v4a, book4.getValue(TBook_REC_VERSION()));
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     @Test
     public void testNonUpdatables() throws Exception {
         jOOQAbstractTest.reset = false;

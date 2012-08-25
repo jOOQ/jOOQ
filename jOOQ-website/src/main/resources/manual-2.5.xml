@@ -8066,12 +8066,95 @@ public class Book implements java.io.Serializable
 
 				    <section id="codegen-procedures">
 						<title>Generated procedures</title>
-						<content></content>
+						<content>
+							<h3>Generated procedures or functions</h3>
+							<p>
+								Every procedure or function (routine) in your database will generate a <reference class="org.jooq.Routine"/> implementation that looks like this:
+							</p>
+
+<java><![CDATA[public class AuthorExists extends AbstractRoutine<java.lang.Void> {
+
+    // All IN, IN OUT, OUT parameters and function return values generate a static member
+    public static final Parameter<String>     AUTHOR_NAME = createParameter("AUTHOR_NAME", SQLDataType.VARCHAR);
+    public static final Parameter<BigDecimal> RESULT      = createParameter("RESULT",      SQLDataType.NUMERIC);
+
+    // A constructor for a new "empty" procedure call
+    public AuthorExists() {
+        super("AUTHOR_EXISTS", TEST);
+
+        addInParameter(AUTHOR_NAME);
+        addOutParameter(RESULT);
+    }
+
+    // Every IN and IN OUT parameter generates a setter
+    public void setAuthorName(String value) {
+        setValue(AUTHOR_NAME, value);
+    }
+
+    // Every IN OUT, OUT and RETURN_VALUE generates a getter
+    public BigDecimal getResult() {
+        return getValue(RESULT);
+    }
+    
+    // [...]
+}]]></java>
+
+							<h3>Package and member procedures or functions</h3>
+							<p>
+								Procedures or functions contained in packages or UDTs are generated in a sub-package that corresponds to the package or UDT name.
+							</p>
+
+							<h3>Flags controlling routine generation</h3>
+							<p>
+								Routine generation cannot be deactivated
+							</p>
+						</content>
 					</section>
 
 				    <section id="codegen-udts">
 						<title>Generated UDTs</title>
-						<content></content>
+						<content>
+							<h3>Generated UDTs</h3>
+							<p>
+								Every UDT in your database will generate a <reference class="org.jooq.UDT"/> implementation that looks like this:
+							</p>
+						
+<java><![CDATA[public class AddressType extends UDTImpl<AddressTypeRecord> {
+
+    // The singleton UDT instance
+    public static final UAddressType U_ADDRESS_TYPE = new UAddressType();
+
+    // Every UDT attribute generates a static member
+    public static final UDTField<AddressTypeRecord, String> ZIP     = createField("ZIP",     SQLDataType.VARCHAR, U_ADDRESS_TYPE);
+    public static final UDTField<AddressTypeRecord, String> CITY    = createField("CITY",    SQLDataType.VARCHAR, U_ADDRESS_TYPE);
+    public static final UDTField<AddressTypeRecord, String> COUNTRY = createField("COUNTRY", SQLDataType.VARCHAR, U_ADDRESS_TYPE);
+    
+    // [...]
+}]]></java>						
+										
+							<p>
+								Besides the <reference class="org.jooq.UDT"/> implementation, a <reference class="org.jooq.UDTRecord"/> implementation is also generated
+							</p>		
+
+<java><![CDATA[public class AddressTypeRecord extends UDTRecordImpl<AddressTypeRecord> {
+
+    // Every attribute generates a getter and a setter
+
+    public void setZip(String value) {...}
+    public String getZip() {...}
+    public void setCity(String value) {...}
+    public String getCity() {...}
+    public void setCountry(String value) {...}
+    public String getCountry() {...}
+    
+    // [...]
+}]]></java>						
+
+							<h3>Flags controlling UDT generation</h3>
+							<p>
+								UDT generation cannot be deactivated
+							</p>
+						</content>
 					</section>
 
 				    <section id="master-data-types">
@@ -8268,36 +8351,163 @@ create.selectFrom(AUTHOR)
 
 			<section id="tools">
 				<title>Tools</title>
-				<content></content>
+				<content>
+					<h3>Tools used with jOOQ</h3>
+					<p>
+						These chapters hold some information about tools to be used with jOOQ
+					</p>
+				</content>
 
 				<sections>
 					<section id="jooq-console">
 						<title>jOOQ Console</title>
-						<content></content>
+						<content>
+   							<h3>jOOQ Console</h3>
+							<p>
+							    The <reference id="execute-listeners" title="ExecuteListener API"/> was driven by a feature request by Christopher Deckers, who has had the courtesy to contribute the jOOQ Console, a sample application interfacing with jOOQ's ExecuteListeners. The jOOQ Console logs all queries executed by jOOQ and displays them nicely in a Swing application. With the jOOQ Console's logger, you can:
+						    </p>
+						    <ul>
+						    	<li>Activate the console's DebugListener anytime (in-process or if the remote server is active).</li>
+						    	<li>View simple and batch queries and their parameters.</li>
+						    	<li>Reformat queries along with syntax highlighting for better readability.</li>
+						    	<li>View stack trace of originator of the call.</li>
+						    	<li>Dump the stack to stdout when in an IDE, to directly navigate to relevant classes.</li>
+						    	<li>Track execution time, binding time, parsing time, rows read, fields read.</li>
+						    	<li>Show/hide queries depending on their type (SELECT, UPDATE, etc.).</li>
+						    	<li>Sort any column (timing columns, queries, types, etc.)</li>
+						    	<li>Easy copy paste of rows/columns to Spreadsheet editors.</li>
+						    </ul>
 
-						<sections>
-							<section id="jooq-console-logger">
-								<title>Logger</title>
-								<content></content>
-							</section>
+						    <p>
+						    	A short overview of such a debugging session can be seen here:
+						    </p>
+   							<div class="screenshot">
+								<img class="screenshot" src="&lt;?=$root?&gt;/img/jooq-console-01.png" alt="jOOQ Console example"/>
+							</div>
+						    <p>
+							    Please note that the jOOQ Console is still experimental. Any feedback is very welcome on <br/>
+							    <a href="http://groups.google.com/group/jooq-user" title="the jooq-user group">the jooq-user group</a>
+							</p>
 
-							<section id="jooq-console-debugger">
-								<title>Debugger</title>
-								<content></content>
-							</section>
+							<h3>jOOQ Console operation modes</h3>
+							<p>
+								The jOOQ Console can be run in two different modes:
+							</p>
+							<ul>
+								<li>In-process mode: running in the same process as the queries you're analysing</li>
+								<li>"headless" mode: running remotely</li>
+							</ul>
 
-							<section id="jooq-console-editor">
-								<title>Editor</title>
-								<content></content>
-							</section>
-						</sections>
+							<p>
+								Both modes will require that you set the <reference class="org.jooq.debug.DebugListener"/> in the Factory's settings. When using XML settings:
+							</p>
+
+<xml><![CDATA[<settings>
+  <executeListeners>
+    <executeListener>org.jooq.debug.DebugListener</executeListener>
+  </executeListeners>
+</settings>]]></xml>
+
+							<p>
+								Or when using programmatic settings:
+							</p>
+							
+<java><![CDATA[Settings settings = new Settings()
+    .getExecuteListeners().add("org.jooq.debug.DebugListener");
+Factory factory = new Factory(connection, dialect, settings);]]></java>
+
+							<h3>In-process mode</h3>
+							<p>
+								The in-process mode is useful for Swing applications or other, locally run Java programs accessing the database via jOOQ. In order to launch the jOOQ Console "in-process", specify the previously documented settings and launch the Console as follows:
+							</p>
+
+<java><![CDATA[// Define a DatabaseDescriptor for the "in-process" mode
+// It is needed for the "Editor" tab
+DatabaseDescriptor descriptor = new DatabaseDescriptor() {
+
+    // Return your generated schema. This is used by the console
+    // to introspect your schema data
+    @Override
+    public Schema getSchema() {
+        return com.example.MySchema.MY_SCHEMA;
+    }
+
+    // Return the SQL dialect that you're using
+    @Override
+    public SQLDialect getSQLDialect() {
+        return SQLDialect.ORACLE;
+    }
+
+    // Return a connection
+    @Override
+    public Connection createConnection() {
+        try {
+            return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "test", "test");
+        }
+        catch (Exception ignore) {}
+    }
+};
+
+// Now pass this database descriptor to the Console and make it visible
+try {
+
+    // Use this for a nicer look-and-feel
+    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+    // Create a new Console
+    Console console = new Console(descriptor, true);
+    console.setLoggingActive(true);
+    console.setVisible(true);
+}
+catch (Exception ignore) {}
+]]></java>
+
+							<p>
+								Only in the in-process mode, you can execute ad-hoc queries directly from the console, if you provide it with proper DatabaseDescriptor. These queries are executed from the Editor pane which features:
+							</p>
+							<ul>
+								<li>SQL editing within the console.</li>
+								<li>Incremental search on tables.</li>
+								<li>Simple code completion with tables/columns/SQL keywords.</li>
+								<li>Syntax highlighting and formatting capabilities.</li>
+								<li>Results shown in one or several tabs.</li>
+								<li>Easy analysis of Logger output by copy/pasting/running queries in the Editor.</li>
+							</ul>
+   							<div class="screenshot">
+								<img class="screenshot" src="&lt;?=$root?&gt;/img/jooq-console-02.png" alt="jOOQ Console example"/>
+							</div>
+
+                            <h3>"Headless" mode</h3>
+							<p>
+								In J2EE or other server/client environments, you may not be able to run the console in the same process as your application. You can then run the jOOQ Console in "headless" mode. In addition to the previously documented settings, you'll have to start a debugger server in your application process, that the console can connect to:
+							</p>
+
+<java>// Create a new RemoteDebuggerServer in your application that listens to
+// incoming connections on a given port
+SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
+
+							<p>
+								Now start your application along with the debugger server and launch the console with this command:
+							</p>
+
+<config>java -jar jooq-console-2.1.0.jar [host] [port]</config>
+
+							<p>
+								Depending on your distribution, you may have to manually add rsyntaxtextarea-1.5.0.jar and jOOQ artefacts on your classpath.
+							</p>
+						</content>
 					</section>
 				</sections>
 			</section>
 
 			<section id="reference">
 				<title>Reference</title>
-				<content></content>
+				<content>
+					<h3>General jOOQ reference</h3>
+					<p>
+						These chapters hold some general jOOQ reference information
+					</p>
+				</content>
 
 				<sections>
 					<section id="supported-rdbms">

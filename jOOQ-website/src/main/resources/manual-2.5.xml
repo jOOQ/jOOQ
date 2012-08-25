@@ -7796,7 +7796,110 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 
 				    <section id="master-data-types">
 						<title>Master data and enumeration tables</title>
-						<content></content>
+						<content>
+							<h3>Enumeration tables</h3>
+							<p>
+								Only MySQL and Postgres databases support true ENUM types natively. Some other RDBMS allow you to map the concept of an ENUM data type to a CHECK constraint, but those constraints can contain arbitrary SQL. With jOOQ, you can "simulate" ENUM types by declaring a table as a "master data table" in the configuration. At code-generation time, this table will be treated specially, and a Java enum type is generated from its data.
+							</p>
+
+							<h3>Configure master data tables</h3>
+							<p>
+								As previously discussed, you can configure master data tables as follows:
+							</p>
+							
+<xml><![CDATA[<!-- These properties can be added to the database element: -->
+<database>
+  <masterDataTables>
+    <masterDataTable>
+      <!-- The name of a master data table -->
+      <name>[a table name]</name>
+
+      <!-- The column used for enum literals -->
+      <literal>[a column name]</literal>
+
+      <!-- The column used for documentation -->
+      <description>[a column name]</description>
+    </masterDataTable>
+
+    [ <masterDataTable>...</masterDataTable> ... ]
+  </masterDataTables>
+ </database>]]></xml>
+
+							<p>
+								The results of this will be a Java enum that looks similar to this:
+							</p>
+							
+<java><![CDATA[public enum TLanguage implements MasterDataType<Integer> {
+
+  /**
+   * English
+   */
+  en(1, "en", "English"),
+
+  /**
+   * Deutsch
+   */
+  de(2, "de", "Deutsch"),
+
+  /**
+   * Français
+   */
+  fr(3, "fr", "Français"),
+
+  /**
+   * null
+   */
+  pt(4, "pt", null),
+  ;
+
+  private final Integer id;
+  private final String cd;
+  private final String description;
+
+  // [ ... constructor and getters for the above properties ]
+}]]></java>
+
+							<p>
+								In the above example, you can see how the configured primary key is mapped to the id member, the configured literal column is mapped to the cd member and the configured description member is mapped to the description member and output as Javadoc. In other words, T_LANGUAGE is a table with 4 rows and at least three columns.
+							</p>
+							
+							<p>
+								The general contract is that there must be
+							</p>
+							<ul>
+								<li>A single-column primary key column of character or integer type</li>
+								<li>An optional unique literal column of character or integer type (otherwise, the primary key is used as enum literal) </li>
+								<li>An optional description column of any type </li>
+							</ul>
+
+							<h3>Using MasterDataTypes</h3>
+							<p>
+								The point of MasterDataTypes in jOOQ is that they behave exactly like true ENUM types. When the above T_LANGUAGE table is referenced by T_BOOK, instead of generating foreign key navigation methods and a LANGUAGE_ID Field&lt;Integer&gt;, a Field&lt;TLanguage&gt; is generated:
+							</p>
+
+<java><![CDATA[public class TBook extends UpdatableTableImpl<TBookRecord> {
+
+  // [...]
+  public static final TableField<TBookRecord, TLanguage> LANGUAGE_ID =
+                  new TableFieldImpl<TBookRecord, TLanguage>( /* ... */ );
+}]]></java>
+
+							<p>
+								Which can then be used in the TBookRecord directly:
+							</p>
+							
+<java><![CDATA[public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
+
+  // [...]
+  public TLanguage getLanguageId() { // [...]
+  public void setLanguageId(TLanguage value) { // [...]
+}]]></java>
+
+							<h3>When to use MasterDataTypes</h3>
+							<p>
+								You can use master data types when you're actually mapping master data to a Java enum. When the underlying table changes frequently, those updates will not be reflected by the statically generated code. Also, be aware that it will be difficult to perform actual JOIN operations on the underlying table with jOOQ, once the master data type is generated.
+							</p>
+						</content>
 					</section>
 
 				    <section id="custom-data-types">

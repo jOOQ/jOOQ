@@ -108,6 +108,7 @@ import org.jooq.util.sybase.SybaseDataType;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public final class FieldTypeHelper {
 
     private static final int        LONG_PRECISION    = String.valueOf(Long.MAX_VALUE).length();

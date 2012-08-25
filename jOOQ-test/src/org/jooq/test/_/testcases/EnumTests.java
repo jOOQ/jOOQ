@@ -43,7 +43,6 @@ import java.util.List;
 
 import org.jooq.EnumType;
 import org.jooq.Field;
-import org.jooq.MasterDataType;
 import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -249,7 +248,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
     @Test
     public void testMasterData() throws Exception {
         if (!supportsReferences()) {
@@ -262,7 +261,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         B book = create().fetchOne(TBook(), TBook_TITLE().equal("1984"));
 
         Enum<?> value = (Enum<?>) book.getValue(TBook_LANGUAGE_ID());
-        assertEquals(Integer.valueOf(1), ((MasterDataType<?>) value).getPrimaryKey());
+        assertEquals(Integer.valueOf(1), ((org.jooq.MasterDataType<?>) value).getPrimaryKey());
         assertEquals("en", value.name());
 
         book.setValue((Field) TBook_LANGUAGE_ID(), Enum.valueOf(value.getClass(), "de"));
@@ -270,7 +269,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         book = create().fetchOne(TBook(), TBook_TITLE().equal("1984"));
         value = (Enum<?>) book.getValue(TBook_LANGUAGE_ID());
-        assertEquals(Integer.valueOf(2), ((MasterDataType<?>) value).getPrimaryKey());
+        assertEquals(Integer.valueOf(2), ((org.jooq.MasterDataType<?>) value).getPrimaryKey());
         assertEquals("de", value.name());
 
         // [#658] - General master data test

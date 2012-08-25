@@ -94,6 +94,7 @@ public abstract class AbstractDatabase implements Database {
     private List<SchemaDefinition>          schemata;
     private List<SequenceDefinition>        sequences;
     private List<TableDefinition>           tables;
+    @SuppressWarnings("deprecation")
     private List<MasterDataTableDefinition> masterDataTables;
     private List<EnumDefinition>            enums;
     private List<UDTDefinition>             udts;
@@ -385,6 +386,7 @@ public abstract class AbstractDatabase implements Database {
         return result;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final List<MasterDataTableDefinition> getMasterDataTables(SchemaDefinition schema) {
         if (masterDataTables == null) {
@@ -403,11 +405,13 @@ public abstract class AbstractDatabase implements Database {
         return filterSchema(masterDataTables, schema);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name) {
         return getMasterDataTable(schema, name, false);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name, boolean ignoreCase) {
         return getDefinition(getMasterDataTables(schema), name, ignoreCase);
@@ -648,6 +652,7 @@ public abstract class AbstractDatabase implements Database {
                     // If we have a match, then add the table only if master
                     // data tables are included in the result
                     if (include) {
+                        log.info("DEPRECATION", "Master data tables have been deprecated in jOOQ 2.5.0 and will be removed in jOOQ 3.0. Do not reuse this feature");
                         result.add((T) new DefaultMasterDataTableDefinition(definition));
                     }
 

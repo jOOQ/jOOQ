@@ -42,7 +42,9 @@ import org.jooq.Result;
  * A definition for a master data table
  *
  * @author Lukas Eder
+ * @deprecated - 2.5.0 [#1741] - This feature will be removed as of jOOQ 3.0
  */
+@Deprecated
 public interface MasterDataTableDefinition extends TableDefinition {
 
     /**

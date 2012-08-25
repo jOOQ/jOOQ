@@ -181,6 +181,7 @@ implements
                         join = join.and(condition(pivot, field));
                     }
 
+                    @SuppressWarnings("unchecked")
                     Select<?> aggregateSelect = create(context)
                         .select(aggregateFunction)
                         .from(table)

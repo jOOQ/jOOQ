@@ -7689,8 +7689,8 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 <generate>
   <!-- Primary key / foreign key relations should be generated and used.
        This is a prerequisite for various advanced features.
-       Defaults to false -->
-  <relations>false</relations>
+       Defaults to true -->
+  <relations>true</relations>
 
   <!-- Generate navigation methods to navigate foreign key relationships
        directly from Record classes. This is only relevant if relations
@@ -7751,37 +7751,317 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 
 				    <section id="codegen-globals">
 						<title>Generated global artefacts</title>
-						<content></content>
+						<content>
+							<h3>Generated global artefacts</h3>
+							<p>
+								For increased convenience at the use-site, jOOQ generates "global" artefacts at the code generation root location, referencing tables, routines, sequences, etc. In detail, these global artefacts include the following:
+							</p>
+							<ul>
+								<li><strong>Keys.java</strong>: This file contains all of the required primary key, unique key, foreign key and identity references in the form of static members of type <reference class="org.jooq.Key"/>.</li>
+								<li><strong>Routines.java</strong>: This file contains all standalone routines (not in packages) in the form of static factory methods for <reference class="org.jooq.Routine"/> types.</li>
+								<li><strong>Sequences.java</strong>: This file contains all sequence objects in the form of static members of type <reference class="org.jooq.Sequence"/>.</li>
+								<li><strong>Tables.java</strong>: This file contains all table objects in the form of static member references to the actual singleton <reference class="org.jooq.Table"/> object</li>
+								<li><strong>UDTs.java</strong>: This file contains all UDT objects in the form of static member references to the actual singleton <reference class="org.jooq.UDT"/> object</li>
+							</ul>
+							
+							<h3>Referencing global artefacts</h3>
+							<p>
+								When referencing global artefacts from your client application, you would typically static import them as such:
+							</p>
+							
+<java><![CDATA[// Static imports for all global artefacts
+import static com.example.generated.Routines.*;
+import static com.example.generated.Sequences.*;
+import static com.example.generated.Tables.*;
+
+// You could then reference your artefacts as follows:
+create.insertInto(MY_TABLE)
+      .values(MY_SEQUENCE.nextval(), myFunction())
+      
+// as a more concise form of this:
+create.insertInto(com.example.generated.Tables.MY_TABLE)
+      .values(com.example.generated.Sequences.MY_SEQUENCE.nextval(), com.example.generated.Routines.myFunction())]]></java>
+						</content>
 					</section>
 
 				    <section id="codegen-tables">
 						<title>Generated tables</title>
-						<content></content>
+						<content>
+							<h3>Generated table meta information</h3>
+							<p>
+								Every table in your database will generate a <reference class="org.jooq.Table"/> implementation that looks like this:
+							</p>
+							
+<java><![CDATA[public class Book extends UpdatableTableImpl<BookRecord> {
+
+    // The singleton instance
+    public static final Book BOOK = new Book();
+
+    // Generated columns
+    public final TableField<BookRecord, Integer> ID        = createField("ID",        SQLDataType.INTEGER, this);
+    public final TableField<BookRecord, Integer> AUTHOR_ID = createField("AUTHOR_ID", SQLDataType.INTEGER, this);
+    public final TableField<BookRecord, String>  ITLE      = createField("TITLE",     SQLDataType.VARCHAR, this);
+
+    // Covariant aliasing method, returning a table of the same type as BOOK
+    @Override
+    public Book as(java.lang.String alias) {
+        return new Book(alias);
+    }
+    
+    // [...]
+}]]></java>
+
+							<h3>Flags influencing generated tables</h3>
+							<p>
+								These flags from the <reference id="codegen-advanced" title="code generation configuration"/> influence generated tables:
+							</p>
+							<ul>
+								<li><strong>recordVersionFields</strong>: Relevant methods from super classes are overridden to return the VERSION field</li>
+								<li><strong>recordTimestampFields</strong>: Relevant methods from super classes are overridden to return the TIMESTAMP field</li>
+								<li><strong>dateAsTimestamp</strong>: This influences all relevant columns</li>
+								<li><strong>unsignedTypes</strong>: This influences all relevant columns</li>
+								<li><strong>relations</strong>: Relevant methods from super classes are overridden to provide primary key, unique key, foreign key and identity information</li>
+								<li><strong>instanceFields</strong>: This flag controls the "static" keyword on table columns, as well as aliasing convenience</li>
+								<li><strong>records</strong>: The generated record type is referenced from tables allowing for type-safe single-table record fetching</li>
+							</ul>
+							
+							<h3>Flags controlling table generation</h3>
+							<p>
+								Table generation cannot be deactivated
+							</p>
+						</content>
 					</section>
 
 				    <section id="codegen-records">
 						<title>Generated records</title>
-						<content></content>
+						<content>
+							<h3>Generated table records</h3>
+							<p>
+								Every table in your database will generate a <reference class="org.jooq.Table"/> implementation that looks like this:
+							</p>
+							
+<java><![CDATA[// JPA annotations can be generated, optionally
+@Entity
+@Table(name = "BOOK", schema = "TEST")
+public class BookRecord extends UpdatableRecordImpl<BookRecord> 
+
+// An interface common to records and pojos can be generated, optionally
+implements IBook {
+
+    // Every column generates a setter and a getter
+    @Override
+    public void setId(Integer value) {
+        setValue(BOOK.ID, value);
+    }
+    
+    @Id
+    @Column(name = "ID", unique = true, nullable = false, precision = 7)
+    @Override
+    public Integer getId() {
+        return getValue(BOOK.ID);
+    }
+    
+    // More setters and getters
+    public void setAuthorId(Integer value) {...}
+    public Integer getAuthorId() {...}
+    
+    // Convenience methods for foreign key methods
+    public void setAuthorId(AuthorRecord value) {
+        if (value == null) {
+            setValue(BOOK.AUTHOR_ID, null);
+        }
+        else {
+            setValue(BOOK.AUTHOR_ID, value.getValue(AUTHOR.ID));
+        }
+    }
+    
+    // Navigation methods
+    public AuthorRecord fetchAuthor() {
+        return create().selectFrom(AUTHOR).where(AUTHOR.ID.equal(getValue(BOOK.AUTHOR_ID))).fetchOne();
+    }
+    
+    // [...]
+}]]></java>							
+							
+							<h3>Flags influencing generated records</h3>
+							<p>
+								These flags from the <reference id="codegen-advanced" title="code generation configuration"/> influence generated records:
+							</p>
+							<ul>
+								<li><strong>dateAsTimestamp</strong>: This influences all relevant getters and setters</li>
+								<li><strong>unsignedTypes</strong>: This influences all relevant getters and setters</li>
+								<li><strong>relations</strong>: This is needed as a prerequisite for navigation methods</li>
+								<li><strong>navigationMethods</strong>: This controls whether navigation methods will be generated or not</li>
+								<li><strong>daos</strong>: Records are a pre-requisite for DAOs. If DAOs are generated, records are generated as well</li>
+								<li><strong>interfaces</strong>: If interfaces are generated, records will implement them</li>
+								<li><strong>jpaAnnotations</strong>: JPA annotations are used on generated records</li>
+							</ul>
+														
+							<h3>Flags controlling record generation</h3>
+							<p>
+								Record generation can be deactivated using the <strong>records</strong> flag
+							</p>
+						</content>
 					</section>
 
 				    <section id="codegen-pojos">
 						<title>Generated POJOs</title>
-						<content></content>
+						<content>
+							<h3>Generated POJOs</h3>
+							<p>
+								Every table in your database will generate a POJO implementation that looks like this:
+							</p>
+							
+<java><![CDATA[// JPA annotations can be generated, optionally
+@javax.persistence.Entity
+@javax.persistence.Table(name = "BOOK", schema = "TEST")
+public class Book implements java.io.Serializable
+
+// An interface common to records and pojos can be generated, optionally
+, IBook {
+
+    // JSR-303 annotations can be generated, optionally
+    @NotNull
+    private Integer id;
+
+    @NotNull
+    private Integer authorId;
+
+    @NotNull
+    @Size(max = 400)
+    private String title;
+
+    // Every column generates a getter and a setter
+    @Id
+    @Column(name = "ID", unique = true, nullable = false, precision = 7)
+    @Override
+    public Integer getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
+    // [...]
+}]]></java>							
+							
+							<h3>Flags influencing generated POJOs</h3>
+							<p>
+								These flags from the <reference id="codegen-advanced" title="code generation configuration"/> influence generated POJOs:
+							</p>
+							<ul>
+								<li><strong>dateAsTimestamp</strong>: This influences all relevant getters and setters</li>
+								<li><strong>unsignedTypes</strong>: This influences all relevant getters and setters</li>
+								<li><strong>interfaces</strong>: If interfaces are generated, POJOs will implement them</li>
+								<li><strong>immutablePojos</strong>: Immutable POJOs have final members and no setters. All members must be passed to the constructor</li>
+								<li><strong>daos</strong>: POJOs are a pre-requisite for DAOs. If DAOs are generated, POJOs are generated as well</li>
+								<li><strong>jpaAnnotations</strong>: JPA annotations are used on generated records</li>
+								<li><strong>validationAnnotations</strong>: JSR-303 validation annotations are used on generated records</li>
+							</ul>
+														
+							<h3>Flags controlling POJO generation</h3>
+							<p>
+								POJO generation can be activated using the <strong>pojos</strong> flag
+							</p>
+						</content>
 					</section>
 
 				    <section id="codegen-interfaces">
 						<title>Generated Interfaces</title>
-						<content></content>
+						<content>
+							<h3>Generated Interfaces</h3>
+							<p>
+								Every table in your database will generate an interface that looks like this:
+							</p>
+							
+<java><![CDATA[public interface IBook extends java.io.Serializable {
+
+    // Every column generates a getter and a setter
+    public void setId(Integer value);
+    public Integer getId();
+    
+    // [...]
+}]]></java>    						
+							
+							<h3>Flags influencing generated interfaces</h3>
+							<p>
+								These flags from the <reference id="codegen-advanced" title="code generation configuration"/> influence generated interfaces:
+							</p>
+							<ul>
+								<li><strong>dateAsTimestamp</strong>: This influences all relevant getters and setters</li>
+								<li><strong>unsignedTypes</strong>: This influences all relevant getters and setters</li>
+							</ul>
+														
+							<h3>Flags controlling POJO generation</h3>
+							<p>
+								POJO generation can be activated using the <strong>interfaces</strong> flag
+							</p>
+						</content>
 					</section>
 
 				    <section id="codegen-daos">
-						<title>Generated POJOs</title>
-						<content></content>
+						<title>Generated DAOs</title>
+						<content>
+							<h3>Generated DAOs</h3>
+							<p>
+								Every table in your database will generate a <reference class="org.jooq.DAO"/> implementation that looks like this:
+							</p>
+							
+<java><![CDATA[public class BookDao extends DAOImpl<BookRecord, Book, Integer> {
+
+    // Generated constructors
+    public BookDao() {
+        super(BOOK, Book.class);
+    }
+
+    public BookDao(Factory factory) {
+        super(BOOK, Book.class, factory);
+    }
+
+    // Every column generates at least one fetch method
+    public List<Book> fetchById(Integer... values) {
+        return fetch(BOOK.ID, values);
+    }
+
+    public Book fetchOneById(Integer value) {
+        return fetchOne(BOOK.ID, value);
+    }
+
+    public List<Book> fetchByAuthorId(Integer... values) {
+        return fetch(BOOK.AUTHOR_ID, values);
+    }
+    
+    // [...]
+}]]></java>							
+							
+							<h3>Flags controlling DAO generation</h3>
+							<p>
+								DAO generation can be activated using the <strong>daos</strong> flag
+							</p>
+						</content>
 					</section>
 
 				    <section id="codegen-sequences">
 						<title>Generated sequences</title>
-						<content></content>
+						<content>
+							<h3>Generated sequences</h3>
+							<p>
+								Every sequence in your database will generate a <reference class="org.jooq.Sequence"/> implementation that looks like this:
+							</p>
+							
+<java><![CDATA[public final class Sequences {
+
+    // Every sequence generates a member
+    public static final Sequence<Integer> S_AUTHOR_ID = new SequenceImpl<Integer>("S_AUTHOR_ID", TEST, SQLDataType.INTEGER);
+}]]></java>		
+							
+							<h3>Flags controlling sequence generation</h3>
+							<p>
+								Sequence generation cannot be deactivated
+							</p>
+						</content>
 					</section>
 
 				    <section id="codegen-procedures">
@@ -7832,7 +8112,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 								The results of this will be a Java enum that looks similar to this:
 							</p>
 							
-<java><![CDATA[public enum TLanguage implements MasterDataType<Integer> {
+<java><![CDATA[public enum Language implements MasterDataType<Integer> {
 
   /**
    * English
@@ -7880,22 +8160,22 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 								The point of MasterDataTypes in jOOQ is that they behave exactly like true ENUM types. When the above T_LANGUAGE table is referenced by T_BOOK, instead of generating foreign key navigation methods and a LANGUAGE_ID Field&lt;Integer&gt;, a Field&lt;TLanguage&gt; is generated:
 							</p>
 
-<java><![CDATA[public class TBook extends UpdatableTableImpl<TBookRecord> {
+<java><![CDATA[public class Book extends UpdatableTableImpl<BookRecord> {
 
   // [...]
-  public static final TableField<TBookRecord, TLanguage> LANGUAGE_ID =
-                  new TableFieldImpl<TBookRecord, TLanguage>( /* ... */ );
+  public static final TableField<BookRecord, Language> LANGUAGE_ID =
+                  new TableFieldImpl<BookRecord, Language>( /* ... */ );
 }]]></java>
 
 							<p>
-								Which can then be used in the TBookRecord directly:
+								Which can then be used in the BookRecord directly:
 							</p>
 							
-<java><![CDATA[public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
+<java><![CDATA[public class BookRecord extends UpdatableRecordImpl<BookRecord> {
 
   // [...]
-  public TLanguage getLanguageId() { // [...]
-  public void setLanguageId(TLanguage value) { // [...]
+  public Language getLanguageId() { // [...]
+  public void setLanguageId(Language value) { // [...]
 }]]></java>
 
 							<h3>When to use MasterDataTypes</h3>

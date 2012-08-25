@@ -2730,7 +2730,36 @@ ORDER BY BOOK.TITLE]]></sql>
 
 							<section id="aliased-columns">
 								<title>Aliased columns</title>
-								<content></content>
+								<content>
+									<h3>Aliased columns</h3>
+									<p>
+										Just like <reference id="aliased-tables" title="tables"/>, columns can be renamed using aliases. Here is an example:
+									</p>
+									
+<sql>  SELECT FIRST_NAME || ' ' || LAST_NAME author, COUNT(*) books
+    FROM AUTHOR
+    JOIN BOOK ON AUTHOR.ID = AUTHOR_ID
+GROUP BY FIRST_NAME, LAST_NAME;</sql>
+
+									<p>
+										Here is how it's done with jOOQ:
+									</p>
+									
+<java>Record record = create.select(
+         concat(AUTHOR.FIRST_NAME, " ", AUTHOR.LAST_NAME).as("author"),
+         count().as("books"))
+      .from(AUTHOR)
+      .join(BOOK).on(AUTHOR.ID.equal(BOOK.AUTHOR_ID))
+      .groupBy(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME).fetchAny();</java>
+      
+      								<p>
+      									When you alias Fields like above, you can access those Fields' values using the alias name:
+  									</p>
+  									
+<java>System.out.println("Author : " + record.getValue("author"));
+System.out.println("Books  : " + record.getValue("books"));</java>
+									
+								</content>
 							</section>
 
 							<section id="cast-expressions">
@@ -7676,7 +7705,63 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 						<title>Supported RDBMS</title>
 						<content>
 							<h3>A list of supported databases</h3>
+							<p>
+						   		Every RDMBS out there has its own little specialties. jOOQ considers those specialties as much as possible, while trying to standardise the behaviour in jOOQ. In order to increase the quality of jOOQ, some 70 unit tests are run for syntax and variable binding verification, as well as some 180 integration tests with an overall of around 1200 queries for any of these databases:
+					   		</p>
+							<ul>
+							    <li>CUBRID 8.4.1</li>
+							    <li>DB2 9.7</li>
+							    <li>Derby 10.8</li>
+							    <li>Firebird 2.5.1</li>
+							    <li>H2 1.3.161</li>
+							    <li>HSQLDB 2.2.5</li>
+							    <li>Ingres 10.1.0</li>
+							    <li>MySQL 5.1.41 and 5.5.8</li>
+							    <li>Oracle XE 10.2.0.1.0 and 11g</li>
+							    <li>PostgreSQL 9.0</li>
+							    <li>SQLite with inofficial JDBC driver v056</li>
+							    <li>SQL Server 2008 R8</li>
+							    <li>Sybase Adaptive Server Enterprise 15.5</li>
+							    <li>Sybase SQL Anywhere 12</li>
+							</ul>
+							<p>
+								These platforms have been observed to work as well, but are not integration-tested
+							</p>
+							<ul>
+								<li>Google Cloud SQL (MySQL)</li>
+							</ul>
+								
+							<h3>Databases planned for support</h3>
+							<p>
+								Any of the following databases might be available in the future
+							</p>
+						    <ul>
+							    <li>Informix</li>
+							    <li>Interbase</li>
+							    <li>MS Access</li>
+							    <li>MS Excel</li>
+							    <li>SQL Azure</li>
+							    <li>Sybase SQL Anywhere OnDemand</li>
+							    <li>Teradata</li>
+						    </ul>
+						    
+							<h3>Databases being watched</h3>
+							<p>
+								Any of the following databases are being observed for a potential integration
+							</p>
+							<ul>
+								<li>Mondrian</li>
+								<li>Netezza</li>
+								<li>SQLFire</li>
+								<li>Vectorwise</li>
+								<li>Vertica</li>
+								<li>VoltDB</li>
+							</ul>
+
 							<h3>Feature matrix</h3>
+							<p>
+								This section will soon contain a feature matrix, documenting what feature is available for which database.
+							</p>
 						</content>
 					</section>
 
@@ -7785,17 +7870,44 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 							
 							<section id="data-types-cursors">
 								<title>CURSOR data types</title>
-								<content></content>
+								<content>
+									<h3>CURSOR data types</h3>
+									<p>
+										Some databases support cursors returned from stored procedures. They are mapped to the following jOOQ data type:
+									</p>
+
+<java><![CDATA[Field<Result<Record>> cursor;]]></java>
+									
+									<p>
+										In fact, such a cursor will be fetched immediately by jOOQ and wrapped in an <reference class="org.jooq.Result"/> object.
+									</p>
+								</content>
 							</section>
 							
 							<section id="data-types-arrays">
 								<title>ARRAY and TABLE data types</title>
-								<content></content>
-							</section>
-							
-							<section id="data-types-udts">
-								<title>User-defined data types</title>
-								<content></content>
+								<content>
+									<h3>ARRAY and TABLE data types</h3>
+									<p>
+										The SQL standard specifies ARRAY data types, that can be mapped to Java arrays as such:
+									</p>
+									
+<java><![CDATA[Field<Integer[]> intArray;]]></java>
+										
+									<p>
+										The above array type is supported by these SQL dialects:
+									</p>
+									<ul>
+										<li>H2</li>
+										<li>HSQLDB</li>
+										<li>Postgres</li>
+									</ul>
+									
+									<h3>Oracle typed arrays</h3>
+									<p>
+										Oracle has strongly-typed arrays and table types (as opposed to the previously seen anonymously typed arrays). These arrays are wrapped by <reference class="org.jooq.ArrayRecord"/> types.
+									</p>
+								</content>
 							</section>
 						</sections>
 					</section>

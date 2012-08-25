@@ -121,12 +121,13 @@ create.select(FIRST_NAME, LAST_NAME, count())
     jOOQ considers those specialties as much as possible, while trying to
     standardise the behaviour in jOOQ. In order to increase the quality of jOOQ,
     some 70 unit tests are run for syntax and variable binding verification,
-    as well as some 130 integration tests with an overall of around 900 queries for any
+    as well as some 180 integration tests with an overall of around 1200 queries for any
     of these databases:</p>
 <ul>
     <li>CUBRID 8.4.1</li>
     <li>DB2 9.7</li>
     <li>Derby 10.8</li>
+    <li>Firebird 2.5.1</li>
     <li>H2 1.3.161</li>
     <li>HSQLDB 2.2.5</li>
     <li>Ingres 10.1.0</li>
@@ -146,7 +147,6 @@ create.select(FIRST_NAME, LAST_NAME, count())
 <h3>Planned (Contributions and suggestions are very welcome!)</h3>
     <ul>
     <li>Access</li>
-    <li>Firebird</li>
     <li>Informix</li>
     <li>Interbase</li>
     <li>SQL Azure</li>

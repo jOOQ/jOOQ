@@ -62,7 +62,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-public class IsDistinctFrom<T> extends AbstractCondition {
+class IsDistinctFrom<T> extends AbstractCondition {
 
     /**
      * Generated UID

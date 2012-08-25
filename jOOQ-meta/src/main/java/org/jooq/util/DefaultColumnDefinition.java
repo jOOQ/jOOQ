@@ -84,6 +84,7 @@ public class DefaultColumnDefinition
         return position;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final DataTypeDefinition getType() {
 

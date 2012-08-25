@@ -38,7 +38,9 @@ package org.jooq.util;
 
 /**
  * @author Lukas Eder
+ * @deprecated - 2.5.0 [#1741] - This feature will be removed as of jOOQ 3.0
  */
+@Deprecated
 public class MasterDataTypeDefinition implements DataTypeDefinition {
 
     final TableDefinition    table;

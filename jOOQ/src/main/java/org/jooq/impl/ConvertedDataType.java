@@ -86,6 +86,7 @@ class ConvertedDataType<T, U> extends AbstractDataType<U> {
         return delegate.getCastTypeName(configuration, precision, scale);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public U convert(Object object) {
         return converter.from(delegate.convert(converter.to((U) object)));

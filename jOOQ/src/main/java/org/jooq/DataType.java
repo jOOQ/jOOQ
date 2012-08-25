@@ -96,7 +96,10 @@ public interface DataType<T> extends Serializable {
 
     /**
      * Retrieve the data type for a given master data type
+     *
+     * @deprecated - 2.5.0 [#1741] - This feature will be removed as of jOOQ 3.0
      */
+    @Deprecated
     <M extends MasterDataType<T>> DataType<M> asMasterDataType(Class<M> masterDataType);
 
     /**

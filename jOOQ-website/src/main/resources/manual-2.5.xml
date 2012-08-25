@@ -7799,6 +7799,9 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 						<content>
 							<h3>Enumeration tables</h3>
 							<p>
+								<strong>NOTE</strong>: This feature is deprecated in jOOQ 2.5.0 and will be removed as of jOOQ 3.0
+							</p>
+							<p>
 								Only MySQL and Postgres databases support true ENUM types natively. Some other RDBMS allow you to map the concept of an ENUM data type to a CHECK constraint, but those constraints can contain arbitrary SQL. With jOOQ, you can "simulate" ENUM types by declaring a table as a "master data table" in the configuration. At code-generation time, this table will be treated specially, and a Java enum type is generated from its data.
 							</p>
 

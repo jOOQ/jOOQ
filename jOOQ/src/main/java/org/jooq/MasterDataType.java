@@ -39,11 +39,16 @@ package org.jooq;
  * A type holding master data.
  *
  * @author Lukas Eder
+ * @deprecated - 2.5.0 [#1741] - This feature will be removed as of jOOQ 3.0
  */
+@Deprecated
 public interface MasterDataType<T> {
 
     /**
      * Get the primary key value for this master data type
+     *
+     * @deprecated - 2.5.0 [#1741] - This feature will be removed as of jOOQ 3.0
      */
+    @Deprecated
     T getPrimaryKey();
 }

@@ -75,7 +75,7 @@ import org.jooq.types.Interval;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "deprecation"})
 public abstract class AbstractDataType<T> implements DataType<T> {
 
     /**
@@ -418,7 +418,6 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         return new DefaultDataType<Object>(dialect, Object.class, typeName, typeName);
     }
 
-    @SuppressWarnings("deprecation")
     protected static DataType<?> getDataType(SQLDialect dialect, String typeName) {
         DataType<?> result = typesByTypeName[dialect.ordinal()].get(FieldTypeHelper.normalise(typeName));
 

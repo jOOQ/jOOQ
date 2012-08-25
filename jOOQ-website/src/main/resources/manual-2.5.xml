@@ -1036,6 +1036,150 @@ Factory create = new Factory(connection, dialect, settings);]]></java>
 									</p>
 								</content>
 							</section>
+							
+							<section id="runtime-schema-mapping">
+								<title>Runtime schema and table mapping</title>
+								<content>
+									<h3>Mapping your DEV schema to a productive environment</h3>
+									<p>
+										You may wish to design your database in a way that you have several instances of your schema. This is useful when you want to cleanly separate data belonging to several customers / organisation units / branches / users and put each of those entities' data in a separate database or schema.
+									</p>
+									
+									<p>
+										In our AUTHOR example this would mean that you provide a book reference database to several companies, such as My Book World and Books R Us. In that case, you'll probably have a schema setup like this:
+									</p>
+									<ul>
+										<li>DEV: Your development schema. This will be the schema that you base code generation upon, with jOOQ </li>
+										<li>MY_BOOK_WORLD: The schema instance for My Book World </li>
+										<li>BOOKS_R_US: The schema instance for Books R Us </li>
+									</ul>
+
+									<h3>Mapping DEV to MY_BOOK_WORLD with jOOQ</h3>
+									<p>
+										When a user from My Book World logs in, you want them to access the MY_BOOK_WORLD schema using classes generated from DEV. This can be achieved with the <reference class="org.jooq.conf.RenderMapping"/> class, that you can equip your Factory's <reference id="custom-settings" title="settings"/> with. Take the following example:
+									</p>
+
+<java>Settings settings = new Settings()
+    .withRenderMapping(new RenderMapping()
+    .withSchemata(
+        new MappedSchema().withInput("DEV")
+                          .withOutput("MY_BOOK_WORLD")));
+
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+
+// Run queries with the "mapped" factory
+create.selectFrom(AUTHOR).fetch();</java>
+
+									<p>
+										The query executed with a Factory equipped with the above mapping will in fact produce this SQL statement:
+									</p>
+									
+<sql>SELECT * FROM MY_BOOK_WORLD.AUTHOR</sql>
+									<p>
+										Even if AUTHOR was generated from DEV.
+									</p>
+
+									<h3>Mapping several schemata</h3>
+									<p>
+										Your development database may not be restricted to hold only one DEV schema. You may also have a LOG schema and a MASTER schema. Let's say the MASTER schema is shared among all customers, but each customer has their own LOG schema instance. Then you can enhance your RenderMapping like this (e.g. using an XML configuration file):
+									</p>
+
+<xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd">
+  <renderMapping>
+    <schemata>
+      <schema>
+        <input>DEV</input>
+        <output>MY_BOOK_WORLD</output>
+      </schema>
+      <schema>
+        <input>LOG</input>
+        <output>MY_BOOK_WORLD_LOG</output>
+      </schema>
+    </schemata>
+  </renderMapping>
+</settings>]]></xml>
+
+                            		<p>
+                            			Note, you can load the above XML file like this:
+                           			</p>
+
+<java>Settings settings = JAXB.unmarshal(new File("jooq-runtime.xml"), Settings.class);</java>
+
+									<p>
+										This will map generated classes from DEV to MY_BOOK_WORLD, from LOG to MY_BOOK_WORLD_LOG, but leave the MASTER schema alone. Whenever you want to change your mapping configuration, you will have to create a new Factory
+									</p>
+
+
+									<h3>Using a default schema</h3>
+									<p>
+										Another option to switch schema names is to use a default schema for the Factory's underlying Connection. Many RDBMS support a USE or SET SCHEMA command, which you can call like this:
+									</p>
+
+<java>// Set the default schema
+Schema MY_BOOK_WORLD = ...
+create.use(MY_BOOK_WORLD);
+
+// Run queries with factory having a default schema
+create.selectFrom(AUTHOR).fetch();</java>
+
+									<p>
+										Queries generated from the above Factory will produce this kind of SQL statement:
+									</p>
+
+<sql>-- the schema name is omitted from all SQL constructs.
+SELECT * FROM AUTHOR</sql>
+
+                            		<p>
+                            			If you wish not to render any schema name at all, use the following Settings property for this:
+                           			</p>
+
+
+<java>Settings settings = new Settings()
+    .withRenderSchema(false);
+
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+
+// Run queries that omit rendering schema names
+create.selectFrom(AUTHOR).fetch();</java>
+
+									<h3>Mapping of tables</h3>
+									<p>
+										Not only schemata can be mapped, but also tables. If you are not the owner of the database your application connects to, you might need to install your schema with some sort of prefix to every table. In our examples, this might mean that you will have to map DEV.AUTHOR to something MY_BOOK_WORLD.MY_APP__AUTHOR, where MY_APP__ is a prefix applied to all of your tables. This can be achieved by creating the following mapping: 
+									</p>
+
+<java>Settings settings = new Settings()
+    .withRenderMapping(new RenderMapping()
+    .withSchemata(
+        new MappedSchema().withInput("DEV")
+                          .withOutput("MY_BOOK_WORLD")
+                          .withTables(
+         new MappedTable().withInput("AUTHOR")
+                          .withOutput("MY_APP__AUTHOR"))));
+
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+
+// Run queries with the "mapped" factory
+create.selectFrom(AUTHOR).fetch();</java>
+
+									<p>
+										The query executed with a Factory equipped with the above mapping will in fact produce this SQL statement:
+									</p>
+									
+<sql>SELECT * FROM MY_BOOK_WORLD.MY_APP__AUTHOR</sql>
+
+		                            <p>
+		                           		Table mapping and schema mapping can be applied independently, by specifying several MappedSchema entries in the above configuration. jOOQ will process them in order of appearance and map at first match. Note that you can always omit a MappedSchema's output value, in case of which, only the table mapping is applied. If you omit a MappedSchema's input value, the table mapping is applied to all schemata!
+		                            </p>
+
+									<h3>Hard-wiring mappings at code-generation time</h3>
+									<p>
+										Note that the manual's section about <reference id="schema-mapping" title="code generation schema mapping"/> explains how you can hard-wire your schema mappings at code generation time
+									</p>									
+								</content>
+							</section>
 
 							<section id="factory-subclasses">
 								<title>Factory subclasses</title>
@@ -7656,13 +7800,82 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 					</section>
 
 				    <section id="custom-data-types">
-						<title>Custom data types and type conversions</title>
-						<content></content>
+						<title>Custom data types and type conversion</title>
+						<content>
+							<h3>Your custom type and its associated Converter</h3>
+							<p>
+								When using a custom type in jOOQ, you need to let jOOQ know about its associated <reference class="org.jooq.Converter"/>. Ad-hoc usages of such converters has been discussed in the chapter about <reference id="data-type-conversion" title="data type conversion"/>. A more common use-case, however, is to let jOOQ know about custom types at code generation time. Use the following configuration elements to specify, that you'd like to use GregorianCalendar for all database fields that start with DATE_OF_
+      						</p>
+
+<xml><![CDATA[<database>
+  <!-- First, register your custom types here -->
+  <customTypes>
+    <customType>
+      <!-- Specify the fully-qualified class name of your custom type -->
+      <name>java.util.GregorianCalendar</name>
+
+      <!-- Associate that custom type with your converter. Note, a
+           custom type can only have one converter in jOOQ -->
+      <converter>com.example.CalendarConverter</converter>
+    </customType>
+  </customTypes>
+
+  <!-- Then, associate custom types with database columns -->
+  <forcedTypes>
+    <forcedType>
+      <!-- Specify again he fully-qualified class name of your custom type -->
+      <name>java.util.GregorianCalendar</name>
+
+      <!-- Add a list of comma-separated regular expressions matching columns -->
+      <expressions>.*\.DATE_OF_.*</expressions>
+    </forcedType>
+  </forcedTypes>
+</database>]]></xml>
+
+                            <p>
+                            	The above configuration will lead to AUTHOR.DATE_OF_BIRTH being generated like this:
+                            </p>
+
+<java><![CDATA[public class TAuthor extends UpdatableTableImpl<TAuthorRecord> {
+
+    // [...]
+    public final TableField<TAuthorRecord, GregorianCalendar> DATE_OF_BIRTH =    // [...]
+    // [...]
+
+}]]></java>
+
+                            <p>
+                            	This means that the bound type of &lt;T&gt; will be GregorianCalendar, wherever you reference DATE_OF_BIRTH. jOOQ will use your custom converter when binding variables and when fetching data from <reference class="java.util.ResultSet"/>:
+                            </p>
+
+<java><![CDATA[// Get all date of births of authors born after 1980
+List<GregorianCalendar> result =
+create.selectFrom(AUTHOR)
+      .where(AUTHOR.DATE_OF_BIRTH.greaterThan(new GregorianCalendar(1980, 0, 1)))
+      .fetch(AUTHOR.DATE_OF_BIRTH);]]></java>
+
+						</content>
 					</section>
 
 				    <section id="schema-mapping">
-						<title>Schema mapping</title>
-						<content></content>
+						<title>Mapping generated schemata and tables</title>
+						<content>
+							<h3>Mapping at code generation time</h3>
+							<p>
+								We've seen previously in the chapter about <reference id="runtime-schema-mapping" title="runtime schema mapping"/>, that schemata and tables can be mapped at runtime to other names. But you can also hard-wire schema mapping in generated artefacts at code generation time, e.g. when you have 5 developers with their own dedicated developer databases, and a common integration database. In the code generation configuration, you would then write.
+							</p>
+
+<xml><![CDATA[<schemata>
+  <schema>
+    <!-- Use this as the developer's schema: -->
+    <inputSchema>LUKAS_DEV_SCHEMA</inputSchema>
+
+    <!-- Use this as the integration / production database: -->
+    <outputSchema>PROD</outputSchema>
+  </schema>
+</schemata>]]></xml>
+
+						</content>
 					</section>
 				</sections>
 			</section>

@@ -159,7 +159,7 @@ exists(); max(); min(); val(); inline(); // correspond to Factory.exists(); Fact
 BOOK.TITLE, AUTHOR.LAST_NAME // correspond to com.example.generated.Tables.BOOK.TITLE, com.example.generated.Tables.BOOK.TITLE
 
 // Whenever you see "create" being used in Java code, assume that this is an instance of org.jooq.impl.Factory:
-Factory create = new Factory(SQLDialect.ORACLE, connection);]]></java>
+Factory create = new Factory(connection, SQLDialect.ORACLE);]]></java>
 
 							<h3>Settings</h3>
 							<p>
@@ -5264,7 +5264,7 @@ create.executeUpdate(book);]]></java>
 									</p>
 
 <java><![CDATA[// Initialise a Factory
-Factory create = new Factory(SQLDialect.ORACLE, connection);
+Factory create = new Factory(connection, SQLDialect.ORACLE);
 
 // Initialise the DAO with the Factory
 BookDao bookDao = new BookDao(create);
@@ -5602,10 +5602,10 @@ for (BookRecord book : create.selectFrom(BOOK).fetch()) {
 SELECT ? FROM DUAL WHERE ? = ?
 SELECT 1 FROM DUAL WHERE 1 = 1]]></sql>
 <java><![CDATA[// This Factory executes PreparedStatements
-Factory prepare = new Factory(SQLDialect.ORACLE, connection);
+Factory prepare = new Factory(connection, SQLDialect.ORACLE);
 
 // This Factory exeecutes static Statements
-Factory inlined = new Factory(SQLDialect.ORACLE, connection, 
+Factory inlined = new Factory(connection, SQLDialect.ORACLE, 
   new Settings().withStatementType(StatementType.STATIC_STATEMENT));
   
 prepare.select(val(1)).where(val(1).equal(1)).fetch();
@@ -6430,12 +6430,107 @@ List<BookRecord> books = coAuthor.fetchBookListByCoAuthorId();]]></java>
 
 							<section id="optimistic-locking">
 								<title>Optimistic locking</title>
-								<content></content>
+								<content>
+									<h3>Optimistic locking handled by jOOQ</h3>
+									<p>
+										jOOQ allows you to perform <reference id="crud-with-updatablerecords" title="CRUD"/> operations using optimistic locking. You can immediately take advantage of this feature by activating the relevant <reference id="custom-settings" title="executeWithOptimisticLocking Setting"/>. Without any further knowledge of the underlying data semantics, this will have the following impact on store() and delete() methods:
+									</p>
+									<ul>
+										<li>INSERT statements are not affected by this Setting flag</li>
+										<li>Prior to UPDATE or DELETE statements, jOOQ will run a <reference id="for-update-clause" title="SELECT .. FOR UPDATE"/> statement, pessimistically locking the record for the subsequent UPDATE / DELETE</li>
+										<li>The data fetched with the previous SELECT will be compared against the data in the record being stored or deleted</li>
+										<li>An <reference class="org.jooq.exception.DataChangedException"/> is thrown if the record had been modified in the mean time</li>
+										<li>The record is successfully stored / deleted, if the record had not been modified in the mean time.</li>
+									</ul>
+									<p>
+										The above changes to jOOQ's behaviour are transparent to the API, the only thing you need to do for it to be activated is to set the Settings flag. Here is an example illustrating optimistic locking:
+									</p>
+
+<java><![CDATA[// Properly configure the Factory
+Factory optimistic = new Factory(connection, SQLDialect.ORACLE, 
+  new Settings().withExecuteWithOptimisticLocking(true));
+  
+// Fetch a book two times
+BookRecord book1 = optimistic.fetch(BOOK, BOOK.ID.equal(5));
+BookRecord book2 = optimistic.fetch(BOOK, BOOK.ID.equal(5));
+
+// Change the title and store this book. The underlying database record has not been modified, it can be safely updated.
+book1.setTitle("Animal Farm");
+book1.store();
+
+// Book2 still references the original TITLE value, but the database holds a new value from book1.store(). This store() will thus fail:
+book2.setTitle("1984");
+book2.store();]]></java>								
+	
+									<h3>Optimised optimistic locking using TIMESTAMP fields</h3>
+									<p>
+										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, you can take indicate TIMESTAMP or UPDATE COUNTER fields for every generated table in the <reference id="codegen-advanced" title="code generation configuration"/>. Let's say we have this table:
+									</p>
+
+<sql><![CDATA[CREATE TABLE book (
+  
+  -- This column indicates when each book record was modified for the last time
+  MODIFIED TIMESTAMP NOT NULL,
+  -- [...]
+)]]></sql>									
+
+									<p>
+										The MODIFIED column will contain a timestamp indicating the last modification timestamp for any book in the BOOK table. If you're using jOOQ and it's <reference id="crud-with-updatablerecords" title="store() methods on UpdatableRecords"/>, jOOQ will then generate this TIMESTAMP value for you, automatically. However, instead of running an additional <reference id="for-update-clause" title="SELECT .. FOR UPDATE"/> statement prior to an UPDATE or DELETE statement, jOOQ adds a WHERE-clause to the UPDATE or DELETE statement, checking for TIMESTAMP's integrity. This can be best illustrated with an example:   
+									</p>
+									
+<java><![CDATA[// Properly configure the Factory
+Factory optimistic = new Factory(connection, SQLDialect.ORACLE, 
+  new Settings().withExecuteWithOptimisticLocking(true));
+  
+// Fetch a book two times
+BookRecord book1 = optimistic.fetch(BOOK, BOOK.ID.equal(5));
+BookRecord book2 = optimistic.fetch(BOOK, BOOK.ID.equal(5));
+
+// Change the title and store this book. The MODIFIED value has not been changed since the book was fetched. It can be safely updated
+book1.setTitle("Animal Farm");
+book1.store();
+
+// Book2 still references the original MODIFIED value, but the database holds a new value from book1.store(). This store() will thus fail:
+book2.setTitle("1984");
+book2.store();]]></java>
+
+									<p>
+										As before, without the added TIMESTAMP column, optimistic locking is transparent to the API.
+									</p>
+									
+									<h3>Optimised optimistic locking using VERSION fields</h3>
+									<p>
+										Instead of using TIMESTAMPs, you may also use numeric VERSION fields, containing version numbers that are incremented by jOOQ upon store() calls.
+									</p>
+
+									<p>
+										Note, for explicit pessimistic locking, please consider the manual's section about the <reference id="for-update-clause" title="FOR UPDATE clause"/>. For more details about how to configure TIMESTAMP or VERSION fields, consider the manual's section about <reference id="codegen-advanced" title="advanced code generator configuration"/>.
+									</p>
+								</content>
 							</section>
 
 							<section id="batch-execution-for-crud">
 								<title>Batch execution</title>
-								<content></content>
+								<content>
+									<h3>Batch CRUD operations</h3>
+									<p>
+										When inserting, updating, deleting a lot of records, you may wish to profit from JDBC batch operations, which can be performed by jOOQ. These are available through jOOQ's <reference id="factory" title="Factory"/> as shown in the following example:
+									</p>
+									
+<java><![CDATA[// Fetch a bunch of books
+List<BookRecord> books = create.fetch(BOOK);
+
+// Modify the above books, and add some new ones:
+modify(books);
+addMore(books);
+
+// Batch-update and/or insert all of the above books
+create.batchStore(books);]]></java>					
+
+									<p>
+										Internally, jOOQ will render all the required SQL statements and execute them as a regular <reference id="batch-execution" title="JDBC batch execution"/>. 
+									</p>				
+								</content>
 							</section>
 						</sections>
 					</section>
@@ -6504,7 +6599,7 @@ public class BookDao extends DAOImpl<BookRecord, Book, Integer> {
 							</p>
 							
 <java><![CDATA[// Initialise a Factory
-Factory create = new Factory(SQLDialect.ORACLE, connection);
+Factory create = new Factory(connection, SQLDialect.ORACLE);
 
 // Initialise the DAO with the Factory
 BookDao bookDao = new BookDao(create);

@@ -59,7 +59,6 @@ import java.util.Arrays;
 
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
-import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
@@ -541,7 +540,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
     public final void bind(BindContext context) {
 
         // [#1302] Bind value only if it was not explicitly forced to be inlined
-        if (!isInline(context)) {
+        if (!isInline()) {
             context.bindValue(getValue(), getType());
         }
     }
@@ -585,12 +584,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         return inline;
     }
 
-    private final boolean isInline(Context<?> context) {
-        // It looks as though jaybird cannot properly bind NULL!
-        return isInline() || (context.getDialect() == FIREBIRD && value == null);
-    }
-
     private final boolean isInline(RenderContext context) {
-        return isInline((Context<?>) context) || context.inline();
+        return isInline() || context.inline();
     }
 }

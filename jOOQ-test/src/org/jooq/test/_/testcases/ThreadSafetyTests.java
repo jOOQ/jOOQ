@@ -36,6 +36,7 @@
 package org.jooq.test._.testcases;
 
 import static junit.framework.Assert.assertEquals;
+import static org.jooq.SQLDialect.FIREBIRD;
 
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -72,6 +73,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
     @Test
     public void testConcurrentExecution() throws Exception {
+        if (getDialect() == FIREBIRD) {
+            log.info("SKIPPING", "Thread-safety tests. This can crash Firebird");
+            return;
+        }
+
         // This test is an adapted version of a test case contributed by
         // Sergey Epik for [#1543]
 

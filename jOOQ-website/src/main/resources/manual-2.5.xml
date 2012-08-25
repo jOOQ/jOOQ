@@ -2448,7 +2448,76 @@ Table<Record> naturalRightOuterJoin(TableLike<?>)]]></java>
 
 							<section id="nested-selects">
 								<title>Nested SELECTs</title>
-								<content></content>
+								<content>
+									<h3>Nested SELECTs, subqueries, derived tables</h3>
+									<p>
+										A <reference id="select-statement" title="SELECT statement"/> can appear almost anywhere a <reference id="table-expressions" title="table expression"/> can. Such a "nested SELECT" is often called a "derived table". Apart from many convenience methods accepting <reference class="org.jooq.Select"/> objects directly, a SELECT statement can always be transformed into a <reference class="org.jooq.Table"/> object using the asTable() method.
+									</p>
+									
+									<h3>Example: Scalar subquery</h3>
+									
+<code-pair>
+<sql>SELECT *
+  FROM BOOK
+ WHERE BOOK.AUTHOR_ID = (
+ 		SELECT ID
+          FROM AUTHOR
+         WHERE LAST_NAME = 'Orwell')</sql>
+<java>create.select()
+      .from(BOOK)
+      .where(BOOK.AUTHOR_ID.equal(create
+             .select(AUTHOR.ID)
+             .from(AUTHOR)
+             .where(AUTHOR.LAST_NAME.equal("Orwell"))));</java>
+</code-pair>
+
+									<h3>Example: Derived table</h3>
+
+<code-pair>
+<sql><![CDATA[SELECT nested.* FROM (
+      SELECT AUTHOR_ID, count(*) books
+        FROM BOOK
+    GROUP BY AUTHOR_ID
+) nested
+ORDER BY nested.books DESC
+
+
+
+]]></sql>
+<java><![CDATA[Table<Record> nested =
+    create.select(BOOK.AUTHOR_ID, count().as("books"))
+          .from(BOOK)
+          .groupBy(BOOK.AUTHOR_ID).asTable("nested");
+
+create.select(nested.getFields())
+      .from(nested)
+      .orderBy(nested.getField("books"));]]></java>
+</code-pair>
+
+									<h3>Example: Correlated subquery</h3>
+<code-pair>
+<sql><![CDATA[  SELECT LAST_NAME, (
+      SELECT COUNT(*)
+       FROM BOOK
+      WHERE BOOK.AUTHOR_ID = AUTHOR.ID) books
+    FROM AUTHOR
+ORDER BY books DESC
+
+
+
+
+]]></sql>
+<java><![CDATA[// The type of books cannot be inferred from the Select<?>
+Field<Object> books =
+    create.selectCount()
+          .from(BOOK)
+          .where(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+          .asField("books");
+create.select(AUTHOR.ID, books)
+      .from(AUTHOR)
+      .orderBy(books, AUTHOR.ID));]]></java>
+</code-pair>									
+								</content>
 							</section>
 
 							<section id="pivot-tables">
@@ -3374,7 +3443,33 @@ GROUP BY A, B, C WITH ROLLUP
 
 							<section id="user-defined-functions">
 								<title>User-defined functions</title>
-								<content></content>
+								<content>
+									<h3>User-defined functions in SQL</h3>
+									<p>
+										Some databases support user-defined functions, which can be embedded in any SQL statement, if you're using jOOQ's <reference id="code-generation" title="code generator"/>. Let's say you have the following simple function in Oracle SQL:
+									</p>
+									
+<sql><![CDATA[CREATE OR REPLACE FUNCTION echo (INPUT NUMBER)
+RETURN NUMBER
+IS
+BEGIN
+    RETURN INPUT;
+END echo;
+]]></sql>
+
+                                    <p>
+                                    	The above function will be made available from a generated <reference id="codegen-procedures" title="Routines"/> class. You can use it like any other <reference id="column-expressions" title="column expression"/>:
+                                    </p>
+                                    
+<code-pair>
+<sql><![CDATA[SELECT echo(1) FROM DUAL WHERE echo(2) = 2]]></sql>
+<java><![CDATA[create.select(echo(1)).where(echo(2).equal(2));]]></java>
+</code-pair>
+                                
+                                	<p>
+                                		Note that user-defined functions returning <reference id="data-types-cursors" title="CURSOR"/> or <reference id="data-types-arrays" title="ARRAY"/> data types can also be used wherever <reference id="table-expressions" title="table expressions"/> can be used, if they are <reference id="array-and-cursor-unnesting" title="unnested"/>
+                                	</p>
+								</content>
 							</section>
 
 							<section id="user-defined-aggregate-functions">
@@ -4092,11 +4187,6 @@ notExists(create.selectOne().from(BOOK)
 									</p>
 								</content>
 							</section>
-
-						    <section id="array-predicates">
-							    <title>ARRAY predicates</title>
-								<content></content>
-							</section>
 						</sections>
 					</section>
 
@@ -4354,11 +4444,11 @@ param2.setValue("Orwell");]]></java>
 										The <reference class="org.jooq.Query"/> interface also allows for setting new bind values directly, without accessing the Param type:
 									</p>
 
-<java><![CDATA[Query query1 = create.select().from(T_AUTHOR).where(LAST_NAME.equal("Poe"));
+<java><![CDATA[Query query1 = create.select().from(AUTHOR).where(LAST_NAME.equal("Poe"));
 query1.bind(1, "Orwell");
 
 // Or, with named parameters
-Query query2 = create.select().from(T_AUTHOR).where(LAST_NAME.equal(param("lastName", "Poe")));
+Query query2 = create.select().from(AUTHOR).where(LAST_NAME.equal(param("lastName", "Poe")));
 query2.bind("lastName", "Orwell");]]></java>
 
 									<p>
@@ -4368,13 +4458,13 @@ query2.bind("lastName", "Orwell");]]></java>
 <code-pair>
 <java><![CDATA[create.renderNamedParams(
     create.select()
-          .from(T_AUTHOR)
+          .from(AUTHOR)
           .where(LAST_NAME.equal(
                  param("lastName", "Poe"))));]]></java>
 <sql><![CDATA[-- The named bind variable can be rendered
 
 SELECT *
-FROM T_AUTHOR
+FROM AUTHOR
 WHERE LAST_NAME = :lastName]]></sql>
 </code-pair>
 								</content>
@@ -4404,7 +4494,7 @@ WHERE LAST_NAME = :lastName]]></sql>
 // single bind values to be rendered as inline values
 // --------------------------------------------------
 create.select()
-      .from(T_AUTHOR)
+      .from(AUTHOR)
       .where(LAST_NAME.equal(inline("Poe")));
 
 // Or render the whole query with inlined values
@@ -4417,7 +4507,7 @@ Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
 
 // Run queries that omit rendering schema names
 create.select()
-      .from(T_AUTHOR)
+      .from(AUTHOR)
       .where(LAST_NAME.equal("Poe"));]]></java>
 								</content>
 							</section>
@@ -4539,12 +4629,12 @@ int peekIndex();]]></java>
 
 									<h3>An example of rendering SQL</h3>
 								   	<p>
-								   		A simple example can be provided by checking out jOOQ's internal representation of a (simplified) <reference id="comparison-predicate" title="CompareCondition"/>. It is used for any <reference class="org.jooq.Condition"/> comparing two fields as for example the T_AUTHOR.ID = T_BOOK.AUTHOR_ID condition here:
+								   		A simple example can be provided by checking out jOOQ's internal representation of a (simplified) <reference id="comparison-predicate" title="CompareCondition"/>. It is used for any <reference class="org.jooq.Condition"/> comparing two fields as for example the AUTHOR.ID = BOOK.AUTHOR_ID condition here:
 							   		</p>
 							   		
 <sql>-- [...]
-FROM T_AUTHOR
-JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
+FROM AUTHOR
+JOIN BOOK ON AUTHOR.ID = BOOK.AUTHOR_ID
 -- [...]</sql>
 
 									<p>
@@ -4623,11 +4713,11 @@ BindContext bindValues(Object... values) throws DataAccessException;]]></java>
 
 									<h3>An example of binding values to SQL</h3>
 								   	<p>
-								   		A simple example can be provided by checking out jOOQ's internal representation of a (simplified) <reference id="comparison-predicate" title="CompareCondition"/>. It is used for any <reference class="org.jooq.Condition"/> comparing two fields as for example the T_AUTHOR.ID = T_BOOK.AUTHOR_ID condition here:
+								   		A simple example can be provided by checking out jOOQ's internal representation of a (simplified) <reference id="comparison-predicate" title="CompareCondition"/>. It is used for any <reference class="org.jooq.Condition"/> comparing two fields as for example the AUTHOR.ID = BOOK.AUTHOR_ID condition here:
 							   		</p>
 							   		
 <sql>-- [...]
-WHERE T_AUTHOR.ID = ?
+WHERE AUTHOR.ID = ?
 -- [...]</sql>
 
 									<p>
@@ -5789,7 +5879,7 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 								If you're using jOOQ's <reference id="code-generation" title="code generator"/>, it will generate <reference class="org.jooq.Routine"/> objects for you. Let's consider the following example:
 							</p>
 							
-<sql><![CDATA[-- Check whether there is an author in T_AUTHOR by that name and get his ID
+<sql><![CDATA[-- Check whether there is an author in AUTHOR by that name and get his ID
 CREATE OR REPLACE PROCEDURE author_exists (author_name VARCHAR2, result OUT NUMBER, id OUT NUMBER);]]></sql>
 
 							<p>
@@ -5828,7 +5918,7 @@ assertEquals(new BigDecimal("2"), procedure.getId();]]></java>
 								Unlike procedures, functions can be inlined in SQL statements to generate <reference id="column-expressions" title="column expressions"/> or <reference id="table-expressions" title="table expressions"/>, if you're using <reference id="array-and-cursor-unnesting" title="unnesting operators"/>. Assume you have a function like this:
 							</p>
 
-<sql><![CDATA[-- Check whether there is an author in T_AUTHOR by that name and get his ID
+<sql><![CDATA[-- Check whether there is an author in AUTHOR by that name and get his ID
 CREATE OR REPLACE FUNCTION author_exists (author_name VARCHAR2) RETURN NUMBER;]]></sql>
 							
 							<p>
@@ -5884,7 +5974,7 @@ create.select(authorExists("Paulo")).fetchOne(0, boolean.class);]]></java>
   last_name VARCHAR2(50),
 
   MEMBER PROCEDURE LOAD,
-  MEMBER FUNCTION count_books RETURN NUMBER
+  MEMBER FUNCTION counBOOKs RETURN NUMBER
 )
 
 -- The type body is omitted for the example]]></sql>
@@ -6845,8 +6935,8 @@ create.select(BOOK.ID, BOOK.TITLE).from(BOOK).orderBy(BOOK.ID).limit(1, 2).fetch
 								The above query may result in the following log output:
 							</p>
 
-<text><![CDATA[Executing query          : select "T_BOOK"."ID", "T_BOOK"."TITLE" from "T_BOOK" order by "T_BOOK"."ID" asc, limit ? offset ?
--> with bind values      : select "T_BOOK"."ID", "T_BOOK"."TITLE" from "T_BOOK" order by "T_BOOK"."ID" asc, limit 2 offset 1
+<text><![CDATA[Executing query          : select "BOOK"."ID", "BOOK"."TITLE" from "BOOK" order by "BOOK"."ID" asc, limit ? offset ?
+-> with bind values      : select "BOOK"."ID", "BOOK"."TITLE" from "BOOK" order by "BOOK"."ID" asc, limit 2 offset 1
 Query executed           : Total: 1.439ms
 Fetched result           : +----+------------+
                          : |  ID|TITLE       |

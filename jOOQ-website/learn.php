@@ -31,38 +31,78 @@ running. It shows how to use jOOQ and its code generator with a simple MySQL dat
 
 <td valign="top" width="50%">
 <h2>Documentation</h2>
-<ul>
-	<li>
-	<a href="<?=$root?>/manual-single-page" title="The jOOQ Manual on one single page">A single-paged HTML manual</a>
-	</li>
+<table width="100%">
+<tr>
+<th width="80" class="right">Version</th>
+<th class="right">Javadoc</th>
+<th class="right">Manual</th>
+</tr>
+<tr>
+<td class="right">2.5.0</td>
+<td class="right">
+	<a style="padding-right: 20px" href="http://www.jooq.org/javadoc/latest/" title="The jOOQ Javadoc">HTML</a>
+</td>
+<td class="right">
+	<a style="padding-right: 20px" href="<?=$root?>/doc/2.5/manual-single-page" title="The jOOQ Manual on one single page">HTML</a>
+	<a style="padding-right: 20px" href="<?=$root?>/doc/2.5/manual" title="The jOOQ Manual on multiple pages">HTML (multi-page)</a>
+	<a style="padding-right: 20px" href="<?=$root?>/doc/2.5/manual-pdf/jOOQ-manual-2.5.pdf" title="The jOOQ Manual as a PDF">PDF</a>
+</td>
+</tr>
 
-	<li>
-	<a href="<?=$root?>/manual" title="The jOOQ Manual on multiple pages">A multi-paged HTML manual</a>
-	</li>
-
-	<li>
-	<a href="<?=$root?>/manual-pdf/jOOQ-manual.pdf" title="The jOOQ Manual as a PDF">A downloadable PDF manual</a>
-	</li>
+<tr>
+<td class="right">2.4.0</td>
+<td class="right">
+	<a style="padding-right: 20px" href="http://www.jooq.org/javadoc/2.4.x/" title="The jOOQ Javadoc">HTML</a>
+</td>
+<td class="right">
+	<a style="padding-right: 20px" href="<?=$root?>/manual-single-page" title="The jOOQ Manual on one single page">HTML</a>
+	<a style="padding-right: 20px" href="<?=$root?>/manual" title="The jOOQ Manual on multiple pages">HTML (multi-page)</a>
+	<a style="padding-right: 20px" href="<?=$root?>/manual-pdf/jOOQ-manual.pdf" title="The jOOQ Manual as a PDF">PDF</a>
 </ul>
+</td>
+</tr>
 
-<h2>Javadoc</h2>
-<ul>
-	<li>
-	<a href="http://www.jooq.org/javadoc/latest/" title="The latest jOOQ Javadoc">The latest jOOQ Javadoc</a>
-	</li>
-	<li>
-	<a href="http://www.jooq.org/javadoc/2.3.x/" title="The latest jOOQ Javadoc">jOOQ 2.3.x</a>
-	</li>
-	<li>
-	<a href="http://www.jooq.org/javadoc/2.2.x/" title="The latest jOOQ Javadoc">jOOQ 2.2.x</a>
-	</li>
-	<li>
-	<a href="http://www.jooq.org/javadoc/2.1.x/" title="The latest jOOQ Javadoc">jOOQ 2.1.x</a>
-	</li>
-	<li>
-	<a href="http://www.jooq.org/javadoc/2.0.x/" title="The latest jOOQ Javadoc">jOOQ 2.0.x</a>
-	</li>
+<tr>
+<td class="right">2.3.0</td>
+<td class="right">
+	<a style="padding-right: 20px" href="http://www.jooq.org/javadoc/2.3.x/" title="The jOOQ Javadoc">HTML</a>
+</td>
+<td class="right">
 </ul>
+</td>
+</tr>
+
+<tr>
+<td class="right">2.2.0</td>
+<td class="right">
+	<a style="padding-right: 20px" href="http://www.jooq.org/javadoc/2.2.x/" title="The jOOQ Javadoc">HTML</a>
+</td>
+<td class="right">
+</ul>
+</td>
+</tr>
+
+<tr>
+<td class="right">2.1.0</td>
+<td class="right">
+	<a style="padding-right: 20px" href="http://www.jooq.org/javadoc/2.1.x/" title="The jOOQ Javadoc">HTML</a>
+</td>
+<td class="right">
+</ul>
+</td>
+</tr>
+
+<tr>
+<td class="right">2.0.0</td>
+<td class="right">
+	<a style="padding-right: 20px" href="http://www.jooq.org/javadoc/2.0.x/" title="The jOOQ Javadoc">HTML</a>
+</td>
+<td class="right">
+</ul>
+</td>
+</tr>
+</table>
+
 </td>
 </tr>
 </table>

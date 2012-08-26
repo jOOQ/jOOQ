@@ -8,6 +8,7 @@ function getActiveMenu() {
 }
 function printContent() {
 	global $root;
+    global $minorVersion;
 	global $version;
 ?>
 

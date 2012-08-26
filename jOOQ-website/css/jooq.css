@@ -65,13 +65,13 @@ p {
 	padding-right: 1em;
 }
 
-td.left {
+td.left, th.left {
 	padding-right: 5px;
 	padding-bottom: 5px;
 	vertical-align: top;
 	text-align: right;
 }
-td.right {
+td.right, th.right {
 	padding-left: 5px;
 	padding-bottom: 5px;
 	vertical-align: top;

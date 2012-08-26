@@ -10,6 +10,151 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.5.0 - August 26, 2012
+=================================================================
+
+Welcome to another great database integration in jOOQ: Firebird!
+This is one of the more popular open source SQL databases out
+there, with a rich feature set, including the SQL standard MERGE
+statement.
+
+Apart from this, the main new features are:
+
+- Optimistic locking. jOOQ's UpdatableRecord API transparently
+  implements optimistic locking on its store() and delete()
+  methods. By default, the in-memory record is compared with the
+  one in the database at write time. But you can also let jOOQ
+  handle incremented VERSION or TIMESTAMP columns for you.
+- Oracle feature increment. Many nice Oracle features are now
+  supported: user-defined aggregates, regular expressions,
+  Oracle Text, CONNECT_BY_ROOT and ORDER SIBLINGS BY clausess,
+  partitioned outer joins and more
+- jOOQ's convenience API has been greatly enhanced. This includes
+  many improved fetch methods and new short forms for equal=eq,
+  notEqual=ne, greaterThan=gt, etc. to better align jOOQ with
+  JPA, XSL, QueryDSL and many other tools that abbreviate these
+  keywords
+- Many types and methods have been deprecated to help you foresee
+  the upcoming changes in jOOQ 3.0
+
+Please consider also the updated manual with its new, more
+user-friendly structure
+
+Features and improvements
+-------------------------
+#430  - Add support for the Firebird database
+#457  - Add support for Oracle user-defined AGGREGATE functions
+#620  - Add support for the SQL:2008 standard LIKE_REGEX operator
+#722  - Remove casting of bind values in Ingres
+#727  - Simulate RPAD and LPAD in SQLite
+#816  - Add support for Oracle Text functions
+#1339 - Add option to generate immutable pojos
+#1547 - Support "optimistic locking" in UpdatableRecord.store() 
+        and delete()
+#1552 - Generate fetchBy[ColumnName] methods in generated DAO
+        classes
+#1553 - Add some Javadoc to document the difference between using
+        a Factory with a Connection or with a DataSource
+#1556 - Add javax.validation API to full deliverable
+#1565 - Add Factory.connectByRoot(Field<?>) to support the Oracle
+        CONNECT_BY_ROOT pseudo column
+#1570 - Add Factory.condition(String, QueryPart...) similar to
+        Factory.field(String, QueryPart...)
+#1582 - Add support for Oracle's ORDER SIBLINGS BY clause, in
+        combination with CONNECT BY
+#1586 - Add missing constructors taking DataSource to dialect-
+        specific factories
+#1587 - Generate missing constructors taking DataSource in
+        schema-specific factories
+#1595 - Simulate REPEAT() in SQLite
+#1596 - Add support for optimistic locking using generated
+        information about "timestamp" or "version" columns
+#1627 - Handle NULL in CSV imports/exports
+#1645 - Add support for Oracle's PARTITION BY clause in OUTER 
+        JOINs
+#1657 - Reorganise the manual
+#1664 - By default, activate <relations/> in the code generator
+#1665 - Add support for the empty GROUP BY () clause
+#1675 - Add support for the SQL standard IS [NOT] DISTINCT FROM
+        predicate
+#1680 - Overload all plain SQL DSL methods to also accept
+        QueryPart arguments
+#1681 - Simulate empty GROUP BY () clause in Sybase ASE and 
+        Ingres, joining a dummy table and grouping by a constant
+        field
+#1684 - Add <attachRecords/> Setting to indicate that fetched
+        records shouldn't be automatically "attached"
+#1685 - Improve Javadoc of Attachable.attach(). Document how
+        "detaching" works
+#1688 - Add <E> E Record.into(E) as a complement to
+        <E> E Record.into(Class<E>)
+#1692 - Replace Factory.executeInsert(), Factory.executeUpdate()
+        and similar methods with more succinct variants
+#1696 - Add short versions of comparison predicate methods, such
+        as eq, ne, gt, ge, lt, le
+#1698 - Add support for the SQL standard BETWEEN SYMMETRIC
+        predicate
+#1701 - Add Factory.not(Condition) as a synonym for 
+        Condition.not()
+#1704 - Document the behaviour of Factory.newRecord(Table<?>,
+        Object) and Record.from(Object) with respect to
+        UpdatableRecord.store()
+#1707 - Add <K> Map<K, Result<R>> ResultQuery.fetchGroups(
+        Field<K>) and Result.intoGroups(Field<K>)
+#1712 - Add <T extends Comparable<? super T>> Result.sortAsc,
+        .sortDesc(Field<T>)
+#1713 - Add <T> Result.sortAsc, .sortDesc(Field<T>,
+        Comparator<? super T>)
+#1714 - Add Result.sortAsc, .sortDesc(Comparator<? super R>)
+#1718 - Document usage of InvalidResultException on the
+        ResultQuery.fetchXXX() Javadocs
+#1721 - Add <K, V> Map<K, List<V>> ResultQuery.fetchGroups(
+        Field<K>, Field<V>) and Result.intoGroups(Field<K>,
+        Field<V>)
+#1722 - ResultQuery.fetchArray(int) and .fetchArray(String)
+        should return a typed array, even if this cannot be
+        checked by the compiler
+#1723 - Add Factory.fetchLazy(ResultSet)
+
+API changes (backwards-compatible)
+----------------------------------
+#1544 - Remove Attachable interface from QueryPart hierarchy
+#1579 - Deprecate org.jooq.Type
+#1580 - Deprecate org.jooq.SchemaProvider
+#1638 - Deprecate org.jooq.ArrayRecord.createArray()
+#1639 - Deprecate org.jooq.Adapter
+#1687 - Let Cursor.fetchInto(Table<Z>) return Result<Z> instead
+        of List<Z>
+#1736 - Deprecate TableRecord.{store|refresh|delete}Using()
+        methods as being part of jOOQ's internal API
+#1741 - Deprecate org.jooq.MasterDataType
+
+Bug fixes
+---------
+#1572 - Use Thread.currentThread().getContextClassLoader() to
+        load ExecuteListener classes as a workaround for
+        experienced class loading problems when using OSGi
+#1584 - Code generation error with Oracle UDT static functions
+#1632 - Improve the performance of various DefaultRenderContext
+        methods, by locally caching Settings values
+#1633 - Improve the performance of CursorImpl.CursorIterator by
+        setting Record values by index rather than by Field
+#1635 - Improve the performance of Factory.fetch(ResultSet) by
+        caching data type normalisation regex in FieldTypeHelper
+#1650 - jOOR Fix #16: Can't call Reflect.create(A, B, null)
+#1660 - Factory.renderContext().castMode(CastMode.NEVER)
+        .render(query) doesn't work. CastMode is not applied
+#1667 - Bad variable binding when NULLS FIRST, NULLS LAST is
+        simulated in SQL Server and other databases
+#1673 - Result.formatXML() and Result.intoXML() do not render
+        namespaces correctly
+#1683 - Oracle code generation regression for 10g. No such column
+        ALL_PROCEDURES.OBJECT_ID
+#1693 - Cannot bind UDT values from other schemata to stored
+        procedures
+#1730 - Compilation errors in SQLite generated code when flag
+        <instanceFields/> is set to true
+
 Version 2.4.0 - July 8, 2012
 =================================================================
 

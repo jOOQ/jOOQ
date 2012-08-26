@@ -39,6 +39,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.function;
@@ -431,6 +432,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
                 if (context.inline()) {
                     context.sql(TBook_ID().getName() + " * 2");
+                }
+
+                // Firebird is the only dialect that cannot handle type inferral
+                // When multiplying an INT by a bind value
+                else if (context.getDialect() == FIREBIRD) {
+                    context.sql(TBook_ID().getName() + " * cast (? as int)");
                 }
                 else {
                     context.sql(TBook_ID().getName() + " * ?");

@@ -67,7 +67,7 @@ import org.jooq.util.firebird.rdb.tables.Rdb$relationConstraints;
 import org.jooq.util.jaxb.Schema;
 
 /**
- * @author sugi - Initial contribution
+ * @author Sugiharto Lim - Initial contribution
  */
 public class FirebirdDatabase extends AbstractDatabase {
 

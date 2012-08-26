@@ -103,6 +103,13 @@
                 <role>spring-support</role>
             </roles>
         </contributor>
+        <contributor>
+        	<name>Sugiharto Lim</name>
+        	<email>truesaint@gmail.com</email>
+        	<roles>
+        		<role>firebird-support</role>
+        	</roles>	
+       	</contributor>
     </contributors>
 
     <modules>

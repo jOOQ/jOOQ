@@ -53,7 +53,7 @@ import org.jooq.util.firebird.rdb.tables.Rdb$fields;
 import org.jooq.util.firebird.rdb.tables.Rdb$relationFields;
 
 /**
- * @author sugi - Initial contribution
+ * @author Sugiharto Lim - Initial contribution
  */
 public class FirebirdTableDefinition extends AbstractTableDefinition {
 

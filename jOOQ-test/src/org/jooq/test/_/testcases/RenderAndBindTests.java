@@ -219,14 +219,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
     @Test
     public void testManyVarcharBindValues() throws Exception {
+        int n = 300;
+        String s = "1234567890";
+
 
         // [#1726] Check if large amounts of VARCHAR bind values can be handled
-        Record record = create().select(Collections.nCopies(1000, val("abc"))).fetchOne();
-        assertEquals(1000, record.size());
-        assertEquals(Collections.nCopies(1000, "abc"), asList(record.intoArray()));
+        Record record = create().select(Collections.nCopies(n, val(s))).fetchOne();
+        assertEquals(n, record.size());
+        assertEquals(Collections.nCopies(n, s), asList(record.intoArray()));
 
         assertEquals(1, create().selectOne()
-            .where(val("abc").in(Collections.nCopies(1000, val("abc")).toArray(new Field[0])))
+            .where(val(s).in(Collections.nCopies(n, val(s)).toArray(new Field[0])))
             .fetchOne(0));
     }
 

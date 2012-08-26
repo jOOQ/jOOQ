@@ -339,7 +339,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
     @Test
     public void testPlainSQLResultQuery() throws Exception {
-        // Firebird renders CAST(? as VARCHAR(...)) bind values with sizes
+        // [#1749] TODO Firebird renders CAST(? as VARCHAR(...)) bind values with sizes
         // pre-calculated. Hence the param needs to have some min length...
         String sql = create().select(param("p", "abc").as("p")).getSQL(false);
         ResultQuery<Record> q = create().resultQuery(sql, "10");

@@ -797,9 +797,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     public void testBatchSingle() throws Exception {
         jOOQAbstractTest.reset = false;
 
+        // [#1749] TODO Firebird renders CAST(? as VARCHAR(...)) bind values with sizes
+        // pre-calculated. Hence the param needs to have some min length...
         int[] result = create().batch(create().insertInto(TAuthor())
                                               .set(TAuthor_ID(), 8)
-                                              .set(TAuthor_LAST_NAME(), "Gamma"))
+                                              .set(TAuthor_LAST_NAME(), "           "))
                                .bind(8, "Gamma")
                                .bind(9, "Helm")
                                .bind(10, "Johnson")

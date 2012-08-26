@@ -88,20 +88,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testEmptyGrouping() throws Exception {
+
+        // [#1665] Test the empty GROUP BY clause
+        assertEquals(1, (int) create().selectOne()
+            .from(TBook())
+            .groupBy()
+            .fetchOne(0, Integer.class));
+
+        // [#1665] Test the empty GROUP BY clause
+        assertEquals(1, (int) create().selectOne()
+            .from(TBook())
+            .groupBy()
+            .having("1 = 1")
+            .fetchOne(0, Integer.class));
+    }
+
+    @Test
     public void testGrouping() throws Exception {
-
-        // [#1665] Test the empty GROUP BY clause
-        assertEquals(1, (int) create().selectOne()
-                                      .from(TBook())
-                                      .groupBy()
-                                      .fetchOne(0, Integer.class));
-
-        // [#1665] Test the empty GROUP BY clause
-        assertEquals(1, (int) create().selectOne()
-                                      .from(TBook())
-                                      .groupBy()
-                                      .having("1 = 1")
-                                      .fetchOne(0, Integer.class));
 
         // Test a simple group by query
         Field<Integer> count = count().as("c");

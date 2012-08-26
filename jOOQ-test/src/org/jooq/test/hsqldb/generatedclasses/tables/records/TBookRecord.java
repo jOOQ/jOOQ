@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> implements org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -454420402;
+	private static final long serialVersionUID = -1705388822;
 
 	/**
 	 * The table column <code>PUBLIC.T_BOOK.ID</code>
@@ -278,6 +278,22 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public java.lang.Integer getRecVersion() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.REC_VERSION);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
+	 */
+	@Override
+	public void setRecTimestamp(java.sql.Timestamp value) {
+		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.REC_TIMESTAMP, value);
+	}
+
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
+	 */
+	@Override
+	public java.sql.Timestamp getRecTimestamp() {
+		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.REC_TIMESTAMP);
 	}
 
 	/**

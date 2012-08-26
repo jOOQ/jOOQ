@@ -1077,6 +1077,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testEmptyGrouping() throws Exception {
+        new GroupByTests(this).testEmptyGrouping();
+    }
+
+    @Test
     public void testGrouping() throws Exception {
         new GroupByTests(this).testGrouping();
     }

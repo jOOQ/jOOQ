@@ -36,6 +36,7 @@ worth mentioning (in alphabetical order)
     <li>Robin Stocker: Git and GitHub support</li>
     <li>Sander Plas: jOOQ-codegen-maven, jOOQ-wicket contribution</li>
     <li>Sergey Epik: jOOQ-spring contribution</li>
+    <li>Sugiharto Lim: Firebird integration</li>
     <li>Vladislav "FractalizeR" Rastrusny: MySQL integration feedback</li>
 </ul>
 

@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -440675106;
+	private static final long serialVersionUID = 851343085;
 
 	/**
 	 * The singleton instance of PUBLIC.T_BOOK
@@ -93,6 +93,11 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.lang.Integer> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
+	 */
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+
 	public TBook() {
 		super("T_BOOK", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
@@ -121,6 +126,11 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb
 	@Override
 	public org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.lang.Integer> getRecordVersion() {
 		return org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.REC_VERSION;
+	}
+
+	@Override
+	public org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.sql.Timestamp> getRecordTimestamp() {
+		return org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.REC_TIMESTAMP;
 	}
 
 	@Override

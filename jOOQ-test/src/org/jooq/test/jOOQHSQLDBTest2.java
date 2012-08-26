@@ -36,21 +36,20 @@
 
 package org.jooq.test;
 
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_639_NUMBERS_TABLE;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_658_REF;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_725_LOB_TEST;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_785;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_AUTHOR;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_BOOK;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_BOOK_STORE;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_BOOK_TO_BOOK_STORE;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_BOOLEANS;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_DATES;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_DIRECTORY;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_TRIGGERS;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.V_AUTHOR;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.V_BOOK;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.V_LIBRARY;
+import static org.jooq.test.h2.generatedclasses.Tables.T_639_NUMBERS_TABLE;
+import static org.jooq.test.h2.generatedclasses.Tables.T_658_REF;
+import static org.jooq.test.h2.generatedclasses.Tables.T_725_LOB_TEST;
+import static org.jooq.test.h2.generatedclasses.Tables.T_785;
+import static org.jooq.test.h2.generatedclasses.Tables.T_AUTHOR;
+import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK;
+import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_STORE;
+import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.h2.generatedclasses.Tables.T_BOOLEANS;
+import static org.jooq.test.h2.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.h2.generatedclasses.Tables.T_TRIGGERS;
+import static org.jooq.test.h2.generatedclasses.Tables.V_AUTHOR;
+import static org.jooq.test.h2.generatedclasses.Tables.V_BOOK;
+import static org.jooq.test.h2.generatedclasses.Tables.V_LIBRARY;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -78,24 +77,23 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.test.h2.generatedclasses.Routines;
+import org.jooq.test.h2.generatedclasses.Sequences;
+import org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TBookRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.T_658RefRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.T_785Record;
+import org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.test.hsqldb.generatedclasses.Public;
-import org.jooq.test.oracle.generatedclasses.test.Routines;
-import org.jooq.test.oracle.generatedclasses.test.Sequences;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.T_658RefRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
@@ -105,6 +103,7 @@ import org.jooq.util.hsqldb.HSQLDBFactory;
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings("static-access")
 public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
         TAuthorRecord,
         Object,
@@ -116,7 +115,7 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
         TArraysRecord,
         TDatesRecord,
         TBooleansRecord,
-        TDirectoryRecord,
+        XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
         XUnusedRecord,
@@ -537,28 +536,28 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
     }
 
     @Override
-    protected UpdatableTable<TDirectoryRecord> TDirectory() {
-        return T_DIRECTORY;
+    protected UpdatableTable<XUnusedRecord> TDirectory() {
+        return null;
     }
 
     @Override
-    protected TableField<TDirectoryRecord, Integer> TDirectory_ID() {
-        return T_DIRECTORY.ID;
+    protected TableField<XUnusedRecord, Integer> TDirectory_ID() {
+        return null;
     }
 
     @Override
-    protected TableField<TDirectoryRecord, Integer> TDirectory_PARENT_ID() {
-        return T_DIRECTORY.PARENT_ID;
+    protected TableField<XUnusedRecord, Integer> TDirectory_PARENT_ID() {
+        return null;
     }
 
     @Override
-    protected TableField<TDirectoryRecord, Integer> TDirectory_IS_DIRECTORY() {
-        return T_DIRECTORY.IS_DIRECTORY;
+    protected TableField<XUnusedRecord, Integer> TDirectory_IS_DIRECTORY() {
+        return null;
     }
 
     @Override
-    protected TableField<TDirectoryRecord, String> TDirectory_NAME() {
-        return T_DIRECTORY.NAME;
+    protected TableField<XUnusedRecord, String> TDirectory_NAME() {
+        return null;
     }
 
     @Override
@@ -623,23 +622,25 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
 
     @Override
     protected Field<? extends Number> FNumberField(Number n) {
-        return Routines.fNumber(n);
+        return Routines.fNumber((Integer) n);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Field<? extends Number> FNumberField(Field<? extends Number> n) {
-        return Routines.fNumber(n);
+        return Routines.fNumber((Field<Integer>) n);
     }
 
     @Override
     protected Field<? extends Number> F317Field(Number n1, Number n2, Number n3, Number n4) {
-        return Routines.f317(n1, n2, n3, n4);
+        return Routines.f317((Integer) n1, (Integer) n2, (Integer) n3, (Integer) n4);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Field<? extends Number> F317Field(Field<? extends Number> n1, Field<? extends Number> n2,
         Field<? extends Number> n3, Field<? extends Number> n4) {
-        return Routines.f317(n1, n2, n3, n4);
+        return Routines.f317((Field<Integer>) n1, (Field<Integer>) n2, (Field<Integer>) n3, (Field<Integer>) n4);
     }
 
     @Override

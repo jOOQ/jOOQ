@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 424431476;
+	private static final long serialVersionUID = -585269785;
 
 	/**
 	 * The singleton instance of PUBLIC.V_BOOK
@@ -72,6 +72,11 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generate
 	 * The table column <code>PUBLIC.V_BOOK.REC_VERSION</code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.lang.Integer> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.INTEGER, this);
+
+	/**
+	 * The table column <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>
+	 */
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	public VBook() {
 		super("V_BOOK", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);

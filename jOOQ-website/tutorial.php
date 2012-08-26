@@ -8,6 +8,7 @@ function getActiveMenu() {
 }
 function printContent() {
     global $root;
+    global $minorVersion;
     global $version;
 ?>
 <h2 id="intro"><a href="#intro" name="intro">#</a> Introduction</h2>
@@ -73,7 +74,7 @@ CREATE TABLE `posts` (
 In this step, we're going to use jOOQ's command line tools to generate classes that
 map to the Posts table we just created. More detailed information about how to
 set up the jOOQ code generator can be found here:<br/>
-<a href="http://www.jooq.org/manual/META/Configuration/" target="_blank" title="jOOQ manual pages about setting up the code generator">http://www.jooq.org/manual/META/Configuration/</a>
+<a href="http://www.jooq.org/doc/<?=$minorVersion?>/manual/code-generation/codegen-configuration" target="_blank" title="jOOQ manual pages about setting up the code generator">http://www.jooq.org/doc/<?=$minorVersion?>/manual/code-generation/codegen-configuration</a>
 </p>
 <p>
 The easiest way to generate a schema is to copy the jOOQ jar files (there should be 3)
@@ -365,7 +366,7 @@ public class Main {
 <h2 id="step6"><a href="#step6" name="step6">#</a> Step 6: Explore!</h2>
 <p>
 jOOQ has grown to be a comprehensive SQL library. For more information, please consider the manual:<br/>
-<a href="http://www.jooq.org/manual/" title="jOOQ Manual">http://www.jooq.org/manual/</a>
+<a href="http://www.jooq.org/doc/<?=$minorVersion?>/manual" title="jOOQ Manual">http://www.jooq.org/doc/<?=$minorVersion?>/manual</a>
 </p>
 <p>
 ... explore the Javadoc:<br/>

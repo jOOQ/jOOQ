@@ -54,7 +54,9 @@ Telling the world:<br/>
 <h3>Contributing code</h3>
 <p>... or contribute code! If you want to share code, please follow these instructions</p>
 <ul>
-	<li>Check out the codebase from GitHub: <a href="http://github.com/jOOQ/jOOQ" title="jOOQ GitHub repository">git@github.com:jOOQ/jOOQ.git</a></li>
+    <li>If you haven't already, download Eclipse (Indigo or Juno) from <a href="http://www.eclipse.org/">http://www.eclipse.org/</a>. While you could develop with other IDEs as well, you wouldn't profit from all the installed launch configurations, etc.</li>
+    <li>Be sure that you have <a href="http://www.eclipse.org/egit/">http://www.eclipse.org/egit/</a> installed in your Eclipse distribution</li>
+    <li>Check out the codebase from GitHub: <a href="http://github.com/jOOQ/jOOQ" title="jOOQ GitHub repository">git@github.com:jOOQ/jOOQ.git</a></li>
     <li>Import the jOOQ projects into <a href="http://www.eclipse.org/" title="jOOQ developers use Eclipse">Eclipse</a></li>
     <li>If you haven't already, get <a href="http://m2eclipse.sonatype.org/sites/m2e/">M2E</a>, the Eclipse Maven plugin to build jOOQ with Maven in Eclipse (The one from Sonatype, NOT the one from Eclipse)</li>
     <li>Use the Eclipse formatting settings that have been checked in with the projects. Keeps the code <a href="http://www.extremeprogramming.org/rules/standards.html">nice and clean</a>. Your code should not change (not much), if formatted with Ctrl-Shift-F. But don't format jOOQ DSL query code!</li>

@@ -39,6 +39,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Factory.getNewFactory;
+import static org.jooq.impl.Util.getDriverConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.math.BigDecimal;
@@ -47,6 +48,7 @@ import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -344,7 +346,12 @@ public final class FieldTypeHelper {
             stream.writeString(value.toString());
         }
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            stream.writeArray(((ArrayRecord<?>) value).createArray());
+
+            // [#1544] We can safely assume that localConfiguration has been
+            // set on DefaultBindContext, prior to serialising arrays to SQLOut
+            Connection connection = getDriverConnection(DefaultBindContext.LOCAL_CONFIGURATION.get());
+            ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
+            stream.writeArray(on(connection).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             stream.writeString(((EnumType) value).getLiteral());

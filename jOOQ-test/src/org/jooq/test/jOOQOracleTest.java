@@ -94,6 +94,7 @@ import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
+import org.jooq.impl.Factory;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -129,6 +130,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.UInvalidTable;
 import org.jooq.test.oracle.generatedclasses.test.udt.UInvalidType;
 import org.jooq.test.oracle.generatedclasses.test.udt.UStreetType;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.OInvalidTypeRecord;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UBookArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord;
@@ -138,6 +140,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UInvalidTypeRecord
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks;
 import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record;
@@ -1232,5 +1235,15 @@ public class jOOQOracleTest extends jOOQAbstractTest<
                     .from(TBook())
                     .fetchOne()
                     .into(Integer[].class)));
+    }
+
+    @Test
+    public void testOracleMultiSchemaFactories() throws Exception {
+        Factory create = new OracleFactory(getConnectionMultiSchema());
+
+        UAddressTypeRecord address = new UAddressTypeRecord();
+        address.setStreet(new UStreetTypeRecord());
+        address.getStreet().setNo("15");
+        assertEquals("15", Routines.pEnhanceAddress1(create, address));
     }
 }

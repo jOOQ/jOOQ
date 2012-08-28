@@ -1666,8 +1666,9 @@ AND TITLE = '1984']]></sql>
 <sql>--   SELECT ..
 --     FROM ..
 --    WHERE ..
- CONNECT BY [NOCYCLE] condition [AND condition, ...] [START WITH condition]
--- GROUP BY ..</sql>
+ CONNECT BY [ NOCYCLE ] condition [ AND condition, ... ] [ START WITH condition ]
+-- GROUP BY ..
+-- ORDER [ SIBLINGS ] BY ..</sql>
 
 											<p>
 												An example for an iterative query, iterating through values between 1 and 5 is this:
@@ -1689,7 +1690,7 @@ create.select(level())
   SUBSTR(SYS_CONNECT_BY_PATH(DIRECTORY.NAME, '/'), 2)
 FROM DIRECTORY
 CONNECT BY 
-  PRIOR DIRECTORY.ID = DIRECTORY_PARENT_ID
+  PRIOR DIRECTORY.ID = DIRECTORY.PARENT_ID
 START WITH DIRECTORY.PARENT_ID IS NULL
 ORDER BY 1]]></sql>
 <java><![CDATA[.select(
@@ -1733,6 +1734,27 @@ ORDER BY 1]]></sql>
 											<p>
 												Note that this syntax is also supported in the CUBRID database.
 											</p>
+											
+											<h3>ORDER SIBLINGS</h3>
+											<p>
+												The Oracle database allows for specifying a SIBLINGS keyword in the <reference id="order-by-clause" title="ORDER BY clause"/>. Instead of ordering the overall result, this will only order siblings among each other, keeping the hierarchy intact. An example is given here:
+											</p>
+											
+<code-pair>
+<sql><![CDATA[SELECT DIRECTORY.NAME
+FROM DIRECTORY
+CONNECT BY 
+  PRIOR DIRECTORY.ID = DIRECTORY.PARENT_ID
+START WITH DIRECTORY.PARENT_ID IS NULL
+ORDER SIBLINGS BY 1]]></sql>
+<java><![CDATA[.select(DIRECTORY.NAME)
+.from(DIRECTORY)
+.connectBy(
+   prior(DIRECTORY.ID).equal(DIRECTORY.PARENT_ID))
+.startWith(DIRECTORY.PARENT_ID.isNull())
+.orderSiblingsBy(1);]]></java>
+</code-pair>
+											
 										</content>
 									</section>
 
@@ -1951,6 +1973,12 @@ ORDER BY CASE TITLE
 											<h3>jOOQ's understanding of SELECT .. ORDER BY</h3>
 											<p>
 												The SQL standard defines that a "query expression" can be ordered, and that query expressions can contain <reference id="union-clause" title="UNION, INTERSECT and EXCEPT clauses"/>, whose subqueries cannot be ordered. While this is defined as such in the SQL standard, many databases allowing for the non-standard <reference id="limit-clause" title="LIMIT clause"/> in one way or another, do not adhere to this part of the SQL standard. Hence, jOOQ allows for ordering all SELECT statements, regardless whether they are constructed as a part of a UNION or not. Corner-cases are handled internally by jOOQ, by introducing synthetic subselects to adhere to the correct syntax, where this is needed.
+											</p>
+											
+											
+											<h3>Oracle's ORDER SIBLINGS BY clause</h3>
+											<p>
+												jOOQ also supports Oracle's SIBLINGS keyword to be used with ORDER BY clauses for <reference id="connect-by-clause" title="hierarchical queries using CONNECT BY"/>
 											</p>
 										</content>
 									</section>

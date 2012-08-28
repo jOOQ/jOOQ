@@ -10,7 +10,7 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 2.4.1 - August 28, 2012
+Version 2.3.3 - August 28, 2012
 =================================================================
 
 This is a minor patch release with some useful fixes for the 2.4 

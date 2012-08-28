@@ -70,7 +70,7 @@ import org.joox.Match;
 @SuppressWarnings("resource")
 public class Transform {
     private static final FopFactory fopFactory = FopFactory.newInstance();
-    private static final String version = "2.5";
+    private static final String version = "2.6";
 
     public static void main(String[] args) throws Exception {
         System.out.println("Transforming multi-page manual");

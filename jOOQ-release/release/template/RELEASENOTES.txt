@@ -10,6 +10,32 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.4.1 - August 28, 2012
+=================================================================
+
+This is a minor patch release with some useful fixes for the 2.4 
+branch
+
+Bug fixes
+---------
+#1537 - Factory.batchStore() renders bad SQL for Postgres. The 
+        RETURNING clause is not allowed in batch INSERTs
+#1556 - Add javax.validation API to full deliverable
+#1572 - Use Thread.currentThread().getContextClassLoader() to 
+        load ExecuteListener classes as a workaround for 
+        experienced class loading problems when using OSGi
+#1650 - jOOR fix #16: Can't call Reflect.create(A, B, null)
+#1660 - Factory.renderContext().castMode(CastMode.NEVER)
+        .render(query) doesn't work. CastMode is not applied
+#1667 - Bad variable binding when NULLS FIRST, NULLS LAST is 
+        simulated in SQL Server and other databases
+#1673 - Result.formatXML() and Result.intoXML() do not render 
+        namespaces correctly
+#1693 - Cannot bind UDT values from other schemata to stored 
+        procedures
+#1632 - Improve the performance of various DefaultRenderContext
+        methods, by locally caching Settings values locally
+        
 Version 2.3.2 - June 3, 2012
 =================================================================
 This is a minor patch release with some useful fixes for the 2.3

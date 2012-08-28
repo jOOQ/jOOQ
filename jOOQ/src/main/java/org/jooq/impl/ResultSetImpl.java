@@ -61,6 +61,8 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
 
+import org.jooq.AttachableInternal;
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -1233,7 +1235,19 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
                     Schema schema = table.getSchema();
 
                     if (schema != null) {
-                        return schema.getName();
+                        Configuration configuration = ((AttachableInternal) result).getConfiguration();
+                        Schema mapped = null;
+
+                        if (configuration != null) {
+                            mapped = Util.getMappedSchema(configuration, schema);
+                        }
+
+                        if (mapped != null) {
+                            return mapped.getName();
+                        }
+                        else {
+                            return schema.getName();
+                        }
                     }
                 }
             }

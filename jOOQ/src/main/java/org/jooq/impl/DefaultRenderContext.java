@@ -46,6 +46,7 @@ import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
+import org.jooq.conf.Settings;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -56,22 +57,32 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = -8358225526567622252L;
+    private static final long        serialVersionUID = -8358225526567622252L;
 
-    private final StringBuilder sql;
-    private boolean             inline;
-    private boolean             renderNamedParams;
-    private boolean             qualify          = true;
-    private int                 alias;
-    private CastMode            castMode         = CastMode.DEFAULT;
-    private SQLDialect[]        castDialects;
-    private int                 indent;
-    private Stack<Integer>      indentLock       = new Stack<Integer>();
+    private final StringBuilder      sql;
+    private boolean                  inline;
+    private boolean                  renderNamedParams;
+    private boolean                  qualify          = true;
+    private int                      alias;
+    private CastMode                 castMode         = CastMode.DEFAULT;
+    private SQLDialect[]             castDialects;
+    private int                      indent;
+    private Stack<Integer>           indentLock       = new Stack<Integer>();
+
+    // [#1632] Cached values from Settings
+    private final RenderKeywordStyle renderKeywordStyle;
+    private final RenderNameStyle    renderNameStyle;
+    private final boolean            renderFormatted;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration);
 
+        Settings settings = configuration.getSettings();
+
         this.sql = new StringBuilder();
+        this.renderKeywordStyle = settings.getRenderKeywordStyle();
+        this.renderFormatted = Boolean.TRUE.equals(settings.isRenderFormatted());
+        this.renderNameStyle = settings.getRenderNameStyle();
     }
 
     DefaultRenderContext(RenderContext context) {
@@ -109,7 +120,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext keyword(String keyword) {
-        if (RenderKeywordStyle.UPPER == getSettings().getRenderKeywordStyle()) {
+        if (RenderKeywordStyle.UPPER == renderKeywordStyle) {
             return sql(keyword.toUpperCase());
         }
         else {
@@ -119,7 +130,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext sql(String s) {
-        if (s != null && Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+        if (s != null && renderFormatted) {
             sql.append(s.replaceAll("[\\n\\r]", "$0" + indentation()));
         }
         else {
@@ -143,7 +154,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatNewLine() {
-        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+        if (renderFormatted) {
             sql.append("\n");
             sql.append(indentation());
         }
@@ -157,7 +168,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatSeparator() {
-        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+        if (renderFormatted) {
             formatNewLine();
         }
         else {
@@ -179,7 +190,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentStart(int i) {
-        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+        if (renderFormatted) {
             indent += i;
         }
 
@@ -188,7 +199,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentEnd(int i) {
-        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+        if (renderFormatted) {
             indent -= i;
         }
 
@@ -197,7 +208,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentLockStart() {
-        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+        if (renderFormatted) {
             indentLock.push(indent);
             String[] lines = sql.toString().split("[\\n\\r]");
             indent = lines[lines.length - 1].length();
@@ -208,7 +219,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentLockEnd() {
-        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+        if (renderFormatted) {
             indent = indentLock.pop();
         }
 
@@ -223,15 +234,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             return this;
         }
 
-        RenderNameStyle style = configuration.getSettings().getRenderNameStyle();
-
-        if (RenderNameStyle.LOWER == style) {
+        if (RenderNameStyle.LOWER == renderNameStyle) {
             sql(literal.toLowerCase());
         }
-        else if (RenderNameStyle.UPPER == style) {
+        else if (RenderNameStyle.UPPER == renderNameStyle) {
             sql(literal.toUpperCase());
         }
-        else if (RenderNameStyle.AS_IS == style) {
+        else if (RenderNameStyle.AS_IS == renderNameStyle) {
             sql(literal);
         }
         else {

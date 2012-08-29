@@ -45,7 +45,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class TableList extends NamedQueryPartList<Table<?>> {
+class TableList extends QueryPartList<Table<?>> {
 
     private static final long serialVersionUID = -8545559185481762229L;
 

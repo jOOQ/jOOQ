@@ -47,7 +47,7 @@ import org.jooq.FieldProvider;
 /**
  * @author Lukas Eder
  */
-class FieldList extends NamedQueryPartList<Field<?>> implements FieldProvider {
+class FieldList extends QueryPartList<Field<?>> implements FieldProvider {
 
     private static final long                serialVersionUID = -6911012275707591576L;
 

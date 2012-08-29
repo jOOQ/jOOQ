@@ -129,6 +129,15 @@ import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
 import org.jooq.Truncate;
+import org.jooq.Tuple1;
+import org.jooq.Tuple2;
+import org.jooq.Tuple3;
+import org.jooq.Tuple4;
+import org.jooq.Tuple5;
+import org.jooq.Tuple6;
+import org.jooq.Tuple7;
+import org.jooq.Tuple8;
+import org.jooq.TupleN;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
@@ -5832,6 +5841,151 @@ public class Factory implements FactoryOperations {
         }
 
         return result;
+    }
+
+    /**
+     * Create a tuple of arity <code>1</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1> Tuple1<T1> tuple(T1 t1) {
+        return tuple(val(t1));
+    }
+
+    /**
+     * Create a tuple of arity <code>2</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2> Tuple2<T1, T2> tuple(T1 t1, T2 t2) {
+        return tuple(val(t1), val(t2));
+    }
+
+    /**
+     * Create a tuple of arity <code>3</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3> Tuple3<T1, T2, T3> tuple(T1 t1, T2 t2, T3 t3) {
+        return tuple(val(t1), val(t2), val(t3));
+    }
+
+    /**
+     * Create a tuple of arity <code>4</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3, T4> Tuple4<T1, T2, T3, T4> tuple(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return tuple(val(t1), val(t2), val(t3), val(t4));
+    }
+
+    /**
+     * Create a tuple of arity <code>5</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3, T4, T5> Tuple5<T1, T2, T3, T4, T5> tuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return tuple(val(t1), val(t2), val(t3), val(t4), val(t5));
+    }
+
+    /**
+     * Create a tuple of arity <code>6</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6> Tuple6<T1, T2, T3, T4, T5, T6> tuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return tuple(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6));
+    }
+
+    /**
+     * Create a tuple of arity <code>7</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7> Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return tuple(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7));
+    }
+
+    /**
+     * Create a tuple of arity <code>8</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8> Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return tuple(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8));
+    }
+
+    /**
+     * Create a tuple of arity <code>N > 8</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static TupleN tuple(Object... values) {
+        return tuple(vals(values).toArray(new Field[0]));
+    }
+
+    /**
+     * Create a tuple of arity <code>1</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1> Tuple1<T1> tuple(Field<T1> t1) {
+        return new TupleImpl<T1, Object, Object, Object, Object, Object, Object, Object>(t1);
+    }
+
+    /**
+     * Create a tuple of arity <code>2</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2> Tuple2<T1, T2> tuple(Field<T1> t1, Field<T2> t2) {
+        return new TupleImpl<T1, T2, Object, Object, Object, Object, Object, Object>(t1, t2);
+    }
+
+    /**
+     * Create a tuple of arity <code>3</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3> Tuple3<T1, T2, T3> tuple(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return new TupleImpl<T1, T2, T3, Object, Object, Object, Object, Object>(t1, t2, t3);
+    }
+
+    /**
+     * Create a tuple of arity <code>4</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3, T4> Tuple4<T1, T2, T3, T4> tuple(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return new TupleImpl<T1, T2, T3, T4, Object, Object, Object, Object>(t1, t2, t3, t4);
+    }
+
+    /**
+     * Create a tuple of arity <code>5</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3, T4, T5> Tuple5<T1, T2, T3, T4, T5> tuple(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return new TupleImpl<T1, T2, T3, T4, T5, Object, Object, Object>(t1, t2, t3, t4, t5);
+    }
+
+    /**
+     * Create a tuple of arity <code>6</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6> Tuple6<T1, T2, T3, T4, T5, T6> tuple(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return new TupleImpl<T1, T2, T3, T4, T5, T6, Object, Object>(t1, t2, t3, t4, t5, t6);
+    }
+
+    /**
+     * Create a tuple of arity <code>7</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7> Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return new TupleImpl<T1, T2, T3, T4, T5, T6, T7, Object>(t1, t2, t3, t4, t5, t6, t7);
+    }
+
+    /**
+     * Create a tuple of arity <code>8</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8> Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return new TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>(t1, t2, t3, t4, t5, t6, t7, t8);
+    }
+
+    /**
+     * Create a tuple of arity <code>N > 8</code>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public static TupleN tuple(Field<?>... values) {
+        return new TupleImpl(values);
     }
 
     // -------------------------------------------------------------------------

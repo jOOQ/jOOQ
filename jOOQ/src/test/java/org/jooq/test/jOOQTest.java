@@ -56,6 +56,7 @@ import static org.jooq.impl.Factory.replace;
 import static org.jooq.impl.Factory.round;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.impl.Factory.tuple;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.test.Table1.FIELD_DATE1;
 import static org.jooq.test.Table1.FIELD_ID1;
@@ -590,6 +591,94 @@ public class jOOQTest {
         assertEquals(
             Factory.year((java.util.Date) null),
             Factory.year((Field<java.util.Date>) null));
+    }
+
+    @Test
+    public void testTuples() throws Exception {
+        assertEquals("(?)", r_ref().render(tuple(1)));
+        assertEquals("(1)", r_refI().render(tuple(1)));
+        assertEquals("(?, ?)", r_ref().render(tuple(1, "2")));
+        assertEquals("(1, '2')", r_refI().render(tuple(1, "2")));
+        assertEquals("(?, ?, ?)", r_ref().render(tuple(1, "2", 3)));
+        assertEquals("(1, '2', 3)", r_refI().render(tuple(1, "2", 3)));
+        assertEquals("(?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4")));
+        assertEquals("(1, '2', 3, '4')", r_refI().render(tuple(1, "2", 3, "4")));
+        assertEquals("(?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5)));
+        assertEquals("(1, '2', 3, '4', 5)", r_refI().render(tuple(1, "2", 3, "4", 5)));
+        assertEquals("(?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6")));
+        assertEquals("(1, '2', 3, '4', 5, '6')", r_refI().render(tuple(1, "2", 3, "4", 5, "6")));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7)));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7)", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7)));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8")));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8')", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8")));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9)));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8', 9)", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9)));
+
+        context.checking(new Expectations() {{
+            int i = 0;
+
+            oneOf(statement).setInt(++i, i);
+            oneOf(statement).setString(++i, "" + i);
+            oneOf(statement).setInt(++i, i);
+            oneOf(statement).setString(++i, "" + i);
+            oneOf(statement).setInt(++i, i);
+            oneOf(statement).setString(++i, "" + i);
+            oneOf(statement).setInt(++i, i);
+            oneOf(statement).setString(++i, "" + i);
+            oneOf(statement).setInt(++i, i);
+        }});
+
+        assertEquals(10, b_ref().bind(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9)).peekIndex());
+        context.assertIsSatisfied();
+    }
+
+    @Test
+    public void testTupleCompareConditions() throws Exception {
+        assertEquals("(?) = (?)", r_ref().render(tuple(1).eq(tuple(1))));
+        assertEquals("(1) = (1)", r_refI().render(tuple(1).eq(tuple(1))));
+        assertEquals("(?, ?) = (?, ?)", r_ref().render(tuple(1, "2").eq(tuple(1, "2"))));
+        assertEquals("(1, '2') = (1, '2')", r_refI().render(tuple(1, "2").eq(tuple(1, "2"))));
+        assertEquals("(?, ?, ?) = (?, ?, ?)", r_ref().render(tuple(1, "2", 3).eq(tuple(1, "2", 3))));
+        assertEquals("(1, '2', 3) = (1, '2', 3)", r_refI().render(tuple(1, "2", 3).eq(tuple(1, "2", 3))));
+        assertEquals("(?, ?, ?, ?) = (?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4").eq(tuple(1, "2", 3, "4"))));
+        assertEquals("(1, '2', 3, '4') = (1, '2', 3, '4')", r_refI().render(tuple(1, "2", 3, "4").eq(tuple(1, "2", 3, "4"))));
+        assertEquals("(?, ?, ?, ?, ?) = (?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5).eq(tuple(1, "2", 3, "4", 5))));
+        assertEquals("(1, '2', 3, '4', 5) = (1, '2', 3, '4', 5)", r_refI().render(tuple(1, "2", 3, "4", 5).eq(tuple(1, "2", 3, "4", 5))));
+        assertEquals("(?, ?, ?, ?, ?, ?) = (?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6").eq(tuple(1, "2", 3, "4", 5, "6"))));
+        assertEquals("(1, '2', 3, '4', 5, '6') = (1, '2', 3, '4', 5, '6')", r_refI().render(tuple(1, "2", 3, "4", 5, "6").eq(tuple(1, "2", 3, "4", 5, "6"))));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?) = (?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7).eq(tuple(1, "2", 3, "4", 5, "6", 7))));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7) = (1, '2', 3, '4', 5, '6', 7)", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7).eq(tuple(1, "2", 3, "4", 5, "6", 7))));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?) = (?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8").eq(tuple(1, "2", 3, "4", 5, "6", 7, "8"))));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8') = (1, '2', 3, '4', 5, '6', 7, '8')", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8").eq(tuple(1, "2", 3, "4", 5, "6", 7, "8"))));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?, ?) = (?, ?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9))));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8', 9) = (1, '2', 3, '4', 5, '6', 7, '8', 9)", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9))));
+
+        context.checking(new Expectations() {{
+            int i = 0;
+
+            oneOf(statement).setInt(++i, i);
+            oneOf(statement).setString(++i, "" + i);
+            oneOf(statement).setInt(++i, i);
+            oneOf(statement).setString(++i, "" + i);
+            oneOf(statement).setInt(++i, i);
+            oneOf(statement).setString(++i, "" + i);
+            oneOf(statement).setInt(++i, i);
+            oneOf(statement).setString(++i, "" + i);
+            oneOf(statement).setInt(++i, i);
+
+            oneOf(statement).setInt(++i, (i - 9));
+            oneOf(statement).setString(++i, "" + (i - 9));
+            oneOf(statement).setInt(++i, (i - 9));
+            oneOf(statement).setString(++i, "" + (i - 9));
+            oneOf(statement).setInt(++i, (i - 9));
+            oneOf(statement).setString(++i, "" + (i - 9));
+            oneOf(statement).setInt(++i, (i - 9));
+            oneOf(statement).setString(++i, "" + (i - 9));
+            oneOf(statement).setInt(++i, (i - 9));
+        }});
+
+        assertEquals(19, b_ref().bind(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(1, "2", 3, "4", 5, "6", 7, "8", 9)).peekIndex());
+        context.assertIsSatisfied();
     }
 
     @Test

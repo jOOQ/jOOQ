@@ -1012,7 +1012,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * Create a condition to check this field against a subquery
      * <p>
      * Note that the subquery must return exactly one field. This is not checked
-     * by jOOQ and will result in syntax errors on the database, if not used
+     * by jOOQ and will result in syntax errors in the database, if not used
      * correctly.
      * <p>
      * SQL: <code>this in (select...)</code>
@@ -1060,7 +1060,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * Create a condition to check this field against a subquery
      * <p>
      * Note that the subquery must return exactly one field. This is not checked
-     * by jOOQ and will result in syntax errors on the database, if not used
+     * by jOOQ and will result in syntax errors in the database, if not used
      * correctly.
      * <p>
      * Note that if any of the passed values is <code>NULL</code>, then the

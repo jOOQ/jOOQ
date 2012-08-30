@@ -2808,6 +2808,11 @@ new Factory(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 					<section id="column-expressions">
 						<title>Column expressions</title>
 						<content>
+						    <p>
+						    	Column expressions can be used in various SQL clauses in order to refer to one or several columns. This chapter explains how to form various types of column expressions with jOOQ. A particular type of column expression is given in the section about <reference id="tuples" title="tuples or row value expressions"/>, where an expression may have a degree of more than one.
+						    </p>
+						
+						    <h3>Using column expressions in jOOQ</h3>
 							<p>
 								jOOQ allows you to freely create arbitrary column expressions using a fluent expression construction API. Many expressions can be formed as functions from <reference id="factory" title="Factory methods"/>, other expressions can be formed based on a pre-existing column expression. For example:
 							</p>
@@ -3820,6 +3825,36 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 									</ul>
 								</content>
 							</section>
+							
+							<section id="tuples">
+								<title>Tuples or row value expressions</title>
+								<content>
+									<p>
+										According to the SQL standard, row value expressions can have a degree of more than one. This is commonly used in the <reference id="insert-statement" title="INSERT statement"/>, where the VALUES row value constructor allows for providing a row value expression as a source for INSERT data. Row value expressions can appear in various other places, though. They are supported by jOOQ as tuples. jOOQ's <reference id="factory" title="Factory"/> allows for the construction of type-safe tuples up to the degree / arity of 8. Higher-degree tuples are supported as well, but without any type-safety. Tuple types are modelled as follows:
+									</p>
+									
+<java><![CDATA[// The Factory provides overloaded tuple constructor methods:
+public static <T1> Tuple1<T1> tuple(T1 t1) { ... }
+public static <T1, T2> Tuple2<T1, T2> tuple(T1 t1, T2 t2) { ... }
+public static <T1, T2, T3> Tuple3<T1, T2, T3> tuple(T1 t1, T2 t2, T3 t3) { ... }
+public static <T1, T2, T3, T4> Tuple4<T1, T2, T3, T4> tuple(T1 t1, T2 t2, T3 t3, T4 t4) { ... }
+
+// [ ... idem for Tuple5, Tuple6, Tuple7, Tuple8 ... ]
+
+// Degrees of more than 8 are supported without type-safety
+public static TupleN tuple(Object... values) { ... }]]></java>
+
+									<h3>Using tuples in predicates</h3>
+                                	<p>
+                                		Tuples are incompatible with most other <reference id="queryparts" title="QueryParts"/>, but they can be used as a basis for constructing various <reference id="conditional-expressions" title="conditional expressions"/>, such as <reference id="comparison-predicate" title="comparison predicates"/>, <reference id="in-predicate" title="IN predicates"/>, or the "degree 2 tuple-only" <reference id="overlaps-predicate" title="OVERLAPS predicate"/>. See the relevant sections for more details about how to use tuples in predicates.
+                                	</p>
+                                	
+                                	<h3>Using tuples in UPDATE statements</h3>
+                                	<p>
+                                		The <reference id="update-statement" title="UPDATE statement"/> also supports a variant where tuples are updated, rather than single columns. See the relevant section for more details
+                                	</p>
+								</content>
+							</section>
 						</sections>
 					</section>
 
@@ -4320,6 +4355,11 @@ notExists(create.selectOne().from(BOOK)
 										<a href="http://blog.jooq.org/2012/07/27/not-in-vs-not-exists-vs-left-join-is-null-mysql/">http://blog.jooq.org/2012/07/27/not-in-vs-not-exists-vs-left-join-is-null-mysql/</a>
 									</p>
 								</content>
+							</section>
+							
+							<section id="overlaps-predicate">
+								<title>OVERLAPS predicate</title>
+								<content></content>
 							</section>
 						</sections>
 					</section>

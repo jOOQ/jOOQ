@@ -634,24 +634,24 @@ public class jOOQTest {
 
     @Test
     public void testTupleCompareConditions() throws Exception {
-        assertEquals("(?) = (?)", r_ref().render(tuple(1).eq(tuple(1))));
-        assertEquals("(1) = (1)", r_refI().render(tuple(1).eq(tuple(1))));
-        assertEquals("(?, ?) = (?, ?)", r_ref().render(tuple(1, "2").eq(tuple(1, "2"))));
-        assertEquals("(1, '2') = (1, '2')", r_refI().render(tuple(1, "2").eq(tuple(1, "2"))));
-        assertEquals("(?, ?, ?) = (?, ?, ?)", r_ref().render(tuple(1, "2", 3).eq(tuple(1, "2", 3))));
-        assertEquals("(1, '2', 3) = (1, '2', 3)", r_refI().render(tuple(1, "2", 3).eq(tuple(1, "2", 3))));
-        assertEquals("(?, ?, ?, ?) = (?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4").eq(tuple(1, "2", 3, "4"))));
-        assertEquals("(1, '2', 3, '4') = (1, '2', 3, '4')", r_refI().render(tuple(1, "2", 3, "4").eq(tuple(1, "2", 3, "4"))));
-        assertEquals("(?, ?, ?, ?, ?) = (?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5).eq(tuple(1, "2", 3, "4", 5))));
-        assertEquals("(1, '2', 3, '4', 5) = (1, '2', 3, '4', 5)", r_refI().render(tuple(1, "2", 3, "4", 5).eq(tuple(1, "2", 3, "4", 5))));
-        assertEquals("(?, ?, ?, ?, ?, ?) = (?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6").eq(tuple(1, "2", 3, "4", 5, "6"))));
-        assertEquals("(1, '2', 3, '4', 5, '6') = (1, '2', 3, '4', 5, '6')", r_refI().render(tuple(1, "2", 3, "4", 5, "6").eq(tuple(1, "2", 3, "4", 5, "6"))));
-        assertEquals("(?, ?, ?, ?, ?, ?, ?) = (?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7).eq(tuple(1, "2", 3, "4", 5, "6", 7))));
-        assertEquals("(1, '2', 3, '4', 5, '6', 7) = (1, '2', 3, '4', 5, '6', 7)", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7).eq(tuple(1, "2", 3, "4", 5, "6", 7))));
-        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?) = (?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8").eq(tuple(1, "2", 3, "4", 5, "6", 7, "8"))));
-        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8') = (1, '2', 3, '4', 5, '6', 7, '8')", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8").eq(tuple(1, "2", 3, "4", 5, "6", 7, "8"))));
-        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?, ?) = (?, ?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9))));
-        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8', 9) = (1, '2', 3, '4', 5, '6', 7, '8', 9)", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9))));
+        assertEquals("(?) = ((?))", r_ref().render(tuple(1).eq(tuple(1))));
+        assertEquals("(1) = ((1))", r_refI().render(tuple(1).eq(tuple(1))));
+        assertEquals("(?, ?) = ((?, ?))", r_ref().render(tuple(1, "2").eq(tuple(1, "2"))));
+        assertEquals("(1, '2') = ((1, '2'))", r_refI().render(tuple(1, "2").eq(tuple(1, "2"))));
+        assertEquals("(?, ?, ?) = ((?, ?, ?))", r_ref().render(tuple(1, "2", 3).eq(tuple(1, "2", 3))));
+        assertEquals("(1, '2', 3) = ((1, '2', 3))", r_refI().render(tuple(1, "2", 3).eq(tuple(1, "2", 3))));
+        assertEquals("(?, ?, ?, ?) = ((?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4").eq(tuple(1, "2", 3, "4"))));
+        assertEquals("(1, '2', 3, '4') = ((1, '2', 3, '4'))", r_refI().render(tuple(1, "2", 3, "4").eq(tuple(1, "2", 3, "4"))));
+        assertEquals("(?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4", 5).eq(tuple(1, "2", 3, "4", 5))));
+        assertEquals("(1, '2', 3, '4', 5) = ((1, '2', 3, '4', 5))", r_refI().render(tuple(1, "2", 3, "4", 5).eq(tuple(1, "2", 3, "4", 5))));
+        assertEquals("(?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4", 5, "6").eq(tuple(1, "2", 3, "4", 5, "6"))));
+        assertEquals("(1, '2', 3, '4', 5, '6') = ((1, '2', 3, '4', 5, '6'))", r_refI().render(tuple(1, "2", 3, "4", 5, "6").eq(tuple(1, "2", 3, "4", 5, "6"))));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7).eq(tuple(1, "2", 3, "4", 5, "6", 7))));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7) = ((1, '2', 3, '4', 5, '6', 7))", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7).eq(tuple(1, "2", 3, "4", 5, "6", 7))));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8").eq(tuple(1, "2", 3, "4", 5, "6", 7, "8"))));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8') = ((1, '2', 3, '4', 5, '6', 7, '8'))", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8").eq(tuple(1, "2", 3, "4", 5, "6", 7, "8"))));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9))));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8', 9) = ((1, '2', 3, '4', 5, '6', 7, '8', 9))", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9))));
 
         context.checking(new Expectations() {{
             int i = 0;
@@ -876,6 +876,11 @@ public class jOOQTest {
 
             context.assertIsSatisfied();
         }
+
+        // [#1771] Negated combined conditions shouldn't render extra parentheses
+        Condition c = not(val(1).eq(1).and(val(2).eq(2)));
+        assertEquals("not(1 = 1 and 2 = 2)", r_refI().render(c));
+        assertEquals("not(? = ? and ? = ?)", r_ref().render(c));
     }
 
     @Test

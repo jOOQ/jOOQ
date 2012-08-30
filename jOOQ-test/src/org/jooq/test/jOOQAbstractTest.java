@@ -973,6 +973,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testTupleOverlapsCondition() throws Exception {
+        new TupleTests(this).testTupleOverlapsCondition();
+    }
+
+    @Test
     public void testIgnoreCase() throws Exception {
         new PredicateTests(this).testIgnoreCase();
     }

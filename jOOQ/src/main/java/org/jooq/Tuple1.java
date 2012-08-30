@@ -45,7 +45,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import java.util.Collection;
 
 /**
- * A model type for a tuple with arity <code>1</code>
+ * A model type for a tuple with degree <code>1</code>
  * <p>
  * Note: Not all databases support tuples, but many tuple operations can be
  * simulated on all databases. See relevant tuple method Javadocs for details.
@@ -53,6 +53,19 @@ import java.util.Collection;
  * @author Lukas Eder
  */
 public interface Tuple1<T1> extends Tuple {
+
+    // ------------------------------------------------------------------------
+    // Field accessors
+    // ------------------------------------------------------------------------
+
+    /**
+     * Get the first field
+     */
+    Field<T1> field1();
+
+    // ------------------------------------------------------------------------
+    // Tuple DSL API
+    // ------------------------------------------------------------------------
 
     /**
      * Compare this tuple with another tuple for equality
@@ -213,7 +226,7 @@ public interface Tuple1<T1> extends Tuple {
     /**
      * Compare this tuple with a subselect for equality
      * <p>
-     * Note that the subquery must return a table of the same arity as this
+     * Note that the subquery must return a table of the same degree as this
      * tuple. This is not checked by jOOQ and will result in syntax errors in
      * the database, if not used correctly.
      */
@@ -247,7 +260,7 @@ public interface Tuple1<T1> extends Tuple {
     /**
      * Compare this tuple with a subselect for equality
      * <p>
-     * Note that the subquery must return a table of the same arity as this
+     * Note that the subquery must return a table of the same degree as this
      * tuple. This is not checked by jOOQ and will result in syntax errors in
      * the database, if not used correctly.
      */

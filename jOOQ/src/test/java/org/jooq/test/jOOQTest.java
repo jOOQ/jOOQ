@@ -100,6 +100,15 @@ import org.jooq.SelectQuery;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
 import org.jooq.Truncate;
+import org.jooq.Tuple1;
+import org.jooq.Tuple2;
+import org.jooq.Tuple3;
+import org.jooq.Tuple4;
+import org.jooq.Tuple5;
+import org.jooq.Tuple6;
+import org.jooq.Tuple7;
+import org.jooq.Tuple8;
+import org.jooq.TupleN;
 import org.jooq.UpdateQuery;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
@@ -595,24 +604,91 @@ public class jOOQTest {
 
     @Test
     public void testTuples() throws Exception {
-        assertEquals("(?)", r_ref().render(tuple(1)));
-        assertEquals("(1)", r_refI().render(tuple(1)));
-        assertEquals("(?, ?)", r_ref().render(tuple(1, "2")));
-        assertEquals("(1, '2')", r_refI().render(tuple(1, "2")));
-        assertEquals("(?, ?, ?)", r_ref().render(tuple(1, "2", 3)));
-        assertEquals("(1, '2', 3)", r_refI().render(tuple(1, "2", 3)));
-        assertEquals("(?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4")));
-        assertEquals("(1, '2', 3, '4')", r_refI().render(tuple(1, "2", 3, "4")));
-        assertEquals("(?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5)));
-        assertEquals("(1, '2', 3, '4', 5)", r_refI().render(tuple(1, "2", 3, "4", 5)));
-        assertEquals("(?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6")));
-        assertEquals("(1, '2', 3, '4', 5, '6')", r_refI().render(tuple(1, "2", 3, "4", 5, "6")));
-        assertEquals("(?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7)));
-        assertEquals("(1, '2', 3, '4', 5, '6', 7)", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7)));
-        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8")));
-        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8')", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8")));
-        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9)));
-        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8', 9)", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9)));
+        Tuple1<Integer> t1 = tuple(1);
+        Tuple2<Integer, String> t2 = tuple(1, "2");
+        Tuple3<Integer, String, Integer> t3 = tuple(1, "2", 3);
+        Tuple4<Integer, String, Integer, String> t4 = tuple(1, "2", 3, "4");
+        Tuple5<Integer, String, Integer, String, Integer> t5 = tuple(1, "2", 3, "4", 5);
+        Tuple6<Integer, String, Integer, String, Integer, String> t6 = tuple(1, "2", 3, "4", 5, "6");
+        Tuple7<Integer, String, Integer, String, Integer, String, Integer> t7 = tuple(1, "2", 3, "4", 5, "6", 7);
+        Tuple8<Integer, String, Integer, String, Integer, String, Integer, String> t8 = tuple(1, "2", 3, "4", 5, "6", 7, "8");
+        TupleN t9 = tuple(1, "2", 3, "4", 5, "6", 7, "8", 9);
+
+        // General info
+        assertEquals(1, t1.getDegree());
+        assertEquals(2, t2.getDegree());
+        assertEquals(3, t3.getDegree());
+        assertEquals(4, t4.getDegree());
+        assertEquals(5, t5.getDegree());
+        assertEquals(6, t6.getDegree());
+        assertEquals(7, t7.getDegree());
+        assertEquals(8, t8.getDegree());
+        assertEquals(9, t9.getDegree());
+
+        // Accessors
+        assertEquals(val(1), t1.field1());
+
+        assertEquals(val(1), t2.field1());
+        assertEquals(val("2"), t2.field2());
+
+        assertEquals(val(1), t3.field1());
+        assertEquals(val("2"), t3.field2());
+        assertEquals(val(3), t3.field3());
+
+        assertEquals(val(1), t4.field1());
+        assertEquals(val("2"), t4.field2());
+        assertEquals(val(3), t4.field3());
+        assertEquals(val("4"), t4.field4());
+
+        assertEquals(val(1), t5.field1());
+        assertEquals(val("2"), t5.field2());
+        assertEquals(val(3), t5.field3());
+        assertEquals(val("4"), t5.field4());
+        assertEquals(val(5), t5.field5());
+
+        assertEquals(val(1), t6.field1());
+        assertEquals(val("2"), t6.field2());
+        assertEquals(val(3), t6.field3());
+        assertEquals(val("4"), t6.field4());
+        assertEquals(val(5), t6.field5());
+        assertEquals(val("6"), t6.field6());
+
+        assertEquals(val(1), t7.field1());
+        assertEquals(val("2"), t7.field2());
+        assertEquals(val(3), t7.field3());
+        assertEquals(val("4"), t7.field4());
+        assertEquals(val(5), t7.field5());
+        assertEquals(val("6"), t7.field6());
+        assertEquals(val(7), t7.field7());
+
+        assertEquals(val(1), t8.field1());
+        assertEquals(val("2"), t8.field2());
+        assertEquals(val(3), t8.field3());
+        assertEquals(val("4"), t8.field4());
+        assertEquals(val(5), t8.field5());
+        assertEquals(val("6"), t8.field6());
+        assertEquals(val(7), t8.field7());
+        assertEquals(val("8"), t8.field8());
+
+        // Rendering
+        assertEquals("(?)", r_ref().render(t1));
+        assertEquals("(1)", r_refI().render(t1));
+        assertEquals("(?, ?)", r_ref().render(t2));
+        assertEquals("(1, '2')", r_refI().render(t2));
+        assertEquals("(?, ?, ?)", r_ref().render(t3));
+        assertEquals("(1, '2', 3)", r_refI().render(t3));
+        assertEquals("(?, ?, ?, ?)", r_ref().render(t4));
+        assertEquals("(1, '2', 3, '4')", r_refI().render(t4));
+        assertEquals("(?, ?, ?, ?, ?)", r_ref().render(t5));
+        assertEquals("(1, '2', 3, '4', 5)", r_refI().render(t5));
+        assertEquals("(?, ?, ?, ?, ?, ?)", r_ref().render(t6));
+        assertEquals("(1, '2', 3, '4', 5, '6')", r_refI().render(t6));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?)", r_ref().render(t7));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7)", r_refI().render(t7));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(t8));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8')", r_refI().render(t8));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(t9));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8', 9)", r_refI().render(t9));
 
         context.checking(new Expectations() {{
             int i = 0;
@@ -628,7 +704,7 @@ public class jOOQTest {
             oneOf(statement).setInt(++i, i);
         }});
 
-        assertEquals(10, b_ref().bind(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9)).peekIndex());
+        assertEquals(10, b_ref().bind(t9).peekIndex());
         context.assertIsSatisfied();
     }
 

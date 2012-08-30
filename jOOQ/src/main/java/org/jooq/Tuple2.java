@@ -45,7 +45,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import java.util.Collection;
 
 /**
- * A model type for a tuple with arity <code>2</code>
+ * A model type for a tuple with degree <code>2</code>
  * <p>
  * Note: Not all databases support tuples, but many tuple operations can be
  * simulated on all databases. See relevant tuple method Javadocs for details.
@@ -53,6 +53,24 @@ import java.util.Collection;
  * @author Lukas Eder
  */
 public interface Tuple2<T1, T2> extends Tuple {
+
+    // ------------------------------------------------------------------------
+    // Field accessors
+    // ------------------------------------------------------------------------
+
+    /**
+     * Get the first field
+     */
+    Field<T1> field1();
+
+    /**
+     * Get the second field
+     */
+    Field<T2> field2();
+
+    // ------------------------------------------------------------------------
+    // Tuple DSL API
+    // ------------------------------------------------------------------------
 
     /**
      * Compare this tuple with another tuple for equality
@@ -213,7 +231,7 @@ public interface Tuple2<T1, T2> extends Tuple {
     /**
      * Compare this tuple with a subselect for equality
      * <p>
-     * Note that the subquery must return a table of the same arity as this
+     * Note that the subquery must return a table of the same degree as this
      * tuple. This is not checked by jOOQ and will result in syntax errors in
      * the database, if not used correctly.
      */
@@ -247,10 +265,76 @@ public interface Tuple2<T1, T2> extends Tuple {
     /**
      * Compare this tuple with a subselect for equality
      * <p>
-     * Note that the subquery must return a table of the same arity as this
+     * Note that the subquery must return a table of the same degree as this
      * tuple. This is not checked by jOOQ and will result in syntax errors in
      * the database, if not used correctly.
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notIn(Select<?> select);
+
+    /**
+     * Check if this tuple overlaps another tuple
+     * <p>
+     * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
+     * which comes in two flavours:
+     * <ul>
+     * <li><code>(DATE, DATE) OVERLAPS (DATE, DATE)</code></li>
+     * <li><code>(DATE, INTERVAL) OVERLAPS (DATE, INTERVAL)</code></li>
+     * </ul>
+     * <p>
+     * jOOQ also supports arbitrary 2-degree tuple comparisons, by simulating
+     * them as such <code><pre>
+     * -- This predicate
+     * (A, B) OVERLAPS (C, D)
+     *
+     * -- can be simulated as such
+     * (C &lt;= B) AND (A &lt;= D)
+     * </pre></code>
+     */
+    @Support
+    Condition overlaps(T1 t1, T2 t2);
+
+    /**
+     * Check if this tuple overlaps another tuple
+     * <p>
+     * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
+     * which comes in two flavours:
+     * <ul>
+     * <li><code>(DATE, DATE) OVERLAPS (DATE, DATE)</code></li>
+     * <li><code>(DATE, INTERVAL) OVERLAPS (DATE, INTERVAL)</code></li>
+     * </ul>
+     * <p>
+     * jOOQ also supports arbitrary 2-degree tuple comparisons, by simulating
+     * them as such <code><pre>
+     * -- This predicate
+     * (A, B) OVERLAPS (C, D)
+     *
+     * -- can be simulated as such
+     * (C &lt;= B) AND (A &lt;= D)
+     * </pre></code>
+     */
+    @Support
+    Condition overlaps(Field<T1> t1, Field<T2> t2);
+
+    /**
+     * Check if this tuple overlaps another tuple
+     * <p>
+     * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
+     * which comes in two flavours:
+     * <ul>
+     * <li><code>(DATE, DATE) OVERLAPS (DATE, DATE)</code></li>
+     * <li><code>(DATE, INTERVAL) OVERLAPS (DATE, INTERVAL)</code></li>
+     * </ul>
+     * <p>
+     * jOOQ also supports arbitrary 2-degree tuple comparisons, by simulating
+     * them as such <code><pre>
+     * -- This predicate
+     * (A, B) OVERLAPS (C, D)
+     *
+     * -- can be simulated as such
+     * (C &lt;= B) AND (A &lt;= D)
+     * </pre></code>
+     */
+    @Support
+    Condition overlaps(Tuple2<T1, T2> tuple);
 }

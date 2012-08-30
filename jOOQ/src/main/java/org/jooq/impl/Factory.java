@@ -5844,7 +5844,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>1</code>
+     * Create a tuple of degree <code>1</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5856,7 +5856,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>2</code>
+     * Create a tuple of degree <code>2</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5868,7 +5868,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>3</code>
+     * Create a tuple of degree <code>3</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5880,7 +5880,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>4</code>
+     * Create a tuple of degree <code>4</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5892,7 +5892,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>5</code>
+     * Create a tuple of degree <code>5</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5904,7 +5904,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>6</code>
+     * Create a tuple of degree <code>6</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5916,7 +5916,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>7</code>
+     * Create a tuple of degree <code>7</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5928,7 +5928,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>8</code>
+     * Create a tuple of degree <code>8</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5940,7 +5940,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>N > 8</code>
+     * Create a tuple of degree <code>N > 8</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5952,7 +5952,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>1</code>
+     * Create a tuple of degree <code>1</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5964,7 +5964,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>2</code>
+     * Create a tuple of degree <code>2</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5976,7 +5976,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>3</code>
+     * Create a tuple of degree <code>3</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -5988,7 +5988,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>4</code>
+     * Create a tuple of degree <code>4</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -6000,7 +6000,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>5</code>
+     * Create a tuple of degree <code>5</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -6012,7 +6012,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>6</code>
+     * Create a tuple of degree <code>6</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -6024,7 +6024,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>7</code>
+     * Create a tuple of degree <code>7</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -6036,7 +6036,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>8</code>
+     * Create a tuple of degree <code>8</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for
@@ -6048,7 +6048,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a tuple of arity <code>N > 8</code>
+     * Create a tuple of degree <code>N > 8</code>
      * <p>
      * Note: Not all databases support tuples, but many tuple operations can be
      * simulated on all databases. See relevant tuple method Javadocs for

@@ -94,6 +94,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(2, TAuthorDao().count());
         assertEquals(2, TAuthorDao().findAll().size());
 
+        // [#1768] Unknown records should return null
+        assertNull(TAuthorDao().findById(3));
+        assertNull(TAuthorDao().fetchOne(TAuthor_ID(), 3));
+
         AP id1 = TAuthorDao().findById(1);
         assertEquals(1, on(id1).get("id"));
         assertEquals("George", on(id1).get("firstName"));

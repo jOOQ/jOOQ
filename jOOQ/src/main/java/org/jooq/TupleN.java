@@ -45,14 +45,14 @@ import static org.jooq.SQLDialect.POSTGRES;
 import java.util.Collection;
 
 /**
- * A model class for a tuple with arity <code>N > 8</code>
+ * A model type for a tuple with arity <code>N > 8</code>
  * <p>
  * Note: Not all databases support tuples, but many tuple operations can be
  * simulated on all databases. See relevant tuple method Javadocs for details.
  *
  * @author Lukas Eder
  */
-public interface TupleN extends QueryPart {
+public interface TupleN extends Tuple {
 
     /**
      * Compare this tuple with another tuple for equality

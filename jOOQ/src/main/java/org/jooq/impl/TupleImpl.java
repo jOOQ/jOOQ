@@ -39,10 +39,14 @@ import static java.util.Arrays.asList;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -59,6 +63,7 @@ import org.jooq.BindContext;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
@@ -74,7 +79,6 @@ import org.jooq.Tuple6;
 import org.jooq.Tuple7;
 import org.jooq.Tuple8;
 import org.jooq.TupleN;
-import org.jooq.exception.DataAccessException;
 
 /**
  * @author Lukas Eder
@@ -132,7 +136,69 @@ implements
     }
 
     // ------------------------------------------------------------------------
-    // XXX: Tuple API
+    // XXX: Tuple accessor API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final int getDegree() {
+        return fields.length;
+    }
+
+    @Override
+    public final Field<?> getField(int index) {
+        return fields[index];
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<T1> field1() {
+        return (Field<T1>) fields[0];
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<T2> field2() {
+        return (Field<T2>) fields[1];
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<T3> field3() {
+        return (Field<T3>) fields[2];
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<T4> field4() {
+        return (Field<T4>) fields[3];
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<T5> field5() {
+        return (Field<T5>) fields[4];
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<T6> field6() {
+        return (Field<T6>) fields[5];
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<T7> field7() {
+        return (Field<T7>) fields[6];
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<T8> field8() {
+        return (Field<T8>) fields[7];
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Tuple DSL API
     // ------------------------------------------------------------------------
 
     @Override
@@ -790,8 +856,116 @@ implements
     }
 
     // ------------------------------------------------------------------------
+    // XXX: Tuple2 API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Condition overlaps(T1 t1, T2 t2) {
+        return overlaps(tuple(t1, t2));
+    }
+
+    @Override
+    public final Condition overlaps(Field<T1> t1, Field<T2> t2) {
+        return overlaps(tuple(t1, t2));
+    }
+
+    @Override
+    public final Condition overlaps(Tuple2<T1, T2> tuple) {
+        return new Overlaps(tuple);
+    }
+
+    // ------------------------------------------------------------------------
     // XXX: Implementation classes
     // ------------------------------------------------------------------------
+
+    private class Overlaps extends AbstractCondition {
+
+        /**
+         * Generated UID
+         */
+        private static final long    serialVersionUID = 85887551884667824L;
+
+        private final TupleImpl<T1, T2, ?, ?, ?, ?, ?, ?> other;
+
+        @SuppressWarnings("unchecked")
+        Overlaps(Tuple2<T1, T2> other) {
+            this.other = (TupleImpl<T1, T2, ?, ?, ?, ?, ?, ?>) other;
+        }
+
+        @Override
+        public final void toSQL(RenderContext context) {
+            delegate(context).toSQL(context);
+        }
+
+        @Override
+        public final void bind(BindContext context) {
+            delegate(context).bind(context);
+        }
+
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        private final QueryPartInternal delegate(Configuration configuration) {
+            DataType<?> type0 = fields[0].getDataType();
+            DataType<?> type1 = fields[1].getDataType();
+
+            // The SQL standard only knows temporal OVERLAPS predicates:
+            // (DATE, DATE)     OVERLAPS (DATE, DATE)
+            // (DATE, INTERVAL) OVERLAPS (DATE, INTERVAL)
+            boolean standardOverlaps = type0.isDateTime() && type1.isTemporal();
+            boolean intervalOverlaps = type0.isDateTime() && (type1.isInterval() || type1.isNumeric());
+
+            // The non-standard OVERLAPS predicate is always simulated
+            if (!standardOverlaps || asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
+
+                // Interval OVERLAPS predicates need some additional arithmetic
+                if (intervalOverlaps) {
+                    return (QueryPartInternal)
+                           other.fields[0].le((Field) fields[0].add(fields[1])).and(
+                           fields[0].le((Field) other.fields[0].add(other.fields[1])));
+                }
+
+                // All other OVERLAPS predicates can be simulated simply
+                else {
+                    return (QueryPartInternal)
+                           other.fields[0].le((Field) fields[1]).and(
+                           fields[0].le((Field) other.fields[1]));
+                }
+            }
+
+            // These dialects seem to have trouble with INTERVAL OVERLAPS predicates
+            else if (intervalOverlaps && asList(HSQLDB).contains(configuration.getDialect())) {
+                    return (QueryPartInternal)
+                            other.fields[0].le((Field) fields[0].add(fields[1])).and(
+                            fields[0].le((Field) other.fields[0].add(other.fields[1])));
+            }
+
+            // Everyone else can handle OVERLAPS (Postgres, Oracle)
+            else {
+                return new Native();
+            }
+        }
+
+        private class Native extends AbstractCondition {
+
+            /**
+             * Generated UID
+             */
+            private static final long serialVersionUID = -1552476981094856727L;
+
+            @Override
+            public final void toSQL(RenderContext context) {
+                context.sql("(")
+                       .sql(TupleImpl.this)
+                       .keyword(" overlaps ")
+                       .sql(other)
+                       .sql(")");
+            }
+
+            @Override
+            public final void bind(BindContext context) {
+                context.bind(TupleImpl.this).bind(other);
+            }
+        }
+    }
 
     private class Compare extends AbstractCondition {
 
@@ -815,7 +989,7 @@ implements
         }
 
         @Override
-        public final void bind(BindContext context) throws DataAccessException {
+        public final void bind(BindContext context) {
             delegate(context).bind(context);
         }
 
@@ -874,7 +1048,7 @@ implements
             }
 
             @Override
-            public final void bind(BindContext context) throws DataAccessException {
+            public final void bind(BindContext context) {
                 context.bind(TupleImpl.this).bind(other);
             }
         }
@@ -901,7 +1075,7 @@ implements
         }
 
         @Override
-        public final void bind(BindContext context) throws DataAccessException {
+        public final void bind(BindContext context) {
             delegate(context).bind(context);
         }
 
@@ -944,7 +1118,7 @@ implements
             }
 
             @Override
-            public final void bind(BindContext context) throws DataAccessException {
+            public final void bind(BindContext context) {
                 context.bind(TupleImpl.this).bind((QueryPart) other);
             }
 
@@ -986,7 +1160,7 @@ implements
         }
 
         @Override
-        public final void bind(BindContext context) throws DataAccessException {
+        public final void bind(BindContext context) {
             context.bind(TupleImpl.this).bind(other);
         }
     }

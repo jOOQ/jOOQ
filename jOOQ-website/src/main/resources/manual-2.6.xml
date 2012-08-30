@@ -4359,7 +4359,47 @@ notExists(create.selectOne().from(BOOK)
 							
 							<section id="overlaps-predicate">
 								<title>OVERLAPS predicate</title>
-								<content></content>
+								<content>
+									<p>
+										When comparing dates, the SQL standard allows for using a special OVERLAPS predicate, which checks whether two date ranges overlap each other. The following can be said:
+									</p>
+
+<sql><![CDATA[-- This yields true
+(DATE '2010-01-01', DATE '2010-01-03') OVERLAPS (DATE '2010-01-02' DATE '2010-01-04')
+
+-- INTERVAL data types are also supported. This is equivalent to the above
+(DATE '2010-01-01', CAST('+2 00:00:00' AS INTERVAL DAY TO SECOND)) OVERLAPS (DATE '2010-01-02', CAST('+2 00:00:00' AS INTERVAL DAY TO SECOND))]]></sql>
+
+									<h3>The OVERLAPS predicate in jOOQ</h3>
+									<p>
+									    jOOQ supports the OVERLAPS predicate on <reference id="tuples" title="tuples of degree 2"/>. The following methods are contained in <reference class="org.jooq.Tuple2"/>:
+									</p>
+
+<java><![CDATA[Condition overlaps(T1 t1, T2 t2);
+Condition overlaps(Field<T1> t1, Field<T2> t2);
+Condition overlaps(Tuple2<T1, T2> tuple);]]></java>
+
+									<p>
+										This allows for expressing the above predicates as such:
+									</p>																		
+
+<java><![CDATA[// The date range tuples version
+tuple(Date.valueOf('2010-01-01'), Date.valueOf('2010-01-03')).overlaps(Date.valueOf('2010-01-02'), Date.valueOf('2010-01-04'))
+
+// The INTERVAL tuples version
+tuple(Date.valueOf('2010-01-01'), new DayToSecond(2)).overlaps(Date.valueOf('2010-01-02'), new DayToSecond(2))]]></java>
+
+									<h3>jOOQ's extensions to the standard</h3>
+									<p>
+										Unlike the standard (or any database implementing the standard), jOOQ also supports the OVERLAPS predicate for comparing arbitrary <reference id="tuples" title="tuples of degree 2"/>. For instance, (1, 3) OVERLAPS (2, 4) will yield true in jOOQ. This is simulated as such
+									</p>
+									
+<sql><![CDATA[-- This predicate
+(A, B) OVERLAPS (C, D)
+
+-- can be simulated as such
+(C <= B) AND (A <= D)]]></sql>
+								</content>
 							</section>
 						</sections>
 					</section>

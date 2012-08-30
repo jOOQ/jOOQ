@@ -45,4 +45,13 @@ package org.jooq;
  */
 public interface Tuple extends QueryPart {
 
+    /**
+     * Get the degree of this tuple
+     */
+    int getDegree();
+
+    /**
+     * Get a field at a given index
+     */
+    Field<?> getField(int index);
 }

@@ -46,14 +46,19 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.Factory.currentDate;
 import static org.jooq.impl.Factory.inline;
+import static org.jooq.impl.Factory.not;
 import static org.jooq.impl.Factory.tuple;
 import static org.jooq.impl.Factory.val;
+
+import java.sql.Date;
 
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+import org.jooq.types.DayToSecond;
 
 import org.junit.Test;
 
@@ -140,5 +145,53 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                             .fetchOne(0, Integer.class));
             }
         }
+    }
+
+    @Test
+    public void testTupleOverlapsCondition() throws Exception {
+        // 1903-06-25
+        // 1947-08-24
+
+        long now = System.currentTimeMillis();
+        long day = 1000L * 60 * 60 * 24;
+
+        // SQL standard (DATE, DATE) OVERLAPS (DATE, DATE) predicate
+        // ---------------------------------------------------------
+        assertEquals(2, (int)
+        create().selectCount()
+                .from(TAuthor())
+                .where(tuple(TAuthor_DATE_OF_BIRTH(), currentDate())
+                    .overlaps(new Date(now - day), new Date(now + day)))
+                .fetchOne(0, Integer.class));
+
+        // SQL standard (DATE, INTERVAL) OVERLAPS (DATE, INTERVAL) predicate
+        // -----------------------------------------------------------------
+        if (asList(INGRES).contains(getDialect())) {
+            log.info("SKIPPING", "Ingres INTERVAL OVERLAPS tests");
+        }
+        else {
+            assertEquals(1, (int)
+            create().selectOne()
+                    .where(tuple(new Date(now), new DayToSecond(3))
+                        .overlaps(new Date(now + day), new DayToSecond(3)))
+                    .fetchOne(0, Integer.class));
+
+            // jOOQ should recognise these as a (DATE, INTERVAL) tuple
+            assertEquals(1, (int)
+            create().selectOne()
+                    .where(tuple(new Date(now), 3)
+                        .overlaps(new Date(now + day), 3))
+                    .fetchOne(0, Integer.class));
+        }
+
+        // jOOQ's convenience for letting arbitrary data types "overlap"
+        // -------------------------------------------------------------
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(tuple(1, 3).overlaps(2, 4))
+                .and(tuple(1, 4).overlaps(2, 3))
+                .and(tuple(1, 4).overlaps(3, 2))
+                .and(not(tuple(1, 2).overlaps(3, 4)))
+                .fetchOne(0, Integer.class));
     }
 }

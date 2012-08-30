@@ -45,7 +45,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import java.util.Collection;
 
 /**
- * A model type for a tuple with arity <code>6</code>
+ * A model type for a tuple with degree <code>6</code>
  * <p>
  * Note: Not all databases support tuples, but many tuple operations can be
  * simulated on all databases. See relevant tuple method Javadocs for details.
@@ -53,6 +53,44 @@ import java.util.Collection;
  * @author Lukas Eder
  */
 public interface Tuple6<T1, T2, T3, T4, T5, T6> extends Tuple {
+
+    // ------------------------------------------------------------------------
+    // Field accessors
+    // ------------------------------------------------------------------------
+
+    /**
+     * Get the first field
+     */
+    Field<T1> field1();
+
+    /**
+     * Get the second field
+     */
+    Field<T2> field2();
+
+    /**
+     * Get the third field
+     */
+    Field<T3> field3();
+
+    /**
+     * Get the fourth field
+     */
+    Field<T4> field4();
+
+    /**
+     * Get the fifth field
+     */
+    Field<T5> field5();
+
+    /**
+     * Get the sixth field
+     */
+    Field<T6> field6();
+
+    // ------------------------------------------------------------------------
+    // Tuple DSL API
+    // ------------------------------------------------------------------------
 
     /**
      * Compare this tuple with another tuple for equality
@@ -213,7 +251,7 @@ public interface Tuple6<T1, T2, T3, T4, T5, T6> extends Tuple {
     /**
      * Compare this tuple with a subselect for equality
      * <p>
-     * Note that the subquery must return a table of the same arity as this
+     * Note that the subquery must return a table of the same degree as this
      * tuple. This is not checked by jOOQ and will result in syntax errors in
      * the database, if not used correctly.
      */
@@ -247,7 +285,7 @@ public interface Tuple6<T1, T2, T3, T4, T5, T6> extends Tuple {
     /**
      * Compare this tuple with a subselect for equality
      * <p>
-     * Note that the subquery must return a table of the same arity as this
+     * Note that the subquery must return a table of the same degree as this
      * tuple. This is not checked by jOOQ and will result in syntax errors in
      * the database, if not used correctly.
      */

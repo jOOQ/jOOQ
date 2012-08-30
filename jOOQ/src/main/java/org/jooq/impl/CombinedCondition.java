@@ -57,7 +57,7 @@ class CombinedCondition extends AbstractCondition {
     private final Operator        operator;
     private final List<Condition> conditions;
 
-    CombinedCondition(Operator operator, Collection<Condition> conditions) {
+    CombinedCondition(Operator operator, Collection<? extends Condition> conditions) {
         if (operator == null) {
             throw new IllegalArgumentException("The argument 'operator' must not be null");
         }
@@ -76,7 +76,7 @@ class CombinedCondition extends AbstractCondition {
         init(operator, conditions);
     }
 
-    private final void init(Operator op, Collection<Condition> cond) {
+    private final void init(Operator op, Collection<? extends Condition> cond) {
         for (Condition condition : cond) {
             if (condition instanceof CombinedCondition) {
                 CombinedCondition combinedCondition = (CombinedCondition) condition;

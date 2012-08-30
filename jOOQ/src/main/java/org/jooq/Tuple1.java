@@ -8,13 +8,13 @@
  *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following @Support({ CUBRID, HSQLDB , MYSQL, ORACLE, POSTGRES }) Conditions are met:
+ * modification, are permitted provided that the following conditions are met:
  *
  * . Redistributions of source code must retain the above copyright notice, this
- *   list of @Support({ CUBRID, HSQLDB , MYSQL, ORACLE, POSTGRES }) Conditions and the following disclaimer.
+ *   list of conditions and the following disclaimer.
  *
  * . Redistributions in binary form must reproduce the above copyright notice,
- *   this list of @Support({ CUBRID, HSQLDB , MYSQL, ORACLE, POSTGRES }) Conditions and the following disclaimer in the documentation
+ *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
  *
  * . Neither the name "jOOQ" nor the names of its contributors may be
@@ -37,7 +37,6 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
@@ -47,6 +46,9 @@ import java.util.Collection;
 
 /**
  * A model class for a tuple with arity <code>1</code>
+ * <p>
+ * Note: Not all databases support tuples, but many tuple operations can be
+ * simulated on all databases. See relevant tuple method Javadocs for details.
  *
  * @author Lukas Eder
  */
@@ -54,86 +56,158 @@ public interface Tuple1<T1> extends QueryPart {
 
     /**
      * Compare this tuple with another tuple for equality
+     * <p>
+     * Tuple equality comparison predicates can be simulated in those databases
+     * that do not support such predicates natively:
+     * <code>(A, B) = (1, 2)</code> is equivalent to
+     * <code>A = 1 AND B = 2</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition equal(Tuple1<T1> tuple);
 
     /**
      * Compare this tuple with another tuple for equality
+     * <p>
+     * Tuple equality comparison predicates can be simulated in those databases
+     * that do not support such predicates natively:
+     * <code>(A, B) = (1, 2)</code> is equivalent to
+     * <code>A = 1 AND B = 2</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition equal(T1 t1);
 
     /**
      * Compare this tuple with another tuple for equality
+     * <p>
+     * Tuple equality comparison predicates can be simulated in those databases
+     * that do not support such predicates natively:
+     * <code>(A, B) = (1, 2)</code> is equivalent to
+     * <code>A = 1 AND B = 2</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition equal(Field<T1> t1);
 
     /**
      * Compare this tuple with another tuple for equality
+     * <p>
+     * Tuple equality comparison predicates can be simulated in those databases
+     * that do not support such predicates natively:
+     * <code>(A, B) = (1, 2)</code> is equivalent to
+     * <code>A = 1 AND B = 2</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition eq(Tuple1<T1> tuple);
 
     /**
      * Compare this tuple with another tuple for equality
+     * <p>
+     * Tuple equality comparison predicates can be simulated in those databases
+     * that do not support such predicates natively:
+     * <code>(A, B) = (1, 2)</code> is equivalent to
+     * <code>A = 1 AND B = 2</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition eq(T1 t1);
 
     /**
      * Compare this tuple with another tuple for equality
+     * <p>
+     * Tuple equality comparison predicates can be simulated in those databases
+     * that do not support such predicates natively:
+     * <code>(A, B) = (1, 2)</code> is equivalent to
+     * <code>A = 1 AND B = 2</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition eq(Field<T1> t1);
 
     /**
      * Compare this tuple with another tuple for non-equality
+     * <p>
+     * Tuple non-equality comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B) <> (1, 2)</code> is equivalent to
+     * <code>NOT(A = 1 AND B = 2)</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition notEqual(Tuple1<T1> tuple);
 
     /**
      * Compare this tuple with another tuple for non-equality
+     * <p>
+     * Tuple non-equality comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B) <> (1, 2)</code> is equivalent to
+     * <code>NOT(A = 1 AND B = 2)</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition notEqual(T1 t1);
 
     /**
      * Compare this tuple with another tuple for non-equality
+     * <p>
+     * Tuple non-equality comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B) <> (1, 2)</code> is equivalent to
+     * <code>NOT(A = 1 AND B = 2)</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition notEqual(Field<T1> t1);
 
     /**
      * Compare this tuple with another tuple for non-equality
+     * <p>
+     * Tuple non-equality comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B) <> (1, 2)</code> is equivalent to
+     * <code>NOT(A = 1 AND B = 2)</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition ne(Tuple1<T1> tuple);
 
     /**
      * Compare this tuple with another tuple for non-equality
+     * <p>
+     * Tuple non-equality comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B) <> (1, 2)</code> is equivalent to
+     * <code>NOT(A = 1 AND B = 2)</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition ne(T1 t1);
 
     /**
      * Compare this tuple with another tuple for non-equality
+     * <p>
+     * Tuple non-equality comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B) <> (1, 2)</code> is equivalent to
+     * <code>NOT(A = 1 AND B = 2)</code>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition ne(Field<T1> t1);
 
     /**
      * Compare this tuple with a set of tuples for equality
+     * <p>
+     * Tuple IN predicates can be simulated in those databases that do not
+     * support such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code>
+     * is equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>,
+     * which is equivalent to
+     * <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
      */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition in(Collection<? extends Tuple1<T1>> tuples);
 
     /**
      * Compare this tuple with a set of tuples for equality
+     * <p>
+     * Tuple IN predicates can be simulated in those databases that do not
+     * support such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code>
+     * is equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>,
+     * which is equivalent to
+     * <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
      */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition in(Tuple1<T1>... tuples);
 
     /**
@@ -148,14 +222,26 @@ public interface Tuple1<T1> extends QueryPart {
 
     /**
      * Compare this tuple with a set of tuples for equality
+     * <p>
+     * Tuple NOT IN predicates can be simulated in those databases that do not
+     * support such predicates natively:
+     * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
+     * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
+     * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
      */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition notIn(Collection<? extends Tuple1<T1>> tuples);
 
     /**
      * Compare this tuple with a set of tuples for equality
+     * <p>
+     * Tuple NOT IN predicates can be simulated in those databases that do not
+     * support such predicates natively:
+     * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
+     * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
+     * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
      */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition notIn(Tuple1<T1>... tuples);
 
     /**

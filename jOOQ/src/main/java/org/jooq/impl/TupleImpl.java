@@ -36,19 +36,33 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.NOT_EQUALS;
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.tuple;
+import static org.jooq.impl.InOperator.NOT_IN;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.Comparator;
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Operator;
 import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Tuple1;
@@ -123,47 +137,47 @@ implements
 
     @Override
     public final Condition equal(Tuple1<T1> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.EQUALS);
+        return new Compare(tuple, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Tuple2<T1, T2> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.EQUALS);
+        return new Compare(tuple, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Tuple3<T1, T2, T3> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.EQUALS);
+        return new Compare(tuple, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Tuple4<T1, T2, T3, T4> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.EQUALS);
+        return new Compare(tuple, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Tuple5<T1, T2, T3, T4, T5> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.EQUALS);
+        return new Compare(tuple, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Tuple6<T1, T2, T3, T4, T5, T6> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.EQUALS);
+        return new Compare(tuple, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.EQUALS);
+        return new Compare(tuple, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.EQUALS);
+        return new Compare(tuple, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(TupleN tuple) {
-        return new TupleCompareCondition(tuple, Comparator.EQUALS);
+        return new Compare(tuple, Comparator.EQUALS);
     }
 
     @Override
@@ -393,47 +407,47 @@ implements
 
     @Override
     public final Condition notEqual(Tuple1<T1> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.NOT_EQUALS);
+        return new Compare(tuple, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Tuple2<T1, T2> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.NOT_EQUALS);
+        return new Compare(tuple, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Tuple3<T1, T2, T3> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.NOT_EQUALS);
+        return new Compare(tuple, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Tuple4<T1, T2, T3, T4> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.NOT_EQUALS);
+        return new Compare(tuple, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Tuple5<T1, T2, T3, T4, T5> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.NOT_EQUALS);
+        return new Compare(tuple, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Tuple6<T1, T2, T3, T4, T5, T6> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.NOT_EQUALS);
+        return new Compare(tuple, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.NOT_EQUALS);
+        return new Compare(tuple, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple) {
-        return new TupleCompareCondition(tuple, Comparator.NOT_EQUALS);
+        return new Compare(tuple, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(TupleN tuple) {
-        return new TupleCompareCondition(tuple, Comparator.NOT_EQUALS);
+        return new Compare(tuple, Comparator.NOT_EQUALS);
     }
 
     @Override
@@ -754,88 +768,200 @@ implements
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition in(Collection tuples) {
-        QueryPartList<QueryPart> list = new QueryPartList<QueryPart>(tuples);
-        return new TupleInCondition(list, InOperator.IN);
+        QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(tuples);
+        return new InTuples(list, InOperator.IN);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition notIn(Collection tuples) {
-        QueryPartList<QueryPart> list = new QueryPartList<QueryPart>(tuples);
-        return new TupleInCondition(list, InOperator.NOT_IN);
+        QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(tuples);
+        return new InTuples(list, InOperator.NOT_IN);
     }
 
     @Override
     public final Condition in(Select<?> select) {
-        return new TupleInCondition(select, InOperator.IN);
+        return new InSubquery(select, InOperator.IN);
     }
 
     @Override
     public final Condition notIn(Select<?> select) {
-        return new TupleInCondition(select, InOperator.NOT_IN);
+        return new InSubquery(select, InOperator.NOT_IN);
     }
 
     // ------------------------------------------------------------------------
     // XXX: Implementation classes
     // ------------------------------------------------------------------------
 
-    private class TupleCompareCondition extends AbstractCondition {
+    private class Compare extends AbstractCondition {
 
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -1806139685201770706L;
+        private static final long                               serialVersionUID = -1806139685201770706L;
 
-        private final QueryPart   other;
-        private final Comparator  comparator;
+        private final TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8> other;
+        private final Comparator                                comparator;
 
-        TupleCompareCondition(QueryPart other, Comparator comparator) {
-            this.other = other;
+        @SuppressWarnings("unchecked")
+        Compare(QueryPart other, Comparator comparator) {
+            this.other = (TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>) other;
             this.comparator = comparator;
         }
 
         @Override
         public final void toSQL(RenderContext context) {
-
-            // Some dialects do not support != comparison with tuples
-            if (comparator == NOT_EQUALS && asList(DB2).contains(context.getDialect())) {
-                context.keyword("not(")
-                       .sql(TupleImpl.this)
-                       .sql(" = ")
-                       .sql(other)
-                       .sql(")");
-            }
-            else {
-                // Some databases need extra parentheses around the RHS
-                boolean extraParentheses = asList(ORACLE).contains(context.getDialect());
-
-                context.sql(TupleImpl.this)
-                       .sql(" ")
-                       .sql(comparator.toSQL())
-                       .sql(" ")
-                       .sql(extraParentheses ? "(" : "")
-                       .sql(other)
-                       .sql(extraParentheses ? ")" : "");
-            }
+            delegate(context).toSQL(context);
         }
 
         @Override
         public final void bind(BindContext context) throws DataAccessException {
-            context.bind(TupleImpl.this).bind(other);
+            delegate(context).bind(context);
+        }
+
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        private final QueryPartInternal delegate(Configuration configuration) {
+            if (asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
+                List<Condition> conditions = new ArrayList<Condition>();
+
+                for (int i = 0; i < fields.length; i++) {
+                    conditions.add(fields[i].equal((Field) other.fields[i]));
+                }
+
+                Condition result = new CombinedCondition(Operator.AND, conditions);
+
+                if (comparator == NOT_EQUALS) {
+                    result = result.not();
+                }
+
+                return (QueryPartInternal) result;
+            }
+            else {
+                return new Native();
+            }
+        }
+
+        private class Native extends AbstractCondition {
+
+            /**
+             * Generated UID
+             */
+            private static final long serialVersionUID = -2977241780111574353L;
+
+            @Override
+            public final void toSQL(RenderContext context) {
+
+                // Some dialects do not support != comparison with tuples
+                if (comparator == NOT_EQUALS && asList(DB2).contains(context.getDialect())) {
+                    context.keyword("not(")
+                           .sql(TupleImpl.this)
+                           .sql(" = ")
+                           .sql(other)
+                           .sql(")");
+                }
+                else {
+                    // Some databases need extra parentheses around the RHS
+                    boolean extraParentheses = asList(ORACLE).contains(context.getDialect());
+
+                    context.sql(TupleImpl.this)
+                           .sql(" ")
+                           .sql(comparator.toSQL())
+                           .sql(" ")
+                           .sql(extraParentheses ? "(" : "")
+                           .sql(other)
+                           .sql(extraParentheses ? ")" : "");
+                }
+            }
+
+            @Override
+            public final void bind(BindContext context) throws DataAccessException {
+                context.bind(TupleImpl.this).bind(other);
+            }
         }
     }
 
-    private class TupleInCondition extends AbstractCondition {
+    private class InTuples extends AbstractCondition {
+
+        /**
+         * Generated UID
+         */
+        private static final long                                              serialVersionUID = -1806139685201770706L;
+
+        private final QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>> other;
+        private final InOperator                                               operator;
+
+        InTuples(QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>> other, InOperator operator) {
+            this.other = other;
+            this.operator = operator;
+        }
+
+        @Override
+        public final void toSQL(RenderContext context) {
+            delegate(context).toSQL(context);
+        }
+
+        @Override
+        public final void bind(BindContext context) throws DataAccessException {
+            delegate(context).bind(context);
+        }
+
+        private final QueryPartInternal delegate(Configuration configuration) {
+            if (asList(ASE, DB2, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
+                List<Condition> conditions = new ArrayList<Condition>();
+
+                for (TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8> tuple : other) {
+                    conditions.add(new Compare(tuple, EQUALS));
+                }
+
+                Condition result = new CombinedCondition(Operator.OR, conditions);
+
+                if (operator == NOT_IN) {
+                    result = result.not();
+                }
+
+                return (QueryPartInternal) result;
+            }
+            else {
+                return new Native();
+            }
+        }
+
+        private class Native extends AbstractCondition {
+
+            /**
+             * Generated UID
+             */
+            private static final long serialVersionUID = -7019193803316281371L;
+
+            @Override
+            public final void toSQL(RenderContext context) {
+                context.sql(TupleImpl.this)
+                       .sql(" ")
+                       .keyword(operator.toSQL())
+                       .sql(" (")
+                       .sql(other)
+                       .sql(")");
+            }
+
+            @Override
+            public final void bind(BindContext context) throws DataAccessException {
+                context.bind(TupleImpl.this).bind((QueryPart) other);
+            }
+
+        }
+    }
+
+    private class InSubquery extends AbstractCondition {
 
         /**
          * Generated UID
          */
         private static final long serialVersionUID = -1806139685201770706L;
 
-        private final QueryPart   other;
+        private final Select<?>   other;
         private final InOperator  operator;
 
-        TupleInCondition(QueryPart other, InOperator operator) {
+        InSubquery(Select<?> other, InOperator operator) {
             this.other = other;
             this.operator = operator;
         }
@@ -844,8 +970,7 @@ implements
         public final void toSQL(RenderContext context) {
 
             // Some databases need extra parentheses around the RHS
-            boolean extraParentheses =
-                other instanceof Select<?> && asList(ORACLE).contains(context.getDialect());
+            boolean extraParentheses = asList(ORACLE).contains(context.getDialect());
             boolean subquery = context.subquery();
 
             context.sql(TupleImpl.this)

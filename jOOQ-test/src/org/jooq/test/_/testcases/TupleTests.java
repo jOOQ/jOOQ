@@ -39,7 +39,6 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -88,12 +87,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     @Test
     public void testTupleConditions() throws Exception {
 
-        // TODO: [#1766] Simulate these things
-        if (asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(getDialect())) {
-            log.info("SKIPPING", "Tuple condition tests");
-            return;
-        }
-
         // Simple equality tests
         assertEquals(1, (int)
         create().selectOne()
@@ -102,16 +95,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .fetchOne(0, Integer.class));
 
         // IN-condition tests
-        if (asList(DB2).contains(getDialect())) {
-            log.info("SKIPPING", "Tuples and IN-predicates");
-        }
-        else {
-            assertEquals(1, (int)
-            create().selectOne()
-                    .where(tuple(1, 2, 3).in(tuple(3, 3, 3), tuple(2, 3, 1), tuple(1, 2, 3)))
-                    .and(tuple(1, 2, 3).notIn(tuple(3, 3, 3), tuple(2, 3, 1)))
-                    .fetchOne(0, Integer.class));
-        }
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(tuple(1, 2, 3).in(tuple(3, 3, 3), tuple(2, 3, 1), tuple(1, 2, 3)))
+                .and(tuple(1, 2, 3).notIn(tuple(3, 3, 3), tuple(2, 3, 1)))
+                .fetchOne(0, Integer.class));
 
         // Tuples with actual data
         assertEquals(asList(1, 2),
@@ -130,7 +118,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .fetch(TBook_ID()));
 
         // IN with subselects - not supported by all DBs
-        if (asList(H2).contains(getDialect())) {
+        // TODO [#1772] Simulate this for all dialects
+        if (asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE, H2).contains(getDialect())) {
             log.info("SKIPPING", "Tuples and subselects");
         }
         else {

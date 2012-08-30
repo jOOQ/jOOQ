@@ -222,10 +222,11 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @Override
     public final <Z> P fetchOne(Field<Z> field, Z value) {
-        return create.selectFrom(table)
-                     .where(field.equal(value))
-                     .fetchOne()
-                     .into(type);
+        R record = create.selectFrom(table)
+                         .where(field.equal(value))
+                         .fetchOne();
+
+        return record == null ? null : record.into(type);
     }
 
     @Override

@@ -8,9 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  *
  * VIEW
  */
+@java.lang.SuppressWarnings("all")
 public class NicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord> {
 
-	private static final long serialVersionUID = -1476711992;
+	private static final long serialVersionUID = 1321783232;
 
 	/**
 	 * The singleton instance of sakila.nicer_but_slower_film_list

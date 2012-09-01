@@ -8,9 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  *
  * VIEW
  */
+@java.lang.SuppressWarnings("all")
 public class StaffList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.StaffListRecord> {
 
-	private static final long serialVersionUID = -1842778327;
+	private static final long serialVersionUID = -1324600271;
 
 	/**
 	 * The singleton instance of sakila.staff_list

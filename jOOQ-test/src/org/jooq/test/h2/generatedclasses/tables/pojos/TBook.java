@@ -8,9 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  *
  * An entity holding books
  */
+@java.lang.SuppressWarnings("all")
 public class TBook implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 805254564;
+	private static final long serialVersionUID = -1144250344;
 
 	private java.lang.Integer                                 id;
 	private java.lang.Integer                                 authorId;

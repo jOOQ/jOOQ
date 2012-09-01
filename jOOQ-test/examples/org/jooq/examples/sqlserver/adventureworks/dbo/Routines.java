@@ -8,6 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo;
  *
  * Convenience access to all stored procedures and functions in dbo
  */
+@java.lang.SuppressWarnings("all")
 public final class Routines {
 
 	/**

@@ -8,6 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo;
  *
  * Convenience access to all tables in dbo
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

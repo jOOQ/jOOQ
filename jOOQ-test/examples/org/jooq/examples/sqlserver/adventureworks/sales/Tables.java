@@ -8,6 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales;
  *
  * Convenience access to all tables in Sales
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

@@ -8,6 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing;
  *
  * Convenience access to all tables in Purchasing
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

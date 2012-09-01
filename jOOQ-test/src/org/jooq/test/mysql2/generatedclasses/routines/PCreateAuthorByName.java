@@ -8,9 +8,10 @@ package org.jooq.test.mysql2.generatedclasses.routines;
  *
  * Create a new author
  */
+@java.lang.SuppressWarnings("all")
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -766791218;
+	private static final long serialVersionUID = -794504562;
 
 
 	/**

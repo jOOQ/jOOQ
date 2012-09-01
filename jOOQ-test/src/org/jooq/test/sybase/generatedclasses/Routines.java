@@ -8,6 +8,7 @@ package org.jooq.test.sybase.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in DBA
  */
+@java.lang.SuppressWarnings("all")
 public final class Routines {
 
 	/**

@@ -14,9 +14,10 @@ package org.jooq.test.oracle.generatedclasses.multi_schema;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class MultiSchemaFactory extends org.jooq.util.oracle.OracleFactory {
 
-	private static final long serialVersionUID = 824825304;
+	private static final long serialVersionUID = -628376108;
 
 	/**
 	 * Create a factory with a connection

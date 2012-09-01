@@ -8,6 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses;
  *
  * Convenience access to all tables in PUBLIC
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

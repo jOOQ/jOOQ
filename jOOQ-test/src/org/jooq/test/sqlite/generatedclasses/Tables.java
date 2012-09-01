@@ -8,6 +8,7 @@ package org.jooq.test.sqlite.generatedclasses;
  *
  * Convenience access to all tables in 
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

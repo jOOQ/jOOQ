@@ -8,11 +8,12 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
  *
  * A book store
  */
+@java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK_STORE", schema = "TEST")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -34194387;
+	private static final long serialVersionUID = 1596673327;
 
 	/**
 	 * The books store name

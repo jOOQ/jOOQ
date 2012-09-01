@@ -8,9 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  *
  * An m:n relation between books and book stores
  */
+@java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -241712930;
+	private static final long serialVersionUID = 174801568;
 
 	/**
 	 * The singleton instance of DBA.t_book_to_book_store

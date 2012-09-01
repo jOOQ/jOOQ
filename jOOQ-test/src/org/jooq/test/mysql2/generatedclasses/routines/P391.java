@@ -8,9 +8,10 @@ package org.jooq.test.mysql2.generatedclasses.routines;
  *
  * Integration tests for #391
  */
+@java.lang.SuppressWarnings("all")
 public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 431603770;
+	private static final long serialVersionUID = 1852419342;
 
 
 	/**

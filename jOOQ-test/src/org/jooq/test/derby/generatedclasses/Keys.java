@@ -9,6 +9,7 @@ package org.jooq.test.derby.generatedclasses;
  * A class modelling foreign key relationships between tables of the <code>TEST</code> 
  * schema
  */
+@java.lang.SuppressWarnings("all")
 public class Keys {
 
 	// IDENTITY definitions

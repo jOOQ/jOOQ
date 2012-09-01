@@ -8,6 +8,7 @@ package org.jooq.test.mysql2.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in test2
  */
+@java.lang.SuppressWarnings("all")
 public final class Routines {
 
 	/**

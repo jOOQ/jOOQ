@@ -8,6 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources;
  *
  * Convenience access to all stored procedures and functions in HumanResources
  */
+@java.lang.SuppressWarnings("all")
 public final class Routines {
 
 	/**

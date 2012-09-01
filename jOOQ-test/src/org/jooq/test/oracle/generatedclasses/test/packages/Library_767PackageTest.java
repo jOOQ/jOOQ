@@ -8,9 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.packages;
  *
  * Convenience access to all stored procedures and functions in LIBRARY_767_PACKAGE_TEST
  */
+@java.lang.SuppressWarnings("all")
 public final class Library_767PackageTest extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -1922518932;
+	private static final long serialVersionUID = 690484802;
 
 	/**
 	 * The singleton instance of TEST.LIBRARY_767_PACKAGE_TEST

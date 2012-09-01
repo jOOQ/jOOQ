@@ -8,9 +8,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  *
  * VIEW
  */
+@java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 18408211;
+	private static final long serialVersionUID = -1799998359;
 
 	/**
 	 * The singleton instance of test2.v_book

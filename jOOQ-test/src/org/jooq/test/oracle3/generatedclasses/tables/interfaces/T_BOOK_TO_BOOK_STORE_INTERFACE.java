@@ -8,6 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  *
  * An m:n relation between books and book stores
  */
+@java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK_TO_BOOK_STORE", schema = "TEST", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"BOOK_STORE_NAME", "BOOK_ID"})

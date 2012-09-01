@@ -8,9 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  *
  * An entity holding authors of books
  */
+@java.lang.SuppressWarnings("all")
 public class T_AUTHOR extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1992199292;
+	private static final long serialVersionUID = 1085896642;
 
 	/**
 	 * The singleton instance of TEST.T_AUTHOR

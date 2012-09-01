@@ -9,6 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema;
  * A class modelling foreign key relationships between tables of the <code>MULTI_SCHEMA</code> 
  * schema
  */
+@java.lang.SuppressWarnings("all")
 public class Keys {
 
 	// IDENTITY definitions

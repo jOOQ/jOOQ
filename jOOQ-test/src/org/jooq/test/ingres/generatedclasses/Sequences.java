@@ -8,6 +8,7 @@ package org.jooq.test.ingres.generatedclasses;
  *
  * Convenience access to all sequences in test
  */
+@java.lang.SuppressWarnings("all")
 public final class Sequences {
 
 	/**

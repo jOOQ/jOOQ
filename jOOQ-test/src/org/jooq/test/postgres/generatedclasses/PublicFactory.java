@@ -14,9 +14,10 @@ package org.jooq.test.postgres.generatedclasses;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class PublicFactory extends org.jooq.util.postgres.PostgresFactory {
 
-	private static final long serialVersionUID = -869751772;
+	private static final long serialVersionUID = 603469004;
 
 	/**
 	 * Create a factory with a connection

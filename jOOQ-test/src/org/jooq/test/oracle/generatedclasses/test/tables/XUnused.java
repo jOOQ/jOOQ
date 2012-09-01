@@ -8,9 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  *
  * An unused table in the same schema.
  */
+@java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1146803951;
+	private static final long serialVersionUID = 1403612353;
 
 	/**
 	 * The singleton instance of TEST.X_UNUSED

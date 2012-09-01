@@ -8,9 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  *
  * An entity holding books
  */
+@java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 2130957207;
+	private static final long serialVersionUID = 1418043787;
 
 	/**
 	 * The table column <code>DBA.t_book.ID</code>

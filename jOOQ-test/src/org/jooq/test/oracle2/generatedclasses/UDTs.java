@@ -8,6 +8,7 @@ package org.jooq.test.oracle2.generatedclasses;
  *
  * Convenience access to all UDTs in TEST
  */
+@java.lang.SuppressWarnings("all")
 public final class UDTs {
 
 	/**

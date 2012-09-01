@@ -8,6 +8,7 @@ package org.jooq.test.oracle3.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in TEST
  */
+@java.lang.SuppressWarnings("all")
 public final class Routines {
 
 	/**

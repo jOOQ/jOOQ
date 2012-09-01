@@ -8,6 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in dbo
  */
+@java.lang.SuppressWarnings("all")
 public final class Routines {
 
 	/**

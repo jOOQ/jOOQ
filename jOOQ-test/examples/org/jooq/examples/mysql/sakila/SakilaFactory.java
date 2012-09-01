@@ -14,9 +14,10 @@ package org.jooq.examples.mysql.sakila;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class SakilaFactory extends org.jooq.util.mysql.MySQLFactory {
 
-	private static final long serialVersionUID = -313004038;
+	private static final long serialVersionUID = -1871846986;
 
 	/**
 	 * Create a factory with a connection

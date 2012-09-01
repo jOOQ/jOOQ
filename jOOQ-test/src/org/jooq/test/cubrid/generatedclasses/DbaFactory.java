@@ -14,9 +14,10 @@ package org.jooq.test.cubrid.generatedclasses;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class DbaFactory extends org.jooq.util.cubrid.CUBRIDFactory {
 
-	private static final long serialVersionUID = 1118008517;
+	private static final long serialVersionUID = 1651108208;
 
 	/**
 	 * Create a factory with a connection
@@ -25,6 +26,17 @@ public class DbaFactory extends org.jooq.util.cubrid.CUBRIDFactory {
 	 */
 	public DbaFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Create a factory with a data source
+	 *
+	 * @param dataSource The data source to use with objects created from this factory
+	 */
+	public DbaFactory(javax.sql.DataSource dataSource) {
+		super(dataSource);
 
 		initDefaultSchema();
 	}
@@ -49,6 +61,18 @@ public class DbaFactory extends org.jooq.util.cubrid.CUBRIDFactory {
 	 */
 	public DbaFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Create a factory with a data source and some settings
+	 *
+	 * @param dataSource The data source to use with objects created from this factory
+	 * @param settings The settings to apply to objects created from this factory
+	 */
+	public DbaFactory(javax.sql.DataSource dataSource, org.jooq.conf.Settings settings) {
+		super(dataSource, settings);
 
 		initDefaultSchema();
 	}

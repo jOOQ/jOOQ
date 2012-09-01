@@ -8,9 +8,10 @@ package org.jooq.examples.mysql.sakila.tables.records;
  *
  * VIEW
  */
+@java.lang.SuppressWarnings("all")
 public class SalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> {
 
-	private static final long serialVersionUID = 1870159577;
+	private static final long serialVersionUID = -82491383;
 
 	/**
 	 * The table column <code>sakila.sales_by_store.store</code>

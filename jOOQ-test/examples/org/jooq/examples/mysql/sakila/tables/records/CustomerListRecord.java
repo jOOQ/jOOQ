@@ -8,9 +8,10 @@ package org.jooq.examples.mysql.sakila.tables.records;
  *
  * VIEW
  */
+@java.lang.SuppressWarnings("all")
 public class CustomerListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord> {
 
-	private static final long serialVersionUID = 2088616700;
+	private static final long serialVersionUID = 1826029516;
 
 	/**
 	 * The table column <code>sakila.customer_list.ID</code>

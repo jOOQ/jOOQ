@@ -9,6 +9,7 @@ package org.jooq.test.ingres.generatedclasses;
  * A class modelling foreign key relationships between tables of the <code>test</code> 
  * schema
  */
+@java.lang.SuppressWarnings("all")
 public class Keys {
 
 	// IDENTITY definitions

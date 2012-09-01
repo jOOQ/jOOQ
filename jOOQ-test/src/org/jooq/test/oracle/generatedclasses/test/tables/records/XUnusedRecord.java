@@ -8,13 +8,14 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
  *
  * An unused table in the same schema.
  */
+@java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "X_UNUSED", schema = "TEST", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"ID", "NAME"})
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 2027532854;
+	private static final long serialVersionUID = 1261453838;
 
 	/**
 	 * The table column <code>TEST.X_UNUSED.ID</code>

@@ -8,9 +8,10 @@ package org.jooq.test.mysql.generatedclasses.routines;
  *
  * Check existence of an author
  */
+@java.lang.SuppressWarnings("all")
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1608515536;
+	private static final long serialVersionUID = 1240342502;
 
 
 	/**

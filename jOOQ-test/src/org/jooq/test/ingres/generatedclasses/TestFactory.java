@@ -14,9 +14,10 @@ package org.jooq.test.ingres.generatedclasses;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class TestFactory extends org.jooq.util.ingres.IngresFactory {
 
-	private static final long serialVersionUID = -2129091931;
+	private static final long serialVersionUID = 1025078199;
 
 	/**
 	 * Create a factory with a connection

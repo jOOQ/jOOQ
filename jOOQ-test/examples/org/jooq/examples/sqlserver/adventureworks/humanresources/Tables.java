@@ -8,6 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources;
  *
  * Convenience access to all tables in HumanResources
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

@@ -9,10 +9,10 @@ package org.jooq.test.sqlite.generatedclasses;
  * A class modelling foreign key relationships between tables of the <code></code> 
  * schema
  */
+@java.lang.SuppressWarnings("all")
 public class Keys {
 
 	// IDENTITY definitions
-	public static final org.jooq.Identity<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
 
 	// UNIQUE and PRIMARY KEY definitions
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE_ID = UniqueKeys0.PK_T_639_NUMBERS_TABLE_ID;
@@ -49,11 +49,6 @@ public class Keys {
 	 * No instances
 	 */
 	private Keys() {}
-
-	@SuppressWarnings("hiding")
-	private static class Identities0 extends org.jooq.impl.AbstractKeys {
-		public static org.jooq.Identity<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = createIdentity(org.jooq.test.sqlite.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.sqlite.generatedclasses.tables.TTriggers.ID_GENERATED);
-	}
 
 	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {

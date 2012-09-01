@@ -8,9 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  *
  * A book store
  */
+@java.lang.SuppressWarnings("all")
 public class TBookStore implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = -954556329;
+	private static final long serialVersionUID = 656388959;
 
 	private java.lang.String name;
 

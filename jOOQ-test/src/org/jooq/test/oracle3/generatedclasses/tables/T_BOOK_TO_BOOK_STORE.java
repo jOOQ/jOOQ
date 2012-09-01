@@ -8,9 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  *
  * An m:n relation between books and book stores
  */
+@java.lang.SuppressWarnings("all")
 public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 176880349;
+	private static final long serialVersionUID = 1773847075;
 
 	/**
 	 * The singleton instance of TEST.T_BOOK_TO_BOOK_STORE

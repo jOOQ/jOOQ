@@ -8,6 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person;
  *
  * Convenience access to all tables in Person
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

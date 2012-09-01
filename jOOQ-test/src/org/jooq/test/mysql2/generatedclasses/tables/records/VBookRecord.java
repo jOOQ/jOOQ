@@ -8,11 +8,12 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
  *
  * VIEW
  */
+@java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "v_book", schema = "test2")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1788473005;
+	private static final long serialVersionUID = -1074727551;
 
 	/**
 	 * The book ID

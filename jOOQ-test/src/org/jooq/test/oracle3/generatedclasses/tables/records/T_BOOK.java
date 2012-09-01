@@ -8,11 +8,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  *
  * An entity holding books
  */
+@java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK", schema = "TEST")
 public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = -1525049578;
+	private static final long serialVersionUID = -1556639858;
 
 	/**
 	 * The book ID

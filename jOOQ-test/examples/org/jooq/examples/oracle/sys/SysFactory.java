@@ -14,9 +14,10 @@ package org.jooq.examples.oracle.sys;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class SysFactory extends org.jooq.util.oracle.OracleFactory {
 
-	private static final long serialVersionUID = 879087750;
+	private static final long serialVersionUID = -1787307274;
 
 	/**
 	 * Create a factory with a connection

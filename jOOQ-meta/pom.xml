@@ -31,6 +31,7 @@
 		                    <extension>true</extension>
 		                    <strict>false</strict>
 		                    <schemaDirectory>src/main/resources/xsd</schemaDirectory>
+		                    <bindingDirectory>src/main/resources/xjb</bindingDirectory>
 		                    <schemaIncludes>
 		                        <include>jooq-codegen-2.5.0.xsd</include>
 		                    </schemaIncludes>
@@ -41,6 +42,7 @@
 		                        <arg>-Xxew:delete</arg>
 		                        <arg>-Xfluent-api</arg>
 		                        <arg>-Xdefault-value</arg>
+		                        <arg>-Xannotate</arg>
 		                    </args>
 		                    <plugins>
 		                        <plugin>
@@ -58,6 +60,11 @@
 		                            <artifactId>jaxb2-default-value</artifactId>
 		                            <version>1.1</version>
 		                        </plugin>
+		                        <plugin>
+		                            <groupId>org.jvnet.jaxb2_commons</groupId>
+		                            <artifactId>jaxb2-basics-annotate</artifactId>
+		                            <version>0.6.2</version>
+		                        </plugin>           
 		                    </plugins>
 		                </configuration>
                     </execution>

@@ -21,17 +21,19 @@ class ArithmeticExpressionTest extends FunSuite {
     val div2 = T_BOOK.ID / 2
     val mod1 = T_BOOK.ID % T_BOOK.AUTHOR_ID
     val mod2 = T_BOOK.ID % 2
+    val neg1 = -T_BOOK.ID
 
-    assert("(t_book.id + t_book.author_id)" == add1.toString(), add1.toString())
-    assert("(t_book.id + 2)"                == add2.toString(), add2.toString())
-    assert("(t_book.id - t_book.author_id)" == sub1.toString(), sub1.toString())
-    assert("(t_book.id - 2)"                == sub2.toString(), sub2.toString())
-    assert("(t_book.id * t_book.author_id)" == mul1.toString(), mul1.toString())
-    assert("(t_book.id * 2)"                == mul2.toString(), mul2.toString())
-    assert("(t_book.id / t_book.author_id)" == div1.toString(), div1.toString())
-    assert("(t_book.id / 2)"                == div2.toString(), div2.toString())
+    assert("(t_book.id + t_book.author_id)"   == add1.toString(), add1.toString())
+    assert("(t_book.id + 2)"                  == add2.toString(), add2.toString())
+    assert("(t_book.id - t_book.author_id)"   == sub1.toString(), sub1.toString())
+    assert("(t_book.id - 2)"                  == sub2.toString(), sub2.toString())
+    assert("(t_book.id * t_book.author_id)"   == mul1.toString(), mul1.toString())
+    assert("(t_book.id * 2)"                  == mul2.toString(), mul2.toString())
+    assert("(t_book.id / t_book.author_id)"   == div1.toString(), div1.toString())
+    assert("(t_book.id / 2)"                  == div2.toString(), div2.toString())
     assert("mod(t_book.id, t_book.author_id)" == mod1.toString(), mod1.toString())
     assert("mod(t_book.id, 2)"                == mod2.toString(), mod2.toString())
+    assert("-(t_book.id)"                     == neg1.toString(), neg1.toString())
 
     // Check for the correct application of operator precedence
     val combined1 = T_BOOK.ID + T_BOOK.AUTHOR_ID * 2

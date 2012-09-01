@@ -130,6 +130,8 @@ object Conversions {
     // Arithmetic operations
     // ---------------------
 
+    def unary_-                       : Field[T]
+
     def +(value : Number)             : Field[T]
     def +(value : Field[_ <: Number]) : Field[T]
 
@@ -229,6 +231,8 @@ object Conversions {
     // ------------------------------------------------------------------------
     // Arithmetic operations
     // ------------------------------------------------------------------------
+
+    def unary_-                       = underlying.neg()
 
     def +(value : Number)             = underlying.add(value)
     def +(value : Field[_ <: Number]) = underlying.add(value)

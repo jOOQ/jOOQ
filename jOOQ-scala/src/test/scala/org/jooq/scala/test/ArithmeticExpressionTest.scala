@@ -10,9 +10,9 @@ import org.jooq.conf.Settings
 import javax.xml.bind.JAXB
 import org.jooq.conf.SettingsTools
 
-class OperatorOverloadingTest extends FunSuite {
+class ArithmeticExpressionTest extends FunSuite {
 
-  test("arithmetic") {
+  test("arithmetic expressions") {
     val add1 = T_BOOK.ID + T_BOOK.AUTHOR_ID
     val add2 = T_BOOK.ID + 2
     val sub1 = T_BOOK.ID - T_BOOK.AUTHOR_ID

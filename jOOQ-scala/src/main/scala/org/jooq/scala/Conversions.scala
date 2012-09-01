@@ -85,7 +85,7 @@ object Conversions {
    * A Scala-esque representation of {@link org.jooq.Field}, adding overloaded
    * operators for common jOOQ operations to arbitrary fields
    */
-  trait SAnyField[T] extends QueryPartInternal {
+  trait SAnyField[T] extends Field[T] {
 
     // String operations
     // -----------------
@@ -183,8 +183,8 @@ object Conversions {
     // QueryPart API
     // -------------
 
-    def toSQL(context : RenderContext) = underlying.toSQL(context)
-    def bind (context : BindContext)   = underlying.bind(context)
+    def toSQL(context : RenderContext) = underlying.asInstanceOf[QueryPartInternal].toSQL(context)
+    def bind (context : BindContext)   = underlying.asInstanceOf[QueryPartInternal].bind(context)
 
     // String operations
     // -----------------
@@ -289,12 +289,18 @@ object Conversions {
   case class NumberFieldWrapper[T <: Number](override val underlying: Field[T])
         extends NumberFieldBase[T] (underlying) {}
 
+  /**
+   * Enrich numeric {@link org.jooq.Field} with the {@link SNumberField} trait
+   */
   implicit def asSNumberField[T <: Number](f : Field[T]): SNumberField[T] = f match {
     case AnyFieldWrapper(f) => f
     case NumberFieldWrapper(f) => f
     case _ => new NumberFieldWrapper(f)
   }
 
+  /**
+   * Enrich any {@link org.jooq.Field} with the {@link SAnyField} trait
+   */
   implicit def asSAnyField[T](f : Field[T]): SAnyField[T] = f match {
     case AnyFieldWrapper(f) => f
     case _ => new AnyFieldWrapper(f)

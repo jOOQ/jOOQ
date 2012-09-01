@@ -33,6 +33,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package org.jooq.scala.example
 
 import collection.JavaConversions._
 
@@ -40,6 +41,7 @@ import java.sql.DriverManager
 
 import org.jooq._
 import org.jooq.impl._
+import org.jooq.impl.Factory._
 import org.jooq.scala.example.h2.Tables._
 import org.jooq.scala.Conversions._
 
@@ -47,14 +49,24 @@ object Test {
   def main(args: Array[String]): Unit = {
     val c = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
     val f = new Factory(c, SQLDialect.H2);
+    val x = T_AUTHOR as "x"
 
     for (r <- f
         select (
           T_BOOK.ID * T_BOOK.AUTHOR_ID,
           T_BOOK.ID + T_BOOK.AUTHOR_ID * 3 + 4,
           T_BOOK.TITLE || " abc" || " xy")
-          from T_BOOK
-          where (T_BOOK.ID <> 3) fetch
+        from T_BOOK
+        leftOuterJoin (
+          f select ( x.ID, x.YEAR_OF_BIRTH)
+          from x
+          limit 1
+          asTable x.getName()
+        )
+        on T_BOOK.AUTHOR_ID === x.ID
+        where (T_BOOK.ID <> 2)
+        or (T_BOOK.TITLE in ("O Alquimista", "Brida"))
+        fetch
     ) {
 
       println(r)

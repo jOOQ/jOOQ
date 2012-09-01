@@ -1766,7 +1766,6 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Get this result formatted as XML
      *
-     * @see #exportXML()
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>
      */

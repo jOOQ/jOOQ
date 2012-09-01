@@ -35,13 +35,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.POSTGRES;
-
 import java.util.Collection;
 
 /**
@@ -234,16 +227,6 @@ public interface Tuple3<T1, T2, T3> extends Tuple {
     Condition in(Tuple3<T1, T2, T3>... tuples);
 
     /**
-     * Compare this tuple with a subselect for equality
-     * <p>
-     * Note that the subquery must return a table of the same degree as this
-     * tuple. This is not checked by jOOQ and will result in syntax errors in
-     * the database, if not used correctly.
-     */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
-    Condition in(Select<?> select);
-
-    /**
      * Compare this tuple with a set of tuples for equality
      * <p>
      * Tuple NOT IN predicates can be simulated in those databases that do not
@@ -266,14 +249,4 @@ public interface Tuple3<T1, T2, T3> extends Tuple {
      */
     @Support
     Condition notIn(Tuple3<T1, T2, T3>... tuples);
-
-    /**
-     * Compare this tuple with a subselect for equality
-     * <p>
-     * Note that the subquery must return a table of the same degree as this
-     * tuple. This is not checked by jOOQ and will result in syntax errors in
-     * the database, if not used correctly.
-     */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
-    Condition notIn(Select<?> select);
 }

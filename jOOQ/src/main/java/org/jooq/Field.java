@@ -1079,6 +1079,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * Create a condition to check this field against some bounds
      * <p>
+     * This is the same as calling
+     * <code>between(minValue).and(maxValue)</code>
+     * <p>
      * SQL: <code>this between minValue and maxValue</code>
      */
     @Support
@@ -1086,6 +1089,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Create a condition to check this field against some bounds
+     * <p>
+     * This is the same as calling
+     * <code>between(minValue).and(maxValue)</code>
      * <p>
      * SQL: <code>this between minValue and maxValue</code>
      */
@@ -1095,6 +1101,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * Create a condition to check this field against some bounds
      * <p>
+     * This is the same as calling
+     * <code>betweenSymmetric(minValue).and(maxValue)</code>
+     * <p>
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
     @Support
@@ -1102,6 +1111,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Create a condition to check this field against some bounds
+     * <p>
+     * This is the same as calling
+     * <code>betweenSymmetric(minValue).and(maxValue)</code>
      * <p>
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
@@ -1111,6 +1123,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * Create a condition to check this field against some bounds
      * <p>
+     * This is the same as calling
+     * <code>notBetween(minValue).and(maxValue)</code>
+     * <p>
      * SQL: <code>this not between minValue and maxValue</code>
      */
     @Support
@@ -1118,6 +1133,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Create a condition to check this field against some bounds
+     * <p>
+     * This is the same as calling
+     * <code>notBetween(minValue).and(maxValue)</code>
      * <p>
      * SQL: <code>this not between minValue and maxValue</code>
      */
@@ -1127,6 +1145,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * Create a condition to check this field against some bounds
      * <p>
+     * This is the same as calling
+     * <code>notBetweenSymmetric(minValue).and(maxValue)</code>
+     * <p>
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
     @Support
@@ -1135,10 +1156,77 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * Create a condition to check this field against some bounds
      * <p>
+     * This is the same as calling
+     * <code>notBetweenSymmetric(minValue).and(maxValue)</code>
+     * <p>
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
     @Support
     Condition notBetweenSymmetric(Field<T> minValue, Field<T> maxValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this between minValue and maxValue</code>
+     */
+    @Support
+    BetweenAndStep<T> between(T minValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this between minValue and maxValue</code>
+     */
+    @Support
+    BetweenAndStep<T> between(Field<T> minValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this between symmetric minValue and maxValue</code>
+     */
+    @Support
+    BetweenAndStep<T> betweenSymmetric(T minValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this between symmetric minValue and maxValue</code>
+     */
+    @Support
+    BetweenAndStep<T> betweenSymmetric(Field<T> minValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this not between minValue and maxValue</code>
+     */
+    @Support
+    BetweenAndStep<T> notBetween(T minValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this not between minValue and maxValue</code>
+     */
+    @Support
+    BetweenAndStep<T> notBetween(Field<T> minValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this not between symmetric minValue and maxValue</code>
+     */
+    @Support
+    BetweenAndStep<T> notBetweenSymmetric(T minValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this not between symmetric minValue and maxValue</code>
+     */
+    @Support
+    BetweenAndStep<T> notBetweenSymmetric(Field<T> minValue);
 
     // ------------------------------------------------------------------------
     // Comparison predicates

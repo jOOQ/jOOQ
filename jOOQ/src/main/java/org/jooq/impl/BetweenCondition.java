@@ -48,8 +48,11 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.Factory.val;
 
+import org.jooq.BetweenAndStep;
 import org.jooq.BindContext;
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -57,7 +60,7 @@ import org.jooq.RenderContext;
 /**
  * @author Lukas Eder
  */
-class BetweenCondition<T> extends AbstractCondition {
+class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T> {
 
     private static final long serialVersionUID = -4666251100802237878L;
 
@@ -65,14 +68,24 @@ class BetweenCondition<T> extends AbstractCondition {
     private final boolean     not;
     private final Field<T>    field;
     private final Field<T>    minValue;
-    private final Field<T>    maxValue;
+    private Field<T>          maxValue;
 
-    BetweenCondition(Field<T> field, Field<T> minValue, Field<T> maxValue, boolean not, boolean symmetric) {
+    BetweenCondition(Field<T> field, Field<T> minValue, boolean not, boolean symmetric) {
         this.field = field;
         this.minValue = minValue;
-        this.maxValue = maxValue;
         this.not = not;
         this.symmetric = symmetric;
+    }
+
+    @Override
+    public final Condition and(T value) {
+        return and(val(value));
+    }
+
+    @Override
+    public final Condition and(Field<T> f) {
+        this.maxValue = f;
+        return this;
     }
 
     @Override

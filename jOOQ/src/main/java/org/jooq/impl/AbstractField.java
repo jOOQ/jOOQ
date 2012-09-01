@@ -56,6 +56,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.BetweenAndStep;
 import org.jooq.BindContext;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
@@ -545,7 +546,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition between(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), false, false);
+        return new BetweenCondition<T>(this, nullSafe(minValue), false, false).and(nullSafe(maxValue));
     }
 
     @Override
@@ -555,7 +556,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition betweenSymmetric(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), false, true);
+        return new BetweenCondition<T>(this, nullSafe(minValue), false, true).and(nullSafe(maxValue));
     }
 
     @Override
@@ -565,7 +566,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notBetween(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), true, false);
+        return new BetweenCondition<T>(this, nullSafe(minValue), true, false).and(nullSafe(maxValue));
     }
 
     @Override
@@ -575,7 +576,47 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notBetweenSymmetric(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), true, true);
+        return new BetweenCondition<T>(this, nullSafe(minValue), true, true).and(nullSafe(maxValue));
+    }
+
+    @Override
+    public final BetweenAndStep<T> between(T minValue) {
+        return between(val(minValue, this));
+    }
+
+    @Override
+    public final BetweenAndStep<T> between(Field<T> minValue) {
+        return new BetweenCondition<T>(this, nullSafe(minValue), false, false);
+    }
+
+    @Override
+    public final BetweenAndStep<T> betweenSymmetric(T minValue) {
+        return betweenSymmetric(val(minValue, this));
+    }
+
+    @Override
+    public final BetweenAndStep<T> betweenSymmetric(Field<T> minValue) {
+        return new BetweenCondition<T>(this, nullSafe(minValue), false, true);
+    }
+
+    @Override
+    public final BetweenAndStep<T> notBetween(T minValue) {
+        return notBetween(val(minValue, this));
+    }
+
+    @Override
+    public final BetweenAndStep<T> notBetween(Field<T> minValue) {
+        return new BetweenCondition<T>(this, nullSafe(minValue), true, false);
+    }
+
+    @Override
+    public final BetweenAndStep<T> notBetweenSymmetric(T minValue) {
+        return notBetweenSymmetric(val(minValue, this));
+    }
+
+    @Override
+    public final BetweenAndStep<T> notBetweenSymmetric(Field<T> minValue) {
+        return new BetweenCondition<T>(this, nullSafe(minValue), true, true);
     }
 
     @Override

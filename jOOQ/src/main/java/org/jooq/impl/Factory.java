@@ -5015,6 +5015,16 @@ public class Factory implements FactoryOperations {
     }
 
     /**
+     * Get the count(distinct field1, field2) function
+     * <p>
+     * Some dialects support several expressions in the <code>COUNT(DISTINCT expr1, expr2)</code> aggregate function.
+     */
+    @Support({ HSQLDB, MYSQL })
+    public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
+        return new Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(fields));
+    }
+
+    /**
      * Get the max value over a field: max(field)
      */
     @Support

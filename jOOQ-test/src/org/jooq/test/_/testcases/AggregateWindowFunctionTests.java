@@ -39,7 +39,16 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.avg;
 import static org.jooq.impl.Factory.avgDistinct;
@@ -251,6 +260,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(2, (int) result.getValueAsInteger(0, 2));
         assertEquals(4, (int) result.getValueAsInteger(1, 1));
         assertEquals(4, (int) result.getValueAsInteger(1, 2));
+    }
+
+    @Test
+    public void testCountDistinct() throws Exception {
+
+        // [#1728] COUNT(DISTINCT expr1, expr2, ...)
+        // -----------------------------------------
+        if (asList(CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE).contains(getDialect())) {
+            log.info("SKIPPING", "Multi-expression COUNT(DISTINCT) test");
+        }
+        else {
+            assertEquals(3, (int)
+            create().select(countDistinct(TBook_AUTHOR_ID(), TBook_LANGUAGE_ID()))
+                    .from(TBook())
+                    .fetchOne(0, Integer.class));
+        }
     }
 
     @Test

@@ -119,6 +119,7 @@
         <!--<module>jOOQ-codegen-maven-example</module>-->
         <module>jOOQ-console</module>
         <module>jOOQ-meta</module>
+        <module>jOOQ-scala</module>
     </modules>
 
     <dependencyManagement>
@@ -151,6 +152,11 @@
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-meta</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-scala</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

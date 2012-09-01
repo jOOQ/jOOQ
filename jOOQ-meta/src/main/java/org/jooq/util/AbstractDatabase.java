@@ -641,7 +641,7 @@ public abstract class AbstractDatabase implements Database {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     private final <T extends TableDefinition> List<T> filterMasterDataTables(List<TableDefinition> list, boolean include) {
         List<T> result = new ArrayList<T>();
 

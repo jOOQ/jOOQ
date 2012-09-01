@@ -138,6 +138,9 @@ object Conversions {
 
     def <=(value : T)         : Condition = underlying.lessOrEqual(value)
     def <=(value : Field[T])  : Condition = underlying.lessOrEqual(value)
+
+    def <=>(value : T)        : Condition = underlying.isNotDistinctFrom(value)
+    def <=>(value : Field[T]) : Condition = underlying.isNotDistinctFrom(value)
   }
 
   /**
@@ -192,6 +195,9 @@ object Conversions {
 
     def <=(value : T)                : Condition
     def <=(value : Field[T])         : Condition
+
+    def <=>(value : T)               : Condition
+    def <=>(value : Field[T])        : Condition
   }
 
   implicit def asScalaField[T](f : Field[T]): SField[T] = f match {

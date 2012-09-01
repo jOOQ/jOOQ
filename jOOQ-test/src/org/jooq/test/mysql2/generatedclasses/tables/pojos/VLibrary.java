@@ -8,11 +8,12 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
  *
  * VIEW
  */
+@java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "v_library", schema = "test2")
 public class VLibrary implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1397579188;
+	private static final long serialVersionUID = -814497512;
 
 	private java.lang.String author;
 	private java.lang.String title;

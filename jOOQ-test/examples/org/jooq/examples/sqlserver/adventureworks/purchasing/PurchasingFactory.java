@@ -14,9 +14,10 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class PurchasingFactory extends org.jooq.util.sqlserver.SQLServerFactory {
 
-	private static final long serialVersionUID = 44773523;
+	private static final long serialVersionUID = -638273;
 
 	/**
 	 * Create a factory with a connection

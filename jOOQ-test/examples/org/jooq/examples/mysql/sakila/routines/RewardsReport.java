@@ -8,9 +8,10 @@ package org.jooq.examples.mysql.sakila.routines;
  *
  * Provides a customizable report on best customers
  */
+@java.lang.SuppressWarnings("all")
 public class RewardsReport extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1735495315;
+	private static final long serialVersionUID = -2004720273;
 
 
 	/**

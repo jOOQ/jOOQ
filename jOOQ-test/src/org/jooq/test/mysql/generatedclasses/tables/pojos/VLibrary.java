@@ -8,9 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  *
  * VIEW
  */
+@java.lang.SuppressWarnings("all")
 public class VLibrary implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1474418579;
+	private static final long serialVersionUID = 684758525;
 
 	private final java.lang.String author;
 	private final java.lang.String title;

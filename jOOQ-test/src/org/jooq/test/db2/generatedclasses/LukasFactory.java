@@ -14,9 +14,10 @@ package org.jooq.test.db2.generatedclasses;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class LukasFactory extends org.jooq.util.db2.DB2Factory {
 
-	private static final long serialVersionUID = 158994551;
+	private static final long serialVersionUID = -1597549571;
 
 	/**
 	 * Create a factory with a connection

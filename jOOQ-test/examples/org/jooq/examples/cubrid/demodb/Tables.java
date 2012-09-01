@@ -8,57 +8,58 @@ package org.jooq.examples.cubrid.demodb;
  *
  * Convenience access to all tables in PUBLIC
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**
 	 * The table PUBLIC.athlete
 	 */
-	public static org.jooq.examples.cubrid.demodb.tables.Athlete ATHLETE = org.jooq.examples.cubrid.demodb.tables.Athlete.ATHLETE;
+	public static final org.jooq.examples.cubrid.demodb.tables.Athlete ATHLETE = org.jooq.examples.cubrid.demodb.tables.Athlete.ATHLETE;
 
 	/**
 	 * The table PUBLIC.code
 	 */
-	public static org.jooq.examples.cubrid.demodb.tables.Code CODE = org.jooq.examples.cubrid.demodb.tables.Code.CODE;
+	public static final org.jooq.examples.cubrid.demodb.tables.Code CODE = org.jooq.examples.cubrid.demodb.tables.Code.CODE;
 
 	/**
 	 * The table PUBLIC.event
 	 */
-	public static org.jooq.examples.cubrid.demodb.tables.Event EVENT = org.jooq.examples.cubrid.demodb.tables.Event.EVENT;
+	public static final org.jooq.examples.cubrid.demodb.tables.Event EVENT = org.jooq.examples.cubrid.demodb.tables.Event.EVENT;
 
 	/**
 	 * The table PUBLIC.game
 	 */
-	public static org.jooq.examples.cubrid.demodb.tables.Game GAME = org.jooq.examples.cubrid.demodb.tables.Game.GAME;
+	public static final org.jooq.examples.cubrid.demodb.tables.Game GAME = org.jooq.examples.cubrid.demodb.tables.Game.GAME;
 
 	/**
 	 * The table PUBLIC.history
 	 */
-	public static org.jooq.examples.cubrid.demodb.tables.History HISTORY = org.jooq.examples.cubrid.demodb.tables.History.HISTORY;
+	public static final org.jooq.examples.cubrid.demodb.tables.History HISTORY = org.jooq.examples.cubrid.demodb.tables.History.HISTORY;
 
 	/**
 	 * The table PUBLIC.nation
 	 */
-	public static org.jooq.examples.cubrid.demodb.tables.Nation NATION = org.jooq.examples.cubrid.demodb.tables.Nation.NATION;
+	public static final org.jooq.examples.cubrid.demodb.tables.Nation NATION = org.jooq.examples.cubrid.demodb.tables.Nation.NATION;
 
 	/**
 	 * The table PUBLIC.olympic
 	 */
-	public static org.jooq.examples.cubrid.demodb.tables.Olympic OLYMPIC = org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC;
+	public static final org.jooq.examples.cubrid.demodb.tables.Olympic OLYMPIC = org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC;
 
 	/**
 	 * The table PUBLIC.participant
 	 */
-	public static org.jooq.examples.cubrid.demodb.tables.Participant PARTICIPANT = org.jooq.examples.cubrid.demodb.tables.Participant.PARTICIPANT;
+	public static final org.jooq.examples.cubrid.demodb.tables.Participant PARTICIPANT = org.jooq.examples.cubrid.demodb.tables.Participant.PARTICIPANT;
 
 	/**
 	 * The table PUBLIC.record
 	 */
-	public static org.jooq.examples.cubrid.demodb.tables.Record RECORD = org.jooq.examples.cubrid.demodb.tables.Record.RECORD;
+	public static final org.jooq.examples.cubrid.demodb.tables.Record RECORD = org.jooq.examples.cubrid.demodb.tables.Record.RECORD;
 
 	/**
 	 * The table PUBLIC.stadium
 	 */
-	public static org.jooq.examples.cubrid.demodb.tables.Stadium STADIUM = org.jooq.examples.cubrid.demodb.tables.Stadium.STADIUM;
+	public static final org.jooq.examples.cubrid.demodb.tables.Stadium STADIUM = org.jooq.examples.cubrid.demodb.tables.Stadium.STADIUM;
 
 	/**
 	 * No instances

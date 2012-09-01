@@ -8,9 +8,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  *
  * A book store
  */
+@java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 482511064;
+	private static final long serialVersionUID = -709896390;
 
 	/**
 	 * The singleton instance of test2.t_book_store

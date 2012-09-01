@@ -8,9 +8,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
  *
  * An m:n relation between books and book stores
  */
+@java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 141433365;
+	private static final long serialVersionUID = 457788609;
 
 	/**
 	 * The singleton instance of test.t_book_to_book_store

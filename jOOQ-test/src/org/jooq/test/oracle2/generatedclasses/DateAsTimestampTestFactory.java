@@ -14,9 +14,10 @@ package org.jooq.test.oracle2.generatedclasses;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class DateAsTimestampTestFactory extends org.jooq.util.oracle.OracleFactory {
 
-	private static final long serialVersionUID = 648372842;
+	private static final long serialVersionUID = 1268174636;
 
 	/**
 	 * Create a factory with a connection

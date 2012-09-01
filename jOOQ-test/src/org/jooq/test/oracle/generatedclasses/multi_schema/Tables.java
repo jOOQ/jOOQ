@@ -8,6 +8,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema;
  *
  * Convenience access to all tables in MULTI_SCHEMA
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

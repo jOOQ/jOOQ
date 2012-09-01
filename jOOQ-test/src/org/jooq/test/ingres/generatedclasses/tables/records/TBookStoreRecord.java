@@ -8,9 +8,10 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  *
  * A book store
  */
+@java.lang.SuppressWarnings("all")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1294706955;
+	private static final long serialVersionUID = 849310245;
 
 	/**
 	 * The books store name

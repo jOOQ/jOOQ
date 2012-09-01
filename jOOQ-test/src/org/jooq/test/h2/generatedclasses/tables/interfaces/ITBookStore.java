@@ -8,6 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
  *
  * A book store
  */
+@java.lang.SuppressWarnings("all")
 public interface ITBookStore extends java.io.Serializable {
 
 	/**

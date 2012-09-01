@@ -8,9 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  *
  * A book store
  */
+@java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 411688001;
+	private static final long serialVersionUID = -1976789263;
 
 	/**
 	 * The singleton instance of DBA.t_book_store

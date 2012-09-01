@@ -8,6 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production;
  *
  * Convenience access to all tables in Production
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

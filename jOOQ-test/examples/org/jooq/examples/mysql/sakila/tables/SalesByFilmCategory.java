@@ -8,9 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  *
  * VIEW
  */
+@java.lang.SuppressWarnings("all")
 public class SalesByFilmCategory extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord> {
 
-	private static final long serialVersionUID = -1079922693;
+	private static final long serialVersionUID = 635854323;
 
 	/**
 	 * The singleton instance of sakila.sales_by_film_category

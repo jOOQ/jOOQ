@@ -8,6 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
  *
  * An entity holding books
  */
+@java.lang.SuppressWarnings("all")
 public interface ITBook extends java.io.Serializable {
 
 	/**

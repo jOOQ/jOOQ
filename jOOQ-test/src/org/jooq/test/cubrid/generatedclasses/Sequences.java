@@ -8,6 +8,7 @@ package org.jooq.test.cubrid.generatedclasses;
  *
  * Convenience access to all sequences in DBA
  */
+@java.lang.SuppressWarnings("all")
 public final class Sequences {
 
 	/**

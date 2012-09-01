@@ -14,9 +14,10 @@ package org.jooq.test.sqlserver.generatedclasses;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class DboFactory extends org.jooq.util.sqlserver.SQLServerFactory {
 
-	private static final long serialVersionUID = -1879544204;
+	private static final long serialVersionUID = 1442157484;
 
 	/**
 	 * Create a factory with a connection

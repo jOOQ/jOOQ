@@ -8,9 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  *
  * An m:n relation between books and book stores
  */
+@java.lang.SuppressWarnings("all")
 public class TBookToBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = -20664189;
+	private static final long serialVersionUID = -1292856423;
 
 	private final java.lang.String  bookStoreName;
 	private final java.lang.Integer bookId;

@@ -8,6 +8,7 @@ package org.jooq.test.h2.generatedclasses;
  *
  * Convenience access to all tables in PUBLIC
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

@@ -8,6 +8,7 @@ package org.jooq.examples.mysql.sakila;
  *
  * Convenience access to all stored procedures and functions in sakila
  */
+@java.lang.SuppressWarnings("all")
 public final class Routines {
 
 	/**

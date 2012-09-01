@@ -9,6 +9,7 @@ package org.jooq.test.mysql2.generatedclasses;
  * A class modelling foreign key relationships between tables of the <code>test2</code> 
  * schema
  */
+@java.lang.SuppressWarnings("all")
 public class Keys {
 
 	// IDENTITY definitions

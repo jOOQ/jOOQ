@@ -8,6 +8,7 @@ package org.jooq.test.derby.generatedclasses;
  *
  * Convenience access to all tables in TEST
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

@@ -8,6 +8,7 @@ package org.jooq.test.sybase.generatedclasses;
  *
  * Convenience access to all tables in DBA
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

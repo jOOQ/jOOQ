@@ -8,6 +8,7 @@ package org.jooq.test.postgres.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in public
  */
+@java.lang.SuppressWarnings("all")
 public final class Routines {
 
 	/**

@@ -8,6 +8,7 @@ package org.jooq.test.db2.generatedclasses;
  *
  * Convenience access to all tables in LUKAS
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

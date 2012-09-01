@@ -8,6 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test;
  *
  * Convenience access to all sequences in TEST
  */
+@java.lang.SuppressWarnings("all")
 public final class Sequences {
 
 	/**

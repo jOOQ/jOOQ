@@ -8,11 +8,12 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
  *
  * A book store
  */
+@java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK_STORE", schema = "TEST")
 public class TBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = -506920109;
+	private static final long serialVersionUID = 776338327;
 
 
 	@javax.validation.constraints.NotNull

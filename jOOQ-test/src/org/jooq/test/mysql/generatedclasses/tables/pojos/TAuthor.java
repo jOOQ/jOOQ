@@ -8,9 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  *
  * An entity holding authors of books
  */
+@java.lang.SuppressWarnings("all")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1043763997;
+	private static final long serialVersionUID = 82644983;
 
 	private final java.lang.Integer id;
 	private final java.lang.String  firstName;

@@ -8,11 +8,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  *
  * An entity holding authors of books
  */
+@java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
 public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR> implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = -1457464438;
+	private static final long serialVersionUID = -1709008540;
 
 	/**
 	 * The author ID

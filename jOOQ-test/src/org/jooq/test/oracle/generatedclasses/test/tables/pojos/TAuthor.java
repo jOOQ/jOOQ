@@ -8,11 +8,12 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
  *
  * An entity holding authors of books
  */
+@java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -173901300;
+	private static final long serialVersionUID = -1539440838;
 
 
 	@javax.validation.constraints.NotNull

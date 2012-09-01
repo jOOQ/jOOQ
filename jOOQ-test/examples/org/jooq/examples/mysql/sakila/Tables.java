@@ -8,6 +8,7 @@ package org.jooq.examples.mysql.sakila;
  *
  * Convenience access to all tables in sakila
  */
+@java.lang.SuppressWarnings("all")
 public final class Tables {
 
 	/**

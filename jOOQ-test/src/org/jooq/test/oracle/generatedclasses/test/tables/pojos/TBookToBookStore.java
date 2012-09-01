@@ -8,13 +8,14 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
  *
  * An m:n relation between books and book stores
  */
+@java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK_TO_BOOK_STORE", schema = "TEST", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"BOOK_STORE_NAME", "BOOK_ID"})
 })
 public class TBookToBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = 129941594;
+	private static final long serialVersionUID = -1214789840;
 
 
 	@javax.validation.constraints.NotNull

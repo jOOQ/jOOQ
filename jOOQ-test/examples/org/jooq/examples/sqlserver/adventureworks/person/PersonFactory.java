@@ -14,9 +14,10 @@ package org.jooq.examples.sqlserver.adventureworks.person;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class PersonFactory extends org.jooq.util.sqlserver.SQLServerFactory {
 
-	private static final long serialVersionUID = 622401302;
+	private static final long serialVersionUID = -1891024556;
 
 	/**
 	 * Create a factory with a connection

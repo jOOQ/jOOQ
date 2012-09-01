@@ -8,6 +8,7 @@ package org.jooq.test.db2.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in LUKAS
  */
+@java.lang.SuppressWarnings("all")
 public final class Routines {
 
 	/**

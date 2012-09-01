@@ -14,9 +14,10 @@ package org.jooq.test.mysql2.generatedclasses;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class Test2Factory extends org.jooq.util.mysql.MySQLFactory {
 
-	private static final long serialVersionUID = 1575134149;
+	private static final long serialVersionUID = 112755311;
 
 	/**
 	 * Create a factory with a connection

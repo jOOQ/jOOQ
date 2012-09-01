@@ -14,9 +14,10 @@ package org.jooq.test.sybase.generatedclasses;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class DbaFactory extends org.jooq.util.sybase.SybaseFactory {
 
-	private static final long serialVersionUID = -557059004;
+	private static final long serialVersionUID = 397057340;
 
 	/**
 	 * Create a factory with a connection

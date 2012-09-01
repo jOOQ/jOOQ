@@ -14,9 +14,10 @@ package org.jooq.test.oracle3.generatedclasses;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class MyFactory extends org.jooq.util.oracle.OracleFactory implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -90424144;
+	private static final long serialVersionUID = -240089840;
 
 	/**
 	 * Create a factory with a connection

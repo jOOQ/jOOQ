@@ -8,9 +8,10 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  *
  * An entity holding books
  */
+@java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1675335914;
+	private static final long serialVersionUID = 726850980;
 
 	/**
 	 * The book ID

@@ -8,6 +8,7 @@ package org.jooq.examples.cubrid.demodb;
  *
  * Convenience access to all sequences in PUBLIC
  */
+@java.lang.SuppressWarnings("all")
 public final class Sequences {
 
 	/**

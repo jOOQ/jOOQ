@@ -8,6 +8,7 @@ package org.jooq.examples.oracle.sys;
  *
  * Convenience access to all UDTs in SYS
  */
+@java.lang.SuppressWarnings("all")
 public final class UDTs {
 
 	/**

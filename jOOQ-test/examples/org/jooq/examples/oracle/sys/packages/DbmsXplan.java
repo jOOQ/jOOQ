@@ -8,9 +8,10 @@ package org.jooq.examples.oracle.sys.packages;
  *
  * Convenience access to all stored procedures and functions in DBMS_XPLAN
  */
+@java.lang.SuppressWarnings("all")
 public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -1584769552;
+	private static final long serialVersionUID = -848500436;
 
 	/**
 	 * The singleton instance of SYS.DBMS_XPLAN

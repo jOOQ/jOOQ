@@ -14,9 +14,10 @@ package org.jooq.test.derby.generatedclasses;
  * or the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class TestFactory extends org.jooq.util.derby.DerbyFactory {
 
-	private static final long serialVersionUID = -1699849817;
+	private static final long serialVersionUID = 797454569;
 
 	/**
 	 * Create a factory with a connection

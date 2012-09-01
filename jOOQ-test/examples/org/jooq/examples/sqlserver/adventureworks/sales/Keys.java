@@ -9,6 +9,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales;
  * A class modelling foreign key relationships between tables of the <code>Sales</code> 
  * schema
  */
+@java.lang.SuppressWarnings("all")
 public class Keys {
 
 	// IDENTITY definitions

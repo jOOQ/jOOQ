@@ -14,9 +14,10 @@ package org.jooq.test.h2.generatedclasses;
  * the {@link org.jooq.impl.Factory} instead, if you want to fully qualify 
  * tables, routines, etc.
  */
+@java.lang.SuppressWarnings("all")
 public class PublicFactory extends org.jooq.util.h2.H2Factory {
 
-	private static final long serialVersionUID = -1117567318;
+	private static final long serialVersionUID = -1346587932;
 
 	/**
 	 * Create a factory with a connection

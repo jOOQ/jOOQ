@@ -8,6 +8,7 @@ package org.jooq.test.firebird.generatedclasses;
  *
  * Convenience access to all sequences in 
  */
+@java.lang.SuppressWarnings("all")
 public final class Sequences {
 
 	/**

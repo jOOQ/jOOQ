@@ -8,6 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.daos;
  *
  * An entity holding books
  */
+@java.lang.SuppressWarnings("all")
 public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBook, java.lang.Integer> {
 
 	/**

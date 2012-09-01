@@ -8,6 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  *
  * An entity holding authors of books
  */
+@java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
 public interface T_AUTHOR_INTERFACE extends java.lang.Cloneable, java.io.Serializable {

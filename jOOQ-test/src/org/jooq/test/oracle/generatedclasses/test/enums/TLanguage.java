@@ -8,6 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.enums;
  *
  * An entity holding language master data
  */
+@java.lang.SuppressWarnings("all")
 public enum TLanguage implements org.jooq.MasterDataType<java.lang.Integer> {
 
 	/**

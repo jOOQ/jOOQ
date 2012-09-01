@@ -8,9 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  *
  * An entity holding authors of books
  */
+@java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 652461256;
+	private static final long serialVersionUID = -1705076996;
 
 	/**
 	 * The singleton instance of TEST.T_AUTHOR

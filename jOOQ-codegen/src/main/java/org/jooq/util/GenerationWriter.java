@@ -29,7 +29,6 @@ import org.jooq.tools.StringUtils;
  */
 public class GenerationWriter {
 
-    private static final String SUPPRESS_WARNINGS_STATEMENT     = "__SUPPRESS_WARNINGS_STATEMENT__";
     private static final String STATIC_INITIALISATION_STATEMENT = "__STATIC_INITIALISATION_STATEMENT__";
     private static final String INITIALISATION_STATEMENT        = "__INITIALISATION_STATEMENT__";
     private static final String SERIAL_STATEMENT                = "__SERIAL_STATEMENT__";
@@ -63,10 +62,6 @@ public class GenerationWriter {
 
     public void printInitialisationStatementsPlaceholder() {
         println(INITIALISATION_STATEMENT);
-    }
-
-    public void printSuppressWarningsPlaceholder() {
-        println(SUPPRESS_WARNINGS_STATEMENT);
     }
 
     public void printStaticInitialisationStatement(String statement) {
@@ -134,7 +129,6 @@ public class GenerationWriter {
 
         StringBuilder staticInits = new StringBuilder();
         StringBuilder inits = new StringBuilder();
-        StringBuilder warnings = new StringBuilder();
 
         boolean hasStaticInits = false;
         boolean hasInits = false;
@@ -181,8 +175,6 @@ public class GenerationWriter {
             Matcher.quoteReplacement(staticInits.toString()));
         string = string.replaceAll(INITIALISATION_STATEMENT + "\\n",
             Matcher.quoteReplacement(inits.toString()));
-        string = string.replaceAll(SUPPRESS_WARNINGS_STATEMENT + "\\n",
-            Matcher.quoteReplacement(warnings.toString()));
         string = string.replaceAll(SERIAL_STATEMENT,
             Matcher.quoteReplacement(String.valueOf(string.hashCode())));
 

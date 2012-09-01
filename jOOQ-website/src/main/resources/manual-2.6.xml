@@ -811,6 +811,11 @@ public class Main {
 						</sections>
 					</section>
 					
+					<section id="jooq-and-scala">
+						<title>jOOQ and Scala</title>
+						<content></content>
+					</section>
+					
 					<section id="dependencies">
 						<title>Dependencies</title>
 						<content>
@@ -4170,8 +4175,8 @@ END
 <code-pair>
 <sql><![CDATA[PUBLISHED_IN     BETWEEN 1920 AND 1940
 PUBLISHED_IN NOT BETWEEN 1920 AND 1940]]></sql>
-<java><![CDATA[BOOK.PUBLISHED_IN.between(1920, 1940)
-BOOK.PUBLISHED_IN.notBetween(1920, 1940)]]></java>
+<java><![CDATA[BOOK.PUBLISHED_IN.between(1920).and(1940)
+BOOK.PUBLISHED_IN.notBetween(1920).and(1940)]]></java>
 </code-pair>
 
 									<h3>BETWEEN SYMMETRIC</h3>
@@ -4182,8 +4187,8 @@ BOOK.PUBLISHED_IN.notBetween(1920, 1940)]]></java>
 <code-pair>
 <sql><![CDATA[PUBLISHED_IN     BETWEEN SYMMETRIC 1940 AND 1920
 PUBLISHED_IN NOT BETWEEN SYMMETRIC 1940 AND 1920]]></sql>
-<java><![CDATA[BOOK.PUBLISHED_IN.betweenSymmetric(1940, 1920)
-BOOK.PUBLISHED_IN.notBetweenSymmetric(1940, 1920)]]></java>
+<java><![CDATA[BOOK.PUBLISHED_IN.betweenSymmetric(1940).and(1920)
+BOOK.PUBLISHED_IN.notBetweenSymmetric(1940).and(1920)]]></java>
 </code-pair>
 
 									<p>
@@ -5065,6 +5070,11 @@ create.attach(select);]]></java>
 								</content>
 							</section>
 						</sections>
+					</section>
+					
+					<section id="scala-sql-building">
+						<title>SQL building in Scala</title>
+						<content></content>
 					</section>
 				</sections>
 			</section>
@@ -7154,6 +7164,11 @@ Finishing                : Total: 4.814ms, +3.375ms
 								Don't be put off by the above paragraphs. You should optimise wisely, i.e. only in places where you really need very high throughput to your database. jOOQ's overhead compared to plain JDBC is typically less than 1ms per query.
 							</p>
 						</content>
+					</section>
+					
+					<section id="scala-sql-execution">
+						<title>SQL execution in Scala</title>
+						<content></content>
 					</section>
 				</sections>
 			</section>

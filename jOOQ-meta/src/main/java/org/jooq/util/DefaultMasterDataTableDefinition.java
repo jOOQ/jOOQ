@@ -47,6 +47,13 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.jaxb.MasterDataTable;
 
+/**
+ * A default definition for a master data table
+ *
+ * @author Lukas Eder
+ * @deprecated - 2.5.0 [#1741] - This feature will be removed as of jOOQ 3.0
+ */
+@Deprecated
 public class DefaultMasterDataTableDefinition extends AbstractDefinition implements MasterDataTableDefinition {
 
     private static final JooqLogger log = JooqLogger.getLogger(DefaultMasterDataTableDefinition.class);

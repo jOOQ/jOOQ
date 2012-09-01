@@ -77,6 +77,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
+import org.jooq.SchemaMapping;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -940,8 +941,10 @@ final class Util {
      */
     @SuppressWarnings("deprecation")
     static final Schema getMappedSchema(Configuration configuration, Schema schema) {
-        if (configuration.getSchemaMapping() != null) {
-            return configuration.getSchemaMapping().map(schema);
+        SchemaMapping mapping = configuration.getSchemaMapping();
+
+        if (mapping != null) {
+            return mapping.map(schema);
         }
         else {
             return schema;
@@ -953,8 +956,10 @@ final class Util {
      */
     @SuppressWarnings("deprecation")
     static final Table<?> getMappedTable(Configuration configuration, Table<?> table) {
-        if (configuration.getSchemaMapping() != null) {
-            return configuration.getSchemaMapping().map(table);
+        SchemaMapping mapping = configuration.getSchemaMapping();
+
+        if (mapping != null) {
+            return mapping.map(table);
         }
         else {
             return table;

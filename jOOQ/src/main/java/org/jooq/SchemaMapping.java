@@ -95,7 +95,7 @@ public class SchemaMapping implements Serializable {
      * @deprecated - 2.0.5 - Do not reuse this SchemaMapping!
      */
     @Deprecated
-    public static final SchemaMapping       NO_MAPPING        = new SchemaMapping(new Settings(), true);
+    public static final SchemaMapping       NO_MAPPING        = new SchemaMapping(SettingsTools.defaultSettings(), true);
 
     private final RenderMapping             mapping;
     private final boolean                   ignoreMapping;
@@ -300,8 +300,11 @@ public class SchemaMapping implements Serializable {
      * @return The configured schema
      */
     public Schema map(Schema schema) {
-        if (ignoreMapping) return schema;
+
+        // [#1774] The default Settings render schema flag takes precedence over
+        // The DefaultConfiguration's ignoreMapping flag!
         if (!renderSchema) return null;
+        if (ignoreMapping) return schema;
 
         Schema result = null;
         if (schema != null) {

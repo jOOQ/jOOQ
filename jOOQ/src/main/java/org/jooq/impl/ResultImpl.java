@@ -948,9 +948,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         Map<Field<?>, Integer> decimalPlacesMap = new HashMap<Field<?>, Integer>();
         for (Field<?> f : getFields()) {
             if (Number.class.isAssignableFrom(f.getType())) {
-                // Collect all decimal places for the column values
                 List<Integer> decimalPlacesList = new ArrayList<Integer>();
 
+                // Initialize
+                decimalPlacesList.add(0);
+
+                // Collect all decimal places for the column values
                 String value;
                 for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
                     value = format0(getValue(i, f));

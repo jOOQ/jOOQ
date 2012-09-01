@@ -88,6 +88,7 @@ import org.w3c.dom.Element;
 
 /**
  * @author Lukas Eder
+ * @author Ivan Dugic
  */
 class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
@@ -937,33 +938,73 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final String format(int maxRecords) {
-        final int MAX_WIDTH = 50;
+        final int COL_MIN_WIDTH = 4;
+        final int COL_MAX_WIDTH = 50;
+        // Numeric columns have greater max width because values are aligned
+        final int NUM_COL_MAX_WIDTH = 100;
+
         final int MAX_RECORDS = 50;
 
-        StringBuilder sb = new StringBuilder();
-        Map<Field<?>, Integer> widths = new HashMap<Field<?>, Integer>();
-
-        // Initialise widths
+        // Get max decimal places for numeric type columns
+        Map<Field<?>, Integer> decimalPlacesMap = new HashMap<Field<?>, Integer>();
         for (Field<?> f : getFields()) {
-            widths.put(f, 4);
+            if (Number.class.isAssignableFrom(f.getType())) {
+                List<Integer> decimalPlacesList = new ArrayList<Integer>();
+
+                // Initialize
+                decimalPlacesList.add(0);
+
+                // Collect all decimal places for the column values
+                String value;
+                for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
+                    value = format0(getValue(i, f));
+                    decimalPlacesList.add(getDecimalPlaces(value));
+                }
+
+                // Find max
+                decimalPlacesMap.put(f, Collections.max(decimalPlacesList));
+            }
         }
 
-        // Find width for every field to satisfy formatting the first 50 records
+        // Get max column widths
+        Map<Field<?>, Integer> widthMap = new HashMap<Field<?>, Integer>();
+        int colMaxWidth;
         for (Field<?> f : getFields()) {
-            widths.put(f, min(MAX_WIDTH, max(widths.get(f), f.getName().length())));
+            // Is number column?
+            boolean isNumCol = Number.class.isAssignableFrom(f.getType());
 
+            colMaxWidth = isNumCol ? NUM_COL_MAX_WIDTH : COL_MAX_WIDTH;
+
+            // Collect all widths for the column
+            List<Integer> widthList = new ArrayList<Integer>();
+
+            // Add column name width first
+            widthList.add(min(colMaxWidth, max(COL_MIN_WIDTH, f.getName().length())));
+
+            // Add column values width
+            String value;
             for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
-                widths.put(f, min(MAX_WIDTH, max(widths.get(f), format0(getValue(i, f)).length())));
+                value = format0(getValue(i, f));
+                // Align number values before width is calculated
+                if (isNumCol) {
+                    value = alignNumberValue(decimalPlacesMap.get(f), value);
+                }
+
+                widthList.add(min(colMaxWidth, value.length()));
             }
+
+            // Find max
+            widthMap.put(f, Collections.max(widthList));
         }
 
         // Begin the writing
         // ---------------------------------------------------------------------
+        StringBuilder sb = new StringBuilder();
 
         // Write top line
         sb.append("+");
         for (Field<?> f : getFields()) {
-            sb.append(rightPad("", widths.get(f), "-"));
+            sb.append(rightPad("", widthMap.get(f), "-"));
             sb.append("+");
         }
 
@@ -973,20 +1014,20 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             String padded;
 
             if (Number.class.isAssignableFrom(f.getType())) {
-                padded = leftPad(f.getName(), widths.get(f));
+                padded = leftPad(f.getName(), widthMap.get(f));
             }
             else {
-                padded = rightPad(f.getName(), widths.get(f));
+                padded = rightPad(f.getName(), widthMap.get(f));
             }
 
-            sb.append(abbreviate(padded, widths.get(f)));
+            sb.append(abbreviate(padded, widthMap.get(f)));
             sb.append("|");
         }
 
         // Write separator
         sb.append("\n+");
         for (Field<?> f : getFields()) {
-            sb.append(rightPad("", widths.get(f), "-"));
+            sb.append(rightPad("", widthMap.get(f), "-"));
             sb.append("+");
         }
 
@@ -995,16 +1036,21 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             sb.append("\n|");
             for (Field<?> f : getFields()) {
                 String value = format0(getValue(i, f)).replace("\n", "{lf}").replace("\r", "{cr}");
-                String padded;
 
+                String padded;
                 if (Number.class.isAssignableFrom(f.getType())) {
-                    padded = leftPad(value, widths.get(f));
+                    // Align number value before left pad
+                    value = alignNumberValue(decimalPlacesMap.get(f), value);
+
+                    // Left pad
+                    padded = leftPad(value, widthMap.get(f));
                 }
                 else {
-                    padded = rightPad(value, widths.get(f));
+                    // Right pad
+                    padded = rightPad(value, widthMap.get(f));
                 }
 
-                sb.append(abbreviate(padded, widths.get(f)));
+                sb.append(abbreviate(padded, widthMap.get(f)));
                 sb.append("|");
             }
         }
@@ -1013,7 +1059,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         if (size() > 0) {
             sb.append("\n+");
             for (Field<?> f : getFields()) {
-                sb.append(rightPad("", widths.get(f), "-"));
+                sb.append(rightPad("", widthMap.get(f), "-"));
                 sb.append("+");
             }
         }
@@ -1026,6 +1072,34 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
 
         return sb.toString();
+    }
+
+    private String alignNumberValue(Integer columnDecimalPlaces, String value) {
+        if (!"{null}".equals(value) && columnDecimalPlaces != 0) {
+            int decimalPlaces = getDecimalPlaces(value);
+            int rightPadSize = value.length() + columnDecimalPlaces - decimalPlaces;
+
+            if (decimalPlaces == 0) {
+                // If integer value, add one for decimal point
+                value = rightPad(value, rightPadSize + 1);
+            }
+            else {
+                value = rightPad(value, rightPadSize);
+            }
+        }
+
+        return value;
+    }
+
+    private Integer getDecimalPlaces(String value) {
+        int decimalPlaces = 0;
+
+        int dotIndex = value.indexOf(".");
+        if (dotIndex != -1) {
+            decimalPlaces = value.length() - dotIndex - 1;
+        }
+
+        return decimalPlaces;
     }
 
     @Override
@@ -1139,6 +1213,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
         else if (value instanceof EnumType) {
             formatted = ((EnumType) value).getLiteral();
+        }
+        else if (value instanceof Number) {
+            // Remove insignificant zeros
+            formatted = value.toString().replaceAll("(?:(\\..*[^0])0+|\\.0+)$", "$1");
         }
         else {
             formatted = value.toString();

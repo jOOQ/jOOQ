@@ -1218,6 +1218,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFormat() throws Exception {
+        new FormatTests(this).testFormat();
+    }
+
+    @Test
     public void testFormatHTML() throws Exception {
         new FormatTests(this).testFormatHTML();
     }

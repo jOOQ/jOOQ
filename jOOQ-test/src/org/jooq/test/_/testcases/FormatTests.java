@@ -41,7 +41,10 @@ import static junit.framework.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -84,6 +87,45 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
     public FormatTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         super(delegate);
+    }
+
+    @Test
+    public void testFormat() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        // Insert test numbers
+        create().insertInto(T639(), T639_ID(), T639_BIG_DECIMAL())
+                .values(1, null)
+                .values(2, new BigDecimal("0"))
+                .values(3, new BigDecimal("1"))
+                .values(4, new BigDecimal("1.2"))
+                .values(5, new BigDecimal("1.23"))
+                .values(6, new BigDecimal("1.23456789"))
+                .values(7, new BigDecimal("12.3"))
+                .values(8, new BigDecimal("123.4"))
+                .values(9, new BigDecimal("1234.5"))
+                .values(10, new BigDecimal("12345678.9"))
+                .values(11, new BigDecimal("0.1"))
+                .values(12, new BigDecimal("0.12"))
+                .values(13, new BigDecimal("0.123456789"))
+                .execute();
+
+        String format = create().select(T639_ID(), T639_BIG_DECIMAL()).from(T639()).fetch().format();
+
+        // Collect decimal point indexes
+        Set<Integer> decimalPointIndexSet = new HashSet<Integer>();
+        for (String formatLine : format.split("\n")) {
+            // Include only data lines
+            if (formatLine.startsWith("|")) {
+                decimalPointIndexSet.add(formatLine.indexOf("."));
+            }
+        }
+
+        // Remove -1 position
+        decimalPointIndexSet.remove(-1);
+
+        // Check if all decimal points have the same position
+        assertEquals(1, decimalPointIndexSet.size());
     }
 
     @Test

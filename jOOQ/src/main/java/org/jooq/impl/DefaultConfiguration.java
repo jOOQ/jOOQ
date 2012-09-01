@@ -44,6 +44,7 @@ import javax.sql.DataSource;
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 
 /**
  * The default configuration, if no other configuration is supplied
@@ -89,7 +90,7 @@ final class DefaultConfiguration implements Configuration {
 
     @Override
     public final Settings getSettings() {
-        return new Settings();
+        return SettingsTools.defaultSettings();
     }
 
     @Override

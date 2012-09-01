@@ -3456,10 +3456,14 @@ public class DefaultGenerator extends AbstractGenerator {
         }
 
         if (deprecation != null && deprecation.length() > 0) {
-            out.println("@Deprecated");
+            out.print("@");
+            out.print(Deprecated.class);
+            out.println();
         }
 
-        out.printSuppressWarningsPlaceholder();
+        out.print("@");
+        out.print(SuppressWarnings.class);
+        out.println("(\"all\")");
     }
 
     /**

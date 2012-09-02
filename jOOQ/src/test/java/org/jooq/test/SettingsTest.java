@@ -35,6 +35,7 @@
  */
 package org.jooq.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -59,7 +60,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void testCloneable() {
+    public void testDefaultSettings() {
         Settings settings2 = SettingsTools.defaultSettings();
         settings.setAttachRecords(false);
 
@@ -68,5 +69,18 @@ public class SettingsTest {
         assertTrue(settings2.isAttachRecords());
         assertTrue(SettingsTools.defaultSettings().isAttachRecords());
         assertFalse(settings.isAttachRecords());
+    }
+
+    @Test
+    public void testCloneable() {
+        Settings settings1 = new Settings();
+        Settings settings2 = SettingsTools.clone(settings1);
+
+        assertEquals(settings1.isAttachRecords(), settings2.isAttachRecords());
+        assertEquals(settings1.getExecuteListeners(), settings2.getExecuteListeners());
+
+        // Check if clone makes a deep-copy
+        settings1.getExecuteListeners().add("asdf");
+        assertEquals(settings1.getExecuteListeners().size(), settings2.getExecuteListeners().size() + 1);
     }
 }

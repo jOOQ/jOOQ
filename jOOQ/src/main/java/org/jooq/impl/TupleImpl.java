@@ -149,6 +149,13 @@ implements
         return fields[index];
     }
 
+    @Override
+    public final Field<?>[] getFields() {
+        Field<?>[] result = new Field[fields.length];
+        System.arraycopy(fields, 0, result, 0, fields.length);
+        return result;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public final Field<T1> field1() {

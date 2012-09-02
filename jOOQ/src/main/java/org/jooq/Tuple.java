@@ -62,6 +62,11 @@ public interface Tuple extends QueryPart {
      */
     Field<?> getField(int index);
 
+    /**
+     * Get all fields of this tuple
+     */
+    Field<?>[] getFields();
+
 //    /**
 //     * Compare this tuple with a subselect for equality
 //     * <p>

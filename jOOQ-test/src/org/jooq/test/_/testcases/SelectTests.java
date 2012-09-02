@@ -514,17 +514,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         switch (getDialect()) {
             case MYSQL:
+            case POSTGRES:
                 log.info("SKIPPING", "FOR UPDATE OF tests");
                 break;
 
             // Most dialects support the OF clause
-            case DB2:
-            case DERBY:
-            case H2:
-            case HSQLDB:
-            case INGRES:
-            case ORACLE:
-            case SYBASE: {
+            default: {
                 Result<Record> result =
                 create().select(TAuthor_ID())
                         .from(TAuthor())
@@ -549,9 +544,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
                 // NO BREAK: Fall through to POSTGRES
             }
+        }
+
+        switch (getDialect()) {
+            case MYSQL:
+                log.info("SKIPPING", "FOR UPDATE OF tests");
+                break;
 
             // Postgres only supports the OF clause with tables as parameters
-            case POSTGRES: {
+            case POSTGRES:
+            default: {
                 Result<Record> result = create().select(TAuthor_ID())
                         .from(TAuthor())
                         .forUpdate()

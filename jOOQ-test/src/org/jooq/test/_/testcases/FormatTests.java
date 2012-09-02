@@ -45,6 +45,8 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -98,34 +100,57 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .values(1, null)
                 .values(2, new BigDecimal("0"))
                 .values(3, new BigDecimal("1"))
-                .values(4, new BigDecimal("1.2"))
+                .values(4, new BigDecimal("-1.20"))
                 .values(5, new BigDecimal("1.23"))
                 .values(6, new BigDecimal("1.23456789"))
                 .values(7, new BigDecimal("12.3"))
                 .values(8, new BigDecimal("123.4"))
                 .values(9, new BigDecimal("1234.5"))
                 .values(10, new BigDecimal("12345678.9"))
-                .values(11, new BigDecimal("0.1"))
+                .values(11, new BigDecimal("-0.1"))
                 .values(12, new BigDecimal("0.12"))
                 .values(13, new BigDecimal("0.123456789"))
                 .execute();
 
-        String format = create().select(T639_ID(), T639_BIG_DECIMAL()).from(T639()).fetch().format();
+        Result<Record> result = create()
+            .select(T639_ID(), T639_BIG_DECIMAL())
+            .from(T639())
+            .orderBy(T639_ID())
+            .fetch();
 
-        // Collect decimal point indexes
-        Set<Integer> decimalPointIndexSet = new HashSet<Integer>();
+        for (int i = 2; i <= result.size(); i++) {
+            testFormatDecimalAlignment(result.format(i));
+        }
+    }
+
+    private void testFormatDecimalAlignment(String format) {
+        Pattern pattern = Pattern.compile("(\\s*-?\\d+)(\\.?(?:\\d*\\s*))");
+
+        // Collect lenghts of strings to both sides of the decimal point
+        Set<Integer> lhs = new HashSet<Integer>();
+        Set<Integer> rhs = new HashSet<Integer>();
+
         for (String formatLine : format.split("\n")) {
-            // Include only data lines
-            if (formatLine.startsWith("|")) {
-                decimalPointIndexSet.add(formatLine.indexOf("."));
+
+            // Include only data lines (lines starting with an ID value | 13 |)
+            if (formatLine.matches("^\\|\\s*\\d+\\|.*") && !formatLine.contains("{null}")) {
+
+                // Find the value in the second column
+                String bigDecimalValue = formatLine.replaceAll("^\\|\\s*\\d+\\|([^\\|]+)\\|", "$1");
+
+                // $1: The left side of the decimal point
+                // $2: The right side of the decimal point, or \\s+
+                Matcher matcher = pattern.matcher(bigDecimalValue);
+
+                assertTrue(matcher.find());
+                lhs.add(matcher.group(1).length());
+                rhs.add(matcher.group(2).length());
             }
         }
 
-        // Remove -1 position
-        decimalPointIndexSet.remove(-1);
-
         // Check if all decimal points have the same position
-        assertEquals(1, decimalPointIndexSet.size());
+        assertEquals(1, lhs.size());
+        assertEquals(1, rhs.size());
     }
 
     @Test

@@ -73,6 +73,7 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.test.firebird.generatedclasses.Sequences;
 import org.jooq.test.firebird.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord;
@@ -692,7 +693,7 @@ public class jOOQFirebirdTest extends jOOQAbstractTest<
 
     @Override
     protected Class<?> cSequences() {
-        return null;
+        return Sequences.class;
     }
 
     @Override

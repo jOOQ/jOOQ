@@ -37,6 +37,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -74,7 +75,7 @@ public interface SimpleSelectForUpdateOfStep<R extends Record> extends SimpleSel
      * @see LockProvider#setForUpdateOf(Field...) see LockProvider for more
      *      details
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
     SimpleSelectForUpdateWaitStep<R> of(Field<?>... fields);
 
     /**
@@ -84,7 +85,7 @@ public interface SimpleSelectForUpdateOfStep<R extends Record> extends SimpleSel
      * @see LockProvider#setForUpdateOf(Collection) see LockProvider for more
      *      details
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
     SimpleSelectForUpdateWaitStep<R> of(Collection<Field<?>> fields);
 
     /**
@@ -94,7 +95,7 @@ public interface SimpleSelectForUpdateOfStep<R extends Record> extends SimpleSel
      * @see LockProvider#setForUpdateOf(Table...) see LockProvider for more
      *      details
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
     SimpleSelectForUpdateWaitStep<R> of(Table<?>... tables);
 
 }

@@ -37,6 +37,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -97,7 +98,7 @@ public interface SelectForUpdateOfStep extends SelectForUpdateWaitStep {
      * @see LockProvider#setForUpdateOf(Field...) see LockProvider for more
      *      details
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
     SelectForUpdateWaitStep of(Field<?>... fields);
 
     /**
@@ -107,7 +108,7 @@ public interface SelectForUpdateOfStep extends SelectForUpdateWaitStep {
      * @see LockProvider#setForUpdateOf(Collection) see LockProvider for more
      *      details
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
     SelectForUpdateWaitStep of(Collection<Field<?>> fields);
 
     /**
@@ -117,7 +118,7 @@ public interface SelectForUpdateOfStep extends SelectForUpdateWaitStep {
      * @see LockProvider#setForUpdateOf(Table...) see LockProvider for more
      *      details
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
     SelectForUpdateWaitStep of(Table<?>... tables);
 
 }

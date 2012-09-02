@@ -103,6 +103,7 @@ class RegexpLike extends AbstractCondition {
             case ASE:
             case DB2:
             case DERBY:
+            case FIREBIRD:
             case INGRES:
             case SQLSERVER:
             default: {

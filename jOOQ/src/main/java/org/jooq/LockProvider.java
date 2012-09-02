@@ -39,6 +39,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -115,7 +116,7 @@ public interface LockProvider {
      *
      * @param forUpdate The flag's value
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     void setForUpdate(boolean forUpdate);
 
     /**
@@ -142,7 +143,7 @@ public interface LockProvider {
      *
      * @param fields The fields that should be locked
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
     void setForUpdateOf(Field<?>... fields);
 
     /**
@@ -152,7 +153,7 @@ public interface LockProvider {
      *
      * @see #setForUpdateOf(Field...)
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
     void setForUpdateOf(Collection<? extends Field<?>> fields);
 
     /**
@@ -181,7 +182,7 @@ public interface LockProvider {
      *
      * @param tables The tables that should be locked
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
     void setForUpdateOf(Table<?>... tables);
 
     /**

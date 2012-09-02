@@ -40,6 +40,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -294,7 +295,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * <p>
      * This is only possible where the underlying RDBMS supports it
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TablePartitionByStep rightOuterJoin(TableLike<?> table);
 
     /**
@@ -309,7 +310,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      *
      * @see Factory#table(String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TablePartitionByStep rightOuterJoin(String sql);
 
     /**
@@ -324,7 +325,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      *
      * @see Factory#table(String, Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TablePartitionByStep rightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -339,7 +340,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      *
      * @see Factory#table(String, QueryPart...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TablePartitionByStep rightOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -347,7 +348,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * <p>
      * This is only possible where the underlying RDBMS supports it
      */
-    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep fullOuterJoin(TableLike<?> table);
 
     /**
@@ -362,7 +363,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      *
      * @see Factory#table(String)
      */
-    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep fullOuterJoin(String sql);
 
     /**
@@ -377,7 +378,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      *
      * @see Factory#table(String, Object...)
      */
-    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep fullOuterJoin(String sql, Object... bindings);
 
     /**
@@ -392,7 +393,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      *
      * @see Factory#table(String, QueryPart...)
      */
-    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep fullOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -588,7 +589,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(TableLike<?> table);
 
     /**
@@ -604,7 +605,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      *
      * @see Factory#table(String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(String sql);
 
     /**
@@ -620,7 +621,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      *
      * @see Factory#table(String, Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -636,6 +637,6 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      *
      * @see Factory#table(String, QueryPart...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
 }

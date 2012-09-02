@@ -940,10 +940,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     public final String format(int maxRecords) {
         final int COL_MIN_WIDTH = 4;
         final int COL_MAX_WIDTH = 50;
+
         // Numeric columns have greater max width because values are aligned
         final int NUM_COL_MAX_WIDTH = 100;
 
-        final int MAX_RECORDS = 50;
+        // The max number of records that will be considered for formatting purposes
+        final int MAX_RECORDS = min(50, maxRecords);
 
         // Get max decimal places for numeric type columns
         Map<Field<?>, Integer> decimalPlacesMap = new HashMap<Field<?>, Integer>();
@@ -1074,7 +1076,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return sb.toString();
     }
 
-    private String alignNumberValue(Integer columnDecimalPlaces, String value) {
+    private static final String alignNumberValue(Integer columnDecimalPlaces, String value) {
         if (!"{null}".equals(value) && columnDecimalPlaces != 0) {
             int decimalPlaces = getDecimalPlaces(value);
             int rightPadSize = value.length() + columnDecimalPlaces - decimalPlaces;
@@ -1091,7 +1093,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return value;
     }
 
-    private Integer getDecimalPlaces(String value) {
+    private static final int getDecimalPlaces(String value) {
         int decimalPlaces = 0;
 
         int dotIndex = value.indexOf(".");
@@ -1199,7 +1201,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
     }
 
-    private final String format0(Object value) {
+    private static final String format0(Object value) {
         String formatted;
 
         if (value == null) {
@@ -1213,10 +1215,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
         else if (value instanceof EnumType) {
             formatted = ((EnumType) value).getLiteral();
-        }
-        else if (value instanceof Number) {
-            // Remove insignificant zeros
-            formatted = value.toString().replaceAll("(?:(\\..*[^0])0+|\\.0+)$", "$1");
         }
         else {
             formatted = value.toString();

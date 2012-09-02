@@ -40,6 +40,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -917,7 +918,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#escape(Field, char)
      * @see #like(Field, char)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Condition contains(Field<T> value);
 
     /**
@@ -947,7 +948,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#escape(Field, char)
      * @see #like(Field, char)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Condition startsWith(Field<T> value);
 
     /**
@@ -977,7 +978,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#escape(Field, char)
      * @see #like(Field, char)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Condition endsWith(Field<T> value);
 
     // ------------------------------------------------------------------------
@@ -1463,7 +1464,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * <code>this = any (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAny(Select<?> query);
 
     /**
@@ -1472,7 +1473,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAny(T... array);
 
     /**
@@ -1490,13 +1491,13 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @deprecated - 2.0.2 - Use {@link #equalAny(Select)} instead
      */
     @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalSome(Select<?> query);
 
     /**
      * <code>this = all (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAll(Select<?> query);
 
     /**
@@ -1505,7 +1506,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAll(T... array);
 
     /**
@@ -1520,7 +1521,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * <code>this != any (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAny(Select<?> query);
 
     /**
@@ -1529,7 +1530,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAny(T... array);
 
     /**
@@ -1547,13 +1548,13 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @deprecated - 2.0.2 - Use {@link #notEqualAny(Select)} instead
      */
     @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualSome(Select<?> query);
 
     /**
      * <code>this != all (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAll(Select<?> query);
 
     /**
@@ -1562,7 +1563,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAll(T... array);
 
     /**
@@ -1577,7 +1578,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * <code>this < any (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAny(Select<?> query);
 
     /**
@@ -1586,7 +1587,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAny(T... array);
 
     /**
@@ -1604,13 +1605,13 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @deprecated - 2.0.2 - Use {@link #lessThanAny(Select)} instead
      */
     @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanSome(Select<?> query);
 
     /**
      * <code>this < all (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAll(Select<?> query);
 
     /**
@@ -1619,7 +1620,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAll(T... array);
 
     /**
@@ -1634,7 +1635,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * <code>this <= any (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAny(Select<?> query);
 
     /**
@@ -1643,7 +1644,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAny(T... array);
 
     /**
@@ -1661,13 +1662,13 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @deprecated - 2.0.2 - Use {@link #lessOrEqualAny(Select)} instead
      */
     @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualSome(Select<?> query);
 
     /**
      * <code>this <= all (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAll(Select<?> query);
 
     /**
@@ -1676,7 +1677,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAll(T... array);
 
     /**
@@ -1691,7 +1692,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * <code>this > any (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAny(Select<?> query);
 
     /**
@@ -1700,7 +1701,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAny(T... array);
 
     /**
@@ -1718,13 +1719,13 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @deprecated - 2.0.2 - Use {@link #greaterThanAny(Select)} instead
      */
     @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanSome(Select<?> query);
 
     /**
      * <code>this > all (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAll(Select<?> query);
 
     /**
@@ -1733,7 +1734,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAll(T... array);
 
     /**
@@ -1748,7 +1749,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * <code>this >= any (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAny(Select<?> query);
 
     /**
@@ -1757,7 +1758,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAny(T... array);
 
     /**
@@ -1775,13 +1776,13 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @deprecated - 2.0.2 - Use {@link #greaterOrEqualAny(Select)} instead
      */
     @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualSome(Select<?> query);
 
     /**
      * <code>this >= all (Select<?> ...)</code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAll(Select<?> query);
 
     /**
@@ -1790,7 +1791,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAll(T... array);
 
     /**
@@ -1875,7 +1876,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#sqrt(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> sqrt();
 
     /**
@@ -1885,7 +1886,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#exp(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> exp();
 
     /**
@@ -1895,7 +1896,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#ln(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> ln();
 
     /**
@@ -1905,7 +1906,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#log(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> log(int base);
 
     /**
@@ -1915,7 +1916,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> power(Number exponent);
 
     /**
@@ -1925,7 +1926,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#acos(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> acos();
 
     /**
@@ -1935,7 +1936,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#asin(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> asin();
 
     /**
@@ -1945,7 +1946,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#atan(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> atan();
 
     /**
@@ -1955,7 +1956,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#atan2(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> atan2(Number y);
 
     /**
@@ -1965,7 +1966,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> atan2(Field<? extends Number> y);
 
     /**
@@ -1975,7 +1976,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#cos(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> cos();
 
     /**
@@ -1985,7 +1986,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#sin(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> sin();
 
     /**
@@ -1995,7 +1996,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#tan(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> tan();
 
     /**
@@ -2005,7 +2006,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#cot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> cot();
 
     /**
@@ -2015,7 +2016,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#sinh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> sinh();
 
     /**
@@ -2025,7 +2026,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#cosh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> cosh();
 
     /**
@@ -2035,7 +2036,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#tanh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> tanh();
 
     /**
@@ -2045,7 +2046,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#coth(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> coth();
 
     /**
@@ -2444,7 +2445,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#rpad(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(Field<? extends Number> length);
 
     /**
@@ -2454,7 +2455,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#rpad(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(int length);
 
     /**
@@ -2464,7 +2465,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#rpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(Field<? extends Number> length, Field<String> character);
 
     /**
@@ -2474,7 +2475,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#rpad(Field, int, char)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(int length, char character);
 
     /**
@@ -2484,7 +2485,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#lpad(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(Field<? extends Number> length);
 
     /**
@@ -2494,7 +2495,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#lpad(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(int length);
 
     /**
@@ -2504,7 +2505,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#lpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(Field<? extends Number> length, Field<String> character);
 
     /**
@@ -2514,7 +2515,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#lpad(Field, int, char)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(int length, char character);
 
     /**
@@ -2524,7 +2525,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#repeat(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> repeat(Number count);
 
     /**
@@ -2534,7 +2535,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> repeat(Field<? extends Number> count);
 
     /**
@@ -2544,7 +2545,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#replace(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(Field<String> search);
 
     /**
@@ -2554,7 +2555,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#replace(Field, String)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(String search);
 
     /**
@@ -2564,7 +2565,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#replace(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(Field<String> search, Field<String> replace);
 
     /**
@@ -2574,7 +2575,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#replace(Field, String, String)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(String search, String replace);
 
     /**
@@ -2584,7 +2585,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#position(Field, String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<Integer> position(String search);
 
     /**
@@ -2594,7 +2595,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#position(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<Integer> position(Field<String> search);
 
     /**
@@ -2604,7 +2605,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#ascii(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<Integer> ascii();
 
     /**

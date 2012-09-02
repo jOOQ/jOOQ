@@ -38,6 +38,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -78,7 +79,7 @@ public interface SimpleSelectForUpdateStep<R extends Record> extends SimpleSelec
      *
      * @see LockProvider#setForUpdate(boolean) see LockProvider for more details
      */
-    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Support({ ASE, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SYBASE })
     SimpleSelectForUpdateOfStep<R> forUpdate();
 
     /**

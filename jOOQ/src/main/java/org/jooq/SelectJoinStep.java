@@ -39,6 +39,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -303,7 +304,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      *
      * @see Table#rightOuterJoin(TableLike)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinPartitionByStep rightOuterJoin(TableLike<?> table);
 
     /**
@@ -321,7 +322,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String)
      * @see Table#rightOuterJoin(String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinPartitionByStep rightOuterJoin(String sql);
 
     /**
@@ -339,7 +340,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String, Object...)
      * @see Table#rightOuterJoin(String, Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinPartitionByStep rightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -357,7 +358,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String, QueryPart...)
      * @see Table#rightOuterJoin(String, QueryPart...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinPartitionByStep rightOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -369,7 +370,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      *
      * @see Table#fullOuterJoin(TableLike)
      */
-    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectOnStep fullOuterJoin(TableLike<?> table);
 
     /**
@@ -387,7 +388,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String)
      * @see Table#fullOuterJoin(String)
      */
-    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectOnStep fullOuterJoin(String sql);
 
     /**
@@ -405,7 +406,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String, Object...)
      * @see Table#fullOuterJoin(String, Object...)
      */
-    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectOnStep fullOuterJoin(String sql, Object... bindings);
 
     /**
@@ -423,7 +424,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String, QueryPart...)
      * @see Table#fullOuterJoin(String, QueryPart...)
      */
-    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectOnStep fullOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -576,7 +577,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      *
      * @see Table#naturalRightOuterJoin(TableLike)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep naturalRightOuterJoin(TableLike<?> table);
 
     /**
@@ -595,7 +596,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String)
      * @see Table#naturalRightOuterJoin(String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep naturalRightOuterJoin(String sql);
 
     /**
@@ -614,7 +615,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String, Object...)
      * @see Table#naturalRightOuterJoin(String, Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep naturalRightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -633,7 +634,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String, QueryPart...)
      * @see Table#naturalRightOuterJoin(String, QueryPart...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep naturalRightOuterJoin(String sql, QueryPart... parts);
 
 }

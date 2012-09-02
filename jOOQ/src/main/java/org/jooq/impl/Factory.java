@@ -2680,7 +2680,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #rpad(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length) {
         return rpad(nullSafe(field), val(length));
     }
@@ -2694,7 +2694,7 @@ public class Factory implements FactoryOperations {
      * well, depending on the RDBMS:
      * <code><pre>concat([field], repeat(' ', [length] - length([field])))</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length) {
         return new Rpad(nullSafe(field), nullSafe(length));
     }
@@ -2704,7 +2704,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #rpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length, char character) {
         return rpad(field, length, Character.toString(character));
     }
@@ -2714,7 +2714,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #rpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length, String character) {
         return rpad(nullSafe(field), val(length), val(character, String.class));
     }
@@ -2731,7 +2731,7 @@ public class Factory implements FactoryOperations {
      * In {@link SQLDialect#SQLITE}, this is simulated as such:
      * <code><pre>[field] || replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Rpad(nullSafe(field), nullSafe(length), nullSafe(character));
     }
@@ -2741,7 +2741,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #lpad(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length) {
         return lpad(nullSafe(field), val(length));
     }
@@ -2755,7 +2755,7 @@ public class Factory implements FactoryOperations {
      * well, depending on the RDBMS:
      * <code><pre>concat(repeat(' ', [length] - length([field])), [field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length) {
         return new Lpad(nullSafe(field), nullSafe(length));
     }
@@ -2765,7 +2765,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #lpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length, char character) {
         return lpad(field, length, Character.toString(character));
     }
@@ -2775,7 +2775,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #lpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length, String character) {
         return lpad(nullSafe(field), val(length), val(character, String.class));
     }
@@ -2792,7 +2792,7 @@ public class Factory implements FactoryOperations {
      * In {@link SQLDialect#SQLITE}, this is simulated as such:
      * <code><pre>replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character]) || [field]</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Lpad(nullSafe(field), nullSafe(length), nullSafe(character));
     }
@@ -2802,7 +2802,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, int count) {
         return repeat(val(field, String.class), val(count));
     }
@@ -2812,7 +2812,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, Field<? extends Number> count) {
         return repeat(val(field, String.class), nullSafe(count));
     }
@@ -2822,7 +2822,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(Field<String> field, int count) {
         return repeat(nullSafe(field), val(count));
     }
@@ -2840,7 +2840,7 @@ public class Factory implements FactoryOperations {
      * In {@link SQLDialect#SQLITE}, this is simulated as such:
      * <code><pre>replace(substr(quote(zeroblob(([count] + 1) / 2)), 3, [count]), '0', [field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(Field<String> field, Field<? extends Number> count) {
         return new Repeat(nullSafe(field), nullSafe(count));
     }
@@ -2869,7 +2869,7 @@ public class Factory implements FactoryOperations {
      * @see #replace(Field, String, String)
      * @see Field#like(Field, char)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> escape(Field<String> field, char escape) {
         Field<String> replace = field;
 
@@ -2886,7 +2886,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #replace(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search) {
         return replace(nullSafe(field), val(search, String.class));
     }
@@ -2900,7 +2900,7 @@ public class Factory implements FactoryOperations {
      * using the three-argument replace function:
      * <code><pre>replace([field], [search], '')</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search) {
         return new Replace(nullSafe(field), nullSafe(search));
     }
@@ -2910,7 +2910,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #replace(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search, String replace) {
         return replace(nullSafe(field), val(search, String.class), val(replace, String.class));
     }
@@ -2922,7 +2922,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>replace([field], [search]) or
      * str_replace([field], [search])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search, Field<String> replace) {
         return new Replace(nullSafe(field), nullSafe(search), nullSafe(replace));
     }
@@ -2932,7 +2932,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #position(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(String in, String search) {
         return position(val(in, String.class), val(search, String.class));
     }
@@ -2942,7 +2942,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #position(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(String in, Field<String> search) {
         return position(val(in, String.class), nullSafe(search));
     }
@@ -2952,7 +2952,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #position(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(Field<String> in, String search) {
         return position(nullSafe(in), val(search, String.class));
     }
@@ -2967,7 +2967,7 @@ public class Factory implements FactoryOperations {
      * instr([in], [search]) or
      * charindex([search], [in])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(Field<String> in, Field<String> search) {
         return new Position(nullSafe(search), nullSafe(in));
     }
@@ -2977,7 +2977,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #ascii(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> ascii(String field) {
         return ascii(val(field, String.class));
     }
@@ -2988,7 +2988,7 @@ public class Factory implements FactoryOperations {
      * This renders the ascii function:
      * <code><pre>ascii([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> ascii(Field<String> field) {
         return new Ascii(nullSafe(field));
     }
@@ -3740,7 +3740,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitCount(Field)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
     public static Field<Integer> bitCount(Number value) {
         return bitCount(val(value));
     }
@@ -3762,7 +3762,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * More efficient algorithms are very welcome
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
     public static Field<Integer> bitCount(Field<? extends Number> field) {
         return new BitCount(nullSafe(field));
     }
@@ -4380,7 +4380,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(T number) {
         return trunc(val(number), inline(0));
     }
@@ -4390,7 +4390,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(T number, int decimals) {
         return trunc(val(number), inline(decimals));
     }
@@ -4400,7 +4400,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(Field<T> number, int decimals) {
         return trunc(nullSafe(number), inline(decimals));
     }
@@ -4410,7 +4410,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(T number, Field<Integer> decimals) {
         return trunc(val(number), nullSafe(decimals));
     }
@@ -4458,7 +4458,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(Field<T> number, Field<Integer> decimals) {
         return new Trunc<T>(nullSafe(number), nullSafe(decimals));
     }
@@ -4468,7 +4468,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #sqrt(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sqrt(Number value) {
         return sqrt(val(value));
     }
@@ -4481,7 +4481,7 @@ public class Factory implements FactoryOperations {
      * power (which in turn may also be simulated using ln and exp functions):
      * <code><pre>power([field], 0.5)</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sqrt(Field<? extends Number> field) {
         return new Sqrt(nullSafe(field));
     }
@@ -4491,7 +4491,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #exp(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> exp(Number value) {
         return exp(val(value));
     }
@@ -4502,7 +4502,7 @@ public class Factory implements FactoryOperations {
      * This renders the same on all dialects:
      * <code><pre>exp([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> exp(Field<? extends Number> field) {
         return function("exp", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -4512,7 +4512,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #ln(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> ln(Number value) {
         return ln(val(value));
     }
@@ -4524,7 +4524,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>ln([field]) or
      * log([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> ln(Field<? extends Number> field) {
         return new Ln(nullSafe(field));
     }
@@ -4534,7 +4534,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #log(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> log(Number value, int base) {
         return log(val(value), base);
     }
@@ -4547,7 +4547,7 @@ public class Factory implements FactoryOperations {
      * most RDBMS) using the natural logarithm:
      * <code><pre>ln([field]) / ln([base])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> log(Field<? extends Number> field, int base) {
         return new Ln(nullSafe(field), base);
     }
@@ -4557,7 +4557,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Number value, Number exponent) {
         return power(val(value), val(exponent));
     }
@@ -4567,7 +4567,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Field<? extends Number> field, Number exponent) {
         return power(nullSafe(field), val(exponent));
     }
@@ -4577,7 +4577,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
         return power(val(value), nullSafe(exponent));
     }
@@ -4590,7 +4590,7 @@ public class Factory implements FactoryOperations {
      * elsewhere using ln and exp:
      * <code><pre>exp(ln([field]) * [exponent])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Field<? extends Number> field, Field<? extends Number> exponent) {
         return new Power(nullSafe(field), nullSafe(exponent));
     }
@@ -4600,7 +4600,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #acos(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> acos(Number value) {
         return acos(val(value));
     }
@@ -4611,7 +4611,7 @@ public class Factory implements FactoryOperations {
      * This renders the acos function where available:
      * <code><pre>acos([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> acos(Field<? extends Number> field) {
         return function("acos", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -4621,7 +4621,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #asin(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> asin(Number value) {
         return asin(val(value));
     }
@@ -4632,7 +4632,7 @@ public class Factory implements FactoryOperations {
      * This renders the asin function where available:
      * <code><pre>asin([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> asin(Field<? extends Number> field) {
         return function("asin", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -4642,7 +4642,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #atan(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan(Number value) {
         return atan(val(value));
     }
@@ -4653,7 +4653,7 @@ public class Factory implements FactoryOperations {
      * This renders the atan function where available:
      * <code><pre>atan([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan(Field<? extends Number> field) {
         return function("atan", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -4663,7 +4663,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Number x, Number y) {
         return atan2(val(x), val(y));
     }
@@ -4673,7 +4673,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
         return atan2(val(x), nullSafe(y));
     }
@@ -4683,7 +4683,7 @@ public class Factory implements FactoryOperations {
       *
      * @see #atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
         return atan2(nullSafe(x), val(y));
     }
@@ -4695,7 +4695,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>atan2([x], [y]) or
      * atn2([x], [y])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
         return new Function<BigDecimal>(Term.ATAN2, SQLDataType.NUMERIC, nullSafe(x), nullSafe(y));
     }
@@ -4705,7 +4705,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #cos(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cos(Number value) {
         return cos(val(value));
     }
@@ -4716,7 +4716,7 @@ public class Factory implements FactoryOperations {
      * This renders the cos function where available:
      * <code><pre>cos([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cos(Field<? extends Number> field) {
         return function("cos", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -4726,7 +4726,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #sin(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sin(Number value) {
         return sin(val(value));
     }
@@ -4737,7 +4737,7 @@ public class Factory implements FactoryOperations {
      * This renders the sin function where available:
      * <code><pre>sin([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sin(Field<? extends Number> field) {
         return function("sin", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -4747,7 +4747,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #tan(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tan(Number value) {
         return tan(val(value));
     }
@@ -4758,7 +4758,7 @@ public class Factory implements FactoryOperations {
      * This renders the tan function where available:
      * <code><pre>tan([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tan(Field<? extends Number> field) {
         return function("tan", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -4768,7 +4768,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #cot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cot(Number value) {
         return cot(val(value));
     }
@@ -4780,7 +4780,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>cot([field])</pre></code> ... or simulates it elsewhere using
      * sin and cos: <code><pre>cos([field]) / sin([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cot(Field<? extends Number> field) {
         return new Cot(nullSafe(field));
     }
@@ -4790,7 +4790,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #sinh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sinh(Number value) {
         return sinh(val(value));
     }
@@ -4802,7 +4802,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>sinh([field])</pre></code> ... or simulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2))</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sinh(Field<? extends Number> field) {
         return new Sinh(nullSafe(field));
     }
@@ -4812,7 +4812,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #cosh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cosh(Number value) {
         return cosh(val(value));
     }
@@ -4824,7 +4824,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>cosh([field])</pre></code> ... or simulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2))</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cosh(Field<? extends Number> field) {
         return new Cosh(nullSafe(field));
     }
@@ -4834,7 +4834,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #tanh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tanh(Number value) {
         return tanh(val(value));
     }
@@ -4847,7 +4847,7 @@ public class Factory implements FactoryOperations {
      * exp:
      * <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2) + 1)</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tanh(Field<? extends Number> field) {
         return new Tanh(nullSafe(field));
     }
@@ -4857,7 +4857,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #coth(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> coth(Number value) {
         return coth(val(value));
     }
@@ -4868,7 +4868,7 @@ public class Factory implements FactoryOperations {
      * This is not supported by any RDBMS, but simulated using exp exp:
      * <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2) - 1)</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> coth(Field<? extends Number> field) {
         field = nullSafe(field);
         return exp(field.mul(2)).add(1).div(exp(field.mul(2)).sub(1));

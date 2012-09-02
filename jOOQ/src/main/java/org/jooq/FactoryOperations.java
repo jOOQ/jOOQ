@@ -39,6 +39,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -872,7 +873,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SYBASE })
     <T extends Number> T nextval(Sequence<T> sequence) throws DataAccessException;
 
     /**
@@ -881,7 +882,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DB2, H2, INGRES, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SYBASE })
     <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException;
 
     /**

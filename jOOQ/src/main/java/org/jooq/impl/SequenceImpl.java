@@ -35,10 +35,18 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.impl.Factory.field;
+
+import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * A common base class for sequences
@@ -90,6 +98,90 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
     }
 
     private final Field<T> getSequence(final String sequence) {
-        return new SequenceFunction<T>(this, sequence);
+        return new SequenceFunction(sequence);
+    }
+
+    private class SequenceFunction extends AbstractFunction<T> {
+
+        /**
+         * Generated UID
+         */
+        private static final long     serialVersionUID = 2292275568395094887L;
+
+        private final String          method;
+
+        SequenceFunction(String method) {
+            super(method, type);
+
+            this.method = method;
+        }
+
+        @Override
+        final Field<T> getFunction0(Configuration configuration) {
+            SQLDialect dialect = configuration.getDialect();
+
+            switch (dialect) {
+                case DB2:
+                case INGRES:
+                case ORACLE:
+                case SYBASE: {
+                    String field = getQualifiedName(configuration) + "." + method;
+                    return field(field, getDataType());
+                }
+
+                case H2:
+                case POSTGRES: {
+                    String field = method + "('" + getQualifiedName(configuration) + "')";
+                    return field(field, getDataType());
+                }
+
+                case FIREBIRD:
+                case DERBY:
+                case HSQLDB: {
+                    if ("nextval".equals(method)) {
+                        String field = "next value for " + getQualifiedName(configuration);
+                        return field(field, getDataType());
+                    }
+                    else if (dialect == FIREBIRD) {
+                        return field("gen_id(" + getQualifiedName(configuration) + ", 0)", getDataType());
+                    }
+                    else {
+                        throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + dialect + " dialect.");
+                    }
+                }
+
+                case CUBRID: {
+                    String field = getQualifiedName(configuration) + ".";
+
+                    if ("nextval".equals(method)) {
+                        field += "next_value";
+                    }
+                    else {
+                        field += "current_value";
+                    }
+
+                    return field(field, getDataType());
+                }
+
+                // Default is needed for hashCode() and toString()
+                default: {
+                    String field = getQualifiedName(configuration) + "." + method;
+                    return field(field, getDataType());
+                }
+            }
+        }
+
+        private final String getQualifiedName(Configuration configuration) {
+            RenderContext local = create(configuration).renderContext();
+            Schema mappedSchema = Util.getMappedSchema(configuration, schema);
+
+            if (mappedSchema != null && configuration.getDialect() != CUBRID) {
+                local.sql(mappedSchema);
+                local.sql(".");
+            }
+
+            local.literal(name);
+            return local.render();
+        }
     }
 }

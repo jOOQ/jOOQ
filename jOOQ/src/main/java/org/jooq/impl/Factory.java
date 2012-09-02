@@ -956,7 +956,9 @@ public class Factory implements FactoryOperations {
     // -------------------------------------------------------------------------
 
     /**
-     * A PlainSQLTable is a table that can contain user-defined plain SQL,
+     * A custom SQL clause that can render arbitrary table expressions.
+     * <p>
+     * A plain SQL table is a table that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex, but static subqueries or tables from different schemas.
      * <p>
@@ -985,7 +987,9 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * A PlainSQLTable is a table that can contain user-defined plain SQL,
+     * A custom SQL clause that can render arbitrary table expressions.
+     * <p>
+     * A plain SQL table is a table that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex, but static subqueries or tables from different schemas.
      * There must be as many binding variables contained in the SQL, as passed
@@ -1014,6 +1018,41 @@ public class Factory implements FactoryOperations {
     @Support
     public static Table<Record> table(String sql, Object... bindings) {
         return new SQLTable(sql, bindings);
+    }
+
+    /**
+     * A custom SQL clause that can render arbitrary table expressions.
+     * <p>
+     * A plain SQL table is a table that can contain user-defined plain SQL,
+     * because sometimes it is easier to express things directly in SQL, for
+     * instance complex, but static subqueries or tables from different schemas.
+     * <p>
+     * Example
+     * <p>
+     * <code><pre>
+     * String sql = "SELECT * FROM USER_TABLES WHERE {0}";
+     * QueryPart[] parts = new QueryPart[] { USER_TABLES.OWNER.equal("MY_SCHEMA") };
+     * </pre></code>
+     * <p>
+     * The provided SQL must evaluate as a table whose type can be dynamically
+     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
+     * can be sure that calling methods, such as {@link Table#getFields()} will
+     * list the actual fields returned from your result set.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return A table wrapping the plain SQL
+     */
+    @Support
+    public static Table<Record> table(String sql, QueryPart... parts) {
+        return new SQLTable(sql, parts);
     }
 
     /**

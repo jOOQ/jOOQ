@@ -65,6 +65,10 @@ import org.jooq.test.jOOQAbstractTest;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
+/**
+ * @author Lukas Eder
+ * @author Ivan Dugic
+ */
 public class FormatTests<
     A    extends UpdatableRecord<A>,
     AP,
@@ -312,7 +316,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         String token2 = "";
         String separator = "";
         for (Field<?> field : fields) {
-            token2 += separator + "\"" + field.getName() + "\"";
+            token2 += separator + "{\"name\":\"" + field.getName() + "\"" + ",\"type\":\""
+                + field.getDataType().getTypeName().toUpperCase() + "\"}";
             separator = ",";
         }
         assertTrue(json.startsWith(token2));
@@ -389,6 +394,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         for (int i = 0; i < fields.size(); i++) {
             assertEquals(fields.get(i).getName(),
                           xp.evaluate("/result/fields/field[" + (i + 1) + "]/@name", doc));
+            assertEquals(fields.get(i).getDataType().getTypeName().toUpperCase(),
+                xp.evaluate("/result/fields/field[" + (i + 1) + "]/@type", doc));
         }
 
         assertEquals("1", xp.evaluate("count(/result/records)", doc));

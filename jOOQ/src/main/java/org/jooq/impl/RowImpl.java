@@ -51,7 +51,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Factory.tuple;
+import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.InOperator.NOT_IN;
 
 import java.util.ArrayList;
@@ -69,34 +69,34 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
+import org.jooq.Row1;
+import org.jooq.Row2;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
+import org.jooq.RowN;
 import org.jooq.Select;
-import org.jooq.Tuple1;
-import org.jooq.Tuple2;
-import org.jooq.Tuple3;
-import org.jooq.Tuple4;
-import org.jooq.Tuple5;
-import org.jooq.Tuple6;
-import org.jooq.Tuple7;
-import org.jooq.Tuple8;
-import org.jooq.TupleN;
 
 /**
  * @author Lukas Eder
  */
-class TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractNamedQueryPart
+class RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractNamedQueryPart
 implements
 
-    // This tuple implementation implements all tuple types. Type-safety is
+    // This row implementation implements all row types. Type-safety is
     // being checked through the type-safe API. No need for further checks here
-    Tuple1<T1>,
-    Tuple2<T1, T2>,
-    Tuple3<T1, T2, T3>,
-    Tuple4<T1, T2, T3, T4>,
-    Tuple5<T1, T2, T3, T4, T5>,
-    Tuple6<T1, T2, T3, T4, T5, T6>,
-    Tuple7<T1, T2, T3, T4, T5, T6, T7>,
-    Tuple8<T1, T2, T3, T4, T5, T6, T7, T8>,
-    TupleN {
+    Row1<T1>,
+    Row2<T1, T2>,
+    Row3<T1, T2, T3>,
+    Row4<T1, T2, T3, T4>,
+    Row5<T1, T2, T3, T4, T5>,
+    Row6<T1, T2, T3, T4, T5, T6>,
+    Row7<T1, T2, T3, T4, T5, T6, T7>,
+    Row8<T1, T2, T3, T4, T5, T6, T7, T8>,
+    RowN {
 
     /**
      * Generated UID
@@ -105,8 +105,8 @@ implements
 
     private final Field<?>[]  fields;
 
-    TupleImpl(Field<?>... fields) {
-        super("tuple");
+    RowImpl(Field<?>... fields) {
+        super("row");
 
         this.fields = fields;
     }
@@ -136,7 +136,7 @@ implements
     }
 
     // ------------------------------------------------------------------------
-    // XXX: Tuple accessor API
+    // XXX: Row accessor API
     // ------------------------------------------------------------------------
 
     @Override
@@ -205,187 +205,187 @@ implements
     }
 
     // ------------------------------------------------------------------------
-    // XXX: Tuple DSL API
+    // XXX: Row DSL API
     // ------------------------------------------------------------------------
 
     @Override
-    public final Condition equal(Tuple1<T1> tuple) {
-        return new Compare(tuple, Comparator.EQUALS);
+    public final Condition equal(Row1<T1> row) {
+        return new Compare(row, Comparator.EQUALS);
     }
 
     @Override
-    public final Condition equal(Tuple2<T1, T2> tuple) {
-        return new Compare(tuple, Comparator.EQUALS);
+    public final Condition equal(Row2<T1, T2> row) {
+        return new Compare(row, Comparator.EQUALS);
     }
 
     @Override
-    public final Condition equal(Tuple3<T1, T2, T3> tuple) {
-        return new Compare(tuple, Comparator.EQUALS);
+    public final Condition equal(Row3<T1, T2, T3> row) {
+        return new Compare(row, Comparator.EQUALS);
     }
 
     @Override
-    public final Condition equal(Tuple4<T1, T2, T3, T4> tuple) {
-        return new Compare(tuple, Comparator.EQUALS);
+    public final Condition equal(Row4<T1, T2, T3, T4> row) {
+        return new Compare(row, Comparator.EQUALS);
     }
 
     @Override
-    public final Condition equal(Tuple5<T1, T2, T3, T4, T5> tuple) {
-        return new Compare(tuple, Comparator.EQUALS);
+    public final Condition equal(Row5<T1, T2, T3, T4, T5> row) {
+        return new Compare(row, Comparator.EQUALS);
     }
 
     @Override
-    public final Condition equal(Tuple6<T1, T2, T3, T4, T5, T6> tuple) {
-        return new Compare(tuple, Comparator.EQUALS);
+    public final Condition equal(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new Compare(row, Comparator.EQUALS);
     }
 
     @Override
-    public final Condition equal(Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple) {
-        return new Compare(tuple, Comparator.EQUALS);
+    public final Condition equal(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new Compare(row, Comparator.EQUALS);
     }
 
     @Override
-    public final Condition equal(Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple) {
-        return new Compare(tuple, Comparator.EQUALS);
+    public final Condition equal(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new Compare(row, Comparator.EQUALS);
     }
 
     @Override
-    public final Condition equal(TupleN tuple) {
-        return new Compare(tuple, Comparator.EQUALS);
+    public final Condition equal(RowN row) {
+        return new Compare(row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(T1 t1) {
-        return equal(tuple(t1));
+        return equal(row(t1));
     }
 
     @Override
     public final Condition equal(T1 t1, T2 t2) {
-        return equal(tuple(t1, t2));
+        return equal(row(t1, t2));
     }
 
     @Override
     public final Condition equal(T1 t1, T2 t2, T3 t3) {
-        return equal(tuple(t1, t2, t3));
+        return equal(row(t1, t2, t3));
     }
 
     @Override
     public final Condition equal(T1 t1, T2 t2, T3 t3, T4 t4) {
-        return equal(tuple(t1, t2, t3, t4));
+        return equal(row(t1, t2, t3, t4));
     }
 
     @Override
     public final Condition equal(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
-        return equal(tuple(t1, t2, t3, t4, t5));
+        return equal(row(t1, t2, t3, t4, t5));
     }
 
     @Override
     public final Condition equal(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
-        return equal(tuple(t1, t2, t3, t4, t5, t6));
+        return equal(row(t1, t2, t3, t4, t5, t6));
     }
 
     @Override
     public final Condition equal(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
-        return equal(tuple(t1, t2, t3, t4, t5, t6, t7));
+        return equal(row(t1, t2, t3, t4, t5, t6, t7));
     }
 
     @Override
     public final Condition equal(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
-        return equal(tuple(t1, t2, t3, t4, t5, t6, t7, t8));
+        return equal(row(t1, t2, t3, t4, t5, t6, t7, t8));
     }
 
     @Override
     public final Condition equal(Object... values) {
-        return equal(tuple(values));
+        return equal(row(values));
     }
 
     @Override
     public final Condition equal(Field<T1> t1) {
-        return equal(tuple(t1));
+        return equal(row(t1));
     }
 
     @Override
     public final Condition equal(Field<T1> t1, Field<T2> t2) {
-        return equal(tuple(t1, t2));
+        return equal(row(t1, t2));
     }
 
     @Override
     public final Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
-        return equal(tuple(t1, t2, t3));
+        return equal(row(t1, t2, t3));
     }
 
     @Override
     public final Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
-        return equal(tuple(t1, t2, t3, t4));
+        return equal(row(t1, t2, t3, t4));
     }
 
     @Override
     public final Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
-        return equal(tuple(t1, t2, t3, t4, t5));
+        return equal(row(t1, t2, t3, t4, t5));
     }
 
     @Override
     public final Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
-        return equal(tuple(t1, t2, t3, t4, t5, t6));
+        return equal(row(t1, t2, t3, t4, t5, t6));
     }
 
     @Override
     public final Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
-        return equal(tuple(t1, t2, t3, t4, t5, t6, t7));
+        return equal(row(t1, t2, t3, t4, t5, t6, t7));
     }
 
     @Override
     public final Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
-        return equal(tuple(t1, t2, t3, t4, t5, t6, t7, t8));
+        return equal(row(t1, t2, t3, t4, t5, t6, t7, t8));
     }
 
     @Override
     public final Condition equal(Field<?>... f) {
-        return equal(tuple(f));
+        return equal(row(f));
     }
 
     @Override
-    public final Condition eq(Tuple1<T1> tuple) {
-        return equal(tuple);
+    public final Condition eq(Row1<T1> row) {
+        return equal(row);
     }
 
     @Override
-    public final Condition eq(Tuple2<T1, T2> tuple) {
-        return equal(tuple);
+    public final Condition eq(Row2<T1, T2> row) {
+        return equal(row);
     }
 
     @Override
-    public final Condition eq(Tuple3<T1, T2, T3> tuple) {
-        return equal(tuple);
+    public final Condition eq(Row3<T1, T2, T3> row) {
+        return equal(row);
     }
 
     @Override
-    public final Condition eq(Tuple4<T1, T2, T3, T4> tuple) {
-        return equal(tuple);
+    public final Condition eq(Row4<T1, T2, T3, T4> row) {
+        return equal(row);
     }
 
     @Override
-    public final Condition eq(Tuple5<T1, T2, T3, T4, T5> tuple) {
-        return equal(tuple);
+    public final Condition eq(Row5<T1, T2, T3, T4, T5> row) {
+        return equal(row);
     }
 
     @Override
-    public final Condition eq(Tuple6<T1, T2, T3, T4, T5, T6> tuple) {
-        return equal(tuple);
+    public final Condition eq(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return equal(row);
     }
 
     @Override
-    public final Condition eq(Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple) {
-        return equal(tuple);
+    public final Condition eq(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return equal(row);
     }
 
     @Override
-    public final Condition eq(Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple) {
-        return equal(tuple);
+    public final Condition eq(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return equal(row);
     }
 
     @Override
-    public final Condition eq(TupleN tuple) {
-        return equal(tuple);
+    public final Condition eq(RowN row) {
+        return equal(row);
     }
 
     @Override
@@ -479,183 +479,183 @@ implements
     }
 
     @Override
-    public final Condition notEqual(Tuple1<T1> tuple) {
-        return new Compare(tuple, Comparator.NOT_EQUALS);
+    public final Condition notEqual(Row1<T1> row) {
+        return new Compare(row, Comparator.NOT_EQUALS);
     }
 
     @Override
-    public final Condition notEqual(Tuple2<T1, T2> tuple) {
-        return new Compare(tuple, Comparator.NOT_EQUALS);
+    public final Condition notEqual(Row2<T1, T2> row) {
+        return new Compare(row, Comparator.NOT_EQUALS);
     }
 
     @Override
-    public final Condition notEqual(Tuple3<T1, T2, T3> tuple) {
-        return new Compare(tuple, Comparator.NOT_EQUALS);
+    public final Condition notEqual(Row3<T1, T2, T3> row) {
+        return new Compare(row, Comparator.NOT_EQUALS);
     }
 
     @Override
-    public final Condition notEqual(Tuple4<T1, T2, T3, T4> tuple) {
-        return new Compare(tuple, Comparator.NOT_EQUALS);
+    public final Condition notEqual(Row4<T1, T2, T3, T4> row) {
+        return new Compare(row, Comparator.NOT_EQUALS);
     }
 
     @Override
-    public final Condition notEqual(Tuple5<T1, T2, T3, T4, T5> tuple) {
-        return new Compare(tuple, Comparator.NOT_EQUALS);
+    public final Condition notEqual(Row5<T1, T2, T3, T4, T5> row) {
+        return new Compare(row, Comparator.NOT_EQUALS);
     }
 
     @Override
-    public final Condition notEqual(Tuple6<T1, T2, T3, T4, T5, T6> tuple) {
-        return new Compare(tuple, Comparator.NOT_EQUALS);
+    public final Condition notEqual(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new Compare(row, Comparator.NOT_EQUALS);
     }
 
     @Override
-    public final Condition notEqual(Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple) {
-        return new Compare(tuple, Comparator.NOT_EQUALS);
+    public final Condition notEqual(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new Compare(row, Comparator.NOT_EQUALS);
     }
 
     @Override
-    public final Condition notEqual(Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple) {
-        return new Compare(tuple, Comparator.NOT_EQUALS);
+    public final Condition notEqual(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new Compare(row, Comparator.NOT_EQUALS);
     }
 
     @Override
-    public final Condition notEqual(TupleN tuple) {
-        return new Compare(tuple, Comparator.NOT_EQUALS);
+    public final Condition notEqual(RowN row) {
+        return new Compare(row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(T1 t1) {
-        return notEqual(tuple(t1));
+        return notEqual(row(t1));
     }
 
     @Override
     public final Condition notEqual(T1 t1, T2 t2) {
-        return notEqual(tuple(t1, t2));
+        return notEqual(row(t1, t2));
     }
 
     @Override
     public final Condition notEqual(T1 t1, T2 t2, T3 t3) {
-        return notEqual(tuple(t1, t2, t3));
+        return notEqual(row(t1, t2, t3));
     }
 
     @Override
     public final Condition notEqual(T1 t1, T2 t2, T3 t3, T4 t4) {
-        return notEqual(tuple(t1, t2, t3, t4));
+        return notEqual(row(t1, t2, t3, t4));
     }
 
     @Override
     public final Condition notEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
-        return notEqual(tuple(t1, t2, t3, t4, t5));
+        return notEqual(row(t1, t2, t3, t4, t5));
     }
 
     @Override
     public final Condition notEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
-        return notEqual(tuple(t1, t2, t3, t4, t5, t6));
+        return notEqual(row(t1, t2, t3, t4, t5, t6));
     }
 
     @Override
     public final Condition notEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
-        return notEqual(tuple(t1, t2, t3, t4, t5, t6, t7));
+        return notEqual(row(t1, t2, t3, t4, t5, t6, t7));
     }
 
     @Override
     public final Condition notEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
-        return notEqual(tuple(t1, t2, t3, t4, t5, t6, t7, t8));
+        return notEqual(row(t1, t2, t3, t4, t5, t6, t7, t8));
     }
 
     @Override
     public final Condition notEqual(Object... values) {
-        return notEqual(tuple(values));
+        return notEqual(row(values));
     }
 
     @Override
     public final Condition notEqual(Field<T1> t1) {
-        return notEqual(tuple(t1));
+        return notEqual(row(t1));
     }
 
     @Override
     public final Condition notEqual(Field<T1> t1, Field<T2> t2) {
-        return notEqual(tuple(t1, t2));
+        return notEqual(row(t1, t2));
     }
 
     @Override
     public final Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
-        return notEqual(tuple(t1, t2, t3));
+        return notEqual(row(t1, t2, t3));
     }
 
     @Override
     public final Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
-        return notEqual(tuple(t1, t2, t3, t4));
+        return notEqual(row(t1, t2, t3, t4));
     }
 
     @Override
     public final Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
-        return notEqual(tuple(t1, t2, t3, t4, t5));
+        return notEqual(row(t1, t2, t3, t4, t5));
     }
 
     @Override
     public final Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
-        return notEqual(tuple(t1, t2, t3, t4, t5, t6));
+        return notEqual(row(t1, t2, t3, t4, t5, t6));
     }
 
     @Override
     public final Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
-        return notEqual(tuple(t1, t2, t3, t4, t5, t6, t7));
+        return notEqual(row(t1, t2, t3, t4, t5, t6, t7));
     }
 
     @Override
     public final Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
-        return notEqual(tuple(t1, t2, t3, t4, t5, t6, t7, t8));
+        return notEqual(row(t1, t2, t3, t4, t5, t6, t7, t8));
     }
 
     @Override
     public final Condition notEqual(Field<?>... f) {
-        return notEqual(tuple(f));
+        return notEqual(row(f));
     }
 
     @Override
-    public final Condition ne(Tuple1<T1> tuple) {
-        return notEqual(tuple);
+    public final Condition ne(Row1<T1> row) {
+        return notEqual(row);
     }
 
     @Override
-    public final Condition ne(Tuple2<T1, T2> tuple) {
-        return notEqual(tuple);
+    public final Condition ne(Row2<T1, T2> row) {
+        return notEqual(row);
     }
 
     @Override
-    public final Condition ne(Tuple3<T1, T2, T3> tuple) {
-        return notEqual(tuple);
+    public final Condition ne(Row3<T1, T2, T3> row) {
+        return notEqual(row);
     }
 
     @Override
-    public final Condition ne(Tuple4<T1, T2, T3, T4> tuple) {
-        return notEqual(tuple);
+    public final Condition ne(Row4<T1, T2, T3, T4> row) {
+        return notEqual(row);
     }
 
     @Override
-    public final Condition ne(Tuple5<T1, T2, T3, T4, T5> tuple) {
-        return notEqual(tuple);
+    public final Condition ne(Row5<T1, T2, T3, T4, T5> row) {
+        return notEqual(row);
     }
 
     @Override
-    public final Condition ne(Tuple6<T1, T2, T3, T4, T5, T6> tuple) {
-        return notEqual(tuple);
+    public final Condition ne(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return notEqual(row);
     }
 
     @Override
-    public final Condition ne(Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple) {
-        return notEqual(tuple);
+    public final Condition ne(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return notEqual(row);
     }
 
     @Override
-    public final Condition ne(Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple) {
-        return notEqual(tuple);
+    public final Condition ne(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return notEqual(row);
     }
 
     @Override
-    public final Condition ne(TupleN tuple) {
-        return notEqual(tuple);
+    public final Condition ne(RowN row) {
+        return notEqual(row);
     }
 
     @Override
@@ -749,107 +749,107 @@ implements
     }
 
     @Override
-    public final Condition in(Tuple1<T1>... tuples) {
-        return in(Arrays.asList(tuples));
+    public final Condition in(Row1<T1>... rows) {
+        return in(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition in(Tuple2<T1, T2>... tuples) {
-        return in(Arrays.asList(tuples));
+    public final Condition in(Row2<T1, T2>... rows) {
+        return in(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition in(Tuple3<T1, T2, T3>... tuples) {
-        return in(Arrays.asList(tuples));
+    public final Condition in(Row3<T1, T2, T3>... rows) {
+        return in(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition in(Tuple4<T1, T2, T3, T4>... tuples) {
-        return in(Arrays.asList(tuples));
+    public final Condition in(Row4<T1, T2, T3, T4>... rows) {
+        return in(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition in(Tuple5<T1, T2, T3, T4, T5>... tuples) {
-        return in(Arrays.asList(tuples));
+    public final Condition in(Row5<T1, T2, T3, T4, T5>... rows) {
+        return in(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition in(Tuple6<T1, T2, T3, T4, T5, T6>... tuples) {
-        return in(Arrays.asList(tuples));
+    public final Condition in(Row6<T1, T2, T3, T4, T5, T6>... rows) {
+        return in(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition in(Tuple7<T1, T2, T3, T4, T5, T6, T7>... tuples) {
-        return in(Arrays.asList(tuples));
+    public final Condition in(Row7<T1, T2, T3, T4, T5, T6, T7>... rows) {
+        return in(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition in(Tuple8<T1, T2, T3, T4, T5, T6, T7, T8>... tuples) {
-        return in(Arrays.asList(tuples));
+    public final Condition in(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... rows) {
+        return in(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition in(TupleN... tuples) {
-        return in(Arrays.asList(tuples));
+    public final Condition in(RowN... rows) {
+        return in(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition notIn(Tuple1<T1>... tuples) {
-        return notIn(Arrays.asList(tuples));
+    public final Condition notIn(Row1<T1>... rows) {
+        return notIn(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition notIn(Tuple2<T1, T2>... tuples) {
-        return notIn(Arrays.asList(tuples));
+    public final Condition notIn(Row2<T1, T2>... rows) {
+        return notIn(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition notIn(Tuple3<T1, T2, T3>... tuples) {
-        return notIn(Arrays.asList(tuples));
+    public final Condition notIn(Row3<T1, T2, T3>... rows) {
+        return notIn(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition notIn(Tuple4<T1, T2, T3, T4>... tuples) {
-        return notIn(Arrays.asList(tuples));
+    public final Condition notIn(Row4<T1, T2, T3, T4>... rows) {
+        return notIn(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition notIn(Tuple5<T1, T2, T3, T4, T5>... tuples) {
-        return notIn(Arrays.asList(tuples));
+    public final Condition notIn(Row5<T1, T2, T3, T4, T5>... rows) {
+        return notIn(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition notIn(Tuple6<T1, T2, T3, T4, T5, T6>... tuples) {
-        return notIn(Arrays.asList(tuples));
+    public final Condition notIn(Row6<T1, T2, T3, T4, T5, T6>... rows) {
+        return notIn(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition notIn(Tuple7<T1, T2, T3, T4, T5, T6, T7>... tuples) {
-        return notIn(Arrays.asList(tuples));
+    public final Condition notIn(Row7<T1, T2, T3, T4, T5, T6, T7>... rows) {
+        return notIn(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition notIn(Tuple8<T1, T2, T3, T4, T5, T6, T7, T8>... tuples) {
-        return notIn(Arrays.asList(tuples));
+    public final Condition notIn(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... rows) {
+        return notIn(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition notIn(TupleN... tuples) {
-        return notIn(Arrays.asList(tuples));
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final Condition in(Collection tuples) {
-        QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(tuples);
-        return new InTuples(list, InOperator.IN);
+    public final Condition notIn(RowN... rows) {
+        return notIn(Arrays.asList(rows));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final Condition notIn(Collection tuples) {
-        QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(tuples);
-        return new InTuples(list, InOperator.NOT_IN);
+    public final Condition in(Collection rows) {
+        QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
+        return new InRows(list, InOperator.IN);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Condition notIn(Collection rows) {
+        QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
+        return new InRows(list, InOperator.NOT_IN);
     }
 
     @Override
@@ -863,22 +863,22 @@ implements
     }
 
     // ------------------------------------------------------------------------
-    // XXX: Tuple2 API
+    // XXX: Row2 API
     // ------------------------------------------------------------------------
 
     @Override
     public final Condition overlaps(T1 t1, T2 t2) {
-        return overlaps(tuple(t1, t2));
+        return overlaps(row(t1, t2));
     }
 
     @Override
     public final Condition overlaps(Field<T1> t1, Field<T2> t2) {
-        return overlaps(tuple(t1, t2));
+        return overlaps(row(t1, t2));
     }
 
     @Override
-    public final Condition overlaps(Tuple2<T1, T2> tuple) {
-        return new Overlaps(tuple);
+    public final Condition overlaps(Row2<T1, T2> row) {
+        return new Overlaps(row);
     }
 
     // ------------------------------------------------------------------------
@@ -892,11 +892,11 @@ implements
          */
         private static final long    serialVersionUID = 85887551884667824L;
 
-        private final TupleImpl<T1, T2, ?, ?, ?, ?, ?, ?> other;
+        private final RowImpl<T1, T2, ?, ?, ?, ?, ?, ?> other;
 
         @SuppressWarnings("unchecked")
-        Overlaps(Tuple2<T1, T2> other) {
-            this.other = (TupleImpl<T1, T2, ?, ?, ?, ?, ?, ?>) other;
+        Overlaps(Row2<T1, T2> other) {
+            this.other = (RowImpl<T1, T2, ?, ?, ?, ?, ?, ?>) other;
         }
 
         @Override
@@ -961,7 +961,7 @@ implements
             @Override
             public final void toSQL(RenderContext context) {
                 context.sql("(")
-                       .sql(TupleImpl.this)
+                       .sql(RowImpl.this)
                        .keyword(" overlaps ")
                        .sql(other)
                        .sql(")");
@@ -969,7 +969,7 @@ implements
 
             @Override
             public final void bind(BindContext context) {
-                context.bind(TupleImpl.this).bind(other);
+                context.bind(RowImpl.this).bind(other);
             }
         }
     }
@@ -981,12 +981,12 @@ implements
          */
         private static final long                               serialVersionUID = -1806139685201770706L;
 
-        private final TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8> other;
+        private final RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> other;
         private final Comparator                                comparator;
 
         @SuppressWarnings("unchecked")
         Compare(QueryPart other, Comparator comparator) {
-            this.other = (TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>) other;
+            this.other = (RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>) other;
             this.comparator = comparator;
         }
 
@@ -1032,10 +1032,10 @@ implements
             @Override
             public final void toSQL(RenderContext context) {
 
-                // Some dialects do not support != comparison with tuples
+                // Some dialects do not support != comparison with rows
                 if (comparator == NOT_EQUALS && asList(DB2).contains(context.getDialect())) {
                     context.keyword("not(")
-                           .sql(TupleImpl.this)
+                           .sql(RowImpl.this)
                            .sql(" = ")
                            .sql(other)
                            .sql(")");
@@ -1044,7 +1044,7 @@ implements
                     // Some databases need extra parentheses around the RHS
                     boolean extraParentheses = asList(ORACLE).contains(context.getDialect());
 
-                    context.sql(TupleImpl.this)
+                    context.sql(RowImpl.this)
                            .sql(" ")
                            .sql(comparator.toSQL())
                            .sql(" ")
@@ -1056,22 +1056,22 @@ implements
 
             @Override
             public final void bind(BindContext context) {
-                context.bind(TupleImpl.this).bind(other);
+                context.bind(RowImpl.this).bind(other);
             }
         }
     }
 
-    private class InTuples extends AbstractCondition {
+    private class InRows extends AbstractCondition {
 
         /**
          * Generated UID
          */
-        private static final long                                              serialVersionUID = -1806139685201770706L;
+        private static final long                                            serialVersionUID = -1806139685201770706L;
 
-        private final QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>> other;
-        private final InOperator                                               operator;
+        private final QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> other;
+        private final InOperator                                             operator;
 
-        InTuples(QueryPartList<TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8>> other, InOperator operator) {
+        InRows(QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> other, InOperator operator) {
             this.other = other;
             this.operator = operator;
         }
@@ -1090,8 +1090,8 @@ implements
             if (asList(ASE, DB2, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
                 List<Condition> conditions = new ArrayList<Condition>();
 
-                for (TupleImpl<T1, T2, T3, T4, T5, T6, T7, T8> tuple : other) {
-                    conditions.add(new Compare(tuple, EQUALS));
+                for (RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> row : other) {
+                    conditions.add(new Compare(row, EQUALS));
                 }
 
                 Condition result = new CombinedCondition(Operator.OR, conditions);
@@ -1116,7 +1116,7 @@ implements
 
             @Override
             public final void toSQL(RenderContext context) {
-                context.sql(TupleImpl.this)
+                context.sql(RowImpl.this)
                        .sql(" ")
                        .keyword(operator.toSQL())
                        .sql(" (")
@@ -1126,7 +1126,7 @@ implements
 
             @Override
             public final void bind(BindContext context) {
-                context.bind(TupleImpl.this).bind((QueryPart) other);
+                context.bind(RowImpl.this).bind((QueryPart) other);
             }
 
         }
@@ -1154,7 +1154,7 @@ implements
             boolean extraParentheses = asList(ORACLE).contains(context.getDialect());
             boolean subquery = context.subquery();
 
-            context.sql(TupleImpl.this)
+            context.sql(RowImpl.this)
                    .sql(" ")
                    .keyword(operator.toSQL())
                    .sql(" (")
@@ -1168,7 +1168,7 @@ implements
 
         @Override
         public final void bind(BindContext context) {
-            context.bind(TupleImpl.this).bind(other);
+            context.bind(RowImpl.this).bind(other);
         }
     }
 }

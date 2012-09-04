@@ -54,9 +54,9 @@ import static org.jooq.impl.Factory.not;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.replace;
 import static org.jooq.impl.Factory.round;
+import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.trueCondition;
-import static org.jooq.impl.Factory.tuple;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.test.Table1.FIELD_DATE1;
 import static org.jooq.test.Table1.FIELD_ID1;
@@ -94,21 +94,21 @@ import org.jooq.Operator;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.RenderContext;
+import org.jooq.Row1;
+import org.jooq.Row2;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
+import org.jooq.RowN;
 import org.jooq.Select;
 import org.jooq.SelectFinalStep;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
 import org.jooq.Truncate;
-import org.jooq.Tuple1;
-import org.jooq.Tuple2;
-import org.jooq.Tuple3;
-import org.jooq.Tuple4;
-import org.jooq.Tuple5;
-import org.jooq.Tuple6;
-import org.jooq.Tuple7;
-import org.jooq.Tuple8;
-import org.jooq.TupleN;
 import org.jooq.UpdateQuery;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
@@ -603,16 +603,16 @@ public class jOOQTest {
     }
 
     @Test
-    public void testTuples() throws Exception {
-        Tuple1<Integer> t1 = tuple(1);
-        Tuple2<Integer, String> t2 = tuple(1, "2");
-        Tuple3<Integer, String, Integer> t3 = tuple(1, "2", 3);
-        Tuple4<Integer, String, Integer, String> t4 = tuple(1, "2", 3, "4");
-        Tuple5<Integer, String, Integer, String, Integer> t5 = tuple(1, "2", 3, "4", 5);
-        Tuple6<Integer, String, Integer, String, Integer, String> t6 = tuple(1, "2", 3, "4", 5, "6");
-        Tuple7<Integer, String, Integer, String, Integer, String, Integer> t7 = tuple(1, "2", 3, "4", 5, "6", 7);
-        Tuple8<Integer, String, Integer, String, Integer, String, Integer, String> t8 = tuple(1, "2", 3, "4", 5, "6", 7, "8");
-        TupleN t9 = tuple(1, "2", 3, "4", 5, "6", 7, "8", 9);
+    public void testRowValueExpressions() throws Exception {
+        Row1<Integer> t1 = row(1);
+        Row2<Integer, String> t2 = row(1, "2");
+        Row3<Integer, String, Integer> t3 = row(1, "2", 3);
+        Row4<Integer, String, Integer, String> t4 = row(1, "2", 3, "4");
+        Row5<Integer, String, Integer, String, Integer> t5 = row(1, "2", 3, "4", 5);
+        Row6<Integer, String, Integer, String, Integer, String> t6 = row(1, "2", 3, "4", 5, "6");
+        Row7<Integer, String, Integer, String, Integer, String, Integer> t7 = row(1, "2", 3, "4", 5, "6", 7);
+        Row8<Integer, String, Integer, String, Integer, String, Integer, String> t8 = row(1, "2", 3, "4", 5, "6", 7, "8");
+        RowN t9 = row(1, "2", 3, "4", 5, "6", 7, "8", 9);
 
         // General info
         assertEquals(1, t1.getDegree());
@@ -709,25 +709,25 @@ public class jOOQTest {
     }
 
     @Test
-    public void testTupleCompareConditions() throws Exception {
-        assertEquals("(?) = ((?))", r_ref().render(tuple(1).eq(tuple(1))));
-        assertEquals("(1) = ((1))", r_refI().render(tuple(1).eq(tuple(1))));
-        assertEquals("(?, ?) = ((?, ?))", r_ref().render(tuple(1, "2").eq(tuple(1, "2"))));
-        assertEquals("(1, '2') = ((1, '2'))", r_refI().render(tuple(1, "2").eq(tuple(1, "2"))));
-        assertEquals("(?, ?, ?) = ((?, ?, ?))", r_ref().render(tuple(1, "2", 3).eq(tuple(1, "2", 3))));
-        assertEquals("(1, '2', 3) = ((1, '2', 3))", r_refI().render(tuple(1, "2", 3).eq(tuple(1, "2", 3))));
-        assertEquals("(?, ?, ?, ?) = ((?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4").eq(tuple(1, "2", 3, "4"))));
-        assertEquals("(1, '2', 3, '4') = ((1, '2', 3, '4'))", r_refI().render(tuple(1, "2", 3, "4").eq(tuple(1, "2", 3, "4"))));
-        assertEquals("(?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4", 5).eq(tuple(1, "2", 3, "4", 5))));
-        assertEquals("(1, '2', 3, '4', 5) = ((1, '2', 3, '4', 5))", r_refI().render(tuple(1, "2", 3, "4", 5).eq(tuple(1, "2", 3, "4", 5))));
-        assertEquals("(?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4", 5, "6").eq(tuple(1, "2", 3, "4", 5, "6"))));
-        assertEquals("(1, '2', 3, '4', 5, '6') = ((1, '2', 3, '4', 5, '6'))", r_refI().render(tuple(1, "2", 3, "4", 5, "6").eq(tuple(1, "2", 3, "4", 5, "6"))));
-        assertEquals("(?, ?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7).eq(tuple(1, "2", 3, "4", 5, "6", 7))));
-        assertEquals("(1, '2', 3, '4', 5, '6', 7) = ((1, '2', 3, '4', 5, '6', 7))", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7).eq(tuple(1, "2", 3, "4", 5, "6", 7))));
-        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8").eq(tuple(1, "2", 3, "4", 5, "6", 7, "8"))));
-        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8') = ((1, '2', 3, '4', 5, '6', 7, '8'))", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8").eq(tuple(1, "2", 3, "4", 5, "6", 7, "8"))));
-        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?, ?, ?, ?))", r_ref().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9))));
-        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8', 9) = ((1, '2', 3, '4', 5, '6', 7, '8', 9))", r_refI().render(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9))));
+    public void testRowCompareConditions() throws Exception {
+        assertEquals("(?) = ((?))", r_ref().render(row(1).eq(row(1))));
+        assertEquals("(1) = ((1))", r_refI().render(row(1).eq(row(1))));
+        assertEquals("(?, ?) = ((?, ?))", r_ref().render(row(1, "2").eq(row(1, "2"))));
+        assertEquals("(1, '2') = ((1, '2'))", r_refI().render(row(1, "2").eq(row(1, "2"))));
+        assertEquals("(?, ?, ?) = ((?, ?, ?))", r_ref().render(row(1, "2", 3).eq(row(1, "2", 3))));
+        assertEquals("(1, '2', 3) = ((1, '2', 3))", r_refI().render(row(1, "2", 3).eq(row(1, "2", 3))));
+        assertEquals("(?, ?, ?, ?) = ((?, ?, ?, ?))", r_ref().render(row(1, "2", 3, "4").eq(row(1, "2", 3, "4"))));
+        assertEquals("(1, '2', 3, '4') = ((1, '2', 3, '4'))", r_refI().render(row(1, "2", 3, "4").eq(row(1, "2", 3, "4"))));
+        assertEquals("(?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?))", r_ref().render(row(1, "2", 3, "4", 5).eq(row(1, "2", 3, "4", 5))));
+        assertEquals("(1, '2', 3, '4', 5) = ((1, '2', 3, '4', 5))", r_refI().render(row(1, "2", 3, "4", 5).eq(row(1, "2", 3, "4", 5))));
+        assertEquals("(?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?))", r_ref().render(row(1, "2", 3, "4", 5, "6").eq(row(1, "2", 3, "4", 5, "6"))));
+        assertEquals("(1, '2', 3, '4', 5, '6') = ((1, '2', 3, '4', 5, '6'))", r_refI().render(row(1, "2", 3, "4", 5, "6").eq(row(1, "2", 3, "4", 5, "6"))));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?, ?))", r_ref().render(row(1, "2", 3, "4", 5, "6", 7).eq(row(1, "2", 3, "4", 5, "6", 7))));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7) = ((1, '2', 3, '4', 5, '6', 7))", r_refI().render(row(1, "2", 3, "4", 5, "6", 7).eq(row(1, "2", 3, "4", 5, "6", 7))));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?, ?, ?))", r_ref().render(row(1, "2", 3, "4", 5, "6", 7, "8").eq(row(1, "2", 3, "4", 5, "6", 7, "8"))));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8') = ((1, '2', 3, '4', 5, '6', 7, '8'))", r_refI().render(row(1, "2", 3, "4", 5, "6", 7, "8").eq(row(1, "2", 3, "4", 5, "6", 7, "8"))));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?, ?) = ((?, ?, ?, ?, ?, ?, ?, ?, ?))", r_ref().render(row(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(row(1, "2", 3, "4", 5, "6", 7, "8", 9))));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8', 9) = ((1, '2', 3, '4', 5, '6', 7, '8', 9))", r_refI().render(row(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(row(1, "2", 3, "4", 5, "6", 7, "8", 9))));
 
         context.checking(new Expectations() {{
             int i = 0;
@@ -753,7 +753,7 @@ public class jOOQTest {
             oneOf(statement).setInt(++i, (i - 9));
         }});
 
-        assertEquals(19, b_ref().bind(tuple(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(1, "2", 3, "4", 5, "6", 7, "8", 9)).peekIndex());
+        assertEquals(19, b_ref().bind(row(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(1, "2", 3, "4", 5, "6", 7, "8", 9)).peekIndex());
         context.assertIsSatisfied();
     }
 

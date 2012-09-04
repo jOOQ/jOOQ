@@ -469,7 +469,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             }
             else if (type.isArray()) {
 
-                // H2 renders arrays as tuples
+                // H2 renders arrays as rows
                 if (dialect == H2) {
                     context.sql(Arrays.toString((Object[]) val).replaceAll("\\[([^]]*)\\]", "($1)"));
                 }

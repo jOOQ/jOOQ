@@ -43,17 +43,18 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 
 /**
- * A model type for a tuple.
+ * A model type for a row value expression.
  * <p>
- * Note: Not all databases support tuples, but many tuple operations can be
- * simulated on all databases. See relevant tuple method Javadocs for details.
+ * Note: Not all databases support row value expressions, but many row value
+ * expression operations can be simulated on all databases. See relevant row
+ * value expression method Javadocs for details.
  *
  * @author Lukas Eder
  */
-public interface Tuple extends QueryPart {
+public interface Row extends QueryPart {
 
     /**
-     * Get the degree of this tuple
+     * Get the degree of this row value expression
      */
     int getDegree();
 
@@ -63,66 +64,26 @@ public interface Tuple extends QueryPart {
     Field<?> getField(int index);
 
     /**
-     * Get all fields of this tuple
+     * Get all fields of this row value expression
      */
     Field<?>[] getFields();
 
-//    /**
-//     * Compare this tuple with a subselect for equality
-//     * <p>
-//     * Note that the subquery must return a table of the same degree as this
-//     * tuple. This is not checked by jOOQ and will result in syntax errors in
-//     * the database, if not used correctly.
-//     */
-//    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition equal(Select<?> select);
-//
-//    /**
-//     * Compare this tuple with a subselect for equality
-//     * <p>
-//     * Note that the subquery must return a table of the same degree as this
-//     * tuple. This is not checked by jOOQ and will result in syntax errors in
-//     * the database, if not used correctly.
-//     */
-//    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition eq(Select<?> select);
-//
-//    /**
-//     * Compare this tuple with a subselect for equality
-//     * <p>
-//     * Note that the subquery must return a table of the same degree as this
-//     * tuple. This is not checked by jOOQ and will result in syntax errors in
-//     * the database, if not used correctly.
-//     */
-//    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition notEqual(Select<?> select);
-//
-//    /**
-//     * Compare this tuple with a subselect for equality
-//     * <p>
-//     * Note that the subquery must return a table of the same degree as this
-//     * tuple. This is not checked by jOOQ and will result in syntax errors in
-//     * the database, if not used correctly.
-//     */
-//    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition ne(Select<?> select);
-
     /**
-     * Compare this tuple with a subselect for equality
+     * Compare this row value expression with a subselect for equality
      * <p>
-     * Note that the subquery must return a table of the same degree as this
-     * tuple. This is not checked by jOOQ and will result in syntax errors in
-     * the database, if not used correctly.
+     * Note that the subquery must return a table of the same degree as this row
+     * value expression. This is not checked by jOOQ and will result in syntax
+     * errors in the database, if not used correctly.
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition in(Select<?> select);
 
     /**
-     * Compare this tuple with a subselect for non-equality
+     * Compare this row value expression with a subselect for non-equality
      * <p>
-     * Note that the subquery must return a table of the same degree as this
-     * tuple. This is not checked by jOOQ and will result in syntax errors in
-     * the database, if not used correctly.
+     * Note that the subquery must return a table of the same degree as this row
+     * value expression. This is not checked by jOOQ and will result in syntax
+     * errors in the database, if not used correctly.
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notIn(Select<?> select);

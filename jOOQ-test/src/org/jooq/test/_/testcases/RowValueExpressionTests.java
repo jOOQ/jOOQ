@@ -49,7 +49,7 @@ import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.currentDate;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.not;
-import static org.jooq.impl.Factory.tuple;
+import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.val;
 
 import java.sql.Date;
@@ -62,7 +62,7 @@ import org.jooq.types.DayToSecond;
 
 import org.junit.Test;
 
-public class TupleTests<
+public class RowValueExpressionTests<
     A    extends UpdatableRecord<A>,
     AP,
     B    extends UpdatableRecord<B>,
@@ -84,41 +84,41 @@ public class TupleTests<
     T785 extends TableRecord<T785>>
 extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> {
 
-    public TupleTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    public RowValueExpressionTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         super(delegate);
     }
 
     @SuppressWarnings("unchecked")
     @Test
-    public void testTupleConditions() throws Exception {
+    public void testRowValueExpressionConditions() throws Exception {
 
         // Simple equality tests
         assertEquals(1, (int)
         create().selectOne()
-                .where(tuple(1, 2, 3).equal(1, 2, 3))
-                .and(tuple(1, 2, 3).ne(3, 2, 1))
+                .where(row(1, 2, 3).equal(1, 2, 3))
+                .and(row(1, 2, 3).ne(3, 2, 1))
                 .fetchOne(0, Integer.class));
 
         // IN-condition tests
         assertEquals(1, (int)
         create().selectOne()
-                .where(tuple(1, 2, 3).in(tuple(3, 3, 3), tuple(2, 3, 1), tuple(1, 2, 3)))
-                .and(tuple(1, 2, 3).notIn(tuple(3, 3, 3), tuple(2, 3, 1)))
+                .where(row(1, 2, 3).in(row(3, 3, 3), row(2, 3, 1), row(1, 2, 3)))
+                .and(row(1, 2, 3).notIn(row(3, 3, 3), row(2, 3, 1)))
                 .fetchOne(0, Integer.class));
 
         // Tuples with actual data
         assertEquals(asList(1, 2),
         create().select(TBook_ID())
                 .from(TBook())
-                .where(tuple(TBook_ID()).equal(1))
-                .or(tuple(TBook_ID(), inline(2)).equal(2, 2))
-                .or(tuple(TBook_ID(), inline(2), val(3)).equal(1, 2, 3))
-                .or(tuple("1", "2", "3", "4").equal(TBook_TITLE(), TBook_TITLE(), TBook_TITLE(), TBook_TITLE()))
-                .or(tuple(TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID()).notEqual(tuple(TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID())))
-                .or(tuple(1, 2, 3, 4, 5, 6).eq(6, 5, 4, 3, 2, 1))
-                .or(tuple(1, 2, 3, 4, 5, 6, 7).eq(1, 2, 3, 4, 5, 6, 0))
-                .or(tuple(1, 2, 3, 4, 5, 6, 7, 8).eq(1, 2, 3, 4, 5, 6, 7, 0))
-                .or(tuple(1, 2, 3, 4, 5, 6, 7, 8, 9).eq(1, 2, 3, 4, 5, 6, 7, 8, 0))
+                .where(row(TBook_ID()).equal(1))
+                .or(row(TBook_ID(), inline(2)).equal(2, 2))
+                .or(row(TBook_ID(), inline(2), val(3)).equal(1, 2, 3))
+                .or(row("1", "2", "3", "4").equal(TBook_TITLE(), TBook_TITLE(), TBook_TITLE(), TBook_TITLE()))
+                .or(row(TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID()).notEqual(row(TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID())))
+                .or(row(1, 2, 3, 4, 5, 6).eq(6, 5, 4, 3, 2, 1))
+                .or(row(1, 2, 3, 4, 5, 6, 7).eq(1, 2, 3, 4, 5, 6, 0))
+                .or(row(1, 2, 3, 4, 5, 6, 7, 8).eq(1, 2, 3, 4, 5, 6, 7, 0))
+                .or(row(1, 2, 3, 4, 5, 6, 7, 8, 9).eq(1, 2, 3, 4, 5, 6, 7, 8, 0))
                 .orderBy(TBook_ID())
                 .fetch(TBook_ID()));
 
@@ -130,16 +130,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         else {
             assertEquals(1, (int)
             create().selectOne()
-                    .where(tuple(1, 2, 3).in(create().select(val(1), val(2), val(3))))
-                    .and(tuple(1, 2, 3).notIn(create().select(val(3), val(2), val(1))))
+                    .where(row(1, 2, 3).in(create().select(val(1), val(2), val(3))))
+                    .and(row(1, 2, 3).notIn(create().select(val(3), val(2), val(1))))
                     .fetchOne(0, Integer.class));
 
             // CUBRID has a bug here http://jira.cubrid.org/browse/ENGINE-61
             if (!asList(CUBRID).contains(getDialect())) {
                 assertEquals(1, (int)
                     create().selectOne()
-                            .where(tuple(1, 2, 3).in(create().select(val(1), val(2), val(3))))
-                            .and(tuple(3, 2).notIn(
+                            .where(row(1, 2, 3).in(create().select(val(1), val(2), val(3))))
+                            .and(row(3, 2).notIn(
                                 create().select(val(2), val(3)).union(
                                 create().select(val(4), val(3)))))
                             .fetchOne(0, Integer.class));
@@ -148,7 +148,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
-    public void testTupleOverlapsCondition() throws Exception {
+    public void testRowValueExpressionOverlapsCondition() throws Exception {
         // 1903-06-25
         // 1947-08-24
 
@@ -160,7 +160,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(2, (int)
         create().selectCount()
                 .from(TAuthor())
-                .where(tuple(TAuthor_DATE_OF_BIRTH(), currentDate())
+                .where(row(TAuthor_DATE_OF_BIRTH(), currentDate())
                     .overlaps(new Date(now - day), new Date(now + day)))
                 .fetchOne(0, Integer.class));
 
@@ -172,14 +172,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         else {
             assertEquals(1, (int)
             create().selectOne()
-                    .where(tuple(new Date(now), new DayToSecond(3))
+                    .where(row(new Date(now), new DayToSecond(3))
                         .overlaps(new Date(now + day), new DayToSecond(3)))
                     .fetchOne(0, Integer.class));
 
             // jOOQ should recognise these as a (DATE, INTERVAL) tuple
             assertEquals(1, (int)
             create().selectOne()
-                    .where(tuple(new Date(now), 3)
+                    .where(row(new Date(now), 3)
                         .overlaps(new Date(now + day), 3))
                     .fetchOne(0, Integer.class));
         }
@@ -188,10 +188,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         // -------------------------------------------------------------
         assertEquals(1, (int)
         create().selectOne()
-                .where(tuple(1, 3).overlaps(2, 4))
-                .and(tuple(1, 4).overlaps(2, 3))
-                .and(tuple(1, 4).overlaps(3, 2))
-                .and(not(tuple(1, 2).overlaps(3, 4)))
+                .where(row(1, 3).overlaps(2, 4))
+                .and(row(1, 4).overlaps(2, 3))
+                .and(row(1, 4).overlaps(3, 2))
+                .and(not(row(1, 2).overlaps(3, 4)))
                 .fetchOne(0, Integer.class));
     }
 }

@@ -1225,11 +1225,16 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final String formatJSON() {
-        List<String> f = new ArrayList<String>();
+        List<Map<String, String>> f = new ArrayList<Map<String, String>>();
         List<List<Object>> r = new ArrayList<List<Object>>();
 
+        Map<String, String> fieldMap;
         for (Field<?> field : getFields()) {
-            f.add(field.getName());
+            fieldMap = new LinkedHashMap<String, String>();
+            fieldMap.put("name", field.getName());
+            fieldMap.put("type", field.getDataType().getTypeName().toUpperCase());
+
+            f.add(fieldMap);
         }
 
         for (Record record : this) {
@@ -1260,6 +1265,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (Field<?> field : getFields()) {
             sb.append("<field name=\"");
             sb.append(escapeXML(field.getName()));
+            sb.append("\" ");
+            sb.append("type=\"");
+            sb.append(field.getDataType().getTypeName().toUpperCase());
             sb.append("\"/>");
         }
 
@@ -1308,7 +1316,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             Document document = builder.newDocument();
 
             Element eResult = document.createElement("result");
-            eResult.setAttribute("xmlns", "http://www.jooq.org/xsd/jooq-export-1.6.2.xsd");
+            eResult.setAttribute("xmlns", "http://www.jooq.org/xsd/jooq-export-2.6.0.xsd");
             document.appendChild(eResult);
 
             Element eFields = document.createElement("fields");
@@ -1317,6 +1325,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             for (Field<?> field : getFields()) {
                 Element eField = document.createElement("field");
                 eField.setAttribute("name", field.getName());
+                eField.setAttribute("type", field.getDataType().getTypeName().toUpperCase());
                 eFields.appendChild(eField);
             }
 

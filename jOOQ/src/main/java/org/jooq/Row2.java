@@ -38,14 +38,15 @@ package org.jooq;
 import java.util.Collection;
 
 /**
- * A model type for a tuple with degree <code>2</code>
+ * A model type for a row value expression with degree <code>2</code>
  * <p>
- * Note: Not all databases support tuples, but many tuple operations can be
- * simulated on all databases. See relevant tuple method Javadocs for details.
+ * Note: Not all databases support row value expressions, but many row value
+ * expression operations can be simulated on all databases. See relevant row
+ * value expression method Javadocs for details.
  *
  * @author Lukas Eder
  */
-public interface Tuple2<T1, T2> extends Tuple {
+public interface Row2<T1, T2> extends Row {
 
     // ------------------------------------------------------------------------
     // Field accessors
@@ -62,24 +63,26 @@ public interface Tuple2<T1, T2> extends Tuple {
     Field<T2> field2();
 
     // ------------------------------------------------------------------------
-    // Tuple DSL API
+    // Row DSL API
     // ------------------------------------------------------------------------
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for
+     * equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
      */
     @Support
-    Condition equal(Tuple2<T1, T2> tuple);
+    Condition equal(Row2<T1, T2> row);
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for
+     * equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
@@ -88,9 +91,10 @@ public interface Tuple2<T1, T2> extends Tuple {
     Condition equal(T1 t1, T2 t2);
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for
+     * equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
@@ -99,20 +103,22 @@ public interface Tuple2<T1, T2> extends Tuple {
     Condition equal(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for
+     * equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
      */
     @Support
-    Condition eq(Tuple2<T1, T2> tuple);
+    Condition eq(Row2<T1, T2> row);
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for
+     * equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
@@ -121,9 +127,10 @@ public interface Tuple2<T1, T2> extends Tuple {
     Condition eq(T1 t1, T2 t2);
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for
+     * equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
@@ -132,20 +139,22 @@ public interface Tuple2<T1, T2> extends Tuple {
     Condition eq(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for
+     * non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
      */
     @Support
-    Condition notEqual(Tuple2<T1, T2> tuple);
+    Condition notEqual(Row2<T1, T2> row);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for
+     * non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
@@ -154,9 +163,10 @@ public interface Tuple2<T1, T2> extends Tuple {
     Condition notEqual(T1 t1, T2 t2);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for
+     * non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
@@ -165,20 +175,22 @@ public interface Tuple2<T1, T2> extends Tuple {
     Condition notEqual(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for
+     * non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
      */
     @Support
-    Condition ne(Tuple2<T1, T2> tuple);
+    Condition ne(Row2<T1, T2> row);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for
+     * non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
@@ -187,9 +199,10 @@ public interface Tuple2<T1, T2> extends Tuple {
     Condition ne(T1 t1, T2 t2);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for
+     * non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
@@ -198,55 +211,57 @@ public interface Tuple2<T1, T2> extends Tuple {
     Condition ne(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this tuple with a set of tuples for equality
+     * Compare this row value expression with a set of row value expressions for
+     * equality
      * <p>
-     * Tuple IN predicates can be simulated in those databases that do not
-     * support such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code>
-     * is equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>,
-     * which is equivalent to
-     * <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
+     * Row IN predicates can be simulated in those databases that do not support
+     * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
+     * equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>, which
+     * is equivalent to <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
      */
     @Support
-    Condition in(Collection<? extends Tuple2<T1, T2>> tuples);
+    Condition in(Collection<? extends Row2<T1, T2>> rows);
 
     /**
-     * Compare this tuple with a set of tuples for equality
+     * Compare this row value expression with a set of row value expressions for
+     * equality
      * <p>
-     * Tuple IN predicates can be simulated in those databases that do not
-     * support such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code>
-     * is equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>,
-     * which is equivalent to
-     * <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
+     * Row IN predicates can be simulated in those databases that do not support
+     * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
+     * equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>, which
+     * is equivalent to <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
      */
     @Support
-    Condition in(Tuple2<T1, T2>... tuples);
+    Condition in(Row2<T1, T2>... rows);
 
     /**
-     * Compare this tuple with a set of tuples for equality
+     * Compare this row value expression with a set of row value expressions for
+     * equality
      * <p>
-     * Tuple NOT IN predicates can be simulated in those databases that do not
+     * Row NOT IN predicates can be simulated in those databases that do not
      * support such predicates natively:
      * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
      * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
      * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
      */
     @Support
-    Condition notIn(Collection<? extends Tuple2<T1, T2>> tuples);
+    Condition notIn(Collection<? extends Row2<T1, T2>> rows);
 
     /**
-     * Compare this tuple with a set of tuples for equality
+     * Compare this row value expression with a set of row value expressions for
+     * equality
      * <p>
-     * Tuple NOT IN predicates can be simulated in those databases that do not
+     * Row NOT IN predicates can be simulated in those databases that do not
      * support such predicates natively:
      * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
      * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
      * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
      */
     @Support
-    Condition notIn(Tuple2<T1, T2>... tuples);
+    Condition notIn(Row2<T1, T2>... rows);
 
     /**
-     * Check if this tuple overlaps another tuple
+     * Check if this row value expression overlaps another row value expression
      * <p>
      * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
      * which comes in two flavours:
@@ -255,8 +270,8 @@ public interface Tuple2<T1, T2> extends Tuple {
      * <li><code>(DATE, INTERVAL) OVERLAPS (DATE, INTERVAL)</code></li>
      * </ul>
      * <p>
-     * jOOQ also supports arbitrary 2-degree tuple comparisons, by simulating
-     * them as such <code><pre>
+     * jOOQ also supports arbitrary 2-degree row value expression comparisons,
+     * by simulating them as such <code><pre>
      * -- This predicate
      * (A, B) OVERLAPS (C, D)
      *
@@ -268,7 +283,7 @@ public interface Tuple2<T1, T2> extends Tuple {
     Condition overlaps(T1 t1, T2 t2);
 
     /**
-     * Check if this tuple overlaps another tuple
+     * Check if this row value expression overlaps another row value expression
      * <p>
      * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
      * which comes in two flavours:
@@ -277,8 +292,8 @@ public interface Tuple2<T1, T2> extends Tuple {
      * <li><code>(DATE, INTERVAL) OVERLAPS (DATE, INTERVAL)</code></li>
      * </ul>
      * <p>
-     * jOOQ also supports arbitrary 2-degree tuple comparisons, by simulating
-     * them as such <code><pre>
+     * jOOQ also supports arbitrary 2-degree row value expression comparisons,
+     * by simulating them as such <code><pre>
      * -- This predicate
      * (A, B) OVERLAPS (C, D)
      *
@@ -290,7 +305,7 @@ public interface Tuple2<T1, T2> extends Tuple {
     Condition overlaps(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Check if this tuple overlaps another tuple
+     * Check if this row value expression overlaps another row value expression
      * <p>
      * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
      * which comes in two flavours:
@@ -299,8 +314,8 @@ public interface Tuple2<T1, T2> extends Tuple {
      * <li><code>(DATE, INTERVAL) OVERLAPS (DATE, INTERVAL)</code></li>
      * </ul>
      * <p>
-     * jOOQ also supports arbitrary 2-degree tuple comparisons, by simulating
-     * them as such <code><pre>
+     * jOOQ also supports arbitrary 2-degree row value expression comparisons,
+     * by simulating them as such <code><pre>
      * -- This predicate
      * (A, B) OVERLAPS (C, D)
      *
@@ -309,5 +324,5 @@ public interface Tuple2<T1, T2> extends Tuple {
      * </pre></code>
      */
     @Support
-    Condition overlaps(Tuple2<T1, T2> tuple);
+    Condition overlaps(Row2<T1, T2> row);
 }

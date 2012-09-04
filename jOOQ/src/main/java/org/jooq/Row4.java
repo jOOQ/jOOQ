@@ -38,14 +38,14 @@ package org.jooq;
 import java.util.Collection;
 
 /**
- * A model type for a tuple with degree <code>6</code>
+ * A model type for a row value expression with degree <code>4</code>
  * <p>
- * Note: Not all databases support tuples, but many tuple operations can be
- * simulated on all databases. See relevant tuple method Javadocs for details.
+ * Note: Not all databases support row value expressions, but many row value expression operations can be
+ * simulated on all databases. See relevant row value expression method Javadocs for details.
  *
  * @author Lukas Eder
  */
-public interface Tuple6<T1, T2, T3, T4, T5, T6> extends Tuple {
+public interface Row4<T1, T2, T3, T4> extends Row {
 
     // ------------------------------------------------------------------------
     // Field accessors
@@ -71,197 +71,187 @@ public interface Tuple6<T1, T2, T3, T4, T5, T6> extends Tuple {
      */
     Field<T4> field4();
 
-    /**
-     * Get the fifth field
-     */
-    Field<T5> field5();
-
-    /**
-     * Get the sixth field
-     */
-    Field<T6> field6();
-
     // ------------------------------------------------------------------------
-    // Tuple DSL API
+    // Row DSL API
     // ------------------------------------------------------------------------
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
      */
     @Support
-    Condition equal(Tuple6<T1, T2, T3, T4, T5, T6> tuple);
+    Condition equal(Row4<T1, T2, T3, T4> row);
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
      */
     @Support
-    Condition equal(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6);
+    Condition equal(T1 t1, T2 t2, T3 t3, T4 t4);
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
      */
     @Support
-    Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6);
+    Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4);
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
      */
     @Support
-    Condition eq(Tuple6<T1, T2, T3, T4, T5, T6> tuple);
+    Condition eq(Row4<T1, T2, T3, T4> row);
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
      */
     @Support
-    Condition eq(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6);
+    Condition eq(T1 t1, T2 t2, T3 t3, T4 t4);
 
     /**
-     * Compare this tuple with another tuple for equality
+     * Compare this row value expression with another row value expression for equality
      * <p>
-     * Tuple equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
      */
     @Support
-    Condition eq(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6);
+    Condition eq(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
      */
     @Support
-    Condition notEqual(Tuple6<T1, T2, T3, T4, T5, T6> tuple);
+    Condition notEqual(Row4<T1, T2, T3, T4> row);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
      */
     @Support
-    Condition notEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6);
+    Condition notEqual(T1 t1, T2 t2, T3 t3, T4 t4);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
      */
     @Support
-    Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6);
+    Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
      */
     @Support
-    Condition ne(Tuple6<T1, T2, T3, T4, T5, T6> tuple);
+    Condition ne(Row4<T1, T2, T3, T4> row);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
      */
     @Support
-    Condition ne(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6);
+    Condition ne(T1 t1, T2 t2, T3 t3, T4 t4);
 
     /**
-     * Compare this tuple with another tuple for non-equality
+     * Compare this row value expression with another row value expression for non-equality
      * <p>
-     * Tuple non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
      */
     @Support
-    Condition ne(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6);
+    Condition ne(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4);
 
     /**
-     * Compare this tuple with a set of tuples for equality
+     * Compare this row value expression with a set of row value expressions for equality
      * <p>
-     * Tuple IN predicates can be simulated in those databases that do not
+     * Row IN predicates can be simulated in those databases that do not
      * support such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code>
      * is equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>,
      * which is equivalent to
      * <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
      */
     @Support
-    Condition in(Collection<? extends Tuple6<T1, T2, T3, T4, T5, T6>> tuples);
+    Condition in(Collection<? extends Row4<T1, T2, T3, T4>> rows);
 
     /**
-     * Compare this tuple with a set of tuples for equality
+     * Compare this row value expression with a set of row value expressions for equality
      * <p>
-     * Tuple IN predicates can be simulated in those databases that do not
+     * Row IN predicates can be simulated in those databases that do not
      * support such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code>
      * is equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>,
      * which is equivalent to
      * <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
      */
     @Support
-    Condition in(Tuple6<T1, T2, T3, T4, T5, T6>... tuples);
+    Condition in(Row4<T1, T2, T3, T4>... rows);
 
     /**
-     * Compare this tuple with a set of tuples for equality
+     * Compare this row value expression with a set of row value expressions for equality
      * <p>
-     * Tuple NOT IN predicates can be simulated in those databases that do not
+     * Row NOT IN predicates can be simulated in those databases that do not
      * support such predicates natively:
      * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
      * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
      * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
      */
     @Support
-    Condition notIn(Collection<? extends Tuple6<T1, T2, T3, T4, T5, T6>> tuples);
+    Condition notIn(Collection<? extends Row4<T1, T2, T3, T4>> rows);
 
     /**
-     * Compare this tuple with a set of tuples for equality
+     * Compare this row value expression with a set of row value expressions for equality
      * <p>
-     * Tuple NOT IN predicates can be simulated in those databases that do not
+     * Row NOT IN predicates can be simulated in those databases that do not
      * support such predicates natively:
      * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
      * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
      * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
      */
     @Support
-    Condition notIn(Tuple6<T1, T2, T3, T4, T5, T6>... tuples);
+    Condition notIn(Row4<T1, T2, T3, T4>... rows);
 }

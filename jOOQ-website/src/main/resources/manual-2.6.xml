@@ -2162,7 +2162,7 @@ create.selectFrom(BOOK).where(BOOK.ID.equal(5)));]]></java></code-pair>
 											
 											<h3>INTERSECT [ ALL ] and EXCEPT [ ALL ]</h3>
 											<p>
-												INTERSECT is the operation that produces only those tuples that are returned by both subselects. EXCEPT is the operation that returns only those tuples that are returned exclusively in the first subselect. Both operators will remove duplicates from their results. The SQL standard allows to specify the ALL keyword for both of these operators as well, but this is hardly supported in any database. jOOQ does not support INTERSECT ALL, EXEPT ALL operations either. 
+												INTERSECT is the operation that produces only those s that are returned by both subselects. EXCEPT is the operation that returns only those s that are returned exclusively in the first subselect. Both operators will remove duplicates from their results. The SQL standard allows to specify the ALL keyword for both of these operators as well, but this is hardly supported in any database. jOOQ does not support INTERSECT ALL, EXEPT ALL operations either. 
 											</p>
 											
 											<h3>jOOQ's set operators and how they're different from standard SQL</h3>
@@ -2550,7 +2550,7 @@ create.select()
 										<li><strong>CROSS JOIN or cartesian product</strong>: The basic JOIN in SQL, producing a relational cross product, combining every record of table A with every record of table B. Note that cartesian products can also be produced by listing comma-separated <reference id="table-expressions" title="table expressions"/> in the <reference id="from-clause" title="FROM clause"/> of a <reference id="select-statement" title="SELECT statement"/></li>
 										<li><strong>NATURAL JOIN</strong>: The basic JOIN in relational algebra, yet a rarely used JOIN in databases with everyday degree of normalisation. This JOIN type unconditionally equi-joins two tables by all columns with the same name (requiring foreign keys and primary keys to share the same name). Note that the JOIN columns will only figure once in the resulting <reference id="table-expressions" title="table expression"/>.</li>
 										<li><strong>INNER JOIN or equi-join</strong>: This JOIN operation performs a cartesian product (CROSS JOIN) with a <reference id="conditional-expressions" title="filtering predicate"/> being applied to the resulting <reference id="table-expressions" title="table expression"/>. Most often, a <reference id="comparison-predicate" title="equal comparison predicate"/> comparing foreign keys and primary keys will be applied as a filter, but any other predicate will work, too.</li>
-										<li><strong>OUTER JOIN</strong>: This JOIN operation performs a cartesian product (CROSS JOIN) with a <reference id="conditional-expressions" title="filtering predicate"/> being applied to the resulting <reference id="table-expressions" title="table expression"/>. Most often, a <reference id="comparison-predicate" title="equal comparison predicate"/> comparing foreign keys and primary keys will be applied as a filter, but any other predicate will work, too. Unlike the INNER JOIN, an OUTER JOIN will add "empty records" to the left (table A) or right (table B) or both tables, in case the conditional expression fails to produce a tuple.</li>										
+										<li><strong>OUTER JOIN</strong>: This JOIN operation performs a cartesian product (CROSS JOIN) with a <reference id="conditional-expressions" title="filtering predicate"/> being applied to the resulting <reference id="table-expressions" title="table expression"/>. Most often, a <reference id="comparison-predicate" title="equal comparison predicate"/> comparing foreign keys and primary keys will be applied as a filter, but any other predicate will work, too. Unlike the INNER JOIN, an OUTER JOIN will add "empty records" to the left (table A) or right (table B) or both tables, in case the conditional expression fails to produce a .</li>										
 										<li><strong>semi-join</strong>: In SQL, this JOIN operation can only be expressed implicitly using <reference id="in-predicate" title="IN predicates"/> or <reference id="exists-predicate" title="EXISTS predicates"/>. The <reference id="table-expressions" title="table expression"/> resulting from a semi-join will only contain the left-hand side table A</li>										
 										<li><strong>anti-join</strong>: In SQL, this JOIN operation can only be expressed implicitly using <reference id="in-predicate" title="NOT IN predicates"/> or <reference id="exists-predicate" title="NOT EXISTS predicates"/>. The <reference id="table-expressions" title="table expression"/> resulting from a semi-join will only contain the left-hand side table A</li>
 										<li><strong>division</strong>: This JOIN operation is hard to express at all, in SQL. See the manual's chapter about <reference id="relational-division" title="relational division"/> for details on how jOOQ simulates this operation.</li>
@@ -2733,7 +2733,7 @@ WHERE NOT EXISTS (
 								<title>Array and cursor unnesting</title>
 								<content>
 									<p>
-										The SQL standard specifies how SQL databases should implement ARRAY and TABLE types, as well as CURSOR types. Put simply, a CURSOR is a pointer to any materialised <reference id="table-expressions" title="table expression"/>. Depending on the cursor's features, this table expression can be scrolled through in both directions, records can be locked, updated, removed, inserted, etc. Often, CURSOR types contain tuples, whereas ARRAY and TABLE types contain simple scalar values, although that is not a requirement
+										The SQL standard specifies how SQL databases should implement ARRAY and TABLE types, as well as CURSOR types. Put simply, a CURSOR is a pointer to any materialised <reference id="table-expressions" title="table expression"/>. Depending on the cursor's features, this table expression can be scrolled through in both directions, records can be locked, updated, removed, inserted, etc. Often, CURSOR types contain s, whereas ARRAY and TABLE types contain simple scalar values, although that is not a requirement
 									</p>
 									
 									<p>
@@ -2814,7 +2814,7 @@ new Factory(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 						<title>Column expressions</title>
 						<content>
 						    <p>
-						    	Column expressions can be used in various SQL clauses in order to refer to one or several columns. This chapter explains how to form various types of column expressions with jOOQ. A particular type of column expression is given in the section about <reference id="tuples" title="tuples or row value expressions"/>, where an expression may have a degree of more than one.
+						    	Column expressions can be used in various SQL clauses in order to refer to one or several columns. This chapter explains how to form various types of column expressions with jOOQ. A particular type of column expression is given in the section about <reference id="row-value-expressions" title="s or row value expressions"/>, where an expression may have a degree of more than one.
 						    </p>
 						
 						    <h3>Using column expressions in jOOQ</h3>
@@ -3831,32 +3831,32 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 								</content>
 							</section>
 							
-							<section id="tuples">
-								<title>Tuples or row value expressions</title>
+							<section id="row-value-expressions">
+								<title>s or row value expressions</title>
 								<content>
 									<p>
-										According to the SQL standard, row value expressions can have a degree of more than one. This is commonly used in the <reference id="insert-statement" title="INSERT statement"/>, where the VALUES row value constructor allows for providing a row value expression as a source for INSERT data. Row value expressions can appear in various other places, though. They are supported by jOOQ as tuples. jOOQ's <reference id="factory" title="Factory"/> allows for the construction of type-safe tuples up to the degree / arity of 8. Higher-degree tuples are supported as well, but without any type-safety. Tuple types are modelled as follows:
+										According to the SQL standard, row value expressions can have a degree of more than one. This is commonly used in the <reference id="insert-statement" title="INSERT statement"/>, where the VALUES row value constructor allows for providing a row value expression as a source for INSERT data. Row value expressions can appear in various other places, though. They are supported by jOOQ as s / rows. jOOQ's <reference id="factory" title="Factory"/> allows for the construction of type-safe s up to the degree / arity of 8. Higher-degree s are supported as well, but without any type-safety.  types are modelled as follows:
 									</p>
 									
-<java><![CDATA[// The Factory provides overloaded tuple constructor methods:
-public static <T1> Tuple1<T1> tuple(T1 t1) { ... }
-public static <T1, T2> Tuple2<T1, T2> tuple(T1 t1, T2 t2) { ... }
-public static <T1, T2, T3> Tuple3<T1, T2, T3> tuple(T1 t1, T2 t2, T3 t3) { ... }
-public static <T1, T2, T3, T4> Tuple4<T1, T2, T3, T4> tuple(T1 t1, T2 t2, T3 t3, T4 t4) { ... }
+<java><![CDATA[// The Factory provides overloaded row value expression constructor methods:
+public static <T1> Row1<T1> row(T1 t1) { ... }
+public static <T1, T2> Row2<T1, T2> row(T1 t1, T2 t2) { ... }
+public static <T1, T2, T3> Row3<T1, T2, T3> row(T1 t1, T2 t2, T3 t3) { ... }
+public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(T1 t1, T2 t2, T3 t3, T4 t4) { ... }
 
-// [ ... idem for Tuple5, Tuple6, Tuple7, Tuple8 ... ]
+// [ ... idem for Row5, Row6, Row7, Row8 ... ]
 
 // Degrees of more than 8 are supported without type-safety
-public static TupleN tuple(Object... values) { ... }]]></java>
+public static RowN row(Object... values) { ... }]]></java>
 
-									<h3>Using tuples in predicates</h3>
+									<h3>Using row value expressions in predicates</h3>
                                 	<p>
-                                		Tuples are incompatible with most other <reference id="queryparts" title="QueryParts"/>, but they can be used as a basis for constructing various <reference id="conditional-expressions" title="conditional expressions"/>, such as <reference id="comparison-predicate" title="comparison predicates"/>, <reference id="in-predicate" title="IN predicates"/>, or the "degree 2 tuple-only" <reference id="overlaps-predicate" title="OVERLAPS predicate"/>. See the relevant sections for more details about how to use tuples in predicates.
+                                		Row value expressions are incompatible with most other <reference id="queryparts" title="QueryParts"/>, but they can be used as a basis for constructing various <reference id="conditional-expressions" title="conditional expressions"/>, such as <reference id="comparison-predicate" title="comparison predicates"/>, <reference id="in-predicate" title="IN predicates"/>, or the "degree 2 row value expression only" <reference id="overlaps-predicate" title="OVERLAPS predicate"/>. See the relevant sections for more details about how to use row value expressions in predicates.
                                 	</p>
                                 	
-                                	<h3>Using tuples in UPDATE statements</h3>
+                                	<h3>Using row value expressions in UPDATE statements</h3>
                                 	<p>
-                                		The <reference id="update-statement" title="UPDATE statement"/> also supports a variant where tuples are updated, rather than single columns. See the relevant section for more details
+                                		The <reference id="update-statement" title="UPDATE statement"/> also supports a variant where row value expressions are updated, rather than single columns. See the relevant section for more details
                                 	</p>
 								</content>
 							</section>
@@ -4377,26 +4377,26 @@ notExists(create.selectOne().from(BOOK)
 
 									<h3>The OVERLAPS predicate in jOOQ</h3>
 									<p>
-									    jOOQ supports the OVERLAPS predicate on <reference id="tuples" title="tuples of degree 2"/>. The following methods are contained in <reference class="org.jooq.Tuple2"/>:
+									    jOOQ supports the OVERLAPS predicate on <reference id="row-value-expressions" title="row value expressions of degree 2"/>. The following methods are contained in <reference class="org.jooq.Row2"/>:
 									</p>
 
 <java><![CDATA[Condition overlaps(T1 t1, T2 t2);
 Condition overlaps(Field<T1> t1, Field<T2> t2);
-Condition overlaps(Tuple2<T1, T2> tuple);]]></java>
+Condition overlaps(Row2<T1, T2> row);]]></java>
 
 									<p>
 										This allows for expressing the above predicates as such:
 									</p>																		
 
 <java><![CDATA[// The date range tuples version
-tuple(Date.valueOf('2010-01-01'), Date.valueOf('2010-01-03')).overlaps(Date.valueOf('2010-01-02'), Date.valueOf('2010-01-04'))
+row(Date.valueOf('2010-01-01'), Date.valueOf('2010-01-03')).overlaps(Date.valueOf('2010-01-02'), Date.valueOf('2010-01-04'))
 
 // The INTERVAL tuples version
-tuple(Date.valueOf('2010-01-01'), new DayToSecond(2)).overlaps(Date.valueOf('2010-01-02'), new DayToSecond(2))]]></java>
+row(Date.valueOf('2010-01-01'), new DayToSecond(2)).overlaps(Date.valueOf('2010-01-02'), new DayToSecond(2))]]></java>
 
 									<h3>jOOQ's extensions to the standard</h3>
 									<p>
-										Unlike the standard (or any database implementing the standard), jOOQ also supports the OVERLAPS predicate for comparing arbitrary <reference id="tuples" title="tuples of degree 2"/>. For instance, (1, 3) OVERLAPS (2, 4) will yield true in jOOQ. This is simulated as such
+										Unlike the standard (or any database implementing the standard), jOOQ also supports the OVERLAPS predicate for comparing arbitrary <reference id="row-value-expressions" title="row vlaue expressions of degree 2"/>. For instance, (1, 3) OVERLAPS (2, 4) will yield true in jOOQ. This is simulated as such
 									</p>
 									
 <sql><![CDATA[-- This predicate
@@ -5280,7 +5280,7 @@ ResultSet fetchResultSet();]]></java>
 								<title>Record vs. TableRecord</title>
 								<content>
 									<p>
-										jOOQ understands that SQL is much more expressive than Java, when it comes to the declarative typing of <reference id="table-expressions" title="table expressions"/>. As a declarative language, SQL allows for creating ad-hoc tuples (records with indexed columns) and records (records with named columns). In Java, this is not possible to the same extent. Yet, still, sometimes you wish to use strongly typed records, when you know that you're selecting only from a single table
+										jOOQ understands that SQL is much more expressive than Java, when it comes to the declarative typing of <reference id="table-expressions" title="table expressions"/>. As a declarative language, SQL allows for creating ad-hoc row value expressions (records with indexed columns) and records (records with named columns). In Java, this is not possible to the same extent. Yet, still, sometimes you wish to use strongly typed records, when you know that you're selecting only from a single table
 									</p>
 									
 									<h3>Fetching strongly or weakly typed records</h3>
@@ -5304,65 +5304,6 @@ System.out.println("Published in: " + book.getPublishedIn());]]></java>
                    						<li><reference id="group-by-clause" title="The GROUP BY clause"/></li>
                    						<li><reference id="having-clause" title="The HAVING clause"/></li>
                    					</ul>		
-                   												
-									<h3>Scala's tuple classes</h3>
-									<p>
-										With the introduction of generics in Java 5, it is possible in principle, to pre-define a set of tuple types. This is what Scala does. In essence, tuple types look something like this:
-									</p>
-									
-<java><![CDATA[// Tuple with arity 1
-public interface Tuple1<T1> extends Tuple {
-    T1 get1(); void set1(T1 t1);
-}
-
-// Tuple with arity 2
-public interface Tuple2<T1, T2> extends Tuple {
-    T1 get1(); void set1(T1 t1);
-    T2 get2(); void set2(T2 t2);
-}
-
-// Tuple with arity 3
-public interface Tuple3<T1, T2, T3> extends Tuple {
-    T1 get1(); void set1(T1 t1);
-    T2 get2(); void set2(T2 t2);
-    T3 get3(); void set3(T3 t3);
-}
-
-// Fictional sample application with Java:
-for (Tuple<Integer, String, Date>> tuple : create
-        .select(BOOK.ID, BOOK.TITLE, BOOK.PUBLICATION_DATE)
-        .from(BOOK)
-        .orderBy(BOOK.ID)
-        .fetch()) {
-
-    Integer id           = tuple.get1();
-    String title         = tuple.get2();
-    Date publicationDate = tuple.get3();
-}
-
-// Fictional sample application with Scala:
-for (tuple <- create
-              select (BOOK.ID, BOOK.TITLE, BOOK.PUBLICATION_DATE)
-              from BOOK
-              orderBy BOOK.ID
-              fetch) {
-
-    val id              = tuple._1; // Type is Int
-    val title           = tuple._2; // Type is String
-    val publicationDate = tuple._3; // Type is Date
-}]]></java>
-
-									<p>
-										It is worth mentioning that Scala is much stronger in inferring types than Java. Yet still, this becomes quickly impracticable as
-									</p>
-									<ul>
-										<li>We will run out of pre-defined tuple types for large arities</li>
-										<li>Tuples are not as expressive as records (named tuples)</li>
-										<li>With Java's weak type inference (no val/var keywords), tuples quickly become very verbose in Java</li>
-									</ul>
-									<p>
-										For these reasons jOOQ does not support generic tuples.
-									</p>
 								</content>
 							</section>
 

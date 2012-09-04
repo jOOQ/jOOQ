@@ -60,7 +60,7 @@ import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
-import org.jooq.test.jOOQMySQLTestSchemaRewrite;
+import org.jooq.test.MySQLTestSchemaRewrite;
 
 import org.junit.Test;
 
@@ -214,7 +214,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             case MYSQL:
 
                 // But not when the schema is already re-written
-                if (delegate.getClass() == jOOQMySQLTestSchemaRewrite.class) {
+                if (delegate.getClass() == MySQLTestSchemaRewrite.class) {
                     log.info("SKIPPING", "Schema mapping test");
                     return;
                 }

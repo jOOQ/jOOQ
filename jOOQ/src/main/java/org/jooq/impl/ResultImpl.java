@@ -1259,7 +1259,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     public final String formatXML() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-1.6.2.xsd\">");
+        sb.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-2.6.0.xsd\">");
         sb.append("<fields>");
 
         for (Field<?> field : getFields()) {

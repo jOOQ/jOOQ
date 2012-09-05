@@ -50,6 +50,7 @@ import org.jooq.RenderContext;
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPart implements AliasProvider<T> {
 
     private static final long serialVersionUID = -2456848365524191614L;

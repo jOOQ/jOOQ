@@ -41,7 +41,10 @@ package org.jooq;
  *
  * @param <Z> The self-binding alias provider subtype
  * @author Lukas Eder
+ * @deprecated - 2.6.0 [#1800] - This marker interface will be removed in future
+ *             versions of jOOQ
  */
+@Deprecated
 public interface AliasProvider<Z extends AliasProvider<Z>> extends QueryPart {
 
     /**

@@ -86,10 +86,6 @@ public class GenerationTool {
 
     private static final JooqLogger log = JooqLogger.getLogger(GenerationTool.class);
 
-	/**
-	 * @param args
-	 * @throws Exception
-	 */
 	public static void main(String[] args) throws Exception {
 		if (args.length < 1) {
 			error();

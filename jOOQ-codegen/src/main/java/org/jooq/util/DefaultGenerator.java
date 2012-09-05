@@ -1520,14 +1520,20 @@ public class DefaultGenerator extends AbstractGenerator {
     }
 
     protected void generateTable(SchemaDefinition schema, TableDefinition table) {
-        log.info("Generating table", strategy.getFileName(table));
+        UniqueKeyDefinition mainKey = table.getMainUniqueKey();
+
+        log.info("Generating table", strategy.getFileName(table) +
+            " [input=" + table.getInputName() +
+            ", output=" + table.getOutputName() +
+            ", pk=" + (mainKey != null ? mainKey.getName() : "N/A") +
+            "]");
 
         GenerationWriter out = new GenerationWriter(strategy.getFile(table));
         printHeader(out, table);
         printClassJavadoc(out, table);
 
         Class<?> baseClass;
-        if (generateRelations() && table.getMainUniqueKey() != null) {
+        if (generateRelations() && mainKey != null) {
             baseClass = UpdatableTableImpl.class;
         } else {
             baseClass = TableImpl.class;
@@ -1621,8 +1627,6 @@ public class DefaultGenerator extends AbstractGenerator {
 
                 out.println("\t}");
             }
-
-            UniqueKeyDefinition mainKey = table.getMainUniqueKey();
 
             // The primary / main unique key
             if (mainKey != null) {

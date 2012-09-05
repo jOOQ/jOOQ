@@ -65,6 +65,7 @@ import org.jooq.util.oracle.OracleFactory;
  * @param <T> The field type
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<Field<T>> {
 
     // ------------------------------------------------------------------------

@@ -77,6 +77,16 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
     Class<? extends R> getRecordType();
 
     /**
+     * Create an alias for this table
+     *
+     * @param alias The alias name
+     * @return The table alias
+     */
+    @Override
+    @Support
+    Table<R> as(String alias);
+
+    /**
      * Retrieve the table's <code>IDENTITY</code> information, if available.
      * <p>
      * With SQL:2003, the concept of <code>IDENTITY</code> columns was

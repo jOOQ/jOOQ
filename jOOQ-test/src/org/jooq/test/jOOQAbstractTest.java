@@ -838,6 +838,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testPlainSQLAndComments() throws Exception {
+        new PlainSQLTests(this).testPlainSQLAndComments();
+    }
+
+    @Test
     public void testPlainSQLCRUD() throws Exception {
         new PlainSQLTests(this).testPlainSQLCRUD();
     }

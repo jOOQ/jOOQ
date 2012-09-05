@@ -1060,6 +1060,36 @@ public class BasicTest {
     }
 
     @Test
+    public void testPlainSQLComments() throws Exception {
+        Field<?> f = field(
+            "-- comment ? '\n" +
+            "/* another comment ? '\n" +
+            "   continuing -- */" +
+            "a bind value : ? /* a comment : ? */ another bind value : ?", "a", "b");
+
+        assertEquals(
+            "-- comment ? '\n" +
+            "/* another comment ? '\n" +
+            "   continuing -- */" +
+            "a bind value : 'a' /* a comment : ? */ another bind value : 'b'", r_refI().render(f));
+        assertEquals(
+            "-- comment ? '\n" +
+            "/* another comment ? '\n" +
+            "   continuing -- */" +
+            "a bind value : ? /* a comment : ? */ another bind value : ?", r_ref().render(f));
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setString(1, "a");
+            oneOf(statement).setString(2, "b");
+        }});
+
+        int i = b_ref().bind(f).peekIndex();
+        assertEquals(3, i);
+
+        context.assertIsSatisfied();
+    }
+
+    @Test
     public void testPlainSQLField() throws Exception {
         Field<?> f1 = field("DECODE(TABLE1.ID, 1, 'a', 'b')");
         Field<?> f2 = field("DECODE(TABLE1.ID, 1, ?, ?)", "a", "b");

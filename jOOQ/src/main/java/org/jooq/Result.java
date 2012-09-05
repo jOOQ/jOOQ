@@ -1754,7 +1754,10 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Get a simple formatted representation of this result as a JSON array of
      * array. The format is the following: <code><pre>
-     * {"fields":["field-1","field-2",...,"field-n"],
+     * {"fields":[{"name":"field-1","type":"type-1"},
+     *            {"name":"field-2","type":"type-2"},
+     *            ...,
+     *            {"name":"field-n","type":"type-n"}],
      *  "records":[[value-1-1,value-1-2,...,value-1-n],
      *             [value-2-1,value-2-2,...,value-2-n]]}
      * </pre></code>
@@ -1767,7 +1770,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * Get this result formatted as XML
      *
      * @see <a
-     *      href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>
+     *      href="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">http://www.jooq.org/xsd/jooq-export-2.6.0.xsd</a>
      */
     String formatXML();
 
@@ -1784,7 +1787,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @see #formatXML()
      * @see <a
-     *      href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>
+     *      href="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">http://www.jooq.org/xsd/jooq-export-2.6.0.xsd</a>
      */
     Document intoXML();
 

@@ -6160,11 +6160,11 @@ String xml = create.selectFrom(BOOK).fetch().formatXML();</java>
 										The above query will result in an XML document looking like the following one:
 									</p>
 
-<xml><![CDATA[<result xmlns="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">
+<xml><![CDATA[<result xmlns="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">
   <fields>
-    <field name="ID"/>
-    <field name="AUTHOR_ID"/>
-    <field name="TITLE"/>
+    <field name="ID" type="INTEGER"/>
+    <field name="AUTHOR_ID" type="INTEGER"/>
+    <field name="TITLE" type="VARCHAR"/>
   </fields>
   <records>
     <record>
@@ -6234,8 +6234,16 @@ String json = create.selectFrom(BOOK).fetch().formatJSON();</java>
 										The above query will result in a JSON document looking like the following one:
 									</p>
 
-<text>{fields:["ID","AUTHOR_ID","TITLE"],
- records:[[1,1,"1984"],[2,1,"Animal Farm"]]}</text>
+<text>{"fields":[{"name":"field-1","type":"type-1"},
+           {"name":"field-2","type":"type-2"},
+           ...,
+           {"name":"field-n","type":"type-n"}],
+ "records":[[value-1-1,value-1-2,...,value-1-n],
+            [value-2-1,value-2-2,...,value-2-n]]}</text>
+             
+             						<p>
+             							Note: This format has changed in jOOQ 2.6.0
+             						</p>
 								</content>
 							</section>
 

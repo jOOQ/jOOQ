@@ -248,7 +248,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         else {
             switch (configuration.getDialect()) {
                 case MYSQL:
-                    sql("`").sql(literal).sql("`");
+                    sql("`").sql(literal.replace("`", "``")).sql("`");
                     break;
 
                 case CUBRID:
@@ -260,7 +260,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 case INGRES:
                 case ORACLE:
                 case POSTGRES:
-                    sql('"').sql(literal).sql('"');
+                    sql('"').sql(literal.replace("\"", "\"\"")).sql('"');
                     break;
 
                 // SQLite is supposed to support all sorts of delimiters, but it
@@ -272,7 +272,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 case ASE:
                 case SQLSERVER:
                 case SYBASE:
-                    sql("[").sql(literal).sql("]");
+                    sql("[").sql(literal.replace("]", "]]")).sql("]");
                     break;
 
                 default:

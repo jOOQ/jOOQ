@@ -47,6 +47,7 @@ import static org.jooq.impl.Factory.decode;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.min;
@@ -56,6 +57,7 @@ import static org.jooq.impl.Factory.replace;
 import static org.jooq.impl.Factory.round;
 import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.sum;
+import static org.jooq.impl.Factory.tableByName;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.test.Table1.FIELD_DATE1;
@@ -93,6 +95,7 @@ import org.jooq.Merge;
 import org.jooq.Operator;
 import org.jooq.Param;
 import org.jooq.Query;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Row1;
 import org.jooq.Row2;
@@ -955,8 +958,8 @@ public class BasicTest {
 
         // [#1771] Negated combined conditions shouldn't render extra parentheses
         Condition c = not(val(1).eq(1).and(val(2).eq(2)));
-        assertEquals("not(1 = 1 and 2 = 2)", r_refI().render(c));
-        assertEquals("not(? = ? and ? = ?)", r_ref().render(c));
+        assertEquals("not((1 = 1 and 2 = 2))", r_refI().render(c));
+        assertEquals("not((? = ? and ? = ?))", r_ref().render(c));
     }
 
     @Test
@@ -976,6 +979,17 @@ public class BasicTest {
         Condition c4 = FIELD_NAME1.notLike("%a%", '!');
         assertEquals("\"TABLE1\".\"NAME1\" not like '%a%' escape '!'", r_refI().render(c4));
         assertEquals("\"TABLE1\".\"NAME1\" not like ? escape '!'", r_ref().render(c4));
+    }
+
+    @Test
+    public void testQueryPartByName() throws Exception {
+        Field<Object> field = fieldByName("A", "b", "';\"");
+        Table<Record> table = tableByName("A", "b", "';\"");
+
+        assertEquals("\"A\".\"b\".\"';\"\"\"", r_ref().render(field));
+        assertEquals("\"A\".\"b\".\"';\"\"\"", r_refI().render(field));
+        assertEquals("\"A\".\"b\".\"';\"\"\"", r_ref().render(table));
+        assertEquals("\"A\".\"b\".\"';\"\"\"", r_refI().render(table));
     }
 
     @Test

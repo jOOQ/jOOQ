@@ -49,9 +49,15 @@ import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Select;
+import org.jooq.SelectQuery;
 import org.jooq.Table;
 
 /**
+ * This class serves as a base class for <code>SelectImpl</code> and
+ * <code>SimpleSelectImpl</code>, the two classes that implement the
+ * <code>SELECT</code> DSL API. It delegates all calls of the {@link Select} API
+ * to an underlying {@link Select} (e.g. a non-DSL {@link SelectQuery})
+ *
  * @author Lukas Eder
  */
 abstract class AbstractDelegatingSelect<R extends Record>

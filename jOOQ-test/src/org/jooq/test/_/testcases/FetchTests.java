@@ -883,6 +883,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testFetchIntoTables() throws Exception {
+        Result<Record> result =
+        create().select()
+                .from(TBook())
+                .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        Result<A> a = result.into(TAuthor());
+        Result<B> b = result.into(TBook());
+
+        assertEquals(4, a.size());
+        assertEquals(4, b.size());
+
+        assertEquals(BOOK_AUTHOR_IDS, a.getValues(TAuthor_ID()));
+        assertEquals(BOOK_FIRST_NAMES, a.getValues(TAuthor_FIRST_NAME()));
+        assertEquals(BOOK_LAST_NAMES, a.getValues(TAuthor_LAST_NAME()));
+        assertTrue(TAuthor().getRecordType().isAssignableFrom(a.get(0).getClass()));
+
+        assertEquals(BOOK_IDS, b.getValues(TBook_ID()));
+        assertEquals(BOOK_TITLES, b.getValues(TBook_TITLE()));
+        assertTrue(TBook().getRecordType().isAssignableFrom(a.get(0).getClass()));
+    }
+
+    @Test
     public void testFetchIntoCustomTable() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere

@@ -57,6 +57,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -1434,6 +1435,25 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             }
 
             result.add(v);
+        }
+
+        return map;
+    }
+
+    @Override
+    public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
+        Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
+
+        for (R record : this) {
+            K keyVal = record.getValue(key);
+
+            List<E> list = map.get(keyVal);
+            if (list == null) {
+                list = new LinkedList<E>();
+                map.put(keyVal, list);
+            }
+
+            list.add(record.into(type));
         }
 
         return map;

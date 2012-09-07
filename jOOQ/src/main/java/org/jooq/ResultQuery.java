@@ -731,6 +731,22 @@ public interface ResultQuery<R extends Record> extends Query {
     <H extends RecordHandler<R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
+     * Return a {@link Map} with results grouped by the given key and mapped
+     * into the given entity type.
+     *
+     * @param <K> The key's generic field type
+     * @param <E> The generic entity type.
+     * @param key The key field.
+     * @param type The entity type.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoGroups(Field, Class)
+     */
+    <K, E> Map<K, List<E>> fetchIntoGroups(Field<K> key, Class<? extends E> type) throws DataAccessException,
+        MappingException;
+
+    /**
      * Fetch results asynchronously.
      * <p>
      * This method wraps fetching of records in a

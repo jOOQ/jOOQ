@@ -793,6 +793,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchIntoGroups() throws Exception {
+        new FetchTests(this).testFetchIntoGroups();
+    }
+
+    @Test
     public void testDAOMethods() throws Exception {
         new DaoTests(this).testDAOMethods();
     }

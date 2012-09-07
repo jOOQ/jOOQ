@@ -1879,11 +1879,9 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * This is the same as calling <code>into(Object[].class)</code>
      *
      * @return This result as an array of arrays
-     * @throws MappingException wrapping any conversion exception that might
-     *             have occurred while mapping records
      * @see Record#intoArray()
      */
-    Object[][] intoArray() throws MappingException;
+    Object[][] intoArray();
 
     /**
      * Map resulting records onto a custom type.

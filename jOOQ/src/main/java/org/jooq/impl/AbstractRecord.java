@@ -54,7 +54,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -66,6 +65,7 @@ import org.jooq.Converter;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.exception.InvalidResultException;
@@ -236,7 +236,9 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " [values=" + Arrays.asList(getValues()) + "]";
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(getConfiguration(), fields);
+        result.add(this);
+        return result.toString();
     }
 
     @Override

@@ -1226,11 +1226,20 @@ public interface Record extends FieldProvider, Store<Object> {
     <E> E into(E object) throws MappingException;
 
     /**
-     * Map resulting records onto a custom record type. The mapping algorithm is
-     * this: <h3>jOOQ will map <code>Record</code> values by equal field names:</h3>
-     * If a field's value for {@link Field#getName()} is <code>MY_field</code>
-     * (case-sensitive!), then there must be a field in <code>table</code> with
-     * the exact same name. <h3>Other restrictions</h3>
+     * Map resulting records onto a custom record type.
+     * <p>
+     * The mapping algorithm is this:
+     * <h3>jOOQ will map <code>Record</code> values by equal field names:</h3>
+     * <ul>
+     * <li>For every field in the <code>table</code> argument with
+     * {@link Field#getName()} <code>"MY_field"</code> (case-sensitive!), a
+     * corresponding field with the same name in this record will be searched.</li>
+     * <li>If several fields in this record share the same
+     * {@link Field#getName()}, then the first one returning true on
+     * {@link Field#equals(Object)} will be returned. (e.g. qualified field
+     * names match)</li>
+     * </ul>
+     * <h3>Other restrictions</h3>
      * <ul>
      * <li>{@link Table#getRecordType()} must return a class of type
      * {@link TableRecord}, which must provide a default constructor. Non-public

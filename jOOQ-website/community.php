@@ -31,9 +31,10 @@ worth mentioning (in alphabetical order)
     <li>Christopher Klewes: Maven integration</li>
     <li>Espen Stromsnes: DB2, H2, Sybase, and HSQLDB integrations</li>
     <li>Florian Adler: jOOQ-minuteproject contribution</li>
+    <li>Ivan Dugic: Various GitHub ticket contributions</li>
     <li>Lukas Eder: Project lead</li>
     <li>Rakesh Waghela: Spreading the news</li>
-    <li>Robin Stocker: Git and GitHub support</li>
+    <li>Robin Stocker: Git, GitHub, and Scala support</li>
     <li>Sander Plas: jOOQ-codegen-maven, jOOQ-wicket contribution</li>
     <li>Sergey Epik: jOOQ-spring contribution</li>
     <li>Sugiharto Lim: Firebird integration</li>

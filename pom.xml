@@ -77,6 +77,13 @@
             </roles>
         </contributor>
         <contributor>
+        	<name>Ivan Dugic</name>
+        	<email>idugic@gmail.com</email>
+        	<roles>
+        		<role>core-implementations</role>
+        	</roles>
+        </contributor>
+        <contributor>
             <name>Peter Ertl</name>
             <roles>
                 <role>maven-support</role>
@@ -87,6 +94,7 @@
             <email>robin@nibor.org</email>
             <roles>
                 <role>git-support</role>
+                <role>scala-support</role>
             </roles>
         </contributor>
         <contributor>

@@ -904,7 +904,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         assertEquals(BOOK_IDS, b.getValues(TBook_ID()));
         assertEquals(BOOK_TITLES, b.getValues(TBook_TITLE()));
-        assertTrue(TBook().getRecordType().isAssignableFrom(a.get(0).getClass()));
+        assertTrue(TBook().getRecordType().isAssignableFrom(b.get(0).getClass()));
     }
 
     @Test

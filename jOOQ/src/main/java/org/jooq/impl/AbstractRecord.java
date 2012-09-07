@@ -714,10 +714,10 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         try {
             R result = Util.newRecord(table, getConfiguration());
 
-            for (Field<?> sourceField : getFields()) {
-                Field<?> targetField = result.getField(sourceField);
+            for (Field<?> targetField : table.getFields()) {
+                Field<?> sourceField = getField(targetField);
 
-                if (targetField != null) {
+                if (sourceField != null) {
                     Util.setValue(result, targetField, this, sourceField);
                 }
             }

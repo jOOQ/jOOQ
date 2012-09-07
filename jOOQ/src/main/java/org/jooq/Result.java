@@ -1864,6 +1864,20 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value);
 
     /**
+     * Return a {@link Map} with results grouped by the given key and mapped
+     * into the given entity type.
+     * <p>
+     *
+     * @param <K> The key's generic field type
+     * @param <E> The generic entity type.
+     * @param key The key field.
+     * @param type The entity type.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     */
+    <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) throws MappingException;
+
+    /**
      * Convert this result into an array of arrays
      * <p>
      * The resulting array has the same number of first-dimension elements as

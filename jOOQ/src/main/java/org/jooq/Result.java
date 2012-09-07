@@ -1884,6 +1884,109 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     Object[][] intoArray();
 
     /**
+     * Return all values for a field index from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(fieldIndex)[recordIndex]</pre></code>
+     *
+     * @return The resulting values. This may be an array type more concrete
+     *         than <code>Object[]</code>, depending on whether jOOQ has any
+     *         knowledge about <code>fieldIndex</code>'s actual type.
+     * @see #getValues(int)
+     */
+    Object[] intoArray(int fieldIndex);
+
+    /**
+     * Return all values for a field index from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(fieldIndex)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @see #getValues(int, Class)
+     */
+    <T> T[] intoArray(int fieldIndex, Class<? extends T> type);
+
+    /**
+     * Return all values for a field index from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(fieldIndex)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @see #getValues(int, Converter)
+     */
+    <U> U[] intoArray(int fieldIndex, Converter<?, U> converter);
+
+    /**
+     * Return all values for a field name from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     *
+     * @return The resulting values. This may be an array type more concrete
+     *         than <code>Object[]</code>, depending on whether jOOQ has any
+     *         knowledge about <code>fieldName</code>'s actual type.
+     * @see #getValues(String)
+     */
+    Object[] intoArray(String fieldName);
+
+    /**
+     * Return all values for a field name from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @see #getValues(String, Class)
+     */
+    <T> T[] intoArray(String fieldName, Class<? extends T> type);
+
+    /**
+     * Return all values for a field name from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @see #getValues(String, Converter)
+     */
+    <U> U[] intoArray(String fieldName, Converter<?, U> converter);
+
+    /**
+     * Return all values for a field from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(field)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @see #getValues(Field)
+     */
+    <T> T[] intoArray(Field<T> field);
+
+    /**
+     * Return all values for a field from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(field)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @see #getValues(Field, Class)
+     */
+    <T> T[] intoArray(Field<?> field, Class<? extends T> type);
+
+    /**
+     * Return all values for a field from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(field)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @see #getValues(Field, Converter)
+     */
+    <T, U> U[] intoArray(Field<T> field, Converter<? super T, U> converter);
+
+    /**
      * Map resulting records onto a custom type.
      * <p>
      * This is the same as calling <code>record.into(type)</code> on every

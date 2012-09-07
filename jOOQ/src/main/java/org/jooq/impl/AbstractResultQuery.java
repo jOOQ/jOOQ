@@ -43,7 +43,6 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.SQLSERVER;
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -444,60 +443,47 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Object[] fetchArray(int fieldIndex) {
-        Result<R> fetch = fetch();
-        Class<?> type = fetch.getField(fieldIndex).getType();
-        List<?> list = fetch.getValues(fieldIndex);
-        return list.toArray((Object[]) Array.newInstance(type, list.size()));
+        return fetch().intoArray(fieldIndex);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) {
-        return (T[]) Convert.convertArray(fetchArray(fieldIndex), type);
+        return fetch().intoArray(fieldIndex, type);
     }
 
-    @SuppressWarnings("cast")
     @Override
     public final <U> U[] fetchArray(int fieldIndex, Converter<?, U> converter) {
-        return (U[]) Convert.convertArray(fetchArray(fieldIndex), converter);
+        return fetch().intoArray(fieldIndex, converter);
     }
 
     @Override
     public final Object[] fetchArray(String fieldName) {
-        Result<R> fetch = fetch();
-        Class<?> type = fetch.getField(fieldName).getType();
-        List<?> list = fetch.getValues(fieldName);
-        return list.toArray((Object[]) Array.newInstance(type, list.size()));
+        return fetch().intoArray(fieldName);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <T> T[] fetchArray(String fieldName, Class<? extends T> type) {
-        return (T[]) Convert.convertArray(fetchArray(fieldName), type);
+        return fetch().intoArray(fieldName, type);
     }
 
-    @SuppressWarnings("cast")
     @Override
     public final <U> U[] fetchArray(String fieldName, Converter<?, U> converter) {
-        return (U[]) Convert.convertArray(fetchArray(fieldName), converter);
+        return fetch().intoArray(fieldName, converter);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <T> T[] fetchArray(Field<T> field) {
-        return fetch(field).toArray((T[]) Array.newInstance(field.getType(), 0));
+        return fetch().intoArray(field);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <T> T[] fetchArray(Field<?> field, Class<? extends T> type) {
-        return (T[]) Convert.convertArray(fetchArray(field), type);
+        return fetch().intoArray(field, type);
     }
 
-    @SuppressWarnings("cast")
     @Override
     public final <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) {
-        return (U[]) Convert.convertArray(fetchArray(field), converter);
+        return fetch().intoArray(field, converter);
     }
 
     /**

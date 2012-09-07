@@ -80,6 +80,7 @@ import org.jooq.DataType;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -648,80 +649,80 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         // .fetchArray(..., Class)
         // ------------------
-        assertEquals(
-            Arrays.asList((byte) 1, (byte) 2),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Byte.class)));
-        assertEquals(
-            Arrays.asList((short) 1, (short) 2),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Short.class)));
-        assertEquals(
-            Arrays.asList(1, 2),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Integer.class)));
-        assertEquals(
-            Arrays.asList(1L, 2L),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Long.class)));
-        assertEquals(
-            Arrays.asList(ubyte((byte) 1), ubyte((byte) 2)),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, UByte.class)));
-        assertEquals(
-            Arrays.asList(ushort((short) 1), ushort((short) 2)),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, UShort.class)));
-        assertEquals(
-            Arrays.asList(uint(1), uint(2)),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, UInteger.class)));
-        assertEquals(
-            Arrays.asList(ulong(1L), ulong(2L)),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, ULong.class)));
-        assertEquals(
-            Arrays.asList(1.0f, 2.0f),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Float.class)));
-        assertEquals(
-            Arrays.asList(1.0, 2.0),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Double.class)));
-        assertEquals(
-            Arrays.asList(new BigInteger("1"), new BigInteger("2")),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, BigInteger.class)));
-        assertEquals(
-            Arrays.asList(new BigDecimal("1"), new BigDecimal("2")),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, BigDecimal.class)));
+        testConversionFetchArrayByIndex(
+            Byte.class, Arrays.asList((byte) 1, (byte) 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByIndex(
+            Short.class, Arrays.asList((short) 1, (short) 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByIndex(
+            Integer.class, Arrays.asList(1, 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByIndex(
+            Long.class, Arrays.asList(1L, 2L),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByIndex(
+            UByte.class, Arrays.asList(ubyte((byte) 1), ubyte((byte) 2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByIndex(
+            UShort.class, Arrays.asList(ushort((short) 1), ushort((short) 2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByIndex(
+            UInteger.class, Arrays.asList(uint(1), uint(2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByIndex(
+            ULong.class, Arrays.asList(ulong(1L), ulong(2L)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByIndex(
+            Float.class, Arrays.asList(1.0f, 2.0f),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByIndex(
+            Double.class, Arrays.asList(1.0, 2.0),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByIndex(
+            BigInteger.class, Arrays.asList(new BigInteger("1"), new BigInteger("2")),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByIndex(
+            BigDecimal.class, Arrays.asList(new BigDecimal("1"), new BigDecimal("2")),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
 
 
-        assertEquals(
-            Arrays.asList((byte) 1, (byte) 2),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Byte.class)));
-        assertEquals(
-            Arrays.asList((short) 1, (short) 2),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Short.class)));
-        assertEquals(
-            Arrays.asList(1, 2),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Integer.class)));
-        assertEquals(
-            Arrays.asList(1L, 2L),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Long.class)));
-        assertEquals(
-            Arrays.asList(ubyte((byte) 1), ubyte((byte) 2)),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), UByte.class)));
-        assertEquals(
-            Arrays.asList(ushort((short) 1), ushort((short) 2)),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), UShort.class)));
-        assertEquals(
-            Arrays.asList(uint(1), uint(2)),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), UInteger.class)));
-        assertEquals(
-            Arrays.asList(ulong(1L), ulong(2L)),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), ULong.class)));
-        assertEquals(
-            Arrays.asList(1.0f, 2.0f),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Float.class)));
-        assertEquals(
-            Arrays.asList(1.0, 2.0),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Double.class)));
-        assertEquals(
-            Arrays.asList(new BigInteger("1"), new BigInteger("2")),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), BigInteger.class)));
-        assertEquals(
-            Arrays.asList(new BigDecimal("1"), new BigDecimal("2")),
-            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), BigDecimal.class)));
+        testConversionFetchArrayByName(
+            Byte.class, Arrays.asList((byte) 1, (byte) 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByName(
+            Short.class, Arrays.asList((short) 1, (short) 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByName(
+            Integer.class, Arrays.asList(1, 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByName(
+            Long.class, Arrays.asList(1L, 2L),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByName(
+            UByte.class, Arrays.asList(ubyte((byte) 1), ubyte((byte) 2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByName(
+            UShort.class, Arrays.asList(ushort((short) 1), ushort((short) 2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByName(
+            UInteger.class, Arrays.asList(uint(1), uint(2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByName(
+            ULong.class, Arrays.asList(ulong(1L), ulong(2L)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByName(
+            Float.class, Arrays.asList(1.0f, 2.0f),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByName(
+            Double.class, Arrays.asList(1.0, 2.0),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByName(
+            BigInteger.class, Arrays.asList(new BigInteger("1"), new BigInteger("2")),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
+        testConversionFetchArrayByName(
+            BigDecimal.class, Arrays.asList(new BigDecimal("1"), new BigDecimal("2")),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()));
 
 
         // .fetchOne(..., Class)
@@ -801,6 +802,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             new BigDecimal("1"),
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), BigDecimal.class));
 
+    }
+
+    private <Z> void testConversionFetchArrayByIndex(Class<Z> type, List<Z> expected, ResultQuery<?> select) {
+        assertEquals(expected, Arrays.asList(select.fetchArray(0, type)));
+        assertEquals(expected, Arrays.asList(select.fetch().intoArray(0, type)));
+    }
+
+    private <Z> void testConversionFetchArrayByName(Class<Z> type, List<Z> expected, ResultQuery<?> select) {
+        assertEquals(expected, Arrays.asList(select.fetchArray(TAuthor_ID().getName(), type)));
+        assertEquals(expected, Arrays.asList(select.fetch().intoArray(TAuthor_ID().getName(), type)));
     }
 
     @Test

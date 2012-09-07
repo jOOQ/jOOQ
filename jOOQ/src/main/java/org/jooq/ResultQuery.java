@@ -560,6 +560,7 @@ public interface ResultQuery<R extends Record> extends Query {
      *         than <code>Object[]</code>, depending on whether jOOQ has any
      *         knowledge about <code>fieldIndex</code>'s actual type.
      * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(int)
      */
     Object[] fetchArray(int fieldIndex) throws DataAccessException;
 
@@ -571,6 +572,8 @@ public interface ResultQuery<R extends Record> extends Query {
      * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
      *
      * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(int, Class)
      */
     <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) throws DataAccessException;
 
@@ -582,6 +585,8 @@ public interface ResultQuery<R extends Record> extends Query {
      * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
      *
      * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(int, Converter)
      */
     <U> U[] fetchArray(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
 
@@ -596,6 +601,7 @@ public interface ResultQuery<R extends Record> extends Query {
      *         than <code>Object[]</code>, depending on whether jOOQ has any
      *         knowledge about <code>fieldName</code>'s actual type.
      * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(String)
      */
     Object[] fetchArray(String fieldName) throws DataAccessException;
 
@@ -608,8 +614,9 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting values.
      * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(String, Converter)
      */
-    <U> U[] fetchArray(String fieldName, Converter<?, U> converter) throws DataAccessException;
+    <T> T[] fetchArray(String fieldName, Class<? extends T> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -620,8 +627,9 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting values.
      * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(String, Class)
      */
-    <T> T[] fetchArray(String fieldName, Class<? extends T> type) throws DataAccessException;
+    <U> U[] fetchArray(String fieldName, Converter<?, U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated
@@ -632,6 +640,7 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting values.
      * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Field)
      */
     <T> T[] fetchArray(Field<T> field) throws DataAccessException;
 
@@ -644,6 +653,7 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting values.
      * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Field, Class)
      */
     <T> T[] fetchArray(Field<?> field, Class<? extends T> type) throws DataAccessException;
 
@@ -656,6 +666,7 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting values.
      * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Field, Converter)
      */
     <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
 

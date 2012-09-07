@@ -42,6 +42,7 @@ import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.StringUtils.rightPad;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
@@ -1448,6 +1449,62 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
 
         return array;
+    }
+
+    @Override
+    public final Object[] intoArray(int fieldIndex) {
+        Class<?> type = getField(fieldIndex).getType();
+        List<?> list = getValues(fieldIndex);
+        return list.toArray((Object[]) Array.newInstance(type, list.size()));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> T[] intoArray(int fieldIndex, Class<? extends T> type) {
+        return (T[]) Convert.convertArray(intoArray(fieldIndex), type);
+    }
+
+    @SuppressWarnings("cast")
+    @Override
+    public final <U> U[] intoArray(int fieldIndex, Converter<?, U> converter) {
+        return (U[]) Convert.convertArray(intoArray(fieldIndex), converter);
+    }
+
+    @Override
+    public final Object[] intoArray(String fieldName) {
+        Class<?> type = getField(fieldName).getType();
+        List<?> list = getValues(fieldName);
+        return list.toArray((Object[]) Array.newInstance(type, list.size()));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> T[] intoArray(String fieldName, Class<? extends T> type) {
+        return (T[]) Convert.convertArray(intoArray(fieldName), type);
+    }
+
+    @SuppressWarnings("cast")
+    @Override
+    public final <U> U[] intoArray(String fieldName, Converter<?, U> converter) {
+        return (U[]) Convert.convertArray(intoArray(fieldName), converter);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> T[] intoArray(Field<T> field) {
+        return getValues(field).toArray((T[]) Array.newInstance(field.getType(), 0));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> T[] intoArray(Field<?> field, Class<? extends T> type) {
+        return (T[]) Convert.convertArray(intoArray(field), type);
+    }
+
+    @SuppressWarnings("cast")
+    @Override
+    public final <T, U> U[] intoArray(Field<T> field, Converter<? super T, U> converter) {
+        return (U[]) Convert.convertArray(intoArray(field), converter);
     }
 
     @Override

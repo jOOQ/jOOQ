@@ -545,6 +545,7 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray()
      */
     Object[][] fetchArrays() throws DataAccessException;
 

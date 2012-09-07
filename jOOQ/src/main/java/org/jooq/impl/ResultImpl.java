@@ -78,7 +78,6 @@ import org.jooq.Result;
 import org.jooq.Store;
 import org.jooq.Table;
 import org.jooq.exception.InvalidResultException;
-import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.json.JSONObject;
@@ -1440,7 +1439,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final Object[][] intoArray() throws MappingException {
+    public final Object[][] intoArray() {
         int size = size();
         Object[][] array = new Object[size][];
 

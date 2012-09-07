@@ -5129,13 +5129,6 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the median over a numeric field: median(field)
-     * <p>
-     * This is known to be supported in any of these RDBMS:
-     * <ul>
-     * <li>HSQLDB</li>
-     * <li>Oracle</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
      */
     @Support({ HSQLDB, ORACLE, SYBASE })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
@@ -5144,20 +5137,6 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the population standard deviation of a numeric field: stddev_pop(field)
-     * <p>
-     * This is known to be supported in any of these RDBMS:
-     * <ul>
-     * <li>DB2</li>
-     * <li>H2</li>
-     * <li>HSQLDB</li>
-     * <li>Ingres</li>
-     * <li>MySQL</li>
-     * <li>Oracle</li>
-     * <li>Postgres</li>
-     * <li>SQL Server (stdev)</li>
-     * <li>Sybase ASE</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
@@ -5166,20 +5145,6 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the sample standard deviation of a numeric field: stddev_samp(field)
-     * <p>
-     * This is known to be supported in any of these RDBMS:
-     * <ul>
-     * <li>DB2</li>
-     * <li>H2</li>
-     * <li>HSQLDB</li>
-     * <li>Ingres</li>
-     * <li>MySQL</li>
-     * <li>Oracle</li>
-     * <li>Postgres</li>
-     * <li>SQL Server (stdev)</li>
-     * <li>Sybase ASE</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
@@ -5188,20 +5153,6 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the population variance of a numeric field: var_pop(field)
-     * <p>
-     * This is known to be supported in any of these RDBMS:
-     * <ul>
-     * <li>DB2</li>
-     * <li>H2</li>
-     * <li>HSQLDB</li>
-     * <li>Ingres</li>
-     * <li>MySQL</li>
-     * <li>Oracle</li>
-     * <li>Postgres</li>
-     * <li>SQL Server (stdev)</li>
-     * <li>Sybase ASE</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
@@ -5210,22 +5161,145 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the sample variance of a numeric field: var_samp(field)
-     * <p>
-     * This is known to be supported in any of these RDBMS:
-     * <ul>
-     * <li>H2</li>
-     * <li>HSQLDB</li>
-     * <li>Ingres</li>
-     * <li>MySQL</li>
-     * <li>Oracle</li>
-     * <li>Postgres</li>
-     * <li>SQL Server (var)</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
+    }
+
+    /**
+     * Get the <code>REGR_SLOPE</code> linear regression function
+     * <p>
+     * The linear regression functions fit an ordinary-least-squares regression
+     * line to a set of number pairs. You can use them as both aggregate and
+     * window functions, where this is supported.
+     * <p>
+     * Note that {@link SQLDialect#DB2} does not support linear regression
+     * window functions.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    public static AggregateFunction<BigDecimal> regrSlope(Field<? extends Number> y, Field<? extends Number> x) {
+        return new Function<BigDecimal>("regr_slope", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+    }
+
+    /**
+     * Get the <code>REGR_INTERCEPT</code> linear regression function
+     * <p>
+     * The linear regression functions fit an ordinary-least-squares regression
+     * line to a set of number pairs. You can use them as both aggregate and
+     * window functions, where this is supported.
+     * <p>
+     * Note that {@link SQLDialect#DB2} does not support linear regression
+     * window functions.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    public static AggregateFunction<BigDecimal> regrIntercept(Field<? extends Number> y, Field<? extends Number> x) {
+        return new Function<BigDecimal>("regr_intercept", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+    }
+
+    /**
+     * Get the <code>REGR_COUNT</code> linear regression function
+     * <p>
+     * The linear regression functions fit an ordinary-least-squares regression
+     * line to a set of number pairs. You can use them as both aggregate and
+     * window functions, where this is supported.
+     * <p>
+     * Note that {@link SQLDialect#DB2} does not support linear regression
+     * window functions.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    public static AggregateFunction<BigDecimal> regrCount(Field<? extends Number> y, Field<? extends Number> x) {
+        return new Function<BigDecimal>("regr_count", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+    }
+
+    /**
+     * Get the <code>REGR_R2</code> linear regression function
+     * <p>
+     * The linear regression functions fit an ordinary-least-squares regression
+     * line to a set of number pairs. You can use them as both aggregate and
+     * window functions, where this is supported.
+     * <p>
+     * Note that {@link SQLDialect#DB2} does not support linear regression
+     * window functions.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    public static AggregateFunction<BigDecimal> regrR2(Field<? extends Number> y, Field<? extends Number> x) {
+        return new Function<BigDecimal>("regr_r2", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+    }
+
+    /**
+     * Get the <code>REGR_AVGX</code> linear regression function
+     * <p>
+     * The linear regression functions fit an ordinary-least-squares regression
+     * line to a set of number pairs. You can use them as both aggregate and
+     * window functions, where this is supported.
+     * <p>
+     * Note that {@link SQLDialect#DB2} does not support linear regression
+     * window functions.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    public static AggregateFunction<BigDecimal> regrAvgX(Field<? extends Number> y, Field<? extends Number> x) {
+        return new Function<BigDecimal>("regr_avgx", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+    }
+
+    /**
+     * Get the <code>REGR_AVGY</code> linear regression function
+     * <p>
+     * The linear regression functions fit an ordinary-least-squares regression
+     * line to a set of number pairs. You can use them as both aggregate and
+     * window functions, where this is supported.
+     * <p>
+     * Note that {@link SQLDialect#DB2} does not support linear regression
+     * window functions.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    public static AggregateFunction<BigDecimal> regrAvgY(Field<? extends Number> y, Field<? extends Number> x) {
+        return new Function<BigDecimal>("regr_avgy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+    }
+
+    /**
+     * Get the <code>REGR_SXX</code> linear regression function
+     * <p>
+     * The linear regression functions fit an ordinary-least-squares regression
+     * line to a set of number pairs. You can use them as both aggregate and
+     * window functions, where this is supported.
+     * <p>
+     * Note that {@link SQLDialect#DB2} does not support linear regression
+     * window functions.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    public static AggregateFunction<BigDecimal> regrSXX(Field<? extends Number> y, Field<? extends Number> x) {
+        return new Function<BigDecimal>("regr_sxx", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+    }
+
+    /**
+     * Get the <code>REGR_SYY</code> linear regression function
+     * <p>
+     * The linear regression functions fit an ordinary-least-squares regression
+     * line to a set of number pairs. You can use them as both aggregate and
+     * window functions, where this is supported.
+     * <p>
+     * Note that {@link SQLDialect#DB2} does not support linear regression
+     * window functions.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    public static AggregateFunction<BigDecimal> regrSYY(Field<? extends Number> y, Field<? extends Number> x) {
+        return new Function<BigDecimal>("regr_syy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+    }
+
+    /**
+     * Get the <code>REGR_SXY</code> linear regression function
+     * <p>
+     * The linear regression functions fit an ordinary-least-squares regression
+     * line to a set of number pairs. You can use them as both aggregate and
+     * window functions, where this is supported.
+     * <p>
+     * Note that {@link SQLDialect#DB2} does not support linear regression
+     * window functions.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    public static AggregateFunction<BigDecimal> regrSXY(Field<? extends Number> y, Field<? extends Number> x) {
+        return new Function<BigDecimal>("regr_sxy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
 
     /**

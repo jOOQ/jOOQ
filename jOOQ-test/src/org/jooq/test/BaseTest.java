@@ -40,6 +40,7 @@ import static org.jooq.tools.reflect.Reflect.on;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Time;
@@ -694,6 +695,17 @@ public abstract class BaseTest<
             Thread.sleep(millis);
         }
         catch (InterruptedException ignore) {}
+    }
+
+    /**
+     * Round all strings to a given scale, to avoid annoying floating point side-effects
+     */
+    protected static String[] roundStrings(int n, String... strings) {
+        for (int i = 0; i < strings.length; i++) {
+            strings[i] = "" + new BigDecimal(strings[i]).setScale(n, RoundingMode.HALF_UP);
+        }
+
+        return strings;
     }
 
     /**

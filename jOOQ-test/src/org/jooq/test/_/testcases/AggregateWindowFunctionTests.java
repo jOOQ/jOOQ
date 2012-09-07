@@ -69,6 +69,15 @@ import static org.jooq.impl.Factory.minDistinct;
 import static org.jooq.impl.Factory.ntile;
 import static org.jooq.impl.Factory.percentRank;
 import static org.jooq.impl.Factory.rank;
+import static org.jooq.impl.Factory.regrAvgX;
+import static org.jooq.impl.Factory.regrAvgY;
+import static org.jooq.impl.Factory.regrCount;
+import static org.jooq.impl.Factory.regrIntercept;
+import static org.jooq.impl.Factory.regrR2;
+import static org.jooq.impl.Factory.regrSXX;
+import static org.jooq.impl.Factory.regrSXY;
+import static org.jooq.impl.Factory.regrSYY;
+import static org.jooq.impl.Factory.regrSlope;
 import static org.jooq.impl.Factory.rowNumber;
 import static org.jooq.impl.Factory.stddevPop;
 import static org.jooq.impl.Factory.stddevSamp;
@@ -79,6 +88,7 @@ import static org.jooq.impl.Factory.varPop;
 import static org.jooq.impl.Factory.varSamp;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
@@ -276,6 +286,68 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                     .from(TBook())
                     .fetchOne(0, Integer.class));
         }
+    }
+
+    @Test
+    public void testLinearRegressionFunctions() throws Exception {
+        switch (getDialect()) {
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
+            case SQLITE:
+            case SQLSERVER:
+                log.info("SKIPPING", "Skipping linear regression function tests");
+                return;
+        }
+
+        // [#600] As aggregate functions
+        Record record =
+        create().select(
+                    regrAvgX(TBook_ID(), TBook_AUTHOR_ID()),
+                    regrAvgY(TBook_ID(), TBook_AUTHOR_ID()),
+                    regrCount(TBook_ID(), TBook_AUTHOR_ID()),
+                    regrIntercept(TBook_ID(), TBook_AUTHOR_ID()),
+                    regrR2(TBook_ID(), TBook_AUTHOR_ID()),
+                    regrSlope(TBook_ID(), TBook_AUTHOR_ID()),
+                    regrSXX(TBook_ID(), TBook_AUTHOR_ID()),
+                    regrSXY(TBook_ID(), TBook_AUTHOR_ID()),
+                    regrSYY(TBook_ID(), TBook_AUTHOR_ID()))
+                .from(TBook())
+                .fetchOne();
+
+        List<String> values = Arrays.asList("1.5", "2.5", "4.0", "-0.5", "0.8", "2.0", "1.0", "2.0", "5.0");
+        assertEquals(values, Arrays.asList(roundStrings(1, record.into(String[].class))));
+
+        switch (getDialect()) {
+            case DB2:
+                log.info("SKIPPING", "Skipping linear regression window function tests");
+                return;
+        }
+
+        // [#600] As window functions
+        Result<Record> result =
+        create().select(
+                    regrAvgX(TBook_ID(), TBook_AUTHOR_ID()).over(),
+                    regrAvgY(TBook_ID(), TBook_AUTHOR_ID()).over(),
+                    regrCount(TBook_ID(), TBook_AUTHOR_ID()).over(),
+                    regrIntercept(TBook_ID(), TBook_AUTHOR_ID()).over(),
+                    regrR2(TBook_ID(), TBook_AUTHOR_ID()).over(),
+                    regrSlope(TBook_ID(), TBook_AUTHOR_ID()).over(),
+                    regrSXX(TBook_ID(), TBook_AUTHOR_ID()).over(),
+                    regrSXY(TBook_ID(), TBook_AUTHOR_ID()).over(),
+                    regrSYY(TBook_ID(), TBook_AUTHOR_ID()).over())
+                .from(TBook())
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(values, Arrays.asList(roundStrings(1, result.get(0).into(String[].class))));
+        assertEquals(values, Arrays.asList(roundStrings(1, result.get(1).into(String[].class))));
+        assertEquals(values, Arrays.asList(roundStrings(1, result.get(2).into(String[].class))));
+        assertEquals(values, Arrays.asList(roundStrings(1, result.get(3).into(String[].class))));
     }
 
     @Test

@@ -1372,6 +1372,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCountDistinct() throws Exception {
+        new AggregateWindowFunctionTests(this).testCountDistinct();
+    }
+
+    @Test
+    public void testLinearRegressionFunctions() throws Exception {
+        new AggregateWindowFunctionTests(this).testLinearRegressionFunctions();
+    }
+
+    @Test
     public void testListAgg() throws Exception {
         new AggregateWindowFunctionTests(this).testListAgg();
     }

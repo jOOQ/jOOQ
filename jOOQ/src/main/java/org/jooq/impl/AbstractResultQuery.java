@@ -517,6 +517,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <K, E> Map<K, List<E>> fetchIntoGroups(Field<K> key, Class<? extends E> type) {
+        return fetch().intoGroups(key, type);
+    }
+
+    @Override
     public final FutureResult<R> fetchLater() {
         ExecutorService executor = newSingleThreadExecutor();
         Future<Result<R>> future = executor.submit(new ResultQueryCallable());

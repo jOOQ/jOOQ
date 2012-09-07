@@ -1500,4 +1500,44 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         }
         catch (SQLException expected) {}
     }
+
+    @Test
+    public void testFetchIntoGroups() throws Exception {
+
+        // Use generated POJOs as entities
+        Reflect book = on(TBook().getClass().getPackage().getName() + ".pojos." + TBook().getClass().getSimpleName());
+
+        // Group by BOOK.ID
+        Map<Integer, List<Object>> map = create().selectFrom(TBook()).orderBy(TBook_ID())
+            .fetchIntoGroups(TBook_ID(), (Class<?>) book.get());
+
+        assertEquals(4, map.size());
+        assertEquals(BOOK_IDS, new ArrayList<Integer>(map.keySet()));
+
+        for (Entry<Integer, List<Object>> entry : map.entrySet()) {
+            assertEquals(1, entry.getValue().size());
+            assertEquals(entry.getKey(), on(entry.getValue().get(0)).call("getId").get());
+        }
+
+        // Group by BOOK.AUTHOR_ID
+        map = create().selectFrom(TBook()).orderBy(TBook_ID())
+            .fetchIntoGroups(TBook_AUTHOR_ID(), (Class<?>) book.get());
+
+        assertEquals(2, map.size());
+        assertEquals(AUTHOR_IDS, new ArrayList<Integer>(map.keySet()));
+
+        Iterator<Entry<Integer, List<Object>>> it = map.entrySet().iterator();
+        Entry<Integer, List<Object>> entry21 = it.next();
+        assertEquals(2, entry21.getValue().size());
+        assertEquals(1, ((Integer) on(entry21.getValue().get(0)).call("getId").get()).intValue());
+        assertEquals(2, ((Integer) on(entry21.getValue().get(1)).call("getId").get()).intValue());
+
+        Entry<Integer, List<Object>> entry22 = it.next();
+        assertEquals(2, entry22.getValue().size());
+        assertEquals(3, ((Integer) on(entry22.getValue().get(0)).call("getId").get()).intValue());
+        assertEquals(4, ((Integer) on(entry22.getValue().get(1)).call("getId").get()).intValue());
+
+        assertFalse(it.hasNext());
+    }
+
 }

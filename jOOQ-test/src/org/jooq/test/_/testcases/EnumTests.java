@@ -55,8 +55,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.tools.reflect.Reflect;
-import org.jooq.tools.reflect.ReflectException;
 
 import org.junit.Test;
 
@@ -209,13 +207,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         // Conversion to custom POJOs
         // --------------------------------------------------------------------
-        try {
-            Reflect booleans = on(TBooleans().getClass().getPackage().getName() + ".pojos." + TBooleans().getClass().getSimpleName());
-
+        if (TBooleansPojo() == null) {
+            log.info("SKIPPING", "Generated POJO tests");
+        }
+        else {
             List<Object> b =
             create().selectFrom(TBooleans())
                     .orderBy(TBooleans_ID().asc())
-                    .fetchInto((Class<?>) booleans.get());
+                    .fetchInto(TBooleansPojo());
 
             assertEquals(2, b.size());
             assertEquals(1, on(b.get(0)).call("getId").get());
@@ -242,10 +241,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             assertEquals(Boolean_YN_UC.N, on(b.get(0)).call("getYNUc").get());
             assertEquals(Boolean_YN_UC.Y, on(b.get(1)).call("getYNUc").get());
         }
-        catch (ReflectException e) {
-            log.info("SKIPPING", "Generated POJO tests");
-        }
-
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })

@@ -378,6 +378,18 @@ public abstract class BaseTest<
         return delegate.TAuthorDao();
     }
 
+    protected Class<AP> TAuthorPojo() {
+        return delegate.TAuthorPojo();
+    }
+
+    protected Class<?> TBookPojo() {
+        return delegate.TBookPojo();
+    }
+
+    protected Class<?> TBooleansPojo() {
+        return delegate.TBooleansPojo();
+    }
+
     protected UpdatableTable<A> TAuthor() {
         return delegate.TAuthor();
     }

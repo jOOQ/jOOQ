@@ -40,42 +40,43 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 /**
  * @author Christopher Deckers
  */
 public class DebuggerRegistry {
 
-	private DebuggerRegistry() {}
+    private DebuggerRegistry() {}
 
-	private static final Object LOCK = new Object();
-	private static final List<Debugger> debuggerList = new ArrayList<Debugger>();
+    private static final Object         LOCK      = new Object();
+    private static final List<Debugger> debuggers = new ArrayList<Debugger>();
 
-	public static void addSqlQueryDebugger(Debugger sqlQueryDebugger) {
-		synchronized(LOCK) {
-			debuggerList.add(sqlQueryDebugger);
-		}
-	}
+    public static void add(Debugger sqlQueryDebugger) {
+        synchronized (LOCK) {
+            debuggers.add(sqlQueryDebugger);
+        }
+    }
 
-	public static void removeSqlQueryDebugger(Debugger sqlQueryDebugger) {
-		synchronized(LOCK) {
-			debuggerList.remove(sqlQueryDebugger);
-		}
-	}
+    public static void remove(Debugger sqlQueryDebugger) {
+        synchronized (LOCK) {
+            debuggers.remove(sqlQueryDebugger);
+        }
+    }
 
-	/*
-	 * @return an immutable list of all the debuggers currently registered.
-	 */
-	public static List<Debugger> getDebuggerList() {
-		synchronized(LOCK) {
-			if(debuggerList.isEmpty()) {
-				// No cost when no loggers
-				return Collections.emptyList();
-			}
-			// Small cost: copy collection and make it immutable.
-			// Generally, no more than one or two listeners in the list.
-			return Collections.unmodifiableList(new ArrayList<Debugger>(debuggerList));
-		}
-	}
+    /*
+     * @return an immutable list of all the debuggers currently registered.
+     */
+    public static List<Debugger> get() {
+        synchronized (LOCK) {
+
+            // No cost when no loggers
+            if (debuggers.isEmpty()) {
+                return Collections.emptyList();
+            }
+
+            // Small cost: copy collection and make it immutable.
+            // Generally, no more than one or two listeners in the list.
+            return Collections.unmodifiableList(new ArrayList<Debugger>(debuggers));
+        }
+    }
 
 }

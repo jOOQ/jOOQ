@@ -56,26 +56,26 @@ public class RemoteDebuggerServer {
         this(port, null);
     }
 
-	public RemoteDebuggerServer(final int port, final DatabaseDescriptor databaseDescriptor) {
+	public RemoteDebuggerServer(final int port, final DatabaseDescriptor descriptor) {
         try {
             synchronized(LOCK) {
                 serverSocket = CommunicationInterface.openServerCommunicationChannel(new CommunicationInterfaceFactory() {
                     @Override
                     public CommunicationInterface createCommunicationInterface(int port_) {
-                        final ServerDebugger serverDebugger = new ServerDebugger(databaseDescriptor);
-                        DebuggerCommmunicationInterface commmunicationInterface = new DebuggerCommmunicationInterface(serverDebugger, port_) {
+                        final ServerDebugger debugger = new ServerDebugger(descriptor);
+                        DebuggerCommmunicationInterface commmunicationInterface = new DebuggerCommmunicationInterface(debugger, port_) {
                             @Override
                             protected void processOpened() {
-                                DebuggerRegistry.addSqlQueryDebugger(serverDebugger);
+                                DebuggerRegistry.add(debugger);
                             }
 
                             @Override
                             protected void processClosed() {
-                                DebuggerRegistry.removeSqlQueryDebugger(serverDebugger);
-                                serverDebugger.cleanup();
+                                DebuggerRegistry.remove(debugger);
+                                debugger.cleanup();
                             }
                         };
-                        serverDebugger.setCommunicationInterface(commmunicationInterface);
+                        debugger.setCommunicationInterface(commmunicationInterface);
                         return commmunicationInterface;
                     }
                 }, port);
@@ -85,17 +85,17 @@ public class RemoteDebuggerServer {
         }
 	}
 
-	public void close() {
-		synchronized(LOCK) {
-			if(serverSocket != null) {
-				try {
-					serverSocket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				serverSocket = null;
-			}
-		}
-	}
-
+    public void close() {
+        synchronized (LOCK) {
+            if (serverSocket != null) {
+                try {
+                    serverSocket.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                serverSocket = null;
+            }
+        }
+    }
 }

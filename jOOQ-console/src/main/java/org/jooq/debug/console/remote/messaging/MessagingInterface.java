@@ -51,7 +51,7 @@ import java.util.Map;
 /**
  * @author Christopher Deckers
  */
-public class MessagingInterface {
+class MessagingInterface {
 
     private static final boolean IS_DEBUGGING_MESSAGES = Boolean.parseBoolean(System.getProperty("communication.interface.debug.printmessages"));
 
@@ -170,7 +170,7 @@ public class MessagingInterface {
     private CommunicationInterface communicationInterface;
     private boolean isClient;
 
-    public MessagingInterface(final CommunicationInterface communicationInterface, final Socket socket, boolean isClient) {
+    MessagingInterface(final CommunicationInterface communicationInterface, final Socket socket, boolean isClient) {
         this.communicationInterface = communicationInterface;
         this.isClient = isClient;
         try {

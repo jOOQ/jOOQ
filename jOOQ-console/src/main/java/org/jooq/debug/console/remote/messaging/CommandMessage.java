@@ -36,6 +36,7 @@
  */
 package org.jooq.debug.console.remote.messaging;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -43,7 +44,7 @@ import java.util.Arrays;
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public abstract class CommandMessage extends Message {
+public abstract class CommandMessage<S extends Serializable> extends Message<S> {
 
     public CommandMessage() {
     }
@@ -75,14 +76,14 @@ public abstract class CommandMessage extends Message {
      * @param arguments the arguments, which must be serializable.
      * @return the result of the execution.
      */
-    public Object syncExec(CommunicationInterface communicationInterface, Object... arguments) {
+    public S syncExec(CommunicationInterface communicationInterface, Object... arguments) {
         setArgs(arguments);
         return syncSend(communicationInterface);
     }
 
     private static final Object[] EMPTY_ARGS = new Object[0];
 
-    Object runCommand() throws Exception {
+    S runCommand() throws Exception {
         return run(args == null? EMPTY_ARGS: args);
     }
 
@@ -92,7 +93,7 @@ public abstract class CommandMessage extends Message {
      * @return the result that may be passed back to the caller.
      * @throws Exception any exception that may happen, and which would be passed back if it is a synchronous execution.
      */
-    public abstract Object run(Object[] arguments) throws Exception;
+    public abstract S run(Object[] arguments) throws Exception;
 
     @Override
     public String toString() {

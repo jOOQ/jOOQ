@@ -36,6 +36,7 @@
  */
 package org.jooq.debug.console.remote;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -238,9 +239,9 @@ public class ClientDebugger implements Debugger {
     }
 
     @SuppressWarnings("serial")
-    static class CMC_logQueries extends ClientDebuggerCommandMessage {
+    static class CMC_logQueries extends ClientDebuggerCommandMessage<Serializable> {
         @Override
-        public Object run(Object[] args) {
+        public Serializable run(Object[] args) {
             LoggingListener loggingListener = getDebugger().getLoggingListener();
             if(loggingListener != null) {
                 loggingListener.logQueries((QueryLoggingData)args[0]);
@@ -250,9 +251,9 @@ public class ClientDebugger implements Debugger {
     }
 
     @SuppressWarnings("serial")
-    static class CMC_logResultSet extends ClientDebuggerCommandMessage {
+    static class CMC_logResultSet extends ClientDebuggerCommandMessage<Serializable> {
         @Override
-        public Object run(Object[] args) {
+        public Serializable run(Object[] args) {
             LoggingListener loggingListener = getDebugger().getLoggingListener();
             if(loggingListener != null) {
                 loggingListener.logResultSet((Integer)args[0], (ResultSetLoggingData)args[1]);
@@ -262,9 +263,9 @@ public class ClientDebugger implements Debugger {
     }
 
     @SuppressWarnings("serial")
-    static class CMC_processBreakpointBeforeExecutionHit extends ClientDebuggerCommandMessage {
+    static class CMC_processBreakpointBeforeExecutionHit extends ClientDebuggerCommandMessage<BreakpointHit> {
         @Override
-        public Object run(Object[] args) {
+        public BreakpointHit run(Object[] args) {
             BreakpointHitHandler breakpointHitHandler = getDebugger().getBreakpointHitHandler();
             if(breakpointHitHandler != null) {
                 BreakpointHit breakpointHit = (BreakpointHit)args[0];
@@ -280,9 +281,9 @@ public class ClientDebugger implements Debugger {
     }
 
     @SuppressWarnings("serial")
-    static class CMC_processBreakpointAfterExecutionHit extends ClientDebuggerCommandMessage {
+    static class CMC_processBreakpointAfterExecutionHit extends ClientDebuggerCommandMessage<BreakpointHit> {
         @Override
-        public Object run(Object[] args) {
+        public BreakpointHit run(Object[] args) {
             BreakpointHitHandler breakpointHitHandler = getDebugger().getBreakpointHitHandler();
             if(breakpointHitHandler != null) {
                 BreakpointHit breakpointHit = (BreakpointHit)args[0];

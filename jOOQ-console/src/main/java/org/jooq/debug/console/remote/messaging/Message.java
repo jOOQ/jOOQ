@@ -44,7 +44,7 @@ import java.io.Serializable;
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public abstract class Message implements Serializable {
+public abstract class Message<S extends Serializable> implements Serializable {
 
     private static int nextID = 1;
 
@@ -108,7 +108,7 @@ public abstract class Message implements Serializable {
      * Send that message synchronously, potentially returning a result if the message type allows that.
      * @return the result if any.
      */
-    public Object syncSend(CommunicationInterface communicationInterface) {
+    public S syncSend(CommunicationInterface communicationInterface) {
         return communicationInterface.syncSend(this);
     }
 

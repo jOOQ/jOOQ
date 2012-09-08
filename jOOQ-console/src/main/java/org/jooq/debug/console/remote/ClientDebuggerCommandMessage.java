@@ -36,13 +36,15 @@
  */
 package org.jooq.debug.console.remote;
 
+import java.io.Serializable;
+
 import org.jooq.debug.console.remote.messaging.CommandMessage;
 
 /**
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-abstract class ClientDebuggerCommandMessage extends CommandMessage {
+abstract class ClientDebuggerCommandMessage<S extends Serializable> extends CommandMessage<S> {
 
     protected ClientDebugger getDebugger() {
         return (ClientDebugger)((DebuggerCommmunicationInterface)getCommunicationInterface()).getDebugger();

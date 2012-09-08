@@ -37,6 +37,7 @@
 package org.jooq.debug.console.remote.messaging;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -129,23 +130,23 @@ public class CommunicationInterface {
         return messagingInterface;
     }
 
-    Object syncSend(final Message message) {
+    <S extends Serializable> S syncSend(final Message<S> message) {
         checkOpen();
         if(message instanceof LocalMessage) {
-            LocalMessage localMessage = (LocalMessage)message;
+            LocalMessage<S> localMessage = (LocalMessage<S>) message;
             localMessage.setCommunicationInterface(this);
             return localMessage.runCommand();
         }
         return messagingInterface.syncSend(message);
     }
 
-    void asyncSend(final Message message) {
+    <S extends Serializable> void asyncSend(final Message<S> message) {
         if(IS_SYNCING_MESSAGES) {
             syncSend(message);
         } else {
             checkOpen();
             if(message instanceof LocalMessage) {
-                LocalMessage localMessage = (LocalMessage)message;
+                LocalMessage<?> localMessage = (LocalMessage<?>)message;
                 localMessage.setCommunicationInterface(this);
                 localMessage.runCommand();
                 return;

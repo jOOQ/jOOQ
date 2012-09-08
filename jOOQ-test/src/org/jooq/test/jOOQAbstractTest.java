@@ -38,6 +38,7 @@ package org.jooq.test;
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.tools.reflect.Reflect.on;
 
 import java.io.File;
 import java.io.InputStream;
@@ -119,6 +120,7 @@ import org.jooq.test._.testcases.ThreadSafetyTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.reflect.ReflectException;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
@@ -587,6 +589,39 @@ public abstract class jOOQAbstractTest<
 
     protected DAO<A, AP, Integer> TAuthorDao() {
         return null;
+    }
+
+    protected final Class<AP> TAuthorPojo() {
+
+        // Not all test configurations have generated POJOs. Discover them dynamically
+        try {
+            return on(TBook().getClass().getPackage().getName() + ".pojos." + TAuthor().getClass().getSimpleName()).get();
+        }
+        catch (ReflectException ignore) {
+            return null;
+        }
+    }
+
+    protected final Class<?> TBookPojo() {
+
+        // Not all test configurations have generated POJOs. Discover them dynamically
+        try {
+            return on(TBook().getClass().getPackage().getName() + ".pojos." + TBook().getClass().getSimpleName()).get();
+        }
+        catch (ReflectException ignore) {
+            return null;
+        }
+    }
+
+    protected final Class<?> TBooleansPojo() {
+
+        // Not all test configurations have generated POJOs. Discover them dynamically
+        try {
+            return on(TBook().getClass().getPackage().getName() + ".pojos." + TBooleans().getClass().getSimpleName()).get();
+        }
+        catch (ReflectException ignore) {
+            return null;
+        }
     }
 
     protected abstract UpdatableTable<A> TAuthor();

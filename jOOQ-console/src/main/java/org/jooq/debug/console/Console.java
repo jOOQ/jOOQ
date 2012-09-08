@@ -95,11 +95,11 @@ public class Console extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
-                DebuggerRegistry.addSqlQueryDebugger(debugger);
+                DebuggerRegistry.add(debugger);
             }
             @Override
             public void windowClosed(WindowEvent e) {
-                DebuggerRegistry.removeSqlQueryDebugger(debugger);
+                DebuggerRegistry.remove(debugger);
             }
         });
         init(isShowingLoggingTab, isShowingDebugger);

@@ -60,7 +60,7 @@ public class DebugListener extends DefaultExecuteListener {
 
 	@Override
 	public void renderStart(ExecuteContext ctx) {
-		hasDebuggers = !DebuggerRegistry.getDebuggerList().isEmpty();
+		hasDebuggers = !DebuggerRegistry.get().isEmpty();
 		startPreparationTime = 0;
 		aggregatedPreparationDuration = 0;
 		startBindTime = 0;
@@ -123,7 +123,7 @@ public class DebugListener extends DefaultExecuteListener {
 
 	@Override
 	public void executeStart(ExecuteContext ctx) {
-        List<Debugger> debuggerList = DebuggerRegistry.getDebuggerList();
+        List<Debugger> debuggerList = DebuggerRegistry.get();
         boolean hasBreakpointHitHandler = false;
         if(!debuggerList.isEmpty()) {
             StatementInfo statementInfo = null;
@@ -292,7 +292,7 @@ public class DebugListener extends DefaultExecuteListener {
 			return;
 		}
 		endExecutionTime = System.currentTimeMillis();
-        List<Debugger> debuggerList = DebuggerRegistry.getDebuggerList();
+        List<Debugger> debuggerList = DebuggerRegistry.get();
 		if(!debuggerList.isEmpty()) {
 		    boolean hasListener = false;
 		    for(Debugger debugger: debuggerList) {

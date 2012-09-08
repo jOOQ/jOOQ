@@ -41,23 +41,23 @@ import java.io.Serializable;
 /**
  * @author Christopher Deckers
  */
-public class ResultSetLoggingData implements Serializable {
+public class ResultSetLog implements Serializable {
 
-	/**
+    /**
      * Generated UID
      */
-    private static final long serialVersionUID = 6968225986331050805L;
+    private static final long   serialVersionUID = 6968225986331050805L;
 
     private static volatile int nextID;
 
-	private int id;
-    private long lifeTime;
-    private final int readRows;
-    private final int readCount;
-    private final int writeCount;
+    private final int           id;
+    private final long          lifeTime;
+    private final int           readRows;
+    private final int           readCount;
+    private final int           writeCount;
 
-    public ResultSetLoggingData(long lifeTime, final int readRows, final int readCount, final int writeCount) {
-    	this.id = nextID++;
+    public ResultSetLog(long lifeTime, final int readRows, final int readCount, final int writeCount) {
+        this.id = nextID++;
         this.lifeTime = lifeTime;
         this.readRows = readRows;
         this.readCount = readCount;
@@ -65,8 +65,8 @@ public class ResultSetLoggingData implements Serializable {
     }
 
     public int getId() {
-		return id;
-	}
+        return id;
+    }
 
     public long getLifeTime() {
         return lifeTime;
@@ -83,5 +83,4 @@ public class ResultSetLoggingData implements Serializable {
     public int getWriteCount() {
         return writeCount;
     }
-
 }

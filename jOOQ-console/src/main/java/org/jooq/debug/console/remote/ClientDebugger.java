@@ -49,7 +49,7 @@ import org.jooq.debug.BreakpointHitHandler;
 import org.jooq.debug.Debugger;
 import org.jooq.debug.LoggingListener;
 import org.jooq.debug.StatementLog;
-import org.jooq.debug.ResultSetLoggingData;
+import org.jooq.debug.ResultSetLog;
 import org.jooq.debug.StatementExecutor;
 import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.remote.ServerDebugger.CMS_addBreakpoint;
@@ -264,7 +264,7 @@ public class ClientDebugger implements Debugger {
         public Serializable run(Serializable... args) {
             LoggingListener loggingListener = getDebugger().getLoggingListener();
             if(loggingListener != null) {
-                loggingListener.logResultSet((Integer)args[0], (ResultSetLoggingData)args[1]);
+                loggingListener.logResultSet((Integer)args[0], (ResultSetLog)args[1]);
             }
             return null;
         }

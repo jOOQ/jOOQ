@@ -61,6 +61,6 @@ public abstract class LocalMessage<S extends Serializable> extends CommandMessag
     }
 
     @Override
-    public abstract S run(Object[] args);
+    public abstract S run(Serializable... args);
 
 }

@@ -98,21 +98,6 @@ public abstract class Message<S extends Serializable> implements Serializable {
     }
 
     /**
-     * Send that message asynchronously.
-     */
-    public void asyncSend(CommunicationInterface communicationInterface) {
-        communicationInterface.asyncSend(this);
-    }
-
-    /**
-     * Send that message synchronously, potentially returning a result if the message type allows that.
-     * @return the result if any.
-     */
-    public S syncSend(CommunicationInterface communicationInterface) {
-        return communicationInterface.syncSend(this);
-    }
-
-    /**
      * Indicate whether the message is valid. This is called before interpreting it to give a chance for the message to prevent its interpretation.
      * @return true if the message is valid and should be interpreted, false otherwise.
      */

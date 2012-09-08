@@ -16,6 +16,7 @@ import javax.swing.tree.TreePath;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings({"serial", "hiding"})
 public class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor {
 
     private CheckBoxNodeRenderer renderer;

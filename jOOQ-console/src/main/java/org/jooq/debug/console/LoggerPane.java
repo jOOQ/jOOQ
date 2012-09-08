@@ -115,7 +115,7 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 /**
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "hiding"})
 public class LoggerPane extends JPanel {
 
     private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("HH:mm:ss.SSS");

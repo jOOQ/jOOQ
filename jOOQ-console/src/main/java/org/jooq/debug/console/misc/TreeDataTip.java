@@ -58,6 +58,7 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 
+@SuppressWarnings("serial")
 public class TreeDataTip {
 
     private TreeDataTip() {}
@@ -142,6 +143,7 @@ public class TreeDataTip {
                             public boolean contains(int x, int y) {
                                 return isHeavyWeight;
                             }
+                            @SuppressWarnings("hiding")
                             @Override
                             public void paintComponent(Graphics g) {
                                 // Leave the component's opacity settings as is, just paint the background myself.

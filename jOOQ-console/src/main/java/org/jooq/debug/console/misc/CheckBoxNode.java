@@ -6,6 +6,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 public class CheckBoxNode extends DefaultMutableTreeNode {
 
     private String text;

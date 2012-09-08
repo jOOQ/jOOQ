@@ -117,7 +117,7 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 /**
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "hiding"})
 public class EditorPane extends JPanel {
 
     private static final int MAX_ROW_COUNT = 10000;
@@ -353,6 +353,7 @@ public class EditorPane extends JPanel {
                 }
             });
             table.setDefaultRenderer(Timestamp.class, new DefaultTableCellRenderer() {
+                @SuppressWarnings("deprecation")
                 @Override
                 public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                     Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);

@@ -81,7 +81,7 @@ import org.jooq.debug.console.remote.ClientDebugger;
 /**
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "hiding"})
 public class Console extends JFrame {
 
     private Debugger debugger;

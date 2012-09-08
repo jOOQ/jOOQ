@@ -91,7 +91,7 @@ import org.jooq.debug.console.misc.TreeDataTip;
 /**
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "hiding"})
 public class DebuggerPane extends JPanel {
 
     private final ImageIcon BREAKPOINT_ON_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/BreakpointOn16.png"));

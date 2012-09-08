@@ -1197,6 +1197,16 @@ abstract class UsageTrackingResultSet extends JDBC41ResultSet implements ResultS
         notifyData(disposeTime - creationTime, readRows, readCount, writeCount);
     }
 
+    /**
+     * Subclasses may override this method to be notified of data
+     *
+     * @param lifeTime The time between <code>ResultSet</code> creation and its
+     *            closing.
+     * @param readRows The rows read
+     * @param readCount The read operations performed
+     * @param writeCount The write operations performed
+     */
+    @SuppressWarnings("hiding")
     protected abstract void notifyData(long lifeTime, int readRows, int readCount, int writeCount);
 
 }

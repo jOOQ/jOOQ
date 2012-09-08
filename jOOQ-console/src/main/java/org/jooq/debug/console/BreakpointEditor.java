@@ -59,7 +59,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 
 import org.jooq.debug.Breakpoint;
-import org.jooq.debug.SqlQueryType;
+import org.jooq.debug.QueryType;
 import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.StatementProcessor;
 import org.jooq.debug.console.misc.TextMatcher;
@@ -117,7 +117,7 @@ public class BreakpointEditor extends JPanel {
         statementTextMatcherPane = new TextMatcherPane(statementTextMatcher);
         add(statementTextMatcherPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
         y++;
-        Set<SqlQueryType> queryTypeSet = statementMatcher.getQueryTypeSet();
+        Set<QueryType> queryTypeSet = statementMatcher.getQueryTypeSet();
         statementTypeCheckBox = new JCheckBox("Type", queryTypeSet != null);
         statementTypeCheckBox.setOpaque(false);
         statementTypeCheckBox.addItemListener(new ItemListener() {
@@ -129,19 +129,19 @@ public class BreakpointEditor extends JPanel {
         add(statementTypeCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         JPanel typesPane = new JPanel(new GridBagLayout());
         typesPane.setOpaque(false);
-        statementTypeSelectCheckBox = new JCheckBox("SELECT", queryTypeSet != null && queryTypeSet.contains(SqlQueryType.SELECT));
+        statementTypeSelectCheckBox = new JCheckBox("SELECT", queryTypeSet != null && queryTypeSet.contains(QueryType.SELECT));
         statementTypeSelectCheckBox.setOpaque(false);
         typesPane.add(statementTypeSelectCheckBox, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        statementTypeUpdateCheckBox = new JCheckBox("UPDATE", queryTypeSet != null && queryTypeSet.contains(SqlQueryType.UPDATE));
+        statementTypeUpdateCheckBox = new JCheckBox("UPDATE", queryTypeSet != null && queryTypeSet.contains(QueryType.UPDATE));
         statementTypeUpdateCheckBox.setOpaque(false);
         typesPane.add(statementTypeUpdateCheckBox, new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
-        statementTypeInsertCheckBox = new JCheckBox("INSERT", queryTypeSet != null && queryTypeSet.contains(SqlQueryType.INSERT));
+        statementTypeInsertCheckBox = new JCheckBox("INSERT", queryTypeSet != null && queryTypeSet.contains(QueryType.INSERT));
         statementTypeInsertCheckBox.setOpaque(false);
         typesPane.add(statementTypeInsertCheckBox, new GridBagConstraints(2, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
-        statementTypeDeleteCheckBox = new JCheckBox("DELETE", queryTypeSet != null && queryTypeSet.contains(SqlQueryType.DELETE));
+        statementTypeDeleteCheckBox = new JCheckBox("DELETE", queryTypeSet != null && queryTypeSet.contains(QueryType.DELETE));
         statementTypeDeleteCheckBox.setOpaque(false);
         typesPane.add(statementTypeDeleteCheckBox, new GridBagConstraints(3, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
-        statementTypeOtherCheckBox = new JCheckBox("OTHER", queryTypeSet != null && queryTypeSet.contains(SqlQueryType.OTHER));
+        statementTypeOtherCheckBox = new JCheckBox("OTHER", queryTypeSet != null && queryTypeSet.contains(QueryType.OTHER));
         statementTypeOtherCheckBox.setOpaque(false);
         typesPane.add(statementTypeOtherCheckBox, new GridBagConstraints(4, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
         add(typesPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
@@ -289,23 +289,23 @@ public class BreakpointEditor extends JPanel {
         boolean isActive = true;//activeCheckBox.isSelected();
         TextMatcher threadNameTextMatcher = threadNameTextMatcherCheckBox.isSelected()? threadNameTextMatcherPane.getTextMatcher(): null;
         TextMatcher statementTextMatcher = statementTextMatcherCheckBox.isSelected()? statementTextMatcherPane.getTextMatcher(): null;
-        Set<SqlQueryType> queryTypeSet;
+        Set<QueryType> queryTypeSet;
         if(statementTypeCheckBox.isSelected()) {
-            List<SqlQueryType> typeList = new ArrayList<SqlQueryType>();
+            List<QueryType> typeList = new ArrayList<QueryType>();
             if(statementTypeSelectCheckBox.isSelected()) {
-                typeList.add(SqlQueryType.SELECT);
+                typeList.add(QueryType.SELECT);
             }
             if(statementTypeUpdateCheckBox.isSelected()) {
-                typeList.add(SqlQueryType.UPDATE);
+                typeList.add(QueryType.UPDATE);
             }
             if(statementTypeInsertCheckBox.isSelected()) {
-                typeList.add(SqlQueryType.INSERT);
+                typeList.add(QueryType.INSERT);
             }
             if(statementTypeDeleteCheckBox.isSelected()) {
-                typeList.add(SqlQueryType.DELETE);
+                typeList.add(QueryType.DELETE);
             }
             if(statementTypeOtherCheckBox.isSelected()) {
-                typeList.add(SqlQueryType.OTHER);
+                typeList.add(QueryType.OTHER);
             }
             queryTypeSet = EnumSet.copyOf(typeList);
         } else {

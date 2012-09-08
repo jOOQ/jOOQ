@@ -44,6 +44,6 @@ public interface LoggingListener {
 
     public void logQueries(StatementLog statementLog);
 
-    public void logResultSet(int queryLoggingDataID, ResultSetLoggingData sqlQueryDebuggerResultSetData);
+    public void logResultSet(int queryLoggingDataID, ResultSetLog sqlQueryDebuggerResultSetData);
 
 }

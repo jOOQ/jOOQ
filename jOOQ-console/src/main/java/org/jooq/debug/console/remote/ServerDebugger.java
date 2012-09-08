@@ -49,7 +49,7 @@ import org.jooq.debug.LocalDebugger;
 import org.jooq.debug.LocalStatementExecutor;
 import org.jooq.debug.LoggingListener;
 import org.jooq.debug.StatementLog;
-import org.jooq.debug.ResultSetLoggingData;
+import org.jooq.debug.ResultSetLog;
 import org.jooq.debug.StatementExecution;
 import org.jooq.debug.StatementExecutor;
 import org.jooq.debug.StatementMatcher;
@@ -83,8 +83,8 @@ class ServerDebugger extends LocalDebugger {
                     comm.asyncExec(new CMC_logQueries(), statementLog);
                 }
                 @Override
-                public void logResultSet(int sqlQueryDebuggerDataID, ResultSetLoggingData resultSetLoggingData) {
-                    comm.asyncExec(new CMC_logResultSet(), sqlQueryDebuggerDataID, resultSetLoggingData);
+                public void logResultSet(int sqlQueryDebuggerDataID, ResultSetLog resultSetLog) {
+                    comm.asyncExec(new CMC_logResultSet(), sqlQueryDebuggerDataID, resultSetLog);
                 }
             });
         } else {

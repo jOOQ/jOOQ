@@ -338,12 +338,12 @@ public class DebugListener extends DefaultExecuteListener {
 		            ResultSet newResultSet = new UsageTrackingResultSet(resultSet) {
 		                @Override
 		                protected void notifyData(long lifeTime, int readRows, int readCount, int writeCount) {
-		                    ResultSetLoggingData resultSetLoggingData = null;
+		                    ResultSetLog resultSetLog = null;
 		                    for(LoggingListener loggingListener: loggingListenerList) {
-		                        if(resultSetLoggingData == null) {
-		                            resultSetLoggingData = new ResultSetLoggingData(lifeTime, readRows, readCount, writeCount);
+		                        if(resultSetLog == null) {
+		                            resultSetLog = new ResultSetLog(lifeTime, readRows, readCount, writeCount);
 		                        }
-		                        loggingListener.logResultSet(queryLoggingDataID, resultSetLoggingData);
+		                        loggingListener.logResultSet(queryLoggingDataID, resultSetLog);
 		                    }
 		                }
 		            };

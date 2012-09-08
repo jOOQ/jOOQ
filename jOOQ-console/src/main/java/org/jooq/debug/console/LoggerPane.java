@@ -100,7 +100,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import org.jooq.debug.Debugger;
 import org.jooq.debug.LoggingListener;
 import org.jooq.debug.QueryType;
-import org.jooq.debug.ResultSetLoggingData;
+import org.jooq.debug.ResultSetLog;
 import org.jooq.debug.StatementLog;
 import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.misc.InvisibleSplitPane;
@@ -381,15 +381,15 @@ public class LoggerPane extends JPanel {
                         return duration < 0? null: duration;
                     }
                     case COLUMN_RS_LIFETIME: {
-                        ResultSetLoggingData rsData = queryDebuggingInfo.getResultSetLoggingData();
+                        ResultSetLog rsData = queryDebuggingInfo.getResultSetLoggingData();
                         return rsData == null? null: rsData.getLifeTime();
                     }
                     case COLUMN_RS_READ: {
-                        ResultSetLoggingData rsData = queryDebuggingInfo.getResultSetLoggingData();
+                        ResultSetLog rsData = queryDebuggingInfo.getResultSetLoggingData();
                         return rsData == null? null: rsData.getReadCount();
                     }
                     case COLUMN_RS_READ_ROWS: {
-                        ResultSetLoggingData rsData = queryDebuggingInfo.getResultSetLoggingData();
+                        ResultSetLog rsData = queryDebuggingInfo.getResultSetLoggingData();
                         return rsData == null? null: rsData.getReadRows();
                     }
                     case COLUMN_DUPLICATION_COUNT: {
@@ -809,12 +809,12 @@ public class LoggerPane extends JPanel {
         public int getDuplicationCount() {
             return duplicationCount;
         }
-        private ResultSetLoggingData resultSetLoggingData;
-        public void setResultSetLoggingData(ResultSetLoggingData resultSetLoggingData) {
-            this.resultSetLoggingData = resultSetLoggingData;
+        private ResultSetLog resultSetLog;
+        public void setResultSetLoggingData(ResultSetLog resultSetLog) {
+            this.resultSetLog = resultSetLog;
         }
-        public ResultSetLoggingData getResultSetLoggingData() {
-            return resultSetLoggingData;
+        public ResultSetLog getResultSetLoggingData() {
+            return resultSetLog;
         }
         private int displayedRow = -1;
         public int getDisplayedRow() {
@@ -853,12 +853,12 @@ public class LoggerPane extends JPanel {
                     addRow(queryDebuggingInfo);
                 }
                 @Override
-                public void logResultSet(final int queryLoggingDataID, final ResultSetLoggingData resultSetLoggingData) {
+                public void logResultSet(final int queryLoggingDataID, final ResultSetLog resultSetLog) {
                     if(!SwingUtilities.isEventDispatchThread()) {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
-                                logResultSet(queryLoggingDataID, resultSetLoggingData);
+                                logResultSet(queryLoggingDataID, resultSetLog);
                             }
                         });
                         return;
@@ -866,7 +866,7 @@ public class LoggerPane extends JPanel {
                     for(int i=queryDebuggingInfoList.size()-1; i>=0; i--) {
                         QueryDebuggingInfo queryDebuggingInfo = queryDebuggingInfoList.get(i);
                         if(queryDebuggingInfo.getQueryLoggingData().getID() == queryLoggingDataID) {
-                            queryDebuggingInfo.setResultSetLoggingData(resultSetLoggingData);
+                            queryDebuggingInfo.setResultSetLoggingData(resultSetLog);
                             XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
                             boolean isResultSetDataShown = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(COLUMN_RS_LIFETIME));
                             if(isResultSetDataShown) {
@@ -934,7 +934,7 @@ public class LoggerPane extends JPanel {
                 "<th>Stack trace</th>" +
                 "</tr>\n");
         for(QueryDebuggingInfo queryDebuggingInfo: queryDebuggingInfos) {
-            ResultSetLoggingData resultSetData = queryDebuggingInfo.getResultSetLoggingData();
+            ResultSetLog resultSetData = queryDebuggingInfo.getResultSetLoggingData();
             htmlSB.append("<tr>\n");
             htmlSB.append("<td>");
             htmlSB.append(queryDebuggingInfo.getQueryType());

@@ -41,6 +41,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -56,19 +57,19 @@ class MessagingInterface {
     private static final boolean IS_DEBUGGING_MESSAGES = Boolean.parseBoolean(System.getProperty("communication.interface.debug.printmessages"));
 
     @SuppressWarnings("serial")
-    private static class CommandResultMessage extends Message {
+    private static class CommandResultMessage<S extends Serializable> extends Message<S> {
 
         private int originalID;
-        private Object result;
+        private S result;
         private Throwable exception;
 
-        CommandResultMessage(int originalID, Object result, Throwable exception) {
+        CommandResultMessage(int originalID, S result, Throwable exception) {
             this.originalID = originalID;
             this.result = result;
             this.exception = exception;
         }
 
-        public Object getResult() {
+        public S getResult() {
             return result;
         }
 
@@ -105,14 +106,14 @@ class MessagingInterface {
     private class MessageProcessingThread extends Thread {
 
         private long originatorThreadID;
-        private List<Message> messageList = new LinkedList<Message>();
+        private List<Message<?>> messageList = new LinkedList<Message<?>>();
 
         public MessageProcessingThread(long originatorThreadID) {
             setName("Communication Interface Message Dispatcher-" + getId() + " [" + originatorThreadID + "]");
             this.originatorThreadID = originatorThreadID;
         }
 
-        public void addMessage(Message message) {
+        public void addMessage(Message<?> message) {
             synchronized (messageList) {
                 messageList.add(message);
             }
@@ -135,7 +136,7 @@ class MessagingInterface {
         @Override
         public void run() {
             while(true) {
-                Message message;
+                Message<?> message;
                 synchronized(messageList) {
                     if(messageList.isEmpty()) {
                        message = null;
@@ -195,7 +196,7 @@ class MessagingInterface {
             @Override
             public void run() {
                 while(isAlive) {
-                    Message message = null;
+                    Message<?> message = null;
                     try {
                         message = readMessage();
                     } catch(Exception e) {
@@ -214,7 +215,7 @@ class MessagingInterface {
                             RECEIVER_LOCK.notify();
                         }
                         synchronized (idToThreadInfo) {
-                            for(ThreadInfo threadInfo: idToThreadInfo.values()) {
+                            for(ThreadInfo<?> threadInfo: idToThreadInfo.values()) {
                                 synchronized (threadInfo) {
                                     threadInfo.notify();
                                 }
@@ -285,35 +286,37 @@ class MessagingInterface {
         receiverThread.start();
     }
 
-    private CommandResultMessage runMessage(Message message) {
+    private <S extends Serializable> CommandResultMessage<S> runMessage(Message<S> message) {
         if(IS_DEBUGGING_MESSAGES) {
             System.err.println("[" + (isClient? "client": "server") + "] >RUN: " + message.getID() + ", " + message);
         }
-        CommandResultMessage commandResultMessage;
+        CommandResultMessage<S> commandResultMessage;
         if(message instanceof CommandMessage) {
-            CommandMessage commandMessage = (CommandMessage)message;
-            Object result = null;
+            CommandMessage<S> commandMessage = (CommandMessage<S>)message;
+            S result = null;
             Throwable throwable = null;
-            if(message.isValid()) {
+            if (message.isValid()) {
                 try {
                     commandMessage.setCommunicationInterface(communicationInterface);
                     result = commandMessage.runCommand();
-                } catch(Throwable t) {
+                }
+                catch (Throwable t) {
                     throwable = t;
                 }
             }
-            if(commandMessage.isSyncExec()) {
-                commandResultMessage = new CommandResultMessage(commandMessage.getID(), result, throwable);
+            if (commandMessage.isSyncExec()) {
+                commandResultMessage = new CommandResultMessage<S>(commandMessage.getID(), result, throwable);
                 asyncSend(commandResultMessage);
-            } else {
-                if(throwable != null) {
+            }
+            else {
+                if (throwable != null) {
                     throwable.printStackTrace();
                 }
-                commandResultMessage = new CommandResultMessage(message.getID(), result, throwable);
+                commandResultMessage = new CommandResultMessage<S>(message.getID(), result, throwable);
             }
         } else {
-            commandResultMessage = new CommandResultMessage(message.getID(), null, null);
-            if(message.isSyncExec()) {
+            commandResultMessage = new CommandResultMessage<S>(message.getID(), null, null);
+            if (message.isSyncExec()) {
                 asyncSend(commandResultMessage);
             }
         }
@@ -323,15 +326,15 @@ class MessagingInterface {
         return commandResultMessage;
     }
 
-    private List<Message> receivedMessageList = new LinkedList<Message>();
+    private List<Message<?>> receivedMessageList = new LinkedList<Message<?>>();
 
     @SuppressWarnings("serial")
-    private static class CM_asyncExecResponse extends CommandMessage {
+    private static class CM_asyncExecResponse extends CommandMessage<Serializable> {
         @Override
-        public Object run(Object[] args) {
+        public Serializable run(Object[] args) {
             MessagingInterface messagingInterface = getCommunicationInterface().getMessagingInterface();
             long threadID = (Long)args[0];
-            CommandResultMessage commandResultMessage = (CommandResultMessage)args[1];
+            CommandResultMessage<?> commandResultMessage = (CommandResultMessage<?>)args[1];
             ThreadInfo threadInfo;
             synchronized (messagingInterface.idToThreadInfo) {
                 threadInfo = messagingInterface.idToThreadInfo.get(threadID);
@@ -349,32 +352,32 @@ class MessagingInterface {
     }
 
     @SuppressWarnings("serial")
-    private static class CM_asyncExec extends CommandMessage {
+    private static class CM_asyncExec extends CommandMessage<Serializable> {
         @Override
-        public Object run(Object[] args) {
-            Message message = (Message)args[1];
+        public Serializable run(Object[] args) {
+            Message<?> message = (Message<?>)args[1];
             message.setSyncExec(false);
             CommunicationInterface communicationInterface = getCommunicationInterface();
 //            message.setCommunicationInterface(communicationInterface);
             MessagingInterface messagingInterface = communicationInterface.getMessagingInterface();
             CM_asyncExecResponse asyncExecResponse = new CM_asyncExecResponse();
-            CommandResultMessage commandResultMessage = messagingInterface.runMessage(message);
+            CommandResultMessage<?> commandResultMessage = messagingInterface.runMessage(message);
             asyncExecResponse.setArgs(args[0], commandResultMessage);
             messagingInterface.asyncSend(asyncExecResponse);
             return null;
         }
     }
 
-    private static class ThreadInfo {
+    private static class ThreadInfo<S extends Serializable> {
 
         private boolean isValuePresent;
-        private Message message;
+        private Message<S> message;
 
-        public Message getMessage() {
+        public Message<S> getMessage() {
             return message;
         }
 
-        public void setMessage(Message message) {
+        public void setMessage(Message<S> message) {
             isValuePresent = true;
             this.message = message;
         }
@@ -389,17 +392,17 @@ class MessagingInterface {
         }
     }
 
-    private Map<Long, ThreadInfo> idToThreadInfo = new HashMap<Long, ThreadInfo>();
+    private Map<Long, ThreadInfo<?>> idToThreadInfo = new HashMap<Long, ThreadInfo<?>>();
 
-    private void printFailedInvocation(Message message) {
+    private void printFailedInvocation(Message<?> message) {
         System.err.println("[" + (isClient? "client": "server") + "] Failed messaging: " + message);
     }
 
-    public Object syncSend(Message message) {
+    public <S extends Serializable> S syncSend(Message<S> message) {
         Thread thread = Thread.currentThread();
         long threadID = thread.getId();
-        ThreadInfo threadInfo = new ThreadInfo();
-        ThreadInfo previousThreadInfo;
+        ThreadInfo<S> threadInfo = new ThreadInfo<S>();
+        ThreadInfo<?> previousThreadInfo;
         synchronized (idToThreadInfo) {
             previousThreadInfo = idToThreadInfo.put(threadID, threadInfo);
         }
@@ -411,7 +414,7 @@ class MessagingInterface {
         CM_asyncExec asyncExec = new CM_asyncExec();
         asyncExec.setArgs(threadID, message);
         asyncSend(asyncExec);
-        CommandResultMessage commandResultMessage = null;
+        CommandResultMessage<S> commandResultMessage = null;
         synchronized(threadInfo) {
             while(commandResultMessage == null) {
                 while(!threadInfo.isValuePresent()) {
@@ -425,10 +428,10 @@ class MessagingInterface {
                         return null;
                     }
                 }
-                Message value = threadInfo.getMessage();
+                Message<S> value = threadInfo.getMessage();
                 threadInfo.clearMessage();
                 if(value instanceof CommandResultMessage) {
-                    commandResultMessage = (CommandResultMessage)value;
+                    commandResultMessage = (CommandResultMessage<S>)value;
                 } else {
                     runMessage(value);
                 }
@@ -449,21 +452,21 @@ class MessagingInterface {
         return processCommandResult(commandResultMessage);
     }
 
-    private Object processCommandResult(CommandResultMessage commandResultMessage) {
+    private <S extends Serializable> S processCommandResult(CommandResultMessage<S> message) {
         if(IS_DEBUGGING_MESSAGES) {
-            System.err.println("[" + (isClient? "client": "server") + "] <USE: " + commandResultMessage.getID());
+            System.err.println("[" + (isClient? "client": "server") + "] <USE: " + message.getID());
         }
-        Throwable exception = commandResultMessage.getException();
+        Throwable exception = message.getException();
         if(exception != null) {
 //            if(exception instanceof RuntimeException) {
 //                throw (RuntimeException)exception;
 //            }
             throw new RuntimeException(exception);
         }
-        return commandResultMessage.getResult();
+        return message.getResult();
     }
 
-    public void asyncSend(Message message) {
+    public void asyncSend(Message<?> message) {
         message.setSyncExec(false);
         Thread thread = Thread.currentThread();
         // If the message was sent by the other side, all returning messages need to know which originating thread they are bound to.
@@ -494,7 +497,7 @@ class MessagingInterface {
 
     private int oosByteCount;
 
-    private void writeMessage(Message message) throws IOException {
+    private void writeMessage(Message<?> message) throws IOException {
         if(!isAlive()) {
             printFailedInvocation(message);
             return;
@@ -513,10 +516,10 @@ class MessagingInterface {
         }
     }
 
-    private Message readMessage() throws IOException, ClassNotFoundException {
+    private Message<?> readMessage() throws IOException, ClassNotFoundException {
         Object o = ois.readUnshared();
         if(o instanceof Message) {
-            Message message = (Message)o;
+            Message<?> message = (Message<?>)o;
             if(IS_DEBUGGING_MESSAGES) {
                 System.err.println("[" + (isClient? "client": "server") + "] RECV: " + message.getID() + ", " + message);
             }

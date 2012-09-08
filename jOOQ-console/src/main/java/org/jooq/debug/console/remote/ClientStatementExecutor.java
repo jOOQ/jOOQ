@@ -62,7 +62,7 @@ public class ClientStatementExecutor implements StatementExecutor {
 
     @Override
     public StatementExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
-        return (StatementExecution)new ServerDebugger.CMS_doStatementExecutorExecution().syncExec(debugger.getCommunicationInterface(), id, sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
+        return new ServerDebugger.CMS_doStatementExecutorExecution().syncExec(debugger.getCommunicationInterface(), id, sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
     }
 
     @Override

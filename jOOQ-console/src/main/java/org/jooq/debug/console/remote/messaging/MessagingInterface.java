@@ -331,7 +331,7 @@ class MessagingInterface {
     @SuppressWarnings("serial")
     private static class CM_asyncExecResponse extends CommandMessage<Serializable> {
         @Override
-        public Serializable run(Object[] args) {
+        public Serializable run(Serializable... args) {
             MessagingInterface messagingInterface = getCommunicationInterface().getMessagingInterface();
             long threadID = (Long)args[0];
             CommandResultMessage<?> commandResultMessage = (CommandResultMessage<?>)args[1];
@@ -354,7 +354,7 @@ class MessagingInterface {
     @SuppressWarnings("serial")
     private static class CM_asyncExec extends CommandMessage<Serializable> {
         @Override
-        public Serializable run(Object[] args) {
+        public Serializable run(Serializable... args) {
             Message<?> message = (Message<?>)args[1];
             message.setSyncExec(false);
             CommunicationInterface communicationInterface = getCommunicationInterface();

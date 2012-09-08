@@ -101,7 +101,7 @@ import org.jooq.debug.Debugger;
 import org.jooq.debug.LoggingListener;
 import org.jooq.debug.QueryLoggingData;
 import org.jooq.debug.ResultSetLoggingData;
-import org.jooq.debug.SqlQueryType;
+import org.jooq.debug.QueryType;
 import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.JTableX;
@@ -456,7 +456,7 @@ public class LoggerPane extends JPanel {
             public Class<?> getColumnClass(int columnIndex) {
                 switch(columnIndex) {
                     case COLUMN_LINE: return Integer.class;
-                    case COLUMN_TYPE: return SqlQueryType.class;
+                    case COLUMN_TYPE: return QueryType.class;
                     case COLUMN_PS_PREPARATION_DURATION: return Long.class;
                     case COLUMN_PS_BINDING_DURATION: return Long.class;
                     case COLUMN_EXEC_TIME: return Long.class;
@@ -485,7 +485,7 @@ public class LoggerPane extends JPanel {
         table.setColumnSelectionAllowed(true);
         table.setFillsViewportHeight(true);
 //        ToolTipManager.sharedInstance().registerComponent(table);
-        table.setDefaultRenderer(SqlQueryType.class, new DefaultTableCellRenderer() {
+        table.setDefaultRenderer(QueryType.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -783,7 +783,7 @@ public class LoggerPane extends JPanel {
         public long getExecutionDuration() {
             return queryLoggingData.getExecutionDuration();
         }
-        public SqlQueryType getQueryType() {
+        public QueryType getQueryType() {
             return queryLoggingData.getQueryType();
         }
         public String[] getQueries() {

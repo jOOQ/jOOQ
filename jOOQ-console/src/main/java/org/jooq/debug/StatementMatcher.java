@@ -51,14 +51,14 @@ public class StatementMatcher implements Serializable {
     private boolean isActive;
     private TextMatcher threadNameTextMatcher;
     private TextMatcher statementTextMatcher;
-    private Set<SqlQueryType> queryTypeSet;
+    private Set<QueryType> queryTypeSet;
 
     /**
      * @param threadNameTextMatcher a text matcher for thread name or null for no text matching.
      * @param statementTextMatcher a text matcher for statement or null for no text matching.
      * @param queryTypeSet some types or null for all types.
      */
-    public StatementMatcher(TextMatcher threadNameTextMatcher, TextMatcher statementTextMatcher, Set<SqlQueryType> queryTypeSet, boolean isActive) {
+    public StatementMatcher(TextMatcher threadNameTextMatcher, TextMatcher statementTextMatcher, Set<QueryType> queryTypeSet, boolean isActive) {
         this.threadNameTextMatcher = threadNameTextMatcher;
         this.statementTextMatcher = statementTextMatcher;
         this.queryTypeSet = queryTypeSet == null? null: EnumSet.copyOf(queryTypeSet);
@@ -99,7 +99,7 @@ public class StatementMatcher implements Serializable {
         return statementTextMatcher;
     }
 
-    public Set<SqlQueryType> getQueryTypeSet() {
+    public Set<QueryType> getQueryTypeSet() {
         return queryTypeSet;
     }
 

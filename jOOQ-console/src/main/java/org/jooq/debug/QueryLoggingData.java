@@ -53,7 +53,7 @@ public class QueryLoggingData extends StatementInfo {
     private long executionDuration;
     private StackTraceElement[] callerStackTraceElements;
 
-    public QueryLoggingData(SqlQueryType queryType, String[] queries, String parameterDescription, Long preparationDuration, Long bindingDuration, long executionDuration) {
+    public QueryLoggingData(QueryType queryType, String[] queries, String parameterDescription, Long preparationDuration, Long bindingDuration, long executionDuration) {
         super(queryType, queries, parameterDescription);
         this.id = nextID.getAndIncrement();
         this.callerStackTraceElements = Thread.currentThread().getStackTrace();

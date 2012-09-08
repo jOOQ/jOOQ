@@ -135,7 +135,7 @@ public class DebugListener extends DefaultExecuteListener {
                         String parameterDescription = null;
                         if(statementInfo == null) {
                             String[] sql = ctx.batchSQL();
-                            SqlQueryType sqlQueryType = SqlQueryType.detectType(sql[0]);
+                            QueryType queryType = QueryType.detectType(sql[0]);
                             if(sql.length == 1) {
                                 sql_ = sql[0];
                                 PreparedStatement statement = ctx.statement();
@@ -152,7 +152,7 @@ public class DebugListener extends DefaultExecuteListener {
                                 }
                                 sql_ = sb.toString();
                             }
-                            statementInfo = new StatementInfo(sqlQueryType, sql, parameterDescription);
+                            statementInfo = new StatementInfo(queryType, sql, parameterDescription);
                         }
                         if(breakpoint.matches(statementInfo, true)) {
                             matchingSQL = sql_;
@@ -181,8 +181,8 @@ public class DebugListener extends DefaultExecuteListener {
                 for(Debugger debugger: debuggerList) {
                     LoggingListener loggingListener = debugger.getLoggingListener();
                     if(loggingListener != null) {
-                        SqlQueryType sqlQueryType = SqlQueryType.detectType(sql);
-                        QueryLoggingData queryLoggingData = new QueryLoggingData(sqlQueryType, new String[] {sql}, null, null, null, subEndExecutionTime - subStartExecutionTime);
+                        QueryType queryType = QueryType.detectType(sql);
+                        QueryLoggingData queryLoggingData = new QueryLoggingData(queryType, new String[] {sql}, null, null, null, subEndExecutionTime - subStartExecutionTime);
                         StatementMatcher[] loggingStatementMatchers = debugger.getLoggingStatementMatchers();
                         if(loggingStatementMatchers == null) {
                             loggingListener.logQueries(queryLoggingData);
@@ -304,7 +304,7 @@ public class DebugListener extends DefaultExecuteListener {
 		    }
 		    if(hasListener) {
 		        String[] sql = ctx.batchSQL();
-		        SqlQueryType sqlQueryType = SqlQueryType.detectType(sql[0]);
+		        QueryType queryType = QueryType.detectType(sql[0]);
 		        String parameterDescription = null;
 		        if(sql.length == 1) {
 		            PreparedStatement statement = ctx.statement();
@@ -312,7 +312,7 @@ public class DebugListener extends DefaultExecuteListener {
 		                parameterDescription = ((UsageTrackingPreparedStatement) statement).getParameterDescription();
 		            }
 		        }
-		        QueryLoggingData queryLoggingData = new QueryLoggingData(sqlQueryType, sql, parameterDescription, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
+		        QueryLoggingData queryLoggingData = new QueryLoggingData(queryType, sql, parameterDescription, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
 		        final List<LoggingListener> loggingListenerList = new ArrayList<LoggingListener>(debuggerList.size());
 		        for(Debugger listener: debuggerList) {
 		            LoggingListener loggingListener = listener.getLoggingListener();
@@ -369,8 +369,8 @@ public class DebugListener extends DefaultExecuteListener {
                 for(Debugger listener: debuggerList) {
                     LoggingListener loggingListener = listener.getLoggingListener();
                     if(loggingListener != null) {
-                        SqlQueryType sqlQueryType = SqlQueryType.detectType(sql);
-                        QueryLoggingData queryLoggingData = new QueryLoggingData(sqlQueryType, new String[] {sql}, null, null, null, subEndExecutionTime - subStartExecutionTime);
+                        QueryType queryType = QueryType.detectType(sql);
+                        QueryLoggingData queryLoggingData = new QueryLoggingData(queryType, new String[] {sql}, null, null, null, subEndExecutionTime - subStartExecutionTime);
                         StatementMatcher[] loggingStatementMatchers = listener.getLoggingStatementMatchers();
                         if(loggingStatementMatchers == null) {
                             loggingListener.logQueries(queryLoggingData);

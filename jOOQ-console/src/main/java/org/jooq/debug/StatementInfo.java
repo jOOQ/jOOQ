@@ -44,13 +44,13 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class StatementInfo implements Serializable {
 
-    private SqlQueryType queryType;
+    private QueryType queryType;
     private String[] queries;
     private String parameterDescription;
     private String threadName;
     private long threadID;
 
-    public StatementInfo(SqlQueryType queryType, String[] queries, String parameterDescription) {
+    public StatementInfo(QueryType queryType, String[] queries, String parameterDescription) {
         Thread currentThread = Thread.currentThread();
         this.threadName = currentThread.getName();
         this.threadID = currentThread.getId();
@@ -67,7 +67,7 @@ public class StatementInfo implements Serializable {
         return threadID;
     }
 
-    public SqlQueryType getQueryType() {
+    public QueryType getQueryType() {
         return queryType;
     }
 

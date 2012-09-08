@@ -41,82 +41,109 @@ import java.util.Locale;
 /**
  * @author Christopher Deckers
  */
-public enum SqlQueryType {
+public enum QueryType {
+
+    /**
+     * <code>SELECT</code> queries
+     */
     SELECT,
+
+    /**
+     * <code>INSERT</code> queries
+     */
     INSERT,
+
+    /**
+     * <code>UPDATE</code> queries
+     */
     UPDATE,
+
+    /**
+     * <code>DELETE</code> queries
+     */
     DELETE,
+
+    /**
+     * All other queries
+     */
     OTHER,
 
     ;
 
-    public static SqlQueryType detectType(String sql) {
+    public static QueryType detectType(String sql) {
         String queryLC = sql.toLowerCase(Locale.ENGLISH).trim();
-        if(queryLC.startsWith("insert ")) {
-            return SqlQueryType.INSERT;
+        if (queryLC.startsWith("insert ")) {
+            return QueryType.INSERT;
         }
-        if(queryLC.startsWith("update ")) {
-            return SqlQueryType.UPDATE;
+        if (queryLC.startsWith("update ")) {
+            return QueryType.UPDATE;
         }
-        if(queryLC.startsWith("delete ")) {
-            return SqlQueryType.DELETE;
+        if (queryLC.startsWith("delete ")) {
+            return QueryType.DELETE;
         }
-        if(queryLC.startsWith("select ")) {
-            return SqlQueryType.SELECT;
+        if (queryLC.startsWith("select ")) {
+            return QueryType.SELECT;
         }
-        if(queryLC.startsWith("with ")) {
+        if (queryLC.startsWith("with ")) {
+
             // Let's skip the table definition to see what action is performed.
             queryLC = queryLC.replaceAll("[\\t\\n\\x0B\\f\\r]+", " ");
             queryLC = queryLC.substring("with ".length());
             boolean isFindingWithStatementEnd = true;
-            while(isFindingWithStatementEnd) {
+            while (isFindingWithStatementEnd) {
                 isFindingWithStatementEnd = false;
+
                 // Let's consider the query is properly created, and the "as" is at the right place.
                 int index = queryLC.indexOf(" as ");
-                if(index == -1) {
+                if (index == -1) {
                     break;
                 }
                 queryLC = queryLC.substring(index + " as ".length()).trim();
-                if(!queryLC.startsWith("(")) {
+                if (!queryLC.startsWith("(")) {
                     break;
                 }
                 int length = queryLC.length();
                 boolean isQuote = false;
                 int pCount = 1;
-                for(int i=1; i<length; i++) {
+                for (int i = 1; i < length; i++) {
                     char c = queryLC.charAt(i);
-                    switch(c) {
+                    switch (c) {
                         case '\'':
                             isQuote = !isQuote;
                             break;
                         case '(':
-                            if(!isQuote) {
+                            if (!isQuote) {
                                 pCount++;
                             }
                             break;
                         case ')':
-                            if(!isQuote) {
+                            if (!isQuote) {
                                 pCount--;
                             }
                             break;
                     }
-                    if(pCount == 0) {
+                    if (pCount == 0) {
                         queryLC = queryLC.substring(i + 1).trim();
-                        if(queryLC.startsWith(",")) {
-                            // Another table definition in the with clause, so let's do another round.
+
+                        // Another table definition in the with clause, so let's do another round.
+                        if (queryLC.startsWith(",")) {
                             isFindingWithStatementEnd = true;
                             break;
-                        } else {
-                            // We removed the with part. Let's ask the type of this.
+                        }
+
+                        // We removed the with part. Let's ask the type of this.
+                        else {
                             return detectType(queryLC);
                         }
                     }
                 }
             }
+
             // If we couldn't find a proper with structure, default to OTHER.
-            return SqlQueryType.OTHER;
+            return QueryType.OTHER;
         }
-        return SqlQueryType.OTHER;
+
+        return QueryType.OTHER;
     }
 
 }

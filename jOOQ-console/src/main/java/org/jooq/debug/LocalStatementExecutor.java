@@ -82,7 +82,7 @@ public class LocalStatementExecutor implements StatementExecutor {
         boolean isAllowed = true;
         if(executorContext.isReadOnly()) {
             String simplifiedSql = sql.replaceAll("'[^']*'", "");
-            switch(SqlQueryType.detectType(simplifiedSql)) {
+            switch(QueryType.detectType(simplifiedSql)) {
                 case SELECT:
                     String[] forbiddenWords = new String[] {
                             "INSERT",

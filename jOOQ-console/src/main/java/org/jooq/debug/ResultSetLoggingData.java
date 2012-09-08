@@ -43,7 +43,12 @@ import java.io.Serializable;
  */
 public class ResultSetLoggingData implements Serializable {
 
-	private static volatile int nextID;
+	/**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 6968225986331050805L;
+
+    private static volatile int nextID;
 
 	private int id;
     private long lifeTime;

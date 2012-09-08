@@ -130,7 +130,13 @@ public class CommunicationInterface {
         return messagingInterface;
     }
 
-    <S extends Serializable> S syncSend(final Message<S> message) {
+    /**
+     * Send that message synchronously, potentially returning a result if the
+     * message type allows that.
+     *
+     * @return the result if any.
+     */
+    final <S extends Serializable> S syncSend(final Message<S> message) {
         checkOpen();
         if(message instanceof LocalMessage) {
             LocalMessage<S> localMessage = (LocalMessage<S>) message;
@@ -140,7 +146,10 @@ public class CommunicationInterface {
         return messagingInterface.syncSend(message);
     }
 
-    <S extends Serializable> void asyncSend(final Message<S> message) {
+    /**
+     * Send a message asynchronously.
+     */
+    final <S extends Serializable> void asyncSend(final Message<S> message) {
         if(IS_SYNCING_MESSAGES) {
             syncSend(message);
         } else {

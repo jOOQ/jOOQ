@@ -68,7 +68,7 @@ public abstract class CommandMessage<S extends Serializable> extends Message<S> 
      */
     public void asyncExec(CommunicationInterface communicationInterface, Object... arguments) {
         setArgs(arguments);
-        asyncSend(communicationInterface);
+        communicationInterface.asyncSend(this);
     }
 
     /**
@@ -78,7 +78,7 @@ public abstract class CommandMessage<S extends Serializable> extends Message<S> 
      */
     public S syncExec(CommunicationInterface communicationInterface, Object... arguments) {
         setArgs(arguments);
-        return syncSend(communicationInterface);
+        return communicationInterface.syncSend(this);
     }
 
     private static final Object[] EMPTY_ARGS = new Object[0];

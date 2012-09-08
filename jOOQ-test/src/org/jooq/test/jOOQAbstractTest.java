@@ -230,6 +230,7 @@ public abstract class jOOQAbstractTest<
     public static Map<String, String>     scripts            = new HashMap<String, String>();
 
     private static RemoteDebuggerServer   SERVER;
+    private static boolean                RUN_CONSOLE_IN_PROCESS = true;
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;
@@ -439,8 +440,7 @@ public abstract class jOOQAbstractTest<
             connectionInitialised = true;
             connection = getConnection0(null, null);
 
-            boolean runConsoleInProcess = false;
-            if (runConsoleInProcess) {
+            if (RUN_CONSOLE_IN_PROCESS) {
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     Debugger debugger = new ClientDebugger("127.0.0.1", DEBUGGER_PORT);

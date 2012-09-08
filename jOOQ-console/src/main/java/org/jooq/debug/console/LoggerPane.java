@@ -99,9 +99,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jooq.debug.Debugger;
 import org.jooq.debug.LoggingListener;
-import org.jooq.debug.QueryLoggingData;
-import org.jooq.debug.ResultSetLoggingData;
 import org.jooq.debug.QueryType;
+import org.jooq.debug.ResultSetLoggingData;
+import org.jooq.debug.StatementLog;
 import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.JTableX;
@@ -759,36 +759,36 @@ public class LoggerPane extends JPanel {
 
     private static class QueryDebuggingInfo {
         private long timestamp;
-        private QueryLoggingData queryLoggingData;
+        private StatementLog statementLog;
         private Throwable throwable;
         private int duplicationCount;
-        public QueryDebuggingInfo(long timestamp, QueryLoggingData queryLoggingData) {
+        public QueryDebuggingInfo(long timestamp, StatementLog statementLog) {
             this.timestamp = timestamp;
-            this.queryLoggingData = queryLoggingData;
+            this.statementLog = statementLog;
             this.throwable = new Exception("Statement Stack trace");
-            throwable.setStackTrace(queryLoggingData.getCallerStackTraceElements());
+            throwable.setStackTrace(statementLog.getCallerStackTraceElements());
         }
         public long getTimestamp() {
             return timestamp;
         }
-        public QueryLoggingData getQueryLoggingData() {
-            return queryLoggingData;
+        public StatementLog getQueryLoggingData() {
+            return statementLog;
         }
         public Long getPrepardeStatementPreparationDuration() {
-            return queryLoggingData.getPreparedStatementPreparationDuration();
+            return statementLog.getPreparedStatementPreparationDuration();
         }
         public Long getPrepardeStatementBindingDuration() {
-            return queryLoggingData.getPreparedStatementBindingDuration();
+            return statementLog.getPreparedStatementBindingDuration();
         }
         public long getExecutionDuration() {
-            return queryLoggingData.getExecutionDuration();
+            return statementLog.getExecutionDuration();
         }
         public QueryType getQueryType() {
-            return queryLoggingData.getQueryType();
+            return statementLog.getStatementInfo().getQueryType();
         }
         public String[] getQueries() {
-            String parameterDescription = queryLoggingData.getParameterDescription();
-            String[] queries = queryLoggingData.getQueries();
+            String parameterDescription = statementLog.getStatementInfo().getParameterDescription();
+            String[] queries = statementLog.getStatementInfo().getQueries();
             if(parameterDescription != null) {
                 return new String[] {queries[0] + " -> " + parameterDescription};
             }
@@ -798,10 +798,10 @@ public class LoggerPane extends JPanel {
             return throwable;
         }
         public String getThreadName() {
-            return queryLoggingData.getThreadName();
+            return statementLog.getStatementInfo().getThreadName();
         }
         public long getThreadId() {
-            return queryLoggingData.getThreadID();
+            return statementLog.getStatementInfo().getThreadID();
         }
         public void setDuplicationCount(int duplicationCount) {
             this.duplicationCount = duplicationCount;
@@ -837,8 +837,8 @@ public class LoggerPane extends JPanel {
         if(isLogging) {
             LoggingListener loggingListener = new LoggingListener() {
                 @Override
-                public void logQueries(QueryLoggingData queryLoggingData) {
-                    debugQueries(new QueryDebuggingInfo(System.currentTimeMillis(), queryLoggingData));
+                public void logQueries(StatementLog statementLog) {
+                    debugQueries(new QueryDebuggingInfo(System.currentTimeMillis(), statementLog));
                 }
                 public void debugQueries(final QueryDebuggingInfo queryDebuggingInfo) {
                     if(!SwingUtilities.isEventDispatchThread()) {

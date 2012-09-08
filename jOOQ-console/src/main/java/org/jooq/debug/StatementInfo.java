@@ -41,17 +41,22 @@ import java.io.Serializable;
 /**
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
 public class StatementInfo implements Serializable {
 
-    private QueryType queryType;
-    private String[] queries;
-    private String parameterDescription;
-    private String threadName;
-    private long threadID;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -8962704457792024345L;
+
+    private final QueryType   queryType;
+    private final String[]    queries;
+    private final String      parameterDescription;
+    private final String      threadName;
+    private final long        threadID;
 
     public StatementInfo(QueryType queryType, String[] queries, String parameterDescription) {
         Thread currentThread = Thread.currentThread();
+
         this.threadName = currentThread.getName();
         this.threadID = currentThread.getId();
         this.queryType = queryType;
@@ -76,10 +81,10 @@ public class StatementInfo implements Serializable {
     }
 
     /**
-     * @return non null if queries consist of a single prepared statement with parameters.
+     * @return non null if queries consist of a single prepared statement with
+     *         parameters.
      */
     public String getParameterDescription() {
         return parameterDescription;
     }
-
 }

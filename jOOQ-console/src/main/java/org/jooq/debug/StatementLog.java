@@ -36,30 +36,43 @@
  */
 package org.jooq.debug;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
-public class QueryLoggingData extends StatementInfo {
+public class StatementLog implements Serializable {
 
-    private static AtomicInteger nextID = new AtomicInteger();
+    /**
+     * Generated UID
+     */
+    private static final long         serialVersionUID = 4788898342470338246L;
 
-    private int id;
-    private Long preparationDuration;
-    private Long bindingDuration;
-    private long executionDuration;
-    private StackTraceElement[] callerStackTraceElements;
+    private static AtomicInteger      nextID           = new AtomicInteger();
 
-    public QueryLoggingData(QueryType queryType, String[] queries, String parameterDescription, Long preparationDuration, Long bindingDuration, long executionDuration) {
-        super(queryType, queries, parameterDescription);
+    private final StatementInfo       statementInfo;
+    private final int                 id;
+    private final Long                preparationDuration;
+    private final Long                bindingDuration;
+    private final long                executionDuration;
+    private final StackTraceElement[] callerStackTraceElements;
+
+    public StatementLog(StatementInfo statementInfo, Long preparationDuration, Long bindingDuration,
+        long executionDuration) {
+
+        this.statementInfo = statementInfo;
+
         this.id = nextID.getAndIncrement();
         this.callerStackTraceElements = Thread.currentThread().getStackTrace();
         this.preparationDuration = preparationDuration;
         this.bindingDuration = bindingDuration;
         this.executionDuration = executionDuration;
+    }
+
+    public StatementInfo getStatementInfo() {
+        return statementInfo;
     }
 
     public int getID() {
@@ -81,5 +94,4 @@ public class QueryLoggingData extends StatementInfo {
     public long getExecutionDuration() {
         return executionDuration;
     }
-
 }

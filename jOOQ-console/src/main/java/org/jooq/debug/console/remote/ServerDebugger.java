@@ -48,7 +48,7 @@ import org.jooq.debug.BreakpointHitHandler;
 import org.jooq.debug.LocalDebugger;
 import org.jooq.debug.LocalStatementExecutor;
 import org.jooq.debug.LoggingListener;
-import org.jooq.debug.QueryLoggingData;
+import org.jooq.debug.StatementLog;
 import org.jooq.debug.ResultSetLoggingData;
 import org.jooq.debug.StatementExecution;
 import org.jooq.debug.StatementExecutor;
@@ -79,8 +79,8 @@ class ServerDebugger extends LocalDebugger {
         if(isActive) {
             setLoggingListener(new LoggingListener() {
                 @Override
-                public void logQueries(QueryLoggingData queryLoggingData) {
-                    comm.asyncExec(new CMC_logQueries(), queryLoggingData);
+                public void logQueries(StatementLog statementLog) {
+                    comm.asyncExec(new CMC_logQueries(), statementLog);
                 }
                 @Override
                 public void logResultSet(int sqlQueryDebuggerDataID, ResultSetLoggingData resultSetLoggingData) {

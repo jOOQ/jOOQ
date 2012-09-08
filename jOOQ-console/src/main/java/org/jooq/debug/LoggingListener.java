@@ -42,7 +42,7 @@ package org.jooq.debug;
  */
 public interface LoggingListener {
 
-    public void logQueries(QueryLoggingData queryLoggingData);
+    public void logQueries(StatementLog statementLog);
 
     public void logResultSet(int queryLoggingDataID, ResultSetLoggingData sqlQueryDebuggerResultSetData);
 

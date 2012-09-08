@@ -182,13 +182,14 @@ public class DebugListener extends DefaultExecuteListener {
                     LoggingListener loggingListener = debugger.getLoggingListener();
                     if(loggingListener != null) {
                         QueryType queryType = QueryType.detectType(sql);
-                        QueryLoggingData queryLoggingData = new QueryLoggingData(queryType, new String[] {sql}, null, null, null, subEndExecutionTime - subStartExecutionTime);
+                        StatementInfo statementInfo = new StatementInfo(queryType, new String[] {sql}, null);
+                        StatementLog statementLog = new StatementLog(statementInfo, null, null, subEndExecutionTime - subStartExecutionTime);
                         StatementMatcher[] loggingStatementMatchers = debugger.getLoggingStatementMatchers();
                         if(loggingStatementMatchers == null) {
-                            loggingListener.logQueries(queryLoggingData);
+                            loggingListener.logQueries(statementLog);
                         } else for(StatementMatcher statementMatcher: loggingStatementMatchers) {
-                            if(statementMatcher.matches(queryLoggingData)) {
-                                loggingListener.logQueries(queryLoggingData);
+                            if(statementMatcher.matches(statementLog.getStatementInfo())) {
+                                loggingListener.logQueries(statementLog);
                                 break;
                             }
                         }
@@ -312,7 +313,8 @@ public class DebugListener extends DefaultExecuteListener {
 		                parameterDescription = ((UsageTrackingPreparedStatement) statement).getParameterDescription();
 		            }
 		        }
-		        QueryLoggingData queryLoggingData = new QueryLoggingData(queryType, sql, parameterDescription, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
+		        StatementInfo statementInfo = new StatementInfo(queryType, sql, parameterDescription);
+		        StatementLog statementLog = new StatementLog(statementInfo, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
 		        final List<LoggingListener> loggingListenerList = new ArrayList<LoggingListener>(debuggerList.size());
 		        for(Debugger listener: debuggerList) {
 		            LoggingListener loggingListener = listener.getLoggingListener();
@@ -320,11 +322,11 @@ public class DebugListener extends DefaultExecuteListener {
 		                StatementMatcher[] loggingStatementMatchers = listener.getLoggingStatementMatchers();
 		                if(loggingStatementMatchers == null) {
 		                    loggingListenerList.add(loggingListener);
-		                    loggingListener.logQueries(queryLoggingData);
+		                    loggingListener.logQueries(statementLog);
 		                } else for(StatementMatcher statementMatcher: loggingStatementMatchers) {
-		                    if(statementMatcher.matches(queryLoggingData)) {
+		                    if(statementMatcher.matches(statementLog.getStatementInfo())) {
 		                        loggingListenerList.add(loggingListener);
-		                        loggingListener.logQueries(queryLoggingData);
+		                        loggingListener.logQueries(statementLog);
 		                        break;
 		                    }
 		                }
@@ -332,7 +334,7 @@ public class DebugListener extends DefaultExecuteListener {
 		        }
 		        ResultSet resultSet = ctx.resultSet();
 		        if(resultSet != null && !loggingListenerList.isEmpty()) {
-		            final int queryLoggingDataID = queryLoggingData.getID();
+		            final int queryLoggingDataID = statementLog.getID();
 		            ResultSet newResultSet = new UsageTrackingResultSet(resultSet) {
 		                @Override
 		                protected void notifyData(long lifeTime, int readRows, int readCount, int writeCount) {
@@ -370,13 +372,14 @@ public class DebugListener extends DefaultExecuteListener {
                     LoggingListener loggingListener = listener.getLoggingListener();
                     if(loggingListener != null) {
                         QueryType queryType = QueryType.detectType(sql);
-                        QueryLoggingData queryLoggingData = new QueryLoggingData(queryType, new String[] {sql}, null, null, null, subEndExecutionTime - subStartExecutionTime);
+                        StatementInfo statementInfo = new StatementInfo(queryType, new String[] {sql}, null);
+                        StatementLog statementLog = new StatementLog(statementInfo, null, null, subEndExecutionTime - subStartExecutionTime);
                         StatementMatcher[] loggingStatementMatchers = listener.getLoggingStatementMatchers();
                         if(loggingStatementMatchers == null) {
-                            loggingListener.logQueries(queryLoggingData);
+                            loggingListener.logQueries(statementLog);
                         } else for(StatementMatcher statementMatcher: loggingStatementMatchers) {
-                            if(statementMatcher.matches(queryLoggingData)) {
-                                loggingListener.logQueries(queryLoggingData);
+                            if(statementMatcher.matches(statementLog.getStatementInfo())) {
+                                loggingListener.logQueries(statementLog);
                                 break;
                             }
                         }

@@ -39,28 +39,36 @@ package org.jooq.debug.console.remote.messaging;
 import java.io.Serializable;
 
 /**
- * A local message is a special message that is not sent through the messaging interface. It is normally used to sequence a local command among remote commands.
+ * A local message is a special message that is not sent through the messaging
+ * interface. It is normally used to sequence a local command among remote
+ * commands.
+ *
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
 public abstract class LocalMessage<S extends Serializable> extends CommandMessage<S> {
 
-    public LocalMessage() {
-    }
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 5946023022822987264L;
+
+    public LocalMessage() {}
 
     @Override
-    S runCommand() {
+    S runCommand(MessageContext context) {
         try {
-            return super.runCommand();
-        } catch(RuntimeException e) {
+            return super.runCommand(context);
+        }
+        catch (RuntimeException e) {
             throw e;
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public abstract S run();
+    public abstract S run(MessageContext context);
 
 }

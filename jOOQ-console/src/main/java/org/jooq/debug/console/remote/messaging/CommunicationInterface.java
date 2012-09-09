@@ -42,8 +42,12 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.jooq.debug.Debugger;
+
 /**
- * The communication interface, which establishes the link between a peer VM and this local side.
+ * The communication interface, which establishes the link between a peer VM and
+ * this local side.
+ *
  * @author Christopher Deckers
  */
 public class CommunicationInterface {
@@ -51,6 +55,17 @@ public class CommunicationInterface {
     private final boolean IS_SYNCING_MESSAGES = Boolean.parseBoolean(System.getProperty("communication.interface.syncmessages"));
 
     private volatile boolean isOpen;
+    private final Debugger   debugger;
+    private final int        port;
+
+    public CommunicationInterface(Debugger debugger, int port) {
+        this.debugger = debugger;
+        this.port = port;
+    }
+
+    public Debugger getDebugger() {
+        return debugger;
+    }
 
     public boolean isOpen() {
         return isOpen;
@@ -93,8 +108,6 @@ public class CommunicationInterface {
     protected void processClosed() {
     }
 
-    private int port;
-
     private void createClientCommunicationChannel(String ip) throws Exception {
         // Create the interface to communicate with the process handling the other side
         Socket socket = null;
@@ -120,10 +133,6 @@ public class CommunicationInterface {
         notifyOpen();
     }
 
-    public CommunicationInterface(int port) {
-        this.port = port;
-    }
-
     private volatile MessagingInterface messagingInterface;
 
     MessagingInterface getMessagingInterface() {
@@ -138,10 +147,9 @@ public class CommunicationInterface {
      */
     public final <S extends Serializable> S syncSend(final Message<S> message) {
         checkOpen();
-        if(message instanceof LocalMessage) {
+        if (message instanceof LocalMessage) {
             LocalMessage<S> localMessage = (LocalMessage<S>) message;
-            localMessage.setCommunicationInterface(this);
-            return localMessage.runCommand();
+            return localMessage.runCommand(new MessageContext(this));
         }
         return messagingInterface.syncSend(message);
     }
@@ -150,14 +158,14 @@ public class CommunicationInterface {
      * Send a message asynchronously.
      */
     public final <S extends Serializable> void asyncSend(final Message<S> message) {
-        if(IS_SYNCING_MESSAGES) {
+        if (IS_SYNCING_MESSAGES) {
             syncSend(message);
-        } else {
+        }
+        else {
             checkOpen();
-            if(message instanceof LocalMessage) {
-                LocalMessage<?> localMessage = (LocalMessage<?>)message;
-                localMessage.setCommunicationInterface(this);
-                localMessage.runCommand();
+            if (message instanceof LocalMessage) {
+                LocalMessage<?> localMessage = (LocalMessage<?>) message;
+                localMessage.runCommand(new MessageContext(this));
                 return;
             }
             messagingInterface.asyncSend(message);

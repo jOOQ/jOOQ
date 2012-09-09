@@ -63,6 +63,7 @@ import org.jooq.debug.console.remote.ServerDebugger.CMS_setLoggingStatementMatch
 import org.jooq.debug.console.remote.messaging.CommandMessage;
 import org.jooq.debug.console.remote.messaging.CommunicationInterface;
 import org.jooq.debug.console.remote.messaging.CommunicationInterfaceFactory;
+import org.jooq.debug.console.remote.messaging.MessageContext;
 
 /**
  * @author Christopher Deckers
@@ -76,7 +77,7 @@ public class ClientDebugger implements Debugger {
 	    comm = CommunicationInterface.openClientCommunicationChannel(new CommunicationInterfaceFactory() {
             @Override
             public CommunicationInterface createCommunicationInterface(int port_) {
-                return new DebuggerCommmunicationInterface(ClientDebugger.this, port_);
+                return new CommunicationInterface(ClientDebugger.this, port_);
             }
         }, ip, port);
 	}
@@ -249,7 +250,7 @@ public class ClientDebugger implements Debugger {
     }
 
 
-    static class CMC_logQueries extends ClientDebuggerCommandMessage<Serializable> {
+    static class CMC_logQueries extends CommandMessage<Serializable> {
         private final StatementLog statementLog;
 
         CMC_logQueries(StatementLog statementLog) {
@@ -257,8 +258,8 @@ public class ClientDebugger implements Debugger {
         }
 
         @Override
-        public Serializable run() {
-            LoggingListener loggingListener = getDebugger().getLoggingListener();
+        public Serializable run(MessageContext context) {
+            LoggingListener loggingListener = context.getDebugger().getLoggingListener();
 
             if (loggingListener != null) {
                 loggingListener.logQueries(statementLog);
@@ -268,7 +269,7 @@ public class ClientDebugger implements Debugger {
         }
     }
 
-    static class CMC_logResultSet extends ClientDebuggerCommandMessage<Serializable> {
+    static class CMC_logResultSet extends CommandMessage<Serializable> {
         private final int          dataId;
         private final ResultSetLog resultSetLog;
 
@@ -278,8 +279,8 @@ public class ClientDebugger implements Debugger {
         }
 
         @Override
-        public Serializable run() {
-            LoggingListener loggingListener = getDebugger().getLoggingListener();
+        public Serializable run(MessageContext context) {
+            LoggingListener loggingListener = context.getDebugger().getLoggingListener();
 
             if (loggingListener != null) {
                 loggingListener.logResultSet(dataId, resultSetLog);
@@ -289,7 +290,7 @@ public class ClientDebugger implements Debugger {
         }
     }
 
-    static class CMC_processBreakpointBeforeExecutionHit extends ClientDebuggerCommandMessage<BreakpointHit> {
+    static class CMC_processBreakpointBeforeExecutionHit extends CommandMessage<BreakpointHit> {
         private final BreakpointHit hit;
 
         CMC_processBreakpointBeforeExecutionHit(BreakpointHit hit) {
@@ -297,8 +298,8 @@ public class ClientDebugger implements Debugger {
         }
 
         @Override
-        public BreakpointHit run() {
-            BreakpointHitHandler breakpointHitHandler = getDebugger().getBreakpointHitHandler();
+        public BreakpointHit run(MessageContext context) {
+            BreakpointHitHandler breakpointHitHandler = context.getDebugger().getBreakpointHitHandler();
 
             if (breakpointHitHandler != null) {
                 breakpointHitHandler.processBreakpointBeforeExecutionHit(hit);
@@ -313,7 +314,7 @@ public class ClientDebugger implements Debugger {
         }
     }
 
-    static class CMC_processBreakpointAfterExecutionHit extends ClientDebuggerCommandMessage<BreakpointHit> {
+    static class CMC_processBreakpointAfterExecutionHit extends CommandMessage<BreakpointHit> {
         private final BreakpointHit hit;
 
         CMC_processBreakpointAfterExecutionHit(BreakpointHit hit) {
@@ -321,8 +322,8 @@ public class ClientDebugger implements Debugger {
         }
 
         @Override
-        public BreakpointHit run() {
-            BreakpointHitHandler breakpointHitHandler = getDebugger().getBreakpointHitHandler();
+        public BreakpointHit run(MessageContext context) {
+            BreakpointHitHandler breakpointHitHandler = context.getDebugger().getBreakpointHitHandler();
 
             if (breakpointHitHandler != null) {
                 breakpointHitHandler.processBreakpointAfterExecutionHit(hit);

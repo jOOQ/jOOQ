@@ -230,7 +230,7 @@ public abstract class jOOQAbstractTest<
     public static Map<String, String>     scripts            = new HashMap<String, String>();
 
     private static RemoteDebuggerServer   SERVER;
-    private static boolean                RUN_CONSOLE_IN_PROCESS = true;
+    private static boolean                RUN_CONSOLE_IN_PROCESS = false;
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;

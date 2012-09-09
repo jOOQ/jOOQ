@@ -67,7 +67,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import org.jooq.debug.console.misc.InvisibleSplitPane;
-import org.jooq.tools.debug.StatementExecutorCreator;
+import org.jooq.tools.debug.QueryExecutorCreator;
 
 /**
  * @author Christopher Deckers
@@ -75,12 +75,12 @@ import org.jooq.tools.debug.StatementExecutorCreator;
 @SuppressWarnings("serial")
 public class EditorsPane extends JPanel {
 
-    private StatementExecutorCreator statementExecutorCreator;
+    private QueryExecutorCreator queryExecutorCreator;
     private JTabbedPane editorTabbedPane;
 
-    public EditorsPane(StatementExecutorCreator statementExecutorCreator, boolean isAddingTableNames) {
+    public EditorsPane(QueryExecutorCreator queryExecutorCreator, boolean isAddingTableNames) {
         super(new BorderLayout());
-        this.statementExecutorCreator = statementExecutorCreator;
+        this.queryExecutorCreator = queryExecutorCreator;
         setOpaque(false);
         editorTabbedPane = new JTabbedPane();
         editorTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -107,7 +107,7 @@ public class EditorsPane extends JPanel {
     }
 
     private JPanel createTablePane() {
-        final String[] tableNames = statementExecutorCreator.createStatementExecutor().getTableNames();
+        final String[] tableNames = queryExecutorCreator.createQueryExecutor().getTableNames();
         final JList tableNamesJList = new JList(tableNames);
         tableNamesJList.addMouseListener(new MouseAdapter() {
             @Override
@@ -252,7 +252,7 @@ public class EditorsPane extends JPanel {
     private void addSQLEditorPane() {
         isAdjusting = true;
         int index = editorTabbedPane.getTabCount() - 1;
-        final EditorPane sqlEditorPane = new EditorPane(statementExecutorCreator);
+        final EditorPane sqlEditorPane = new EditorPane(queryExecutorCreator);
         sqlEditorPane.setBorder(BorderFactory.createEmptyBorder(2, 5, 0, 5));
         String title = "Context " + contextCount++;
         editorTabbedPane.insertTab(title, null, sqlEditorPane, null, index);

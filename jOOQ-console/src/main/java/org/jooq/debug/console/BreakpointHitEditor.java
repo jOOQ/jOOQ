@@ -59,8 +59,8 @@ import javax.swing.JTabbedPane;
 import org.jooq.debug.console.DebuggerPane.BreakpointHitNode;
 import org.jooq.tools.debug.BreakpointHit;
 import org.jooq.tools.debug.Debugger;
-import org.jooq.tools.debug.StatementExecutor;
-import org.jooq.tools.debug.StatementExecutorCreator;
+import org.jooq.tools.debug.QueryExecutor;
+import org.jooq.tools.debug.QueryExecutorCreator;
 import org.jooq.tools.debug.BreakpointHit.ExecutionType;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -166,9 +166,9 @@ public class BreakpointHitEditor extends JPanel {
         breakpointHitExecutionPane.add(buttonPane, new GridBagConstraints(0, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         adjustStates();
         tabbedPane.addTab("Execution", breakpointHitExecutionPane);
-        tabbedPane.addTab("Editor", new EditorsPane(new StatementExecutorCreator() {
+        tabbedPane.addTab("Editor", new EditorsPane(new QueryExecutorCreator() {
             @Override
-            public StatementExecutor createStatementExecutor() {
+            public QueryExecutor createQueryExecutor() {
                 return debugger.createBreakpointHitStatementExecutor(breakpointHit.getThreadID());
             }
         }, false));

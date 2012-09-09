@@ -45,11 +45,11 @@ import java.util.Set;
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class StatementMatcher implements Serializable {
+public class QueryMatcher implements Serializable {
 
-    private boolean isActive;
-    private TextMatcher threadNameTextMatcher;
-    private TextMatcher statementTextMatcher;
+    private boolean        isActive;
+    private TextMatcher    threadNameTextMatcher;
+    private TextMatcher    statementTextMatcher;
     private Set<QueryType> queryTypeSet;
 
     /**
@@ -57,32 +57,32 @@ public class StatementMatcher implements Serializable {
      * @param statementTextMatcher a text matcher for statement or null for no text matching.
      * @param queryTypeSet some types or null for all types.
      */
-    public StatementMatcher(TextMatcher threadNameTextMatcher, TextMatcher statementTextMatcher, Set<QueryType> queryTypeSet, boolean isActive) {
+    public QueryMatcher(TextMatcher threadNameTextMatcher, TextMatcher statementTextMatcher, Set<QueryType> queryTypeSet, boolean isActive) {
         this.threadNameTextMatcher = threadNameTextMatcher;
         this.statementTextMatcher = statementTextMatcher;
         this.queryTypeSet = queryTypeSet == null? null: EnumSet.copyOf(queryTypeSet);
         this.isActive = isActive;
     }
 
-    public boolean matches(StatementInfo statementInfo) {
-        if(!isActive) {
+    public boolean matches(QueryInfo queryInfo) {
+        if (!isActive) {
             return false;
         }
         boolean hasMatcher = false;
-        if(threadNameTextMatcher != null) {
-            if(!threadNameTextMatcher.matches(statementInfo.getThreadName())) {
+        if (threadNameTextMatcher != null) {
+            if (!threadNameTextMatcher.matches(queryInfo.getThreadName())) {
                 return false;
             }
             hasMatcher = true;
         }
-        if(statementTextMatcher != null) {
-            if(!statementTextMatcher.matches(statementInfo.getQueries())) {
+        if (statementTextMatcher != null) {
+            if (!statementTextMatcher.matches(queryInfo.getQueries())) {
                 return false;
             }
             hasMatcher = true;
         }
-        if(queryTypeSet != null) {
-            if(!queryTypeSet.contains(statementInfo.getQueryType())) {
+        if (queryTypeSet != null) {
+            if (!queryTypeSet.contains(queryInfo.getQueryType())) {
                 return false;
             }
             hasMatcher = true;
@@ -105,5 +105,4 @@ public class StatementMatcher implements Serializable {
     public boolean isActive() {
         return isActive;
     }
-
 }

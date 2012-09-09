@@ -104,11 +104,11 @@ import javax.swing.text.BadLocationException;
 
 import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.JTableX;
-import org.jooq.tools.debug.StatementExecution;
-import org.jooq.tools.debug.StatementExecutionMessageResult;
-import org.jooq.tools.debug.StatementExecutionResult;
-import org.jooq.tools.debug.StatementExecutor;
-import org.jooq.tools.debug.StatementExecutorCreator;
+import org.jooq.tools.debug.QueryExecution;
+import org.jooq.tools.debug.QueryExecutionMessageResult;
+import org.jooq.tools.debug.QueryExecutionResult;
+import org.jooq.tools.debug.QueryExecutor;
+import org.jooq.tools.debug.QueryExecutorCreator;
 import org.jooq.tools.debug.impl.StatementExecutionResultSetResult;
 import org.jooq.tools.debug.impl.Utils;
 
@@ -126,15 +126,15 @@ public class EditorPane extends JPanel {
 
     private SqlTextArea editorTextArea;
     private JPanel southPanel;
-    private StatementExecutorCreator statementExecutorCreator;
+    private QueryExecutorCreator queryExecutorCreator;
     private final Object STATEMENT_EXECUTOR_CREATOR_LOCK = new Object();
-    private StatementExecutor lastStatementExecutor;
+    private QueryExecutor lastStatementExecutor;
     private JButton startButton;
     private JButton stopButton;
 
-    EditorPane(StatementExecutorCreator statementExecutorCreator) {
+    EditorPane(QueryExecutorCreator queryExecutorCreator) {
         super(new BorderLayout());
-        this.statementExecutorCreator = statementExecutorCreator;
+        this.queryExecutorCreator = queryExecutorCreator;
         setOpaque(false);
         JPanel northPanel = new JPanel(new BorderLayout());
         northPanel.setOpaque(false);
@@ -271,14 +271,14 @@ public class EditorPane extends JPanel {
                 stopButton.setToolTipText("Query started on " + Utils.formatDateTimeTZ(new Date()));
             }
         });
-        StatementExecutor statementExecutor;
+        QueryExecutor queryExecutor;
         synchronized (STATEMENT_EXECUTOR_CREATOR_LOCK) {
-            statementExecutor = statementExecutorCreator.createStatementExecutor();
-            lastStatementExecutor = statementExecutor;
+            queryExecutor = queryExecutorCreator.createQueryExecutor();
+            lastStatementExecutor = queryExecutor;
         }
-        StatementExecution statementExecution;
+        QueryExecution queryExecution;
         try {
-            statementExecution = statementExecutor.execute(sql, isUsingMaxRowCount? MAX_ROW_COUNT: Integer.MAX_VALUE, maxDisplayedRowCount);
+            queryExecution = queryExecutor.execute(sql, isUsingMaxRowCount? MAX_ROW_COUNT: Integer.MAX_VALUE, maxDisplayedRowCount);
         } finally {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -289,14 +289,14 @@ public class EditorPane extends JPanel {
                 }
             });
         }
-        final StatementExecutionResult[] results = statementExecution.getResults();
-        final long executionDuration = statementExecution.getExecutionDuration();
+        final QueryExecutionResult[] results = queryExecution.getResults();
+        final long executionDuration = queryExecution.getExecutionDuration();
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                for(StatementExecutionResult result: results) {
-                    if(result instanceof StatementExecutionMessageResult) {
-                        StatementExecutionMessageResult messageResult = (StatementExecutionMessageResult)result;
+                for(QueryExecutionResult result: results) {
+                    if(result instanceof QueryExecutionMessageResult) {
+                        QueryExecutionMessageResult messageResult = (QueryExecutionMessageResult)result;
                         setMessage(addResultPane(), messageResult.getMessage(), messageResult.isError());
                     } else if(result instanceof StatementExecutionResultSetResult) {
                         addResultTable(sql, executionDuration, (StatementExecutionResultSetResult)result);
@@ -846,14 +846,14 @@ public class EditorPane extends JPanel {
         List<CompletionCandidate> candidateList = new ArrayList<CompletionCandidate>();
         // Here can add more candidates depending on magic word start.
         if(candidateList.isEmpty()) {
-            StatementExecutor statementExecutor = statementExecutorCreator.createStatementExecutor();
-            for(String s: statementExecutor.getTableNames()) {
+            QueryExecutor queryExecutor = queryExecutorCreator.createQueryExecutor();
+            for(String s: queryExecutor.getTableNames()) {
                 candidateList.add(new CompletionCandidate(KeyWordType.TABLE, s));
             }
-            for(String s: statementExecutor.getTableColumnNames()) {
+            for(String s: queryExecutor.getTableColumnNames()) {
                 candidateList.add(new CompletionCandidate(KeyWordType.TABLE_COlUMN, s));
             }
-            statementExecutor.stopExecution();
+            queryExecutor.stopExecution();
             for(String s: new String[] {
                     "ALTER",
                     "ASC",

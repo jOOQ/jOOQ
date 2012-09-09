@@ -38,8 +38,8 @@ package org.jooq.tools.debug.impl;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.jooq.tools.debug.StatementExecution;
-import org.jooq.tools.debug.StatementExecutor;
+import org.jooq.tools.debug.QueryExecution;
+import org.jooq.tools.debug.QueryExecutor;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_createServerStatementExecutor;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_doStatementExecutorExecution;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_getStatementExecutorTableColumnNames;
@@ -49,7 +49,7 @@ import org.jooq.tools.debug.impl.ServerDebugger.CMS_stopStatementExecutorExecuti
 /**
  * @author Christopher Deckers
  */
-class ClientStatementExecutor implements StatementExecutor {
+class ClientStatementExecutor implements QueryExecutor {
 
     private static AtomicInteger nextID = new AtomicInteger();
 
@@ -66,7 +66,7 @@ class ClientStatementExecutor implements StatementExecutor {
     }
 
     @Override
-    public StatementExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
+    public QueryExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
         return debugger.getCommunicationInterface().syncSend(new CMS_doStatementExecutorExecution(id, sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold));
     }
 

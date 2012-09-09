@@ -47,20 +47,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Breakpoint implements Serializable {
 
     private int id;
-    private StatementMatcher statementMatcher;
+    private QueryMatcher queryMatcher;
     private Integer hitCount;
     private boolean isBreaking;
-    private StatementProcessor beforeExecutionProcessor;
-    private StatementProcessor replacementExecutionProcessor;
-    private StatementProcessor afterExecutionProcessor;
+    private QueryProcessor beforeExecutionProcessor;
+    private QueryProcessor replacementExecutionProcessor;
+    private QueryProcessor afterExecutionProcessor;
 
-    public Breakpoint(int id, Integer hitCount, StatementMatcher statementMatcher, boolean isBreaking, StatementProcessor beforeExecutionProcessor, StatementProcessor replacementExecutionProcessor, StatementProcessor afterExecutionProcessor) {
+    public Breakpoint(int id, Integer hitCount, QueryMatcher queryMatcher, boolean isBreaking, QueryProcessor beforeExecutionProcessor, QueryProcessor replacementExecutionProcessor, QueryProcessor afterExecutionProcessor) {
         this.id = id;
         this.hitCount = hitCount;
         if(hitCount != null) {
             currentHitCount = new AtomicInteger(hitCount);
         }
-        this.statementMatcher = statementMatcher;
+        this.queryMatcher = queryMatcher;
         this.isBreaking = isBreaking;
         this.beforeExecutionProcessor = beforeExecutionProcessor;
         this.replacementExecutionProcessor = replacementExecutionProcessor;
@@ -71,20 +71,20 @@ public class Breakpoint implements Serializable {
         return id;
     }
 
-    public StatementMatcher getStatementMatcher() {
-        return statementMatcher;
+    public QueryMatcher getStatementMatcher() {
+        return queryMatcher;
     }
 
     private transient AtomicInteger currentHitCount;
 
-    public boolean matches(StatementInfo statementInfo, boolean trackHitCount) {
+    public boolean matches(QueryInfo queryInfo, boolean trackHitCount) {
         if(trackHitCount && hitCount != null && currentHitCount.get() <= 0) {
             // No need to match if hit count was already reached.
             return false;
         }
         boolean hasMatcher = false;
-        if(statementMatcher != null) {
-            if(!statementMatcher.matches(statementInfo)) {
+        if(queryMatcher != null) {
+            if(!queryMatcher.matches(queryInfo)) {
                 return false;
             }
             hasMatcher = true;
@@ -126,15 +126,15 @@ public class Breakpoint implements Serializable {
         return isBreaking;
     }
 
-    public StatementProcessor getBeforeExecutionProcessor() {
+    public QueryProcessor getBeforeExecutionProcessor() {
         return beforeExecutionProcessor;
     }
 
-    public StatementProcessor getReplacementExecutionProcessor() {
+    public QueryProcessor getReplacementExecutionProcessor() {
         return replacementExecutionProcessor;
     }
 
-    public StatementProcessor getAfterExecutionProcessor() {
+    public QueryProcessor getAfterExecutionProcessor() {
         return afterExecutionProcessor;
     }
 

@@ -51,7 +51,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.jooq.tools.debug.Debugger;
-import org.jooq.tools.debug.StatementMatcher;
+import org.jooq.tools.debug.QueryMatcher;
 
 /**
  * @author Christopher Deckers
@@ -95,7 +95,7 @@ public class StatementMatchersDialogBox extends JDialog {
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StatementMatcher[] statementMatchers = statementMatchersPane.getStatementMatchers();
+                QueryMatcher[] statementMatchers = statementMatchersPane.getStatementMatchers();
                 debugger.setLoggingStatementMatchers(statementMatchers.length == 0? null: statementMatchers);
                 dispose();
             }
@@ -105,7 +105,7 @@ public class StatementMatchersDialogBox extends JDialog {
         applyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StatementMatcher[] statementMatchers = statementMatchersPane.getStatementMatchers();
+                QueryMatcher[] statementMatchers = statementMatchersPane.getStatementMatchers();
                 debugger.setLoggingStatementMatchers(statementMatchers.length == 0? null: statementMatchers);
             }
         });

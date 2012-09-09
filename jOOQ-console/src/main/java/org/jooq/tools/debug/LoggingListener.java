@@ -36,15 +36,18 @@
  */
 package org.jooq.tools.debug;
 
-
-
 /**
+ * A listener interface for the {@link Debugger}'s logging capabilities
+ * <p>
+ * This listener can be hooked into a {@link Debugger} in order to receive
+ * notifications about executed queries and fetched results.
+ *
  * @author Christopher Deckers
  */
 public interface LoggingListener {
 
-    public void logQueries(StatementLog statementLog);
+    public void logQuery(QueryLog log);
 
-    public void logResultSet(int dataId, ResultSetLog resultSetLog);
+    public void logResult(int dataId, ResultLog log);
 
 }

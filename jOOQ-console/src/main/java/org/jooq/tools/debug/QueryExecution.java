@@ -38,50 +38,28 @@ package org.jooq.tools.debug;
 
 import java.io.Serializable;
 
-import org.jooq.tools.debug.impl.Utils;
 
 /**
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class StatementProcessor implements Serializable {
+public class QueryExecution implements Serializable {
 
-    public static enum ProcessorExecutionType {
-        STATIC("Static SQL"),
-        SED_LIKE_REG_EXP("Sed-like Reg. Exp."),
-        ;
-        private String name;
-        private ProcessorExecutionType(String name) {
-            this.name = name;
-        }
-        @Override
-        public String toString() {
-            return name;
-        }
+    private long executionDuration;
+
+    private QueryExecutionResult[] results;
+
+    public QueryExecution(long executionDuration, QueryExecutionResult... results) {
+        this.executionDuration = executionDuration;
+        this.results = results;
     }
 
-    private ProcessorExecutionType type;
-    private String text;
-
-    public StatementProcessor(ProcessorExecutionType type, String text) {
-        this.type = type;
-        this.text = text;
+    public QueryExecutionResult[] getResults() {
+        return results;
     }
 
-    public ProcessorExecutionType getType() {
-        return type;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public String processSQL(String sql) {
-        switch(type) {
-            case STATIC: return text;
-            case SED_LIKE_REG_EXP: return Utils.applySedRegularExpression(sql, text);
-        }
-        throw new IllegalStateException();
+    public long getExecutionDuration() {
+        return executionDuration;
     }
 
 }

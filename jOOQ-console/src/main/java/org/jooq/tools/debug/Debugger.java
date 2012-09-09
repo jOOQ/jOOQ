@@ -77,4 +77,6 @@ public interface Debugger extends StatementExecutorCreator {
 
     public StatementExecutor createBreakpointHitStatementExecutor(long threadID);
 
+    public void close();
+
 }

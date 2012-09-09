@@ -53,13 +53,8 @@ final class ServerCommunication extends Communication {
     }
 
     @Override
-    protected void processOpened() {
-        DebuggerRegistry.add(getDebugger());
-    }
-
-    @Override
     protected void processClosed() {
-        DebuggerRegistry.remove(getDebugger());
+        getDebugger().close();
         getDebugger().cleanup();
     }
 }

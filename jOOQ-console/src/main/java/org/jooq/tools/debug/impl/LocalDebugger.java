@@ -70,10 +70,16 @@ class LocalDebugger implements Debugger {
 
     public LocalDebugger(DatabaseDescriptor databaseDescriptor) {
         this.databaseDescriptor = databaseDescriptor;
+        DebuggerRegistry.add(this);
     }
 
     private LoggingListener loggingListener;
     private final Object LOGGING_LISTENER_LOCK = new Object();
+
+    @Override
+    public void close() {
+        DebuggerRegistry.remove(this);
+    }
 
     @Override
     public void setLoggingListener(LoggingListener loggingListener) {
@@ -352,4 +358,46 @@ class LocalDebugger implements Debugger {
         });
     }
 
+    /**
+     * A registry for local debuggers
+     */
+    static class DebuggerRegistry {
+
+        private static final Object         LOCK      = new Object();
+        private static final List<Debugger> debuggers = new ArrayList<Debugger>();
+
+        private static void add(Debugger debugger) {
+            synchronized (LOCK) {
+                debuggers.add(debugger);
+            }
+        }
+
+        private static void remove(Debugger debugger) {
+            synchronized (LOCK) {
+                debuggers.remove(debugger);
+            }
+        }
+
+        /*
+         * @return an immutable list of all the debuggers currently registered.
+         */
+        public static List<Debugger> get() {
+            synchronized (LOCK) {
+
+                // No cost when no loggers
+                if (debuggers.isEmpty()) {
+                    return Collections.emptyList();
+                }
+
+                // Small cost: copy collection and make it immutable.
+                // Generally, no more than one or two listeners in the list.
+                return Collections.unmodifiableList(new ArrayList<Debugger>(debuggers));
+            }
+        }
+
+        /**
+         * No instances
+         */
+        private DebuggerRegistry() {}
+    }
 }

@@ -83,10 +83,6 @@ abstract class Communication {
 
     void notifyOpen() {
         isOpen = true;
-        processOpened();
-    }
-
-    protected void processOpened() {
     }
 
     void notifyKilled() {

@@ -538,6 +538,22 @@ public interface ResultQuery<R extends Record> extends Query {
     <K, V> Map<K, List<V>> fetchGroups(Field<K> key, Field<V> value) throws DataAccessException;
 
     /**
+     * Return a {@link Map} with results grouped by the given key and mapped
+     * into the given entity type.
+     *
+     * @param <K> The key's generic field type
+     * @param <E> The generic entity type.
+     * @param key The key field.
+     * @param type The entity type.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoGroups(Field, Class)
+     */
+    <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) throws DataAccessException,
+        MappingException;
+
+    /**
      * Execute the query and return the generated result as an Object matrix
      * <p>
      * You can access data like this
@@ -729,22 +745,6 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      */
     <H extends RecordHandler<R>> H fetchInto(H handler) throws DataAccessException;
-
-    /**
-     * Return a {@link Map} with results grouped by the given key and mapped
-     * into the given entity type.
-     *
-     * @param <K> The key's generic field type
-     * @param <E> The generic entity type.
-     * @param key The key field.
-     * @param type The entity type.
-     * @throws DataAccessException if something went wrong executing the query
-     * @throws MappingException wrapping any reflection or data type conversion
-     *             exception that might have occurred while mapping records
-     * @see Result#intoGroups(Field, Class)
-     */
-    <K, E> Map<K, List<E>> fetchIntoGroups(Field<K> key, Class<? extends E> type) throws DataAccessException,
-        MappingException;
 
     /**
      * Fetch results asynchronously.

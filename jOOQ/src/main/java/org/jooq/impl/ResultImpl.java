@@ -57,7 +57,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -1449,7 +1448,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
             List<E> list = map.get(keyVal);
             if (list == null) {
-                list = new LinkedList<E>();
+                list = new ArrayList<E>();
                 map.put(keyVal, list);
             }
 

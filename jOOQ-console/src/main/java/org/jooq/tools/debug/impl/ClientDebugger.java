@@ -77,6 +77,9 @@ class ClientDebugger implements Debugger {
         return comm;
     }
 
+    @Override
+    public void close() {}
+
     private LoggingListener loggingListener;
     private final Object LOGGING_LISTENER_LOCK = new Object();
 

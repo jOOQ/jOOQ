@@ -76,7 +76,6 @@ import org.jooq.debug.console.misc.JSedRegExBuilder;
 import org.jooq.tools.debug.DatabaseDescriptor;
 import org.jooq.tools.debug.Debugger;
 import org.jooq.tools.debug.impl.DebuggerFactory;
-import org.jooq.tools.debug.impl.DebuggerRegistry;
 
 /**
  * @author Christopher Deckers
@@ -94,12 +93,8 @@ public class Console extends JFrame {
         // Local debugger registration is managed by the console since it hides the debugger.
         addWindowListener(new WindowAdapter() {
             @Override
-            public void windowOpened(WindowEvent e) {
-                DebuggerRegistry.add(debugger);
-            }
-            @Override
             public void windowClosed(WindowEvent e) {
-                DebuggerRegistry.remove(debugger);
+                debugger.close();
             }
         });
         init(isShowingLoggingTab, isShowingDebugger);

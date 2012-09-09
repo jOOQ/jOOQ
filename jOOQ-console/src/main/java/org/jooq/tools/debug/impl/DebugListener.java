@@ -60,13 +60,28 @@ import org.jooq.tools.debug.StatementInfo;
 import org.jooq.tools.debug.StatementLog;
 import org.jooq.tools.debug.StatementMatcher;
 import org.jooq.tools.debug.StatementProcessor;
+import org.jooq.tools.debug.impl.LocalDebugger.DebuggerRegistry;
 
 /**
  * @author Christopher Deckers
  */
 public class DebugListener extends DefaultExecuteListener {
 
-	private boolean hasDebuggers;
+    private boolean    hasDebuggers;
+
+    private long       startPreparationTime;
+    private long       aggregatedPreparationDuration;
+
+    private long       startBindTime;
+    private long       endBindTime;
+
+    private long       startExecutionTime;
+    private long       endExecutionTime;
+    private String     matchingSQL;
+    private String     matchingParameterDescription;
+    private String     effectiveSQL;
+    private Breakpoint matchingBreakpoint;
+    private Debugger   matchingDebugger = null;
 
 	@Override
 	public void renderStart(ExecuteContext ctx) {
@@ -78,9 +93,6 @@ public class DebugListener extends DefaultExecuteListener {
 		startExecutionTime = 0;
 		endExecutionTime = 0;
 	}
-
-	private long startPreparationTime;
-	private long aggregatedPreparationDuration;
 
 	@Override
 	public void prepareStart(ExecuteContext ctx) {
@@ -104,9 +116,6 @@ public class DebugListener extends DefaultExecuteListener {
 		}
 	}
 
-	private long startBindTime;
-	private long endBindTime;
-
 	@Override
 	public void bindStart(ExecuteContext ctx) {
 		if(!hasDebuggers) {
@@ -122,14 +131,6 @@ public class DebugListener extends DefaultExecuteListener {
 		}
 		endBindTime = System.currentTimeMillis();
 	}
-
-	private long startExecutionTime;
-	private long endExecutionTime;
-	private String matchingSQL;
-	private String matchingParameterDescription;
-	private String effectiveSQL;
-	private Breakpoint matchingBreakpoint;
-    private Debugger matchingDebugger = null;
 
 	@Override
 	public void executeStart(ExecuteContext ctx) {

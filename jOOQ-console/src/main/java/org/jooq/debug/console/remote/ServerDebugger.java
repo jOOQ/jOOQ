@@ -69,10 +69,10 @@ class ServerDebugger extends LocalDebugger {
         super(databaseDescriptor);
     }
 
-    private CommunicationInterface comm;
+    private Communication comm;
 
-    void setCommunicationInterface(CommunicationInterface communicationInterface) {
-        this.comm = communicationInterface;
+    void setCommunicationInterface(Communication communication) {
+        this.comm = communication;
     }
 
     private void setLoggingActive(boolean isActive) {

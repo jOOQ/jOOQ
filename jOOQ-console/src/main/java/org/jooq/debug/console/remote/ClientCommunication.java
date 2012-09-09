@@ -36,35 +36,45 @@
  */
 package org.jooq.debug.console.remote;
 
-import org.jooq.debug.Debugger;
+import java.io.IOException;
+import java.net.Socket;
+
 
 /**
- * A wrapper object for types that are required in message execution contexts
- * <p>
- * This type contains various objects that are needed when executing a
- * <code>CommandMessage</code>
- *
  * @author Lukas Eder
  */
-class MessageContext {
+final class ClientCommunication extends Communication {
 
-    private final Debugger           debugger;
-    private final MessagingInterface messagingInterface;
+    public ClientCommunication(ClientDebugger debugger, int port, String ip) throws Exception {
+        super(debugger);
 
-    public MessageContext(Communication comm) {
-        this(comm.getDebugger(), comm.getMessagingInterface());
+        init(port, ip);
     }
 
-    public MessageContext(Debugger debugger, MessagingInterface messagingInterface) {
-        this.debugger = debugger;
-        this.messagingInterface = messagingInterface;
-    }
-
-    public Debugger getDebugger() {
-        return debugger;
-    }
-
-    public MessagingInterface getMessagingInterface() {
-        return messagingInterface;
+    private void init(int port, String ip) throws Exception {
+        // Create the interface to communicate with the process handling the
+        // other side
+        Socket socket = null;
+        // 2 attempts
+        for (int i = 1; i >= 0; i--) {
+            try {
+                socket = new Socket(ip, port);
+                break;
+            }
+            catch (IOException e) {
+                if (i == 0) {
+                    throw new RuntimeException(e);
+                }
+            }
+            try {
+                Thread.sleep(100);
+            }
+            catch (Exception e) {}
+        }
+        if (socket == null) {
+            throw new IllegalStateException("Failed to connect to " + ip + "!");
+        }
+        setMessagingInterface(new MessagingInterface(this, socket, true));
+        notifyOpen();
     }
 }

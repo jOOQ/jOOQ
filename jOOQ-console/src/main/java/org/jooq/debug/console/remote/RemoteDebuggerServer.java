@@ -37,9 +37,10 @@
 package org.jooq.debug.console.remote;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 
-import org.jooq.debug.DebuggerRegistry;
 import org.jooq.debug.console.DatabaseDescriptor;
 
 /**
@@ -54,34 +55,16 @@ public class RemoteDebuggerServer {
         this(port, null);
     }
 
-	public RemoteDebuggerServer(final int port, final DatabaseDescriptor descriptor) {
+    public RemoteDebuggerServer(final int port, final DatabaseDescriptor descriptor) {
         try {
-            synchronized(LOCK) {
-                serverSocket = CommunicationInterface.openServerCommunicationChannel(new CommunicationInterfaceFactory() {
-                    @Override
-                    public CommunicationInterface createCommunicationInterface(int port_) {
-                        final ServerDebugger debugger = new ServerDebugger(descriptor);
-                        CommunicationInterface commmunicationInterface = new CommunicationInterface(debugger, port_) {
-                            @Override
-                            protected void processOpened() {
-                                DebuggerRegistry.add(debugger);
-                            }
-
-                            @Override
-                            protected void processClosed() {
-                                DebuggerRegistry.remove(debugger);
-                                debugger.cleanup();
-                            }
-                        };
-                        debugger.setCommunicationInterface(commmunicationInterface);
-                        return commmunicationInterface;
-                    }
-                }, port);
+            synchronized (LOCK) {
+                serverSocket = openServerCommunicationChannel(port, descriptor);
             }
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
-	}
+    }
 
     public void close() {
         synchronized (LOCK) {
@@ -95,5 +78,44 @@ public class RemoteDebuggerServer {
                 serverSocket = null;
             }
         }
+    }
+
+    public static ServerSocket openServerCommunicationChannel(final int port, final DatabaseDescriptor descriptor) throws Exception {
+        final ServerSocket serverSocket;
+        try {
+          serverSocket = new ServerSocket();
+//          serverSocket.setReuseAddress(true);
+          serverSocket.bind(new InetSocketAddress(port));
+        } catch(IOException e) {
+          throw e;
+        }
+        Thread serverThread = new Thread("Communication channel server on port " + port) {
+            @Override
+            public void run() {
+                while(!serverSocket.isClosed()) {
+                    final Socket socket;
+                    try {
+                        socket = serverSocket.accept();
+                        new Thread("Communication channel - client connection") {
+                            @Override
+                            public void run() {
+                                final ServerDebugger debugger = new ServerDebugger(descriptor);
+                                Communication comm = new ServerCommunication(debugger);
+                                debugger.setCommunicationInterface(comm);
+                                comm.setMessagingInterface(new MessagingInterface(comm, socket, false));
+                                comm.notifyOpen();
+                            }
+                        }.start();
+                    } catch(Exception e) {
+                        if(!serverSocket.isClosed()) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        };
+        serverThread.setDaemon(true);
+        serverThread.start();
+        return serverSocket;
     }
 }

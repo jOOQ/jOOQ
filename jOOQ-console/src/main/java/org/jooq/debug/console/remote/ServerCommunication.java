@@ -36,35 +36,31 @@
  */
 package org.jooq.debug.console.remote;
 
-import org.jooq.debug.Debugger;
+import org.jooq.debug.DebuggerRegistry;
+
 
 /**
- * A wrapper object for types that are required in message execution contexts
- * <p>
- * This type contains various objects that are needed when executing a
- * <code>CommandMessage</code>
- *
  * @author Lukas Eder
  */
-class MessageContext {
+final class ServerCommunication extends Communication {
 
-    private final Debugger           debugger;
-    private final MessagingInterface messagingInterface;
-
-    public MessageContext(Communication comm) {
-        this(comm.getDebugger(), comm.getMessagingInterface());
+    public ServerCommunication(ServerDebugger debugger) {
+        super(debugger);
     }
 
-    public MessageContext(Debugger debugger, MessagingInterface messagingInterface) {
-        this.debugger = debugger;
-        this.messagingInterface = messagingInterface;
+    @Override
+    public ServerDebugger getDebugger() {
+        return (ServerDebugger) super.getDebugger();
     }
 
-    public Debugger getDebugger() {
-        return debugger;
+    @Override
+    protected void processOpened() {
+        DebuggerRegistry.add(getDebugger());
     }
 
-    public MessagingInterface getMessagingInterface() {
-        return messagingInterface;
+    @Override
+    protected void processClosed() {
+        DebuggerRegistry.remove(getDebugger());
+        getDebugger().cleanup();
     }
 }

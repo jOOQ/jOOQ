@@ -67,18 +67,13 @@ import org.jooq.debug.console.remote.ServerDebugger.CMS_setLoggingStatementMatch
 @SuppressWarnings("serial")
 public class ClientDebugger implements Debugger {
 
-    private CommunicationInterface comm;
+    private Communication comm;
 
 	public ClientDebugger(String ip, int port) throws Exception {
-	    comm = CommunicationInterface.openClientCommunicationChannel(new CommunicationInterfaceFactory() {
-            @Override
-            public CommunicationInterface createCommunicationInterface(int port_) {
-                return new CommunicationInterface(ClientDebugger.this, port_);
-            }
-        }, ip, port);
+	    comm = new ClientCommunication(this, port, ip);
 	}
 
-    CommunicationInterface getCommunicationInterface() {
+    Communication getCommunicationInterface() {
         return comm;
     }
 

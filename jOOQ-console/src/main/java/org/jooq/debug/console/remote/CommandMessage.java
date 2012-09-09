@@ -58,7 +58,7 @@ abstract class CommandMessage<S extends Serializable> extends Message<S> {
     /**
      * Run the message.
      *
-     * @param context The context in which this {@link Message} object is run
+     * @param context The context in which this <code>Message</code> object is run
      * @return the result that may be passed back to the caller.
      * @throws Exception any exception that may happen, and which would be
      *             passed back if it is a synchronous execution.

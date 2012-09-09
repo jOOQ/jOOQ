@@ -168,11 +168,11 @@ class MessagingInterface {
 
     private Map<Long, MessageProcessingThread> originatorThreadIDToThreadMap = new HashMap<Long, MessagingInterface.MessageProcessingThread>();
 
-    private CommunicationInterface comm;
+    private Communication comm;
     private boolean isClient;
 
-    MessagingInterface(final CommunicationInterface communicationInterface, final Socket socket, boolean isClient) {
-        this.comm = communicationInterface;
+    MessagingInterface(final Communication communication, final Socket socket, boolean isClient) {
+        this.comm = communication;
         this.isClient = isClient;
         try {
             oos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()) {
@@ -204,7 +204,7 @@ class MessagingInterface {
                             isAlive = false;
 //                            e.printStackTrace();
                             try {
-                                communicationInterface.notifyKilled();
+                                communication.notifyKilled();
                             } catch(Exception ex) {
                                 ex.printStackTrace();
                             }

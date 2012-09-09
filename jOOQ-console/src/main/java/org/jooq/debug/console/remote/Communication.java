@@ -36,11 +36,7 @@
  */
 package org.jooq.debug.console.remote;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 import org.jooq.debug.Debugger;
 
@@ -50,17 +46,17 @@ import org.jooq.debug.Debugger;
  *
  * @author Christopher Deckers
  */
-class CommunicationInterface {
+abstract class Communication {
 
-    private final boolean    IS_SYNCING_MESSAGES = Boolean.parseBoolean(System.getProperty("communication.interface.syncmessages"));
+    private final boolean               IS_SYNCING_MESSAGES = Boolean.parseBoolean(System.getProperty("communication.interface.syncmessages"));
 
-    private volatile boolean isOpen;
-    private final Debugger   debugger;
-    private final int        port;
+    private volatile boolean            isOpen;
+    private volatile MessagingInterface messagingInterface;
 
-    public CommunicationInterface(Debugger debugger, int port) {
+    private final Debugger              debugger;
+
+    public Communication(Debugger debugger) {
         this.debugger = debugger;
-        this.port = port;
     }
 
     public Debugger getDebugger() {
@@ -72,23 +68,17 @@ class CommunicationInterface {
     }
 
     private void checkOpen() {
-        if(!isOpen()) {
+        if (!isOpen()) {
             throw new IllegalStateException("The interface is not open!");
         }
     }
 
     public void close() {
         isOpen = false;
-        if(messagingInterface != null) {
+        if (messagingInterface != null) {
             messagingInterface.destroy();
             messagingInterface = null;
         }
-    }
-
-    public static CommunicationInterface openClientCommunicationChannel(CommunicationInterfaceFactory communicationInterfaceFactory, String ip, int port) throws Exception {
-        CommunicationInterface communicationInterface = communicationInterfaceFactory.createCommunicationInterface(port);
-        communicationInterface.createClientCommunicationChannel(ip);
-        return communicationInterface;
     }
 
     void notifyOpen() {
@@ -108,32 +98,9 @@ class CommunicationInterface {
     protected void processClosed() {
     }
 
-    private void createClientCommunicationChannel(String ip) throws Exception {
-        // Create the interface to communicate with the process handling the other side
-        Socket socket = null;
-        // 2 attempts
-        for(int i=1; i>=0; i--) {
-            try {
-                socket = new Socket(ip, port);
-                break;
-            } catch(IOException e) {
-                if(i == 0) {
-                    throw new RuntimeException(e);
-                }
-            }
-            try {
-                Thread.sleep(100);
-            } catch(Exception e) {
-            }
-        }
-        if(socket == null) {
-            throw new IllegalStateException("Failed to connect to " + ip + "!");
-        }
-        messagingInterface = new MessagingInterface(this, socket, true);
-        notifyOpen();
+    void setMessagingInterface(MessagingInterface messagingInterface) {
+        this.messagingInterface = messagingInterface;
     }
-
-    private volatile MessagingInterface messagingInterface;
 
     MessagingInterface getMessagingInterface() {
         return messagingInterface;
@@ -171,42 +138,4 @@ class CommunicationInterface {
             messagingInterface.asyncSend(message);
         }
     }
-
-    public static ServerSocket openServerCommunicationChannel(final CommunicationInterfaceFactory communicationInterfaceFactory, final int port) throws Exception {
-        final ServerSocket serverSocket;
-        try {
-          serverSocket = new ServerSocket();
-//          serverSocket.setReuseAddress(true);
-          serverSocket.bind(new InetSocketAddress(port));
-        } catch(IOException e) {
-          throw e;
-        }
-        Thread serverThread = new Thread("Communication channel server on port " + port) {
-            @Override
-            public void run() {
-                while(!serverSocket.isClosed()) {
-                    final Socket socket;
-                    try {
-                        socket = serverSocket.accept();
-                        new Thread("Communication channel - client connection") {
-                            @Override
-                            public void run() {
-                                CommunicationInterface communicationInterface = communicationInterfaceFactory.createCommunicationInterface(port);
-                                communicationInterface.messagingInterface = new MessagingInterface(communicationInterface, socket, false);
-                                communicationInterface.notifyOpen();
-                            }
-                        }.start();
-                    } catch(Exception e) {
-                        if(!serverSocket.isClosed()) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        };
-        serverThread.setDaemon(true);
-        serverThread.start();
-        return serverSocket;
-    }
-
 }

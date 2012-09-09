@@ -58,6 +58,7 @@ import org.jooq.debug.console.remote.ClientDebugger.CMC_logQueries;
 import org.jooq.debug.console.remote.ClientDebugger.CMC_logResultSet;
 import org.jooq.debug.console.remote.ClientDebugger.CMC_processBreakpointAfterExecutionHit;
 import org.jooq.debug.console.remote.ClientDebugger.CMC_processBreakpointBeforeExecutionHit;
+import org.jooq.debug.console.remote.messaging.CommandMessage;
 import org.jooq.debug.console.remote.messaging.CommunicationInterface;
 
 /**
@@ -81,11 +82,11 @@ class ServerDebugger extends LocalDebugger {
             setLoggingListener(new LoggingListener() {
                 @Override
                 public void logQueries(StatementLog statementLog) {
-                    comm.asyncExec(new CMC_logQueries(statementLog));
+                    comm.asyncSend((CommandMessage<?>) new CMC_logQueries(statementLog));
                 }
                 @Override
                 public void logResultSet(int dataId, ResultSetLog resultSetLog) {
-                    comm.asyncExec(new CMC_logResultSet(dataId, resultSetLog));
+                    comm.asyncSend((CommandMessage<?>) new CMC_logResultSet(dataId, resultSetLog));
                 }
             });
         } else {
@@ -112,14 +113,14 @@ class ServerDebugger extends LocalDebugger {
             setBreakpointHitHandler(new BreakpointHitHandler() {
                 @Override
                 public void processBreakpointBeforeExecutionHit(BreakpointHit hit) {
-                    BreakpointHit modifiedBreakpointHit = comm.syncExec(new CMC_processBreakpointBeforeExecutionHit(hit));
+                    BreakpointHit modifiedBreakpointHit = comm.syncSend(new CMC_processBreakpointBeforeExecutionHit(hit));
                     if(modifiedBreakpointHit != null) {
                         hit.setExecutionType(modifiedBreakpointHit.getExecutionType(), modifiedBreakpointHit.getSql());
                     }
                 }
                 @Override
                 public void processBreakpointAfterExecutionHit(BreakpointHit hit) {
-                    comm.syncExec(new CMC_processBreakpointAfterExecutionHit(hit));
+                    comm.syncSend(new CMC_processBreakpointAfterExecutionHit(hit));
                 }
             });
         } else {

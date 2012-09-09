@@ -131,29 +131,12 @@ public class CommunicationInterface {
     }
 
     /**
-     * Execute that message asynchronously with the given arguments.
-     */
-    public void asyncExec(CommandMessage<?> message) {
-        asyncSend(message);
-    }
-
-    /**
-     * Execute that message synchronously with the given arguments and return
-     * the result.
-     *
-     * @return the result of the execution.
-     */
-    public <S extends Serializable> S syncExec(CommandMessage<S> message) {
-        return syncSend(message);
-    }
-
-    /**
      * Send that message synchronously, potentially returning a result if the
      * message type allows that.
      *
      * @return the result if any.
      */
-    final <S extends Serializable> S syncSend(final Message<S> message) {
+    public final <S extends Serializable> S syncSend(final Message<S> message) {
         checkOpen();
         if(message instanceof LocalMessage) {
             LocalMessage<S> localMessage = (LocalMessage<S>) message;
@@ -166,7 +149,7 @@ public class CommunicationInterface {
     /**
      * Send a message asynchronously.
      */
-    final <S extends Serializable> void asyncSend(final Message<S> message) {
+    public final <S extends Serializable> void asyncSend(final Message<S> message) {
         if(IS_SYNCING_MESSAGES) {
             syncSend(message);
         } else {

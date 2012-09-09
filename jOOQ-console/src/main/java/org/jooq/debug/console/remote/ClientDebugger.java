@@ -60,6 +60,7 @@ import org.jooq.debug.console.remote.ServerDebugger.CMS_setBreakpointHitHandlerA
 import org.jooq.debug.console.remote.ServerDebugger.CMS_setBreakpoints;
 import org.jooq.debug.console.remote.ServerDebugger.CMS_setLoggingActive;
 import org.jooq.debug.console.remote.ServerDebugger.CMS_setLoggingStatementMatchers;
+import org.jooq.debug.console.remote.messaging.CommandMessage;
 import org.jooq.debug.console.remote.messaging.CommunicationInterface;
 import org.jooq.debug.console.remote.messaging.CommunicationInterfaceFactory;
 
@@ -95,7 +96,7 @@ public class ClientDebugger implements Debugger {
             }
             this.loggingListener = loggingListener;
         }
-        comm.asyncExec(new CMS_setLoggingActive(loggingListener != null));
+        comm.asyncSend((CommandMessage<?>) new CMS_setLoggingActive(loggingListener != null));
     }
 
     @Override
@@ -113,7 +114,7 @@ public class ClientDebugger implements Debugger {
         synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
             this.loggingStatementMatchers = matchers;
         }
-        comm.asyncExec(new CMS_setLoggingStatementMatchers(matchers));
+        comm.asyncSend((CommandMessage<?>) new CMS_setLoggingStatementMatchers(matchers));
     }
 
     @Override
@@ -134,7 +135,7 @@ public class ClientDebugger implements Debugger {
         synchronized (BREAKPOINT_LOCK) {
             this.breakpoints = breakpoints;
         }
-        comm.asyncExec(new CMS_setBreakpoints(breakpoints));
+        comm.asyncSend((CommandMessage<?>) new CMS_setBreakpoints(breakpoints));
     }
 
     @Override
@@ -142,13 +143,13 @@ public class ClientDebugger implements Debugger {
         synchronized (BREAKPOINT_LOCK) {
             if(this.breakpoints == null) {
                 this.breakpoints = new Breakpoint[] {breakpoint};
-                comm.asyncExec(new CMS_addBreakpoint(breakpoint));
+                comm.asyncSend((CommandMessage<?>) new CMS_addBreakpoint(breakpoint));
                 return;
             }
             for(int i=0; i<breakpoints.length; i++) {
                 if(breakpoints[i].getID() == breakpoint.getID()) {
                     breakpoints[i] = breakpoint;
-                    comm.asyncExec(new CMS_modifyBreakpoint(breakpoint));
+                    comm.asyncSend((CommandMessage<?>) new CMS_modifyBreakpoint(breakpoint));
                     return;
                 }
             }
@@ -157,7 +158,7 @@ public class ClientDebugger implements Debugger {
             newBreakpoints[breakpoints.length] = breakpoint;
             breakpoints = newBreakpoints;
         }
-        comm.asyncExec(new CMS_addBreakpoint(breakpoint));
+        comm.asyncSend((CommandMessage<?>) new CMS_addBreakpoint(breakpoint));
     }
 
     @Override
@@ -170,7 +171,7 @@ public class ClientDebugger implements Debugger {
             for (int i = 0; i < breakpoints.length; i++) {
                 if (breakpoints[i].getID() == breakpoint.getID()) {
                     breakpoints[i] = breakpoint;
-                    comm.asyncExec(new CMS_modifyBreakpoint(breakpoint));
+                    comm.asyncSend((CommandMessage<?>) new CMS_modifyBreakpoint(breakpoint));
                     return;
                 }
             }
@@ -194,7 +195,7 @@ public class ClientDebugger implements Debugger {
                         System.arraycopy(breakpoints, i + 1, newBreakpoints, i, newBreakpoints.length - i);
                         breakpoints = newBreakpoints;
                     }
-                    comm.asyncExec(new CMS_removeBreakpoint(breakpoint));
+                    comm.asyncSend((CommandMessage<?>) new CMS_removeBreakpoint(breakpoint));
                     break;
                 }
             }
@@ -219,7 +220,7 @@ public class ClientDebugger implements Debugger {
             }
             this.breakpointHitHandler = breakpointHitHandler;
         }
-        comm.asyncExec(new CMS_setBreakpointHitHandlerActive(breakpointHitHandler != null));
+        comm.asyncSend((CommandMessage<?>) new CMS_setBreakpointHitHandlerActive(breakpointHitHandler != null));
     }
 
     @Override
@@ -236,7 +237,7 @@ public class ClientDebugger implements Debugger {
     public boolean isExecutionSupported() {
         synchronized (IS_EDITION_SUPPORTED_LOCK) {
             if(isEditionSupported == null) {
-                isEditionSupported = comm.syncExec(new CMS_isExecutionSupported());
+                isEditionSupported = comm.syncSend(new CMS_isExecutionSupported());
             }
         }
         return Boolean.TRUE.equals(isEditionSupported);

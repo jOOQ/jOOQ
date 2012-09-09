@@ -47,11 +47,11 @@ import org.jooq.tools.debug.BreakpointHit;
 import org.jooq.tools.debug.BreakpointHitHandler;
 import org.jooq.tools.debug.DatabaseDescriptor;
 import org.jooq.tools.debug.LoggingListener;
-import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.QueryExecution;
 import org.jooq.tools.debug.QueryExecutor;
 import org.jooq.tools.debug.QueryLog;
 import org.jooq.tools.debug.QueryMatcher;
+import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.impl.ClientDebugger.CMC_logQueries;
 import org.jooq.tools.debug.impl.ClientDebugger.CMC_logResultSet;
 import org.jooq.tools.debug.impl.ClientDebugger.CMC_processBreakpointAfterExecutionHit;
@@ -81,8 +81,8 @@ class ServerDebugger extends LocalDebugger {
                     comm.asyncSend((CommandMessage<?>) new CMC_logQueries(queryLog));
                 }
                 @Override
-                public void logResult(int dataId, ResultLog resultLog) {
-                    comm.asyncSend((CommandMessage<?>) new CMC_logResultSet(dataId, resultLog));
+                public void logResult(ResultLog resultLog) {
+                    comm.asyncSend((CommandMessage<?>) new CMC_logResultSet(resultLog));
                 }
             });
         } else {

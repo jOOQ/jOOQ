@@ -103,10 +103,10 @@ import org.jooq.debug.console.misc.RichTextTransferable;
 import org.jooq.debug.console.misc.XTableColumnModel;
 import org.jooq.tools.debug.Debugger;
 import org.jooq.tools.debug.LoggingListener;
-import org.jooq.tools.debug.QueryType;
-import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.QueryLog;
 import org.jooq.tools.debug.QueryMatcher;
+import org.jooq.tools.debug.QueryType;
+import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.impl.Utils;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -853,19 +853,19 @@ public class LoggerPane extends JPanel {
                     addRow(queryDebuggingInfo);
                 }
                 @Override
-                public void logResult(final int queryLoggingDataID, final ResultLog resultLog) {
+                public void logResult(final ResultLog resultLog) {
                     if(!SwingUtilities.isEventDispatchThread()) {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
-                                logResult(queryLoggingDataID, resultLog);
+                                logResult(resultLog);
                             }
                         });
                         return;
                     }
                     for(int i=queryDebuggingInfoList.size()-1; i>=0; i--) {
                         QueryDebuggingInfo queryDebuggingInfo = queryDebuggingInfoList.get(i);
-                        if(queryDebuggingInfo.getQueryLoggingData().getID() == queryLoggingDataID) {
+                        if(queryDebuggingInfo.getQueryLoggingData().getID() == resultLog.getQueryLogId()) {
                             queryDebuggingInfo.setResultSetLoggingData(resultLog);
                             XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
                             boolean isResultSetDataShown = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(COLUMN_RS_LIFETIME));

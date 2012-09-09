@@ -48,10 +48,10 @@ import org.jooq.tools.debug.BreakpointHit;
 import org.jooq.tools.debug.BreakpointHitHandler;
 import org.jooq.tools.debug.Debugger;
 import org.jooq.tools.debug.LoggingListener;
-import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.QueryExecutor;
 import org.jooq.tools.debug.QueryLog;
 import org.jooq.tools.debug.QueryMatcher;
+import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_addBreakpoint;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_isExecutionSupported;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_modifyBreakpoint;
@@ -264,11 +264,9 @@ class ClientDebugger implements Debugger {
     }
 
     static class CMC_logResultSet extends CommandMessage<Serializable> {
-        private final int          dataId;
         private final ResultLog resultLog;
 
-        CMC_logResultSet(int dataId, ResultLog resultLog) {
-            this.dataId = dataId;
+        CMC_logResultSet(ResultLog resultLog) {
             this.resultLog = resultLog;
         }
 
@@ -277,7 +275,7 @@ class ClientDebugger implements Debugger {
             LoggingListener loggingListener = context.getDebugger().getLoggingListener();
 
             if (loggingListener != null) {
-                loggingListener.logResult(dataId, resultLog);
+                loggingListener.logResult(resultLog);
             }
 
             return null;

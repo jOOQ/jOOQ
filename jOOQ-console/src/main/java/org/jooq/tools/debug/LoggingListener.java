@@ -36,6 +36,9 @@
  */
 package org.jooq.tools.debug;
 
+import org.jooq.Query;
+import org.jooq.Result;
+
 /**
  * A listener interface for the {@link Debugger}'s logging capabilities
  * <p>
@@ -46,8 +49,14 @@ package org.jooq.tools.debug;
  */
 public interface LoggingListener {
 
+    /**
+     * Notification that a {@link Query} has been executed.
+     */
     public void logQuery(QueryLog log);
 
-    public void logResult(int dataId, ResultLog log);
+    /**
+     * Notification that a {@link Result} has been fetched.
+     */
+    public void logResult(ResultLog log);
 
 }

@@ -1508,7 +1508,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         Map<Integer, List<Object>> map1 =
         create().selectFrom(TBook())
                 .orderBy(TBook_ID())
-                .fetchIntoGroups(TBook_ID(), TBookPojo());
+                .fetchGroups(TBook_ID(), TBookPojo());
 
         assertEquals(4, map1.size());
         assertEquals(BOOK_IDS, new ArrayList<Integer>(map1.keySet()));
@@ -1529,7 +1529,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         Map<Integer, List<Object>> map2 =
         create().selectFrom(TBook())
                 .orderBy(TBook_ID())
-                .fetchIntoGroups(TBook_AUTHOR_ID(), TBookPojo());
+                .fetchGroups(TBook_AUTHOR_ID(), TBookPojo());
 
         assertEquals(2, map2.size());
         assertEquals(AUTHOR_IDS, new ArrayList<Integer>(map2.keySet()));

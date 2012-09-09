@@ -37,70 +37,57 @@
 package org.jooq.debug.console.remote.messaging;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
- * A type of message that executes a command with optional arguments and returns a result.
+ * A type of message that executes a command with optional arguments and returns
+ * a result.
+ *
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
 public abstract class CommandMessage<S extends Serializable> extends Message<S> {
 
-    public CommandMessage() {
-    }
-
-    private Serializable[] args;
-
     /**
-     * Set the arguments that will be used when the message is run.
-     *
-     * @param arguments the arguments, which must be serializable.
+     * Generated UID
      */
-    void setArgs(Serializable... arguments) {
-        if (arguments.length == 0) {
-            arguments = null;
-        }
-        this.args = arguments;
-    }
-
-    private static final Serializable[] EMPTY_ARGS = new Serializable[0];
+    private static final long           serialVersionUID = -5396976580375899880L;
 
     S runCommand() throws Exception {
-        return run(args == null? EMPTY_ARGS: args);
+        return run();
     }
 
     /**
      * Run the message.
      *
-     * @param arguments the arguments that were specified for that command, or
-     *            an empty array if none were specified.
      * @return the result that may be passed back to the caller.
      * @throws Exception any exception that may happen, and which would be
      *             passed back if it is a synchronous execution.
      */
-    public abstract S run(Serializable... arguments) throws Exception;
+    public abstract S run() throws Exception;
 
-    @Override
-    public String toString() {
-        String s = super.toString();
-        if(args == null || args.length == 0) {
-            return s + "()";
-        }
-        StringBuilder sb = new StringBuilder();
-        sb.append(s).append('(');
-        for(int i=0; i<args.length; i++) {
-            Object arg = args[i];
-            if(i > 0) {
-                sb.append(", ");
-            }
-            if(arg != null && arg.getClass().isArray()) {
-                sb.append(Arrays.deepToString((Object[])arg));
-            } else {
-                sb.append(arg);
-            }
-        }
-        sb.append(')');
-        return sb.toString();
-    }
-
+//    TODO: It looks as though args was only used for debugging purposes
+//    maybe there is another way to access arguments?
+//
+//    @Override
+//    public String toString() {
+//        String s = super.toString();
+//        if (args == null || args.length == 0) {
+//            return s + "()";
+//        }
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(s).append('(');
+//        for (int i = 0; i < args.length; i++) {
+//            Object arg = args[i];
+//            if (i > 0) {
+//                sb.append(", ");
+//            }
+//            if (arg != null && arg.getClass().isArray()) {
+//                sb.append(Arrays.deepToString((Object[]) arg));
+//            }
+//            else {
+//                sb.append(arg);
+//            }
+//        }
+//        sb.append(')');
+//        return sb.toString();
+//    }
 }

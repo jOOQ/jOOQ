@@ -62,28 +62,28 @@ public class ClientStatementExecutor implements StatementExecutor {
     public ClientStatementExecutor(ClientDebugger debugger, Long breakpointHitThreadID) {
         id = nextID.incrementAndGet();
         this.debugger = debugger;
-        debugger.getCommunicationInterface().asyncExec(new CMS_createServerStatementExecutor(), id, breakpointHitThreadID);
+        debugger.getCommunicationInterface().asyncExec(new CMS_createServerStatementExecutor(id, breakpointHitThreadID));
     }
 
     @Override
     public StatementExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
-        return debugger.getCommunicationInterface().syncExec(new CMS_doStatementExecutorExecution(), id, sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
+        return debugger.getCommunicationInterface().syncExec(new CMS_doStatementExecutorExecution(id, sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold));
     }
 
     @Override
     public void stopExecution() {
-        debugger.getCommunicationInterface().asyncExec(new CMS_stopStatementExecutorExecution(), id);
+        debugger.getCommunicationInterface().asyncExec(new CMS_stopStatementExecutorExecution(id));
     }
 
     @Override
     public String[] getTableNames() {
-        String[] tableNames = debugger.getCommunicationInterface().syncExec(new CMS_getStatementExecutorTableNames(), id);
+        String[] tableNames = debugger.getCommunicationInterface().syncExec(new CMS_getStatementExecutorTableNames(id));
         return tableNames == null? new String[0]: tableNames;
     }
 
     @Override
     public String[] getTableColumnNames() {
-        String[] tableColumnNames = debugger.getCommunicationInterface().syncExec(new CMS_getStatementExecutorTableColumnNames(), id);
+        String[] tableColumnNames = debugger.getCommunicationInterface().syncExec(new CMS_getStatementExecutorTableColumnNames(id));
         return tableColumnNames == null? new String[0]: tableColumnNames;
     }
 

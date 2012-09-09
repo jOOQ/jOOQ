@@ -48,9 +48,9 @@ import org.jooq.debug.BreakpointHit;
 import org.jooq.debug.BreakpointHitHandler;
 import org.jooq.debug.Debugger;
 import org.jooq.debug.LoggingListener;
-import org.jooq.debug.StatementLog;
 import org.jooq.debug.ResultSetLog;
 import org.jooq.debug.StatementExecutor;
+import org.jooq.debug.StatementLog;
 import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.remote.ServerDebugger.CMS_addBreakpoint;
 import org.jooq.debug.console.remote.ServerDebugger.CMS_isExecutionSupported;
@@ -66,6 +66,7 @@ import org.jooq.debug.console.remote.messaging.CommunicationInterfaceFactory;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 public class ClientDebugger implements Debugger {
 
     private CommunicationInterface comm;
@@ -94,7 +95,7 @@ public class ClientDebugger implements Debugger {
             }
             this.loggingListener = loggingListener;
         }
-        comm.asyncExec(new CMS_setLoggingActive(), loggingListener != null);
+        comm.asyncExec(new CMS_setLoggingActive(loggingListener != null));
     }
 
     @Override
@@ -108,11 +109,11 @@ public class ClientDebugger implements Debugger {
     private final Object LOGGING_STATEMENT_MATCHERS_LOCK = new Object();
 
     @Override
-    public void setLoggingStatementMatchers(StatementMatcher[] loggingStatementMatchers) {
+    public void setLoggingStatementMatchers(StatementMatcher[] matchers) {
         synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
-            this.loggingStatementMatchers = loggingStatementMatchers;
+            this.loggingStatementMatchers = matchers;
         }
-        comm.asyncExec(new CMS_setLoggingStatementMatchers(), (Serializable[]) loggingStatementMatchers);
+        comm.asyncExec(new CMS_setLoggingStatementMatchers(matchers));
     }
 
     @Override
@@ -133,7 +134,7 @@ public class ClientDebugger implements Debugger {
         synchronized (BREAKPOINT_LOCK) {
             this.breakpoints = breakpoints;
         }
-        comm.asyncExec(new CMS_setBreakpoints(), (Serializable[]) breakpoints);
+        comm.asyncExec(new CMS_setBreakpoints(breakpoints));
     }
 
     @Override
@@ -141,13 +142,13 @@ public class ClientDebugger implements Debugger {
         synchronized (BREAKPOINT_LOCK) {
             if(this.breakpoints == null) {
                 this.breakpoints = new Breakpoint[] {breakpoint};
-                comm.asyncExec(new CMS_addBreakpoint(), breakpoint);
+                comm.asyncExec(new CMS_addBreakpoint(breakpoint));
                 return;
             }
             for(int i=0; i<breakpoints.length; i++) {
                 if(breakpoints[i].getID() == breakpoint.getID()) {
                     breakpoints[i] = breakpoint;
-                    comm.asyncExec(new CMS_modifyBreakpoint(), breakpoint);
+                    comm.asyncExec(new CMS_modifyBreakpoint(breakpoint));
                     return;
                 }
             }
@@ -156,20 +157,20 @@ public class ClientDebugger implements Debugger {
             newBreakpoints[breakpoints.length] = breakpoint;
             breakpoints = newBreakpoints;
         }
-        comm.asyncExec(new CMS_addBreakpoint(), breakpoint);
+        comm.asyncExec(new CMS_addBreakpoint(breakpoint));
     }
 
     @Override
     public void modifyBreakpoint(Breakpoint breakpoint) {
         synchronized (BREAKPOINT_LOCK) {
-            if(this.breakpoints == null) {
+            if (this.breakpoints == null) {
                 addBreakpoint(breakpoint);
                 return;
             }
-            for(int i=0; i<breakpoints.length; i++) {
-                if(breakpoints[i].getID() == breakpoint.getID()) {
+            for (int i = 0; i < breakpoints.length; i++) {
+                if (breakpoints[i].getID() == breakpoint.getID()) {
                     breakpoints[i] = breakpoint;
-                    comm.asyncExec(new CMS_modifyBreakpoint(), breakpoint);
+                    comm.asyncExec(new CMS_modifyBreakpoint(breakpoint));
                     return;
                 }
             }
@@ -193,7 +194,7 @@ public class ClientDebugger implements Debugger {
                         System.arraycopy(breakpoints, i + 1, newBreakpoints, i, newBreakpoints.length - i);
                         breakpoints = newBreakpoints;
                     }
-                    comm.asyncExec(new CMS_removeBreakpoint(), breakpoint);
+                    comm.asyncExec(new CMS_removeBreakpoint(breakpoint));
                     break;
                 }
             }
@@ -218,7 +219,7 @@ public class ClientDebugger implements Debugger {
             }
             this.breakpointHitHandler = breakpointHitHandler;
         }
-        comm.asyncExec(new CMS_setBreakpointHitHandlerActive(), breakpointHitHandler != null);
+        comm.asyncExec(new CMS_setBreakpointHitHandlerActive(breakpointHitHandler != null));
     }
 
     @Override
@@ -246,57 +247,86 @@ public class ClientDebugger implements Debugger {
         return new ClientStatementExecutor(this, null);
     }
 
-    @SuppressWarnings("serial")
+
     static class CMC_logQueries extends ClientDebuggerCommandMessage<Serializable> {
+        private final StatementLog statementLog;
+
+        CMC_logQueries(StatementLog statementLog) {
+            this.statementLog = statementLog;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
+        public Serializable run() {
             LoggingListener loggingListener = getDebugger().getLoggingListener();
-            if(loggingListener != null) {
-                loggingListener.logQueries((StatementLog)args[0]);
+
+            if (loggingListener != null) {
+                loggingListener.logQueries(statementLog);
             }
+
             return null;
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMC_logResultSet extends ClientDebuggerCommandMessage<Serializable> {
+        private final int          dataId;
+        private final ResultSetLog resultSetLog;
+
+        CMC_logResultSet(int dataId, ResultSetLog resultSetLog) {
+            this.dataId = dataId;
+            this.resultSetLog = resultSetLog;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
+        public Serializable run() {
             LoggingListener loggingListener = getDebugger().getLoggingListener();
-            if(loggingListener != null) {
-                loggingListener.logResultSet((Integer)args[0], (ResultSetLog)args[1]);
+
+            if (loggingListener != null) {
+                loggingListener.logResultSet(dataId, resultSetLog);
             }
+
             return null;
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMC_processBreakpointBeforeExecutionHit extends ClientDebuggerCommandMessage<BreakpointHit> {
+        private final BreakpointHit hit;
+
+        CMC_processBreakpointBeforeExecutionHit(BreakpointHit hit) {
+            this.hit = hit;
+        }
+
         @Override
-        public BreakpointHit run(Serializable... args) {
+        public BreakpointHit run() {
             BreakpointHitHandler breakpointHitHandler = getDebugger().getBreakpointHitHandler();
-            if(breakpointHitHandler != null) {
-                BreakpointHit breakpointHit = (BreakpointHit)args[0];
-                breakpointHitHandler.processBreakpointBeforeExecutionHit(breakpointHit);
-                if(breakpointHit.getBreakpointID() != null) {
+
+            if (breakpointHitHandler != null) {
+                breakpointHitHandler.processBreakpointBeforeExecutionHit(hit);
+                if (hit.getBreakpointID() != null) {
                     // The breakpoint was not processed, so we process it here.
-                    breakpointHit.setExecutionType(BreakpointHit.ExecutionType.RUN, null);
+                    hit.setExecutionType(BreakpointHit.ExecutionType.RUN, null);
                 }
-                return breakpointHit;
+                return hit;
             }
+
             return null;
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMC_processBreakpointAfterExecutionHit extends ClientDebuggerCommandMessage<BreakpointHit> {
+        private final BreakpointHit hit;
+
+        CMC_processBreakpointAfterExecutionHit(BreakpointHit hit) {
+            this.hit = hit;
+        }
+
         @Override
-        public BreakpointHit run(Serializable... args) {
+        public BreakpointHit run() {
             BreakpointHitHandler breakpointHitHandler = getDebugger().getBreakpointHitHandler();
-            if(breakpointHitHandler != null) {
-                BreakpointHit breakpointHit = (BreakpointHit)args[0];
-                breakpointHitHandler.processBreakpointAfterExecutionHit(breakpointHit);
+
+            if (breakpointHitHandler != null) {
+                breakpointHitHandler.processBreakpointAfterExecutionHit(hit);
             }
+
             return null;
         }
     }

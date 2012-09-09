@@ -132,11 +132,8 @@ public class CommunicationInterface {
 
     /**
      * Execute that message asynchronously with the given arguments.
-     *
-     * @param arguments the arguments, which must be serializable.
      */
-    public void asyncExec(CommandMessage<?> message, Serializable... arguments) {
-        message.setArgs(arguments);
+    public void asyncExec(CommandMessage<?> message) {
         asyncSend(message);
     }
 
@@ -144,11 +141,9 @@ public class CommunicationInterface {
      * Execute that message synchronously with the given arguments and return
      * the result.
      *
-     * @param arguments the arguments, which must be serializable.
      * @return the result of the execution.
      */
-    public <S extends Serializable> S syncExec(CommandMessage<S> message, Serializable... arguments) {
-        message.setArgs(arguments);
+    public <S extends Serializable> S syncExec(CommandMessage<S> message) {
         return syncSend(message);
     }
 

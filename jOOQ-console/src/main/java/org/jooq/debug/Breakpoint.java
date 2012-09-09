@@ -106,7 +106,11 @@ public class Breakpoint implements Serializable {
 
     /**
      * Reset internal state like hit count tracking.
+     *
+     * @deprecated - That feels like a workaround... Maybe there's a better way
+     *             to do this?
      */
+    @Deprecated
     public void reset() {
         if(hitCount != null) {
             currentHitCount = new AtomicInteger(hitCount);

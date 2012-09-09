@@ -48,10 +48,10 @@ import org.jooq.debug.BreakpointHitHandler;
 import org.jooq.debug.LocalDebugger;
 import org.jooq.debug.LocalStatementExecutor;
 import org.jooq.debug.LoggingListener;
-import org.jooq.debug.StatementLog;
 import org.jooq.debug.ResultSetLog;
 import org.jooq.debug.StatementExecution;
 import org.jooq.debug.StatementExecutor;
+import org.jooq.debug.StatementLog;
 import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.DatabaseDescriptor;
 import org.jooq.debug.console.remote.ClientDebugger.CMC_logQueries;
@@ -63,6 +63,7 @@ import org.jooq.debug.console.remote.messaging.CommunicationInterface;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 class ServerDebugger extends LocalDebugger {
 
     public ServerDebugger(DatabaseDescriptor databaseDescriptor) {
@@ -80,11 +81,11 @@ class ServerDebugger extends LocalDebugger {
             setLoggingListener(new LoggingListener() {
                 @Override
                 public void logQueries(StatementLog statementLog) {
-                    comm.asyncExec(new CMC_logQueries(), statementLog);
+                    comm.asyncExec(new CMC_logQueries(statementLog));
                 }
                 @Override
-                public void logResultSet(int sqlQueryDebuggerDataID, ResultSetLog resultSetLog) {
-                    comm.asyncExec(new CMC_logResultSet(), sqlQueryDebuggerDataID, resultSetLog);
+                public void logResultSet(int dataId, ResultSetLog resultSetLog) {
+                    comm.asyncExec(new CMC_logResultSet(dataId, resultSetLog));
                 }
             });
         } else {
@@ -92,11 +93,16 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_setLoggingActive extends ServerDebuggerCommandMessage<Serializable> {
+        private final boolean isActive;
+
+        CMS_setLoggingActive(boolean isActive) {
+            this.isActive = isActive;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
-            getDebugger().setLoggingActive((Boolean)args[0]);
+        public Serializable run() {
+            getDebugger().setLoggingActive(isActive);
             return null;
         }
     }
@@ -105,15 +111,15 @@ class ServerDebugger extends LocalDebugger {
         if(isActive) {
             setBreakpointHitHandler(new BreakpointHitHandler() {
                 @Override
-                public void processBreakpointBeforeExecutionHit(BreakpointHit breakpointHit) {
-                    BreakpointHit modifiedBreakpointHit = comm.syncExec(new CMC_processBreakpointBeforeExecutionHit(), breakpointHit);
+                public void processBreakpointBeforeExecutionHit(BreakpointHit hit) {
+                    BreakpointHit modifiedBreakpointHit = comm.syncExec(new CMC_processBreakpointBeforeExecutionHit(hit));
                     if(modifiedBreakpointHit != null) {
-                        breakpointHit.setExecutionType(modifiedBreakpointHit.getExecutionType(), modifiedBreakpointHit.getSql());
+                        hit.setExecutionType(modifiedBreakpointHit.getExecutionType(), modifiedBreakpointHit.getSql());
                     }
                 }
                 @Override
-                public void processBreakpointAfterExecutionHit(BreakpointHit breakpointHit) {
-                    comm.syncExec(new CMC_processBreakpointAfterExecutionHit(), breakpointHit);
+                public void processBreakpointAfterExecutionHit(BreakpointHit hit) {
+                    comm.syncExec(new CMC_processBreakpointAfterExecutionHit(hit));
                 }
             });
         } else {
@@ -121,23 +127,33 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_setLoggingStatementMatchers extends ServerDebuggerCommandMessage<Serializable> {
+        private final StatementMatcher[] matchers;
+
+        CMS_setLoggingStatementMatchers(StatementMatcher[] matchers) {
+            this.matchers = matchers;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
-            getDebugger().setLoggingStatementMatchers((StatementMatcher[])args[0]);
+        public Serializable run() {
+            getDebugger().setLoggingStatementMatchers(matchers);
             return null;
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_setBreakpoints extends ServerDebuggerCommandMessage<Serializable> {
+        private final Breakpoint[] breakpoints;
+
+        CMS_setBreakpoints(Breakpoint[] breakpoints) {
+            this.breakpoints = breakpoints;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
-            Breakpoint[] breakpoints = (Breakpoint[])args[0];
-            if(breakpoints != null) {
-                for(Breakpoint breakpoint: breakpoints) {
-                    // Serialization has a cache, assuming objects are immutable. We have to reset our internal states.
+        public Serializable run() {
+            if (breakpoints != null) {
+                for (Breakpoint breakpoint : breakpoints) {
+                    // Serialization has a cache, assuming objects are
+                    // immutable. We have to reset our internal states.
                     breakpoint.reset();
                 }
             }
@@ -146,52 +162,71 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_addBreakpoint extends ServerDebuggerCommandMessage<Serializable> {
+        private final Breakpoint breakpoint;
+
+        CMS_addBreakpoint(Breakpoint breakpoint) {
+            this.breakpoint = breakpoint;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
-            Breakpoint breakpoint = (Breakpoint)args[0];
-            // Serialization has a cache, assuming objects are immutable. We have to reset our internal states.
+        public Serializable run() {
+            // Serialization has a cache, assuming objects are immutable. We
+            // have to reset our internal states.
             breakpoint.reset();
             getDebugger().addBreakpoint(breakpoint);
             return null;
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_modifyBreakpoint extends ServerDebuggerCommandMessage<Serializable> {
+        private final Breakpoint breakpoint;
+
+        CMS_modifyBreakpoint(Breakpoint breakpoint) {
+            this.breakpoint = breakpoint;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
-            Breakpoint breakpoint = (Breakpoint)args[0];
-            // Serialization has a cache, assuming objects are immutable. We have to reset our internal states.
+        public Serializable run() {
+            // Serialization has a cache, assuming objects are immutable. We
+            // have to reset our internal states.
             breakpoint.reset();
             getDebugger().modifyBreakpoint(breakpoint);
             return null;
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_removeBreakpoint extends ServerDebuggerCommandMessage<Serializable> {
+        private final Breakpoint breakpoint;
+
+        CMS_removeBreakpoint(Breakpoint breakpoint) {
+            this.breakpoint = breakpoint;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
-            getDebugger().removeBreakpoint((Breakpoint)args[0]);
+        public Serializable run() {
+            getDebugger().removeBreakpoint(breakpoint);
             return null;
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_setBreakpointHitHandlerActive extends ServerDebuggerCommandMessage<Serializable> {
+        private final boolean isActive;
+
+        CMS_setBreakpointHitHandlerActive(boolean isActive) {
+            this.isActive = isActive;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
-            getDebugger().setBreakpointHitHandlerActive((Boolean)args[0]);
+        public Serializable run() {
+            getDebugger().setBreakpointHitHandlerActive(isActive);
             return null;
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_isExecutionSupported extends ServerDebuggerCommandMessage<Boolean> {
         @Override
-        public Boolean run(Serializable... args) {
+        public Boolean run() {
             return getDebugger().isExecutionSupported();
         }
     }
@@ -222,54 +257,79 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_createServerStatementExecutor extends ServerDebuggerCommandMessage<Serializable> {
+        private final int  id;
+        private final Long breakpointHitThreadID;
+
+        CMS_createServerStatementExecutor(int id, Long breakpointHitThreadID) {
+            this.id = id;
+            this.breakpointHitThreadID = breakpointHitThreadID;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
-            int id = (Integer)args[0];
-            Long breakpointHitThreadID = (Long)args[1];
+        public Serializable run() {
             getDebugger().createStatementExecutor(id, breakpointHitThreadID);
             return null;
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_doStatementExecutorExecution extends ServerDebuggerCommandMessage<StatementExecution> {
+        private final int    id;
+        private final String sql;
+        private final int    maxRSRowsParsing;
+        private final int    retainParsedRSDataRowCountThreshold;
+
+        CMS_doStatementExecutorExecution(int id, String sql, int maxRSRowsParsing,
+            int retainParsedRSDataRowCountThreshold) {
+            this.id = id;
+            this.sql = sql;
+            this.maxRSRowsParsing = maxRSRowsParsing;
+            this.retainParsedRSDataRowCountThreshold = retainParsedRSDataRowCountThreshold;
+        }
+
         @Override
-        public StatementExecution run(Serializable... args) {
-            int id = (Integer)args[0];
-            String sql = (String)args[1];
-            int maxRSRowsParsing = (Integer)args[2];
-            int retainParsedRSDataRowCountThreshold = (Integer)args[3];
+        public StatementExecution run() {
             StatementExecution statementExecution = getDebugger().getStatementExecutor(id).execute(sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
             return new ClientStatementExecution(statementExecution);
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_stopStatementExecutorExecution extends ServerDebuggerCommandMessage<Serializable> {
+        private final int id;
+
+        CMS_stopStatementExecutorExecution(int id) {
+            this.id = id;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
-            int id = (Integer)args[0];
+        public Serializable run() {
             getDebugger().removeStatementExecutor(id).stopExecution();
             return null;
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_getStatementExecutorTableNames extends ServerDebuggerCommandMessage<String[]> {
+        private final int id;
+
+        CMS_getStatementExecutorTableNames(int id) {
+            this.id = id;
+        }
+
         @Override
-        public String[] run(Serializable... args) {
-            int id = (Integer)args[0];
+        public String[] run() {
             return getDebugger().getStatementExecutor(id).getTableNames();
         }
     }
 
-    @SuppressWarnings("serial")
     static class CMS_getStatementExecutorTableColumnNames extends ServerDebuggerCommandMessage<String[]> {
+        private final int id;
+
+        CMS_getStatementExecutorTableColumnNames(int id) {
+            this.id = id;
+        }
+
         @Override
-        public String[] run(Serializable... args) {
-            int id = (Integer)args[0];
+        public String[] run() {
             return getDebugger().getStatementExecutor(id).getTableColumnNames();
         }
     }

@@ -49,7 +49,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Scrollable;
 
-import org.jooq.debug.StatementMatcher;
+import org.jooq.tools.debug.StatementMatcher;
 
 /**
  * @author Christopher Deckers

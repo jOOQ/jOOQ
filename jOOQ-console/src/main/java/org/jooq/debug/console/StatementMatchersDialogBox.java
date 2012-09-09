@@ -50,8 +50,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import org.jooq.debug.Debugger;
-import org.jooq.debug.StatementMatcher;
+import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.StatementMatcher;
 
 /**
  * @author Christopher Deckers

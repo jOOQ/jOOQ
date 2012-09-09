@@ -72,11 +72,11 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import org.jooq.debug.Debugger;
-import org.jooq.debug.DebuggerRegistry;
-import org.jooq.debug.LocalDebugger;
 import org.jooq.debug.console.misc.JSedRegExBuilder;
-import org.jooq.debug.console.remote.ClientDebugger;
+import org.jooq.tools.debug.DatabaseDescriptor;
+import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.impl.DebuggerFactory;
+import org.jooq.tools.debug.impl.DebuggerRegistry;
 
 /**
  * @author Christopher Deckers
@@ -90,7 +90,7 @@ public class Console extends JFrame {
 
 
     public Console(DatabaseDescriptor editorDatabaseDescriptor, boolean isShowingLoggingTab, boolean isShowingDebugger) {
-        debugger = new LocalDebugger(editorDatabaseDescriptor);
+        debugger = DebuggerFactory.localDebugger(editorDatabaseDescriptor);
         // Local debugger registration is managed by the console since it hides the debugger.
         addWindowListener(new WindowAdapter() {
             @Override
@@ -325,13 +325,13 @@ public class Console extends JFrame {
 
     public static void main(String[] args) {
     	if(args.length < 2) {
-    	    System.out.println("Please specify IP and port of a running RemoteDebuggerServer");
+    	    System.out.println("Please specify IP and port of a running Server");
     		System.out.println("Usage: Console <ip> <port>");
     		return;
     	}
     	final Debugger debugger;
     	try {
-    	    debugger = new ClientDebugger(args[0], Integer.parseInt(args[1]));
+    	    debugger = DebuggerFactory.remoteDebugger(args[0], Integer.parseInt(args[1]));
     	} catch(Exception e) {
     		e.printStackTrace();
     		return;

@@ -77,11 +77,7 @@ import org.jooq.UpdatableTable;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
-import org.jooq.debug.DebugListener;
-import org.jooq.debug.Debugger;
 import org.jooq.debug.console.Console;
-import org.jooq.debug.console.remote.ClientDebugger;
-import org.jooq.debug.console.remote.RemoteDebuggerServer;
 import org.jooq.impl.Factory;
 import org.jooq.test._.TestStatisticsListener;
 import org.jooq.test._.converters.Boolean_10;
@@ -120,6 +116,10 @@ import org.jooq.test._.testcases.ThreadSafetyTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.impl.DebugListener;
+import org.jooq.tools.debug.impl.DebuggerFactory;
+import org.jooq.tools.debug.impl.Server;
 import org.jooq.tools.reflect.ReflectException;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
@@ -229,7 +229,7 @@ public abstract class jOOQAbstractTest<
     public static String                  jdbcSchema;
     public static Map<String, String>     scripts            = new HashMap<String, String>();
 
-    private static RemoteDebuggerServer   SERVER;
+    private static Server   SERVER;
     private static boolean                RUN_CONSOLE_IN_PROCESS = false;
 
     protected void execute(String script) throws Exception {
@@ -378,7 +378,7 @@ public abstract class jOOQAbstractTest<
 
     @BeforeClass
     public static void sqlConsole() throws Exception {
-        SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);
+        SERVER = new Server(DEBUGGER_PORT);
     }
 
     @Before
@@ -443,7 +443,7 @@ public abstract class jOOQAbstractTest<
             if (RUN_CONSOLE_IN_PROCESS) {
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                    Debugger debugger = new ClientDebugger("127.0.0.1", DEBUGGER_PORT);
+                    Debugger debugger = DebuggerFactory.remoteDebugger("127.0.0.1", DEBUGGER_PORT);
                     Console console = new Console(debugger, true, true);
                     console.setLoggingActive(true);
                     console.setVisible(true);

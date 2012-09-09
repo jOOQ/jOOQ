@@ -97,17 +97,17 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.jooq.debug.Debugger;
-import org.jooq.debug.LoggingListener;
-import org.jooq.debug.QueryType;
-import org.jooq.debug.ResultSetLog;
-import org.jooq.debug.StatementLog;
-import org.jooq.debug.StatementMatcher;
 import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.JTableX;
 import org.jooq.debug.console.misc.RichTextTransferable;
-import org.jooq.debug.console.misc.Utils;
 import org.jooq.debug.console.misc.XTableColumnModel;
+import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.LoggingListener;
+import org.jooq.tools.debug.QueryType;
+import org.jooq.tools.debug.ResultSetLog;
+import org.jooq.tools.debug.StatementLog;
+import org.jooq.tools.debug.StatementMatcher;
+import org.jooq.tools.debug.impl.Utils;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
 

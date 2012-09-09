@@ -52,11 +52,11 @@ import java.util.Map;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 class MessagingInterface {
 
     private static final boolean IS_DEBUGGING_MESSAGES = Boolean.parseBoolean(System.getProperty("communication.interface.debug.printmessages"));
 
-    @SuppressWarnings("serial")
     private static class CommandResultMessage<S extends Serializable> extends Message<S> {
 
         private int originalID;
@@ -328,16 +328,22 @@ class MessagingInterface {
 
     private List<Message<?>> receivedMessageList = new LinkedList<Message<?>>();
 
-    @SuppressWarnings("serial")
-    private static class CM_asyncExecResponse extends CommandMessage<Serializable> {
+    private static class CM_asyncExecResponse<S extends Serializable> extends CommandMessage<Serializable> {
+        private final long threadID;
+        private final CommandResultMessage<S> commandResultMessage;
+
+        public CM_asyncExecResponse(long threadID, CommandResultMessage<S> commandResultMessage) {
+            this.threadID = threadID;
+            this.commandResultMessage = commandResultMessage;
+        }
+
+        @SuppressWarnings("unchecked")
         @Override
-        public Serializable run(Serializable... args) {
+        public Serializable run() {
             MessagingInterface messagingInterface = getCommunicationInterface().getMessagingInterface();
-            long threadID = (Long)args[0];
-            CommandResultMessage<?> commandResultMessage = (CommandResultMessage<?>)args[1];
-            ThreadInfo threadInfo;
+            ThreadInfo<S> threadInfo;
             synchronized (messagingInterface.idToThreadInfo) {
-                threadInfo = messagingInterface.idToThreadInfo.get(threadID);
+                threadInfo = (ThreadInfo<S>) messagingInterface.idToThreadInfo.get(threadID);
             }
             if(threadInfo == null) {
                 System.err.println("A sync call is missing.");
@@ -351,18 +357,23 @@ class MessagingInterface {
         }
     }
 
-    @SuppressWarnings("serial")
-    private static class CM_asyncExec extends CommandMessage<Serializable> {
+    private static class CM_asyncExec<S extends Serializable> extends CommandMessage<Serializable> {
+        private final long threadID;
+        private final Message<S> message;
+
+        CM_asyncExec(long threadID, Message<S> message) {
+            this.threadID = threadID;
+            this.message = message;
+        }
+
         @Override
-        public Serializable run(Serializable... args) {
-            Message<?> message = (Message<?>)args[1];
+        public Serializable run() {
             message.setSyncExec(false);
             CommunicationInterface communicationInterface = getCommunicationInterface();
 //            message.setCommunicationInterface(communicationInterface);
             MessagingInterface messagingInterface = communicationInterface.getMessagingInterface();
-            CM_asyncExecResponse asyncExecResponse = new CM_asyncExecResponse();
-            CommandResultMessage<?> commandResultMessage = messagingInterface.runMessage(message);
-            asyncExecResponse.setArgs(args[0], commandResultMessage);
+            CommandResultMessage<S> commandResultMessage = messagingInterface.runMessage(message);
+            CM_asyncExecResponse<S> asyncExecResponse = new CM_asyncExecResponse<S>(threadID, commandResultMessage);
             messagingInterface.asyncSend(asyncExecResponse);
             return null;
         }
@@ -411,8 +422,7 @@ class MessagingInterface {
                 ((MessageProcessingThread)thread).setWaitingOnSyncCall(true);
             }
         }
-        CM_asyncExec asyncExec = new CM_asyncExec();
-        asyncExec.setArgs(threadID, message);
+        CM_asyncExec<S> asyncExec = new CM_asyncExec<S>(threadID, message);
         asyncSend(asyncExec);
         CommandResultMessage<S> commandResultMessage = null;
         synchronized(threadInfo) {

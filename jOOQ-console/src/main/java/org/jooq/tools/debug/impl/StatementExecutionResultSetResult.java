@@ -40,12 +40,12 @@ import java.io.Serializable;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-import org.jooq.tools.debug.StatementExecutionResult;
+import org.jooq.tools.debug.QueryExecutionResult;
 
 /**
  * @author Christopher Deckers
  */
-public interface StatementExecutionResultSetResult extends StatementExecutionResult {
+public interface StatementExecutionResultSetResult extends QueryExecutionResult {
 
     @SuppressWarnings("serial")
     public static class TypeInfo implements Serializable {

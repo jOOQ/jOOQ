@@ -36,22 +36,22 @@
  */
 package org.jooq.tools.debug.impl;
 
-import org.jooq.tools.debug.StatementExecution;
-import org.jooq.tools.debug.StatementExecutionResult;
+import org.jooq.tools.debug.QueryExecution;
+import org.jooq.tools.debug.QueryExecutionResult;
 
 /**
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-class ClientStatementExecution extends StatementExecution {
+class ClientStatementExecution extends QueryExecution {
 
-    public ClientStatementExecution(StatementExecution statementExecution) {
-        super(statementExecution.getExecutionDuration(), convertResults(statementExecution));
+    public ClientStatementExecution(QueryExecution queryExecution) {
+        super(queryExecution.getExecutionDuration(), convertResults(queryExecution));
     }
 
-    private static StatementExecutionResult[] convertResults(StatementExecution statementExecution) {
-        StatementExecutionResult[] results = statementExecution.getResults();
-        StatementExecutionResult[] clientResults = new StatementExecutionResult[results.length];
+    private static QueryExecutionResult[] convertResults(QueryExecution queryExecution) {
+        QueryExecutionResult[] results = queryExecution.getResults();
+        QueryExecutionResult[] clientResults = new QueryExecutionResult[results.length];
         // TODO: improve? For now, basic implementation: ALL data to be sent in a message.
         for(int i=0; i<results.length; i++) {
             clientResults[i] = results[i];

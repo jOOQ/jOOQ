@@ -44,7 +44,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author Christopher Deckers
  */
-public class StatementLog implements Serializable {
+public class QueryLog implements Serializable {
 
     /**
      * Generated UID
@@ -53,17 +53,17 @@ public class StatementLog implements Serializable {
 
     private static AtomicInteger      nextID           = new AtomicInteger();
 
-    private final StatementInfo       statementInfo;
+    private final QueryInfo           queryInfo;
     private final int                 id;
     private final Long                preparationDuration;
     private final Long                bindingDuration;
     private final long                executionDuration;
     private final StackTraceElement[] callerStackTraceElements;
 
-    public StatementLog(StatementInfo statementInfo, Long preparationDuration, Long bindingDuration,
+    public QueryLog(QueryInfo queryInfo, Long preparationDuration, Long bindingDuration,
         long executionDuration) {
 
-        this.statementInfo = statementInfo;
+        this.queryInfo = queryInfo;
 
         this.id = nextID.getAndIncrement();
         this.callerStackTraceElements = Thread.currentThread().getStackTrace();
@@ -72,8 +72,8 @@ public class StatementLog implements Serializable {
         this.executionDuration = executionDuration;
     }
 
-    public StatementInfo getStatementInfo() {
-        return statementInfo;
+    public QueryInfo getQueryInfo() {
+        return queryInfo;
     }
 
     public int getID() {

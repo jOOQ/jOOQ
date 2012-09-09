@@ -42,7 +42,7 @@ import org.jooq.ExecuteContext;
 /**
  * @author Christopher Deckers
  */
-public interface Debugger extends StatementExecutorCreator {
+public interface Debugger extends QueryExecutorCreator {
 
     /**
      * @param listener a listener, or null to stop logging.
@@ -51,9 +51,9 @@ public interface Debugger extends StatementExecutorCreator {
 
     public LoggingListener getLoggingListener();
 
-    public void setLoggingStatementMatchers(StatementMatcher[] matchers);
+    public void setLoggingStatementMatchers(QueryMatcher[] matchers);
 
-    public StatementMatcher[] getLoggingStatementMatchers();
+    public QueryMatcher[] getLoggingStatementMatchers();
 
     public void setBreakpoints(Breakpoint[] breakpoints);
 
@@ -75,7 +75,7 @@ public interface Debugger extends StatementExecutorCreator {
 
     public void processBreakpointAfterExecutionHit(ExecuteContext ctx, BreakpointHit hit);
 
-    public StatementExecutor createBreakpointHitStatementExecutor(long threadID);
+    public QueryExecutor createBreakpointHitStatementExecutor(long threadID);
 
     public void close();
 

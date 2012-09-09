@@ -57,8 +57,8 @@ import org.jooq.tools.debug.BreakpointHitHandler;
 import org.jooq.tools.debug.DatabaseDescriptor;
 import org.jooq.tools.debug.Debugger;
 import org.jooq.tools.debug.LoggingListener;
-import org.jooq.tools.debug.StatementExecutorContext;
-import org.jooq.tools.debug.StatementMatcher;
+import org.jooq.tools.debug.QueryExecutorContext;
+import org.jooq.tools.debug.QueryMatcher;
 
 
 /**
@@ -95,18 +95,18 @@ class LocalDebugger implements Debugger {
         }
     }
 
-    private StatementMatcher[] loggingStatementMatchers;
+    private QueryMatcher[] loggingStatementMatchers;
     private final Object LOGGING_STATEMENT_MATCHERS_LOCK = new Object();
 
     @Override
-    public void setLoggingStatementMatchers(StatementMatcher[] loggingStatementMatchers) {
+    public void setLoggingStatementMatchers(QueryMatcher[] loggingStatementMatchers) {
         synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
             this.loggingStatementMatchers = loggingStatementMatchers;
         }
     }
 
     @Override
-    public StatementMatcher[] getLoggingStatementMatchers() {
+    public QueryMatcher[] getLoggingStatementMatchers() {
         synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
             return loggingStatementMatchers;
         }
@@ -214,8 +214,8 @@ class LocalDebugger implements Debugger {
     }
 
     @Override
-    public LocalStatementExecutor createStatementExecutor() {
-        return new LocalStatementExecutor(new StatementExecutorContext() {
+    public LocalStatementExecutor createQueryExecutor() {
+        return new LocalStatementExecutor(new QueryExecutorContext() {
             @Override
             public boolean isReadOnly() {
                 return databaseDescriptor.isReadOnly();
@@ -330,7 +330,7 @@ class LocalDebugger implements Debugger {
                 return null;
             }
         }
-        return new LocalStatementExecutor(new StatementExecutorContext() {
+        return new LocalStatementExecutor(new QueryExecutorContext() {
             @Override
             public boolean isReadOnly() {
                 return false;

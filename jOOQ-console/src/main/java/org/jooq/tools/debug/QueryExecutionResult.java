@@ -40,8 +40,6 @@ package org.jooq.tools.debug;
 /**
  * @author Christopher Deckers
  */
-public interface StatementExecutorCreator {
-
-    public StatementExecutor createStatementExecutor();
+public interface QueryExecutionResult {
 
 }

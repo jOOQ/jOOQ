@@ -49,7 +49,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Scrollable;
 
-import org.jooq.tools.debug.StatementMatcher;
+import org.jooq.tools.debug.QueryMatcher;
 
 /**
  * @author Christopher Deckers
@@ -92,15 +92,15 @@ public class StatementMatchersPane extends JPanel {
 
     private JPanel statementMatcherPanesContainer;
 
-    public StatementMatchersPane(StatementMatcher[] statementMatchers) {
+    public StatementMatchersPane(QueryMatcher[] statementMatchers) {
         super(new BorderLayout());
         statementMatcherPanesContainer = new ScrollablePane();
         statementMatcherPanesContainer.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         addDefaultMessageComponent();
         add(new JScrollPane(statementMatcherPanesContainer), BorderLayout.CENTER);
         if(statementMatchers != null) {
-            for(StatementMatcher statementMatcher: statementMatchers) {
-                addStatementMatcherPane(new StatementMatcherPane(this, statementMatcher));
+            for(QueryMatcher queryMatcher: statementMatchers) {
+                addStatementMatcherPane(new StatementMatcherPane(this, queryMatcher));
             }
         }
     }
@@ -137,12 +137,12 @@ public class StatementMatchersPane extends JPanel {
         statementMatcherPanesContainer.repaint();
     }
 
-    public StatementMatcher[] getStatementMatchers() {
+    public QueryMatcher[] getStatementMatchers() {
         if(!(statementMatcherPanesContainer.getComponent(0) instanceof StatementMatcherPane)) {
-            return new StatementMatcher[0];
+            return new QueryMatcher[0];
         }
         Component[] components = statementMatcherPanesContainer.getComponents();
-        StatementMatcher[] statementMatchers = new StatementMatcher[components.length];
+        QueryMatcher[] statementMatchers = new QueryMatcher[components.length];
         for(int i=0; i<components.length; i++) {
             statementMatchers[i] = ((StatementMatcherPane)components[i]).getStatementMatcher();
         }

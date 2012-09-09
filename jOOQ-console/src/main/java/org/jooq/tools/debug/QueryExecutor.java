@@ -36,22 +36,16 @@
  */
 package org.jooq.tools.debug;
 
-import java.sql.Connection;
 
-import org.jooq.SQLDialect;
 
 /**
  * @author Christopher Deckers
  */
-public interface StatementExecutorContext {
+public interface QueryExecutor {
 
-    public boolean isReadOnly();
+    public QueryExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold);
 
-    public Connection getConnection();
-
-    public void releaseConnection(Connection connection);
-
-    public SQLDialect getSQLDialect();
+    public void stopExecution();
 
     public String[] getTableNames();
 

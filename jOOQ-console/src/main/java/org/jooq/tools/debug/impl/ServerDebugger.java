@@ -47,11 +47,11 @@ import org.jooq.tools.debug.BreakpointHit;
 import org.jooq.tools.debug.BreakpointHitHandler;
 import org.jooq.tools.debug.DatabaseDescriptor;
 import org.jooq.tools.debug.LoggingListener;
-import org.jooq.tools.debug.ResultSetLog;
-import org.jooq.tools.debug.StatementExecution;
-import org.jooq.tools.debug.StatementExecutor;
-import org.jooq.tools.debug.StatementLog;
-import org.jooq.tools.debug.StatementMatcher;
+import org.jooq.tools.debug.ResultLog;
+import org.jooq.tools.debug.QueryExecution;
+import org.jooq.tools.debug.QueryExecutor;
+import org.jooq.tools.debug.QueryLog;
+import org.jooq.tools.debug.QueryMatcher;
 import org.jooq.tools.debug.impl.ClientDebugger.CMC_logQueries;
 import org.jooq.tools.debug.impl.ClientDebugger.CMC_logResultSet;
 import org.jooq.tools.debug.impl.ClientDebugger.CMC_processBreakpointAfterExecutionHit;
@@ -77,12 +77,12 @@ class ServerDebugger extends LocalDebugger {
         if(isActive) {
             setLoggingListener(new LoggingListener() {
                 @Override
-                public void logQueries(StatementLog statementLog) {
-                    comm.asyncSend((CommandMessage<?>) new CMC_logQueries(statementLog));
+                public void logQuery(QueryLog queryLog) {
+                    comm.asyncSend((CommandMessage<?>) new CMC_logQueries(queryLog));
                 }
                 @Override
-                public void logResultSet(int dataId, ResultSetLog resultSetLog) {
-                    comm.asyncSend((CommandMessage<?>) new CMC_logResultSet(dataId, resultSetLog));
+                public void logResult(int dataId, ResultLog resultLog) {
+                    comm.asyncSend((CommandMessage<?>) new CMC_logResultSet(dataId, resultLog));
                 }
             });
         } else {
@@ -125,9 +125,9 @@ class ServerDebugger extends LocalDebugger {
     }
 
     static class CMS_setLoggingStatementMatchers extends CommandMessage<Serializable> {
-        private final StatementMatcher[] matchers;
+        private final QueryMatcher[] matchers;
 
-        CMS_setLoggingStatementMatchers(StatementMatcher[] matchers) {
+        CMS_setLoggingStatementMatchers(QueryMatcher[] matchers) {
             this.matchers = matchers;
         }
 
@@ -228,12 +228,12 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    private Map<Integer, StatementExecutor> idToStatementExecutorMap = new HashMap<Integer, StatementExecutor>();
+    private Map<Integer, QueryExecutor> idToStatementExecutorMap = new HashMap<Integer, QueryExecutor>();
 
     private void createStatementExecutor(int id, Long breakpointHitThreadID) {
         LocalStatementExecutor statementExecutor;
         if(breakpointHitThreadID == null) {
-            statementExecutor = createStatementExecutor();
+            statementExecutor = createQueryExecutor();
         } else {
             statementExecutor = createBreakpointHitStatementExecutor(breakpointHitThreadID);
         }
@@ -242,13 +242,13 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    private StatementExecutor getStatementExecutor(int id) {
+    private QueryExecutor getStatementExecutor(int id) {
         synchronized (idToStatementExecutorMap) {
             return idToStatementExecutorMap.get(id);
         }
     }
 
-    private StatementExecutor removeStatementExecutor(int id) {
+    private QueryExecutor removeStatementExecutor(int id) {
         synchronized (idToStatementExecutorMap) {
             return idToStatementExecutorMap.remove(id);
         }
@@ -270,7 +270,7 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_doStatementExecutorExecution extends CommandMessage<StatementExecution> {
+    static class CMS_doStatementExecutorExecution extends CommandMessage<QueryExecution> {
         private final int    id;
         private final String sql;
         private final int    maxRSRowsParsing;
@@ -285,9 +285,9 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public StatementExecution run(MessageContext context) {
-            StatementExecution statementExecution = getServerDebugger(context).getStatementExecutor(id).execute(sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
-            return new ClientStatementExecution(statementExecution);
+        public QueryExecution run(MessageContext context) {
+            QueryExecution queryExecution = getServerDebugger(context).getStatementExecutor(id).execute(sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
+            return new ClientStatementExecution(queryExecution);
         }
     }
 
@@ -343,22 +343,22 @@ class ServerDebugger extends LocalDebugger {
 
     void cleanup() {
         synchronized (idToStatementExecutorMap) {
-            for(StatementExecutor executor: idToStatementExecutorMap.values()) {
+            for(QueryExecutor executor: idToStatementExecutorMap.values()) {
                 executor.stopExecution();
             }
             idToStatementExecutorMap.clear();
         }
     }
 
-    private Map<Long, List<StatementExecutor>> threadIDToStatementExecutorList = new HashMap<Long, List<StatementExecutor>>();
+    private Map<Long, List<QueryExecutor>> threadIDToStatementExecutorList = new HashMap<Long, List<QueryExecutor>>();
 
     @Override
     public LocalStatementExecutor createBreakpointHitStatementExecutor(long threadID) {
         LocalStatementExecutor statementExecutor = super.createBreakpointHitStatementExecutor(threadID);
         synchronized (threadIDToStatementExecutorList) {
-            List<StatementExecutor> list = threadIDToStatementExecutorList.get(threadID);
+            List<QueryExecutor> list = threadIDToStatementExecutorList.get(threadID);
             if(list == null) {
-                list = new ArrayList<StatementExecutor>();
+                list = new ArrayList<QueryExecutor>();
                 threadIDToStatementExecutorList.put(threadID, list);
             }
             list.add(statementExecutor);
@@ -368,13 +368,13 @@ class ServerDebugger extends LocalDebugger {
 
     @Override
     protected void performThreadDataCleanup(long threadID) {
-        List<StatementExecutor> list;
+        List<QueryExecutor> list;
         synchronized (threadIDToStatementExecutorList) {
             list = threadIDToStatementExecutorList.remove(threadID);
         }
         if(list != null) {
-            for(StatementExecutor statementExecutor: list) {
-                statementExecutor.stopExecution();
+            for(QueryExecutor queryExecutor: list) {
+                queryExecutor.stopExecution();
             }
         }
     }

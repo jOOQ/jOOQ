@@ -36,56 +36,12 @@
  */
 package org.jooq.tools.debug;
 
-import java.io.Serializable;
-
 
 /**
  * @author Christopher Deckers
  */
-public class StatementInfo implements Serializable {
+public interface QueryExecutorCreator {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -8962704457792024345L;
+    public QueryExecutor createQueryExecutor();
 
-    private final QueryType   queryType;
-    private final String[]    queries;
-    private final String      parameterDescription;
-    private final String      threadName;
-    private final long        threadID;
-
-    public StatementInfo(QueryType queryType, String[] queries, String parameterDescription) {
-        Thread currentThread = Thread.currentThread();
-
-        this.threadName = currentThread.getName();
-        this.threadID = currentThread.getId();
-        this.queryType = queryType;
-        this.queries = queries;
-        this.parameterDescription = parameterDescription;
-    }
-
-    public String getThreadName() {
-        return threadName;
-    }
-
-    public long getThreadID() {
-        return threadID;
-    }
-
-    public QueryType getQueryType() {
-        return queryType;
-    }
-
-    public String[] getQueries() {
-        return queries;
-    }
-
-    /**
-     * @return non null if queries consist of a single prepared statement with
-     *         parameters.
-     */
-    public String getParameterDescription() {
-        return parameterDescription;
-    }
 }

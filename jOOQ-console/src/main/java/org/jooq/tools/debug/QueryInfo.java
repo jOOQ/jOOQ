@@ -42,24 +42,50 @@ import java.io.Serializable;
 /**
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
-public class StatementExecution implements Serializable {
+public class QueryInfo implements Serializable {
 
-    private long executionDuration;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -8962704457792024345L;
 
-    private StatementExecutionResult[] results;
+    private final QueryType   queryType;
+    private final String[]    queries;
+    private final String      parameterDescription;
+    private final String      threadName;
+    private final long        threadID;
 
-    public StatementExecution(long executionDuration, StatementExecutionResult... results) {
-        this.executionDuration = executionDuration;
-        this.results = results;
+    public QueryInfo(QueryType queryType, String[] queries, String parameterDescription) {
+        Thread currentThread = Thread.currentThread();
+
+        this.threadName = currentThread.getName();
+        this.threadID = currentThread.getId();
+        this.queryType = queryType;
+        this.queries = queries;
+        this.parameterDescription = parameterDescription;
     }
 
-    public StatementExecutionResult[] getResults() {
-        return results;
+    public String getThreadName() {
+        return threadName;
     }
 
-    public long getExecutionDuration() {
-        return executionDuration;
+    public long getThreadID() {
+        return threadID;
     }
 
+    public QueryType getQueryType() {
+        return queryType;
+    }
+
+    public String[] getQueries() {
+        return queries;
+    }
+
+    /**
+     * @return non null if queries consist of a single prepared statement with
+     *         parameters.
+     */
+    public String getParameterDescription() {
+        return parameterDescription;
+    }
 }

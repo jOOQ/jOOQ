@@ -36,37 +36,25 @@
  */
 package org.jooq.tools.debug;
 
-import java.io.PrintWriter;
-import java.io.Serializable;
-import java.io.StringWriter;
+import java.sql.Connection;
+
+import org.jooq.SQLDialect;
 
 /**
  * @author Christopher Deckers
  */
-@SuppressWarnings("serial")
-public class StatementExecutionMessageResult implements StatementExecutionResult, Serializable {
+public interface QueryExecutorContext {
 
-    private String message;
-    private boolean isError;
+    public boolean isReadOnly();
 
-    public StatementExecutionMessageResult(String message, boolean isError) {
-        this.message = message;
-        this.isError = isError;
-    }
+    public Connection getConnection();
 
-    public StatementExecutionMessageResult(Exception e) {
-        StringWriter stringWriter = new StringWriter();
-        e.printStackTrace(new PrintWriter(stringWriter));
-        this.message = stringWriter.toString();
-        isError = true;
-    }
+    public void releaseConnection(Connection connection);
 
-    public String getMessage() {
-        return message;
-    }
+    public SQLDialect getSQLDialect();
 
-    public boolean isError() {
-        return isError;
-    }
+    public String[] getTableNames();
+
+    public String[] getTableColumnNames();
 
 }

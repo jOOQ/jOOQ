@@ -59,21 +59,21 @@ import java.util.regex.Pattern;
 
 import org.jooq.SQLDialect;
 import org.jooq.tools.debug.QueryType;
-import org.jooq.tools.debug.StatementExecution;
-import org.jooq.tools.debug.StatementExecutionMessageResult;
-import org.jooq.tools.debug.StatementExecutionResult;
-import org.jooq.tools.debug.StatementExecutor;
-import org.jooq.tools.debug.StatementExecutorContext;
+import org.jooq.tools.debug.QueryExecution;
+import org.jooq.tools.debug.QueryExecutionMessageResult;
+import org.jooq.tools.debug.QueryExecutionResult;
+import org.jooq.tools.debug.QueryExecutor;
+import org.jooq.tools.debug.QueryExecutorContext;
 import org.jooq.tools.debug.impl.StatementExecutionResultSetResult.TypeInfo;
 
 /**
  * @author Christopher Deckers
  */
-class LocalStatementExecutor implements StatementExecutor {
+class LocalStatementExecutor implements QueryExecutor {
 
-    private StatementExecutorContext executorContext;
+    private QueryExecutorContext executorContext;
 
-    public LocalStatementExecutor(StatementExecutorContext executorContext) {
+    public LocalStatementExecutor(QueryExecutorContext executorContext) {
         this.executorContext = executorContext;
     }
 
@@ -83,7 +83,7 @@ class LocalStatementExecutor implements StatementExecutor {
     private volatile Thread evaluationThread;
 
     @Override
-    public StatementExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
+    public QueryExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
         boolean isAllowed = true;
         if(executorContext.isReadOnly()) {
             String simplifiedSql = sql.replaceAll("'[^']*'", "");
@@ -116,7 +116,7 @@ class LocalStatementExecutor implements StatementExecutor {
             }
         }
         if(!isAllowed) {
-            return new StatementExecution(0, new StatementExecutionMessageResult("The database is not editable but the statement to evaluate is a modification statement!", true));
+            return new QueryExecution(0, new QueryExecutionMessageResult("The database is not editable but the statement to evaluate is a modification statement!", true));
         }
         stopExecution();
         evaluationThread = Thread.currentThread();
@@ -128,7 +128,7 @@ class LocalStatementExecutor implements StatementExecutor {
             start = System.currentTimeMillis();
             if(evaluationThread != Thread.currentThread()) {
                 long executionDuration = System.currentTimeMillis() - start;
-                return new StatementExecution(executionDuration, new StatementExecutionMessageResult("Interrupted by user after " + Utils.formatDuration(executionDuration), true));
+                return new QueryExecution(executionDuration, new QueryExecutionMessageResult("Interrupted by user after " + Utils.formatDuration(executionDuration), true));
             }
             boolean executeResult;
             try {
@@ -136,17 +136,17 @@ class LocalStatementExecutor implements StatementExecutor {
             } catch(SQLException e) {
                 long executionDuration = System.currentTimeMillis() - start;
                 if(evaluationThread != Thread.currentThread()) {
-                    return new StatementExecution(executionDuration, new StatementExecutionMessageResult("Interrupted by user after " + Utils.formatDuration(executionDuration), true));
+                    return new QueryExecution(executionDuration, new QueryExecutionMessageResult("Interrupted by user after " + Utils.formatDuration(executionDuration), true));
                 }
-                return new StatementExecution(executionDuration, new StatementExecutionMessageResult(e));
+                return new QueryExecution(executionDuration, new QueryExecutionMessageResult(e));
             }
             final long executionDuration = System.currentTimeMillis() - start;
             if(evaluationThread != Thread.currentThread()) {
-                return new StatementExecution(executionDuration, new StatementExecutionMessageResult("Interrupted by user after " + Utils.formatDuration(executionDuration), true));
+                return new QueryExecution(executionDuration, new QueryExecutionMessageResult("Interrupted by user after " + Utils.formatDuration(executionDuration), true));
             }
-            List<StatementExecutionResult> statementExecutionResultList = new ArrayList<StatementExecutionResult>();
+            List<QueryExecutionResult> statementExecutionResultList = new ArrayList<QueryExecutionResult>();
             do {
-                StatementExecutionResult statementExecutionResult;
+                QueryExecutionResult queryExecutionResult;
                 if(executeResult) {
                     final ResultSet rs = stmt.getResultSet();
                     ResultSetMetaData metaData = rs.getMetaData();
@@ -215,14 +215,14 @@ class LocalStatementExecutor implements StatementExecutor {
                         }
                     }
                     if(evaluationThread != Thread.currentThread()) {
-                        return new StatementExecution(executionDuration, new StatementExecutionMessageResult("Interrupted by user after " + Utils.formatDuration(executionDuration), true));
+                        return new QueryExecution(executionDuration, new QueryExecutionMessageResult("Interrupted by user after " + Utils.formatDuration(executionDuration), true));
                     }
                     final List<Object[]> rowDataList = new ArrayList<Object[]>();
                     int rowCount = 0;
                     long rsStart = System.currentTimeMillis();
                     while(rs.next() && rowCount < maxRSRowsParsing) {
                         if(evaluationThread != Thread.currentThread()) {
-                            return new StatementExecution(executionDuration, new StatementExecutionMessageResult("Interrupted by user after " + Utils.formatDuration(executionDuration), true));
+                            return new QueryExecution(executionDuration, new QueryExecutionMessageResult("Interrupted by user after " + Utils.formatDuration(executionDuration), true));
                         }
                         rowCount++;
                         Object[] rowData = new Object[columnNames.length];
@@ -278,10 +278,10 @@ class LocalStatementExecutor implements StatementExecutor {
                         }
                     }
                     final long resultSetParsingDuration = System.currentTimeMillis() - rsStart;
-                    statementExecutionResult = new LocalStatementExecutionResultSetResult(rs, columnNames, typeInfos, columnClasses, rowDataList.toArray(new Object[0][]), rowCount, resultSetParsingDuration, retainParsedRSDataRowCountThreshold, executorContext.isReadOnly());
+                    queryExecutionResult = new LocalStatementExecutionResultSetResult(rs, columnNames, typeInfos, columnClasses, rowDataList.toArray(new Object[0][]), rowCount, resultSetParsingDuration, retainParsedRSDataRowCountThreshold, executorContext.isReadOnly());
                 } else {
                     final int updateCount = stmt.getUpdateCount();
-                    statementExecutionResult = new StatementExecutionMessageResult(Utils.formatDuration(executionDuration) + "> " + updateCount + " row(s) affected.", false);
+                    queryExecutionResult = new QueryExecutionMessageResult(Utils.formatDuration(executionDuration) + "> " + updateCount + " row(s) affected.", false);
                 }
                 if(executorContext.getSQLDialect() == SQLDialect.SQLSERVER) {
                     try {
@@ -292,12 +292,12 @@ class LocalStatementExecutor implements StatementExecutor {
                 } else {
                     executeResult = false;
                 }
-                statementExecutionResultList.add(statementExecutionResult);
+                statementExecutionResultList.add(queryExecutionResult);
             } while(executeResult || stmt.getUpdateCount() != -1);
-            return new StatementExecution(executionDuration, statementExecutionResultList.toArray(new StatementExecutionResult[0]));
+            return new QueryExecution(executionDuration, statementExecutionResultList.toArray(new QueryExecutionResult[0]));
         } catch(Exception e) {
             long executionDuration = System.currentTimeMillis() - start;
-            return new StatementExecution(executionDuration, new StatementExecutionMessageResult(e));
+            return new QueryExecution(executionDuration, new QueryExecutionMessageResult(e));
         } finally {
             if(executorContext.isReadOnly()) {
                 closeConnection();

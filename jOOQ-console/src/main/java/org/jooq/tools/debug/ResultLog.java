@@ -41,7 +41,7 @@ import java.io.Serializable;
 /**
  * @author Christopher Deckers
  */
-public class ResultSetLog implements Serializable {
+public class ResultLog implements Serializable {
 
     /**
      * Generated UID
@@ -56,7 +56,7 @@ public class ResultSetLog implements Serializable {
     private final int           readCount;
     private final int           writeCount;
 
-    public ResultSetLog(long lifeTime, final int readRows, final int readCount, final int writeCount) {
+    public ResultLog(long lifeTime, final int readRows, final int readCount, final int writeCount) {
         this.id = nextID++;
         this.lifeTime = lifeTime;
         this.readRows = readRows;

@@ -36,19 +36,37 @@
  */
 package org.jooq.tools.debug;
 
-
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.StringWriter;
 
 /**
  * @author Christopher Deckers
  */
-public interface StatementExecutor {
+@SuppressWarnings("serial")
+public class QueryExecutionMessageResult implements QueryExecutionResult, Serializable {
 
-    public StatementExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold);
+    private String message;
+    private boolean isError;
 
-    public void stopExecution();
+    public QueryExecutionMessageResult(String message, boolean isError) {
+        this.message = message;
+        this.isError = isError;
+    }
 
-    public String[] getTableNames();
+    public QueryExecutionMessageResult(Exception e) {
+        StringWriter stringWriter = new StringWriter();
+        e.printStackTrace(new PrintWriter(stringWriter));
+        this.message = stringWriter.toString();
+        isError = true;
+    }
 
-    public String[] getTableColumnNames();
+    public String getMessage() {
+        return message;
+    }
+
+    public boolean isError() {
+        return isError;
+    }
 
 }

@@ -104,9 +104,9 @@ import org.jooq.debug.console.misc.XTableColumnModel;
 import org.jooq.tools.debug.Debugger;
 import org.jooq.tools.debug.LoggingListener;
 import org.jooq.tools.debug.QueryType;
-import org.jooq.tools.debug.ResultSetLog;
-import org.jooq.tools.debug.StatementLog;
-import org.jooq.tools.debug.StatementMatcher;
+import org.jooq.tools.debug.ResultLog;
+import org.jooq.tools.debug.QueryLog;
+import org.jooq.tools.debug.QueryMatcher;
 import org.jooq.tools.debug.impl.Utils;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -381,15 +381,15 @@ public class LoggerPane extends JPanel {
                         return duration < 0? null: duration;
                     }
                     case COLUMN_RS_LIFETIME: {
-                        ResultSetLog rsData = queryDebuggingInfo.getResultSetLoggingData();
+                        ResultLog rsData = queryDebuggingInfo.getResultSetLoggingData();
                         return rsData == null? null: rsData.getLifeTime();
                     }
                     case COLUMN_RS_READ: {
-                        ResultSetLog rsData = queryDebuggingInfo.getResultSetLoggingData();
+                        ResultLog rsData = queryDebuggingInfo.getResultSetLoggingData();
                         return rsData == null? null: rsData.getReadCount();
                     }
                     case COLUMN_RS_READ_ROWS: {
-                        ResultSetLog rsData = queryDebuggingInfo.getResultSetLoggingData();
+                        ResultLog rsData = queryDebuggingInfo.getResultSetLoggingData();
                         return rsData == null? null: rsData.getReadRows();
                     }
                     case COLUMN_DUPLICATION_COUNT: {
@@ -659,7 +659,7 @@ public class LoggerPane extends JPanel {
     }
 
     private void adjustStatementMatcherButton() {
-        StatementMatcher[] loggingStatementMatchers = LoggerPane.this.debugger.getLoggingStatementMatchers();
+        QueryMatcher[] loggingStatementMatchers = LoggerPane.this.debugger.getLoggingStatementMatchers();
         statementMatcherButton.setSelected(loggingStatementMatchers != null);
     }
 
@@ -759,36 +759,36 @@ public class LoggerPane extends JPanel {
 
     private static class QueryDebuggingInfo {
         private long timestamp;
-        private StatementLog statementLog;
+        private QueryLog queryLog;
         private Throwable throwable;
         private int duplicationCount;
-        public QueryDebuggingInfo(long timestamp, StatementLog statementLog) {
+        public QueryDebuggingInfo(long timestamp, QueryLog queryLog) {
             this.timestamp = timestamp;
-            this.statementLog = statementLog;
+            this.queryLog = queryLog;
             this.throwable = new Exception("Statement Stack trace");
-            throwable.setStackTrace(statementLog.getCallerStackTraceElements());
+            throwable.setStackTrace(queryLog.getCallerStackTraceElements());
         }
         public long getTimestamp() {
             return timestamp;
         }
-        public StatementLog getQueryLoggingData() {
-            return statementLog;
+        public QueryLog getQueryLoggingData() {
+            return queryLog;
         }
         public Long getPrepardeStatementPreparationDuration() {
-            return statementLog.getPreparedStatementPreparationDuration();
+            return queryLog.getPreparedStatementPreparationDuration();
         }
         public Long getPrepardeStatementBindingDuration() {
-            return statementLog.getPreparedStatementBindingDuration();
+            return queryLog.getPreparedStatementBindingDuration();
         }
         public long getExecutionDuration() {
-            return statementLog.getExecutionDuration();
+            return queryLog.getExecutionDuration();
         }
         public QueryType getQueryType() {
-            return statementLog.getStatementInfo().getQueryType();
+            return queryLog.getQueryInfo().getQueryType();
         }
         public String[] getQueries() {
-            String parameterDescription = statementLog.getStatementInfo().getParameterDescription();
-            String[] queries = statementLog.getStatementInfo().getQueries();
+            String parameterDescription = queryLog.getQueryInfo().getParameterDescription();
+            String[] queries = queryLog.getQueryInfo().getQueries();
             if(parameterDescription != null) {
                 return new String[] {queries[0] + " -> " + parameterDescription};
             }
@@ -798,10 +798,10 @@ public class LoggerPane extends JPanel {
             return throwable;
         }
         public String getThreadName() {
-            return statementLog.getStatementInfo().getThreadName();
+            return queryLog.getQueryInfo().getThreadName();
         }
         public long getThreadId() {
-            return statementLog.getStatementInfo().getThreadID();
+            return queryLog.getQueryInfo().getThreadID();
         }
         public void setDuplicationCount(int duplicationCount) {
             this.duplicationCount = duplicationCount;
@@ -809,12 +809,12 @@ public class LoggerPane extends JPanel {
         public int getDuplicationCount() {
             return duplicationCount;
         }
-        private ResultSetLog resultSetLog;
-        public void setResultSetLoggingData(ResultSetLog resultSetLog) {
-            this.resultSetLog = resultSetLog;
+        private ResultLog resultLog;
+        public void setResultSetLoggingData(ResultLog resultLog) {
+            this.resultLog = resultLog;
         }
-        public ResultSetLog getResultSetLoggingData() {
-            return resultSetLog;
+        public ResultLog getResultSetLoggingData() {
+            return resultLog;
         }
         private int displayedRow = -1;
         public int getDisplayedRow() {
@@ -837,8 +837,8 @@ public class LoggerPane extends JPanel {
         if(isLogging) {
             LoggingListener loggingListener = new LoggingListener() {
                 @Override
-                public void logQueries(StatementLog statementLog) {
-                    debugQueries(new QueryDebuggingInfo(System.currentTimeMillis(), statementLog));
+                public void logQuery(QueryLog queryLog) {
+                    debugQueries(new QueryDebuggingInfo(System.currentTimeMillis(), queryLog));
                 }
                 public void debugQueries(final QueryDebuggingInfo queryDebuggingInfo) {
                     if(!SwingUtilities.isEventDispatchThread()) {
@@ -853,12 +853,12 @@ public class LoggerPane extends JPanel {
                     addRow(queryDebuggingInfo);
                 }
                 @Override
-                public void logResultSet(final int queryLoggingDataID, final ResultSetLog resultSetLog) {
+                public void logResult(final int queryLoggingDataID, final ResultLog resultLog) {
                     if(!SwingUtilities.isEventDispatchThread()) {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
-                                logResultSet(queryLoggingDataID, resultSetLog);
+                                logResult(queryLoggingDataID, resultLog);
                             }
                         });
                         return;
@@ -866,7 +866,7 @@ public class LoggerPane extends JPanel {
                     for(int i=queryDebuggingInfoList.size()-1; i>=0; i--) {
                         QueryDebuggingInfo queryDebuggingInfo = queryDebuggingInfoList.get(i);
                         if(queryDebuggingInfo.getQueryLoggingData().getID() == queryLoggingDataID) {
-                            queryDebuggingInfo.setResultSetLoggingData(resultSetLog);
+                            queryDebuggingInfo.setResultSetLoggingData(resultLog);
                             XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
                             boolean isResultSetDataShown = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(COLUMN_RS_LIFETIME));
                             if(isResultSetDataShown) {
@@ -934,7 +934,7 @@ public class LoggerPane extends JPanel {
                 "<th>Stack trace</th>" +
                 "</tr>\n");
         for(QueryDebuggingInfo queryDebuggingInfo: queryDebuggingInfos) {
-            ResultSetLog resultSetData = queryDebuggingInfo.getResultSetLoggingData();
+            ResultLog resultSetData = queryDebuggingInfo.getResultSetLoggingData();
             htmlSB.append("<tr>\n");
             htmlSB.append("<td>");
             htmlSB.append(queryDebuggingInfo.getQueryType());

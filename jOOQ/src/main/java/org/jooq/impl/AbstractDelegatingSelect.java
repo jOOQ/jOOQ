@@ -324,8 +324,8 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
-    public final <K, E> Map<K, List<E>> fetchIntoGroups(Field<K> key, Class<? extends E> type) {
-        return getDelegate().fetchIntoGroups(key, type);
+    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) {
+        return getDelegate().fetchGroups(key, type);
     }
 
     @Override

@@ -78,15 +78,15 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import org.jooq.debug.Breakpoint;
-import org.jooq.debug.BreakpointHit;
-import org.jooq.debug.BreakpointHitHandler;
-import org.jooq.debug.Debugger;
 import org.jooq.debug.console.misc.CheckBoxNode;
 import org.jooq.debug.console.misc.CheckBoxNodeEditor;
 import org.jooq.debug.console.misc.CheckBoxNodeRenderer;
 import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.TreeDataTip;
+import org.jooq.tools.debug.Breakpoint;
+import org.jooq.tools.debug.BreakpointHit;
+import org.jooq.tools.debug.BreakpointHitHandler;
+import org.jooq.tools.debug.Debugger;
 
 /**
  * @author Christopher Deckers

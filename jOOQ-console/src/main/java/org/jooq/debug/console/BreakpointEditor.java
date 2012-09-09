@@ -58,11 +58,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 
-import org.jooq.debug.Breakpoint;
-import org.jooq.debug.QueryType;
-import org.jooq.debug.StatementMatcher;
-import org.jooq.debug.StatementProcessor;
-import org.jooq.debug.console.misc.TextMatcher;
+import org.jooq.tools.debug.Breakpoint;
+import org.jooq.tools.debug.QueryType;
+import org.jooq.tools.debug.StatementMatcher;
+import org.jooq.tools.debug.StatementProcessor;
+import org.jooq.tools.debug.TextMatcher;
 
 /**
  * @author Christopher Deckers

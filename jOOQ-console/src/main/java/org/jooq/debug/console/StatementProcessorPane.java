@@ -48,7 +48,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import org.jooq.debug.StatementProcessor;
+import org.jooq.tools.debug.StatementProcessor;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
 

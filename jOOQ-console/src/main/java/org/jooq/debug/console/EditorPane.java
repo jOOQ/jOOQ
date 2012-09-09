@@ -102,15 +102,15 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.BadLocationException;
 
-import org.jooq.debug.StatementExecution;
-import org.jooq.debug.StatementExecutionMessageResult;
-import org.jooq.debug.StatementExecutionResult;
-import org.jooq.debug.StatementExecutionResultSetResult;
-import org.jooq.debug.StatementExecutor;
-import org.jooq.debug.StatementExecutorCreator;
 import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.JTableX;
-import org.jooq.debug.console.misc.Utils;
+import org.jooq.tools.debug.StatementExecution;
+import org.jooq.tools.debug.StatementExecutionMessageResult;
+import org.jooq.tools.debug.StatementExecutionResult;
+import org.jooq.tools.debug.StatementExecutor;
+import org.jooq.tools.debug.StatementExecutorCreator;
+import org.jooq.tools.debug.impl.StatementExecutionResultSetResult;
+import org.jooq.tools.debug.impl.Utils;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
 

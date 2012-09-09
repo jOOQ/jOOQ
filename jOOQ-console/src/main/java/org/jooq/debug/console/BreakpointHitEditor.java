@@ -56,12 +56,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
-import org.jooq.debug.BreakpointHit;
-import org.jooq.debug.BreakpointHit.ExecutionType;
-import org.jooq.debug.Debugger;
-import org.jooq.debug.StatementExecutor;
-import org.jooq.debug.StatementExecutorCreator;
 import org.jooq.debug.console.DebuggerPane.BreakpointHitNode;
+import org.jooq.tools.debug.BreakpointHit;
+import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.StatementExecutor;
+import org.jooq.tools.debug.StatementExecutorCreator;
+import org.jooq.tools.debug.BreakpointHit.ExecutionType;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
 

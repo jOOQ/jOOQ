@@ -41,8 +41,6 @@ import java.net.ServerSocket;
 
 import org.jooq.debug.DebuggerRegistry;
 import org.jooq.debug.console.DatabaseDescriptor;
-import org.jooq.debug.console.remote.messaging.CommunicationInterface;
-import org.jooq.debug.console.remote.messaging.CommunicationInterfaceFactory;
 
 /**
  * @author Christopher Deckers

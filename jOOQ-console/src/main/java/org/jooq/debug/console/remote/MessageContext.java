@@ -34,7 +34,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console.remote.messaging;
+package org.jooq.debug.console.remote;
 
 import org.jooq.debug.Debugger;
 
@@ -42,11 +42,11 @@ import org.jooq.debug.Debugger;
  * A wrapper object for types that are required in message execution contexts
  * <p>
  * This type contains various objects that are needed when executing a
- * {@link CommandMessage}.
+ * <code>CommandMessage</code>
  *
  * @author Lukas Eder
  */
-public class MessageContext {
+class MessageContext {
 
     private final Debugger           debugger;
     private final MessagingInterface messagingInterface;

@@ -34,7 +34,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console.remote.messaging;
+package org.jooq.debug.console.remote;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -50,9 +50,9 @@ import org.jooq.debug.Debugger;
  *
  * @author Christopher Deckers
  */
-public class CommunicationInterface {
+class CommunicationInterface {
 
-    private final boolean IS_SYNCING_MESSAGES = Boolean.parseBoolean(System.getProperty("communication.interface.syncmessages"));
+    private final boolean    IS_SYNCING_MESSAGES = Boolean.parseBoolean(System.getProperty("communication.interface.syncmessages"));
 
     private volatile boolean isOpen;
     private final Debugger   debugger;

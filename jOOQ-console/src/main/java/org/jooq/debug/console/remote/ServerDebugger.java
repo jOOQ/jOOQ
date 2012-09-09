@@ -58,9 +58,6 @@ import org.jooq.debug.console.remote.ClientDebugger.CMC_logQueries;
 import org.jooq.debug.console.remote.ClientDebugger.CMC_logResultSet;
 import org.jooq.debug.console.remote.ClientDebugger.CMC_processBreakpointAfterExecutionHit;
 import org.jooq.debug.console.remote.ClientDebugger.CMC_processBreakpointBeforeExecutionHit;
-import org.jooq.debug.console.remote.messaging.CommandMessage;
-import org.jooq.debug.console.remote.messaging.CommunicationInterface;
-import org.jooq.debug.console.remote.messaging.MessageContext;
 
 /**
  * @author Christopher Deckers

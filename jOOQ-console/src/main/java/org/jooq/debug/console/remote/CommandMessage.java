@@ -34,41 +34,61 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console.remote.messaging;
+package org.jooq.debug.console.remote;
 
 import java.io.Serializable;
 
 /**
- * A local message is a special message that is not sent through the messaging
- * interface. It is normally used to sequence a local command among remote
- * commands.
+ * A type of message that executes a command with optional arguments and returns
+ * a result.
  *
  * @author Christopher Deckers
  */
-public abstract class LocalMessage<S extends Serializable> extends CommandMessage<S> {
+abstract class CommandMessage<S extends Serializable> extends Message<S> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 5946023022822987264L;
+    private static final long           serialVersionUID = -5396976580375899880L;
 
-    public LocalMessage() {}
-
-    @Override
-    S runCommand(MessageContext context) {
-        try {
-            return super.runCommand(context);
-        }
-        catch (RuntimeException e) {
-            throw e;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    S runCommand(MessageContext context) throws Exception {
+        return run(context);
     }
 
-    @Override
-    public abstract S run(MessageContext context);
+    /**
+     * Run the message.
+     *
+     * @param context The context in which this {@link Message} object is run
+     * @return the result that may be passed back to the caller.
+     * @throws Exception any exception that may happen, and which would be
+     *             passed back if it is a synchronous execution.
+     */
+    public abstract S run(MessageContext context) throws Exception;
 
+//    TODO: It looks as though args was only used for debugging purposes
+//    maybe there is another way to access arguments?
+//
+//    @Override
+//    public String toString() {
+//        String s = super.toString();
+//        if (args == null || args.length == 0) {
+//            return s + "()";
+//        }
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(s).append('(');
+//        for (int i = 0; i < args.length; i++) {
+//            Object arg = args[i];
+//            if (i > 0) {
+//                sb.append(", ");
+//            }
+//            if (arg != null && arg.getClass().isArray()) {
+//                sb.append(Arrays.deepToString((Object[]) arg));
+//            }
+//            else {
+//                sb.append(arg);
+//            }
+//        }
+//        sb.append(')');
+//        return sb.toString();
+//    }
 }

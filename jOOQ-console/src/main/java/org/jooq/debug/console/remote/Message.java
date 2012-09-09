@@ -34,61 +34,74 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console.remote.messaging;
+package org.jooq.debug.console.remote;
 
 import java.io.Serializable;
 
+
 /**
- * A type of message that executes a command with optional arguments and returns
- * a result.
- *
+ * The superclass of all the messages that are exchanged at the communication interface.
  * @author Christopher Deckers
  */
-public abstract class CommandMessage<S extends Serializable> extends Message<S> {
+@SuppressWarnings("serial")
+abstract class Message<S extends Serializable> implements Serializable {
+
+    private static int nextID = 1;
+
+    private int id = nextID++;
+    private boolean isSyncExec;
+    private long threadID;
+    private boolean isProcessorToOriginator;
 
     /**
-     * Generated UID
+     * Create an empty message.
      */
-    private static final long           serialVersionUID = -5396976580375899880L;
+    public Message() {
+    }
 
-    S runCommand(MessageContext context) throws Exception {
-        return run(context);
+    int getID() {
+        return id;
+    }
+
+    void setSyncExec(boolean isSyncExec) {
+        this.isSyncExec = isSyncExec;
+    }
+
+    void setThreadID(long threadID) {
+        this.threadID = threadID;
+    }
+
+    long getThreadID() {
+        return threadID;
+    }
+
+    void setProcessorToOriginator(boolean isProcessorToOriginator) {
+        this.isProcessorToOriginator = isProcessorToOriginator;
+    }
+
+    boolean isProcessorToOriginator() {
+        return isProcessorToOriginator;
+    }
+
+    boolean isSyncExec() {
+        return isSyncExec;
     }
 
     /**
-     * Run the message.
-     *
-     * @param context The context in which this {@link Message} object is run
-     * @return the result that may be passed back to the caller.
-     * @throws Exception any exception that may happen, and which would be
-     *             passed back if it is a synchronous execution.
+     * Indicate whether the message is valid. This is called before interpreting it to give a chance for the message to prevent its interpretation.
+     * @return true if the message is valid and should be interpreted, false otherwise.
      */
-    public abstract S run(MessageContext context) throws Exception;
+    protected boolean isValid() {
+        return true;
+    }
 
-//    TODO: It looks as though args was only used for debugging purposes
-//    maybe there is another way to access arguments?
-//
-//    @Override
-//    public String toString() {
-//        String s = super.toString();
-//        if (args == null || args.length == 0) {
-//            return s + "()";
-//        }
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(s).append('(');
-//        for (int i = 0; i < args.length; i++) {
-//            Object arg = args[i];
-//            if (i > 0) {
-//                sb.append(", ");
-//            }
-//            if (arg != null && arg.getClass().isArray()) {
-//                sb.append(Arrays.deepToString((Object[]) arg));
-//            }
-//            else {
-//                sb.append(arg);
-//            }
-//        }
-//        sb.append(')');
-//        return sb.toString();
-//    }
+    @Override
+    public String toString() {
+        String name = getClass().getName();
+        if(name.startsWith("chrriis.dj.nativeswing.")) {
+            name = name.substring("chrriis.dj.nativeswing.".length());
+        }
+        return name;
+    }
+
 }

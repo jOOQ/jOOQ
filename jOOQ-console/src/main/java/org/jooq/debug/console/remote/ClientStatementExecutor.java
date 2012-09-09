@@ -45,12 +45,11 @@ import org.jooq.debug.console.remote.ServerDebugger.CMS_doStatementExecutorExecu
 import org.jooq.debug.console.remote.ServerDebugger.CMS_getStatementExecutorTableColumnNames;
 import org.jooq.debug.console.remote.ServerDebugger.CMS_getStatementExecutorTableNames;
 import org.jooq.debug.console.remote.ServerDebugger.CMS_stopStatementExecutorExecution;
-import org.jooq.debug.console.remote.messaging.CommandMessage;
 
 /**
  * @author Christopher Deckers
  */
-public class ClientStatementExecutor implements StatementExecutor {
+class ClientStatementExecutor implements StatementExecutor {
 
     private static AtomicInteger nextID = new AtomicInteger();
 

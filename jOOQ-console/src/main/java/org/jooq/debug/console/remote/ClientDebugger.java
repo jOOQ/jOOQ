@@ -60,10 +60,6 @@ import org.jooq.debug.console.remote.ServerDebugger.CMS_setBreakpointHitHandlerA
 import org.jooq.debug.console.remote.ServerDebugger.CMS_setBreakpoints;
 import org.jooq.debug.console.remote.ServerDebugger.CMS_setLoggingActive;
 import org.jooq.debug.console.remote.ServerDebugger.CMS_setLoggingStatementMatchers;
-import org.jooq.debug.console.remote.messaging.CommandMessage;
-import org.jooq.debug.console.remote.messaging.CommunicationInterface;
-import org.jooq.debug.console.remote.messaging.CommunicationInterfaceFactory;
-import org.jooq.debug.console.remote.messaging.MessageContext;
 
 /**
  * @author Christopher Deckers

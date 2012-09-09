@@ -45,15 +45,15 @@ import org.jooq.debug.StatementExecutionResultSetResult;
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class ClientStatementExecutionResultSetResult implements StatementExecutionResultSetResult, Serializable {
+class ClientStatementExecutionResultSetResult implements StatementExecutionResultSetResult, Serializable {
 
-    private String[] columnNames;
+    private String[]   columnNames;
     private TypeInfo[] typeInfos;
     private Class<?>[] columnClasses;
     private Object[][] rowData;
-    private int rowCount;
-    private long resultSetParsingDuration;
-    private int retainParsedRSDataRowCountThreshold;
+    private int        rowCount;
+    private long       resultSetParsingDuration;
+    private int        retainParsedRSDataRowCountThreshold;
 
     public ClientStatementExecutionResultSetResult(LocalStatementExecutionResultSetResult rsResult) {
         columnNames = rsResult.getColumnNames();

@@ -54,12 +54,12 @@ import org.jooq.tools.debug.BreakpointHit;
 import org.jooq.tools.debug.BreakpointHit.ExecutionType;
 import org.jooq.tools.debug.Debugger;
 import org.jooq.tools.debug.LoggingListener;
-import org.jooq.tools.debug.QueryType;
-import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.QueryInfo;
 import org.jooq.tools.debug.QueryLog;
 import org.jooq.tools.debug.QueryMatcher;
 import org.jooq.tools.debug.QueryProcessor;
+import org.jooq.tools.debug.QueryType;
+import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.impl.LocalDebugger.DebuggerRegistry;
 
 /**
@@ -325,7 +325,7 @@ public class DebugListener extends DefaultExecuteListener {
 		            }
 		        }
 		        QueryInfo queryInfo = new QueryInfo(queryType, sql, parameterDescription);
-		        QueryLog queryLog = new QueryLog(queryInfo, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
+		        final QueryLog queryLog = new QueryLog(queryInfo, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
 		        final List<LoggingListener> loggingListenerList = new ArrayList<LoggingListener>(debuggerList.size());
 		        for(Debugger listener: debuggerList) {
 		            LoggingListener loggingListener = listener.getLoggingListener();
@@ -345,16 +345,15 @@ public class DebugListener extends DefaultExecuteListener {
 		        }
 		        ResultSet resultSet = ctx.resultSet();
 		        if(resultSet != null && !loggingListenerList.isEmpty()) {
-		            final int queryLoggingDataID = queryLog.getID();
 		            ResultSet newResultSet = new TrackingResultSet(resultSet) {
 		                @Override
 		                protected void notifyData(long lifeTime, int readRows, int readCount, int writeCount) {
 		                    ResultLog resultLog = null;
 		                    for(LoggingListener loggingListener: loggingListenerList) {
 		                        if(resultLog == null) {
-		                            resultLog = new ResultLog(lifeTime, readRows, readCount, writeCount);
+		                            resultLog = new ResultLog(queryLog.getID(), lifeTime, readRows, readCount, writeCount);
 		                        }
-		                        loggingListener.logResult(queryLoggingDataID, resultLog);
+		                        loggingListener.logResult(resultLog);
 		                    }
 		                }
 		            };

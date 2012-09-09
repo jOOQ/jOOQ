@@ -50,13 +50,15 @@ public class ResultLog implements Serializable {
 
     private static volatile int nextID;
 
+    private final int           queryLogId;
     private final int           id;
     private final long          lifeTime;
     private final int           readRows;
     private final int           readCount;
     private final int           writeCount;
 
-    public ResultLog(long lifeTime, final int readRows, final int readCount, final int writeCount) {
+    public ResultLog(int queryLogId, long lifeTime, final int readRows, final int readCount, final int writeCount) {
+        this.queryLogId = queryLogId;
         this.id = nextID++;
         this.lifeTime = lifeTime;
         this.readRows = readRows;
@@ -66,6 +68,10 @@ public class ResultLog implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public int getQueryLogId() {
+        return queryLogId;
     }
 
     public long getLifeTime() {

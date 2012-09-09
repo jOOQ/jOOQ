@@ -60,6 +60,7 @@ import org.jooq.debug.console.remote.ClientDebugger.CMC_processBreakpointAfterEx
 import org.jooq.debug.console.remote.ClientDebugger.CMC_processBreakpointBeforeExecutionHit;
 import org.jooq.debug.console.remote.messaging.CommandMessage;
 import org.jooq.debug.console.remote.messaging.CommunicationInterface;
+import org.jooq.debug.console.remote.messaging.MessageContext;
 
 /**
  * @author Christopher Deckers
@@ -94,7 +95,7 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_setLoggingActive extends ServerDebuggerCommandMessage<Serializable> {
+    static class CMS_setLoggingActive extends CommandMessage<Serializable> {
         private final boolean isActive;
 
         CMS_setLoggingActive(boolean isActive) {
@@ -102,8 +103,8 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run() {
-            getDebugger().setLoggingActive(isActive);
+        public Serializable run(MessageContext context) {
+            getServerDebugger(context).setLoggingActive(isActive);
             return null;
         }
     }
@@ -128,7 +129,7 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_setLoggingStatementMatchers extends ServerDebuggerCommandMessage<Serializable> {
+    static class CMS_setLoggingStatementMatchers extends CommandMessage<Serializable> {
         private final StatementMatcher[] matchers;
 
         CMS_setLoggingStatementMatchers(StatementMatcher[] matchers) {
@@ -136,13 +137,13 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run() {
-            getDebugger().setLoggingStatementMatchers(matchers);
+        public Serializable run(MessageContext context) {
+            context.getDebugger().setLoggingStatementMatchers(matchers);
             return null;
         }
     }
 
-    static class CMS_setBreakpoints extends ServerDebuggerCommandMessage<Serializable> {
+    static class CMS_setBreakpoints extends CommandMessage<Serializable> {
         private final Breakpoint[] breakpoints;
 
         CMS_setBreakpoints(Breakpoint[] breakpoints) {
@@ -150,7 +151,7 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run() {
+        public Serializable run(MessageContext context) {
             if (breakpoints != null) {
                 for (Breakpoint breakpoint : breakpoints) {
                     // Serialization has a cache, assuming objects are
@@ -158,12 +159,12 @@ class ServerDebugger extends LocalDebugger {
                     breakpoint.reset();
                 }
             }
-            getDebugger().setBreakpoints(breakpoints);
+            context.getDebugger().setBreakpoints(breakpoints);
             return null;
         }
     }
 
-    static class CMS_addBreakpoint extends ServerDebuggerCommandMessage<Serializable> {
+    static class CMS_addBreakpoint extends CommandMessage<Serializable> {
         private final Breakpoint breakpoint;
 
         CMS_addBreakpoint(Breakpoint breakpoint) {
@@ -171,16 +172,16 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run() {
+        public Serializable run(MessageContext context) {
             // Serialization has a cache, assuming objects are immutable. We
             // have to reset our internal states.
             breakpoint.reset();
-            getDebugger().addBreakpoint(breakpoint);
+            context.getDebugger().addBreakpoint(breakpoint);
             return null;
         }
     }
 
-    static class CMS_modifyBreakpoint extends ServerDebuggerCommandMessage<Serializable> {
+    static class CMS_modifyBreakpoint extends CommandMessage<Serializable> {
         private final Breakpoint breakpoint;
 
         CMS_modifyBreakpoint(Breakpoint breakpoint) {
@@ -188,16 +189,16 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run() {
+        public Serializable run(MessageContext context) {
             // Serialization has a cache, assuming objects are immutable. We
             // have to reset our internal states.
             breakpoint.reset();
-            getDebugger().modifyBreakpoint(breakpoint);
+            context.getDebugger().modifyBreakpoint(breakpoint);
             return null;
         }
     }
 
-    static class CMS_removeBreakpoint extends ServerDebuggerCommandMessage<Serializable> {
+    static class CMS_removeBreakpoint extends CommandMessage<Serializable> {
         private final Breakpoint breakpoint;
 
         CMS_removeBreakpoint(Breakpoint breakpoint) {
@@ -205,13 +206,13 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run() {
-            getDebugger().removeBreakpoint(breakpoint);
+        public Serializable run(MessageContext context) {
+            context.getDebugger().removeBreakpoint(breakpoint);
             return null;
         }
     }
 
-    static class CMS_setBreakpointHitHandlerActive extends ServerDebuggerCommandMessage<Serializable> {
+    static class CMS_setBreakpointHitHandlerActive extends CommandMessage<Serializable> {
         private final boolean isActive;
 
         CMS_setBreakpointHitHandlerActive(boolean isActive) {
@@ -219,16 +220,16 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run() {
-            getDebugger().setBreakpointHitHandlerActive(isActive);
+        public Serializable run(MessageContext context) {
+            getServerDebugger(context).setBreakpointHitHandlerActive(isActive);
             return null;
         }
     }
 
-    static class CMS_isExecutionSupported extends ServerDebuggerCommandMessage<Boolean> {
+    static class CMS_isExecutionSupported extends CommandMessage<Boolean> {
         @Override
-        public Boolean run() {
-            return getDebugger().isExecutionSupported();
+        public Boolean run(MessageContext context) {
+            return context.getDebugger().isExecutionSupported();
         }
     }
 
@@ -258,7 +259,7 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_createServerStatementExecutor extends ServerDebuggerCommandMessage<Serializable> {
+    static class CMS_createServerStatementExecutor extends CommandMessage<Serializable> {
         private final int  id;
         private final Long breakpointHitThreadID;
 
@@ -268,13 +269,13 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run() {
-            getDebugger().createStatementExecutor(id, breakpointHitThreadID);
+        public Serializable run(MessageContext context) {
+            getServerDebugger(context).createStatementExecutor(id, breakpointHitThreadID);
             return null;
         }
     }
 
-    static class CMS_doStatementExecutorExecution extends ServerDebuggerCommandMessage<StatementExecution> {
+    static class CMS_doStatementExecutorExecution extends CommandMessage<StatementExecution> {
         private final int    id;
         private final String sql;
         private final int    maxRSRowsParsing;
@@ -289,13 +290,13 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public StatementExecution run() {
-            StatementExecution statementExecution = getDebugger().getStatementExecutor(id).execute(sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
+        public StatementExecution run(MessageContext context) {
+            StatementExecution statementExecution = getServerDebugger(context).getStatementExecutor(id).execute(sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
             return new ClientStatementExecution(statementExecution);
         }
     }
 
-    static class CMS_stopStatementExecutorExecution extends ServerDebuggerCommandMessage<Serializable> {
+    static class CMS_stopStatementExecutorExecution extends CommandMessage<Serializable> {
         private final int id;
 
         CMS_stopStatementExecutorExecution(int id) {
@@ -303,13 +304,13 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run() {
-            getDebugger().removeStatementExecutor(id).stopExecution();
+        public Serializable run(MessageContext context) {
+            getServerDebugger(context).removeStatementExecutor(id).stopExecution();
             return null;
         }
     }
 
-    static class CMS_getStatementExecutorTableNames extends ServerDebuggerCommandMessage<String[]> {
+    static class CMS_getStatementExecutorTableNames extends CommandMessage<String[]> {
         private final int id;
 
         CMS_getStatementExecutorTableNames(int id) {
@@ -317,12 +318,12 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public String[] run() {
-            return getDebugger().getStatementExecutor(id).getTableNames();
+        public String[] run(MessageContext context) {
+            return getServerDebugger(context).getStatementExecutor(id).getTableNames();
         }
     }
 
-    static class CMS_getStatementExecutorTableColumnNames extends ServerDebuggerCommandMessage<String[]> {
+    static class CMS_getStatementExecutorTableColumnNames extends CommandMessage<String[]> {
         private final int id;
 
         CMS_getStatementExecutorTableColumnNames(int id) {
@@ -330,9 +331,19 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public String[] run() {
-            return getDebugger().getStatementExecutor(id).getTableColumnNames();
+        public String[] run(MessageContext context) {
+            return getServerDebugger(context).getStatementExecutor(id).getTableColumnNames();
         }
+    }
+
+    /**
+     * Convenience method to extract a ServerDebugger from a MessageContext.
+     * <p>
+     * This method is used for an intermediate [#1472] refactoring step and is
+     * likely to be removed again
+     */
+    static ServerDebugger getServerDebugger(MessageContext context) {
+        return (ServerDebugger) context.getDebugger();
     }
 
     void cleanup() {

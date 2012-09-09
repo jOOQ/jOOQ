@@ -59,16 +59,6 @@ public abstract class Message<S extends Serializable> implements Serializable {
     public Message() {
     }
 
-    private transient CommunicationInterface communicationInterface;
-
-    void setCommunicationInterface(CommunicationInterface communicationInterface) {
-        this.communicationInterface = communicationInterface;
-    }
-
-    protected CommunicationInterface getCommunicationInterface() {
-        return communicationInterface;
-    }
-
     int getID() {
         return id;
     }

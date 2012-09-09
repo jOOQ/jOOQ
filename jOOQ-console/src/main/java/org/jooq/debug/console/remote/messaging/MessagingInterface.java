@@ -168,11 +168,11 @@ class MessagingInterface {
 
     private Map<Long, MessageProcessingThread> originatorThreadIDToThreadMap = new HashMap<Long, MessagingInterface.MessageProcessingThread>();
 
-    private CommunicationInterface communicationInterface;
+    private CommunicationInterface comm;
     private boolean isClient;
 
     MessagingInterface(final CommunicationInterface communicationInterface, final Socket socket, boolean isClient) {
-        this.communicationInterface = communicationInterface;
+        this.comm = communicationInterface;
         this.isClient = isClient;
         try {
             oos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()) {
@@ -297,8 +297,7 @@ class MessagingInterface {
             Throwable throwable = null;
             if (message.isValid()) {
                 try {
-                    commandMessage.setCommunicationInterface(communicationInterface);
-                    result = commandMessage.runCommand();
+                    result = commandMessage.runCommand(new MessageContext(comm));
                 }
                 catch (Throwable t) {
                     throwable = t;
@@ -339,8 +338,8 @@ class MessagingInterface {
 
         @SuppressWarnings("unchecked")
         @Override
-        public Serializable run() {
-            MessagingInterface messagingInterface = getCommunicationInterface().getMessagingInterface();
+        public Serializable run(MessageContext context) {
+            MessagingInterface messagingInterface = context.getMessagingInterface();
             ThreadInfo<S> threadInfo;
             synchronized (messagingInterface.idToThreadInfo) {
                 threadInfo = (ThreadInfo<S>) messagingInterface.idToThreadInfo.get(threadID);
@@ -367,11 +366,10 @@ class MessagingInterface {
         }
 
         @Override
-        public Serializable run() {
+        public Serializable run(MessageContext context) {
             message.setSyncExec(false);
-            CommunicationInterface communicationInterface = getCommunicationInterface();
 //            message.setCommunicationInterface(communicationInterface);
-            MessagingInterface messagingInterface = communicationInterface.getMessagingInterface();
+            MessagingInterface messagingInterface = context.getMessagingInterface();
             CommandResultMessage<S> commandResultMessage = messagingInterface.runMessage(message);
             CM_asyncExecResponse<S> asyncExecResponse = new CM_asyncExecResponse<S>(threadID, commandResultMessage);
             messagingInterface.asyncSend(asyncExecResponse);

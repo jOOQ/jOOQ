@@ -51,18 +51,19 @@ public abstract class CommandMessage<S extends Serializable> extends Message<S> 
      */
     private static final long           serialVersionUID = -5396976580375899880L;
 
-    S runCommand() throws Exception {
-        return run();
+    S runCommand(MessageContext context) throws Exception {
+        return run(context);
     }
 
     /**
      * Run the message.
      *
+     * @param context The context in which this {@link Message} object is run
      * @return the result that may be passed back to the caller.
      * @throws Exception any exception that may happen, and which would be
      *             passed back if it is a synchronous execution.
      */
-    public abstract S run() throws Exception;
+    public abstract S run(MessageContext context) throws Exception;
 
 //    TODO: It looks as though args was only used for debugging purposes
 //    maybe there is another way to access arguments?

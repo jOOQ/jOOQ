@@ -1401,6 +1401,24 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final Map<List<?>, R> intoMap(Field<?>... keys) {
+        Map<List<?>, R> map = new LinkedHashMap<List<?>, R>();
+
+        for (R record : this) {
+            List<Object> keyList = new ArrayList<Object>();
+            for (Field<?> key : keys) {
+                keyList.add(record.getValue(key));
+            }
+
+            if (map.put(keyList, record) != null) {
+                throw new InvalidResultException("Key list " + keys + " is not unique in Result for " + this);
+            }
+        }
+
+        return map;
+    }
+
+    @Override
     public final <K> Map<K, Result<R>> intoGroups(Field<K> key) {
         Map<K, Result<R>> map = new LinkedHashMap<K, Result<R>>();
 
@@ -1434,6 +1452,28 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             }
 
             result.add(v);
+        }
+
+        return map;
+    }
+
+    @Override
+    public final Map<List<?>, Result<R>> intoGroups(Field<?>... keys) {
+        Map<List<?>, Result<R>> map = new LinkedHashMap<List<?>, Result<R>>();
+
+        for (R record : this) {
+            List<Object> keyList = new ArrayList<Object>();
+            for (Field<?> key : keys) {
+                keyList.add(record.getValue(key));
+            }
+
+            Result<R> result = map.get(keyList);
+            if (result == null) {
+                result = new ResultImpl<R>(getConfiguration(), this.fields);
+                map.put(keyList, result);
+            }
+
+            result.add(record);
         }
 
         return map;

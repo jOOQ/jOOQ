@@ -1836,6 +1836,22 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     <K, V> Map<K, V> intoMap(Field<K> key, Field<V> value);
 
     /**
+     * Return a {@link Map} with keys list as a map key and the corresponding
+     * record as value.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the key list is
+     * non-unique in the result set. Use {@link #intoGroups(Field...)} instead,
+     * if your key list is non-unique.
+     *
+     * @param keys The key list. Client code must assure that this key list is
+     *            unique in the result set.
+     * @return A Map containing the results.
+     * @throws InvalidResultException if the key list is non-unique in the
+     *             result set.
+     */
+    Map<List<?>, R> intoMap(Field<?>... keys);
+
+    /**
      * Return a {@link Map} with one of the result's columns as key and a list
      * of corresponding records as value.
      * <p>
@@ -1862,6 +1878,18 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return A Map containing the results
      */
     <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value);
+
+    /**
+     * Execute the query and return a {@link Map} with the result grouped by the
+     * given key list.
+     * <p>
+     * Unlike {@link #intoMap(Field...)}, this method allows for non-unique key
+     * list in the result set.
+     *
+     * @param keys The key list.
+     * @return A Map containing grouped results
+     */
+    Map<List<?>, Result<R>> intoGroups(Field<?>... keys);
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped

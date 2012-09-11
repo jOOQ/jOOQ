@@ -50,7 +50,6 @@ import org.jooq.tools.debug.Debugger;
 import org.jooq.tools.debug.LoggingListener;
 import org.jooq.tools.debug.QueryExecutor;
 import org.jooq.tools.debug.QueryLog;
-import org.jooq.tools.debug.QueryMatcher;
 import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_addBreakpoint;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_isExecutionSupported;
@@ -59,7 +58,6 @@ import org.jooq.tools.debug.impl.ServerDebugger.CMS_removeBreakpoint;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_setBreakpointHitHandlerActive;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_setBreakpoints;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_setLoggingActive;
-import org.jooq.tools.debug.impl.ServerDebugger.CMS_setLoggingStatementMatchers;
 
 /**
  * @author Christopher Deckers
@@ -84,38 +82,22 @@ class ClientDebugger implements Debugger {
     private final Object LOGGING_LISTENER_LOCK = new Object();
 
     @Override
-    public void setLoggingListener(LoggingListener loggingListener) {
+    public void setLoggingListener(LoggingListener listener) {
         synchronized (LOGGING_LISTENER_LOCK) {
-            if(this.loggingListener == loggingListener) {
+            if(this.loggingListener == listener) {
                 return;
             }
-            this.loggingListener = loggingListener;
+            this.loggingListener = listener;
         }
-        comm.asyncSend((CommandMessage<?>) new CMS_setLoggingActive(loggingListener != null));
+        comm.asyncSend((CommandMessage<?>) new CMS_setLoggingActive(
+            listener != null,
+            listener != null ? listener.getMatchers() : null));
     }
 
     @Override
     public LoggingListener getLoggingListener() {
         synchronized (LOGGING_LISTENER_LOCK) {
             return loggingListener;
-        }
-    }
-
-    private QueryMatcher[] loggingStatementMatchers;
-    private final Object LOGGING_STATEMENT_MATCHERS_LOCK = new Object();
-
-    @Override
-    public void setLoggingStatementMatchers(QueryMatcher[] matchers) {
-        synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
-            this.loggingStatementMatchers = matchers;
-        }
-        comm.asyncSend((CommandMessage<?>) new CMS_setLoggingStatementMatchers(matchers));
-    }
-
-    @Override
-    public QueryMatcher[] getLoggingStatementMatchers() {
-        synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
-            return loggingStatementMatchers;
         }
     }
 

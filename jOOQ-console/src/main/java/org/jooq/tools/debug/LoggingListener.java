@@ -46,17 +46,30 @@ import org.jooq.Result;
  * notifications about executed queries and fetched results.
  *
  * @author Christopher Deckers
+ * @author Lukas Eder
  */
 public interface LoggingListener {
 
     /**
+     * Get the matchers used for this listener
+     * <p>
+     * A logging listener's matchers are used to check whether queries should be
+     * logged for this listener. The resulting array is expected to be
+     * "immutable", i.e. the jOOQ debug API may cache its value. If a listener's
+     * associated {@link QueryMatcher} array changes, set the listener onto the
+     * debugger afresh, using
+     * {@link Debugger#setLoggingListener(LoggingListener)}
+     */
+    QueryMatcher[] getMatchers();
+
+    /**
      * Notification that a {@link Query} has been executed.
      */
-    public void logQuery(QueryLog log);
+    void logQuery(QueryLog log);
 
     /**
      * Notification that a {@link Result} has been fetched.
      */
-    public void logResult(ResultLog log);
+    void logResult(ResultLog log);
 
 }

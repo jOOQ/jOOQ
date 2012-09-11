@@ -188,20 +188,26 @@ public class DebugListener extends DefaultExecuteListener {
                 long subStartExecutionTime = System.currentTimeMillis();
                 executeSQL(ctx, sql);
                 long subEndExecutionTime = System.currentTimeMillis();
+
                 // Log result of pre-processing.
-                for(Debugger debugger: debuggerList) {
-                    LoggingListener loggingListener = debugger.getLoggingListener();
-                    if(loggingListener != null) {
-                        QueryType queryType = QueryType.detectType(sql);
-                        QueryInfo queryInfo = new QueryInfo(queryType, new String[] {sql}, null);
-                        QueryLog queryLog = new QueryLog(queryInfo, null, null, subEndExecutionTime - subStartExecutionTime);
-                        QueryMatcher[] loggingStatementMatchers = debugger.getLoggingStatementMatchers();
-                        if(loggingStatementMatchers == null) {
-                            loggingListener.logQuery(queryLog);
-                        } else for(QueryMatcher queryMatcher: loggingStatementMatchers) {
-                            if(queryMatcher.matches(queryLog.getQueryInfo())) {
-                                loggingListener.logQuery(queryLog);
-                                break;
+                for (Debugger debugger : debuggerList) {
+                    LoggingListener listener = debugger.getLoggingListener();
+
+                    if (listener != null) {
+                        QueryType type = QueryType.detectType(sql);
+                        QueryInfo info = new QueryInfo(type, new String[] { sql }, null);
+                        QueryLog log = new QueryLog(info, null, null, subEndExecutionTime - subStartExecutionTime);
+                        QueryMatcher[] matchers = listener.getMatchers();
+
+                        if (matchers == null) {
+                            listener.logQuery(log);
+                        }
+                        else {
+                            for (QueryMatcher matcher : matchers) {
+                                if (matcher.matches(log.getQueryInfo())) {
+                                    listener.logQuery(log);
+                                    break;
+                                }
                             }
                         }
                     }
@@ -304,61 +310,66 @@ public class DebugListener extends DefaultExecuteListener {
 			return;
 		}
 		endExecutionTime = System.currentTimeMillis();
-        List<Debugger> debuggerList = DebuggerRegistry.get();
-		if(!debuggerList.isEmpty()) {
+        List<Debugger> debuggers = DebuggerRegistry.get();
+		if(!debuggers.isEmpty()) {
 		    boolean hasListener = false;
-		    for(Debugger debugger: debuggerList) {
-		        LoggingListener loggingListener = debugger.getLoggingListener();
-		        if(loggingListener != null) {
-		            hasListener = true;
-		            break;
-		        }
-		    }
+            for (Debugger debugger : debuggers) {
+                LoggingListener listener = debugger.getLoggingListener();
+                if (listener != null) {
+                    hasListener = true;
+                    break;
+                }
+            }
+
 		    if(hasListener) {
 		        String[] sql = ctx.batchSQL();
-		        QueryType queryType = QueryType.detectType(sql[0]);
-		        String parameterDescription = null;
-		        if(sql.length == 1) {
-		            PreparedStatement statement = ctx.statement();
-		            if(statement instanceof TrackingPreparedStatement) {
-		                parameterDescription = ((TrackingPreparedStatement) statement).getParameterDescription();
-		            }
-		        }
-		        QueryInfo queryInfo = new QueryInfo(queryType, sql, parameterDescription);
-		        final QueryLog queryLog = new QueryLog(queryInfo, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
-		        final List<LoggingListener> loggingListenerList = new ArrayList<LoggingListener>(debuggerList.size());
-		        for(Debugger listener: debuggerList) {
-		            LoggingListener loggingListener = listener.getLoggingListener();
-		            if(loggingListener != null) {
-		                QueryMatcher[] loggingStatementMatchers = listener.getLoggingStatementMatchers();
-		                if(loggingStatementMatchers == null) {
-		                    loggingListenerList.add(loggingListener);
-		                    loggingListener.logQuery(queryLog);
-		                } else for(QueryMatcher queryMatcher: loggingStatementMatchers) {
-		                    if(queryMatcher.matches(queryLog.getQueryInfo())) {
-		                        loggingListenerList.add(loggingListener);
-		                        loggingListener.logQuery(queryLog);
-		                        break;
-		                    }
-		                }
-		            }
+		        QueryType type = QueryType.detectType(sql[0]);
+                String parameterDescription = null;
+                if (sql.length == 1) {
+                    PreparedStatement statement = ctx.statement();
+                    if (statement instanceof TrackingPreparedStatement) {
+                        parameterDescription = ((TrackingPreparedStatement) statement).getParameterDescription();
+                    }
+                }
+		        QueryInfo info = new QueryInfo(type, sql, parameterDescription);
+		        final QueryLog log = new QueryLog(info, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
+		        final List<LoggingListener> listeners = new ArrayList<LoggingListener>(debuggers.size());
+                for (Debugger debugger : debuggers) {
+                    LoggingListener listener = debugger.getLoggingListener();
+
+                    if (listener != null) {
+                        QueryMatcher[] matchers = listener.getMatchers();
+                        if (matchers == null) {
+                            listeners.add(listener);
+                            listener.logQuery(log);
+                        }
+                        else {
+                            for (QueryMatcher matcher : matchers) {
+                                if (matcher.matches(log.getQueryInfo())) {
+                                    listeners.add(listener);
+                                    listener.logQuery(log);
+                                    break;
+                                }
+                            }
+                        }
+                    }
 		        }
 		        ResultSet resultSet = ctx.resultSet();
-		        if(resultSet != null && !loggingListenerList.isEmpty()) {
-		            ResultSet newResultSet = new TrackingResultSet(resultSet) {
-		                @Override
-		                protected void notifyData(long lifeTime, int readRows, int readCount, int writeCount) {
-		                    ResultLog resultLog = null;
-		                    for(LoggingListener loggingListener: loggingListenerList) {
-		                        if(resultLog == null) {
-		                            resultLog = new ResultLog(queryLog.getID(), lifeTime, readRows, readCount, writeCount);
-		                        }
-		                        loggingListener.logResult(resultLog);
-		                    }
-		                }
-		            };
-		            ctx.resultSet(newResultSet);
-		        }
+                if (resultSet != null && !listeners.isEmpty()) {
+                    ResultSet newResultSet = new TrackingResultSet(resultSet) {
+                        @Override
+                        protected void notifyData(long lifeTime, int readRows, int readCount, int writeCount) {
+                            ResultLog resultLog = null;
+                            for (LoggingListener loggingListener : listeners) {
+                                if (resultLog == null) {
+                                    resultLog = new ResultLog(log.getID(), lifeTime, readRows, readCount, writeCount);
+                                }
+                                loggingListener.logResult(resultLog);
+                            }
+                        }
+                    };
+                    ctx.resultSet(newResultSet);
+                }
 		    }
 		}
         if(matchingDebugger != null) {
@@ -378,19 +389,24 @@ public class DebugListener extends DefaultExecuteListener {
                 executeSQL(ctx, sql);
                 long subEndExecutionTime = System.currentTimeMillis();
                 // Log result of pre-processing.
-                for(Debugger listener: debuggerList) {
-                    LoggingListener loggingListener = listener.getLoggingListener();
-                    if(loggingListener != null) {
-                        QueryType queryType = QueryType.detectType(sql);
-                        QueryInfo queryInfo = new QueryInfo(queryType, new String[] {sql}, null);
-                        QueryLog queryLog = new QueryLog(queryInfo, null, null, subEndExecutionTime - subStartExecutionTime);
-                        QueryMatcher[] loggingStatementMatchers = listener.getLoggingStatementMatchers();
-                        if(loggingStatementMatchers == null) {
-                            loggingListener.logQuery(queryLog);
-                        } else for(QueryMatcher queryMatcher: loggingStatementMatchers) {
-                            if(queryMatcher.matches(queryLog.getQueryInfo())) {
-                                loggingListener.logQuery(queryLog);
-                                break;
+                for (Debugger debugger : debuggers) {
+                    LoggingListener listener = debugger.getLoggingListener();
+
+                    if (listener != null) {
+                        QueryType type = QueryType.detectType(sql);
+                        QueryInfo info = new QueryInfo(type, new String[] {sql}, null);
+                        QueryLog log = new QueryLog(info, null, null, subEndExecutionTime - subStartExecutionTime);
+                        QueryMatcher[] matchers = listener.getMatchers();
+
+                        if (matchers == null) {
+                            listener.logQuery(log);
+                        }
+                        else {
+                            for (QueryMatcher matcher : matchers) {
+                                if (matcher.matches(log.getQueryInfo())) {
+                                    listener.logQuery(log);
+                                    break;
+                                }
                             }
                         }
                     }

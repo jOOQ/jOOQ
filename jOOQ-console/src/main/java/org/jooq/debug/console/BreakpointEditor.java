@@ -89,11 +89,11 @@ public class BreakpointEditor extends JPanel {
     private JComboBox breakpointTypeComboBox;
     private JPanel processorPane;
     private JCheckBox beforeExecutionCheckBox;
-    private StatementProcessorPane beforeExecutionProcessorPane;
+    private QueryProcessorPane beforeExecutionProcessorPane;
     private JComboBox executeTypeComboBox;
-    private StatementProcessorPane replacementExecutionProcessorPane;
+    private QueryProcessorPane replacementExecutionProcessorPane;
     private JCheckBox afterExecutionCheckBox;
-    private StatementProcessorPane afterExecutionProcessorPane;
+    private QueryProcessorPane afterExecutionProcessorPane;
 
     public BreakpointEditor(final DebuggerPane debuggerPane, Breakpoint breakpoint) {
         super(new GridBagLayout());
@@ -104,7 +104,7 @@ public class BreakpointEditor extends JPanel {
             queryMatcher = new QueryMatcher(null, null, null, true);
         }
         int y = 0;
-        TextMatcher statementTextMatcher = queryMatcher.getStatementTextMatcher();
+        TextMatcher statementTextMatcher = queryMatcher.getQueryTextMatcher();
         statementTextMatcherCheckBox = new JCheckBox("Statement", statementTextMatcher != null);
         statementTextMatcherCheckBox.setOpaque(false);
         statementTextMatcherCheckBox.addItemListener(new ItemListener() {
@@ -221,7 +221,7 @@ public class BreakpointEditor extends JPanel {
             }
         });
         processorPane.add(beforeExecutionCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(2, 0, 0, 0), 0, 0));
-        beforeExecutionProcessorPane = new StatementProcessorPane(beforeExecutionProcessor);
+        beforeExecutionProcessorPane = new QueryProcessorPane(beforeExecutionProcessor);
         processorPane.add(beforeExecutionProcessorPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 0, 0), 0, 0));
         y++;
         QueryProcessor replacementExecutionProcessor = breakpoint.getReplacementExecutionProcessor();
@@ -236,7 +236,7 @@ public class BreakpointEditor extends JPanel {
             executeTypeComboBox.setSelectedIndex(0);
         }
         processorPane.add(executeTypeComboBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        replacementExecutionProcessorPane = new StatementProcessorPane(breakpoint.getReplacementExecutionProcessor());
+        replacementExecutionProcessorPane = new QueryProcessorPane(breakpoint.getReplacementExecutionProcessor());
         processorPane.add(replacementExecutionProcessorPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
         executeTypeComboBox.addItemListener(new ItemListener() {
             @Override
@@ -256,7 +256,7 @@ public class BreakpointEditor extends JPanel {
             }
         });
         processorPane.add(afterExecutionCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(2, 0, 0, 0), 0, 0));
-        afterExecutionProcessorPane = new StatementProcessorPane(afterExecutionProcessor);
+        afterExecutionProcessorPane = new QueryProcessorPane(afterExecutionProcessor);
         processorPane.add(afterExecutionProcessorPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(2, 5, 0, 0), 0, 0));
     }
 
@@ -325,9 +325,9 @@ public class BreakpointEditor extends JPanel {
         QueryProcessor replacementExecutionProcessor = null;
         QueryProcessor afterExecutionProcessor = null;
         if(!isBreaking) {
-            beforeExecutionProcessor = beforeExecutionCheckBox.isSelected()? beforeExecutionProcessorPane.getStatementProcessor(): null;
-            replacementExecutionProcessor = executeTypeComboBox.getSelectedIndex() == 1? replacementExecutionProcessorPane.getStatementProcessor(): null;
-            afterExecutionProcessor = afterExecutionCheckBox.isSelected()? afterExecutionProcessorPane.getStatementProcessor(): null;
+            beforeExecutionProcessor = beforeExecutionCheckBox.isSelected()? beforeExecutionProcessorPane.getQueryProcessor(): null;
+            replacementExecutionProcessor = executeTypeComboBox.getSelectedIndex() == 1? replacementExecutionProcessorPane.getQueryProcessor(): null;
+            afterExecutionProcessor = afterExecutionCheckBox.isSelected()? afterExecutionProcessorPane.getQueryProcessor(): null;
         }
         return new Breakpoint(id, hitCount, queryMatcher, isBreaking, beforeExecutionProcessor, replacementExecutionProcessor, afterExecutionProcessor);
     }

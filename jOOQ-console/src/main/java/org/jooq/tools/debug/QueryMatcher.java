@@ -49,17 +49,19 @@ public class QueryMatcher implements Serializable {
 
     private boolean        isActive;
     private TextMatcher    threadNameTextMatcher;
-    private TextMatcher    statementTextMatcher;
+    private TextMatcher    queryTextMatcher;
     private Set<QueryType> queryTypeSet;
 
     /**
-     * @param threadNameTextMatcher a text matcher for thread name or null for no text matching.
-     * @param statementTextMatcher a text matcher for statement or null for no text matching.
+     * @param threadNameTextMatcher a text matcher for thread name or null for
+     *            no text matching.
+     * @param queryTextMatcher a text matcher for statement or null for no text
+     *            matching.
      * @param queryTypeSet some types or null for all types.
      */
-    public QueryMatcher(TextMatcher threadNameTextMatcher, TextMatcher statementTextMatcher, Set<QueryType> queryTypeSet, boolean isActive) {
+    public QueryMatcher(TextMatcher threadNameTextMatcher, TextMatcher queryTextMatcher, Set<QueryType> queryTypeSet, boolean isActive) {
         this.threadNameTextMatcher = threadNameTextMatcher;
-        this.statementTextMatcher = statementTextMatcher;
+        this.queryTextMatcher = queryTextMatcher;
         this.queryTypeSet = queryTypeSet == null? null: EnumSet.copyOf(queryTypeSet);
         this.isActive = isActive;
     }
@@ -75,8 +77,8 @@ public class QueryMatcher implements Serializable {
             }
             hasMatcher = true;
         }
-        if (statementTextMatcher != null) {
-            if (!statementTextMatcher.matches(queryInfo.getQueries())) {
+        if (queryTextMatcher != null) {
+            if (!queryTextMatcher.matches(queryInfo.getQueries())) {
                 return false;
             }
             hasMatcher = true;
@@ -94,8 +96,8 @@ public class QueryMatcher implements Serializable {
         return threadNameTextMatcher;
     }
 
-    public TextMatcher getStatementTextMatcher() {
-        return statementTextMatcher;
+    public TextMatcher getQueryTextMatcher() {
+        return queryTextMatcher;
     }
 
     public Set<QueryType> getQueryTypeSet() {

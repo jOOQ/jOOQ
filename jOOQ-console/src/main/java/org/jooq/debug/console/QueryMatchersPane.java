@@ -55,7 +55,7 @@ import org.jooq.tools.debug.QueryMatcher;
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class StatementMatchersPane extends JPanel {
+public class QueryMatchersPane extends JPanel {
 
     private static class ScrollablePane extends JPanel implements Scrollable {
 
@@ -90,63 +90,62 @@ public class StatementMatchersPane extends JPanel {
 
     }
 
-    private JPanel statementMatcherPanesContainer;
+    private JPanel matcherPanesContainer;
 
-    public StatementMatchersPane(QueryMatcher[] statementMatchers) {
+    public QueryMatchersPane(QueryMatcher[] matchers) {
         super(new BorderLayout());
-        statementMatcherPanesContainer = new ScrollablePane();
-        statementMatcherPanesContainer.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        matcherPanesContainer = new ScrollablePane();
+        matcherPanesContainer.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         addDefaultMessageComponent();
-        add(new JScrollPane(statementMatcherPanesContainer), BorderLayout.CENTER);
-        if(statementMatchers != null) {
-            for(QueryMatcher queryMatcher: statementMatchers) {
-                addStatementMatcherPane(new StatementMatcherPane(this, queryMatcher));
+        add(new JScrollPane(matcherPanesContainer), BorderLayout.CENTER);
+        if (matchers != null) {
+            for (QueryMatcher matcher : matchers) {
+                addQueryMatcherPane(new QueryMatcherPane(this, matcher));
             }
         }
     }
 
-    public void addStatementMatcherPane(StatementMatcherPane statementMatcherPane) {
-        if(!(statementMatcherPanesContainer.getComponent(0) instanceof StatementMatcherPane)) {
-            statementMatcherPanesContainer.remove(0);
+    public void addQueryMatcherPane(QueryMatcherPane pane) {
+        if(!(matcherPanesContainer.getComponent(0) instanceof QueryMatcherPane)) {
+            matcherPanesContainer.remove(0);
         }
-        statementMatcherPanesContainer.add(statementMatcherPane);
-        statementMatcherPanesContainer.revalidate();
-        statementMatcherPanesContainer.repaint();
-        statementMatcherPanesContainer.scrollRectToVisible(new Rectangle(0, Short.MAX_VALUE, 1, 1));
+        matcherPanesContainer.add(pane);
+        matcherPanesContainer.revalidate();
+        matcherPanesContainer.repaint();
+        matcherPanesContainer.scrollRectToVisible(new Rectangle(0, Short.MAX_VALUE, 1, 1));
     }
 
-    void removeAllStatementMatcherPanes() {
-        statementMatcherPanesContainer.removeAll();
+    void removeAllQueryMatcherPanes() {
+        matcherPanesContainer.removeAll();
         addDefaultMessageComponent();
-        statementMatcherPanesContainer.revalidate();
-        statementMatcherPanesContainer.repaint();
+        matcherPanesContainer.revalidate();
+        matcherPanesContainer.repaint();
     }
 
     private void addDefaultMessageComponent() {
-        JLabel messageLabel = new JLabel("No statement filters, logging everything.");
+        JLabel messageLabel = new JLabel("No query filters, logging everything.");
         messageLabel.setFont(messageLabel.getFont().deriveFont(Font.ITALIC));
-        statementMatcherPanesContainer.add(messageLabel);
+        matcherPanesContainer.add(messageLabel);
     }
 
-    void removeStatementMatcherPane(StatementMatcherPane statementMatcherPane) {
-        statementMatcherPanesContainer.remove(statementMatcherPane);
-        if(statementMatcherPanesContainer.getComponentCount() == 0) {
+    void removeQueryMatcherPane(QueryMatcherPane pane) {
+        matcherPanesContainer.remove(pane);
+        if (matcherPanesContainer.getComponentCount() == 0) {
             addDefaultMessageComponent();
         }
-        statementMatcherPanesContainer.revalidate();
-        statementMatcherPanesContainer.repaint();
+        matcherPanesContainer.revalidate();
+        matcherPanesContainer.repaint();
     }
 
-    public QueryMatcher[] getStatementMatchers() {
-        if(!(statementMatcherPanesContainer.getComponent(0) instanceof StatementMatcherPane)) {
+    public QueryMatcher[] getMatchers() {
+        if (!(matcherPanesContainer.getComponent(0) instanceof QueryMatcherPane)) {
             return new QueryMatcher[0];
         }
-        Component[] components = statementMatcherPanesContainer.getComponents();
-        QueryMatcher[] statementMatchers = new QueryMatcher[components.length];
-        for(int i=0; i<components.length; i++) {
-            statementMatchers[i] = ((StatementMatcherPane)components[i]).getStatementMatcher();
+        Component[] components = matcherPanesContainer.getComponents();
+        QueryMatcher[] matchers = new QueryMatcher[components.length];
+        for (int i = 0; i < components.length; i++) {
+            matchers[i] = ((QueryMatcherPane) components[i]).getQueryMatcher();
         }
-        return statementMatchers;
+        return matchers;
     }
-
 }

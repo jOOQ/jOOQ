@@ -73,33 +73,43 @@ class ServerDebugger extends LocalDebugger {
         this.comm = communication;
     }
 
-    private void setLoggingActive(boolean isActive) {
-        if(isActive) {
+    private void setLoggingActive(boolean isActive, final QueryMatcher[] matchers) {
+        if (isActive) {
             setLoggingListener(new LoggingListener() {
+
+                @Override
+                public QueryMatcher[] getMatchers() {
+                    return matchers;
+                }
+
                 @Override
                 public void logQuery(QueryLog queryLog) {
                     comm.asyncSend((CommandMessage<?>) new CMC_logQueries(queryLog));
                 }
+
                 @Override
                 public void logResult(ResultLog resultLog) {
                     comm.asyncSend((CommandMessage<?>) new CMC_logResultSet(resultLog));
                 }
             });
-        } else {
+        }
+        else {
             setLoggingListener(null);
         }
     }
 
     static class CMS_setLoggingActive extends CommandMessage<Serializable> {
         private final boolean isActive;
+        private final QueryMatcher[] matchers;
 
-        CMS_setLoggingActive(boolean isActive) {
+        CMS_setLoggingActive(boolean isActive, QueryMatcher[] matchers) {
             this.isActive = isActive;
+            this.matchers = matchers;
         }
 
         @Override
         public Serializable run(MessageContext context) {
-            getServerDebugger(context).setLoggingActive(isActive);
+            getServerDebugger(context).setLoggingActive(isActive, matchers);
             return null;
         }
     }
@@ -121,20 +131,6 @@ class ServerDebugger extends LocalDebugger {
             });
         } else {
             setBreakpointHitHandler(null);
-        }
-    }
-
-    static class CMS_setLoggingStatementMatchers extends CommandMessage<Serializable> {
-        private final QueryMatcher[] matchers;
-
-        CMS_setLoggingStatementMatchers(QueryMatcher[] matchers) {
-            this.matchers = matchers;
-        }
-
-        @Override
-        public Serializable run(MessageContext context) {
-            context.getDebugger().setLoggingStatementMatchers(matchers);
-            return null;
         }
     }
 

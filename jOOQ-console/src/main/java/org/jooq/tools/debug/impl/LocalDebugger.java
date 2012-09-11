@@ -58,7 +58,6 @@ import org.jooq.tools.debug.DatabaseDescriptor;
 import org.jooq.tools.debug.Debugger;
 import org.jooq.tools.debug.LoggingListener;
 import org.jooq.tools.debug.QueryExecutorContext;
-import org.jooq.tools.debug.QueryMatcher;
 
 
 /**
@@ -92,23 +91,6 @@ class LocalDebugger implements Debugger {
     public LoggingListener getLoggingListener() {
         synchronized (LOGGING_LISTENER_LOCK) {
             return loggingListener;
-        }
-    }
-
-    private QueryMatcher[] loggingStatementMatchers;
-    private final Object LOGGING_STATEMENT_MATCHERS_LOCK = new Object();
-
-    @Override
-    public void setLoggingStatementMatchers(QueryMatcher[] loggingStatementMatchers) {
-        synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
-            this.loggingStatementMatchers = loggingStatementMatchers;
-        }
-    }
-
-    @Override
-    public QueryMatcher[] getLoggingStatementMatchers() {
-        synchronized (LOGGING_STATEMENT_MATCHERS_LOCK) {
-            return loggingStatementMatchers;
         }
     }
 

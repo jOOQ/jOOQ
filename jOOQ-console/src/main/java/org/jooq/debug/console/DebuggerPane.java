@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
- *                             Christopher Deckers, chrriis@gmail.com
+ *                          Christopher Deckers, chrriis@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0

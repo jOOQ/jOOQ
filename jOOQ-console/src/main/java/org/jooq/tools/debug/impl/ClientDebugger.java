@@ -36,7 +36,6 @@
  */
 package org.jooq.tools.debug.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +50,7 @@ import org.jooq.tools.debug.LoggingListener;
 import org.jooq.tools.debug.QueryExecutor;
 import org.jooq.tools.debug.QueryLog;
 import org.jooq.tools.debug.ResultLog;
+import org.jooq.tools.debug.impl.Message.NoResult;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_addBreakpoint;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_isExecutionSupported;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_modifyBreakpoint;
@@ -214,7 +214,7 @@ class ClientDebugger implements Debugger {
     }
 
 
-    static class CMC_logQueries extends CommandMessage<Serializable> {
+    static class CMC_logQueries extends CommandMessage<NoResult> {
         private final QueryLog queryLog;
 
         CMC_logQueries(QueryLog queryLog) {
@@ -222,7 +222,7 @@ class ClientDebugger implements Debugger {
         }
 
         @Override
-        public Serializable run(MessageContext context) {
+        public NoResult run(MessageContext context) {
             LoggingListener loggingListener = context.getDebugger().getLoggingListener();
 
             if (loggingListener != null) {
@@ -233,7 +233,7 @@ class ClientDebugger implements Debugger {
         }
     }
 
-    static class CMC_logResultSet extends CommandMessage<Serializable> {
+    static class CMC_logResultSet extends CommandMessage<NoResult> {
         private final ResultLog resultLog;
 
         CMC_logResultSet(ResultLog resultLog) {
@@ -241,7 +241,7 @@ class ClientDebugger implements Debugger {
         }
 
         @Override
-        public Serializable run(MessageContext context) {
+        public NoResult run(MessageContext context) {
             LoggingListener loggingListener = context.getDebugger().getLoggingListener();
 
             if (loggingListener != null) {

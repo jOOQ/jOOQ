@@ -48,10 +48,10 @@ abstract class Message<S extends Serializable> implements Serializable {
 
     private static int nextID = 1;
 
-    private int id = nextID++;
-    private boolean isSyncExec;
-    private long threadID;
-    private boolean isProcessorToOriginator;
+    private int        id     = nextID++;
+    private boolean    isSyncExec;
+    private long       threadID;
+    private boolean    isProcessorToOriginator;
 
     /**
      * Create an empty message.
@@ -98,10 +98,23 @@ abstract class Message<S extends Serializable> implements Serializable {
     @Override
     public String toString() {
         String name = getClass().getName();
-        if(name.startsWith("chrriis.dj.nativeswing.")) {
+        if (name.startsWith("chrriis.dj.nativeswing.")) {
             name = name.substring("chrriis.dj.nativeswing.".length());
         }
         return name;
     }
 
+    /**
+     * This type is used for messages that do not have any result
+     * <p>
+     * This works in similar ways as {@link Void}, except that {@link NoResult}
+     * also implements {@link Serializable}
+     */
+    protected static final class NoResult implements Serializable {
+
+        /**
+         * No instances
+         */
+        private NoResult() {}
+    }
 }

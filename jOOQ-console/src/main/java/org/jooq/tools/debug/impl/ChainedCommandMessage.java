@@ -36,7 +36,7 @@
  */
 package org.jooq.tools.debug.impl;
 
-import java.io.Serializable;
+import org.jooq.tools.debug.impl.Message.NoResult;
 
 /**
  * A chain of <code>CommandMessage</code> objects
@@ -45,7 +45,7 @@ import java.io.Serializable;
  *
  * @author Lukas Eder
  */
-class ChainedCommandMessage extends CommandMessage<Serializable> {
+class ChainedCommandMessage extends CommandMessage<NoResult> {
 
     /**
      * Generated UID
@@ -59,7 +59,7 @@ class ChainedCommandMessage extends CommandMessage<Serializable> {
     }
 
     @Override
-    public Serializable run(MessageContext context) throws Exception {
+    public NoResult run(MessageContext context) throws Exception {
         for (CommandMessage<?> message : messages) {
             message.run(context);
         }

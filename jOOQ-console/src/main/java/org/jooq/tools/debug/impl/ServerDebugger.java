@@ -36,7 +36,6 @@
  */
 package org.jooq.tools.debug.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +55,7 @@ import org.jooq.tools.debug.impl.ClientDebugger.CMC_logQueries;
 import org.jooq.tools.debug.impl.ClientDebugger.CMC_logResultSet;
 import org.jooq.tools.debug.impl.ClientDebugger.CMC_processBreakpointAfterExecutionHit;
 import org.jooq.tools.debug.impl.ClientDebugger.CMC_processBreakpointBeforeExecutionHit;
+import org.jooq.tools.debug.impl.Message.NoResult;
 
 /**
  * @author Christopher Deckers
@@ -98,7 +98,7 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_setLoggingActive extends CommandMessage<Serializable> {
+    static class CMS_setLoggingActive extends CommandMessage<NoResult> {
         private final boolean isActive;
         private final QueryMatcher[] matchers;
 
@@ -108,7 +108,7 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run(MessageContext context) {
+        public NoResult run(MessageContext context) {
             getServerDebugger(context).setLoggingActive(isActive, matchers);
             return null;
         }
@@ -134,7 +134,7 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_addBreakpoint extends CommandMessage<Serializable> {
+    static class CMS_addBreakpoint extends CommandMessage<NoResult> {
         private final Breakpoint breakpoint;
 
         CMS_addBreakpoint(Breakpoint breakpoint) {
@@ -142,7 +142,7 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run(MessageContext context) {
+        public NoResult run(MessageContext context) {
             // Serialization has a cache, assuming objects are immutable. We
             // have to reset our internal states.
             breakpoint.reset();
@@ -151,7 +151,7 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_modifyBreakpoint extends CommandMessage<Serializable> {
+    static class CMS_modifyBreakpoint extends CommandMessage<NoResult> {
         private final Breakpoint breakpoint;
 
         CMS_modifyBreakpoint(Breakpoint breakpoint) {
@@ -159,7 +159,7 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run(MessageContext context) {
+        public NoResult run(MessageContext context) {
             // Serialization has a cache, assuming objects are immutable. We
             // have to reset our internal states.
             breakpoint.reset();
@@ -168,7 +168,7 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_removeBreakpoint extends CommandMessage<Serializable> {
+    static class CMS_removeBreakpoint extends CommandMessage<NoResult> {
         private final Breakpoint breakpoint;
 
         CMS_removeBreakpoint(Breakpoint breakpoint) {
@@ -176,13 +176,13 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run(MessageContext context) {
+        public NoResult run(MessageContext context) {
             context.getDebugger().removeBreakpoint(breakpoint);
             return null;
         }
     }
 
-    static class CMS_setBreakpointHitHandlerActive extends CommandMessage<Serializable> {
+    static class CMS_setBreakpointHitHandlerActive extends CommandMessage<NoResult> {
         private final boolean isActive;
 
         CMS_setBreakpointHitHandlerActive(boolean isActive) {
@@ -190,7 +190,7 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run(MessageContext context) {
+        public NoResult run(MessageContext context) {
             getServerDebugger(context).setBreakpointHitHandlerActive(isActive);
             return null;
         }
@@ -229,7 +229,7 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_createServerStatementExecutor extends CommandMessage<Serializable> {
+    static class CMS_createServerStatementExecutor extends CommandMessage<NoResult> {
         private final int  id;
         private final Long breakpointHitThreadID;
 
@@ -239,7 +239,7 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run(MessageContext context) {
+        public NoResult run(MessageContext context) {
             getServerDebugger(context).createStatementExecutor(id, breakpointHitThreadID);
             return null;
         }
@@ -266,7 +266,7 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_stopStatementExecutorExecution extends CommandMessage<Serializable> {
+    static class CMS_stopStatementExecutorExecution extends CommandMessage<NoResult> {
         private final int id;
 
         CMS_stopStatementExecutorExecution(int id) {
@@ -274,7 +274,7 @@ class ServerDebugger extends LocalDebugger {
         }
 
         @Override
-        public Serializable run(MessageContext context) {
+        public NoResult run(MessageContext context) {
             getServerDebugger(context).removeStatementExecutor(id).stopExecution();
             return null;
         }

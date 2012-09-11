@@ -48,6 +48,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.tools.debug.impl.Message.NoResult;
+
 
 /**
  * @author Christopher Deckers
@@ -327,7 +329,7 @@ class MessagingInterface {
 
     private List<Message<?>> receivedMessageList = new LinkedList<Message<?>>();
 
-    private static class CM_asyncExecResponse<S extends Serializable> extends CommandMessage<Serializable> {
+    private static class CM_asyncExecResponse<S extends Serializable> extends CommandMessage<NoResult> {
         private final long threadID;
         private final CommandResultMessage<S> commandResultMessage;
 
@@ -338,7 +340,7 @@ class MessagingInterface {
 
         @SuppressWarnings("unchecked")
         @Override
-        public Serializable run(MessageContext context) {
+        public NoResult run(MessageContext context) {
             MessagingInterface messagingInterface = context.getMessagingInterface();
             ThreadInfo<S> threadInfo;
             synchronized (messagingInterface.idToThreadInfo) {
@@ -356,7 +358,7 @@ class MessagingInterface {
         }
     }
 
-    private static class CM_asyncExec<S extends Serializable> extends CommandMessage<Serializable> {
+    private static class CM_asyncExec<S extends Serializable> extends CommandMessage<NoResult> {
         private final long threadID;
         private final Message<S> message;
 
@@ -366,7 +368,7 @@ class MessagingInterface {
         }
 
         @Override
-        public Serializable run(MessageContext context) {
+        public NoResult run(MessageContext context) {
             message.setSyncExec(false);
 //            message.setCommunicationInterface(communicationInterface);
             MessagingInterface messagingInterface = context.getMessagingInterface();

@@ -56,7 +56,6 @@ import org.jooq.tools.debug.impl.ServerDebugger.CMS_isExecutionSupported;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_modifyBreakpoint;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_removeBreakpoint;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_setBreakpointHitHandlerActive;
-import org.jooq.tools.debug.impl.ServerDebugger.CMS_setBreakpoints;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_setLoggingActive;
 
 /**
@@ -103,17 +102,6 @@ class ClientDebugger implements Debugger {
 
     private Breakpoint[] breakpoints;
     private final Object BREAKPOINT_LOCK = new Object();
-
-    @Override
-    public void setBreakpoints(Breakpoint[] breakpoints) {
-        if(breakpoints != null && breakpoints.length == 0) {
-            breakpoints = null;
-        }
-        synchronized (BREAKPOINT_LOCK) {
-            this.breakpoints = breakpoints;
-        }
-        comm.asyncSend((CommandMessage<?>) new CMS_setBreakpoints(breakpoints));
-    }
 
     @Override
     public void addBreakpoint(Breakpoint breakpoint) {

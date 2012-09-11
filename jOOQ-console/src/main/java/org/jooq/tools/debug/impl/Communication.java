@@ -110,10 +110,6 @@ abstract class Communication {
      */
     public final <S extends Serializable> S syncSend(final Message<S> message) {
         checkOpen();
-        if (message instanceof LocalMessage) {
-            LocalMessage<S> localMessage = (LocalMessage<S>) message;
-            return localMessage.runCommand(new MessageContext(this));
-        }
         return messagingInterface.syncSend(message);
     }
 
@@ -126,11 +122,6 @@ abstract class Communication {
         }
         else {
             checkOpen();
-            if (message instanceof LocalMessage) {
-                LocalMessage<?> localMessage = (LocalMessage<?>) message;
-                localMessage.runCommand(new MessageContext(this));
-                return;
-            }
             messagingInterface.asyncSend(message);
         }
     }

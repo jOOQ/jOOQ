@@ -151,23 +151,6 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_modifyBreakpoint extends CommandMessage<NoResult> {
-        private final Breakpoint breakpoint;
-
-        CMS_modifyBreakpoint(Breakpoint breakpoint) {
-            this.breakpoint = breakpoint;
-        }
-
-        @Override
-        public NoResult run(MessageContext context) {
-            // Serialization has a cache, assuming objects are immutable. We
-            // have to reset our internal states.
-            breakpoint.reset();
-            context.getDebugger().modifyBreakpoint(breakpoint);
-            return null;
-        }
-    }
-
     static class CMS_removeBreakpoint extends CommandMessage<NoResult> {
         private final Breakpoint breakpoint;
 

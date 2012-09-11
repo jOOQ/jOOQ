@@ -53,7 +53,6 @@ import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.impl.Message.NoResult;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_addBreakpoint;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_isExecutionSupported;
-import org.jooq.tools.debug.impl.ServerDebugger.CMS_modifyBreakpoint;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_removeBreakpoint;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_setBreakpointHitHandlerActive;
 import org.jooq.tools.debug.impl.ServerDebugger.CMS_setLoggingActive;
@@ -83,14 +82,13 @@ class ClientDebugger implements Debugger {
     @Override
     public void setLoggingListener(LoggingListener listener) {
         synchronized (LOGGING_LISTENER_LOCK) {
-            if(this.loggingListener == listener) {
+            if (this.loggingListener == listener) {
                 return;
             }
             this.loggingListener = listener;
         }
-        comm.asyncSend((CommandMessage<?>) new CMS_setLoggingActive(
-            listener != null,
-            listener != null ? listener.getMatchers() : null));
+
+        comm.asyncSend(new CMS_setLoggingActive(listener != null, listener != null ? listener.getMatchers() : null));
     }
 
     @Override
@@ -106,42 +104,27 @@ class ClientDebugger implements Debugger {
     @Override
     public void addBreakpoint(Breakpoint breakpoint) {
         synchronized (BREAKPOINT_LOCK) {
-            if(this.breakpoints == null) {
-                this.breakpoints = new Breakpoint[] {breakpoint};
-                comm.asyncSend((CommandMessage<?>) new CMS_addBreakpoint(breakpoint));
+            if (this.breakpoints == null) {
+                this.breakpoints = new Breakpoint[] { breakpoint };
+                comm.asyncSend(new CMS_addBreakpoint(breakpoint));
                 return;
             }
-            for(int i=0; i<breakpoints.length; i++) {
-                if(breakpoints[i].getID() == breakpoint.getID()) {
+
+            for (int i = 0; i < breakpoints.length; i++) {
+                if (breakpoints[i].getID() == breakpoint.getID()) {
                     breakpoints[i] = breakpoint;
-                    comm.asyncSend((CommandMessage<?>) new CMS_modifyBreakpoint(breakpoint));
+                    comm.asyncSend(new CMS_addBreakpoint(breakpoint));
                     return;
                 }
             }
+
             Breakpoint[] newBreakpoints = new Breakpoint[breakpoints.length + 1];
             System.arraycopy(breakpoints, 0, newBreakpoints, 0, breakpoints.length);
             newBreakpoints[breakpoints.length] = breakpoint;
             breakpoints = newBreakpoints;
         }
-        comm.asyncSend((CommandMessage<?>) new CMS_addBreakpoint(breakpoint));
-    }
 
-    @Override
-    public void modifyBreakpoint(Breakpoint breakpoint) {
-        synchronized (BREAKPOINT_LOCK) {
-            if (this.breakpoints == null) {
-                addBreakpoint(breakpoint);
-                return;
-            }
-            for (int i = 0; i < breakpoints.length; i++) {
-                if (breakpoints[i].getID() == breakpoint.getID()) {
-                    breakpoints[i] = breakpoint;
-                    comm.asyncSend((CommandMessage<?>) new CMS_modifyBreakpoint(breakpoint));
-                    return;
-                }
-            }
-            addBreakpoint(breakpoint);
-        }
+        comm.asyncSend(new CMS_addBreakpoint(breakpoint));
     }
 
     @Override
@@ -160,7 +143,7 @@ class ClientDebugger implements Debugger {
                         System.arraycopy(breakpoints, i + 1, newBreakpoints, i, newBreakpoints.length - i);
                         breakpoints = newBreakpoints;
                     }
-                    comm.asyncSend((CommandMessage<?>) new CMS_removeBreakpoint(breakpoint));
+                    comm.asyncSend(new CMS_removeBreakpoint(breakpoint));
                     break;
                 }
             }
@@ -185,7 +168,7 @@ class ClientDebugger implements Debugger {
             }
             this.breakpointHitHandler = breakpointHitHandler;
         }
-        comm.asyncSend((CommandMessage<?>) new CMS_setBreakpointHitHandlerActive(breakpointHitHandler != null));
+        comm.asyncSend(new CMS_setBreakpointHitHandlerActive(breakpointHitHandler != null));
     }
 
     @Override

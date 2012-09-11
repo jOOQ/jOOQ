@@ -68,9 +68,13 @@ public interface Debugger extends QueryExecutorCreator {
      */
     LoggingListener getLoggingListener();
 
+    /**
+     * Add (or modify) a breakpoint to the debugger
+     * <p>
+     * This method adds a breakpoint to the debugger, or modifies the breakpoint
+     * if it already exists.
+     */
     void addBreakpoint(Breakpoint breakpoint);
-
-    void modifyBreakpoint(Breakpoint breakpoint);
 
     void removeBreakpoint(Breakpoint breakpoint);
 

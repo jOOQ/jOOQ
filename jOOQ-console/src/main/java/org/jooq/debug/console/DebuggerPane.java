@@ -374,22 +374,22 @@ public class DebuggerPane extends JPanel {
         Breakpoint breakpoint = new Breakpoint(nextID++, null, null, true, null, null, null);
         CheckBoxNode breakpointNode = new CheckBoxNode(breakpoint, name, true);
         rootNode.add(breakpointNode);
-        breakpointTreeModel.nodesWereInserted(rootNode, new int[] {rootNode.getIndex(breakpointNode)});
+        breakpointTreeModel.nodesWereInserted(rootNode, new int[] { rootNode.getIndex(breakpointNode) });
         breakpointTree.expandPath(new TreePath(rootNode));
         debugger.addBreakpoint(breakpoint);
         DebuggerPane.this.debugger.setBreakpointHitHandler(breakpointHitHandler);
-        breakpointTree.setSelectionPath(new TreePath(new Object[] {rootNode, breakpointNode}));
+        breakpointTree.setSelectionPath(new TreePath(new Object[] { rootNode, breakpointNode }));
     }
 
     void modifyBreakpoint(Breakpoint breakpoint) {
         int childCount = rootNode.getChildCount();
-        for(int i=0; i<childCount; i++) {
-            CheckBoxNode checkBoxNode = (CheckBoxNode)rootNode.getChildAt(i);
-            Breakpoint breakpoint_ = (Breakpoint)checkBoxNode.getUserObject();
-            if(breakpoint_.getID() == breakpoint.getID()) {
+        for (int i = 0; i < childCount; i++) {
+            CheckBoxNode checkBoxNode = (CheckBoxNode) rootNode.getChildAt(i);
+            Breakpoint b = (Breakpoint) checkBoxNode.getUserObject();
+            if (b.getID() == breakpoint.getID()) {
                 checkBoxNode.setUserObject(breakpoint);
-                if(checkBoxNode.isSelected()) {
-                    debugger.modifyBreakpoint(breakpoint);
+                if (checkBoxNode.isSelected()) {
+                    debugger.addBreakpoint(breakpoint);
                 }
                 break;
             }

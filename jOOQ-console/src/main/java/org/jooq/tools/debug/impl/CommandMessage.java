@@ -51,10 +51,6 @@ abstract class CommandMessage<S extends Serializable> extends Message<S> {
      */
     private static final long           serialVersionUID = -5396976580375899880L;
 
-    S runCommand(MessageContext context) throws Exception {
-        return run(context);
-    }
-
     /**
      * Run the message.
      *

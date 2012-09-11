@@ -299,7 +299,7 @@ class MessagingInterface {
             Throwable throwable = null;
             if (message.isValid()) {
                 try {
-                    result = commandMessage.runCommand(new MessageContext(comm));
+                    result = commandMessage.run(new MessageContext(comm));
                 }
                 catch (Throwable t) {
                     throwable = t;

@@ -381,14 +381,18 @@ public class DebuggerPane extends JPanel {
 
     void modifyBreakpoint(Breakpoint breakpoint) {
         int childCount = rootNode.getChildCount();
+
         for (int i = 0; i < childCount; i++) {
             CheckBoxNode checkBoxNode = (CheckBoxNode) rootNode.getChildAt(i);
             Breakpoint b = (Breakpoint) checkBoxNode.getUserObject();
-            if (b.getID() == breakpoint.getID()) {
+
+            if (b.equals(breakpoint)) {
                 checkBoxNode.setUserObject(breakpoint);
+
                 if (checkBoxNode.isSelected()) {
                     debugger.addBreakpoint(breakpoint);
                 }
+
                 break;
             }
         }

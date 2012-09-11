@@ -106,7 +106,7 @@ class LocalDebugger implements Debugger {
             }
 
             for (int i = 0; i < breakpoints.length; i++) {
-                if (breakpoints[i].getID() == breakpoint.getID()) {
+                if (breakpoints[i].equals(breakpoint)) {
                     breakpoints[i] = breakpoint;
                     return;
                 }
@@ -122,14 +122,15 @@ class LocalDebugger implements Debugger {
     @Override
     public void removeBreakpoint(Breakpoint breakpoint) {
         synchronized (BREAKPOINT_LOCK) {
-            if(this.breakpoints == null) {
+            if (this.breakpoints == null) {
                 return;
             }
-            for(int i=0; i<breakpoints.length; i++) {
-                if(breakpoints[i].getID() == breakpoint.getID()) {
-                    if(breakpoints.length == 1) {
+            for (int i = 0; i < breakpoints.length; i++) {
+                if (breakpoints[i].equals(breakpoint)) {
+                    if (breakpoints.length == 1) {
                         breakpoints = null;
-                    } else {
+                    }
+                    else {
                         Breakpoint[] newBreakpoints = new Breakpoint[breakpoints.length - 1];
                         System.arraycopy(breakpoints, 0, newBreakpoints, 0, i);
                         System.arraycopy(breakpoints, i + 1, newBreakpoints, i, newBreakpoints.length - i);

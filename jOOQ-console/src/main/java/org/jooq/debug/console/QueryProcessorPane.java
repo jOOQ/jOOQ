@@ -56,14 +56,14 @@ import org.fife.ui.rtextarea.RTextScrollPane;
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class StatementProcessorPane extends JPanel {
+public class QueryProcessorPane extends JPanel {
 
     private JComboBox processorTypeComboBox;
     private JTextField processorTextField;
     private JScrollPane processorStaticScrollPane;
     private SqlTextArea processorStaticSQLTextArea;
 
-    public StatementProcessorPane(QueryProcessor queryProcessor) {
+    public QueryProcessorPane(QueryProcessor queryProcessor) {
         super(new GridBagLayout());
         setOpaque(false);
         if(queryProcessor == null) {
@@ -100,7 +100,7 @@ public class StatementProcessorPane extends JPanel {
         repaint();
     }
 
-    public QueryProcessor getStatementProcessor() {
+    public QueryProcessor getQueryProcessor() {
         QueryProcessor.ProcessorExecutionType type = (QueryProcessor.ProcessorExecutionType)processorTypeComboBox.getSelectedItem();
         return new QueryProcessor(type, type == QueryProcessor.ProcessorExecutionType.STATIC? processorStaticSQLTextArea.getText(): processorTextField.getText());
     }

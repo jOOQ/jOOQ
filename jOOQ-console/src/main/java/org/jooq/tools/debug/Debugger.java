@@ -37,23 +37,36 @@
 package org.jooq.tools.debug;
 
 import org.jooq.ExecuteContext;
-
+import org.jooq.Query;
+import org.jooq.Result;
+import org.jooq.tools.debug.impl.DebuggerFactory;
 
 /**
+ * The jOOQ debugger API
+ * <p>
+ * This is the main API for hooking into jOOQ's debugging capabilities locally
+ * or remotely. In order to create a <code>Debugger</code> instance, use
+ * {@link DebuggerFactory#localDebugger(DatabaseDescriptor)} or
+ * {@link DebuggerFactory#remoteDebugger(String, int)}
+ *
  * @author Christopher Deckers
+ * @author Lukas Eder
  */
 public interface Debugger extends QueryExecutorCreator {
 
     /**
+     * Set a logging listener to the <code>Debugger</code>
+     * <p>
+     * Logging listeners log {@link Query} and {@link Result} objects.
+     *
      * @param listener a listener, or null to stop logging.
      */
     public void setLoggingListener(LoggingListener listener);
 
+    /**
+     * Get the <code>Debugger</code>'s configured logging listeners
+     */
     public LoggingListener getLoggingListener();
-
-    public void setLoggingStatementMatchers(QueryMatcher[] matchers);
-
-    public QueryMatcher[] getLoggingStatementMatchers();
 
     public void setBreakpoints(Breakpoint[] breakpoints);
 

@@ -50,26 +50,27 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.jooq.debug.console.LoggerPane.LoggerPaneLoggingListener;
 import org.jooq.tools.debug.Debugger;
-import org.jooq.tools.debug.QueryMatcher;
 
 /**
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class StatementMatchersDialogBox extends JDialog {
+public class QueryMatchersDialogBox extends JDialog {
 
-    public StatementMatchersDialogBox(Component parent, final Debugger debugger) {
-        super(SwingUtilities.getWindowAncestor(parent), "Statement filters", ModalityType.DOCUMENT_MODAL);
+    public QueryMatchersDialogBox(Component parent, final Debugger debugger, final LoggerPaneLoggingListener listener) {
+        super(SwingUtilities.getWindowAncestor(parent), "Query filters", ModalityType.DOCUMENT_MODAL);
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         Container contentPane = getContentPane();
         JPanel northPane = new JPanel(new BorderLayout());
         northPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 2, 5));
-        northPane.add(new JLabel("Log statements matching any of these filters:"), BorderLayout.WEST);
+        northPane.add(new JLabel("Log queries matching any of these filters:"), BorderLayout.WEST);
         contentPane.add(northPane, BorderLayout.NORTH);
-        final StatementMatchersPane statementMatchersPane = new StatementMatchersPane(debugger.getLoggingStatementMatchers());
-        statementMatchersPane.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-        contentPane.add(statementMatchersPane, BorderLayout.CENTER);
+        final QueryMatchersPane matchersPane = new QueryMatchersPane(listener.getMatchers());
+        matchersPane.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        contentPane.add(matchersPane, BorderLayout.CENTER);
         JPanel buttonBar = new JPanel(new BorderLayout());
         buttonBar.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         JPanel filterButtonsPane = new JPanel(new GridLayout(1, 2, 2, 0));
@@ -77,7 +78,7 @@ public class StatementMatchersDialogBox extends JDialog {
         addFilterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                statementMatchersPane.addStatementMatcherPane(new StatementMatcherPane(statementMatchersPane, null));
+                matchersPane.addQueryMatcherPane(new QueryMatcherPane(matchersPane, null));
             }
         });
         filterButtonsPane.add(addFilterButton);
@@ -85,7 +86,7 @@ public class StatementMatchersDialogBox extends JDialog {
         removeAllFiltersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                statementMatchersPane.removeAllStatementMatcherPanes();
+                matchersPane.removeAllQueryMatcherPanes();
             }
         });
         filterButtonsPane.add(removeAllFiltersButton);
@@ -95,8 +96,8 @@ public class StatementMatchersDialogBox extends JDialog {
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                QueryMatcher[] statementMatchers = statementMatchersPane.getStatementMatchers();
-                debugger.setLoggingStatementMatchers(statementMatchers.length == 0? null: statementMatchers);
+                listener.setMatchers(matchersPane.getMatchers());
+                debugger.setLoggingListener(listener);
                 dispose();
             }
         });
@@ -105,8 +106,8 @@ public class StatementMatchersDialogBox extends JDialog {
         applyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                QueryMatcher[] statementMatchers = statementMatchersPane.getStatementMatchers();
-                debugger.setLoggingStatementMatchers(statementMatchers.length == 0? null: statementMatchers);
+                listener.setMatchers(matchersPane.getMatchers());
+                debugger.setLoggingListener(listener);
             }
         });
         rightButtonsPane.add(applyButton);

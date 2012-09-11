@@ -118,40 +118,51 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 @SuppressWarnings({"serial", "hiding"})
 public class LoggerPane extends JPanel {
 
-    private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("HH:mm:ss.SSS");
+    private static final String             LS                              = System.getProperty("line.separator");
+    private static final SimpleDateFormat   TIMESTAMP_FORMAT                = new SimpleDateFormat("HH:mm:ss.SSS");
+    private static final int                MAX_NUMBER_OF_ROWS              = 10000;
 
-    private static final int COLUMN_LINE = 0;
-    private static final int COLUMN_TYPE = 1;
-    private static final int COLUMN_THREAD = 2;
-    private static final int COLUMN_TIMESTAMP = 3;
-    private static final int COLUMN_PS_PREPARATION_DURATION = 4;
-    private static final int COLUMN_PS_BINDING_DURATION = 5;
-    private static final int COLUMN_EXEC_TIME = 6;
-    private static final int COLUMN_RS_LIFETIME = 7;
-    private static final int COLUMN_RS_READ = 8;
-    private static final int COLUMN_RS_READ_ROWS = 9;
-    private static final int COLUMN_DUPLICATION_COUNT = 10;
-    private static final int COLUMN_QUERY = 11;
-    private static final int COLUMN_COUNT = COLUMN_QUERY + 1;
+    private static final int                COLUMN_LINE                     = 0;
+    private static final int                COLUMN_TYPE                     = 1;
+    private static final int                COLUMN_THREAD                   = 2;
+    private static final int                COLUMN_TIMESTAMP                = 3;
+    private static final int                COLUMN_PS_PREPARATION_DURATION  = 4;
+    private static final int                COLUMN_PS_BINDING_DURATION      = 5;
+    private static final int                COLUMN_EXEC_TIME                = 6;
+    private static final int                COLUMN_RS_LIFETIME              = 7;
+    private static final int                COLUMN_RS_READ                  = 8;
+    private static final int                COLUMN_RS_READ_ROWS             = 9;
+    private static final int                COLUMN_DUPLICATION_COUNT        = 10;
+    private static final int                COLUMN_QUERY                    = 11;
+    private static final int                COLUMN_COUNT                    = COLUMN_QUERY + 1;
 
-    private final ImageIcon INSERT_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlInsert16.png"));
-    private final ImageIcon UPDATE_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlUpdate16.png"));
-    private final ImageIcon DELETE_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlDelete16.png"));
-    private final ImageIcon OTHER_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlOther16.png"));
-    private final ImageIcon SELECT_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlSelect16.png"));
+    private final ImageIcon                 INSERT_ICON                     = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlInsert16.png"));
+    private final ImageIcon                 UPDATE_ICON                     = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlUpdate16.png"));
+    private final ImageIcon                 DELETE_ICON                     = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlDelete16.png"));
+    private final ImageIcon                 OTHER_ICON                      = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlOther16.png"));
+    private final ImageIcon                 SELECT_ICON                     = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlSelect16.png"));
 
-    private Debugger debugger;
-    private JTableX table;
-    private SqlTextArea textArea;
-    private JLabel loggerStatusLabel;
-    private JButton loggerOnButton;
-    private JButton loggerOffButton;
-    private JToggleButton statementMatcherButton;
-    private boolean isLogging;
-    private boolean isReadQueryTypeDisplayed = true;
-    private boolean isWriteQueryTypeDisplayed = true;
-    private boolean isOtherQueryTypeDisplayed = true;
-    private boolean isScrollLocked;
+    // UI components
+
+    private JTableX                         table;
+    private SqlTextArea                     textArea;
+    private JLabel                          loggerStatusLabel;
+    private JButton                         loggerOnButton;
+    private JButton                         loggerOffButton;
+    private JToggleButton                   queryMatcherButton;
+    private boolean                         isLogging;
+    private boolean                         isReadQueryTypeDisplayed        = true;
+    private boolean                         isWriteQueryTypeDisplayed       = true;
+    private boolean                         isOtherQueryTypeDisplayed       = true;
+    private boolean                         isScrollLocked;
+
+    // Data and debug API
+
+    private final Debugger                  debugger;
+    private final LoggerPaneLoggingListener loggingListener;
+    private List<QueryDebuggingInfo>        queryDebuggingInfoList          = new ArrayList<QueryDebuggingInfo>();
+    private List<QueryDebuggingInfo>        displayedQueryDebuggingInfoList = new ArrayList<QueryDebuggingInfo>();
+    private Map<List<String>, Integer>      queriesToCountMap               = new HashMap<List<String>, Integer>();
 
     public LoggerPane(Debugger debugger) {
         super(new BorderLayout());
@@ -163,6 +174,7 @@ public class LoggerPane extends JPanel {
         JToolBar loggerHeaderWestPanel = new JToolBar();
         loggerHeaderWestPanel.setFloatable(false);
         loggerHeaderWestPanel.setOpaque(false);
+        loggingListener = new LoggerPaneLoggingListener();
         loggerOnButton = new JButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Paused16.png")));
         loggerOnButton.setOpaque(false);
         loggerOnButton.setFocusable(false);
@@ -187,20 +199,20 @@ public class LoggerPane extends JPanel {
             }
         });
         loggerHeaderWestPanel.add(loggerOffButton);
-        statementMatcherButton = new JToggleButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Filter16.png")));
-        statementMatcherButton.setOpaque(false);
-        statementMatcherButton.setFocusable(false);
-        statementMatcherButton.setToolTipText("Filter incoming statements");
-        adjustStatementMatcherButton();
-        statementMatcherButton.addActionListener(new ActionListener() {
+        queryMatcherButton = new JToggleButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Filter16.png")));
+        queryMatcherButton.setOpaque(false);
+        queryMatcherButton.setFocusable(false);
+        queryMatcherButton.setToolTipText("Filter incoming queries");
+        adjustQueryMatcherButton();
+        queryMatcherButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                statementMatcherButton.setSelected(true);
-                new StatementMatchersDialogBox(LoggerPane.this, LoggerPane.this.debugger).setVisible(true);
-                adjustStatementMatcherButton();
+                queryMatcherButton.setSelected(true);
+                new QueryMatchersDialogBox(LoggerPane.this, LoggerPane.this.debugger, loggingListener).setVisible(true);
+                adjustQueryMatcherButton();
             }
         });
-        loggerHeaderWestPanel.add(statementMatcherButton);
+        loggerHeaderWestPanel.add(queryMatcherButton);
         loggerHeaderPanel.add(loggerHeaderWestPanel, BorderLayout.WEST);
         JPanel loggerHeaderCenterPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
         loggerHeaderCenterPanel.setOpaque(false);
@@ -286,7 +298,7 @@ public class LoggerPane extends JPanel {
         JToggleButton loggerReadQueryTypeToggleButton = new JToggleButton(SELECT_ICON, isReadQueryTypeDisplayed);
         loggerReadQueryTypeToggleButton.setOpaque(false);
         loggerReadQueryTypeToggleButton.setFocusable(false);
-        loggerReadQueryTypeToggleButton.setToolTipText("Show/hide read statements");
+        loggerReadQueryTypeToggleButton.setToolTipText("Show/hide read queries");
         loggerReadQueryTypeToggleButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -298,7 +310,7 @@ public class LoggerPane extends JPanel {
         JToggleButton loggerWriteQueryTypeToggleButton = new JToggleButton(UPDATE_ICON, isWriteQueryTypeDisplayed);
         loggerWriteQueryTypeToggleButton.setOpaque(false);
         loggerWriteQueryTypeToggleButton.setFocusable(false);
-        loggerWriteQueryTypeToggleButton.setToolTipText("Show/hide modification statements");
+        loggerWriteQueryTypeToggleButton.setToolTipText("Show/hide modification queries");
         loggerWriteQueryTypeToggleButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -310,7 +322,7 @@ public class LoggerPane extends JPanel {
         JToggleButton loggerOtherQueryTypeToggleButton = new JToggleButton(OTHER_ICON, isOtherQueryTypeDisplayed);
         loggerOtherQueryTypeToggleButton.setOpaque(false);
         loggerOtherQueryTypeToggleButton.setFocusable(false);
-        loggerOtherQueryTypeToggleButton.setToolTipText("Show/hide other types of statements");
+        loggerOtherQueryTypeToggleButton.setToolTipText("Show/hide other types of queries");
         loggerOtherQueryTypeToggleButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -369,11 +381,11 @@ public class LoggerPane extends JPanel {
                         return TIMESTAMP_FORMAT.format(new Date(queryDebuggingInfo.getTimestamp()));
                     }
                     case COLUMN_PS_PREPARATION_DURATION: {
-                        Long duration = queryDebuggingInfo.getPrepardeStatementPreparationDuration();
+                        Long duration = queryDebuggingInfo.getPreparedStatementPreparationDuration();
                         return duration == null? null: duration;
                     }
                     case COLUMN_PS_BINDING_DURATION: {
-                        Long duration = queryDebuggingInfo.getPrepardeStatementBindingDuration();
+                        Long duration = queryDebuggingInfo.getPreparedStatementBindingDuration();
                         return duration == null? null: duration;
                     }
                     case COLUMN_EXEC_TIME: {
@@ -560,7 +572,7 @@ public class LoggerPane extends JPanel {
                         popupMenu.add(copyCellsToClipboardMenuItem);
                     }
                     if(selectedQueryDebuggingInfos.length > 0) {
-                        JMenuItem copyToClipboardMenuItem = new JMenuItem("Copy " + (selectedQueryDebuggingInfos.length > 1? selectedQueryDebuggingInfos.length + " ": "") + "Statement Data to Clipboard");
+                        JMenuItem copyToClipboardMenuItem = new JMenuItem("Copy " + (selectedQueryDebuggingInfos.length > 1? selectedQueryDebuggingInfos.length + " ": "") + "Query Data to Clipboard");
                         copyToClipboardMenuItem.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -570,7 +582,7 @@ public class LoggerPane extends JPanel {
                         popupMenu.add(copyToClipboardMenuItem);
                     }
                     if(displayedQueryDebuggingInfoList.size() > 0) {
-                        JMenuItem copyAllToClipboardMenuItem = new JMenuItem("Copy All Statements Data (" + displayedQueryDebuggingInfoList.size() + ") to Clipboard");
+                        JMenuItem copyAllToClipboardMenuItem = new JMenuItem("Copy All Query Data (" + displayedQueryDebuggingInfoList.size() + ") to Clipboard");
                         copyAllToClipboardMenuItem.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -658,14 +670,10 @@ public class LoggerPane extends JPanel {
         loggerThreadCheckBox.setSelected(false);
     }
 
-    private void adjustStatementMatcherButton() {
-        QueryMatcher[] loggingStatementMatchers = LoggerPane.this.debugger.getLoggingStatementMatchers();
-        statementMatcherButton.setSelected(loggingStatementMatchers != null);
+    private void adjustQueryMatcherButton() {
+        QueryMatcher[] matchers = loggingListener.getMatchers();
+        queryMatcherButton.setSelected(matchers != null);
     }
-
-    private List<QueryDebuggingInfo> queryDebuggingInfoList = new ArrayList<QueryDebuggingInfo>();
-    private List<QueryDebuggingInfo> displayedQueryDebuggingInfoList = new ArrayList<QueryDebuggingInfo>();
-    private Map<List<String>, Integer> queriesToCountMap = new HashMap<List<String>, Integer>();
 
     private void refreshRows() {
         int originalRowCount = displayedQueryDebuggingInfoList.size();
@@ -684,8 +692,6 @@ public class LoggerPane extends JPanel {
         }
         updateStatusLabel();
     }
-
-    private static final int MAX_NUMBER_OF_ROWS = 10000;
 
     private void addRow(QueryDebuggingInfo queryDebuggingInfo) {
         if(queryDebuggingInfoList.size() == MAX_NUMBER_OF_ROWS) {
@@ -765,7 +771,7 @@ public class LoggerPane extends JPanel {
         public QueryDebuggingInfo(long timestamp, QueryLog queryLog) {
             this.timestamp = timestamp;
             this.queryLog = queryLog;
-            this.throwable = new Exception("Statement Stack trace");
+            this.throwable = new Exception("Query Stack trace");
             throwable.setStackTrace(queryLog.getCallerStackTraceElements());
         }
         public long getTimestamp() {
@@ -774,10 +780,10 @@ public class LoggerPane extends JPanel {
         public QueryLog getQueryLoggingData() {
             return queryLog;
         }
-        public Long getPrepardeStatementPreparationDuration() {
+        public Long getPreparedStatementPreparationDuration() {
             return queryLog.getPreparedStatementPreparationDuration();
         }
-        public Long getPrepardeStatementBindingDuration() {
+        public Long getPreparedStatementBindingDuration() {
             return queryLog.getPreparedStatementBindingDuration();
         }
         public long getExecutionDuration() {
@@ -825,61 +831,76 @@ public class LoggerPane extends JPanel {
         }
     }
 
-    private static String LS = System.getProperty("line.separator");
-
     public void setLogging(boolean isLogging) {
-        if(this.isLogging == isLogging) {
+        if (this.isLogging == isLogging) {
             return;
         }
+
         this.isLogging = isLogging;
+
         loggerOnButton.setVisible(!isLogging);
         loggerOffButton.setVisible(isLogging);
-        if(isLogging) {
-            LoggingListener loggingListener = new LoggingListener() {
-                @Override
-                public void logQuery(QueryLog queryLog) {
-                    debugQueries(new QueryDebuggingInfo(System.currentTimeMillis(), queryLog));
-                }
-                public void debugQueries(final QueryDebuggingInfo queryDebuggingInfo) {
-                    if(!SwingUtilities.isEventDispatchThread()) {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                debugQueries(queryDebuggingInfo);
-                            }
-                        });
-                        return;
-                    }
-                    addRow(queryDebuggingInfo);
-                }
-                @Override
-                public void logResult(final ResultLog resultLog) {
-                    if(!SwingUtilities.isEventDispatchThread()) {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                logResult(resultLog);
-                            }
-                        });
-                        return;
-                    }
-                    for(int i=queryDebuggingInfoList.size()-1; i>=0; i--) {
-                        QueryDebuggingInfo queryDebuggingInfo = queryDebuggingInfoList.get(i);
-                        if(queryDebuggingInfo.getQueryLoggingData().getID() == resultLog.getQueryLogId()) {
-                            queryDebuggingInfo.setResultSetLoggingData(resultLog);
-                            XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
-                            boolean isResultSetDataShown = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(COLUMN_RS_LIFETIME));
-                            if(isResultSetDataShown) {
-                                updateRow(queryDebuggingInfo);
-                            }
-                            break;
-                        }
-                    }
-                }
-            };
+        if (isLogging) {
             debugger.setLoggingListener(loggingListener);
-        } else {
+        }
+        else {
             debugger.setLoggingListener(null);
+        }
+    }
+
+    class LoggerPaneLoggingListener implements LoggingListener {
+        private QueryMatcher[] matchers;
+
+        @Override
+        public QueryMatcher[] getMatchers() {
+            return matchers;
+        }
+
+        public void setMatchers(QueryMatcher[] matchers) {
+            this.matchers = matchers;
+        }
+
+        @Override
+        public void logQuery(QueryLog queryLog) {
+            debugQueries(new QueryDebuggingInfo(System.currentTimeMillis(), queryLog));
+        }
+
+        public void debugQueries(final QueryDebuggingInfo queryDebuggingInfo) {
+            if (!SwingUtilities.isEventDispatchThread()) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        debugQueries(queryDebuggingInfo);
+                    }
+                });
+                return;
+            }
+            addRow(queryDebuggingInfo);
+        }
+
+        @Override
+        public void logResult(final ResultLog resultLog) {
+            if (!SwingUtilities.isEventDispatchThread()) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        logResult(resultLog);
+                    }
+                });
+                return;
+            }
+            for (int i = queryDebuggingInfoList.size() - 1; i >= 0; i--) {
+                QueryDebuggingInfo queryDebuggingInfo = queryDebuggingInfoList.get(i);
+                if (queryDebuggingInfo.getQueryLoggingData().getID() == resultLog.getQueryLogId()) {
+                    queryDebuggingInfo.setResultSetLoggingData(resultLog);
+                    XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
+                    boolean isResultSetDataShown = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(COLUMN_RS_LIFETIME));
+                    if (isResultSetDataShown) {
+                        updateRow(queryDebuggingInfo);
+                    }
+                    break;
+                }
+            }
         }
     }
 

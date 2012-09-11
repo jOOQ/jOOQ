@@ -55,29 +55,29 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
-import org.jooq.tools.debug.QueryType;
 import org.jooq.tools.debug.QueryMatcher;
+import org.jooq.tools.debug.QueryType;
 import org.jooq.tools.debug.TextMatcher;
 
 /**
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class StatementMatcherPane extends JPanel {
+public class QueryMatcherPane extends JPanel {
 
     private JCheckBox activeCheckBox;
     private JCheckBox threadNameTextMatcherCheckBox;
     private TextMatcherPane threadNameTextMatcherPane;
-    private JCheckBox statementTextMatcherCheckBox;
-    private TextMatcherPane statementTextMatcherPane;
-    private JCheckBox statementTypeCheckBox;
-    private JCheckBox statementTypeSelectCheckBox;
-    private JCheckBox statementTypeUpdateCheckBox;
-    private JCheckBox statementTypeInsertCheckBox;
-    private JCheckBox statementTypeDeleteCheckBox;
-    private JCheckBox statementTypeOtherCheckBox;
+    private JCheckBox queryTextMatcherCheckBox;
+    private TextMatcherPane queryTextMatcherPane;
+    private JCheckBox queryTypeCheckBox;
+    private JCheckBox queryTypeSelectCheckBox;
+    private JCheckBox queryTypeUpdateCheckBox;
+    private JCheckBox queryTypeInsertCheckBox;
+    private JCheckBox queryTypeDeleteCheckBox;
+    private JCheckBox queryTypeOtherCheckBox;
 
-    public StatementMatcherPane(final StatementMatchersPane statementMatchersPane, QueryMatcher queryMatcher) {
+    public QueryMatcherPane(final QueryMatchersPane queryMatchersPane, QueryMatcher queryMatcher) {
         super(new GridBagLayout());
         setBorder(BorderFactory.createLineBorder(getBackground().darker()));
         if(queryMatcher == null) {
@@ -100,45 +100,45 @@ public class StatementMatcherPane extends JPanel {
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                statementMatchersPane.removeStatementMatcherPane(StatementMatcherPane.this);
+                queryMatchersPane.removeQueryMatcherPane(QueryMatcherPane.this);
             }
         });
         closeButtonPane.add(closeButton);
         northPane.add(closeButtonPane, new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
         add(northPane, new GridBagConstraints(0, y, 2, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         y++;
-        TextMatcher statementTextMatcher = queryMatcher.getStatementTextMatcher();
-        statementTextMatcherCheckBox = new JCheckBox("Statement", statementTextMatcher != null);
-        statementTextMatcherCheckBox.addItemListener(new ItemListener() {
+        TextMatcher queryTextMatcher = queryMatcher.getQueryTextMatcher();
+        queryTextMatcherCheckBox = new JCheckBox("Query", queryTextMatcher != null);
+        queryTextMatcherCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 adjustStates();
             }
         });
-        add(statementTextMatcherCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        statementTextMatcherPane = new TextMatcherPane(statementTextMatcher);
-        add(statementTextMatcherPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
+        add(queryTextMatcherCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        queryTextMatcherPane = new TextMatcherPane(queryTextMatcher);
+        add(queryTextMatcherPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
         y++;
         Set<QueryType> queryTypeSet = queryMatcher.getQueryTypeSet();
-        statementTypeCheckBox = new JCheckBox("Type", queryTypeSet != null);
-        statementTypeCheckBox.addItemListener(new ItemListener() {
+        queryTypeCheckBox = new JCheckBox("Type", queryTypeSet != null);
+        queryTypeCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 adjustStates();
             }
         });
-        add(statementTypeCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        add(queryTypeCheckBox, new GridBagConstraints(0, y, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         JPanel typesPane = new JPanel(new GridBagLayout());
-        statementTypeSelectCheckBox = new JCheckBox("SELECT", queryTypeSet != null && queryTypeSet.contains(QueryType.SELECT));
-        typesPane.add(statementTypeSelectCheckBox, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        statementTypeUpdateCheckBox = new JCheckBox("UPDATE", queryTypeSet != null && queryTypeSet.contains(QueryType.UPDATE));
-        typesPane.add(statementTypeUpdateCheckBox, new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
-        statementTypeInsertCheckBox = new JCheckBox("INSERT", queryTypeSet != null && queryTypeSet.contains(QueryType.INSERT));
-        typesPane.add(statementTypeInsertCheckBox, new GridBagConstraints(2, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
-        statementTypeDeleteCheckBox = new JCheckBox("DELETE", queryTypeSet != null && queryTypeSet.contains(QueryType.DELETE));
-        typesPane.add(statementTypeDeleteCheckBox, new GridBagConstraints(3, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
-        statementTypeOtherCheckBox = new JCheckBox("OTHER", queryTypeSet != null && queryTypeSet.contains(QueryType.OTHER));
-        typesPane.add(statementTypeOtherCheckBox, new GridBagConstraints(4, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
+        queryTypeSelectCheckBox = new JCheckBox("SELECT", queryTypeSet != null && queryTypeSet.contains(QueryType.SELECT));
+        typesPane.add(queryTypeSelectCheckBox, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        queryTypeUpdateCheckBox = new JCheckBox("UPDATE", queryTypeSet != null && queryTypeSet.contains(QueryType.UPDATE));
+        typesPane.add(queryTypeUpdateCheckBox, new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
+        queryTypeInsertCheckBox = new JCheckBox("INSERT", queryTypeSet != null && queryTypeSet.contains(QueryType.INSERT));
+        typesPane.add(queryTypeInsertCheckBox, new GridBagConstraints(2, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
+        queryTypeDeleteCheckBox = new JCheckBox("DELETE", queryTypeSet != null && queryTypeSet.contains(QueryType.DELETE));
+        typesPane.add(queryTypeDeleteCheckBox, new GridBagConstraints(3, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
+        queryTypeOtherCheckBox = new JCheckBox("OTHER", queryTypeSet != null && queryTypeSet.contains(QueryType.OTHER));
+        typesPane.add(queryTypeOtherCheckBox, new GridBagConstraints(4, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
         add(typesPane, new GridBagConstraints(1, y, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
         y++;
         TextMatcher threadNameTextMatcher = queryMatcher.getThreadNameTextMatcher();
@@ -157,45 +157,45 @@ public class StatementMatcherPane extends JPanel {
 
     private void adjustStates() {
         boolean isActive = activeCheckBox.isSelected();
-        statementTextMatcherCheckBox.setEnabled(isActive);
-        statementTypeCheckBox.setEnabled(isActive);
+        queryTextMatcherCheckBox.setEnabled(isActive);
+        queryTypeCheckBox.setEnabled(isActive);
         threadNameTextMatcherCheckBox.setEnabled(isActive);
-        statementTextMatcherPane.setLocked(!isActive || !statementTextMatcherCheckBox.isSelected());
-        statementTypeSelectCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
-        statementTypeUpdateCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
-        statementTypeInsertCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
-        statementTypeDeleteCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
-        statementTypeOtherCheckBox.setEnabled(isActive && statementTypeCheckBox.isSelected());
+        queryTextMatcherPane.setLocked(!isActive || !queryTextMatcherCheckBox.isSelected());
+        queryTypeSelectCheckBox.setEnabled(isActive && queryTypeCheckBox.isSelected());
+        queryTypeUpdateCheckBox.setEnabled(isActive && queryTypeCheckBox.isSelected());
+        queryTypeInsertCheckBox.setEnabled(isActive && queryTypeCheckBox.isSelected());
+        queryTypeDeleteCheckBox.setEnabled(isActive && queryTypeCheckBox.isSelected());
+        queryTypeOtherCheckBox.setEnabled(isActive && queryTypeCheckBox.isSelected());
         threadNameTextMatcherPane.setLocked(!isActive || !threadNameTextMatcherCheckBox.isSelected());
     }
 
-    public QueryMatcher getStatementMatcher() {
+    public QueryMatcher getQueryMatcher() {
         boolean isActive = activeCheckBox.isSelected();
         TextMatcher threadNameTextMatcher = threadNameTextMatcherCheckBox.isSelected()? threadNameTextMatcherPane.getTextMatcher(): null;
-        TextMatcher statementTextMatcher = statementTextMatcherCheckBox.isSelected()? statementTextMatcherPane.getTextMatcher(): null;
+        TextMatcher queryTextMatcher = queryTextMatcherCheckBox.isSelected()? queryTextMatcherPane.getTextMatcher(): null;
         Set<QueryType> queryTypeSet;
-        if(statementTypeCheckBox.isSelected()) {
+        if(queryTypeCheckBox.isSelected()) {
             List<QueryType> typeList = new ArrayList<QueryType>();
-            if(statementTypeSelectCheckBox.isSelected()) {
+            if(queryTypeSelectCheckBox.isSelected()) {
                 typeList.add(QueryType.SELECT);
             }
-            if(statementTypeUpdateCheckBox.isSelected()) {
+            if(queryTypeUpdateCheckBox.isSelected()) {
                 typeList.add(QueryType.UPDATE);
             }
-            if(statementTypeInsertCheckBox.isSelected()) {
+            if(queryTypeInsertCheckBox.isSelected()) {
                 typeList.add(QueryType.INSERT);
             }
-            if(statementTypeDeleteCheckBox.isSelected()) {
+            if(queryTypeDeleteCheckBox.isSelected()) {
                 typeList.add(QueryType.DELETE);
             }
-            if(statementTypeOtherCheckBox.isSelected()) {
+            if(queryTypeOtherCheckBox.isSelected()) {
                 typeList.add(QueryType.OTHER);
             }
             queryTypeSet = EnumSet.copyOf(typeList);
         } else {
             queryTypeSet = null;
         }
-        return new QueryMatcher(threadNameTextMatcher, statementTextMatcher, queryTypeSet, isActive);
+        return new QueryMatcher(threadNameTextMatcher, queryTextMatcher, queryTypeSet, isActive);
     }
 
 }

@@ -37,71 +37,93 @@
 package org.jooq.tools.debug;
 
 import java.io.Serializable;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
-
 
 /**
  * @author Christopher Deckers
+ * @author Lukas Eder
  */
-@SuppressWarnings("serial")
 public class Breakpoint implements Serializable {
 
-    private int id;
-    private QueryMatcher queryMatcher;
-    private Integer hitCount;
-    private boolean isBreaking;
-    private QueryProcessor beforeExecutionProcessor;
-    private QueryProcessor replacementExecutionProcessor;
-    private QueryProcessor afterExecutionProcessor;
+    /**
+     * Generated UID
+     */
+    private static final long       serialVersionUID = 7419556364234031622L;
 
-    public Breakpoint(int id, Integer hitCount, QueryMatcher queryMatcher, boolean isBreaking, QueryProcessor beforeExecutionProcessor, QueryProcessor replacementExecutionProcessor, QueryProcessor afterExecutionProcessor) {
-        this.id = id;
-        this.hitCount = hitCount;
-        if(hitCount != null) {
-            currentHitCount = new AtomicInteger(hitCount);
-        }
-        this.queryMatcher = queryMatcher;
-        this.isBreaking = isBreaking;
-        this.beforeExecutionProcessor = beforeExecutionProcessor;
-        this.replacementExecutionProcessor = replacementExecutionProcessor;
-        this.afterExecutionProcessor = afterExecutionProcessor;
-    }
-
-    public int getID() {
-        return id;
-    }
-
-    public QueryMatcher getStatementMatcher() {
-        return queryMatcher;
-    }
+    private final UUID              id;
+    private final QueryMatcher      matcher;
+    private final Integer           hitCount;
+    private final boolean           isBreaking;
+    private final QueryProcessor    before;
+    private final QueryProcessor    replace;
+    private final QueryProcessor    after;
 
     private transient AtomicInteger currentHitCount;
 
+    public Breakpoint() {
+        this(null, null, null, true, null, null, null);
+    }
+
+    public Breakpoint(UUID id, Integer hitCount, QueryMatcher matcher, boolean isBreaking, QueryProcessor before,
+        QueryProcessor replace, QueryProcessor after) {
+
+        if (id == null) {
+            this.id = UUID.randomUUID();
+        }
+        else {
+            this.id = id;
+        }
+
+        this.hitCount = hitCount;
+
+        if (hitCount != null) {
+            currentHitCount = new AtomicInteger(hitCount);
+        }
+
+        this.matcher = matcher;
+        this.isBreaking = isBreaking;
+        this.before = before;
+        this.replace = replace;
+        this.after = after;
+    }
+
+    public UUID getID() {
+        return id;
+    }
+
+    public QueryMatcher getMatcher() {
+        return matcher;
+    }
+
     public boolean matches(QueryInfo queryInfo, boolean trackHitCount) {
-        if(trackHitCount && hitCount != null && currentHitCount.get() <= 0) {
-            // No need to match if hit count was already reached.
+        // No need to match if hit count was already reached.
+        if (trackHitCount && hitCount != null && currentHitCount.get() <= 0) {
             return false;
         }
+
         boolean hasMatcher = false;
-        if(queryMatcher != null) {
-            if(!queryMatcher.matches(queryInfo)) {
+        if (matcher != null) {
+            if (!matcher.matches(queryInfo)) {
                 return false;
             }
             hasMatcher = true;
         }
-        if(trackHitCount) {
-            if(hitCount != null) {
+
+        if (trackHitCount) {
+            if (hitCount != null) {
                 int currentHitCount_ = currentHitCount.decrementAndGet();
-                if(currentHitCount_ > 0) {
+                if (currentHitCount_ > 0) {
                     return false;
                 }
-                if(currentHitCount_ < 0) {
+                if (currentHitCount_ < 0) {
                     currentHitCount.set(0);
                     return false;
                 }
                 hasMatcher = true;
             }
         }
+
         return hasMatcher;
     }
 
@@ -113,7 +135,7 @@ public class Breakpoint implements Serializable {
      */
     @Deprecated
     public void reset() {
-        if(hitCount != null) {
+        if (hitCount != null) {
             currentHitCount = new AtomicInteger(hitCount);
         }
     }
@@ -127,15 +149,28 @@ public class Breakpoint implements Serializable {
     }
 
     public QueryProcessor getBeforeExecutionProcessor() {
-        return beforeExecutionProcessor;
+        return before;
     }
 
     public QueryProcessor getReplacementExecutionProcessor() {
-        return replacementExecutionProcessor;
+        return replace;
     }
 
     public QueryProcessor getAfterExecutionProcessor() {
-        return afterExecutionProcessor;
+        return after;
     }
 
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Breakpoint) {
+            return id.equals(((Breakpoint) obj).id);
+        }
+
+        return false;
+    }
 }

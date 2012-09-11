@@ -367,11 +367,9 @@ public class DebuggerPane extends JPanel {
         add(new InvisibleSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, westPane, eastPane), BorderLayout.CENTER);
     }
 
-    private static int nextID = 1;
-
     private void addBreakpoint(String name) {
         breakpointTree.cancelEditing();
-        Breakpoint breakpoint = new Breakpoint(nextID++, null, null, true, null, null, null);
+        Breakpoint breakpoint = new Breakpoint();
         CheckBoxNode breakpointNode = new CheckBoxNode(breakpoint, name, true);
         rootNode.add(breakpointNode);
         breakpointTreeModel.nodesWereInserted(rootNode, new int[] { rootNode.getIndex(breakpointNode) });
@@ -478,7 +476,7 @@ public class DebuggerPane extends JPanel {
                     for(int i=0; i<childCount; i++) {
                         CheckBoxNode checkBoxNode = (CheckBoxNode)rootNode.getChildAt(i);
                         Breakpoint breakpoint = (Breakpoint)checkBoxNode.getUserObject();
-                        if(breakpoint.getID() == breakpointHit.getBreakpointID()) {
+                        if(breakpoint.getID().equals(breakpointHit.getBreakpointID())) {
                             int index = checkBoxNode.getChildCount();
                             checkBoxNode.add(node);
                             breakpointTreeModel.nodesWereInserted(checkBoxNode, new int[] {index});

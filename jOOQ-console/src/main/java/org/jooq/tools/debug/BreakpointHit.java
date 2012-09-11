@@ -39,35 +39,38 @@ package org.jooq.tools.debug;
 import java.io.Serializable;
 import java.util.UUID;
 
+import org.jooq.Query;
+
 /**
  * @author Christopher Deckers
+ * @author Lukas Eder
  */
-@SuppressWarnings("serial")
 public class BreakpointHit implements Serializable {
 
-    public static enum ExecutionType {
-        STEP_THROUGH,
-        RUN_OVER,
-        RUN,
-        FAIL,
-    }
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -9202720101880051991L;
 
-    private boolean             isBeforeExecution;
-    private UUID                breakpointID;
-    private String              sql;
-    private String              parameterDescription;
-    private long                threadID;
-    private String              threadName;
-    private StackTraceElement[] callerStackTraceElements;
+    private final boolean             isBeforeExecution;
+    private UUID                      breakpointID;
+    private String                    sql;
+    private final String              parameterDescription;
+    private final long                threadID;
+    private final String              threadName;
+    private final StackTraceElement[] stackTrace;
 
-    public BreakpointHit(UUID breakpointID, String sql, String parameterDescription, long threadID, String threadName, StackTraceElement[] callerStackTraceElements, boolean isBeforeExecution) {
+    private ExecutionType             executionType    = ExecutionType.RUN;
+
+    public BreakpointHit(UUID breakpointID, String sql, String parameterDescription, long threadID, String threadName,
+        StackTraceElement[] callerStackTraceElements, boolean isBeforeExecution) {
         this.isBeforeExecution = isBeforeExecution;
         this.breakpointID = breakpointID;
         this.sql = sql;
         this.parameterDescription = parameterDescription;
         this.threadID = threadID;
         this.threadName = threadName;
-        this.callerStackTraceElements = callerStackTraceElements;
+        this.stackTrace = callerStackTraceElements;
     }
 
     public boolean isBeforeExecution() {
@@ -75,34 +78,53 @@ public class BreakpointHit implements Serializable {
     }
 
     /**
-     * @return null if the breakpoint was processed and contains an execution type.
+     * @return null if the breakpoint was processed and contains an execution
+     *         type.
      */
     public UUID getBreakpointID() {
         return breakpointID;
     }
 
-    public String getSql() {
+    /**
+     * The SQL string of the {@link Query} that was suspended by this breakpoint hit
+     */
+    public String getSQL() {
         return sql;
     }
 
+    /**
+     * The bind values of the {@link Query} that was suspended by this breakpoint hit
+     */
     public String getParameterDescription() {
         return parameterDescription;
     }
 
+    /**
+     * The ID of the thread which was suspended by this breakpoint hit
+     */
     public long getThreadID() {
         return threadID;
     }
 
+    /**
+     * The name of the thread which was suspended by this breakpoint hit
+     */
     public String getThreadName() {
         return threadName;
     }
 
-    public StackTraceElement[] getCallerStackTraceElements() {
-        return callerStackTraceElements;
+    /**
+     * The stacktrace of the thread which was suspended by this breakpoint hit
+     */
+    public StackTraceElement[] getStackTrace() {
+        return stackTrace;
     }
 
-    private ExecutionType executionType = ExecutionType.RUN;
-
+    /**
+     * @deprecated - {@link BreakpointHit} should be immutable. This subtle
+     *             state-change has too much implicit semantics.
+     */
+    @Deprecated
     public void setExecutionType(ExecutionType executionType, String sql) {
         this.breakpointID = null;
         this.executionType = executionType;

@@ -51,8 +51,8 @@ import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.Factory;
 import org.jooq.tools.debug.Breakpoint;
 import org.jooq.tools.debug.BreakpointHit;
-import org.jooq.tools.debug.BreakpointHit.ExecutionType;
 import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.ExecutionType;
 import org.jooq.tools.debug.LoggingListener;
 import org.jooq.tools.debug.QueryInfo;
 import org.jooq.tools.debug.QueryLog;
@@ -227,7 +227,7 @@ public class DebugListener extends DefaultExecuteListener {
                     throw new RuntimeException(e);
                 }
             }
-            ExecutionType executionType = BreakpointHit.ExecutionType.RUN;
+            ExecutionType executionType = ExecutionType.RUN;
             if(hasBreakpointHitHandler) {
                 effectiveSQL = mainSQL != null? mainSQL: matchingSQL;
                 // TODO: find a way for the handler to replace the statement (not just step over).
@@ -241,7 +241,7 @@ public class DebugListener extends DefaultExecuteListener {
                 // Breakpoint has an answer.
                 if(breakpointHit.getBreakpointID() == null) {
                     executionType = breakpointHit.getExecutionType();
-                    String sql = breakpointHit.getSql();
+                    String sql = breakpointHit.getSQL();
                     if(sql != null) {
                         effectiveSQL = sql;
                         matchingParameterDescription = null;
@@ -256,14 +256,14 @@ public class DebugListener extends DefaultExecuteListener {
                     }
                 }
             }
-            if(executionType != ExecutionType.STEP_THROUGH) {
+            if(executionType != ExecutionType.STEP) {
                 matchingDebugger = null;
             }
             switch(executionType) {
                 case FAIL: {
                     throw new DataAccessException("Failing SQL statement.");
                 }
-                case RUN_OVER: {
+                case SKIP: {
                     try {
                         ctx.statement().close();
                         // Better return possibility? Based on originating query?

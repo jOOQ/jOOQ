@@ -502,6 +502,24 @@ public interface ResultQuery<R extends Record> extends Query {
     <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) throws DataAccessException;
 
     /**
+     * Execute the query and return a {@link Map} with keys list as a map key
+     * and the corresponding record as value.
+     * <p>
+     * An exception is thrown, if the key list turns out to be non-unique in the
+     * result set. Use {@link #fetchGroups(Field...)} instead, if your key list
+     * is non-unique.
+     *
+     * @param keys The key list. Client code must assure that this key list is
+     *            unique in the result set.
+     * @return A Map containing the results.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key list is non-unique in the
+     *             result set.
+     * @see Result#intoMap(Field...)
+     */
+    Map<List<?>, R> fetchMap(Field<?>... keys) throws DataAccessException;
+
+    /**
      * Execute the query and return a {@link Map} with one of the result's
      * columns as key and a list of corresponding records as value.
      * <p>
@@ -536,6 +554,20 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Result#intoGroups(Field, Field)
      */
     <K, V> Map<K, List<V>> fetchGroups(Field<K> key, Field<V> value) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with the result grouped by the
+     * given key list.
+     * <p>
+     * Unlike {@link #fetchMap(Field...)}, this method allows for non-unique key
+     * list in the result set.
+     *
+     * @param keys The key list used for result grouping.
+     * @return A Map containing grouped results
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoGroups(Field...)
+     */
+    Map<List<?>, Result<R>> fetchGroups(Field<?>... keys) throws DataAccessException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped

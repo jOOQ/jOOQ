@@ -98,16 +98,6 @@ class LocalDebugger implements Debugger {
     private final Object BREAKPOINT_LOCK = new Object();
 
     @Override
-    public void setBreakpoints(Breakpoint[] breakpoints) {
-        if(breakpoints != null && breakpoints.length == 0) {
-            breakpoints = null;
-        }
-        synchronized (BREAKPOINT_LOCK) {
-            this.breakpoints = breakpoints;
-        }
-    }
-
-    @Override
     public void addBreakpoint(Breakpoint breakpoint) {
         synchronized (BREAKPOINT_LOCK) {
             if(this.breakpoints == null) {

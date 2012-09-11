@@ -134,27 +134,6 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_setBreakpoints extends CommandMessage<Serializable> {
-        private final Breakpoint[] breakpoints;
-
-        CMS_setBreakpoints(Breakpoint[] breakpoints) {
-            this.breakpoints = breakpoints;
-        }
-
-        @Override
-        public Serializable run(MessageContext context) {
-            if (breakpoints != null) {
-                for (Breakpoint breakpoint : breakpoints) {
-                    // Serialization has a cache, assuming objects are
-                    // immutable. We have to reset our internal states.
-                    breakpoint.reset();
-                }
-            }
-            context.getDebugger().setBreakpoints(breakpoints);
-            return null;
-        }
-    }
-
     static class CMS_addBreakpoint extends CommandMessage<Serializable> {
         private final Breakpoint breakpoint;
 

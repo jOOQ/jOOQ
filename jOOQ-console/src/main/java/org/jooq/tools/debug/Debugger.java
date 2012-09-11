@@ -61,35 +61,33 @@ public interface Debugger extends QueryExecutorCreator {
      *
      * @param listener a listener, or null to stop logging.
      */
-    public void setLoggingListener(LoggingListener listener);
+    void setLoggingListener(LoggingListener listener);
 
     /**
      * Get the <code>Debugger</code>'s configured logging listeners
      */
-    public LoggingListener getLoggingListener();
+    LoggingListener getLoggingListener();
 
-    public void setBreakpoints(Breakpoint[] breakpoints);
+    void addBreakpoint(Breakpoint breakpoint);
 
-    public void addBreakpoint(Breakpoint breakpoint);
+    void modifyBreakpoint(Breakpoint breakpoint);
 
-    public void modifyBreakpoint(Breakpoint breakpoint);
+    void removeBreakpoint(Breakpoint breakpoint);
 
-    public void removeBreakpoint(Breakpoint breakpoint);
+    Breakpoint[] getBreakpoints();
 
-    public void setBreakpointHitHandler(BreakpointHitHandler handler);
+    void setBreakpointHitHandler(BreakpointHitHandler handler);
 
-    public BreakpointHitHandler getBreakpointHitHandler();
+    BreakpointHitHandler getBreakpointHitHandler();
 
-    public Breakpoint[] getBreakpoints();
+    boolean isExecutionSupported();
 
-    public boolean isExecutionSupported();
+    void processBreakpointBeforeExecutionHit(ExecuteContext ctx, BreakpointHit hit);
 
-    public void processBreakpointBeforeExecutionHit(ExecuteContext ctx, BreakpointHit hit);
+    void processBreakpointAfterExecutionHit(ExecuteContext ctx, BreakpointHit hit);
 
-    public void processBreakpointAfterExecutionHit(ExecuteContext ctx, BreakpointHit hit);
+    QueryExecutor createBreakpointHitStatementExecutor(long threadID);
 
-    public QueryExecutor createBreakpointHitStatementExecutor(long threadID);
-
-    public void close();
+    void close();
 
 }

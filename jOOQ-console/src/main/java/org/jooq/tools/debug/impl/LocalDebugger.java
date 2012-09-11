@@ -255,6 +255,9 @@ class LocalDebugger implements Debugger {
         }
     }
 
+    /**
+     * @param threadID The thread ID whose data should be cleaned up
+     */
     protected void performThreadDataCleanup(long threadID) {
     }
 

@@ -37,6 +37,7 @@
 package org.jooq.tools.debug;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @author Christopher Deckers
@@ -51,15 +52,15 @@ public class BreakpointHit implements Serializable {
         FAIL,
     }
 
-    private boolean isBeforeExecution;
-    private Integer breakpointID;
-    private String sql;
-    private String parameterDescription;
-    private long threadID;
-    private String threadName;
+    private boolean             isBeforeExecution;
+    private UUID                breakpointID;
+    private String              sql;
+    private String              parameterDescription;
+    private long                threadID;
+    private String              threadName;
     private StackTraceElement[] callerStackTraceElements;
 
-    public BreakpointHit(int breakpointID, String sql, String parameterDescription, long threadID, String threadName, StackTraceElement[] callerStackTraceElements, boolean isBeforeExecution) {
+    public BreakpointHit(UUID breakpointID, String sql, String parameterDescription, long threadID, String threadName, StackTraceElement[] callerStackTraceElements, boolean isBeforeExecution) {
         this.isBeforeExecution = isBeforeExecution;
         this.breakpointID = breakpointID;
         this.sql = sql;
@@ -76,7 +77,7 @@ public class BreakpointHit implements Serializable {
     /**
      * @return null if the breakpoint was processed and contains an execution type.
      */
-    public Integer getBreakpointID() {
+    public UUID getBreakpointID() {
         return breakpointID;
     }
 

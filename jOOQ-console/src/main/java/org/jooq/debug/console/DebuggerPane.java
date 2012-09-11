@@ -334,7 +334,7 @@ public class DebuggerPane extends JPanel {
                                     public void actionPerformed(ActionEvent e) {
                                         StringWriter sw = new StringWriter();
                                         Throwable throwable = new Exception("Statement Stack trace");
-                                        throwable.setStackTrace(breakpointHit.getCallerStackTraceElements());
+                                        throwable.setStackTrace(breakpointHit.getStackTrace());
                                         throwable.printStackTrace(new PrintWriter(sw));
                                         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                                         clipboard.setContents(new StringSelection(sw.toString()), null);
@@ -346,7 +346,7 @@ public class DebuggerPane extends JPanel {
                                     @Override
                                     public void actionPerformed(ActionEvent e) {
                                         Throwable throwable = new Exception("Statement Stack trace");
-                                        throwable.setStackTrace(breakpointHit.getCallerStackTraceElements());
+                                        throwable.setStackTrace(breakpointHit.getStackTrace());
                                         throwable.printStackTrace();
                                     }
                                 });
@@ -418,8 +418,8 @@ public class DebuggerPane extends JPanel {
     class BreakpointHitNode extends DefaultMutableTreeNode {
         public BreakpointHitNode(BreakpointHit breakpointHit) {
             super(breakpointHit);
-            StackTraceElement[] callerStackTraceElements = breakpointHit.getCallerStackTraceElements();
-            for(StackTraceElement stackTraceElement: callerStackTraceElements) {
+            StackTraceElement[] stackTrace = breakpointHit.getStackTrace();
+            for (StackTraceElement stackTraceElement : stackTrace) {
                 add(new StackTraceElementNode(stackTraceElement));
             }
         }

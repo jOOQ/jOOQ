@@ -115,21 +115,23 @@ class ServerDebugger extends LocalDebugger {
     }
 
     private void setBreakpointHitHandlerActive(boolean isActive) {
-        if(isActive) {
+        if (isActive) {
             setBreakpointHitHandler(new BreakpointHitHandler() {
                 @Override
                 public void processBreakpointBeforeExecutionHit(BreakpointHit hit) {
-                    BreakpointHit modifiedBreakpointHit = comm.syncSend(new CMC_processBreakpointBeforeExecutionHit(hit));
-                    if(modifiedBreakpointHit != null) {
-                        hit.setExecutionType(modifiedBreakpointHit.getExecutionType(), modifiedBreakpointHit.getSql());
+                    BreakpointHit modified = comm.syncSend(new CMC_processBreakpointBeforeExecutionHit(hit));
+                    if (modified != null) {
+                        hit.setExecutionType(modified.getExecutionType(), modified.getSQL());
                     }
                 }
+
                 @Override
                 public void processBreakpointAfterExecutionHit(BreakpointHit hit) {
                     comm.syncSend(new CMC_processBreakpointAfterExecutionHit(hit));
                 }
             });
-        } else {
+        }
+        else {
             setBreakpointHitHandler(null);
         }
     }

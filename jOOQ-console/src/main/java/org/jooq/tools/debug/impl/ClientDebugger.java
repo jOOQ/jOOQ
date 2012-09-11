@@ -46,6 +46,7 @@ import org.jooq.tools.debug.Breakpoint;
 import org.jooq.tools.debug.BreakpointHit;
 import org.jooq.tools.debug.BreakpointHitHandler;
 import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.ExecutionType;
 import org.jooq.tools.debug.LoggingListener;
 import org.jooq.tools.debug.QueryExecutor;
 import org.jooq.tools.debug.QueryLog;
@@ -251,7 +252,7 @@ class ClientDebugger implements Debugger {
                 breakpointHitHandler.processBreakpointBeforeExecutionHit(hit);
                 if (hit.getBreakpointID() != null) {
                     // The breakpoint was not processed, so we process it here.
-                    hit.setExecutionType(BreakpointHit.ExecutionType.RUN, null);
+                    hit.setExecutionType(ExecutionType.RUN, null);
                 }
                 return hit;
             }

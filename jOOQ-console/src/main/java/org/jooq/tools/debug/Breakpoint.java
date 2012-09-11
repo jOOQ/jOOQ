@@ -41,6 +41,11 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * A breakpoint that can be set onto a {@link Debugger}
+ * <p>
+ * Breakpoints can be set onto a {@link Debugger} in order to make the debugger
+ * break on certain events
+ *
  * @author Christopher Deckers
  * @author Lukas Eder
  */
@@ -61,10 +66,16 @@ public class Breakpoint implements Serializable {
 
     private transient AtomicInteger currentHitCount;
 
+    /**
+     * Create a new, empty breakpoint
+     */
     public Breakpoint() {
         this(null, null, null, true, null, null, null);
     }
 
+    /**
+     * Create an initialised breakpoint
+     */
     public Breakpoint(UUID id, Integer hitCount, QueryMatcher matcher, boolean isBreaking, QueryProcessor before,
         QueryProcessor replace, QueryProcessor after) {
 
@@ -88,10 +99,17 @@ public class Breakpoint implements Serializable {
         this.after = after;
     }
 
+    /**
+     * The breakpoints unique ID, which is used to identify it across remote
+     * systems.
+     */
     public UUID getID() {
         return id;
     }
 
+    /**
+     * A matcher used to match queries on which to break
+     */
     public QueryMatcher getMatcher() {
         return matcher;
     }
@@ -140,10 +158,16 @@ public class Breakpoint implements Serializable {
         }
     }
 
+    /**
+     * The breakpoint's hit count
+     */
     public Integer getHitCount() {
         return hitCount;
     }
 
+    /**
+     * Whether the breakpoint is breaking
+     */
     public boolean isBreaking() {
         return isBreaking;
     }

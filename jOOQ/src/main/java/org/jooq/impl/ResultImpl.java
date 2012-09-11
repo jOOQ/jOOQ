@@ -116,7 +116,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return internalType.cast(this);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public final void attach(Configuration c) {
         this.configuration = c;

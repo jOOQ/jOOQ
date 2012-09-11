@@ -143,6 +143,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(BOOK_IDS, new ArrayList<Integer>(map2.keySet()));
         assertEquals(BOOK_TITLES, new ArrayList<String>(map2.values()));
 
+        // Key list -> Record
+        // ------------------
+        Map<List<?>, B> map3 = create().selectFrom(TBook()).orderBy(TBook_ID())
+            .fetchMap(TBook_ID(), TBook_LANGUAGE_ID(), TBook_TITLE());
+        assertEquals(4, map3.keySet().size());
+
+        for (List<?> keyList : map3.keySet()) {
+            B record = map3.get(keyList);
+            assertEquals(keyList.get(0), record.getValue(TBook_ID()));
+            assertEquals(keyList.get(1), record.getValue(TBook_LANGUAGE_ID()));
+            assertEquals(keyList.get(2), record.getValue(TBook_TITLE()));
+        }
+
         // List of Map
         // -----------
         Result<B> books = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch();
@@ -159,10 +172,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         // Single Map
         // ----------
         B book = create().selectFrom(TBook()).where(TBook_ID().equal(1)).fetchOne();
-        Map<String, Object> map3 = create().selectFrom(TBook()).where(TBook_ID().equal(1)).fetchOneMap();
+        Map<String, Object> map4 = create().selectFrom(TBook()).where(TBook_ID().equal(1)).fetchOneMap();
 
         for (Field<?> field : books.getFields()) {
-            assertEquals(book.getValue(field), map3.get(field.getName()));
+            assertEquals(book.getValue(field), map4.get(field.getName()));
         }
 
         // Maps with two times the same field
@@ -236,6 +249,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             assertEquals(2, map4Values.get(i).size());
             assertEquals(BOOK_TITLES.get(i * 2 + 0), map4Values.get(i).get(0));
             assertEquals(BOOK_TITLES.get(i * 2 + 1), map4Values.get(i).get(1));
+        }
+
+        // Key list -> Record
+        // ----------------------
+        Map<List<?>, Result<B>> map5 = create().selectFrom(TBook()).orderBy(TBook_ID())
+            .fetchGroups(TBook_ID(), TBook_LANGUAGE_ID(), TBook_TITLE());
+        assertEquals(4, map5.size());
+
+        for (List<?> keyList : map5.keySet()) {
+            Result<B> result = map5.get(keyList);
+            assertEquals(1, result.size());
+            assertEquals(keyList.get(0), result.get(0).getValue(TBook_ID()));
+            assertEquals(keyList.get(1), result.get(0).getValue(TBook_LANGUAGE_ID()));
+            assertEquals(keyList.get(2), result.get(0).getValue(TBook_TITLE()));
         }
     }
 

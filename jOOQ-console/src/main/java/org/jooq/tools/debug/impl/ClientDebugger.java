@@ -180,17 +180,17 @@ class ClientDebugger implements Debugger {
         }
     }
 
-    private Boolean isEditionSupported;
-    private final Object IS_EDITION_SUPPORTED_LOCK = new Object();
+    private Boolean isExecutionSupported;
+    private final Object IS_EXECUTION_SUPPORTED_LOCK = new Object();
 
     @Override
     public boolean isExecutionSupported() {
-        synchronized (IS_EDITION_SUPPORTED_LOCK) {
-            if(isEditionSupported == null) {
-                isEditionSupported = comm.syncSend(new CMS_isExecutionSupported());
+        synchronized (IS_EXECUTION_SUPPORTED_LOCK) {
+            if(isExecutionSupported == null) {
+                isExecutionSupported = comm.syncSend(new CMS_isExecutionSupported());
             }
         }
-        return Boolean.TRUE.equals(isEditionSupported);
+        return Boolean.TRUE.equals(isExecutionSupported);
     }
 
     @Override

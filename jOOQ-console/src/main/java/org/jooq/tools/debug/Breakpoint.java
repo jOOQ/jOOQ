@@ -114,9 +114,10 @@ public class Breakpoint implements Serializable {
         return matcher;
     }
 
-    public boolean matches(QueryInfo queryInfo, boolean trackHitCount) {
+    public boolean matches(QueryInfo queryInfo) {
+
         // No need to match if hit count was already reached.
-        if (trackHitCount && hitCount != null && currentHitCount.get() <= 0) {
+        if (hitCount != null && currentHitCount.get() <= 0) {
             return false;
         }
 
@@ -128,18 +129,16 @@ public class Breakpoint implements Serializable {
             hasMatcher = true;
         }
 
-        if (trackHitCount) {
-            if (hitCount != null) {
-                int currentHitCount_ = currentHitCount.decrementAndGet();
-                if (currentHitCount_ > 0) {
-                    return false;
-                }
-                if (currentHitCount_ < 0) {
-                    currentHitCount.set(0);
-                    return false;
-                }
-                hasMatcher = true;
+        if (hitCount != null) {
+            int currentHitCount_ = currentHitCount.decrementAndGet();
+            if (currentHitCount_ > 0) {
+                return false;
             }
+            if (currentHitCount_ < 0) {
+                currentHitCount.set(0);
+                return false;
+            }
+            hasMatcher = true;
         }
 
         return hasMatcher;

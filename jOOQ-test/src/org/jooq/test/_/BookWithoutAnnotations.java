@@ -80,6 +80,6 @@ public class BookWithoutAnnotations {
 
     @Override
     public String toString() {
-        return "JPABook [id=" + id + ", title=" + title + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+        return "NonJPABook [id=" + id + ", title=" + title + ", firstName=" + firstName + ", lastName=" + lastName + "]";
     }
 }

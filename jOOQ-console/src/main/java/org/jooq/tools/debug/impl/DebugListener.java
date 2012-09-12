@@ -165,7 +165,7 @@ public class DebugListener extends DefaultExecuteListener {
                             }
                             queryInfo = new QueryInfo(queryType, sql, parameterDescription);
                         }
-                        if(breakpoint.matches(queryInfo, true)) {
+                        if(breakpoint.matches(queryInfo)) {
                             matchingSQL = sql_;
                             matchingParameterDescription = parameterDescription;
                             matchingDebugger = debugger;

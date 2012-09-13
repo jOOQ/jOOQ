@@ -34,6 +34,12 @@
       <!-- When set to true, this will add jOOQ's default logging ExecuteListeners -->
       <element name="executeLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
 
+      <!-- When set to ON, this will add jOOQ's default debugging ExecuteListeners -->
+      <element name="executeDebugging" type="jooq-runtime:ExecuteDebugging" minOccurs="0" maxOccurs="1" default="SERVER"/>
+
+      <!-- When set to ON, this will add jOOQ's default debugging ExecuteListeners -->
+      <element name="executeDebuggingPort" type="int" minOccurs="0" maxOccurs="1" default="5555"/>
+
       <!-- The event listeners to be notified upon execution events -->
       <element name="executeListeners" type="jooq-runtime:ExecuteListeners" minOccurs="0" maxOccurs="1"/>
 
@@ -103,6 +109,20 @@
       <!-- Execute statements with bind values, using JDBC's
            PreparedStatements -->
       <enumeration value="PREPARED_STATEMENT"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="ExecuteDebugging">
+    <restriction base="string">
+
+      <!-- Execute debugging is not active -->
+      <enumeration value="OFF"/>
+
+      <!-- Execute debugging is active remotely -->
+      <enumeration value="SERVER"/>
+
+      <!-- Execute debugging is active locally -->
+      <enumeration value="LOCAL"/>
     </restriction>
   </simpleType>
 

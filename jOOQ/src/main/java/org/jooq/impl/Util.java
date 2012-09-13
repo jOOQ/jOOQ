@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Integer.toOctalString;
+import static org.jooq.conf.ExecuteDebugging.OFF;
 import static org.jooq.impl.Factory.escape;
 import static org.jooq.impl.Factory.getDataType;
 import static org.jooq.impl.Factory.nullSafe;
@@ -1029,6 +1030,10 @@ final class Util {
         if (!FALSE.equals(configuration.getSettings().isExecuteLogging())) {
             result.add(new StopWatchListener());
             result.add(new LoggerListener());
+        }
+
+        if (OFF != configuration.getSettings().getExecuteDebugging()) {
+            // result.add(new DebugListener());
         }
 
         for (String listener : configuration.getSettings().getExecuteListeners()) {

@@ -42,6 +42,7 @@ import static org.jooq.impl.Factory.getDataType;
 import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.tools.StringUtils.leftPad;
+import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -748,7 +749,7 @@ final class Util {
 
             if (annotation != null) {
                 if (name.equals(annotation.name())) {
-                    result.add(member);
+                    result.add(accessible(member));
                 }
             }
         }
@@ -764,10 +765,10 @@ final class Util {
 
         for (java.lang.reflect.Field member : getInstanceMembers(type)) {
             if (name.equals(member.getName())) {
-                result.add(member);
+                result.add(accessible(member));
             }
             else if (StringUtils.toCamelCaseLC(name).equals(member.getName())) {
-                result.add(member);
+                result.add(accessible(member));
             }
         }
 
@@ -787,7 +788,7 @@ final class Util {
 
                 // Annotated setter
                 if (method.getParameterTypes().length == 1) {
-                    result.add(method);
+                    result.add(accessible(method));
                 }
 
                 // Annotated getter with matching setter
@@ -800,7 +801,7 @@ final class Util {
 
                             // Setter annotation is more relevant
                             if (setter.getAnnotation(Column.class) == null) {
-                                result.add(setter);
+                                result.add(accessible(setter));
                             }
                         }
                         catch (NoSuchMethodException ignore) {}
@@ -823,7 +824,7 @@ final class Util {
 
                 // Annotated getter
                 if (method.getParameterTypes().length == 0) {
-                    return method;
+                    return accessible(method);
                 }
 
                 // Annotated setter with matching getter
@@ -836,7 +837,7 @@ final class Util {
 
                             // Getter annotation is more relevant
                             if (getter.getAnnotation(Column.class) == null) {
-                                return getter;
+                                return accessible(getter);
                             }
                         }
                         catch (NoSuchMethodException ignore) {}
@@ -846,7 +847,7 @@ final class Util {
 
                             // Getter annotation is more relevant
                             if (getter.getAnnotation(Column.class) == null) {
-                                return getter;
+                                return accessible(getter);
                             }
                         }
                         catch (NoSuchMethodException ignore) {}
@@ -867,16 +868,16 @@ final class Util {
         for (Method method : getInstanceMethods(type)) {
             if (method.getParameterTypes().length == 1) {
                 if (name.equals(method.getName())) {
-                    result.add(method);
+                    result.add(accessible(method));
                 }
                 else if (StringUtils.toCamelCaseLC(name).equals(method.getName())) {
-                    result.add(method);
+                    result.add(accessible(method));
                 }
                 else if (("set" + name).equals(method.getName())) {
-                    result.add(method);
+                    result.add(accessible(method));
                 }
                 else if (("set" + StringUtils.toCamelCase(name)).equals(method.getName())) {
-                    result.add(method);
+                    result.add(accessible(method));
                 }
             }
         }
@@ -892,22 +893,22 @@ final class Util {
         for (Method method : getInstanceMethods(type)) {
             if (method.getParameterTypes().length == 0) {
                 if (name.equals(method.getName())) {
-                    return method;
+                    return accessible(method);
                 }
                 else if (StringUtils.toCamelCaseLC(name).equals(method.getName())) {
-                    return method;
+                    return accessible(method);
                 }
                 else if (("get" + name).equals(method.getName())) {
-                    return method;
+                    return accessible(method);
                 }
                 else if (("get" + StringUtils.toCamelCase(name)).equals(method.getName())) {
-                    return method;
+                    return accessible(method);
                 }
                 else if (("is" + name).equals(method.getName())) {
-                    return method;
+                    return accessible(method);
                 }
                 else if (("is" + StringUtils.toCamelCase(name)).equals(method.getName())) {
-                    return method;
+                    return accessible(method);
                 }
             }
         }

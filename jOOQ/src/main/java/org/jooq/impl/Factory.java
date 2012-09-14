@@ -6713,8 +6713,8 @@ public class Factory implements FactoryOperations {
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
 
-        if (log.isDebugEnabled()) {
-            log.debug("Deserialising", this);
+        if (log.isTraceEnabled()) {
+            log.trace("Deserialising", this);
         }
 
         Configuration registered = org.jooq.ConfigurationRegistry.provideFor(this);
@@ -6722,8 +6722,8 @@ public class Factory implements FactoryOperations {
             connection = registered.getConnection();
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("Deserialised", this);
+        if (log.isTraceEnabled()) {
+            log.trace("Deserialised", this);
         }
     }
 }

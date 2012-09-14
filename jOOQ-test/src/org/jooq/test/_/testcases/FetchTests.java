@@ -820,6 +820,34 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testFetchIntoTableRecords() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        // [#1819] Check if only applicable setters are used
+        // JOIN two tables into a generated UpdatableRecord
+        List<B> result1 =
+        create().select(
+                    TBook_ID(),
+                    TBook_TITLE(),
+                    TBook_AUTHOR_ID(),
+                    TAuthor_FIRST_NAME(),
+                    TAuthor_LAST_NAME())
+                .from(TBook())
+                .join(TAuthor())
+                .on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
+                .orderBy(TBook_ID())
+                .fetch()
+                .into(TBook().getRecordType());
+
+        assertEquals(4, result1.size());
+        for (int i = 0; i < 4; i++) {
+            assertEquals(BOOK_IDS.get(i), result1.get(i).getValue(TBook_ID()));
+            assertEquals(BOOK_TITLES.get(i), result1.get(i).getValue(TBook_TITLE()));
+            assertEquals(BOOK_AUTHOR_IDS.get(i), result1.get(i).getValue(TBook_AUTHOR_ID()));
+        }
+    }
+
+    @Test
     public void testFetchIntoTable() throws Exception {
         jOOQAbstractTest.reset = false;
 

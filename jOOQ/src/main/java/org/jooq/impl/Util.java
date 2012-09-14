@@ -866,7 +866,11 @@ final class Util {
         List<Method> result = new ArrayList<Method>();
 
         for (Method method : getInstanceMethods(type)) {
-            if (method.getParameterTypes().length == 1) {
+            Class<?>[] parameterTypes = method.getParameterTypes();
+
+            // [#1510] [#1819] Avoid potentially overloaded setters that were
+            // generated for foreign key records
+            if (parameterTypes.length == 1 && !Record.class.isAssignableFrom(parameterTypes[0])) {
                 if (name.equals(method.getName())) {
                     result.add(accessible(method));
                 }

@@ -755,6 +755,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testRecordFromWithIdentity() throws Exception {
+        if (TIdentityPK() == null) {
+            log.info("SKIPPING", "Reflection with IDENTITY tests");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        // [#1818] SQL Server doesn't like inserting IDENTITY values...
+        IPK record = create().newRecord(TIdentityPK(), new Identity());
+        assertEquals(10, (int) record.getValue(TIdentityPK_ID()));
+        assertEquals(11, (int) record.getValue(TIdentityPK_VAL()));
+        assertEquals(1, record.store());
+    }
+
+    static class Identity {
+        public int id = 10;
+        public int val = 11;
+    }
+
+    @Test
     public void testRecordFromUpdatePK() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere

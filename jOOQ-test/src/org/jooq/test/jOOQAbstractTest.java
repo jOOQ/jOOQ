@@ -1083,6 +1083,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRecordFromWithIdentity() throws Exception {
+        new FetchTests(this).testRecordFromWithIdentity();
+    }
+
+    @Test
     public void testRecordFromUpdatePK() throws Exception {
         new FetchTests(this).testRecordFromUpdatePK();
     }

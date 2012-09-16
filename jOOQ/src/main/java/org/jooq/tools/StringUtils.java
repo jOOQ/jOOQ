@@ -1128,6 +1128,26 @@ public final class StringUtils {
         return object1.equals(object2);
     }
 
+    /**
+     * <p>Returns a default value if the object passed is {@code null}.</p>
+     *
+     * <pre>
+     * ObjectUtils.defaultIfNull(null, null)      = null
+     * ObjectUtils.defaultIfNull(null, "")        = ""
+     * ObjectUtils.defaultIfNull(null, "zz")      = "zz"
+     * ObjectUtils.defaultIfNull("abc", *)        = "abc"
+     * ObjectUtils.defaultIfNull(Boolean.TRUE, *) = Boolean.TRUE
+     * </pre>
+     *
+     * @param <T> the type of the object
+     * @param object  the {@code Object} to test, may be {@code null}
+     * @param defaultValue  the default value to return, may be {@code null}
+     * @return {@code object} if it is not {@code null}, defaultValue otherwise
+     */
+    public static <T> T defaultIfNull(T object, T defaultValue) {
+        return object != null ? object : defaultValue;
+    }
+
     // -------------------------------------------------------------------------
     // XXX: The following methods are not part of Apache's commons-lang library
     // -------------------------------------------------------------------------

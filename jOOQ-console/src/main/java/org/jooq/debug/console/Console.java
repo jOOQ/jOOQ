@@ -73,9 +73,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.jooq.debug.console.misc.JSedRegExBuilder;
-import org.jooq.tools.debug.DatabaseDescriptor;
-import org.jooq.tools.debug.Debugger;
-import org.jooq.tools.debug.impl.DebuggerFactory;
+import org.jooq.tools.debug.old.DatabaseDescriptor;
+import org.jooq.tools.debug.old.Debugger;
+import org.jooq.tools.debug.old.impl.DebuggerFactory;
 
 /**
  * @author Christopher Deckers

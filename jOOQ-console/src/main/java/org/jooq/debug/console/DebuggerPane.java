@@ -83,10 +83,10 @@ import org.jooq.debug.console.misc.CheckBoxNodeEditor;
 import org.jooq.debug.console.misc.CheckBoxNodeRenderer;
 import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.TreeDataTip;
-import org.jooq.tools.debug.Breakpoint;
-import org.jooq.tools.debug.BreakpointHit;
-import org.jooq.tools.debug.BreakpointHitHandler;
-import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.old.Breakpoint;
+import org.jooq.tools.debug.old.BreakpointHit;
+import org.jooq.tools.debug.old.BreakpointHitHandler;
+import org.jooq.tools.debug.old.Debugger;
 
 /**
  * @author Christopher Deckers

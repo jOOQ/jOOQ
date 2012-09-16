@@ -101,13 +101,13 @@ import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.JTableX;
 import org.jooq.debug.console.misc.RichTextTransferable;
 import org.jooq.debug.console.misc.XTableColumnModel;
-import org.jooq.tools.debug.Debugger;
-import org.jooq.tools.debug.LoggingListener;
-import org.jooq.tools.debug.QueryLog;
-import org.jooq.tools.debug.QueryMatcher;
-import org.jooq.tools.debug.QueryType;
-import org.jooq.tools.debug.ResultLog;
-import org.jooq.tools.debug.impl.Utils;
+import org.jooq.tools.debug.old.Debugger;
+import org.jooq.tools.debug.old.LoggingListener;
+import org.jooq.tools.debug.old.QueryLog;
+import org.jooq.tools.debug.old.QueryMatcher;
+import org.jooq.tools.debug.old.QueryType;
+import org.jooq.tools.debug.old.ResultLog;
+import org.jooq.tools.debug.old.impl.Utils;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
 

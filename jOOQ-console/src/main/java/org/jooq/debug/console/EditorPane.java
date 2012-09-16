@@ -104,13 +104,13 @@ import javax.swing.text.BadLocationException;
 
 import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.JTableX;
-import org.jooq.tools.debug.QueryExecution;
-import org.jooq.tools.debug.QueryExecutionMessageResult;
-import org.jooq.tools.debug.QueryExecutionResult;
-import org.jooq.tools.debug.QueryExecutor;
-import org.jooq.tools.debug.QueryExecutorCreator;
-import org.jooq.tools.debug.impl.StatementExecutionResultSetResult;
-import org.jooq.tools.debug.impl.Utils;
+import org.jooq.tools.debug.old.QueryExecution;
+import org.jooq.tools.debug.old.QueryExecutionMessageResult;
+import org.jooq.tools.debug.old.QueryExecutionResult;
+import org.jooq.tools.debug.old.QueryExecutor;
+import org.jooq.tools.debug.old.QueryExecutorCreator;
+import org.jooq.tools.debug.old.impl.StatementExecutionResultSetResult;
+import org.jooq.tools.debug.old.impl.Utils;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
 

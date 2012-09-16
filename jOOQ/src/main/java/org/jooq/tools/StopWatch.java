@@ -95,7 +95,7 @@ public final class StopWatch {
         }
     }
 
-    private static String format(long nanoTime) {
+    public static String format(long nanoTime) {
 
         // If more than one minute, format in HH:mm:ss
         if (nanoTime > (60L * 1000L * 1000000L)) {
@@ -113,7 +113,7 @@ public final class StopWatch {
         }
     }
 
-    private static String formatHours(long seconds) {
+    public static String formatHours(long seconds) {
         long s = seconds % 60L;
         long m = (seconds / 60L) % 60L;
         long h = (seconds / 3600L);

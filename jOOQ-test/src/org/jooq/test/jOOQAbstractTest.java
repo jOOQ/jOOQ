@@ -74,6 +74,7 @@ import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.conf.ExecuteDebugging;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -92,6 +93,7 @@ import org.jooq.test._.testcases.BenchmarkTests;
 import org.jooq.test._.testcases.CRUDTests;
 import org.jooq.test._.testcases.DaoTests;
 import org.jooq.test._.testcases.DataTypeTests;
+import org.jooq.test._.testcases.DebuggerTests;
 import org.jooq.test._.testcases.EnumTests;
 import org.jooq.test._.testcases.ExecuteListenerTests;
 import org.jooq.test._.testcases.ExoticTests;
@@ -116,10 +118,9 @@ import org.jooq.test._.testcases.ThreadSafetyTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
-import org.jooq.tools.debug.Debugger;
-import org.jooq.tools.debug.impl.DebugListener;
-import org.jooq.tools.debug.impl.DebuggerFactory;
-import org.jooq.tools.debug.impl.Server;
+import org.jooq.tools.debug.old.Debugger;
+import org.jooq.tools.debug.old.impl.DebuggerFactory;
+import org.jooq.tools.debug.old.impl.Server;
 import org.jooq.tools.reflect.ReflectException;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
@@ -746,12 +747,13 @@ public abstract class jOOQAbstractTest<
         Boolean renderSchema = Boolean.valueOf(System.getProperty("org.jooq.settings.renderSchema", "true"));
 
         Settings settings = SettingsTools.defaultSettings()
+            .withExecuteDebugging(ExecuteDebugging.SERVER)
+            .withExecuteDebuggingPort(5555)
             .withRenderSchema(renderSchema)
             .withRenderMapping(new RenderMapping()
                 .withDefaultSchema(defaultSchema))
             .withExecuteListeners(
-                TestStatisticsListener.class.getName(),
-                DebugListener.class.getName());
+                TestStatisticsListener.class.getName());
 
         return create(settings);
     }
@@ -1729,6 +1731,21 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testRenderKeywordStyle() throws Exception {
         new RenderAndBindTests(this).testRenderKeywordStyle();
+    }
+
+    @Test
+    public void testDebuggerLogger() throws Exception {
+        new DebuggerTests(this).testDebuggerLogger();
+    }
+
+    @Test
+    public void testDebuggerProcessor() throws Exception {
+        new DebuggerTests(this).testDebuggerProcessor();
+    }
+
+    @Test
+    public void testDebuggerBreakpoint() throws Exception {
+        new DebuggerTests(this).testDebuggerBreakpoint();
     }
 
     @Test

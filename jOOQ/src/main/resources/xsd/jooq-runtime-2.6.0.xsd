@@ -35,7 +35,7 @@
       <element name="executeLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
 
       <!-- When set to ON, this will add jOOQ's default debugging ExecuteListeners -->
-      <element name="executeDebugging" type="jooq-runtime:ExecuteDebugging" minOccurs="0" maxOccurs="1" default="SERVER"/>
+      <element name="executeDebugging" type="jooq-runtime:ExecuteDebugging" minOccurs="0" maxOccurs="1" default="OFF"/>
 
       <!-- When set to ON, this will add jOOQ's default debugging ExecuteListeners -->
       <element name="executeDebuggingPort" type="int" minOccurs="0" maxOccurs="1" default="5555"/>

@@ -36,10 +36,10 @@
  */
 package org.jooq.debug.console;
 
-import static org.jooq.tools.debug.ExecutionType.FAIL;
-import static org.jooq.tools.debug.ExecutionType.RUN;
-import static org.jooq.tools.debug.ExecutionType.SKIP;
-import static org.jooq.tools.debug.ExecutionType.STEP;
+import static org.jooq.tools.debug.old.ExecutionType.FAIL;
+import static org.jooq.tools.debug.old.ExecutionType.RUN;
+import static org.jooq.tools.debug.old.ExecutionType.SKIP;
+import static org.jooq.tools.debug.old.ExecutionType.STEP;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -62,11 +62,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import org.jooq.debug.console.DebuggerPane.BreakpointHitNode;
-import org.jooq.tools.debug.BreakpointHit;
-import org.jooq.tools.debug.Debugger;
-import org.jooq.tools.debug.ExecutionType;
-import org.jooq.tools.debug.QueryExecutor;
-import org.jooq.tools.debug.QueryExecutorCreator;
+import org.jooq.tools.debug.old.BreakpointHit;
+import org.jooq.tools.debug.old.Debugger;
+import org.jooq.tools.debug.old.ExecutionType;
+import org.jooq.tools.debug.old.QueryExecutor;
+import org.jooq.tools.debug.old.QueryExecutorCreator;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
 

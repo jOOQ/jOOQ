@@ -45,8 +45,8 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.jooq.tools.debug.TextMatcher;
-import org.jooq.tools.debug.TextMatcher.TextMatchingType;
+import org.jooq.tools.debug.old.TextMatcher;
+import org.jooq.tools.debug.old.TextMatcher.TextMatchingType;
 
 
 /**

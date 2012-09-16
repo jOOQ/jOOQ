@@ -58,8 +58,9 @@ class ActionImpl extends AbstractDebuggerObject implements Action {
     }
 
     @Override
-    public void query(Query q) {
+    public Action query(Query q) {
         this.query = q;
         apply();
+        return this;
     }
 }

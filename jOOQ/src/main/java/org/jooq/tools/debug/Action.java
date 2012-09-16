@@ -54,6 +54,8 @@ public interface Action extends DebuggerObject {
 
     /**
      * Register a query to be executed by this action
+     *
+     * @return The action itself
      */
-    void query(Query query);
+    Action query(Query query);
 }

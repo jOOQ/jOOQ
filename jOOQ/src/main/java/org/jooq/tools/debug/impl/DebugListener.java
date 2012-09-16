@@ -38,6 +38,11 @@ package org.jooq.tools.debug.impl;
 
 import static org.jooq.conf.ExecuteDebugging.SERVER;
 import static org.jooq.tools.StringUtils.defaultIfNull;
+import static org.jooq.tools.debug.QueryOrigin.APPLICATION;
+import static org.jooq.tools.debug.QueryOrigin.BREAKPOINT_AFTER;
+import static org.jooq.tools.debug.QueryOrigin.BREAKPOINT_BEFORE;
+import static org.jooq.tools.debug.QueryOrigin.PROCESSOR_AFTER;
+import static org.jooq.tools.debug.QueryOrigin.PROCESSOR_BEFORE;
 import static org.jooq.tools.debug.Step.STEP;
 
 import java.util.ArrayList;
@@ -62,6 +67,7 @@ import org.jooq.tools.debug.Matcher;
 import org.jooq.tools.debug.Processor;
 import org.jooq.tools.debug.QueryExecutor;
 import org.jooq.tools.debug.QueryLog;
+import org.jooq.tools.debug.QueryOrigin;
 import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.Step;
 import org.jooq.tools.debug.impl.LocalDebugger.DebuggerRegistry;
@@ -74,25 +80,25 @@ import org.jooq.tools.debug.impl.LocalDebugger.DebuggerRegistry;
  */
 public class DebugListener extends DefaultExecuteListener {
 
-    private static final ThreadLocal<Object> RECURSION_LOCK       = new ThreadLocal<Object>();
-    static final ThreadLocal<QueryExecutor>  BREAKPOINT_EXECUTORS = new ThreadLocal<QueryExecutor>();
+    private static final ThreadLocal<QueryOrigin> RECURSION_LOCK       = new ThreadLocal<QueryOrigin>();
+    static final ThreadLocal<QueryExecutor>       BREAKPOINT_EXECUTORS = new ThreadLocal<QueryExecutor>();
 
-    private boolean                          hasDebuggers;
+    private boolean                               hasDebuggers;
 
-    private long                             startPrepareTime;
-    private long                             endPrepareTime;
+    private long                                  startPrepareTime;
+    private long                                  endPrepareTime;
 
-    private long                             startBindTime;
-    private long                             endBindTime;
+    private long                                  startBindTime;
+    private long                                  endBindTime;
 
-    private long                             startExecuteTime;
-    private long                             endExecuteTime;
+    private long                                  startExecuteTime;
+    private long                                  endExecuteTime;
 
-    private long                             startFetchTime;
-    private long                             endFetchTime;
+    private long                                  startFetchTime;
+    private long                                  endFetchTime;
 
-    private List<Matcher>                    matchers;
-    private QueryLog                         log;
+    private List<Matcher>                         matchers;
+    private QueryLog                              log;
 
     @Override
     public void start(ExecuteContext ctx) {
@@ -111,8 +117,8 @@ public class DebugListener extends DefaultExecuteListener {
         startExecuteTime = 0;
         endExecuteTime = 0;
 
-        // Avoid recursion for processors and breakpoints.
-        recursionSafe(new Runnable() {
+        // Avoid recursion for processors.
+        recursionSafe(PROCESSOR_BEFORE, new Runnable() {
             @Override
             public void run() {
                 Factory create = create(ctx);
@@ -126,11 +132,15 @@ public class DebugListener extends DefaultExecuteListener {
                         }
                     }
                 }
+            }
+        });
 
-                // Process breakpoints
+        // Avoid recursion for breakpoints.
+        recursionSafe(BREAKPOINT_BEFORE, new Runnable() {
+            @Override
+            public void run() {
                 breakpoints(true, ctx);
             }
-
         });
     }
 
@@ -182,8 +192,8 @@ public class DebugListener extends DefaultExecuteListener {
             }
         }
 
-        // Avoid recursion for processors and breakpoints.
-        recursionSafe(new Runnable() {
+        // Avoid recursion for processors.
+        recursionSafe(PROCESSOR_AFTER, new Runnable() {
             @Override
             public void run() {
                 Factory create = create(ctx);
@@ -196,8 +206,14 @@ public class DebugListener extends DefaultExecuteListener {
                         }
                     }
                 }
+            }
+        });
 
-                // Process breakpoints
+
+        // Avoid recursion for breakpoints.
+        recursionSafe(BREAKPOINT_AFTER, new Runnable() {
+            @Override
+            public void run() {
                 breakpoints(false, ctx);
             }
         });
@@ -298,9 +314,9 @@ public class DebugListener extends DefaultExecuteListener {
         }
     }
 
-    private void recursionSafe(Runnable runnable) {
+    private void recursionSafe(QueryOrigin origin, Runnable runnable) {
         if (RECURSION_LOCK.get() == null) {
-            RECURSION_LOCK.set(new Object());
+            RECURSION_LOCK.set(origin);
 
             try {
                 runnable.run();
@@ -328,9 +344,12 @@ public class DebugListener extends DefaultExecuteListener {
     }
 
     private QueryLog getLog(ExecuteContext ctx) {
+        QueryOrigin origin = defaultIfNull(RECURSION_LOCK.get(), APPLICATION);
+
         if (log == null) {
             log = new QueryLog(
                 ctx.query(),
+                origin,
                 endPrepareTime - startPrepareTime,
                 endBindTime - startBindTime,
                 endExecuteTime - startExecuteTime

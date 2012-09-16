@@ -61,15 +61,17 @@ public final class QueryLog implements Serializable {
     private final StackTraceElement[] stackTrace;
 
     private final Query               query;
+    private final QueryOrigin         origin;
     private final long                prepareTime;
     private final long                bindTime;
     private final long                executeTime;
 
-    public QueryLog(Query query, long prepareTime, long bindTime, long executeTime) {
+    public QueryLog(Query query, QueryOrigin origin, long prepareTime, long bindTime, long executeTime) {
         this.id = NEXT_ID.getAndIncrement();
         this.stackTrace = Thread.currentThread().getStackTrace();
 
         this.query = query;
+        this.origin = origin;
         this.prepareTime = prepareTime;
         this.bindTime = bindTime;
         this.executeTime = executeTime;
@@ -77,6 +79,10 @@ public final class QueryLog implements Serializable {
 
     public final Query getQuery() {
         return query;
+    }
+
+    public final QueryOrigin getOrigin() {
+        return origin;
     }
 
     public final int getId() {
@@ -111,7 +117,9 @@ public final class QueryLog implements Serializable {
         sb.append(StopWatch.format(executeTime));
         sb.append(", query=[");
         sb.append(query);
-        sb.append("]]");
+        sb.append(", origin=");
+        sb.append(origin);
+        sb.append("]");
 
         return sb.toString();
     }

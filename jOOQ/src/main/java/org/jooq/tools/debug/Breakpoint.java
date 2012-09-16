@@ -55,6 +55,8 @@ public interface Breakpoint extends DebuggerObject {
 
     /**
      * Register a breakpoint listener
+     *
+     * @return The breakpoint itself
      */
-    void listener(BreakpointListener listener);
+    Breakpoint listener(BreakpointListener listener);
 }

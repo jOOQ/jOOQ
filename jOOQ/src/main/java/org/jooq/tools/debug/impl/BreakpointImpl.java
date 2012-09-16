@@ -53,9 +53,10 @@ class BreakpointImpl extends AbstractDebuggerObject implements Breakpoint {
     private transient BreakpointListener listener;
 
     @Override
-    public void listener(BreakpointListener l) {
+    public Breakpoint listener(BreakpointListener l) {
         this.listener = l;
         apply();
+        return this;
     }
 
     @Override

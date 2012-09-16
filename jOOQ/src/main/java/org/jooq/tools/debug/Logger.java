@@ -51,8 +51,10 @@ public interface Logger extends DebuggerObject {
 
     /**
      * Set whether this logger should log queries
+     *
+     * @return The logger itself
      */
-    void logQuery(boolean logQuery);
+    Logger logQuery(boolean logQuery);
 
     /**
      * Whether this logger should log results
@@ -61,8 +63,10 @@ public interface Logger extends DebuggerObject {
 
     /**
      * Set whether this logger should log results
+     *
+     * @return The logger itself
      */
-    void logResult(boolean logResult);
+    Logger logResult(boolean logResult);
 
     /**
      * Get the previously registered logger listener
@@ -71,7 +75,9 @@ public interface Logger extends DebuggerObject {
 
     /**
      * Register a logger listener
+     *
+     * @return The logger itself
      */
-    void listener(LoggerListener listener);
+    Logger listener(LoggerListener listener);
 
 }

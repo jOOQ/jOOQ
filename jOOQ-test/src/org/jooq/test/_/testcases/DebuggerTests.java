@@ -148,6 +148,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 Matcher d1m1 = d1.newMatcher();
                 Matcher d2m1 = d2.newMatcher();
 
+                d1m1.newLogger().listener(new LListener(null));
+
                 Processor d1m1p1 = d1m1.newProcessor();
                 Processor d2m1p1 = d2m1.newProcessor();
 

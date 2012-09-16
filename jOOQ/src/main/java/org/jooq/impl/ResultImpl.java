@@ -1393,8 +1393,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Map<List<?>, R> intoMap(Field<?>[] keys) {
-        if (keys == null || keys.length == 0) {
-            throw new IllegalArgumentException("Keys must not be null or empty.");
+        if (keys == null) {
+            keys = new Field[0];
         }
 
         Map<List<?>, R> map = new LinkedHashMap<List<?>, R>();
@@ -1454,8 +1454,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Map<List<?>, Result<R>> intoGroups(Field<?>[] keys) {
-        if (keys == null || keys.length == 0) {
-            throw new IllegalArgumentException("Keys must not be null or empty.");
+        if (keys == null) {
+            keys = new Field[0];
         }
 
         Map<List<?>, Result<R>> map = new LinkedHashMap<List<?>, Result<R>>();

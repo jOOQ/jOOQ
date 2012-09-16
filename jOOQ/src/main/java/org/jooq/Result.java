@@ -1844,7 +1844,8 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * are non-unique.
      *
      * @param keys The keys. Client code must assure that keys are unique in the
-     *            result set.
+     *            result set. If this is <code>null</code> or an empty array,
+     *            the resulting map will contain at most one entry.
      * @return A Map containing the results.
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
@@ -1886,7 +1887,8 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * Unlike {@link #intoMap(Field[])}, this method allows for non-unique keys
      * in the result set.
      *
-     * @param keys The keys.
+     * @param keys The keys. If this is <code>null</code> or an empty array, the
+     *            resulting map will contain at most one entry.
      * @return A Map containing grouped results
      */
     Map<List<?>, Result<R>> intoGroups(Field<?>[] keys);

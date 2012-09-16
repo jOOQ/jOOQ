@@ -62,14 +62,16 @@ public final class ResultLog implements Serializable {
     private final int            queryLogId;
 
     private final long           fetchTime;
-    private final int            size;
+    private final int            rows;
+    private final int            columns;
 
-    public ResultLog(int queryLogId, long fetchTime, final int size) {
+    public ResultLog(int queryLogId, long fetchTime, int rows, int columns) {
         this.queryLogId = queryLogId;
         this.id = NEXT_ID.getAndIncrement();
 
         this.fetchTime = fetchTime;
-        this.size = size;
+        this.rows = rows;
+        this.columns = columns;
     }
 
     public final int getId() {
@@ -84,8 +86,12 @@ public final class ResultLog implements Serializable {
         return fetchTime;
     }
 
-    public final int size() {
-        return size;
+    public final int rows() {
+        return rows;
+    }
+
+    public final int columns() {
+        return columns;
     }
 
     @Override
@@ -94,8 +100,10 @@ public final class ResultLog implements Serializable {
 
         sb.append("ResultLog[fetch=");
         sb.append(StopWatch.format(fetchTime));
-        sb.append(", size=");
-        sb.append(size);
+        sb.append(", rows=");
+        sb.append(rows);
+        sb.append(", columns=");
+        sb.append(columns);
         sb.append("]");
 
         return sb.toString();

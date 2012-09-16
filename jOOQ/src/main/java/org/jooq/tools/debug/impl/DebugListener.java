@@ -245,7 +245,8 @@ public class DebugListener extends DefaultExecuteListener {
                                 resultLog = new ResultLog(
                                     getLog(ctx).getId(),
                                     endFetchTime - startFetchTime,
-                                    result.size()
+                                    result.size(),
+                                    result.getFields().size()
                                 );
                             }
 

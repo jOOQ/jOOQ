@@ -520,6 +520,24 @@ public interface ResultQuery<R extends Record> extends Query {
     Map<List<?>, R> fetchMap(Field<?>[] keys) throws DataAccessException;
 
     /**
+     * Execute the query and return a {@link Map} with results grouped by the
+     * given key and mapped into the given entity type.
+     * <p>
+     * An exception is thrown, if the key turn out to be non-unique in the
+     * result set. Use {@link #fetchGroups(Field, Class)} instead, if your key
+     * is non-unique.
+     *
+     * @param key The key. Client code must assure that key is unique in the
+     *            result set.
+     * @return A Map containing the result.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key is non-unique in the result
+     *             set.
+     * @see Result#intoMap(Field, Class)
+     */
+    <K, E> Map<K, E> fetchMap(Field<K> key, Class<? extends E> type) throws DataAccessException;
+
+    /**
      * Execute the query and return a {@link Map} with one of the result's
      * columns as key and a list of corresponding records as value.
      * <p>

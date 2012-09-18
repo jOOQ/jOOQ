@@ -1414,6 +1414,19 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
+        Map<K, E> map = new LinkedHashMap<K, E>();
+
+        for (R record : this) {
+            if (map.put(record.getValue(key), record.into(type)) != null) {
+                throw new InvalidResultException("Key " + key + " is not unique in Result for " + this);
+            }
+        }
+
+        return map;
+    }
+
+    @Override
     public final <K> Map<K, Result<R>> intoGroups(Field<K> key) {
         Map<K, Result<R>> map = new LinkedHashMap<K, Result<R>>();
 

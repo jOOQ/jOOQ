@@ -1599,7 +1599,45 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
-    public void testFetchIntoGroups() throws Exception {
+    public void testFetchMapPOJO() throws Exception {
+        if (TBookPojo() == null) {
+            log.info("SKIPPING", "Generated POJO tests");
+            return;
+        }
+
+        // Group by BOOK.ID
+        Map<Integer, Object> map1 =
+        create().selectFrom(TBook())
+                .orderBy(TBook_ID())
+                .fetchMap(TBook_ID(), TBookPojo());
+
+        assertEquals(4, map1.size());
+        assertEquals(BOOK_IDS, new ArrayList<Integer>(map1.keySet()));
+
+        List<Entry<Integer, Object>> entries =
+            new ArrayList<Map.Entry<Integer,Object>>(map1.entrySet());
+
+        for (int i = 0; i < map1.size(); i++) {
+            Entry<Integer, Object> entry = entries.get(i);
+
+            assertEquals(BOOK_IDS.get(i), on(entry.getValue()).call("getId").get());
+            assertEquals(BOOK_AUTHOR_IDS.get(i), on(entry.getValue()).call("getAuthorId").get());
+            assertEquals(BOOK_TITLES.get(i), on(entry.getValue()).call("getTitle").get());
+        }
+
+        try {
+            // Group by BOOK.AUTHOR_ID
+            create().selectFrom(TBook()).orderBy(TBook_ID()).fetchMap(TBook_AUTHOR_ID(), TBookPojo());
+
+            fail("Fetching map with the non-unique key - InvalidResultException not thrown.");
+        }
+        catch (Throwable t) {
+            assertEquals(InvalidResultException.class, t.getClass());
+        }
+    }
+
+    @Test
+    public void testFetchGroupsPOJO() throws Exception {
         if (TBookPojo() == null) {
             log.info("SKIPPING", "Generated POJO tests");
             return;
@@ -1656,5 +1694,4 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         assertFalse(it.hasNext());
     }
-
 }

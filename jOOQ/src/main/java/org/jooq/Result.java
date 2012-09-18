@@ -1853,6 +1853,22 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     Map<List<?>, R> intoMap(Field<?>[] keys);
 
     /**
+     * Return a {@link Map} with results grouped by the given key and mapped
+     * into the given entity type.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the key is non-unique in
+     * the result set. Use {@link #intoGroups(Field, Class)} instead, if your
+     * key is non-unique.
+     *
+     * @param key The key. Client code must assure that key is unique in the
+     *            result set.
+     * @return A Map containing the result.
+     * @throws InvalidResultException if the key is non-unique in the result
+     *             set.
+     */
+    <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) throws MappingException;
+
+    /**
      * Return a {@link Map} with one of the result's columns as key and a list
      * of corresponding records as value.
      * <p>

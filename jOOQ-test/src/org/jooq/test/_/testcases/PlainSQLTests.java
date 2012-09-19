@@ -121,6 +121,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testPlainSQLExecuteWithResults() throws Exception {
+        // [#1829] The Factory.execute() method must be able to handle queries
+        // that return results
+
+        assertEquals(0, create().execute(create().render(create().selectOne())));
+        assertEquals(0, create().query(create().render(create().selectOne())).execute());
+    }
+
+    @Test
     public void testPlainSQL() throws Exception {
         jOOQAbstractTest.reset = false;
 

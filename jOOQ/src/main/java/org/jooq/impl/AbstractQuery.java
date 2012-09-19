@@ -188,11 +188,13 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
      */
     protected int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         int result = 0;
-
         listener.executeStart(ctx);
-        result = ctx.statement().executeUpdate();
-        listener.executeEnd(ctx);
 
+        if (!ctx.statement().execute()) {
+            result = ctx.statement().getUpdateCount();
+        }
+
+        listener.executeEnd(ctx);
         return result;
     }
 

@@ -180,6 +180,33 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testDebuggerProcessorInstead() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        run(new DebugTestRunnable() {
+
+            @Override
+            public void run(Debugger d1, Debugger d2) throws Exception {
+                Matcher matcher = d1.newMatcher();
+                matcher.matchSQL("^(?i:delete.*book.*)$");
+                matcher.newLogger().listener(new LListener(null));
+
+                Processor processor = matcher.newProcessor();
+                Action action = processor.newInstead();
+
+                action.query(create().selectOne());
+
+                assertEquals(0, create().delete(TBook()).execute());
+                assertEquals(4, (int) create().selectCount().from(TBook()).fetchOne(0, Integer.class));
+
+                action.remove();
+                assertEquals(4, create().delete(TBook()).execute());
+                assertEquals(0, (int) create().selectCount().from(TBook()).fetchOne(0, Integer.class));
+            }
+        });
+    }
+
+    @Test
     public void testDebuggerLogger() throws Exception {
         run(new DebugTestRunnable() {
 

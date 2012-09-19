@@ -1749,6 +1749,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDebuggerMatchCount() throws Exception {
+        new DebuggerTests(this).testDebuggerMatchCount();
+    }
+
+    @Test
     public void testDebuggerProcessor() throws Exception {
         new DebuggerTests(this).testDebuggerProcessor();
     }

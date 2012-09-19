@@ -37,7 +37,9 @@
 package org.jooq.tools.debug.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.jooq.ExecuteContext;
@@ -65,6 +67,8 @@ class MatcherImpl extends AbstractDebuggerObject implements Matcher {
 
     private Pattern              matchThreadName;
     private Pattern              matchSQL;
+    private Set<Integer>         matchCount;
+    private transient int        matchCounter;
 
     @Override
     public Logger newLogger() {
@@ -104,6 +108,8 @@ class MatcherImpl extends AbstractDebuggerObject implements Matcher {
         else {
             this.matchThreadName = null;
         }
+
+        apply();
     }
 
     @Override
@@ -114,6 +120,24 @@ class MatcherImpl extends AbstractDebuggerObject implements Matcher {
         else {
             this.matchSQL = null;
         }
+
+        apply();
+    }
+
+    @Override
+    public void matchCount(int... count) {
+        if (count == null || count.length == 0) {
+            matchCount = null;
+        }
+        else {
+            matchCount = new HashSet<Integer>();
+
+            for (int i : count) {
+                matchCount.add(i);
+            }
+        }
+
+        apply();
     }
 
     boolean matches(ExecuteContext ctx) {
@@ -135,6 +159,16 @@ class MatcherImpl extends AbstractDebuggerObject implements Matcher {
 
             if (!matchFound) {
                 return false;
+            }
+        }
+
+        if (matchCount != null) {
+            synchronized (matchCount) {
+                matchCounter += 1;
+
+                if (!matchCount.contains(matchCounter)) {
+                    return false;
+                }
             }
         }
 

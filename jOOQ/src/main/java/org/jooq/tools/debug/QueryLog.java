@@ -117,7 +117,7 @@ public final class QueryLog implements Serializable {
         sb.append(StopWatch.format(executeTime));
         sb.append(", query=[");
         sb.append(query);
-        sb.append(", origin=");
+        sb.append("], origin=");
         sb.append(origin);
         sb.append("]");
 

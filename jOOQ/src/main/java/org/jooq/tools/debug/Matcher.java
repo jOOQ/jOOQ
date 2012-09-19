@@ -108,4 +108,18 @@ public interface Matcher extends DebuggerObject {
      * @param regex A regular expression
      */
     void matchSQL(String regex);
+
+    /**
+     * Define the match count before this matcher will trigger actions.
+     * <p>
+     * The match count specifies how many times {@link #matchThreadName(String)}
+     * and {@link #matchSQL(String)} need to match a statement before this
+     * matcher triggers its {@link #breakpoints()}, {@link #loggers()}, and
+     * {@link #processors()}
+     *
+     * @param count A list of match counts. If this is <code>null</code> or an
+     *            empty array, match counting is disabled and every match will
+     *            trigger the aforementioned events.
+     */
+    void matchCount(int... count);
 }

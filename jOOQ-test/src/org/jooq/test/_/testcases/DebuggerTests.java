@@ -36,9 +36,16 @@
 package org.jooq.test._.testcases;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.tools.debug.impl.DebuggerFactory.localDebugger;
 import static org.jooq.tools.debug.impl.DebuggerFactory.remoteDebugger;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.TableRecord;
@@ -113,6 +120,42 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
     interface DebugTestRunnable {
         void run(Debugger remote, Debugger local) throws Exception;
+    }
+
+    @Test
+    public void testDebuggerMatchCount() throws Exception {
+        class Count234 implements LoggerListener {
+
+            List<String> queries = new ArrayList<String>(Arrays.asList("0, 1", "0, 1, 2", "0, 1, 2, 3, 4"));
+            List<Integer> columns = new ArrayList<Integer>(Arrays.asList(2, 3, 5));
+
+            @Override
+            public void logQuery(QueryLog l) {
+                assertTrue(l.getQuery().getSQL().contains(queries.remove(0)));
+            }
+
+            @Override
+            public void logResult(ResultLog l) {
+                assertEquals((int) columns.remove(0), l.columns());
+            }
+
+        }
+
+        run(new DebugTestRunnable() {
+
+            @Override
+            public void run(Debugger d1, Debugger d2) throws Exception {
+                Matcher matcher = d1.newMatcher();
+                matcher.matchCount(2, 3, 5);
+                matcher.newLogger().listener(new Count234());
+
+                List<Field<?>> fields = new ArrayList<Field<?>>();
+                for (int i = 0; i < 10; i++) {
+                    fields.add(inline(i));
+                    create().select(fields).fetch();
+                }
+            }
+        });
     }
 
     @Test

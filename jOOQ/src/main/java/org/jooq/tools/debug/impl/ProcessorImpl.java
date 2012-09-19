@@ -56,6 +56,7 @@ class ProcessorImpl extends AbstractDebuggerObject implements Processor {
     private static final long serialVersionUID = -1575906853348333417L;
 
     private List<ActionImpl>  before           = new ArrayList<ActionImpl>();
+    private List<ActionImpl>  instead          = new ArrayList<ActionImpl>();
     private List<ActionImpl>  after            = new ArrayList<ActionImpl>();
 
     @Override
@@ -66,6 +67,16 @@ class ProcessorImpl extends AbstractDebuggerObject implements Processor {
     @Override
     public synchronized Action[] before() {
         return before.toArray(new Action[before.size()]);
+    }
+
+    @Override
+    public synchronized Action newInstead() {
+        return delegate(this, new ActionImpl(), instead);
+    }
+
+    @Override
+    public synchronized Action[] instead() {
+        return instead.toArray(new Action[instead.size()]);
     }
 
     @Override

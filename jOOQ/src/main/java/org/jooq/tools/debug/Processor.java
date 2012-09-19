@@ -49,6 +49,9 @@ public interface Processor extends DebuggerObject {
 
     /**
      * Attach a new "before" action to this processor
+     * <p>
+     * This action will be executed before the {@link Query} matched by the
+     * owning {@link Matcher}. Several actions can be chained this way.
      */
     Action newBefore();
 
@@ -58,7 +61,23 @@ public interface Processor extends DebuggerObject {
     Action[] before();
 
     /**
+     * Attach a new "instead" action to this processor
+     * <p>
+     * This action will be executed instead of the {@link Query} matched by the
+     * owning {@link Matcher}. Several actions can be chained this way.
+     */
+    Action newInstead();
+
+    /**
+     * Get a copy of the attached "instead" actions for this processor
+     */
+    Action[] instead();
+
+    /**
      * Attach a new "after" action to this processor
+     * <p>
+     * This action will be executed after the {@link Query} matched by the
+     * owning {@link Matcher}. Several actions can be chained this way.
      */
     Action newAfter();
 

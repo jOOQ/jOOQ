@@ -43,16 +43,16 @@ import static org.jooq.tools.debug.QueryOrigin.BREAKPOINT_AFTER;
 import static org.jooq.tools.debug.QueryOrigin.BREAKPOINT_BEFORE;
 import static org.jooq.tools.debug.QueryOrigin.PROCESSOR_AFTER;
 import static org.jooq.tools.debug.QueryOrigin.PROCESSOR_BEFORE;
+import static org.jooq.tools.debug.QueryOrigin.PROCESSOR_INSTEAD;
 import static org.jooq.tools.debug.Step.STEP;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
-import org.jooq.Query;
 import org.jooq.Result;
-import org.jooq.ResultQuery;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.Factory;
@@ -151,7 +151,7 @@ public class DebugListener extends DefaultExecuteListener {
     }
 
     @Override
-    public void prepareEnd(ExecuteContext ctx) {
+    public void prepareEnd(final ExecuteContext ctx) {
         if (!hasDebuggers) return;
         endPrepareTime = System.nanoTime();
     }
@@ -172,6 +172,42 @@ public class DebugListener extends DefaultExecuteListener {
     public void executeStart(ExecuteContext ctx) {
         if (!hasDebuggers) return;
         startExecuteTime = System.nanoTime();
+
+        Factory create = create(ctx);
+
+        // Process "instead" processors. These processors must not trigger
+        // recursive debugger reactions (e.g. further processors or breakpoints)
+        for (Matcher matcher : matchers(ctx)) {
+            for (Processor processor : matcher.processors()) {
+                for (Action action : processor.instead()) {
+
+                    // Skip the original statement
+                    if (RECURSION_LOCK.get() != PROCESSOR_INSTEAD) {
+                        RECURSION_LOCK.set(PROCESSOR_INSTEAD);
+
+                        skip(create, ctx);
+                    }
+
+                    execute(create, action);
+                }
+            }
+        }
+    }
+
+    private void skip(Factory create, ExecuteContext ctx) {
+        try {
+            // TODO Set a dummy statement to the context, that doesn't actually
+            // execute any statements in the DB
+
+            // Close previous statement prior to execution
+            ctx.statement().close();
+
+            // Replace previous statement by a new one
+            ctx.statement(ctx.configuration().getConnection().prepareStatement(create.selectOne().getSQL()));
+        }
+        catch (SQLException e) {
+            throw new DataAccessException("Cannot prepare skipping statement", e);
+        }
     }
 
     @Override
@@ -259,15 +295,7 @@ public class DebugListener extends DefaultExecuteListener {
     }
 
     private void execute(Factory create, Action action) {
-        Query query = action.query();
-
-        // TODO [#1829] It should be possible to execute any query using Factory.execute()
-        if (query instanceof ResultQuery) {
-            create.fetchLazy(create.renderInlined(query)).close();
-        }
-        else {
-            create.execute(create.renderInlined(query));
-        }
+        create.execute(create.renderInlined(action.query()));
     }
 
     private void breakpoints(boolean before, final ExecuteContext ctx) {

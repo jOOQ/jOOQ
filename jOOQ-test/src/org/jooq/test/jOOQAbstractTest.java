@@ -1754,6 +1754,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDebuggerProcessorInstead() throws Exception {
+        new DebuggerTests(this).testDebuggerProcessorInstead();
+    }
+
+    @Test
     public void testDebuggerBreakpoint() throws Exception {
         new DebuggerTests(this).testDebuggerBreakpoint();
     }

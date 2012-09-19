@@ -56,6 +56,11 @@ public enum QueryOrigin {
     PROCESSOR_BEFORE,
 
     /**
+     * A {@link Processor#instead()}-originating query.
+     */
+    PROCESSOR_INSTEAD,
+
+    /**
      * A {@link Processor#after()}-originating query.
      */
     PROCESSOR_AFTER,

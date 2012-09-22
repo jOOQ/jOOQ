@@ -39,6 +39,7 @@ package org.jooq.util.oracle;
 import static org.jooq.util.oracle.sys.Tables.ALL_COLL_TYPES;
 import static org.jooq.util.oracle.sys.Tables.ALL_CONSTRAINTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_CONS_COLUMNS;
+import static org.jooq.util.oracle.sys.Tables.ALL_MVIEW_COMMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_OBJECTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_PROCEDURES;
 import static org.jooq.util.oracle.sys.Tables.ALL_SEQUENCES;
@@ -228,17 +229,26 @@ public class OracleDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-        for (Record record : create().select(
-                ALL_TAB_COMMENTS.OWNER,
-                ALL_TAB_COMMENTS.TABLE_NAME,
-                ALL_TAB_COMMENTS.COMMENTS)
-            .from(ALL_TAB_COMMENTS)
-            .where(ALL_TAB_COMMENTS.OWNER.upper().in(getInputSchemata()))
-            .and(ALL_TAB_COMMENTS.TABLE_NAME.notLike("%$%"))
-            .orderBy(
-                ALL_TAB_COMMENTS.OWNER,
-                ALL_TAB_COMMENTS.TABLE_NAME)
-            .fetch()) {
+        for (Record record : create()
+                .select()
+                .from(create()
+                    .select(
+                        ALL_TAB_COMMENTS.OWNER,
+                        ALL_TAB_COMMENTS.TABLE_NAME,
+                        ALL_TAB_COMMENTS.COMMENTS)
+                    .from(ALL_TAB_COMMENTS)
+                    .where(ALL_TAB_COMMENTS.OWNER.upper().in(getInputSchemata()))
+                    .and(ALL_TAB_COMMENTS.TABLE_NAME.notLike("%$%"))
+                .unionAll(create()
+                    .select(
+                        ALL_MVIEW_COMMENTS.OWNER,
+                        ALL_MVIEW_COMMENTS.MVIEW_NAME,
+                        ALL_MVIEW_COMMENTS.COMMENTS)
+                    .from(ALL_MVIEW_COMMENTS)
+                    .where(ALL_MVIEW_COMMENTS.OWNER.upper().in(getInputSchemata()))
+                    .and(ALL_MVIEW_COMMENTS.MVIEW_NAME.notLike("%$%"))))
+                .orderBy(1, 2)
+                .fetch()) {
 
             SchemaDefinition schema = getSchema(record.getValue(ALL_TAB_COMMENTS.OWNER));
             String name = record.getValue(ALL_TAB_COMMENTS.TABLE_NAME);

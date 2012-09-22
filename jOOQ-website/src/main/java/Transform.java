@@ -40,6 +40,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -166,17 +167,20 @@ public class Transform {
             File dir = new File(path);
             dir.mkdirs();
 
+            PrintStream stream = System.out;
             boolean blank = StringUtils.isBlank(section.find("content").text());
             if (blank) {
                 blanks++;
+                stream = System.err;
             }
             else {
                 completed++;
             }
 
-            System.out.print("[");
-            System.out.print(blank ? " " : "x");
-            System.out.println("] Transforming section " + path);
+            stream.print("[");
+            stream.print(blank ? " " : "x");
+            stream.println("] Transforming section " + path);
+
             File file = new File(dir, "index.php");
             file.delete();
             FileOutputStream out = new FileOutputStream(file);

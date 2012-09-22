@@ -1181,7 +1181,7 @@ public class DefaultGenerator extends AbstractGenerator {
         out.println("}");
         out.close();
 
-        watch.splitInfo("Table references generated");
+        watch.splitInfo("Table refs generated");
     }
 
     protected void generateTableReference(GenerationWriter out, TableDefinition table) {

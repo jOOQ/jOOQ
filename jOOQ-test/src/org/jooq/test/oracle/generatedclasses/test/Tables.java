@@ -12,6 +12,11 @@ package org.jooq.test.oracle.generatedclasses.test;
 public final class Tables {
 
 	/**
+	 * snapshot table for snapshot TEST.M_LIBRARY
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.MLibrary M_LIBRARY = org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY;
+
+	/**
 	 * The table TEST.T_ARRAYS
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TArrays T_ARRAYS = org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS;

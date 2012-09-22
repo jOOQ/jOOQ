@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test;
 @java.lang.SuppressWarnings("all")
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 471090537;
+	private static final long serialVersionUID = -37182850;
 
 	/**
 	 * The singleton instance of TEST
@@ -37,6 +37,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 	@Override
 	public final java.util.List<org.jooq.Table<?>> getTables() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
+			org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY,
 			org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS,
 			org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR,
 			org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK,

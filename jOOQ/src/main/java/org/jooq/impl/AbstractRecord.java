@@ -42,8 +42,11 @@ import static org.jooq.impl.Util.getAnnotatedSetters;
 import static org.jooq.impl.Util.getMatchingGetter;
 import static org.jooq.impl.Util.getMatchingMembers;
 import static org.jooq.impl.Util.getMatchingSetters;
+import static org.jooq.impl.Util.getPropertyName;
 import static org.jooq.impl.Util.hasColumnAnnotations;
+import static org.jooq.tools.reflect.Reflect.accessible;
 
+import java.beans.ConstructorProperties;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -54,6 +57,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -715,7 +719,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
             // [#1340] Allow for using non-public default constructors
             else {
-                result = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
+                result = accessible(type.getDeclaredConstructor()).newInstance();
             }
 
             return intoMutablePOJO(type, result);
@@ -734,17 +738,81 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
      */
     @SuppressWarnings("unchecked")
     private final <E> E intoImmutablePOJO(Class<? extends E> type) throws Exception {
-        for (Constructor<E> constructor : (Constructor<E>[]) type.getDeclaredConstructors()) {
+        Constructor<E>[] constructors = (Constructor<E>[]) type.getDeclaredConstructors();
+
+        // [#1837] If any java.beans.ConstructorProperties annotations are
+        // present use those rather than matching constructors by the number of
+        // arguments
+        for (Constructor<E> constructor : constructors) {
+            ConstructorProperties properties = constructor.getAnnotation(ConstructorProperties.class);
+
+            if (properties != null) {
+                return intoImmutablePOJO(type, constructor, properties);
+            }
+        }
+
+        // Without ConstructorProperties, match constructors by matching
+        // argument length
+        for (Constructor<E> constructor : constructors) {
             Class<?>[] parameterTypes = constructor.getParameterTypes();
 
             // Match the first constructor by parameter length
             if (parameterTypes.length == getFields().size()) {
                 Object[] converted = Util.convert(parameterTypes, intoArray());
-                return Reflect.accessible(constructor).newInstance(converted);
+                return accessible(constructor).newInstance(converted);
             }
         }
 
         throw new MappingException("No matching constructor found on type " + type + " for record " + this);
+    }
+
+    /**
+     * Create an immutable POJO given a constructor and its associated JavaBeans
+     * {@link ConstructorProperties}
+     */
+    private final <E> E intoImmutablePOJO(Class<? extends E> type, Constructor<E> constructor, ConstructorProperties properties) throws Exception {
+        boolean useAnnotations = hasColumnAnnotations(type);
+        List<String> propertyNames = Arrays.asList(properties.value());
+
+        Class<?>[] parameterTypes = constructor.getParameterTypes();
+        Object[] parameterValues = new Object[parameterTypes.length];
+
+        for (Field<?> field : getFields()) {
+            List<java.lang.reflect.Field> members;
+            Method method;
+
+            // Annotations are available and present
+            if (useAnnotations) {
+                members = getAnnotatedMembers(type, field.getName());
+                method = getAnnotatedGetter(type, field.getName());
+            }
+
+            // No annotations are present
+            else {
+                members = getMatchingMembers(type, field.getName());
+                method = getMatchingGetter(type, field.getName());
+            }
+
+            for (java.lang.reflect.Field member : members) {
+                int index = propertyNames.indexOf(member.getName());
+
+                if (index >= 0) {
+                    parameterValues[index] = getValue(field);
+                }
+            }
+
+            if (method != null) {
+                String name = getPropertyName(method.getName());
+                int index = propertyNames.indexOf(name);
+
+                if (index >= 0) {
+                    parameterValues[index] = getValue(field);
+                }
+            }
+        }
+
+        Object[] converted = Util.convert(parameterTypes, parameterValues);
+        return accessible(constructor).newInstance(converted);
     }
 
     /**

@@ -4447,7 +4447,8 @@ notExists(create.selectOne().from(BOOK)
 (DATE '2010-01-01', DATE '2010-01-03') OVERLAPS (DATE '2010-01-02' DATE '2010-01-04')
 
 -- INTERVAL data types are also supported. This is equivalent to the above
-(DATE '2010-01-01', CAST('+2 00:00:00' AS INTERVAL DAY TO SECOND)) OVERLAPS (DATE '2010-01-02', CAST('+2 00:00:00' AS INTERVAL DAY TO SECOND))]]></sql>
+(DATE '2010-01-01', CAST('+2 00:00:00' AS INTERVAL DAY TO SECOND)) OVERLAPS 
+(DATE '2010-01-02', CAST('+2 00:00:00' AS INTERVAL DAY TO SECOND))]]></sql>
 
 									<h3>The OVERLAPS predicate in jOOQ</h3>
 									<p>
@@ -5494,9 +5495,18 @@ public class MyBook1 {
 // The various "into()" methods allow for fetching records into your custom POJOs:
 MyBook1 myBook        = create.select().from(BOOK).fetchAny().into(MyBook1.class); 
 List<MyBook1> myBooks = create.select().from(BOOK).fetch().into(MyBook1.class);
-List<MyBook1> myBooks = create.select().from(BOOK).fetchInto(MyBook1.class);	
+List<MyBook1> myBooks = create.select().from(BOOK).fetchInto(MyBook1.class);]]></java>	
+
+									<p>
+										Please refer to the <reference class="org.jooq.Record" anchor="#into(java.lang.Class)" title="Record.into()"/> Javadoc for more details.
+									</p>
 									
-// An "immutable" POJO class
+									<h3>Using "immutable" POJOs</h3>
+									<p>
+										If jOOQ does not find any default constructor, columns are mapped to the "best-matching" constructor. This allows for using "immutable" POJOs with jOOQ. An example illustrates this:
+									</p>
+									
+<java><![CDATA[// An "immutable" POJO class
 public class MyBook2 {
   public final int id;
   public final String title;
@@ -5510,7 +5520,26 @@ public class MyBook2 {
 // With "immutable" POJO classes, there must be an exact match between projected fields and available constructors:
 MyBook2 myBook        = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetchAny().into(MyBook2.class); 
 List<MyBook2> myBooks = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetch().into(MyBook2.class);
-List<MyBook2> myBooks = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetchInto(MyBook2.class);]]></java>	
+List<MyBook2> myBooks = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetchInto(MyBook2.class);
+
+// An "immutable" POJO class with a java.beans.ConstructorProperties annotation
+public class MyBook3 {
+  public final String title;
+  public final int id;
+  
+  @ConstructorProperties({ "title", "id"})
+  public MyBook2(String title, int id) {
+    this.title = title;
+    this.id = id;
+  }
+}
+
+// With annotated "immutable" POJO classes, there doesn't need to be an exact match between fields and constructor arguments.
+// In the below cases, only BOOK.ID is really set onto the POJO, BOOK.TITLE remains null and BOOK.AUTHOR_ID is ignored
+MyBook3 myBook        = create.select(BOOK.ID, BOOK.AUTHOR_ID).from(BOOK).fetchAny().into(MyBook3.class); 
+List<MyBook3> myBooks = create.select(BOOK.ID, BOOK.AUTHOR_ID).from(BOOK).fetch().into(MyBook3.class);
+List<MyBook3> myBooks = create.select(BOOK.ID, BOOK.AUTHOR_ID).from(BOOK).fetchInto(MyBook3.class);
+]]></java>	
 									
 									<p>
 										Please refer to the <reference class="org.jooq.Record" anchor="#into(java.lang.Class)" title="Record.into()"/> Javadoc for more details.

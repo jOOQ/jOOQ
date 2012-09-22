@@ -91,6 +91,10 @@ import org.jooq.test._.FinalWithoutAnnotations;
 import org.jooq.test._.IBookWithAnnotations;
 import org.jooq.test._.IBookWithoutAnnotations;
 import org.jooq.test._.ImmutableAuthor;
+import org.jooq.test._.ImmutableAuthorWithConstructorProperties;
+import org.jooq.test._.ImmutableAuthorWithConstructorPropertiesAndJPAAnnotations;
+import org.jooq.test._.ImmutableAuthorWithConstructorPropertiesAndJPAAnnotationsAndPublicFields;
+import org.jooq.test._.ImmutableAuthorWithConstructorPropertiesAndPublicFields;
 import org.jooq.test._.StaticWithAnnotations;
 import org.jooq.test._.StaticWithoutAnnotations;
 
@@ -980,6 +984,59 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         }
         catch (MappingException expected) {}
     }
+
+    @Test
+    public void testReflectionWithImmutablesAndConstructorProperties() throws Exception {
+
+        // TODO [#791] Fix test data and have all upper case columns everywhere
+        switch (getDialect()) {
+            case ASE:
+            case CUBRID:
+            case INGRES:
+            case POSTGRES:
+                log.info("SKIPPING", "fetchInto() tests");
+                return;
+        }
+
+        Record author =
+        create().select(
+                    TAuthor_LAST_NAME(),
+                    TAuthor_FIRST_NAME(),
+                    TAuthor_ID(),
+                    TAuthor_YEAR_OF_BIRTH())
+                .from(TAuthor())
+                .where(TAuthor_ID().equal(1))
+                .fetchOne();
+
+        ImmutableAuthorWithConstructorProperties into1 =
+            author.into(ImmutableAuthorWithConstructorProperties.class);
+        assertNull(into1.getDateOfBirth());
+        assertEquals(1, into1.getId());
+        assertEquals(AUTHOR_FIRST_NAMES.get(0), into1.getFirstName());
+        assertEquals(AUTHOR_LAST_NAMES.get(0), into1.getLastName());
+
+        ImmutableAuthorWithConstructorPropertiesAndPublicFields into2 =
+            author.into(ImmutableAuthorWithConstructorPropertiesAndPublicFields.class);
+        assertNull(into2.dateOfBirth);
+        assertEquals(1, into2.id);
+        assertEquals(AUTHOR_FIRST_NAMES.get(0), into2.firstName);
+        assertEquals(AUTHOR_LAST_NAMES.get(0), into2.lastName);
+
+        ImmutableAuthorWithConstructorPropertiesAndJPAAnnotations into3 =
+            author.into(ImmutableAuthorWithConstructorPropertiesAndJPAAnnotations.class);
+        assertNull(into3.getF4());
+        assertEquals(1, into3.getF3());
+        assertEquals(AUTHOR_FIRST_NAMES.get(0), into3.getF1());
+        assertEquals(AUTHOR_LAST_NAMES.get(0), into3.getF2());
+
+        ImmutableAuthorWithConstructorPropertiesAndJPAAnnotationsAndPublicFields into4 =
+            author.into(ImmutableAuthorWithConstructorPropertiesAndJPAAnnotationsAndPublicFields.class);
+        assertNull(into4.f4);
+        assertEquals(1, into4.f3);
+        assertEquals(AUTHOR_FIRST_NAMES.get(0), into4.f1);
+        assertEquals(AUTHOR_LAST_NAMES.get(0), into4.f2);
+    }
+
 
     @Test
     public void testFetchIntoTableRecords() throws Exception {

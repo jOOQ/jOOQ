@@ -281,8 +281,13 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final List<Result<Record>> fetchMany() {
         many = true;
-        execute();
-        many = false;
+
+        try {
+            execute();
+        }
+        finally {
+            many = false;
+        }
 
         return results;
     }

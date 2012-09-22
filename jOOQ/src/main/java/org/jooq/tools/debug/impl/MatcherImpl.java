@@ -37,9 +37,9 @@
 package org.jooq.tools.debug.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import org.jooq.ExecuteContext;
@@ -101,7 +101,12 @@ class MatcherImpl extends AbstractDebuggerObject implements Matcher {
     }
 
     @Override
-    public void matchThreadName(String regex) {
+    public String matchThreadName() {
+        return matchThreadName == null ? null : matchThreadName.pattern();
+    }
+
+    @Override
+    public Matcher matchThreadName(String regex) {
         if (regex != null) {
             this.matchThreadName = Pattern.compile(regex);
         }
@@ -110,10 +115,16 @@ class MatcherImpl extends AbstractDebuggerObject implements Matcher {
         }
 
         apply();
+        return this;
     }
 
     @Override
-    public void matchSQL(String regex) {
+    public String matchSQL() {
+        return matchSQL == null ? null : matchSQL.pattern();
+    }
+
+    @Override
+    public Matcher matchSQL(String regex) {
         if (regex != null) {
             this.matchSQL = Pattern.compile(regex);
         }
@@ -122,15 +133,32 @@ class MatcherImpl extends AbstractDebuggerObject implements Matcher {
         }
 
         apply();
+        return this;
     }
 
     @Override
-    public void matchCount(int... count) {
+    public int[] matchCount() {
+        if (matchCount == null) {
+            return null;
+        }
+
+        int[] result = new int[matchCount.size()];
+
+        int i = 0;
+        for (int count : matchCount) {
+            result[i++] = count;
+        }
+
+        return result;
+    }
+
+    @Override
+    public Matcher matchCount(int... count) {
         if (count == null || count.length == 0) {
             matchCount = null;
         }
         else {
-            matchCount = new HashSet<Integer>();
+            matchCount = new TreeSet<Integer>();
 
             for (int i : count) {
                 matchCount.add(i);
@@ -138,6 +166,7 @@ class MatcherImpl extends AbstractDebuggerObject implements Matcher {
         }
 
         apply();
+        return this;
     }
 
     boolean matches(ExecuteContext ctx) {

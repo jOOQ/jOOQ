@@ -39,6 +39,8 @@ package org.jooq.tools.debug;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteType;
 import org.jooq.Query;
 import org.jooq.tools.StopWatch;
 
@@ -59,18 +61,27 @@ public final class QueryLog implements Serializable {
 
     private final int                 id;
     private final StackTraceElement[] stackTrace;
+    private final String              threadName;
+    private final long                threadId;
 
     private final Query               query;
+    private final ExecuteType         executeType;
     private final QueryOrigin         origin;
     private final long                prepareTime;
     private final long                bindTime;
     private final long                executeTime;
 
-    public QueryLog(Query query, QueryOrigin origin, long prepareTime, long bindTime, long executeTime) {
-        this.id = NEXT_ID.getAndIncrement();
-        this.stackTrace = Thread.currentThread().getStackTrace();
 
-        this.query = query;
+    public QueryLog(ExecuteContext ctx, QueryOrigin origin, long prepareTime, long bindTime, long executeTime) {
+        final Thread thread = Thread.currentThread();
+
+        this.id = NEXT_ID.getAndIncrement();
+        this.stackTrace = thread.getStackTrace();
+        this.threadName = thread.getName();
+        this.threadId = thread.getId();
+
+        this.query = ctx.query();
+        this.executeType = ctx.type();
         this.origin = origin;
         this.prepareTime = prepareTime;
         this.bindTime = bindTime;
@@ -79,6 +90,10 @@ public final class QueryLog implements Serializable {
 
     public final Query getQuery() {
         return query;
+    }
+
+    public final ExecuteType getExecuteType() {
+        return executeType;
     }
 
     public final QueryOrigin getOrigin() {
@@ -91,6 +106,14 @@ public final class QueryLog implements Serializable {
 
     public final StackTraceElement[] getStackTrace() {
         return stackTrace;
+    }
+
+    public final String getThreadName() {
+        return threadName;
+    }
+
+    public final long getThreadId() {
+        return threadId;
     }
 
     public final long getPrepareTime() {

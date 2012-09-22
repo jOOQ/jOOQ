@@ -85,6 +85,11 @@ public interface Matcher extends DebuggerObject {
     Breakpoint[] breakpoints();
 
     /**
+     * The regular expression used for matching thread names
+     */
+    String matchThreadName();
+
+    /**
      * Define a regular expression used for matching thread names
      * <p>
      * Matching is performed as such: <code><pre>
@@ -93,7 +98,12 @@ public interface Matcher extends DebuggerObject {
      *
      * @param regex A regular expression
      */
-    void matchThreadName(String regex);
+    Matcher matchThreadName(String regex);
+
+    /**
+     * The regular expression used for matching SQL strings
+     */
+    String matchSQL();
 
     /**
      * Define a regular expression used for matching SQL strings
@@ -107,7 +117,12 @@ public interface Matcher extends DebuggerObject {
      *
      * @param regex A regular expression
      */
-    void matchSQL(String regex);
+    Matcher matchSQL(String regex);
+
+    /**
+     * The match count before this matcher will trigger actions.
+     */
+    int[] matchCount();
 
     /**
      * Define the match count before this matcher will trigger actions.
@@ -121,5 +136,5 @@ public interface Matcher extends DebuggerObject {
      *            empty array, match counting is disabled and every match will
      *            trigger the aforementioned events.
      */
-    void matchCount(int... count);
+    Matcher matchCount(int... count);
 }

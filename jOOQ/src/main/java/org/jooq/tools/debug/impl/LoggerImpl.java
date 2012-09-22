@@ -64,8 +64,11 @@ class LoggerImpl extends AbstractDebuggerObject implements Logger {
 
     @Override
     public Logger logQuery(boolean l) {
-        this.logQuery = l;
-        apply();
+        if (logQuery != l) {
+            logQuery = l;
+            apply();
+        }
+
         return this;
     }
 
@@ -76,8 +79,11 @@ class LoggerImpl extends AbstractDebuggerObject implements Logger {
 
     @Override
     public Logger logResult(boolean l) {
-        this.logResult = l;
-        apply();
+        if (logResult != l) {
+            logResult = l;
+            apply();
+        }
+
         return this;
     }
 
@@ -88,8 +94,11 @@ class LoggerImpl extends AbstractDebuggerObject implements Logger {
 
     @Override
     public Logger listener(LoggerListener l) {
-        this.listener = l;
-        apply();
+        if (listener != l) {
+            listener = l;
+            apply();
+        }
+
         return this;
     }
 }

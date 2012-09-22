@@ -377,7 +377,7 @@ public class DebugListener extends DefaultExecuteListener {
 
         if (log == null) {
             log = new QueryLog(
-                ctx.query(),
+                ctx,
                 origin,
                 endPrepareTime - startPrepareTime,
                 endBindTime - startBindTime,

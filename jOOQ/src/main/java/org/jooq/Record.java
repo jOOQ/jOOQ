@@ -36,6 +36,7 @@
 
 package org.jooq;
 
+import java.beans.ConstructorProperties;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Proxy;
 import java.math.BigDecimal;
@@ -965,7 +966,8 @@ public interface Record extends FieldProvider, Store<Object> {
      *             that might have occurred
      * @see Convert#convert(Object, Converter)
      */
-    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException, DataTypeException;
+    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a converted value from this record, providing a field.
@@ -983,8 +985,8 @@ public interface Record extends FieldProvider, Store<Object> {
      *             that might have occurred
      * @see Convert#convert(Object, Converter)
      */
-    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue) throws IllegalArgumentException,
-        DataTypeException;
+    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue)
+        throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Record, providing a field name.
@@ -1175,6 +1177,23 @@ public interface Record extends FieldProvider, Store<Object> {
      * <li>Public non-final instance member field <code>MY_field</code></li>
      * <li>Public non-final instance member field <code>myField</code></li>
      * </ul>
+     * <h3>If no default constructor is available, but at least one constructor
+     * annotated with <code>ConstructorProperties</code> is available, that one
+     * is used</h3>
+     * <ul>
+     * <li>The standard JavaBeans {@link ConstructorProperties} annotation is
+     * used to match constructor arguments against POJO members or getters.</li>
+     * <li>If those POJO members or getters have JPA annotations, those will be
+     * used according to the aforementioned rules, in order to map
+     * <code>Record</code> values onto constructor arguments.</li>
+     * <li>If those POJO members or getters don't have JPA annotations, the
+     * aforementioned naming conventions will be used, in order to map
+     * <code>Record</code> values onto constructor arguments.</li>
+     * <li>When several annotated constructors are found, the first one is
+     * chosen (as reported by {@link Class#getDeclaredConstructors()}</li>
+     * <li>When invoking the annotated constructor, values are converted onto
+     * constructor argument types</li>
+     * </ul>
      * <h3>If no default constructor is available, but at least one "matching"
      * constructor is available, that one is used</h3>
      * <ul>
@@ -1182,7 +1201,8 @@ public interface Record extends FieldProvider, Store<Object> {
      * this record holds fields</li>
      * <li>When several "matching" constructors are found, the first one is
      * chosen (as reported by {@link Class#getDeclaredConstructors()}</li>
-     * <li>When invoking the "matching"
+     * <li>When invoking the "matching" constructor, values are converted onto
+     * constructor argument types</li>
      * </ul>
      * <h3>If the supplied type is an interface or an abstract class</h3>
      * Abstract types are instanciated using Java reflection {@link Proxy}
@@ -1293,12 +1313,11 @@ public interface Record extends FieldProvider, Store<Object> {
      * <ul>
      * <li>primitive types are supported.</li>
      * </ul>
-     * <h3>General notes</h3>
-     * The resulting record will have its internal "changed" flags set to true
-     * for all values. This means that {@link UpdatableRecord#store()} will
-     * perform an <code>INSERT</code> statement. If you wish to store the record
-     * using an <code>UPDATE</code> statement, use
-     * {@link Factory#executeUpdate(UpdatableRecord)} instead.
+     * <h3>General notes</h3> The resulting record will have its internal
+     * "changed" flags set to true for all values. This means that
+     * {@link UpdatableRecord#store()} will perform an <code>INSERT</code>
+     * statement. If you wish to store the record using an <code>UPDATE</code>
+     * statement, use {@link Factory#executeUpdate(UpdatableRecord)} instead.
      *
      * @param source The source object to copy data from
      * @throws MappingException wrapping any reflection exception that might

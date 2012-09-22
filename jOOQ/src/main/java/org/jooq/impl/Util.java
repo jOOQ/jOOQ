@@ -989,6 +989,25 @@ final class Util {
     }
 
     /**
+     * Get a property name associated with a getter/setter method name.
+     */
+    static String getPropertyName(String methodName) {
+        String name = methodName;
+
+        if (name.startsWith("is") && name.length() > 2) {
+            name = name.substring(2, 3).toLowerCase() + name.substring(3);
+        }
+        else if (name.startsWith("get") && name.length() > 3) {
+            name = name.substring(3, 4).toLowerCase() + name.substring(4);
+        }
+        else if (name.startsWith("set") && name.length() > 3) {
+            name = name.substring(3, 4).toLowerCase() + name.substring(4);
+        }
+
+        return name;
+    }
+
+    /**
      * Type-safely copy a value from one record to another
      */
     static final <T> void setValue(Record target, Field<T> targetField, Record source, Field<?> sourceField) {

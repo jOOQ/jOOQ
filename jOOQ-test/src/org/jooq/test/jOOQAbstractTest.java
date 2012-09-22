@@ -1120,6 +1120,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testReflectionWithImmutablesAndConstructorProperties() throws Exception {
+        new FetchTests(this).testReflectionWithImmutablesAndConstructorProperties();
+    }
+
+    @Test
     public void testFetchIntoTableRecords() throws Exception {
         new FetchTests(this).testFetchIntoTableRecords();
     }

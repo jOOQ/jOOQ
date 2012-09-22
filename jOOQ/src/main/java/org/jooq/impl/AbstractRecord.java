@@ -614,7 +614,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     @Override
-    public final <T> T into(Class<? extends T> type) {
+    public final <E> E into(Class<? extends E> type) {
         try {
             if (type.isArray()) {
                 return intoArray(type);
@@ -672,12 +672,12 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
      * etc.
      */
     @SuppressWarnings("unchecked")
-    private final <T> T intoArray(Class<? extends T> type) {
+    private final <E> E intoArray(Class<? extends E> type) {
         int size = getFields().size();
         Class<?> componentType = type.getComponentType();
         Object[] result = (Object[]) Array.newInstance(componentType, size);
 
-        return (T) intoArray(result, componentType);
+        return (E) intoArray(result, componentType);
     }
 
     /**
@@ -702,11 +702,11 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     /**
      * Convert this record into a POJO
      */
-    private final <T> T intoPOJO(Class<? extends T> type) throws Exception {
+    private final <E> E intoPOJO(Class<? extends E> type) throws Exception {
 
         // If a default, no argument constructor is present, use that one.
         try {
-            T result;
+            E result;
 
             // [#1470] Return a proxy if the supplied type is an interface
             if (Modifier.isAbstract(type.getModifiers())) {
@@ -733,8 +733,8 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
      * constructor).
      */
     @SuppressWarnings("unchecked")
-    private final <T> T intoImmutablePOJO(Class<? extends T> type) throws Exception {
-        for (Constructor<T> constructor : (Constructor<T>[]) type.getDeclaredConstructors()) {
+    private final <E> E intoImmutablePOJO(Class<? extends E> type) throws Exception {
+        for (Constructor<E> constructor : (Constructor<E>[]) type.getDeclaredConstructors()) {
             Class<?>[] parameterTypes = constructor.getParameterTypes();
 
             // Match the first constructor by parameter length
@@ -751,7 +751,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
      * Convert this record into a "mutable" POJO (non-final fields or setters
      * available)
      */
-    private final <T> T intoMutablePOJO(Class<? extends T> type, T result) throws Exception {
+    private final <E> E intoMutablePOJO(Class<? extends E> type, E result) throws Exception {
         boolean useAnnotations = hasColumnAnnotations(type);
 
         for (Field<?> field : getFields()) {

@@ -1,3 +1,4 @@
+DROP MATERIALIZED VIEW m_library/
 DROP VIEW v_library/
 DROP VIEW v_author/
 DROP VIEW v_book/
@@ -733,6 +734,10 @@ CREATE TABLE x_test_case_85 (
 CREATE OR REPLACE VIEW v_library (author, title) AS
 SELECT a.first_name || ' ' || a.last_name, b.title
 FROM t_author a JOIN t_book b ON b.author_id = a.id
+/
+
+CREATE MATERIALIZED VIEW m_library REFRESH WITH ROWID AS
+SELECT * FROM v_library
 /
 
 CREATE VIEW v_author AS

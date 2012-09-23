@@ -10,6 +10,30 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.4.2 - September 23, 2012
+=================================================================
+
+This is a minor patch release with some useful fixes for the 
+2.4 branch
+
+Bug fixes
+---------
+#1774 - QueryPart.toString() does not load default settings from 
+        classpath
+#1792 - Factory.fieldByName() and tableByName() do not correctly
+        escape quotes
+#1797 - SQL syntax errors when plain SQL contains comments with 
+        question marks and SQL is executed as 
+        StatementType.STATIC_STATEMENT
+#1802 - Result.into(Table) doesn't work correctly, if the same 
+        field name appears twice in Result
+#1819 - MappingException in Record.into(Class), when POJO setters
+        have applicable names but non-applicable argument types
+#1820 - Cannot fetch into non-public POJO classes. Their members 
+        / getters / setters should be made accessible
+#1829 - Factory.execute(String) may cause errors when plain SQL
+        returns results
+
 Version 2.4.1 - August 28, 2012
 =================================================================
 

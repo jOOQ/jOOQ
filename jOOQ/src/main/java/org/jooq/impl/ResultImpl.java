@@ -1392,21 +1392,23 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final Map<List<?>, R> intoMap(Field<?>[] keys) {
+    public final Map<Record, R> intoMap(Field<?>[] keys) {
         if (keys == null) {
             keys = new Field[0];
         }
 
-        Map<List<?>, R> map = new LinkedHashMap<List<?>, R>();
+        Map<Record, R> map = new LinkedHashMap<Record, R>();
+        FieldList keyList = new FieldList(keys);
 
         for (R record : this) {
-            List<Object> keyList = new ArrayList<Object>();
-            for (Field<?> key : keys) {
-                keyList.add(record.getValue(key));
+            Record key = new RecordImpl(keyList);
+
+            for (Field<?> field : keys) {
+                Util.setValue(key, field, record, field);
             }
 
-            if (map.put(keyList, record) != null) {
-                throw new InvalidResultException("Key list " + keys + " is not unique in Result for " + this);
+            if (map.put(key, record) != null) {
+                throw new InvalidResultException("Key list " + keyList + " is not unique in Result for " + this);
             }
         }
 
@@ -1466,23 +1468,25 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final Map<List<?>, Result<R>> intoGroups(Field<?>[] keys) {
+    public final Map<Record, Result<R>> intoGroups(Field<?>[] keys) {
         if (keys == null) {
             keys = new Field[0];
         }
 
-        Map<List<?>, Result<R>> map = new LinkedHashMap<List<?>, Result<R>>();
+        Map<Record, Result<R>> map = new LinkedHashMap<Record, Result<R>>();
+        FieldList keyList = new FieldList(keys);
 
         for (R record : this) {
-            List<Object> keyList = new ArrayList<Object>();
-            for (Field<?> key : keys) {
-                keyList.add(record.getValue(key));
+            Record key = new RecordImpl(keyList);
+
+            for (Field<?> field : keys) {
+                Util.setValue(key, field, record, field);
             }
 
-            Result<R> result = map.get(keyList);
+            Result<R> result = map.get(key);
             if (result == null) {
                 result = new ResultImpl<R>(getConfiguration(), this.fields);
-                map.put(keyList, result);
+                map.put(key, result);
             }
 
             result.add(record);

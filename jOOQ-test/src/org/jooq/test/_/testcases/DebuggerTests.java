@@ -106,7 +106,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             Thread.sleep(1000);
         }
 
-        Debugger remote = remoteDebugger("localhost", 5555);
+        Debugger remote = remoteDebugger("localhost", jOOQAbstractTest.DEBUGGER_PORT);
         Debugger local = localDebugger();
 
         try {

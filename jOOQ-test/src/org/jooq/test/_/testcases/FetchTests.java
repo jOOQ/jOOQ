@@ -149,15 +149,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         // Keys -> Record
         // --------------
-        Map<List<?>, B> map3 = create().selectFrom(TBook()).orderBy(TBook_ID())
+        Map<Record, B> map3 = create().selectFrom(TBook()).orderBy(TBook_ID())
             .fetchMap(new Field<?>[] { TBook_ID(), TBook_LANGUAGE_ID(), TBook_TITLE() });
         assertEquals(4, map3.keySet().size());
 
-        for (List<?> keyList : map3.keySet()) {
-            B record = map3.get(keyList);
-            assertEquals(keyList.get(0), record.getValue(TBook_ID()));
-            assertEquals(keyList.get(1), record.getValue(TBook_LANGUAGE_ID()));
-            assertEquals(keyList.get(2), record.getValue(TBook_TITLE()));
+        for (Record key : map3.keySet()) {
+            B record = map3.get(key);
+            assertEquals(key.getValue(0), record.getValue(TBook_ID()));
+            assertEquals(key.getValue(1), record.getValue(TBook_LANGUAGE_ID()));
+            assertEquals(key.getValue(2), record.getValue(TBook_TITLE()));
         }
 
         // List of Map
@@ -258,40 +258,40 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         // Keys -> Record
         // --------------
         // Grouping by BOOK.AUTHOR_ID, BOOK.LANGUAGE_ID
-        Map<List<?>, Result<B>> map5 = create().selectFrom(TBook()).orderBy(TBook_ID())
+        Map<Record, Result<B>> map5 = create().selectFrom(TBook()).orderBy(TBook_ID())
             .fetchGroups(new Field<?>[] { TBook_AUTHOR_ID(), TBook_LANGUAGE_ID() });
 
-        Iterator<Entry<List<?>, Result<B>>> iterator = map5.entrySet().iterator();
-        Entry<List<?>, Result<B>> entry1_en = iterator.next();
+        Iterator<Entry<Record, Result<B>>> iterator = map5.entrySet().iterator();
+        Entry<Record, Result<B>> entry1_en = iterator.next();
         assertEquals(2, entry1_en.getValue().size());
-        assertEquals(entry1_en.getKey().get(0), entry1_en.getValue().get(0).getValue(TBook_AUTHOR_ID()));
-        assertEquals(entry1_en.getKey().get(0), entry1_en.getValue().get(1).getValue(TBook_AUTHOR_ID()));
-        assertEquals(entry1_en.getKey().get(1), entry1_en.getValue().get(0).getValue(TBook_LANGUAGE_ID()));
-        assertEquals(entry1_en.getKey().get(1), entry1_en.getValue().get(1).getValue(TBook_LANGUAGE_ID()));
+        assertEquals(entry1_en.getKey().getValue(0), entry1_en.getValue().get(0).getValue(TBook_AUTHOR_ID()));
+        assertEquals(entry1_en.getKey().getValue(0), entry1_en.getValue().get(1).getValue(TBook_AUTHOR_ID()));
+        assertEquals(entry1_en.getKey().getValue(1), entry1_en.getValue().get(0).getValue(TBook_LANGUAGE_ID()));
+        assertEquals(entry1_en.getKey().getValue(1), entry1_en.getValue().get(1).getValue(TBook_LANGUAGE_ID()));
 
-        Entry<List<?>, Result<B>> entry2_pt = iterator.next();
+        Entry<Record, Result<B>> entry2_pt = iterator.next();
         assertEquals(1, entry2_pt.getValue().size());
-        assertEquals(entry2_pt.getKey().get(0), entry2_pt.getValue().get(0).getValue(TBook_AUTHOR_ID()));
-        assertEquals(entry2_pt.getKey().get(1), entry2_pt.getValue().get(0).getValue(TBook_LANGUAGE_ID()));
+        assertEquals(entry2_pt.getKey().getValue(0), entry2_pt.getValue().get(0).getValue(TBook_AUTHOR_ID()));
+        assertEquals(entry2_pt.getKey().getValue(1), entry2_pt.getValue().get(0).getValue(TBook_LANGUAGE_ID()));
 
-        Entry<List<?>, Result<B>> entry2_de = iterator.next();
+        Entry<Record, Result<B>> entry2_de = iterator.next();
         assertEquals(1, entry2_de.getValue().size());
-        assertEquals(entry2_de.getKey().get(0), entry2_de.getValue().get(0).getValue(TBook_AUTHOR_ID()));
-        assertEquals(entry2_de.getKey().get(1), entry2_de.getValue().get(0).getValue(TBook_LANGUAGE_ID()));
+        assertEquals(entry2_de.getKey().getValue(0), entry2_de.getValue().get(0).getValue(TBook_AUTHOR_ID()));
+        assertEquals(entry2_de.getKey().getValue(1), entry2_de.getValue().get(0).getValue(TBook_LANGUAGE_ID()));
 
         assertFalse(iterator.hasNext());
 
         // Grouping by BOOK.AUTHOR_ID, BOOK.LANGUAGE_ID, BOOK.TITLE
-        Map<List<?>, Result<B>> map6 = create().selectFrom(TBook()).orderBy(TBook_ID())
+        Map<Record, Result<B>> map6 = create().selectFrom(TBook()).orderBy(TBook_ID())
             .fetchGroups(new Field<?>[] { TBook_ID(), TBook_LANGUAGE_ID(), TBook_TITLE() });
         assertEquals(4, map6.size());
 
-        for (List<?> keyList : map6.keySet()) {
-            Result<B> result = map6.get(keyList);
+        for (Record key : map6.keySet()) {
+            Result<B> result = map6.get(key);
             assertEquals(1, result.size());
-            assertEquals(keyList.get(0), result.get(0).getValue(TBook_ID()));
-            assertEquals(keyList.get(1), result.get(0).getValue(TBook_LANGUAGE_ID()));
-            assertEquals(keyList.get(2), result.get(0).getValue(TBook_TITLE()));
+            assertEquals(key.getValue(0), result.get(0).getValue(TBook_ID()));
+            assertEquals(key.getValue(1), result.get(0).getValue(TBook_LANGUAGE_ID()));
+            assertEquals(key.getValue(2), result.get(0).getValue(TBook_TITLE()));
         }
     }
 

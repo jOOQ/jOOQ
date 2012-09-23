@@ -422,7 +422,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final Map<List<?>, R> fetchMap(Field<?>[] keys) {
+    public final Map<Record, R> fetchMap(Field<?>[] keys) {
         return fetch().intoMap(keys);
     }
 
@@ -452,7 +452,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final Map<List<?>, Result<R>> fetchGroups(Field<?>[] keys) {
+    public final Map<Record, Result<R>> fetchGroups(Field<?>[] keys) {
         return fetch().intoGroups(keys);
     }
 

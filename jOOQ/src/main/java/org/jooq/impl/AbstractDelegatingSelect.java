@@ -234,7 +234,7 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
-    public final Map<List<?>, R> fetchMap(Field<?>[] keys) {
+    public final Map<Record, R> fetchMap(Field<?>[] keys) {
         return getDelegate().fetchMap(keys);
     }
 
@@ -264,7 +264,7 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
-    public final Map<List<?>, Result<R>> fetchGroups(Field<?>[] keys) {
+    public final Map<Record, Result<R>> fetchGroups(Field<?>[] keys) {
         return getDelegate().fetchGroups(keys);
     }
 

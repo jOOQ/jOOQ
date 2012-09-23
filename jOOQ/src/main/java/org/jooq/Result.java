@@ -1850,7 +1850,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
-    Map<List<?>, R> intoMap(Field<?>[] keys);
+    Map<Record, R> intoMap(Field<?>[] keys);
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -1907,7 +1907,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *            resulting map will contain at most one entry.
      * @return A Map containing grouped results
      */
-    Map<List<?>, Result<R>> intoGroups(Field<?>[] keys);
+    Map<Record, Result<R>> intoGroups(Field<?>[] keys);
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped

@@ -517,7 +517,7 @@ public interface ResultQuery<R extends Record> extends Query {
      *             result set.
      * @see Result#intoMap(Field[])
      */
-    Map<List<?>, R> fetchMap(Field<?>[] keys) throws DataAccessException;
+    Map<Record, R> fetchMap(Field<?>[] keys) throws DataAccessException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -585,7 +585,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Field[])
      */
-    Map<List<?>, Result<R>> fetchGroups(Field<?>[] keys) throws DataAccessException;
+    Map<Record, Result<R>> fetchGroups(Field<?>[] keys) throws DataAccessException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped

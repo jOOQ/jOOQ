@@ -118,9 +118,8 @@ import org.jooq.test._.testcases.ThreadSafetyTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
-import org.jooq.tools.debug.old.Debugger;
-import org.jooq.tools.debug.old.impl.DebuggerFactory;
-import org.jooq.tools.debug.old.impl.Server;
+import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.impl.DebuggerFactory;
 import org.jooq.tools.reflect.ReflectException;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
@@ -132,7 +131,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.postgresql.util.PSQLException;
 
@@ -213,7 +211,6 @@ public abstract class jOOQAbstractTest<
     private static final String           JDBC_USER          = "jdbc.User";
     private static final String           JDBC_URL           = "jdbc.URL";
     private static final String           JDBC_DRIVER        = "jdbc.Driver";
-    private static final int              DEBUGGER_PORT      = 5533;
 
     public static final JooqLogger        log                = JooqLogger.getLogger(jOOQAbstractTest.class);
     public static final StopWatch         testSQLWatch       = new StopWatch();
@@ -230,8 +227,8 @@ public abstract class jOOQAbstractTest<
     public static String                  jdbcSchema;
     public static Map<String, String>     scripts            = new HashMap<String, String>();
 
-    private static Server   SERVER;
-    private static boolean                RUN_CONSOLE_IN_PROCESS = false;
+    public static final int               DEBUGGER_PORT      = 5533;
+    public static boolean                 RUN_CONSOLE_IN_PROCESS = false;
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;
@@ -377,11 +374,6 @@ public abstract class jOOQAbstractTest<
         }
     }
 
-    @BeforeClass
-    public static void sqlConsole() throws Exception {
-        SERVER = new Server(DEBUGGER_PORT);
-    }
-
     @Before
     public void setUp() throws Exception {
         connection = getConnection();
@@ -407,8 +399,6 @@ public abstract class jOOQAbstractTest<
 
     @AfterClass
     public static void quit() throws Exception {
-        SERVER.close();
-
         log.info("QUITTING");
 
         // Issue a log dump on adaptive server. Don't know why this is needed
@@ -442,6 +432,9 @@ public abstract class jOOQAbstractTest<
             connection = getConnection0(null, null);
 
             if (RUN_CONSOLE_IN_PROCESS) {
+                // This workaround will start the server
+                create().selectOne().fetch();
+
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     Debugger debugger = DebuggerFactory.remoteDebugger("127.0.0.1", DEBUGGER_PORT);
@@ -748,7 +741,7 @@ public abstract class jOOQAbstractTest<
 
         Settings settings = SettingsTools.defaultSettings()
             .withExecuteDebugging(ExecuteDebugging.SERVER)
-            .withExecuteDebuggingPort(5555)
+            .withExecuteDebuggingPort(DEBUGGER_PORT)
             .withRenderSchema(renderSchema)
             .withRenderMapping(new RenderMapping()
                 .withDefaultSchema(defaultSchema))

@@ -72,32 +72,22 @@ class FieldList extends NamedQueryPartList<Field<?>> implements FieldProvider {
             return null;
         }
 
-        Field<?> result = null;
-        String name = field.getName();
-
-        for (Field<?> f1 : this) {
-            if (f1.getName().equals(name)) {
-
-                // Remember the first matching field by name
-                if (result == null) {
-                    result = f1;
-                }
-
-                // [#1802] On a colliding second matching field by name, try exact matching
-                else {
-                    for (Field<?> f2 : this) {
-                        if (f2.equals(field)) {
-                            result = f2;
-                            break;
-                        }
-                    }
-
-                    break;
-                }
+        // [#1802] Try finding an exact match (e.g. exact matching qualified name)
+        for (Field<?> f : this) {
+            if (f.equals(field)) {
+                return (Field<T>) f;
             }
         }
 
-        return (Field<T>) result;
+        // In case no exact match was found, return the first field with matching name
+        String name = field.getName();
+        for (Field<?> f1 : this) {
+            if (f1.getName().equals(name)) {
+                return (Field<T>) f1;
+            }
+        }
+
+        return null;
     }
 
     @Override

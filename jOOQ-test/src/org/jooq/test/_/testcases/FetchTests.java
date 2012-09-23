@@ -887,7 +887,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         Result<Record> result =
         create().select()
                 .from(TBook())
-                .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
                 .orderBy(TBook_ID())
                 .fetch();
 

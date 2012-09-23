@@ -346,37 +346,73 @@ final class Util {
     static final void toSQLReference(RenderContext context, String sql, List<QueryPart> substitutes) {
         int bindIndex = 0;
         char[] sqlChars = sql.toCharArray();
-        boolean stringLiteral = false;
 
         for (int i = 0; i < sqlChars.length; i++) {
 
+            // [#1797] Skip content inside of single-line comments, e.g.
+            // select 1 x -- what's this ?'?
+            // from t_book -- what's that ?'?
+            // where id = ?
+            if (peek(sqlChars, i, "--")) {
+
+                // Consume the complete comment
+                for (; sqlChars[i] != '\r' && sqlChars[i] != '\n'; context.sql(sqlChars[i++]));
+
+                // Consume the newline character
+                context.sql(sqlChars[i]);
+            }
+
+            // [#1797] Skip content inside of multi-line comments, e.g.
+            // select 1 x /* what's this ?'?
+            // I don't know ?'? */
+            // from t_book where id = ?
+            else if (peek(sqlChars, i, "/*")) {
+
+                // Consume the complete comment
+                for (; !peek(sqlChars, i, "*/"); context.sql(sqlChars[i++]));
+
+                // Consume the comment delimiter
+                context.sql(sqlChars[i++]);
+                context.sql(sqlChars[i]);
+            }
+
             // [#1031] [#1032] Skip ? inside of string literals, e.g.
             // insert into x values ('Hello? Anybody out there?');
-            if (sqlChars[i] == '\'') {
+            else if (sqlChars[i] == '\'') {
 
-                // Delimiter is actually an escaping apostrophe
-                if (i + 1 < sqlChars.length && sqlChars[i + 1] == '\'') {
+                // Consume the initial string literal delimiter
+                context.sql(sqlChars[i++]);
 
-                    // Skip subsequent character
+                // Consume the whole string literal
+                for (;;) {
+
+                    // Consume an escaped apostrophe
+                    if (peek(sqlChars, i, "''")) {
+                        context.sql(sqlChars[i++]);
+                    }
+
+                    // Break on the terminal string literal delimiter
+                    else if (peek(sqlChars, i, "'")) {
+                        break;
+                    }
+
+                    // Consume string literal content
                     context.sql(sqlChars[i++]);
-                    context.sql(sqlChars[i]);
                 }
 
-                else {
-                    stringLiteral = !stringLiteral;
-                    context.sql(sqlChars[i]);
-                }
+                // Consume the terminal string literal delimiter
+                context.sql(sqlChars[i]);
             }
 
             // TODO: This case should be mutually exclusive with the next one
             // Inline bind variables only outside of string literals
-            else if (sqlChars[i] == '?' && context.inline() && !stringLiteral && bindIndex < substitutes.size()) {
+            else if (sqlChars[i] == '?' && context.inline() && bindIndex < substitutes.size()) {
                 context.sql(substitutes.get(bindIndex++));
             }
 
             // TODO: This case should be mutually exclusive with the previous one
             // [#1432] Inline substitues for {numbered placeholders} outside of string literals
-            else if (sqlChars[i] == '{' && !stringLiteral && bindIndex < substitutes.size()) {
+            else if (sqlChars[i] == '{' && bindIndex < substitutes.size()) {
 
                 // [#1461] Be careful not to match any JDBC escape syntax
                 if (JDBC_ESCAPE_PATTERN.matcher(sql.substring(i)).matches()) {
@@ -409,6 +445,28 @@ final class Util {
                 context.sql(sqlChars[i]);
             }
         }
+    }
+
+    /**
+     * Peek for a string at a given <code>index</code> of a <code>char[]</code>
+     *
+     * @param sqlChars The char array to peek into
+     * @param index The index within the char array to peek for a string
+     * @param peek The string to peek for
+     */
+    static final boolean peek(char[] sqlChars, int index, String peek) {
+        char[] peekArray = peek.toCharArray();
+
+        for (int i = 0; i < peekArray.length; i++) {
+            if (index + i >= sqlChars.length) {
+                return false;
+            }
+            if (sqlChars[index + i] != peekArray[i]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

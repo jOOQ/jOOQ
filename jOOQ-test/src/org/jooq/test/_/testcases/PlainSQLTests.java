@@ -39,6 +39,8 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.function;
@@ -67,6 +69,7 @@ import org.jooq.ResultQuery;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.Settings;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
@@ -246,6 +249,56 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Integer.valueOf(2), books.getValue(1, TBook_ID()));
         assertEquals(Integer.valueOf(1), books.getValue(0, TBook_AUTHOR_ID()));
         assertEquals(Integer.valueOf(1), books.getValue(1, TBook_AUTHOR_ID()));
+    }
+
+    @Test
+    public void testPlainSQLAndComments() throws Exception {
+
+        // Skip comments test for most dialects, as the behaviour w.r.t. comments
+        // may differ
+        if (getDialect() != H2) {
+            log.info("SKIPPING", "Skip comments tests");
+            return;
+        }
+
+        // [#1797] Plain SQL should be allowed to contain comments. Special care
+        // must be taken when comments contain ' or ? characters
+
+        // Single-line comments
+        // --------------------
+
+        // Render bind values
+        Record record1 = create()
+            .fetchOne("select 1 x -- what's this ?'? \n" +
+            		  ", '-- no comment' y from t_book \n" +
+            		  "       -- what's this ?'?\r" +
+            		  "where id = ?", 1);
+        assertEquals(1, record1.getValue(0));
+        assertEquals("-- no comment", record1.getValue(1));
+
+        // Inline bind values
+        Record record2 = create(new Settings().withStatementType(STATIC_STATEMENT))
+            .fetchOne("select 1 x -- what's this ?'? \n" +
+                ", '-- no comment' y from t_book \n" +
+                "       -- what's this ?'?\r" +
+                "where id = ?", 1);
+        assertEquals(1, record2.getValue(0));
+        assertEquals("-- no comment", record2.getValue(1));
+
+        // Multi-line comments
+        // -------------------
+
+        // Render bind values
+        Record record3 = create()
+            .fetchOne("select /* what's this ?'?\n\r?'? */ 1 x, '/* no comment */' y from t_book where id = ?", 1);
+        assertEquals(1, record3.getValue(0));
+        assertEquals("/* no comment */", record3.getValue(1));
+
+        // Inline bind values
+        Record record4 = create(new Settings().withStatementType(STATIC_STATEMENT))
+            .fetchOne("select /* what's this ?'?\n\r?'? */ 1 x, '/* no comment */' y from t_book where id = ?", 1);
+        assertEquals(1, record4.getValue(0));
+        assertEquals("/* no comment */", record4.getValue(1));
     }
 
     @Test

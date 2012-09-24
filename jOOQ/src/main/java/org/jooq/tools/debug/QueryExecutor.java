@@ -36,10 +36,13 @@
  */
 package org.jooq.tools.debug;
 
+import org.jooq.Field;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Schema;
+import org.jooq.Table;
 
 /**
  * A query executor allows to execute queries in any given context.
@@ -48,6 +51,31 @@ import org.jooq.ResultQuery;
  * @author Lukas Eder
  */
 public interface QueryExecutor {
+
+    /**
+     * Fetch all schemata
+     *
+     * @return A list of schemata
+     */
+    Schema[] schemata();
+
+    /**
+     * Fetch all tables, given a list of schemata.
+     *
+     * @param schemata The list of schemata for which to fetch tables. If no
+     *            schema is provided, all tables are fetched.
+     * @return A list of tables
+     */
+    Table<?>[] tables(Schema... schemata);
+
+    /**
+     * Fetch all fields, given a list of tables.
+     *
+     * @param tables The list of tables for which to fetch fields. If no table
+     *            is provided, all fields are fetched.
+     * @return A list of fields.
+     */
+    Field<?>[] fields(Table<?>... tables);
 
     /**
      * Execute a query

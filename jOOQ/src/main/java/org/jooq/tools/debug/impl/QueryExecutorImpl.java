@@ -36,11 +36,24 @@
  */
 package org.jooq.tools.debug.impl;
 
+import static org.jooq.impl.Factory.fieldByName;
+import static org.jooq.impl.Factory.schemaByName;
+import static org.jooq.impl.Factory.tableByName;
+
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jooq.Configuration;
+import org.jooq.Field;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Factory;
 import org.jooq.tools.debug.QueryExecutor;
 
@@ -59,18 +72,98 @@ class QueryExecutorImpl implements QueryExecutor {
     }
 
     @Override
-    public int execute(Query query) {
+    public final Schema[] schemata() {
+        try {
+            DatabaseMetaData meta = meta();
+            String[] names = create().fetch(meta.getSchemas()).intoArray(0, String.class);
+            Schema[] result = new Schema[names.length];
+
+            for (int i = 0; i < names.length; i++) {
+                result[i] = schemaByName(names[i]);
+            }
+
+            return result;
+        }
+        catch (SQLException e) {
+            throw new DataAccessException("Cannot fetch schemata", e);
+        }
+    }
+
+    @Override
+    public final Table<?>[] tables(Schema... schemata) {
+        schemata = (schemata != null && schemata.length > 0) ? schemata : new Schema[] { null };
+        List<Table<?>> result = new ArrayList<Table<?>>();
+
+        try {
+            DatabaseMetaData meta = meta();
+
+            for (Schema schema : schemata) {
+                String schemaName = (schema != null) ? schema.getName() : null;
+
+                for (Record record : create().fetch(meta.getTables(null, schemaName, null, null))) {
+                    result.add(tableByName(
+                        record.getValue(1, String.class),
+                        record.getValue(2, String.class)));
+                }
+            }
+
+            return result.toArray(new Table[result.size()]);
+        }
+        catch (SQLException e) {
+            throw new DataAccessException("Cannot fetch tables", e);
+        }
+    }
+
+    @Override
+    public final Field<?>[] fields(Table<?>... tables) {
+        tables = (tables != null && tables.length > 0) ? tables : new Table[] { null };
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        try {
+            DatabaseMetaData meta = meta();
+
+            for (Table<?> table : tables) {
+                String schemaName = (table != null && table.getSchema() != null) ? table.getSchema().getName() : null;
+                String tableName = (table != null) ? table.getName() : null;
+
+                for (Record record : create().fetch(meta.getColumns(null, schemaName, tableName, null))) {
+                    // Discover SQLDataType, here?
+                    result.add(fieldByName(
+                        record.getValue(1, String.class),
+                        record.getValue(2, String.class),
+                        record.getValue(3, String.class)));
+                }
+            }
+
+            return result.toArray(new Field[result.size()]);
+        }
+        catch (SQLException e) {
+            throw new DataAccessException("Cannot fetch fields", e);
+        }
+    }
+
+    @Override
+    public final int execute(Query query) {
         create().attach(query);
         return query.execute();
     }
 
     @Override
-    public <R extends Record> Result<R> fetch(ResultQuery<R> query) {
+    public final <R extends Record> Result<R> fetch(ResultQuery<R> query) {
         create().attach(query);
         return query.fetch();
     }
 
-    private Factory create() {
+    private final DatabaseMetaData meta() {
+        try {
+            return create().getConnection().getMetaData();
+        }
+        catch (SQLException e) {
+            throw new DataAccessException("Cannot fetch meta data", e);
+        }
+    }
+
+    private final Factory create() {
         return new Factory(configuration.getConnection(), configuration.getDialect(), configuration.getSettings());
     }
 }

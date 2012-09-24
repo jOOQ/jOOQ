@@ -36,6 +36,7 @@
 package org.jooq.test._.testcases;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.tools.debug.impl.DebuggerFactory.localDebugger;
@@ -48,6 +49,8 @@ import java.util.List;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.Schema;
+import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
@@ -294,6 +297,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         @Override
         public Step before(HitContext context) {
+            if (schema() != null) {
+                List<Schema> schemata = Arrays.asList(context.executor().schemata());
+                assertTrue(schemata.contains(schema()));
+            }
+
+            List<Table<?>> tables1 = Arrays.asList(context.executor().tables());
+            assertTrue(tables1.contains(TBook()));
+            assertTrue(tables1.contains(TAuthor()));
+
+            if (schema() != null) {
+                List<Table<?>> tables2 = Arrays.asList(context.executor().tables(schema()));
+                assertTrue(tables2.contains(TBook()));
+                assertTrue(tables2.contains(TAuthor()));
+            }
+
+            List<Field<?>> fields1 = Arrays.asList(context.executor().fields());
+            assertTrue(fields1.contains(TBook_ID()));
+            assertTrue(fields1.contains(TBook_TITLE()));
+            assertTrue(fields1.contains(TAuthor_ID()));
+
+            List<Field<?>> fields2 = Arrays.asList(context.executor().fields(TBook()));
+            assertTrue(fields2.contains(TBook_ID()));
+            assertTrue(fields2.contains(TBook_TITLE()));
+            assertFalse(fields2.contains(TAuthor_ID()));
+
             Result<Record> result =
             context.executor().fetch(create().selectCount().from(TAuthor()));
 

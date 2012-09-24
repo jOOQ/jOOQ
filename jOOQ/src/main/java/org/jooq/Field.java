@@ -167,6 +167,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Create an ascending sort field from this field
+     * <p>
+     * This is the same as calling {@link #sort(SortOrder)} with
+     * {@link SortOrder#ASC}
      *
      * @return This field as an ascending sort field
      */
@@ -175,11 +178,23 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Create a descending sort field from this field
+     * <p>
+     * This is the same as calling {@link #sort(SortOrder)} with
+     * {@link SortOrder#DESC}
      *
      * @return This field as a descending sort field
      */
     @Support
     SortField<T> desc();
+
+    /**
+     * Create an ascending/descending sort field from this field
+     *
+     * @param order The sort order
+     * @return This field as an ascending/descending sort field.
+     */
+    @Support
+    SortField<T> sort(SortOrder order);
 
     /**
      * Create a sort field of the form <code><pre>

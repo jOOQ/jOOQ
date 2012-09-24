@@ -765,25 +765,25 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a value
+     * a field
      * <p>
-     * This translates to <code>this ilike value</code> in
+     * This translates to <code>this ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(value)</code> in all other dialects.
+     * <code>lower(this) like lower(field)</code> in all other dialects.
      */
     @Support
-    Condition likeIgnoreCase(Field<String> value);
+    Condition likeIgnoreCase(Field<String> field);
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a value
+     * a field
      * <p>
-     * This translates to <code>this ilike value</code> in
+     * This translates to <code>this ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(value)</code> in all other dialects.
+     * <code>lower(this) like lower(field)</code> in all other dialects.
      */
     @Support
-    Condition likeIgnoreCase(Field<String> value, char escape);
+    Condition likeIgnoreCase(Field<String> field, char escape);
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
@@ -808,20 +808,20 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition likeIgnoreCase(String value, char escape);
 
     /**
-     * Create a condition to pattern-check this field against a value
+     * Create a condition to pattern-check this field against a field
      * <p>
-     * SQL: <code>this not like value</code>
+     * SQL: <code>this not like field</code>
      */
     @Support
-    Condition notLike(Field<String> value);
+    Condition notLike(Field<String> field);
 
     /**
-     * Create a condition to pattern-check this field against a value
+     * Create a condition to pattern-check this field against a field
      * <p>
-     * SQL: <code>this not like value escape 'e'</code>
+     * SQL: <code>this not like field escape 'e'</code>
      */
     @Support
-    Condition notLike(Field<String> value, char escape);
+    Condition notLike(Field<String> field, char escape);
 
     /**
      * Create a condition to pattern-check this field against a value
@@ -841,25 +841,25 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a value
+     * a field
      * <p>
-     * This translates to <code>this not ilike value</code> in
+     * This translates to <code>this not ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     * <code>lower(this) not like lower(field)</code> in all other dialects.
      */
     @Support
-    Condition notLikeIgnoreCase(Field<String> value);
+    Condition notLikeIgnoreCase(Field<String> field);
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a value
+     * a field
      * <p>
-     * This translates to <code>this not ilike value</code> in
+     * This translates to <code>this not ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     * <code>lower(this) not like lower(field)</code> in all other dialects.
      */
     @Support
-    Condition notLikeIgnoreCase(Field<String> value, char escape);
+    Condition notLikeIgnoreCase(Field<String> field, char escape);
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
@@ -1248,6 +1248,28 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     // ------------------------------------------------------------------------
     // Comparison predicates
     // ------------------------------------------------------------------------
+
+    /**
+     * Compare this field with a value using a dynamic comparator
+     *
+     * @param comparator The comparator to use for comparing this field with a
+     *            value
+     * @param value The value to compare this field with
+     * @return A comparison predicate
+     */
+    @Support
+    Condition compare(Comparator comparator, T value);
+
+    /**
+     * Compare this field with another field using a dynamic comparator
+     *
+     * @param comparator The comparator to use for comparing this field with
+     *            another field
+     * @param field The field to compare this field with
+     * @return A comparison predicate
+     */
+    @Support
+    Condition compare(Comparator comparator, Field<T> field);
 
     /**
      * <code>this = value</code>

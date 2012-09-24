@@ -296,7 +296,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition isDistinctFrom(Field<T> field) {
-        return new IsDistinctFrom<T>(this, nullSafe(field), Comparator.IS_DISTINCT_FROM);
+        return compare(Comparator.IS_DISTINCT_FROM, field);
     }
 
     @Override
@@ -306,7 +306,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition isNotDistinctFrom(Field<T> field) {
-        return new IsDistinctFrom<T>(this, nullSafe(field), Comparator.IS_NOT_DISTINCT_FROM);
+        return compare(Comparator.IS_NOT_DISTINCT_FROM, field);
     }
 
     @SuppressWarnings("unchecked")
@@ -358,13 +358,13 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    public final Condition like(Field<String> value) {
-        return new CompareCondition(this, nullSafe(value), Comparator.LIKE);
+    public final Condition like(Field<String> field) {
+        return new CompareCondition(this, nullSafe(field), Comparator.LIKE);
     }
 
     @Override
-    public final Condition like(Field<String> value, char escape) {
-        return new CompareCondition(this, nullSafe(value), Comparator.LIKE, escape);
+    public final Condition like(Field<String> field, char escape) {
+        return new CompareCondition(this, nullSafe(field), Comparator.LIKE, escape);
     }
 
     @Override
@@ -378,13 +378,13 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    public final Condition likeIgnoreCase(Field<String> value) {
-        return new CompareCondition(this, nullSafe(value), Comparator.LIKE_IGNORE_CASE);
+    public final Condition likeIgnoreCase(Field<String> field) {
+        return new CompareCondition(this, nullSafe(field), Comparator.LIKE_IGNORE_CASE);
     }
 
     @Override
-    public final Condition likeIgnoreCase(Field<String> value, char escape) {
-        return new CompareCondition(this, nullSafe(value), Comparator.LIKE_IGNORE_CASE, escape);
+    public final Condition likeIgnoreCase(Field<String> field, char escape) {
+        return new CompareCondition(this, nullSafe(field), Comparator.LIKE_IGNORE_CASE, escape);
     }
 
     @Override
@@ -408,13 +408,13 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    public final Condition notLike(Field<String> value) {
-        return new CompareCondition(this, nullSafe(value), Comparator.NOT_LIKE);
+    public final Condition notLike(Field<String> field) {
+        return new CompareCondition(this, nullSafe(field), Comparator.NOT_LIKE);
     }
 
     @Override
-    public final Condition notLike(Field<String> value, char escape) {
-        return new CompareCondition(this, nullSafe(value), Comparator.NOT_LIKE, escape);
+    public final Condition notLike(Field<String> field, char escape) {
+        return new CompareCondition(this, nullSafe(field), Comparator.NOT_LIKE, escape);
     }
 
     @Override
@@ -428,13 +428,13 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    public final Condition notLikeIgnoreCase(Field<String> value) {
-        return new CompareCondition(this, nullSafe(value), Comparator.NOT_LIKE_IGNORE_CASE);
+    public final Condition notLikeIgnoreCase(Field<String> field) {
+        return new CompareCondition(this, nullSafe(field), Comparator.NOT_LIKE_IGNORE_CASE);
     }
 
     @Override
-    public final Condition notLikeIgnoreCase(Field<String> value, char escape) {
-        return new CompareCondition(this, nullSafe(value), Comparator.NOT_LIKE_IGNORE_CASE, escape);
+    public final Condition notLikeIgnoreCase(Field<String> field, char escape) {
+        return new CompareCondition(this, nullSafe(field), Comparator.NOT_LIKE_IGNORE_CASE, escape);
     }
 
     @Override
@@ -721,7 +721,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition equal(Field<T> field) {
-        return new CompareCondition(this, nullSafe(field), Comparator.EQUALS);
+        return compare(Comparator.EQUALS, nullSafe(field));
     }
 
     @Override
@@ -782,7 +782,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notEqual(Field<T> field) {
-        return new CompareCondition(this, nullSafe(field), Comparator.NOT_EQUALS);
+        return compare(Comparator.NOT_EQUALS, nullSafe(field));
     }
 
     @Override
@@ -843,7 +843,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition lessThan(Field<T> field) {
-        return new CompareCondition(this, nullSafe(field), Comparator.LESS);
+        return compare(Comparator.LESS, nullSafe(field));
     }
 
     @Override
@@ -894,7 +894,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition lessOrEqual(Field<T> field) {
-        return new CompareCondition(this, nullSafe(field), Comparator.LESS_OR_EQUAL);
+        return compare(Comparator.LESS_OR_EQUAL, nullSafe(field));
     }
 
     @Override
@@ -945,7 +945,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition greaterThan(Field<T> field) {
-        return new CompareCondition(this, nullSafe(field), Comparator.GREATER);
+        return compare(Comparator.GREATER, nullSafe(field));
     }
 
     @Override
@@ -996,7 +996,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition greaterOrEqual(Field<T> field) {
-        return new CompareCondition(this, nullSafe(field), Comparator.GREATER_OR_EQUAL);
+        return compare(Comparator.GREATER_OR_EQUAL, nullSafe(field));
     }
 
     @Override
@@ -1038,6 +1038,23 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition greaterOrEqualAll(Field<T[]> array) {
         return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.GREATER_OR_EQUAL_ALL);
+    }
+
+    @Override
+    public final Condition compare(Comparator comparator, T value) {
+        return compare(comparator, val(value, this));
+    }
+
+    @Override
+    public final Condition compare(Comparator comparator, Field<T> field) {
+        switch (comparator) {
+            case IS_DISTINCT_FROM:
+            case IS_NOT_DISTINCT_FROM:
+                return new IsDistinctFrom<T>(this, nullSafe(field), comparator);
+
+            default:
+                return new CompareCondition(this, nullSafe(field), comparator);
+        }
     }
 
     // ------------------------------------------------------------------------

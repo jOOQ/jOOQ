@@ -139,12 +139,17 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final SortField<T> asc() {
-        return new SortFieldImpl<T>(this, SortOrder.ASC);
+        return sort(SortOrder.ASC);
     }
 
     @Override
     public final SortField<T> desc() {
-        return new SortFieldImpl<T>(this, SortOrder.DESC);
+        return sort(SortOrder.DESC);
+    }
+
+    @Override
+    public final SortField<T> sort(SortOrder order) {
+        return new SortFieldImpl<T>(this, order);
     }
 
     @Override

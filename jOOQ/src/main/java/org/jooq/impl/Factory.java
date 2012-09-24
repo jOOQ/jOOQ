@@ -956,6 +956,31 @@ public class Factory implements FactoryOperations {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a qualified schema, given its schema name
+     * <p>
+     * This constructs a schema reference given the schema's qualified name.
+     * jOOQ will render the schema name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This schema...
+     * schemaByName("MY_SCHEMA");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA]
+     * </pre></code>
+     *
+     * @param name The schema's reference name.
+     * @return A schema referenced by <code>name</code>
+     */
+    @Support
+    public static Schema schemaByName(String name) {
+        return new SchemaImpl(name);
+    }
+
+    /**
      * A custom SQL clause that can render arbitrary table expressions.
      * <p>
      * A plain SQL table is a table that can contain user-defined plain SQL,
@@ -1066,7 +1091,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * Example: <code><pre>
      * // This table...
-     * tableName("MY_SCHEMA", "MY_TABLE");
+     * tableByName("MY_SCHEMA", "MY_TABLE");
      *
      * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
      * [MY_SCHEMA].[MY_TABLE]
@@ -1350,7 +1375,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * Example: <code><pre>
      * // This field...
-     * fieldName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
+     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
      *
      * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
@@ -1385,7 +1410,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * Example: <code><pre>
      * // This field...
-     * fieldName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
+     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
      *
      * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
@@ -1421,7 +1446,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * Example: <code><pre>
      * // This field...
-     * fieldName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
+     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
      *
      * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]

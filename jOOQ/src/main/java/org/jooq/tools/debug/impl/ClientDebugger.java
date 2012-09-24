@@ -40,10 +40,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.jooq.Field;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Schema;
+import org.jooq.Table;
 import org.jooq.tools.debug.Breakpoint;
 import org.jooq.tools.debug.BreakpointListener;
 import org.jooq.tools.debug.Debugger;
@@ -239,6 +242,21 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
                 executor = new QueryExecutor() {
 
                     @Override
+                    public Schema[] schemata() {
+                        return context.getClientDebugger().getCommunicationInterface().syncSend(new CMC_schemata());
+                    }
+
+                    @Override
+                    public Table<?>[] tables(Schema... schemata) {
+                        return context.getClientDebugger().getCommunicationInterface().syncSend(new CMC_tables(schemata));
+                    }
+
+                    @Override
+                    public Field<?>[] fields(Table<?>... tables) {
+                        return context.getClientDebugger().getCommunicationInterface().syncSend(new CMC_fields(tables));
+                    }
+
+                    @Override
                     public <R extends Record> Result<R> fetch(ResultQuery<R> query) {
                         return context.getClientDebugger().getCommunicationInterface().syncSend(new CMC_fetch<R>(query));
                     }
@@ -251,6 +269,60 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
             }
 
             hitContext.executor(executor);
+        }
+    }
+
+    static class CMC_schemata extends CommandMessage<Schema[]> {
+
+        /**
+         * Generated UID
+         */
+        private static final long    serialVersionUID = -9163573787750356644L;
+
+        CMC_schemata() {
+        }
+
+        @Override
+        public Schema[] run(MessageContext context) {
+            return DebugListener.BREAKPOINT_EXECUTORS.get().schemata();
+        }
+    }
+
+    static class CMC_tables extends CommandMessage<Table<?>[]> {
+
+        /**
+         * Generated UID
+         */
+        private static final long    serialVersionUID = -9163573787750356644L;
+
+        private final Schema[] schemata;
+
+        CMC_tables(Schema[] schemata) {
+            this.schemata = schemata;
+        }
+
+        @Override
+        public Table<?>[] run(MessageContext context) {
+            return DebugListener.BREAKPOINT_EXECUTORS.get().tables(schemata);
+        }
+    }
+
+    static class CMC_fields extends CommandMessage<Field<?>[]> {
+
+        /**
+         * Generated UID
+         */
+        private static final long    serialVersionUID = -9163573787750356644L;
+
+        private final Table<?>[] tables;
+
+        CMC_fields(Table<?>[] tables) {
+            this.tables = tables;
+        }
+
+        @Override
+        public Field<?>[] run(MessageContext context) {
+            return DebugListener.BREAKPOINT_EXECUTORS.get().fields(tables);
         }
     }
 

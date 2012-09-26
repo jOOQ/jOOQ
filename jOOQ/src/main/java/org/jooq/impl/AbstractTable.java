@@ -56,6 +56,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
+import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 
 abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQueryPart<R> implements Table<R> {
@@ -186,8 +187,13 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     // ------------------------------------------------------------------------
 
     @Override
+    public TableOptionalOnStep join(TableLike<?> table, JoinType type) {
+        return new JoinTable(this, table, type);
+    }
+
+    @Override
     public final TableOnStep join(TableLike<?> table) {
-        return new JoinTable(this, table, JoinType.JOIN);
+        return join(table, JoinType.JOIN);
     }
 
     @Override
@@ -207,7 +213,7 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
 
     @Override
     public final TablePartitionByStep leftOuterJoin(TableLike<?> table) {
-        return new JoinTable(this, table, JoinType.LEFT_OUTER_JOIN);
+        return join(table, JoinType.LEFT_OUTER_JOIN);
     }
 
     @Override
@@ -227,7 +233,7 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
 
     @Override
     public final TablePartitionByStep rightOuterJoin(TableLike<?> table) {
-        return new JoinTable(this, table, JoinType.RIGHT_OUTER_JOIN);
+        return join(table, JoinType.RIGHT_OUTER_JOIN);
     }
 
     @Override
@@ -247,7 +253,7 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
 
     @Override
     public final TableOnStep fullOuterJoin(TableLike<?> table) {
-        return new JoinTable(this, table, JoinType.FULL_OUTER_JOIN);
+        return join(table, JoinType.FULL_OUTER_JOIN);
     }
 
     @Override
@@ -267,7 +273,7 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
 
     @Override
     public final Table<Record> crossJoin(TableLike<?> table) {
-        return new JoinTable(this, table, JoinType.CROSS_JOIN);
+        return join(table, JoinType.CROSS_JOIN);
     }
 
     @Override
@@ -287,7 +293,7 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
 
     @Override
     public final Table<Record> naturalJoin(TableLike<?> table) {
-        return new JoinTable(this, table, JoinType.NATURAL_JOIN);
+        return join(table, JoinType.NATURAL_JOIN);
     }
 
     @Override
@@ -307,7 +313,7 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
 
     @Override
     public final Table<Record> naturalLeftOuterJoin(TableLike<?> table) {
-        return new JoinTable(this, table, JoinType.NATURAL_LEFT_OUTER_JOIN);
+        return join(table, JoinType.NATURAL_LEFT_OUTER_JOIN);
     }
 
     @Override
@@ -327,7 +333,7 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
 
     @Override
     public final Table<Record> naturalRightOuterJoin(TableLike<?> table) {
-        return new JoinTable(this, table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
+        return join(table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
     }
 
     @Override

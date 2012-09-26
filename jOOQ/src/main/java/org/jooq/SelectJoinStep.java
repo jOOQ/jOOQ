@@ -61,7 +61,7 @@ import org.jooq.impl.Factory;
  * -- more than five books in German in the last three years
  * -- (from 2011), and sort those authors by last names
  * -- limiting results to the second and third row
- *
+ * 
  *   SELECT T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, COUNT(*)
  *     FROM T_AUTHOR
  *     JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
@@ -90,15 +90,27 @@ import org.jooq.impl.Factory;
  *       .of(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
  *       .noWait();
  * </pre></code> Refer to the manual for more details
- *
+ * 
  * @author Lukas Eder
  */
 public interface SelectJoinStep extends SelectWhereStep {
 
     /**
+     * Convenience method to join a table to the last table added to the
+     * <code>FROM</code> clause using {@link Table#join(TableLike, JoinType)}
+     * <p>
+     * Depending on the <code>JoinType</code>, a subsequent
+     * {@link SelectOnStep#on(Condition...)} or
+     * {@link SelectOnStep#using(Field...)} clause is required. If it is
+     * required but omitted, the JOIN clause will be ignored
+     */
+    @Support
+    SelectOptionalOnStep join(TableLike<?> table, JoinType type);
+
+    /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
      * added to the <code>FROM</code> clause using {@link Table#join(TableLike)}
-     *
+     * 
      * @see Table#join(TableLike)
      */
     @Support
@@ -112,7 +124,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      * @see Table#join(String)
      */
@@ -128,7 +140,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      * @see Table#join(String, Object...)
      */
@@ -144,7 +156,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      * @see Table#join(String, QueryPart...)
      */
@@ -162,7 +174,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * A cross join B
      * A join B on 1 = 1
      * </pre></code>
-     *
+     * 
      * @see Table#crossJoin(TableLike)
      */
     @Support
@@ -184,7 +196,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      * @see Table#crossJoin(String)
      */
@@ -207,7 +219,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      * @see Table#crossJoin(String, Object...)
      */
@@ -230,7 +242,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      * @see Table#crossJoin(String, QueryPart...)
      */
@@ -241,7 +253,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#leftOuterJoin(TableLike)}
-     *
+     * 
      * @see Table#leftOuterJoin(TableLike)
      */
     @Support
@@ -256,7 +268,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      * @see Table#leftOuterJoin(String)
      */
@@ -272,7 +284,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      * @see Table#leftOuterJoin(String, Object...)
      */
@@ -288,7 +300,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      * @see Table#leftOuterJoin(String, QueryPart...)
      */
@@ -301,7 +313,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * {@link Table#rightOuterJoin(TableLike)}
      * <p>
      * This is only possible where the underlying RDBMS supports it
-     *
+     * 
      * @see Table#rightOuterJoin(TableLike)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -318,7 +330,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      * @see Table#rightOuterJoin(String)
      */
@@ -336,7 +348,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      * @see Table#rightOuterJoin(String, Object...)
      */
@@ -354,7 +366,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      * @see Table#rightOuterJoin(String, QueryPart...)
      */
@@ -367,7 +379,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * {@link Table#fullOuterJoin(TableLike)}
      * <p>
      * This is only possible where the underlying RDBMS supports it
-     *
+     * 
      * @see Table#fullOuterJoin(TableLike)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -384,7 +396,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      * @see Table#fullOuterJoin(String)
      */
@@ -402,7 +414,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      * @see Table#fullOuterJoin(String, Object...)
      */
@@ -420,7 +432,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      * @see Table#fullOuterJoin(String, QueryPart...)
      */
@@ -434,7 +446,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
-     *
+     * 
      * @see Table#naturalJoin(TableLike)
      */
     @Support
@@ -452,7 +464,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      * @see Table#naturalJoin(String)
      */
@@ -471,7 +483,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      * @see Table#naturalJoin(String, Object...)
      */
@@ -490,7 +502,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      * @see Table#naturalJoin(String, QueryPart...)
      */
@@ -504,7 +516,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
-     *
+     * 
      * @see Table#naturalLeftOuterJoin(TableLike)
      */
     @Support
@@ -522,7 +534,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      * @see Table#naturalLeftOuterJoin(String)
      */
@@ -541,7 +553,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      * @see Table#naturalLeftOuterJoin(String, Object...)
      */
@@ -560,7 +572,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      * @see Table#naturalLeftOuterJoin(String, QueryPart...)
      */
@@ -574,7 +586,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
-     *
+     * 
      * @see Table#naturalRightOuterJoin(TableLike)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -592,7 +604,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      * @see Table#naturalRightOuterJoin(String)
      */
@@ -611,7 +623,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      * @see Table#naturalRightOuterJoin(String, Object...)
      */
@@ -630,7 +642,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      * @see Table#naturalRightOuterJoin(String, QueryPart...)
      */

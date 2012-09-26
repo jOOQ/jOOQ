@@ -57,11 +57,11 @@ import org.jooq.SelectConditionStep;
 import org.jooq.SelectConnectByConditionStep;
 import org.jooq.SelectForUpdateOfStep;
 import org.jooq.SelectHavingConditionStep;
-import org.jooq.SelectJoinPartitionByStep;
 import org.jooq.SelectJoinStep;
 import org.jooq.SelectOffsetStep;
 import org.jooq.SelectOnConditionStep;
 import org.jooq.SelectOnStep;
+import org.jooq.SelectOptionalOnStep;
 import org.jooq.SelectQuery;
 import org.jooq.SelectSelectStep;
 import org.jooq.SortField;
@@ -79,7 +79,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     // Cascading interface implementations for Select behaviour
     SelectSelectStep,
-    SelectJoinPartitionByStep,
+    SelectOptionalOnStep,
     SelectOnConditionStep,
     SelectConditionStep,
     SelectConnectByConditionStep,
@@ -689,59 +689,69 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl join(TableLike<?> table) {
-        return join0(table, JoinType.JOIN);
+        return join(table, JoinType.JOIN);
     }
 
     @Override
     public final SelectImpl leftOuterJoin(TableLike<?> table) {
-        return join0(table, JoinType.LEFT_OUTER_JOIN);
+        return join(table, JoinType.LEFT_OUTER_JOIN);
     }
 
     @Override
     public final SelectImpl rightOuterJoin(TableLike<?> table) {
-        return join0(table, JoinType.RIGHT_OUTER_JOIN);
+        return join(table, JoinType.RIGHT_OUTER_JOIN);
     }
 
     @Override
     public final SelectOnStep fullOuterJoin(TableLike<?> table) {
-        return join0(table, JoinType.FULL_OUTER_JOIN);
+        return join(table, JoinType.FULL_OUTER_JOIN);
     }
 
-    private final SelectImpl join0(TableLike<?> table, JoinType type) {
-        conditionStep = ConditionStep.ON;
-        joinTable = table;
-        joinType = type;
-        joinPartitionBy = null;
-        joinConditions = null;
-        return this;
+    @Override
+    public final SelectImpl join(TableLike<?> table, JoinType type) {
+        switch (type) {
+            case CROSS_JOIN:
+            case NATURAL_JOIN:
+            case NATURAL_LEFT_OUTER_JOIN:
+            case NATURAL_RIGHT_OUTER_JOIN: {
+                getQuery().addJoin(table, type);
+                joinTable = null;
+                joinPartitionBy = null;
+                joinType = null;
+
+                return this;
+            }
+
+            default: {
+                conditionStep = ConditionStep.ON;
+                joinTable = table;
+                joinType = type;
+                joinPartitionBy = null;
+                joinConditions = null;
+
+                return this;
+            }
+        }
     }
 
     @Override
     public final SelectJoinStep crossJoin(TableLike<?> table) {
-        return simpleJoin0(table, JoinType.CROSS_JOIN);
+        return join(table, JoinType.CROSS_JOIN);
     }
 
     @Override
     public final SelectImpl naturalJoin(TableLike<?> table) {
-        return simpleJoin0(table, JoinType.NATURAL_JOIN);
+        return join(table, JoinType.NATURAL_JOIN);
     }
 
     @Override
     public final SelectImpl naturalLeftOuterJoin(TableLike<?> table) {
-        return simpleJoin0(table, JoinType.NATURAL_LEFT_OUTER_JOIN);
+        return join(table, JoinType.NATURAL_LEFT_OUTER_JOIN);
     }
 
     @Override
     public final SelectImpl naturalRightOuterJoin(TableLike<?> table) {
-        return simpleJoin0(table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
-    }
-
-    private final SelectImpl simpleJoin0(TableLike<?> table, JoinType type) {
-        getQuery().addJoin(table, type);
-        joinTable = null;
-        joinPartitionBy = null;
-        joinType = null;
-        return this;
+        return join(table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
     }
 
     @Override

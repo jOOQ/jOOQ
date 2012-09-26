@@ -73,7 +73,7 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnConditionStep;
 import org.jooq.TableOnStep;
-import org.jooq.TablePartitionByStep;
+import org.jooq.TableOptionalOnStep;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -81,7 +81,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-class JoinTable extends AbstractTable<Record> implements TableOnConditionStep, TablePartitionByStep {
+class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, TableOnConditionStep {
 
     /**
      * Generated UID

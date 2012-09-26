@@ -57,7 +57,7 @@ import org.jooq.impl.Factory;
 
 /**
  * A table to be used in queries
- *
+ * 
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
@@ -78,7 +78,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
 
     /**
      * Create an alias for this table
-     *
+     * 
      * @param alias The alias name
      * @return The table alias
      */
@@ -101,7 +101,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * <p>
      * Note: Unfortunately, this is not supported in the Oracle dialect, where
      * identities simulated by triggers cannot be formally detected.
-     *
+     * 
      * @return The table's <code>IDENTITY</code> information, or
      *         <code>null</code>, if no such information is available.
      */
@@ -109,7 +109,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
 
     /**
      * Get the list of <code>FOREIGN KEY</code>'s of this table
-     *
+     * 
      * @return This table's <code>FOREIGN KEY</code>'s. This is never
      *         <code>null</code>.
      */
@@ -118,7 +118,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
     /**
      * Get a list of <code>FOREIGN KEY</code>'s of this table, referencing a
      * specific table.
-     *
+     * 
      * @param <O> The other table's record type
      * @param other The other table of the foreign key relationship
      * @return This table's <code>FOREIGN KEY</code>'s towards an other table.
@@ -137,7 +137,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * <li>Other dialects by using some means of simulation (not yet officially
      * supported)</li>
      * </ul>
-     *
+     * 
      * @param aggregateFunctions The aggregate functions used for pivoting.
      * @return A DSL object to create the <code>PIVOT</code> expression
      */
@@ -149,7 +149,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * into another form
      * <p>
      * For more details, see {@link #pivot(Field...)}
-     *
+     * 
      * @param aggregateFunctions The aggregate functions used for pivoting.
      * @return A DSL object to create the <code>PIVOT</code> expression
      * @see #pivot(Field...)
@@ -166,7 +166,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * <code><pre>
      * Assume the following cross join / cartesian product
      * C = A × B
-     *
+     * 
      * Then it can be said that
      * A = C ÷ B
      * B = C ÷ A
@@ -199,16 +199,30 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * examples, see
      * <ul>
      * <li><a
-     * href="http://en.wikipedia.org/wiki/Relational_algebra#Division">http://en.wikipedia.org/wiki/Relational_algebra#Division</a></li>
+     * href="http://en.wikipedia.org/wiki/Relational_algebra#Division">http
+     * ://en.wikipedia.org/wiki/Relational_algebra#Division</a></li>
      * <li><a href=
      * "http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/"
-     * >http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/</a></li>
+     * >http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-
+     * sql-of-relational-division/</a></li>
      * </ul>
      * <p>
      * This has been observed to work with all dialects
      */
     @Support
     DivideByOnStep divideBy(Table<?> divisor);
+
+    /**
+     * Join a table to this table using a {@link JoinType}
+     * <p>
+     * Depending on the <code>JoinType</code>, a subsequent
+     * {@link TableOnStep#on(Condition...)} or
+     * {@link TableOnStep#using(Field...)} clause is required. If it is required
+     * but omitted, a {@link Factory#trueCondition()}, i.e. <code>1 = 1</code>
+     * condition will be rendered
+     */
+    @Support
+    TableOptionalOnStep join(TableLike<?> table, JoinType type);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -223,7 +237,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      */
     @Support
@@ -236,7 +250,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      */
     @Support
@@ -249,7 +263,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      */
     @Support
@@ -268,7 +282,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      */
     @Support
@@ -281,7 +295,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      */
     @Support
@@ -294,7 +308,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      */
     @Support
@@ -317,7 +331,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -332,7 +346,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -347,7 +361,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -370,7 +384,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -385,7 +399,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -400,7 +414,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -433,7 +447,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      */
     @Support
@@ -453,7 +467,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      */
     @Support
@@ -473,7 +487,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      */
     @Support
@@ -498,7 +512,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      */
     @Support
@@ -514,7 +528,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      */
     @Support
@@ -530,7 +544,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      */
     @Support
@@ -555,7 +569,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      */
     @Support
@@ -571,7 +585,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      */
     @Support
@@ -587,7 +601,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      */
     @Support
@@ -612,7 +626,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -628,7 +642,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -644,7 +658,7 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     *
+     * 
      * @see Factory#table(String, QueryPart...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })

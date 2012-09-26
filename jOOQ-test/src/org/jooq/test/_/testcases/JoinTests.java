@@ -55,6 +55,7 @@ import static org.jooq.impl.Factory.zero;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.JoinType;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -277,6 +278,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(
            asList(1, 2, 1, 2),
            result.getValues(0 + TAuthor().getFields().size(), Integer.class));
+
+        // [#1844] Cross joins can be achieved by omitting the ON clause, too
+        assertEquals(8, (int)
+        create().selectCount()
+                .from(TAuthor()
+                    .join(TBook(), JoinType.JOIN))
+                .fetchOne(0, int.class));
+
+        assertEquals(8, (int)
+        create().selectCount()
+                .from(TAuthor())
+                .join(TBook(), JoinType.CROSS_JOIN)
+                .fetchOne(0, int.class));
     }
 
     @Test

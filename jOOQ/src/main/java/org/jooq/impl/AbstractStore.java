@@ -289,8 +289,14 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
                     final Object thisValue = getValue(i);
                     final Object thatValue = that.getValue(i);
 
-                    if (thisValue == null || thatValue == null) {
-                        return thisValue == thatValue;
+                    // [#1850] Only return false early. In all other cases,
+                    // continue checking the remaining fields
+                    if (thisValue == null && thatValue == null) {
+                        continue;
+                    }
+
+                    else if (thisValue == null || thatValue == null) {
+                        return false;
                     }
 
                     // [#985] Compare arrays too.
@@ -298,13 +304,17 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
                         // Might be byte[]
                         if (thisValue.getClass() == byte[].class && thatValue.getClass() == byte[].class) {
-                            return Arrays.equals((byte[]) thisValue, (byte[]) thatValue);
+                            if (!Arrays.equals((byte[]) thisValue, (byte[]) thatValue)) {
+                                return false;
+                            }
                         }
 
                         // Other primitive types are not expected
                         else if (!thisValue.getClass().getComponentType().isPrimitive() &&
                                  !thatValue.getClass().getComponentType().isPrimitive()) {
-                            return Arrays.equals((Object[]) thisValue, (Object[]) thatValue);
+                            if (!Arrays.equals((Object[]) thisValue, (Object[]) thatValue)) {
+                                return false;
+                            }
                         }
 
                         else {

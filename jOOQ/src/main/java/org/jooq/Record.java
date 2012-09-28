@@ -1294,6 +1294,14 @@ public interface Record extends FieldProvider, Store<Object> {
     <R extends Record> R into(Table<R> table);
 
     /**
+     * Map this record into a custom mapper callback
+     *
+     * @param mapper The mapper callback
+     * @return The custom mapped record
+     */
+    <E> E map(RecordMapper<Record, E> mapper);
+
+    /**
      * Load data into this record from a source. The mapping algorithm is this:
      * <h3>If any JPA {@link Column} annotations are found on the {@link Class}
      * of the provided <code>source</code>, only those are used. Matching

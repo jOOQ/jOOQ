@@ -70,6 +70,7 @@ import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
+import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
@@ -1267,6 +1268,29 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                         assertEquals(count.poll(), record.getValue(count()));
                     }
                 });
+    }
+
+    @Test
+    public void testFetchIntoRecordMapper() throws Exception {
+        assertEquals(BOOK_IDS,
+        create().selectFrom(TBook())
+                .orderBy(TBook_ID())
+                .fetch(new RecordMapper<B, Integer>() {
+                    @Override
+                    public Integer map(B record) {
+                        return record.getValue(TBook_ID());
+                    }
+                }));
+
+        assertEquals(BOOK_TITLES,
+        create().selectFrom(TBook())
+                .orderBy(TBook_ID())
+                .fetch(new RecordMapper<Record, String>() {
+                    @Override
+                    public String map(Record record) {
+                        return record.getValue(TBook_TITLE());
+                    }
+                }));
     }
 
     @Test

@@ -46,6 +46,7 @@ import org.jooq.Field;
 import org.jooq.FutureResult;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
+import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Select;
@@ -336,6 +337,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     @Override
     public final <H extends RecordHandler<R>> H fetchInto(H handler) {
         return getDelegate().fetchInto(handler);
+    }
+
+    @Override
+    public final <E> List<E> fetch(RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetch(mapper);
     }
 
     @Override

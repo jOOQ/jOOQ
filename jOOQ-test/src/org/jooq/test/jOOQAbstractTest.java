@@ -1153,6 +1153,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchIntoRecordMapper() throws Exception {
+        new FetchTests(this).testFetchIntoRecordMapper();
+    }
+
+    @Test
     public void testFetchLater() throws Exception {
         new FetchTests(this).testFetchLater();
     }

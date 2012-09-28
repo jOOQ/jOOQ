@@ -69,6 +69,7 @@ import org.jooq.Converter;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
+import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
@@ -919,6 +920,11 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         catch (Exception e) {
             throw new MappingException("An error ocurred when mapping record to " + table, e);
         }
+    }
+
+    @Override
+    public final <E> E map(RecordMapper<Record, E> mapper) {
+        return mapper.map(this);
     }
 
     @Override

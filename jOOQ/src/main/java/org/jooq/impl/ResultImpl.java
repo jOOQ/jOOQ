@@ -75,6 +75,7 @@ import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
+import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.Store;
 import org.jooq.Table;
@@ -1611,6 +1612,17 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
 
         return handler;
+    }
+
+    @Override
+    public final <E> List<E> map(RecordMapper<? super R, E> mapper) {
+        List<E> result = new ArrayList<E>();
+
+        for (R record : this) {
+            result.add(mapper.map(record));
+        }
+
+        return result;
     }
 
     @Override

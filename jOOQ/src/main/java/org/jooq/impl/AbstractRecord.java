@@ -594,6 +594,21 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         return result == null ? defaultValue : result;
     }
 
+    /*
+     * This method is overridden covariantly by TableRecordImpl
+     */
+    @Override
+    public Record original() {
+        AbstractRecord result = Util.newRecord(getClass(), getFieldProvider(), getConfiguration());
+        Value<?>[] v = getValues();
+
+        for (int i = 0; i < v.length; i++) {
+            result.setValue(i, new Value<Object>(v[i].getOriginal()));
+        }
+
+        return result;
+    }
+
     @Override
     public final Object[] intoArray() {
         return into(Object[].class);

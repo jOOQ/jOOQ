@@ -256,4 +256,10 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      */
     @Deprecated
     void refreshUsing(TableField<R, ?>... keys) throws DataAccessException;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    R original();
 }

@@ -688,6 +688,10 @@ public abstract class BaseTest<
         return delegate.getConnection();
     }
 
+    protected final Connection getConnectionMultiSchema() {
+        return delegate.getConnectionMultiSchema();
+    }
+
     protected final Connection getNewConnection() {
         return delegate.getConnection0(null, null);
     }

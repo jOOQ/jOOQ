@@ -41,6 +41,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.Executor;
 import org.jooq.tools.debug.Matcher;
 
 /**
@@ -57,22 +58,22 @@ class LocalDebugger extends AbstractDebuggerObject implements Debugger {
     private static final long serialVersionUID = 7828985946284691522L;
 
     public LocalDebugger() {
-        DebuggerRegistry.add(this);
+        LocalRegistry.add(this);
     }
 
     @Override
     void apply() {}
 
     @Override
-    public void remove() {
-        DebuggerRegistry.remove(this);
+    public final void remove() {
+        LocalRegistry.remove(this);
     }
 
     private List<Matcher> matchers     = new ArrayList<Matcher>();
     private final Object  MATCHER_LOCK = new Object();
 
     @Override
-    public Matcher newMatcher() {
+    public final Matcher newMatcher() {
         Matcher result = new MatcherImpl();
         setMatcher(result);
         return result;
@@ -100,16 +101,26 @@ class LocalDebugger extends AbstractDebuggerObject implements Debugger {
     }
 
     @Override
-    public Matcher[] matchers() {
+    public final Matcher[] matchers() {
         synchronized (MATCHER_LOCK) {
             return matchers.toArray(new Matcher[matchers.size()]);
         }
     }
 
+    @Override
+    public final Executor executor(String name) {
+        return DebuggerAPI.executor(name);
+    }
+
+    @Override
+    public final Executor[] executors() {
+        return DebuggerAPI.executors();
+    }
+
     /**
      * A registry for local debuggers
      */
-    static class DebuggerRegistry {
+    static class LocalRegistry {
 
         /**
          * A list of registered debuggers
@@ -148,6 +159,6 @@ class LocalDebugger extends AbstractDebuggerObject implements Debugger {
         /**
          * No instances
          */
-        private DebuggerRegistry() {}
+        private LocalRegistry() {}
     }
 }

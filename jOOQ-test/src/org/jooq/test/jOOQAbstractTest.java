@@ -74,7 +74,6 @@ import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
-import org.jooq.conf.ExecuteDebugging;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -118,6 +117,7 @@ import org.jooq.test._.testcases.ThreadSafetyTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.debug.impl.DebuggerAPI;
 import org.jooq.tools.debug.old.Debugger;
 import org.jooq.tools.debug.old.impl.DebuggerFactory;
 import org.jooq.tools.reflect.ReflectException;
@@ -131,6 +131,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.postgresql.util.PSQLException;
 
@@ -374,6 +375,12 @@ public abstract class jOOQAbstractTest<
         }
     }
 
+    @BeforeClass
+    public static void console() throws Exception {
+        DebuggerAPI.startServer(DEBUGGER_PORT);
+        DebuggerAPI.debug(true);
+    }
+
     @Before
     public void setUp() throws Exception {
         connection = getConnection();
@@ -424,6 +431,8 @@ public abstract class jOOQAbstractTest<
 
         log.info("---------------");
         log.info("Total", total);
+
+        DebuggerAPI.stopServer();
     }
 
     public final Connection getConnection() {
@@ -432,9 +441,6 @@ public abstract class jOOQAbstractTest<
             connection = getConnection0(null, null);
 
             if (RUN_CONSOLE_IN_PROCESS) {
-                // This workaround will start the server
-                create().selectOne().fetch();
-
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     Debugger debugger = DebuggerFactory.remoteDebugger("127.0.0.1", DEBUGGER_PORT);
@@ -740,8 +746,6 @@ public abstract class jOOQAbstractTest<
         Boolean renderSchema = Boolean.valueOf(System.getProperty("org.jooq.settings.renderSchema", "true"));
 
         Settings settings = SettingsTools.defaultSettings()
-            .withExecuteDebugging(ExecuteDebugging.SERVER)
-            .withExecuteDebuggingPort(DEBUGGER_PORT)
             .withRenderSchema(renderSchema)
             .withRenderMapping(new RenderMapping()
                 .withDefaultSchema(defaultSchema))
@@ -1739,6 +1743,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testRenderKeywordStyle() throws Exception {
         new RenderAndBindTests(this).testRenderKeywordStyle();
+    }
+
+    @Test
+    public void testDebuggerExecutor() throws Exception {
+        new DebuggerTests(this).testDebuggerExecutor();
     }
 
     @Test

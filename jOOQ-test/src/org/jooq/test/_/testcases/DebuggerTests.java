@@ -39,8 +39,8 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.inline;
-import static org.jooq.tools.debug.impl.DebuggerFactory.localDebugger;
-import static org.jooq.tools.debug.impl.DebuggerFactory.remoteDebugger;
+import static org.jooq.tools.debug.impl.DebuggerAPI.localDebugger;
+import static org.jooq.tools.debug.impl.DebuggerAPI.remoteDebugger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,6 +59,7 @@ import org.jooq.tools.debug.Action;
 import org.jooq.tools.debug.Breakpoint;
 import org.jooq.tools.debug.BreakpointListener;
 import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.Executor;
 import org.jooq.tools.debug.HitContext;
 import org.jooq.tools.debug.Logger;
 import org.jooq.tools.debug.LoggerListener;
@@ -67,6 +68,7 @@ import org.jooq.tools.debug.Processor;
 import org.jooq.tools.debug.QueryLog;
 import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.Step;
+import org.jooq.tools.debug.impl.DebuggerAPI;
 
 import org.junit.Test;
 
@@ -253,6 +255,74 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testDebuggerExecutor() throws Exception {
+
+        // This is local to the server-side!
+        if (schema() != null) {
+            DebuggerAPI.setExecutor("GENERATED", create(), schema());
+        }
+        DebuggerAPI.setExecutor("META", create());
+
+        try {
+            run(new DebugTestRunnable() {
+
+                @Override
+                public void run(Debugger remote, Debugger local) throws Exception {
+                    Executor[] generated = { remote.executor("GENERATED"), local.executor("GENERATED") };
+                    Executor[] meta = { remote.executor("META"), local.executor("META") };
+
+                    for (Executor exe : generated) {
+                        assertEquals("GENERATED", exe.getName());
+                        executorTests(exe);
+                    }
+
+                    for (Executor exe : meta) {
+                        assertEquals("META", exe.getName());
+                        executorTests(exe);
+                    }
+                }
+            });
+        }
+        finally {
+            DebuggerAPI.removeExecutor("GENERATED");
+            DebuggerAPI.removeExecutor("META");
+        }
+    }
+
+    private void executorTests(Executor executor) {
+        if (schema() != null) {
+            List<Schema> schemata = Arrays.asList(executor.getSchemata());
+            assertTrue(schemata.contains(schema()));
+        }
+
+        List<Table<?>> tables1 = Arrays.asList(executor.getTables());
+        assertTrue(tables1.contains(TBook()));
+        assertTrue(tables1.contains(TAuthor()));
+
+        if (schema() != null) {
+            List<Table<?>> tables2 = Arrays.asList(executor.getTables(schema()));
+            assertTrue(tables2.contains(TBook()));
+            assertTrue(tables2.contains(TAuthor()));
+        }
+
+        List<Field<?>> fields1 = Arrays.asList(executor.getFields());
+        assertTrue(fields1.contains(TBook_ID()));
+        assertTrue(fields1.contains(TBook_TITLE()));
+        assertTrue(fields1.contains(TAuthor_ID()));
+
+        List<Field<?>> fields2 = Arrays.asList(executor.getFields(TBook()));
+        assertTrue(fields2.contains(TBook_ID()));
+        assertTrue(fields2.contains(TBook_TITLE()));
+        assertFalse(fields2.contains(TAuthor_ID()));
+
+        Result<Record> result =
+        executor.fetch(create().selectCount().from(TAuthor()));
+
+        assertEquals(1, result.size());
+        assertEquals(2, (int) result.get(0).getValue(0, int.class));
+    }
+
+    @Test
     public void testDebuggerLogger() throws Exception {
         run(new DebugTestRunnable() {
 
@@ -297,43 +367,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         @Override
         public Step before(HitContext context) {
-            if (schema() != null) {
-                List<Schema> schemata = Arrays.asList(context.executor().schemata());
-                assertTrue(schemata.contains(schema()));
-            }
-
-            List<Table<?>> tables1 = Arrays.asList(context.executor().tables());
-            assertTrue(tables1.contains(TBook()));
-            assertTrue(tables1.contains(TAuthor()));
-
-            if (schema() != null) {
-                List<Table<?>> tables2 = Arrays.asList(context.executor().tables(schema()));
-                assertTrue(tables2.contains(TBook()));
-                assertTrue(tables2.contains(TAuthor()));
-            }
-
-            List<Field<?>> fields1 = Arrays.asList(context.executor().fields());
-            assertTrue(fields1.contains(TBook_ID()));
-            assertTrue(fields1.contains(TBook_TITLE()));
-            assertTrue(fields1.contains(TAuthor_ID()));
-
-            List<Field<?>> fields2 = Arrays.asList(context.executor().fields(TBook()));
-            assertTrue(fields2.contains(TBook_ID()));
-            assertTrue(fields2.contains(TBook_TITLE()));
-            assertFalse(fields2.contains(TAuthor_ID()));
-
-            Result<Record> result =
-            context.executor().fetch(create().selectCount().from(TAuthor()));
-
-            assertEquals(1, result.size());
-            assertEquals(2, (int) result.get(0).getValue(0, int.class));
-
+            executorTests(context.executor());
             return Step.STEP;
         }
 
         @Override
         public Step after(HitContext context) throws Exception {
-            System.out.println(context);
+            executorTests(context.executor());
             return null;
         }
     }

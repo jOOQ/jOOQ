@@ -37,8 +37,8 @@
 package org.jooq.tools.debug.impl;
 
 import org.jooq.Query;
+import org.jooq.tools.debug.Executor;
 import org.jooq.tools.debug.HitContext;
-import org.jooq.tools.debug.QueryExecutor;
 
 /**
  * A default implementation for {@link HitContext}
@@ -51,12 +51,12 @@ class HitContextImpl implements HitContext {
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = -5668022635078979220L;
+    private static final long  serialVersionUID = -5668022635078979220L;
 
-    private final Query             query;
-    private transient QueryExecutor executor;
+    private final Query        query;
+    private transient Executor executor;
 
-    HitContextImpl(Query query, QueryExecutor executor) {
+    HitContextImpl(Query query, Executor executor) {
         this.query = query;
         this.executor = executor;
     }
@@ -67,11 +67,11 @@ class HitContextImpl implements HitContext {
     }
 
     @Override
-    public QueryExecutor executor() {
+    public Executor executor() {
         return executor;
     }
 
-    void executor(QueryExecutor e) {
+    void executor(Executor e) {
         this.executor = e;
     }
 

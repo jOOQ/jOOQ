@@ -37,8 +37,6 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Integer.toOctalString;
-import static org.jooq.conf.ExecuteDebugging.LOCAL;
-import static org.jooq.conf.ExecuteDebugging.SERVER;
 import static org.jooq.impl.Factory.escape;
 import static org.jooq.impl.Factory.getDataType;
 import static org.jooq.impl.Factory.nullSafe;
@@ -83,7 +81,6 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
-import org.jooq.conf.ExecuteDebugging;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
@@ -91,6 +88,7 @@ import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.debug.impl.DebugListener;
+import org.jooq.tools.debug.impl.DebuggerAPI;
 import org.jooq.tools.reflect.Reflect;
 
 /**
@@ -1059,8 +1057,7 @@ final class Util {
             result.add(new LoggerListener());
         }
 
-        ExecuteDebugging debugging = configuration.getSettings().getExecuteDebugging();
-        if (SERVER == debugging || LOCAL == debugging) {
+        if (DebuggerAPI.debug()) {
             result.add(new DebugListener());
         }
 

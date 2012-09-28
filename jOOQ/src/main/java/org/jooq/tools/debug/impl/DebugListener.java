@@ -36,7 +36,6 @@
  */
 package org.jooq.tools.debug.impl;
 
-import static org.jooq.conf.ExecuteDebugging.SERVER;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.debug.QueryOrigin.APPLICATION;
 import static org.jooq.tools.debug.QueryOrigin.BREAKPOINT_AFTER;
@@ -60,17 +59,17 @@ import org.jooq.tools.debug.Action;
 import org.jooq.tools.debug.Breakpoint;
 import org.jooq.tools.debug.BreakpointListener;
 import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.Executor;
 import org.jooq.tools.debug.HitContext;
 import org.jooq.tools.debug.Logger;
 import org.jooq.tools.debug.LoggerListener;
 import org.jooq.tools.debug.Matcher;
 import org.jooq.tools.debug.Processor;
-import org.jooq.tools.debug.QueryExecutor;
 import org.jooq.tools.debug.QueryLog;
 import org.jooq.tools.debug.QueryOrigin;
 import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.Step;
-import org.jooq.tools.debug.impl.LocalDebugger.DebuggerRegistry;
+import org.jooq.tools.debug.impl.LocalDebugger.LocalRegistry;
 
 /**
  * An {@link ExecuteListener} implementation for the jOOQ debugger API
@@ -81,7 +80,7 @@ import org.jooq.tools.debug.impl.LocalDebugger.DebuggerRegistry;
 public class DebugListener extends DefaultExecuteListener {
 
     private static final ThreadLocal<QueryOrigin> RECURSION_LOCK       = new ThreadLocal<QueryOrigin>();
-    static final ThreadLocal<QueryExecutor>       BREAKPOINT_EXECUTORS = new ThreadLocal<QueryExecutor>();
+    static final ThreadLocal<Executor>            BREAKPOINT_EXECUTORS = new ThreadLocal<Executor>();
 
     private boolean                               hasDebuggers;
 
@@ -101,15 +100,8 @@ public class DebugListener extends DefaultExecuteListener {
     private QueryLog                              log;
 
     @Override
-    public void start(ExecuteContext ctx) {
-        if (ctx.getSettings().getExecuteDebugging() == SERVER) {
-            Server.initialise(ctx.getSettings().getExecuteDebuggingPort());
-        }
-    }
-
-    @Override
     public void renderEnd(final ExecuteContext ctx) {
-        hasDebuggers = !DebuggerRegistry.get().isEmpty();
+        hasDebuggers = !LocalRegistry.get().isEmpty();
         startPrepareTime = 0;
         endPrepareTime = 0;
         startBindTime = 0;
@@ -305,7 +297,7 @@ public class DebugListener extends DefaultExecuteListener {
                 BreakpointListener listener = breakpoint.listener();
 
                 if (listener != null) {
-                    QueryExecutor executor = new QueryExecutorImpl(ctx);
+                    Executor executor = new ExecutorImpl(null, ctx);
                     BREAKPOINT_EXECUTORS.set(executor);
 
                     try {
@@ -360,7 +352,7 @@ public class DebugListener extends DefaultExecuteListener {
         if (matchers == null) {
             matchers = new ArrayList<Matcher>();
 
-            for (Debugger debugger : DebuggerRegistry.get()) {
+            for (Debugger debugger : LocalRegistry.get()) {
                 for (Matcher matcher : debugger.matchers()) {
                     if (((MatcherImpl) matcher).matches(ctx)) {
                         matchers.add(matcher);

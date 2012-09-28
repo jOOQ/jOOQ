@@ -47,13 +47,13 @@ import java.net.Socket;
  */
 final class ClientCommunication extends Communication {
 
-    public ClientCommunication(ClientDebugger debugger, int port, String ip) throws Exception {
+    public ClientCommunication(ClientDebugger debugger, int port, String ip) {
         super(debugger);
 
         init(port, ip);
     }
 
-    private void init(int port, String ip) throws Exception {
+    private void init(int port, String ip) {
         // Create the interface to communicate with the process handling the
         // other side
         Socket socket = null;

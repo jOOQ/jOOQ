@@ -50,11 +50,11 @@ import org.jooq.Table;
 import org.jooq.tools.debug.Breakpoint;
 import org.jooq.tools.debug.BreakpointListener;
 import org.jooq.tools.debug.Debugger;
+import org.jooq.tools.debug.Executor;
 import org.jooq.tools.debug.HitContext;
 import org.jooq.tools.debug.Logger;
 import org.jooq.tools.debug.LoggerListener;
 import org.jooq.tools.debug.Matcher;
-import org.jooq.tools.debug.QueryExecutor;
 import org.jooq.tools.debug.QueryLog;
 import org.jooq.tools.debug.ResultLog;
 import org.jooq.tools.debug.Step;
@@ -71,16 +71,16 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 1867377595857961400L;
+    private static final long   serialVersionUID = 1867377595857961400L;
 
-    private Communication     comm;
-    private List<Matcher>     matchers         = new ArrayList<Matcher>();
+    private Communication       comm;
+    private final List<Matcher> matchers         = new ArrayList<Matcher>();
 
-    public ClientDebugger(String ip, int port) throws Exception {
+    public ClientDebugger(String ip, int port) {
         comm = new ClientCommunication(this, port, ip);
     }
 
-    Communication getCommunicationInterface() {
+    Communication getCommunication() {
         return comm;
     }
 
@@ -88,12 +88,13 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
     void apply() {}
 
     @Override
-    public void remove() {
+    public final void remove() {
         comm.close();
+        comm = null;
     }
 
     @Override
-    public synchronized Matcher newMatcher() {
+    public final Matcher newMatcher() {
         final MatcherImpl result = new MatcherImpl();
         result.setDelegate(new AbstractDebuggerObject() {
 
@@ -103,8 +104,8 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
             private static final long serialVersionUID = 549633622817329607L;
 
             @Override
-            public void remove() {
-                synchronized (ClientDebugger.this) {
+            public final void remove() {
+                synchronized (matchers) {
                     matchers.remove(result);
                 }
 
@@ -117,7 +118,7 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
             }
         });
 
-        synchronized (ClientDebugger.this) {
+        synchronized (matchers) {
             matchers.add(result);
         }
 
@@ -125,8 +126,74 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
     }
 
     @Override
-    public synchronized Matcher[] matchers() {
-        return matchers.toArray(new Matcher[matchers.size()]);
+    public final Matcher[] matchers() {
+        synchronized (matchers) {
+            return matchers.toArray(new Matcher[matchers.size()]);
+        }
+    }
+
+    @Override
+    public final Executor executor(String name) {
+        for (Executor executor : executors()) {
+            if (name.equals(executor.getName())) {
+                return executor;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public final Executor[] executors() {
+        String[] names = comm.syncSend(new CMC_executorNames());
+        Executor[] executors = new Executor[names.length];
+
+        for (int i = 0; i < names.length; i++) {
+            executors[i] = new ClientExecutor(names[i], comm);
+        }
+
+        return executors;
+    }
+
+    static class ClientExecutor implements Executor {
+
+        private final String name;
+        private final Communication comm;
+
+        ClientExecutor(String name, Communication comm) {
+            this.name = name;
+            this.comm = comm;
+        }
+
+        @Override
+        public final String getName() {
+            return name;
+        }
+
+        @Override
+        public final Schema[] getSchemata() {
+            return comm.syncSend(new CMC_schemata(name));
+        }
+
+        @Override
+        public final Table<?>[] getTables(Schema... schemata) {
+            return comm.syncSend(new CMC_tables(name, schemata));
+        }
+
+        @Override
+        public final Field<?>[] getFields(Table<?>... tables) {
+            return comm.syncSend(new CMC_fields(name, tables));
+        }
+
+        @Override
+        public final <R extends Record> Result<R> fetch(ResultQuery<R> query) {
+            return comm.syncSend(new CMC_fetch<R>(name, query));
+        }
+
+        @Override
+        public final int execute(Query query) {
+            return comm.syncSend(new CMC_execute(name, query));
+        }
     }
 
     static class CMS_logQuery extends CommandMessage<NoResult> {
@@ -145,7 +212,7 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
         }
 
         @Override
-        public NoResult run(MessageContext context) {
+        public final NoResult run(MessageContext context) {
             for (Matcher m : context.getClientDebugger().matchers) {
                 for (Logger l : m.loggers()) {
                     if (l.getId().equals(logger)) {
@@ -178,7 +245,7 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
         }
 
         @Override
-        public NoResult run(MessageContext context) {
+        public final NoResult run(MessageContext context) {
             for (Matcher m : context.getClientDebugger().matchers) {
                 for (Logger l : m.loggers()) {
                     if (l.getId().equals(logger)) {
@@ -200,12 +267,12 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
         /**
          * Generated UID
          */
-        private static final long       serialVersionUID = 3392847306059043330L;
+        private static final long    serialVersionUID = 3392847306059043330L;
 
-        private final boolean           before;
-        private final UUID              breakpoint;
-        private final HitContextImpl    hitContext;
-        private transient QueryExecutor executor;
+        private final boolean        before;
+        private final UUID           breakpoint;
+        private final HitContextImpl hitContext;
+        private transient Executor   executor;
 
         CMS_step(boolean before, UUID breakpoint, HitContextImpl hitContext) {
             this.before = before;
@@ -214,7 +281,7 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
         }
 
         @Override
-        public Step run(MessageContext context) throws Exception {
+        public final Step run(MessageContext context) throws Exception {
             initialiseHitContext(context);
 
             for (Matcher m : context.getClientDebugger().matchers) {
@@ -239,36 +306,30 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
 
         private void initialiseHitContext(final MessageContext context) {
             if (executor == null) {
-                executor = new QueryExecutor() {
-
-                    @Override
-                    public Schema[] schemata() {
-                        return context.getClientDebugger().getCommunicationInterface().syncSend(new CMC_schemata());
-                    }
-
-                    @Override
-                    public Table<?>[] tables(Schema... schemata) {
-                        return context.getClientDebugger().getCommunicationInterface().syncSend(new CMC_tables(schemata));
-                    }
-
-                    @Override
-                    public Field<?>[] fields(Table<?>... tables) {
-                        return context.getClientDebugger().getCommunicationInterface().syncSend(new CMC_fields(tables));
-                    }
-
-                    @Override
-                    public <R extends Record> Result<R> fetch(ResultQuery<R> query) {
-                        return context.getClientDebugger().getCommunicationInterface().syncSend(new CMC_fetch<R>(query));
-                    }
-
-                    @Override
-                    public int execute(Query query) {
-                        return context.getClientDebugger().getCommunicationInterface().syncSend(new CMC_execute(query));
-                    }
-                };
+                executor = new ClientExecutor(null, context.getClientDebugger().getCommunication());
             }
 
             hitContext.executor(executor);
+        }
+    }
+
+    static class CMC_executorNames extends CommandMessage<String[]> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -9163573787750356644L;
+
+        @Override
+        public final String[] run(MessageContext context) {
+            Executor[] executors = context.getServerDebugger().executors();
+            String[] result = new String[executors.length];
+
+            for (int i = 0; i < result.length; i++) {
+                result[i] = executors[i].getName();
+            }
+
+            return result;
         }
     }
 
@@ -277,14 +338,17 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
         /**
          * Generated UID
          */
-        private static final long    serialVersionUID = -9163573787750356644L;
+        private static final long serialVersionUID = -9163573787750356644L;
 
-        CMC_schemata() {
+        private final String      name;
+
+        CMC_schemata(String name) {
+            this.name = name;
         }
 
         @Override
-        public Schema[] run(MessageContext context) {
-            return DebugListener.BREAKPOINT_EXECUTORS.get().schemata();
+        public final Schema[] run(MessageContext context) {
+            return context.getServerDebugger().executor(name).getSchemata();
         }
     }
 
@@ -293,17 +357,19 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
         /**
          * Generated UID
          */
-        private static final long    serialVersionUID = -9163573787750356644L;
+        private static final long serialVersionUID = -9163573787750356644L;
 
-        private final Schema[] schemata;
+        private final String      name;
+        private final Schema[]    schemata;
 
-        CMC_tables(Schema[] schemata) {
+        CMC_tables(String name, Schema[] schemata) {
+            this.name = name;
             this.schemata = schemata;
         }
 
         @Override
-        public Table<?>[] run(MessageContext context) {
-            return DebugListener.BREAKPOINT_EXECUTORS.get().tables(schemata);
+        public final Table<?>[] run(MessageContext context) {
+            return context.getServerDebugger().executor(name).getTables(schemata);
         }
     }
 
@@ -312,17 +378,19 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
         /**
          * Generated UID
          */
-        private static final long    serialVersionUID = -9163573787750356644L;
+        private static final long serialVersionUID = -9163573787750356644L;
 
-        private final Table<?>[] tables;
+        private final String      name;
+        private final Table<?>[]  tables;
 
-        CMC_fields(Table<?>[] tables) {
+        CMC_fields(String name, Table<?>[] tables) {
+            this.name = name;
             this.tables = tables;
         }
 
         @Override
-        public Field<?>[] run(MessageContext context) {
-            return DebugListener.BREAKPOINT_EXECUTORS.get().fields(tables);
+        public final Field<?>[] run(MessageContext context) {
+            return context.getServerDebugger().executor(name).getFields(tables);
         }
     }
 
@@ -333,15 +401,17 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
          */
         private static final long    serialVersionUID = -9163573787750356644L;
 
+        private final String         name;
         private final ResultQuery<R> query;
 
-        CMC_fetch(ResultQuery<R> query) {
+        CMC_fetch(String name, ResultQuery<R> query) {
+            this.name = name;
             this.query = query;
         }
 
         @Override
-        public Result<R> run(MessageContext context) {
-            return DebugListener.BREAKPOINT_EXECUTORS.get().fetch(query);
+        public final Result<R> run(MessageContext context) {
+            return context.getServerDebugger().executor(name).fetch(query);
         }
     }
 
@@ -352,15 +422,17 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
          */
         private static final long serialVersionUID = -4323062835006905610L;
 
+        private final String      name;
         private final Query       query;
 
-        CMC_execute(Query query) {
+        CMC_execute(String name, Query query) {
+            this.name = name;
             this.query = query;
         }
 
         @Override
-        public Integer run(MessageContext context) {
-            return DebugListener.BREAKPOINT_EXECUTORS.get().execute(query);
+        public final Integer run(MessageContext context) {
+            return context.getServerDebugger().executor(name).execute(query);
         }
     }
 
@@ -381,7 +453,7 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
         }
 
         @Override
-        public NoResult run(final MessageContext context) {
+        public final NoResult run(final MessageContext context) {
             initialiseLogger(context);
             initialiseBreakpoint(context);
 
@@ -395,12 +467,12 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
                     loggerListener = new LoggerListener() {
 
                         @Override
-                        public void logQuery(QueryLog log) {
+                        public final void logQuery(QueryLog log) {
                             context.getServerDebugger().getCommunicationInterface().asyncSend(new CMS_logQuery(logger.getId(), log));
                         }
 
                         @Override
-                        public void logResult(ResultLog log) {
+                        public final void logResult(ResultLog log) {
                             context.getServerDebugger().getCommunicationInterface().asyncSend(new CMS_logResult(logger.getId(), log));
                         }
                     };
@@ -416,12 +488,12 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
                     breakpointListener = new BreakpointListener() {
 
                         @Override
-                        public Step before(HitContext hitContext) {
+                        public final Step before(HitContext hitContext) {
                             return context.getServerDebugger().getCommunicationInterface().syncSend(new CMS_step(true, breakpoint.getId(), (HitContextImpl) hitContext));
                         }
 
                         @Override
-                        public Step after(HitContext hitContext) {
+                        public final Step after(HitContext hitContext) {
                             return context.getServerDebugger().getCommunicationInterface().syncSend(new CMS_step(false, breakpoint.getId(), (HitContextImpl) hitContext));
                         }
                     };
@@ -446,7 +518,7 @@ class ClientDebugger extends AbstractDebuggerObject implements Debugger {
         }
 
         @Override
-        public NoResult run(MessageContext context) {
+        public final NoResult run(MessageContext context) {
             for (Matcher m : context.getClientDebugger().matchers) {
                 if (m.getId().equals(matcher)) {
                     context.getServerDebugger().removeMatcher(m);

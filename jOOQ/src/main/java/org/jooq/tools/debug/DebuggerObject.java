@@ -39,14 +39,14 @@ package org.jooq.tools.debug;
 import java.io.Serializable;
 import java.util.UUID;
 
-import org.jooq.tools.debug.impl.DebuggerFactory;
+import org.jooq.tools.debug.impl.DebuggerAPI;
 
 /**
  * An object that is part of the jOOQ debugger API
  * <p>
  * The jOOQ debugger API exposes {@link Serializable} objects that can be used
- * with local or remote debuggers (see {@link DebuggerFactory#localDebugger()}
- * and {@link DebuggerFactory#remoteDebugger(String, int)} for details).
+ * with local or remote debuggers (see {@link DebuggerAPI#localDebugger()}
+ * and {@link DebuggerAPI#remoteDebugger(String, int)} for details).
  *
  * @author Christopher Deckers
  * @author Lukas Eder

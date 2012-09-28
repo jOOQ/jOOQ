@@ -36,24 +36,24 @@
  */
 package org.jooq.tools.debug;
 
-import org.jooq.tools.debug.impl.DebuggerFactory;
+import org.jooq.tools.debug.impl.DebuggerAPI;
 
 /**
  * A debugger that hooks into the lifecycle of jOOQ-executed queries
  * <p>
  * A debugger comes in two flavours:
  * <ul>
- * <li> {@link DebuggerFactory#localDebugger()}: A local debugger is a debugger
- * that is executed locally, in the same JVM as the debugger client program.
- * This is useful for Swing applications, for instance</li>
- * <li> {@link DebuggerFactory#remoteDebugger(String, int)}: A remote debugger is
- * a debugger that connects to a remote JVM with jOOQ configured to accept
- * remote debugging sessions. This is useful for server applications</li>
+ * <li> {@link DebuggerAPI#localDebugger()}: A local debugger is a debugger that
+ * is executed locally, in the same JVM as the debugger client program. This is
+ * useful for Swing applications, for instance</li>
+ * <li> {@link DebuggerAPI#remoteDebugger(String, int)}: A remote debugger is a
+ * debugger that connects to a remote JVM with jOOQ configured to accept remote
+ * debugging sessions. This is useful for server applications</li>
  * </ul>
  * <p>
  * A debugger allows to create and register {@link Matcher} objects, which can
  * be used for debugging a local or remote jOOQ application.
- *
+ * 
  * @author Christopher Deckers
  * @author Lukas Eder
  */
@@ -68,5 +68,21 @@ public interface Debugger extends DebuggerObject {
      * Get a copy of the attached matchers for this debugger
      */
     Matcher[] matchers();
+
+    /**
+     * Get a reference of an executor given a configured name
+     * 
+     * @return A configured <code>Executor</code> or <code>null</code> if no
+     *         executor exists by that name.
+     */
+    Executor executor(String name);
+
+    /**
+     * Get all reference of this debugger's executors.
+     * 
+     * @return All configured <code>Executors</code> or an empty array, if no
+     *         executors were configured.
+     */
+    Executor[] executors();
 
 }

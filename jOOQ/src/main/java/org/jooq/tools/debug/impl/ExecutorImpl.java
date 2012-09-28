@@ -55,7 +55,7 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Factory;
-import org.jooq.tools.debug.QueryExecutor;
+import org.jooq.tools.debug.Executor;
 
 /**
  * A local query executor
@@ -63,16 +63,54 @@ import org.jooq.tools.debug.QueryExecutor;
  * @author Christopher Deckers
  * @author Lukas Eder
  */
-class QueryExecutorImpl implements QueryExecutor {
+class ExecutorImpl implements Executor {
 
+    private final String        name;
     private final Configuration configuration;
+    private final Schema[]      schemata;
 
-    QueryExecutorImpl(Configuration configuration) {
+    ExecutorImpl(String name, Configuration configuration, Schema... schemata) {
+        this.name = name;
         this.configuration = configuration;
+        this.schemata = schemata != null ? schemata : new Schema[0];
     }
 
     @Override
-    public final Schema[] schemata() {
+    public final String getName() {
+        return name;
+    }
+
+    @Override
+    public final Schema[] getSchemata() {
+        if (schemata.length != 0) {
+            return getGeneratedSchemata();
+        }
+        else {
+            return getJDBCSchemata();
+        }
+    }
+
+    @Override
+    public final Table<?>[] getTables(Schema... filter) {
+        if (schemata.length != 0) {
+            return getGeneratedTables(filter);
+        }
+        else {
+            return getJDBCTables(filter);
+        }
+    }
+
+    @Override
+    public final Field<?>[] getFields(Table<?>... filter) {
+        if (schemata.length != 0) {
+            return getGeneratedFields(filter);
+        }
+        else {
+            return getJDBCFields(filter);
+        }
+    }
+
+    private final Schema[] getJDBCSchemata() {
         try {
             DatabaseMetaData meta = meta();
             String[] names = create().fetch(meta.getSchemas()).intoArray(0, String.class);
@@ -89,21 +127,42 @@ class QueryExecutorImpl implements QueryExecutor {
         }
     }
 
-    @Override
-    public final Table<?>[] tables(Schema... schemata) {
-        schemata = (schemata != null && schemata.length > 0) ? schemata : new Schema[] { null };
+    private final Schema[] getGeneratedSchemata() {
+        return schemata.clone();
+    }
+
+    private final Table<?>[] getGeneratedTables(Schema[] filter) {
+        List<Table<?>> result = new ArrayList<Table<?>>();
+
+        for (Schema schema : nonEmpty(filter, schemata)) {
+            result.addAll(schema.getTables());
+        }
+
+        return result.toArray(new Table[result.size()]);
+    }
+
+    private final Field<?>[] getGeneratedFields(Table<?>[] filter) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        for (Table<?> table : nonEmpty(filter, getGeneratedTables(schemata))) {
+            result.addAll(table.getFields());
+        }
+
+        return result.toArray(new Field[result.size()]);
+    }
+
+    private final Table<?>[] getJDBCTables(Schema... filter) {
+        filter = (filter != null && filter.length > 0) ? filter : new Schema[] { null };
         List<Table<?>> result = new ArrayList<Table<?>>();
 
         try {
             DatabaseMetaData meta = meta();
 
-            for (Schema schema : schemata) {
+            for (Schema schema : filter) {
                 String schemaName = (schema != null) ? schema.getName() : null;
 
                 for (Record record : create().fetch(meta.getTables(null, schemaName, null, null))) {
-                    result.add(tableByName(
-                        record.getValue(1, String.class),
-                        record.getValue(2, String.class)));
+                    result.add(tableByName(record.getValue(1, String.class), record.getValue(2, String.class)));
                 }
             }
 
@@ -114,23 +173,20 @@ class QueryExecutorImpl implements QueryExecutor {
         }
     }
 
-    @Override
-    public final Field<?>[] fields(Table<?>... tables) {
-        tables = (tables != null && tables.length > 0) ? tables : new Table[] { null };
+    private final Field<?>[] getJDBCFields(Table<?>... filter) {
+        filter = (filter != null && filter.length > 0) ? filter : new Table[] { null };
         List<Field<?>> result = new ArrayList<Field<?>>();
 
         try {
             DatabaseMetaData meta = meta();
 
-            for (Table<?> table : tables) {
+            for (Table<?> table : filter) {
                 String schemaName = (table != null && table.getSchema() != null) ? table.getSchema().getName() : null;
                 String tableName = (table != null) ? table.getName() : null;
 
                 for (Record record : create().fetch(meta.getColumns(null, schemaName, tableName, null))) {
                     // Discover SQLDataType, here?
-                    result.add(fieldByName(
-                        record.getValue(1, String.class),
-                        record.getValue(2, String.class),
+                    result.add(fieldByName(record.getValue(1, String.class), record.getValue(2, String.class),
                         record.getValue(3, String.class)));
                 }
             }
@@ -152,6 +208,10 @@ class QueryExecutorImpl implements QueryExecutor {
     public final <R extends Record> Result<R> fetch(ResultQuery<R> query) {
         create().attach(query);
         return query.fetch();
+    }
+
+    private final <T> T[] nonEmpty(T[] filter, T[] fallback) {
+        return (filter != null && filter.length > 0) ? filter : fallback;
     }
 
     private final DatabaseMetaData meta() {

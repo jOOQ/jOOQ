@@ -63,5 +63,5 @@ public interface HitContext extends Serializable {
      * its transactional state. However, it will not trigger any further
      * {@link Breakpoint} hit events, or {@link Processor} events.
      */
-    QueryExecutor executor();
+    Executor executor();
 }

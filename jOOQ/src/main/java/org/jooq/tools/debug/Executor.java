@@ -34,28 +34,61 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.tools.debug.impl;
+package org.jooq.tools.debug;
 
-import org.jooq.tools.debug.Debugger;
+import org.jooq.Field;
+import org.jooq.Query;
+import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.ResultQuery;
+import org.jooq.Schema;
+import org.jooq.Table;
 
 /**
- * A factory object for {@link Debugger} types.
+ * A query executor allows to execute queries in any given context.
  *
- * @author Lukas Eder
  * @author Christopher Deckers
+ * @author Lukas Eder
  */
-public class DebuggerFactory {
-
-    public static Debugger localDebugger() {
-        return new LocalDebugger();
-    }
-
-    public static Debugger remoteDebugger(String ip, int port) throws Exception {
-        return new ClientDebugger(ip, port);
-    }
+public interface Executor {
 
     /**
-     * No instances
+     * Get this executor's name
      */
-    private DebuggerFactory () {}
+    String getName();
+
+    /**
+     * Fetch all schemata
+     *
+     * @return A list of schemata
+     */
+    Schema[] getSchemata();
+
+    /**
+     * Fetch all tables, given a list of schemata.
+     *
+     * @param schemata The list of schemata for which to fetch tables. If no
+     *            schema is provided, all tables are fetched.
+     * @return A list of tables
+     */
+    Table<?>[] getTables(Schema... schemata);
+
+    /**
+     * Fetch all fields, given a list of tables.
+     *
+     * @param filter The list of tables for which to fetch fields. If no table
+     *            is provided, all fields are fetched.
+     * @return A list of fields.
+     */
+    Field<?>[] getFields(Table<?>... filter);
+
+    /**
+     * Execute a query
+     */
+    int execute(Query query);
+
+    /**
+     * Execute a query
+     */
+    <R extends Record> Result<R> fetch(ResultQuery<R> query);
 }

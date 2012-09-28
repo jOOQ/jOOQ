@@ -47,9 +47,14 @@ import java.net.Socket;
  */
 class Server {
 
-    static Server INSTANCE;
+    /**
+     * The singleton debugger server instance
+     */
+    private static Server      INSTANCE;
 
-    static final synchronized Server initialise(int port) {
+    private final ServerSocket socket;
+
+    static final synchronized Server start(int port) {
         if (INSTANCE == null) {
             INSTANCE = new Server(port);
         }
@@ -57,46 +62,45 @@ class Server {
         return INSTANCE;
     }
 
-    private final Object LOCK = new Object();
-    private ServerSocket serverSocket;
+    static final synchronized void stop() {
+        if (INSTANCE != null) {
+            INSTANCE.close();
+        }
+
+        INSTANCE = null;
+    }
 
     private Server(final int port) {
         try {
-            synchronized (LOCK) {
-                serverSocket = openServerCommunicationChannel(port);
-            }
+            socket = openServerCommunicationChannel(port);
         }
         catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    void close() {
-        synchronized (LOCK) {
-            if (serverSocket != null) {
-                try {
-                    serverSocket.close();
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-                serverSocket = null;
-            }
+    private void close() {
+        try {
+            socket.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     private static ServerSocket openServerCommunicationChannel(final int port) throws Exception {
         final ServerSocket serverSocket;
         try {
-          serverSocket = new ServerSocket();
-          serverSocket.bind(new InetSocketAddress(port));
-        } catch(IOException e) {
-          throw e;
+            serverSocket = new ServerSocket();
+            serverSocket.bind(new InetSocketAddress(port));
+        }
+        catch (IOException e) {
+            throw e;
         }
         Thread serverThread = new Thread("Communication channel server on port " + port) {
             @Override
             public void run() {
-                while(!serverSocket.isClosed()) {
+                while (!serverSocket.isClosed()) {
                     final Socket socket;
                     try {
                         socket = serverSocket.accept();
@@ -110,8 +114,9 @@ class Server {
                                 comm.notifyOpen();
                             }
                         }.start();
-                    } catch(Exception e) {
-                        if(!serverSocket.isClosed()) {
+                    }
+                    catch (Exception e) {
+                        if (!serverSocket.isClosed()) {
                             e.printStackTrace();
                         }
                     }

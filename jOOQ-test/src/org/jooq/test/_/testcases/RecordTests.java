@@ -73,12 +73,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     @Test
     public void testRecordOriginals() throws Exception {
         B book = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
-        assertEquals(book, book.original());
-        assertEquals(book.getValue(TBook_ID()), book.original().getValue(TBook_ID()));
-        assertEquals(book.getValue(TBook_TITLE()), book.original().getValue(TBook_TITLE()));
+        B orig = book.original();
+
+        assertEquals(book, orig);
+        assertEquals(book.getValue(TBook_ID()), orig.getValue(TBook_ID()));
+        assertEquals(book.getValue(TBook_TITLE()), orig.getValue(TBook_TITLE()));
 
         book.setValue(TBook_TITLE(), "abc");
         assertEquals("abc", book.getValue(TBook_TITLE()));
-        assertEquals(BOOK_TITLES.get(0), book.original().getValue(TBook_TITLE()));
+        assertEquals(BOOK_TITLES.get(0), orig.getValue(TBook_TITLE()));
+
+        book = orig;
+        orig = orig.original();
+        book.setValue(TBook_TITLE(), "abc");
+        assertEquals("abc", book.getValue(TBook_TITLE()));
+        assertEquals(BOOK_TITLES.get(0), orig.getValue(TBook_TITLE()));
     }
 }

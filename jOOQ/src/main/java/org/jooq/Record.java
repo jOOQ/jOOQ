@@ -1119,6 +1119,17 @@ public interface Record extends FieldProvider, Store<Object> {
     Record original();
 
     /**
+     * Check if this record has been changed from its original as fetched from
+     * the database.
+     * <p>
+     * If this returns <code>false</code>, then it can be said that
+     * <code>record.equals(record.original())</code> is true.
+     *
+     * @see #original()
+     */
+    boolean changed();
+
+    /**
      * Convert this record into an array.
      * <p>
      * The resulting array has the same number of elements as this record has

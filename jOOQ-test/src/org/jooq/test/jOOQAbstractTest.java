@@ -1163,6 +1163,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRecordChanged() throws Exception {
+        new RecordTests(this).testRecordChanged();
+    }
+
+    @Test
     public void testConcurrentExecution() throws Exception {
         new ThreadSafetyTests(this).testConcurrentExecution();
     }

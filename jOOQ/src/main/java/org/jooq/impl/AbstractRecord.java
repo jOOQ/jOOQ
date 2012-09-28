@@ -610,6 +610,17 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     @Override
+    public final boolean changed() {
+        for (Value<?> value : getValues()) {
+            if (value.isChanged()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
     public final Object[] intoArray() {
         return into(Object[].class);
     }

@@ -36,6 +36,8 @@
 package org.jooq.test._.testcases;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -80,13 +82,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(book.getValue(TBook_TITLE()), orig.getValue(TBook_TITLE()));
 
         book.setValue(TBook_TITLE(), "abc");
+        assertFalse(book.equals(orig));
+        assertFalse(book.equals(book.original()));
         assertEquals("abc", book.getValue(TBook_TITLE()));
         assertEquals(BOOK_TITLES.get(0), orig.getValue(TBook_TITLE()));
 
         book = orig;
         orig = orig.original();
         book.setValue(TBook_TITLE(), "abc");
+        assertFalse(book.equals(orig));
+        assertFalse(book.equals(book.original()));
         assertEquals("abc", book.getValue(TBook_TITLE()));
         assertEquals(BOOK_TITLES.get(0), orig.getValue(TBook_TITLE()));
+    }
+
+    @Test
+    public void testRecordChanged() throws Exception {
+        B book = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
+
+        assertFalse(book.changed());
+        book.setValue(TBook_TITLE(), "abc");
+        assertTrue(book.changed());
     }
 }

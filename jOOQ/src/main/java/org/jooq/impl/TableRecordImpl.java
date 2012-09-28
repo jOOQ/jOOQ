@@ -97,6 +97,12 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         return (Table<R>) getFieldProvider();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final R original() {
+        return (R) super.original();
+    }
+
     /**
      * Subclasses may override this method to provide an identity
      */

@@ -1109,6 +1109,16 @@ public interface Record extends FieldProvider, Store<Object> {
     <T, U> void setValue(Field<T> field, U value, Converter<T, ? super U> converter);
 
     /**
+     * Get this record containing the original values as fetched from the
+     * database.
+     * <p>
+     * Record values can be freely modified after having fetched a record from
+     * the database. Every record also references the originally fetched values.
+     * This method returns a new record containing those original values.
+     */
+    Record original();
+
+    /**
      * Convert this record into an array.
      * <p>
      * The resulting array has the same number of elements as this record has

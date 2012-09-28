@@ -107,6 +107,7 @@ import org.jooq.test._.testcases.LoaderTests;
 import org.jooq.test._.testcases.OrderByTests;
 import org.jooq.test._.testcases.PlainSQLTests;
 import org.jooq.test._.testcases.PredicateTests;
+import org.jooq.test._.testcases.RecordTests;
 import org.jooq.test._.testcases.RenderAndBindTests;
 import org.jooq.test._.testcases.ResultTests;
 import org.jooq.test._.testcases.RoutineAndUDTTests;
@@ -1154,6 +1155,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testFetchLater() throws Exception {
         new FetchTests(this).testFetchLater();
+    }
+
+    @Test
+    public void testRecordOriginals() throws Exception {
+        new RecordTests(this).testRecordOriginals();
     }
 
     @Test

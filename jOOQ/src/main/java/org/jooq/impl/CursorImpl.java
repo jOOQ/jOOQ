@@ -66,6 +66,7 @@ import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
+import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
@@ -190,6 +191,16 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         }
 
         return handler;
+    }
+
+    @Override
+    public final <E> E fetchOne(RecordMapper<? super R, E> mapper) {
+        return mapper.map(fetchOne());
+    }
+
+    @Override
+    public final <E> List<E> fetch(RecordMapper<? super R, E> mapper) {
+        return fetch().map(mapper);
     }
 
     @Override

@@ -149,6 +149,27 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
     <H extends RecordHandler<R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
+     * Fetch the next record into a custom mapper callback
+     * <p>
+     * This will conveniently close the <code>Cursor</code>, after the last
+     * <code>Record</code> was fetched.
+     *
+     * @param mapper The mapper callback
+     * @return The custom mapped record
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException;
+
+    /**
+     * Fetch results into a custom mapper callback
+     *
+     * @param mapper The mapper callback
+     * @return The custom mapped records
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <E> List<E> fetch(RecordMapper<? super R, E> mapper) throws DataAccessException;
+
+    /**
      * Map the next resulting record onto a custom type.
      * <p>
      * This is the same as calling <code>fetchOne().into(type)</code>. See

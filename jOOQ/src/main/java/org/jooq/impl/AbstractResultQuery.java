@@ -65,6 +65,7 @@ import org.jooq.FieldProvider;
 import org.jooq.FutureResult;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
+import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -534,6 +535,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <H extends RecordHandler<R>> H fetchInto(H handler) {
         return fetch().into(handler);
+    }
+
+    @Override
+    public final <E> List<E> fetch(RecordMapper<? super R, E> mapper) {
+        return fetch().map(mapper);
     }
 
     @Override

@@ -797,6 +797,15 @@ public interface ResultQuery<R extends Record> extends Query {
     <H extends RecordHandler<R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
+     * Fetch results into a custom mapper callback
+     *
+     * @param mapper The mapper callback
+     * @return The custom mapped records
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <E> List<E> fetch(RecordMapper<? super R, E> mapper) throws DataAccessException;
+
+    /**
      * Fetch results asynchronously.
      * <p>
      * This method wraps fetching of records in a

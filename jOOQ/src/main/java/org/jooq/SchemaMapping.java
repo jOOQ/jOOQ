@@ -100,8 +100,8 @@ public class SchemaMapping implements Serializable {
     private final RenderMapping             mapping;
     private final boolean                   ignoreMapping;
     private final boolean                   renderSchema;
-    private transient Map<String, Schema> schemata = new HashMap<String, Schema>();
-    private transient Map<String, Table<?>> tables = new HashMap<String, Table<?>>();
+    private volatile transient Map<String, Schema> schemata;
+    private volatile transient Map<String, Table<?>> tables;
 
     /**
      * Construct an empty mapping
@@ -424,10 +424,24 @@ public class SchemaMapping implements Serializable {
     }
 
     private final Map<String, Schema> getSchemata() {
+        if (schemata == null) {
+            synchronized (this) {
+                if (schemata == null) {
+                    schemata = new HashMap<String, Schema>();
+                }
+            }
+        }
         return schemata;
     }
 
     private final Map<String, Table<?>> getTables() {
+        if (tables == null) {
+            synchronized (this) {
+                if (tables == null) {
+                    tables = new HashMap<String, Table<?>>();
+                }
+            }
+        }
         return tables;
     }
 

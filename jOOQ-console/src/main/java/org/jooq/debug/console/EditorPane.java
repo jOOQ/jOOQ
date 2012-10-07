@@ -250,10 +250,13 @@ public class EditorPane extends JPanel {
             @Override
             public void run() {
                 final int maxDisplayedRowCount = ((Number)displayedRowCountField.getValue()).intValue();
+                // TODO: For now, if there is no max limit, consider we don't want the rows to be updatable.
+                // TODO: eventually, we want a distinct choice on the user interface.
+                final boolean isUpdatable = isUsingMaxRowCount;
                 Thread evaluationThread = new Thread("SQLConsole - Evaluation") {
                     @Override
                     public void run() {
-                        evaluate_unrestricted_nothread(sql, maxDisplayedRowCount);
+                        evaluate_unrestricted_nothread(sql, maxDisplayedRowCount, isUpdatable);
                     }
                 };
                 evaluationThread.start();
@@ -261,7 +264,7 @@ public class EditorPane extends JPanel {
         });
     }
 
-    private void evaluate_unrestricted_nothread(final String sql, final int maxDisplayedRowCount) {
+    private void evaluate_unrestricted_nothread(final String sql, final int maxDisplayedRowCount, boolean isUpdatable) {
         closeLastExecution();
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -278,7 +281,7 @@ public class EditorPane extends JPanel {
         }
         QueryExecution queryExecution;
         try {
-            queryExecution = queryExecutor.execute(sql, isUsingMaxRowCount? MAX_ROW_COUNT: Integer.MAX_VALUE, maxDisplayedRowCount);
+            queryExecution = queryExecutor.execute(sql, isUsingMaxRowCount? MAX_ROW_COUNT: Integer.MAX_VALUE, maxDisplayedRowCount, isUpdatable);
         } finally {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -660,7 +663,9 @@ public class EditorPane extends JPanel {
                         case KeyEvent.VK_DOWN:
                         case KeyEvent.VK_HOME:
                         case KeyEvent.VK_END:
+                            return;
                         case KeyEvent.VK_ESCAPE:
+                            w.setVisible(false);
                             return;
                         case KeyEvent.VK_ENTER:
                             editorTextArea.replaceRange(((CompletionCandidate)jList.getSelectedValue()).toString(), getWordStart(), editorTextArea.getCaretPosition());

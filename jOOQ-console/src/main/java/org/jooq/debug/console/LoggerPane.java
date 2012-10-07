@@ -96,6 +96,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
 
 import org.jooq.debug.console.misc.InvisibleSplitPane;
 import org.jooq.debug.console.misc.JTableX;
@@ -913,9 +914,38 @@ public class LoggerPane extends JPanel {
         } else {
             text = displayedCount + "/" + size + " queries";
         }
-        int count = table.getSelectedRowCount();
-        if(count > 0) {
-            text = text + " - " + count + " selected rows";
+        int selectedRowCount = table.getSelectedRowCount();
+        if(selectedRowCount > 0) {
+            text = text + " - " + selectedRowCount + " selected rows";
+            if(selectedRowCount > 1) {
+                int[] selectedColumns = table.getSelectedColumns();
+                if(selectedColumns.length == 1) {
+                    int column = table.convertColumnIndexToModel(selectedColumns[0]);
+                    switch(column) {
+                        case COLUMN_EXEC_TIME:
+                        case COLUMN_RS_LIFETIME:
+                        case COLUMN_RS_READ:
+                        case COLUMN_RS_READ_ROWS:
+                            int[] selectedRows = table.getSelectedRows();
+                            TableModel model = table.getModel();
+                            long sum = 0;
+                            boolean isValid = true;
+                            for(int row: selectedRows) {
+                                row = table.convertRowIndexToModel(row);
+                                Number number = (Number)model.getValueAt(row, column);
+                                if(number == null) {
+                                    isValid = false;
+                                    break;
+                                }
+                                sum += number.longValue();
+                            }
+                            if(isValid) {
+                                text += " - sum: " + sum;
+                            }
+                            break;
+                    }
+                }
+            }
         }
         loggerStatusLabel.setText(text);
     }

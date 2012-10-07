@@ -231,22 +231,24 @@ class ServerDebugger extends LocalDebugger {
     }
 
     static class CMS_doStatementExecutorExecution extends CommandMessage<QueryExecution> {
-        private final int    id;
-        private final String sql;
-        private final int    maxRSRowsParsing;
-        private final int    retainParsedRSDataRowCountThreshold;
+        private final int     id;
+        private final String  sql;
+        private final int     maxRSRowsParsing;
+        private final int     retainParsedRSDataRowCountThreshold;
+        private final boolean isUpdatable;
 
         CMS_doStatementExecutorExecution(int id, String sql, int maxRSRowsParsing,
-            int retainParsedRSDataRowCountThreshold) {
+            int retainParsedRSDataRowCountThreshold, boolean isUpdatable) {
             this.id = id;
             this.sql = sql;
             this.maxRSRowsParsing = maxRSRowsParsing;
             this.retainParsedRSDataRowCountThreshold = retainParsedRSDataRowCountThreshold;
+            this.isUpdatable = isUpdatable;
         }
 
         @Override
         public QueryExecution run(MessageContext context) {
-            QueryExecution queryExecution = getServerDebugger(context).getStatementExecutor(id).execute(sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold);
+            QueryExecution queryExecution = getServerDebugger(context).getStatementExecutor(id).execute(sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold, isUpdatable);
             return new ClientStatementExecution(queryExecution);
         }
     }

@@ -83,9 +83,11 @@ class LocalStatementExecutor implements QueryExecutor {
     private volatile Thread evaluationThread;
 
     @Override
-    public QueryExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
+    public QueryExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold, boolean isUpdatable) {
+        boolean isReadOnly = executorContext.isReadOnly();
+        isUpdatable = !isReadOnly && isUpdatable;
         boolean isAllowed = true;
-        if(executorContext.isReadOnly()) {
+        if(isReadOnly) {
             String simplifiedSql = sql.replaceAll("'[^']*'", "");
             switch(QueryType.detectType(simplifiedSql)) {
                 case SELECT:
@@ -123,7 +125,11 @@ class LocalStatementExecutor implements QueryExecutor {
         long start = System.currentTimeMillis();
         try {
             conn = executorContext.getConnection();
-            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            if(isUpdatable) {
+                stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            } else {
+                stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            }
             // If no error, adjust start to beginning of actual execution.
             start = System.currentTimeMillis();
             if(evaluationThread != Thread.currentThread()) {
@@ -278,7 +284,7 @@ class LocalStatementExecutor implements QueryExecutor {
                         }
                     }
                     final long resultSetParsingDuration = System.currentTimeMillis() - rsStart;
-                    queryExecutionResult = new LocalStatementExecutionResultSetResult(rs, columnNames, typeInfos, columnClasses, rowDataList.toArray(new Object[0][]), rowCount, resultSetParsingDuration, retainParsedRSDataRowCountThreshold, executorContext.isReadOnly());
+                    queryExecutionResult = new LocalStatementExecutionResultSetResult(rs, columnNames, typeInfos, columnClasses, rowDataList.toArray(new Object[0][]), rowCount, resultSetParsingDuration, retainParsedRSDataRowCountThreshold, isReadOnly);
                 } else {
                     final int updateCount = stmt.getUpdateCount();
                     queryExecutionResult = new QueryExecutionMessageResult(Utils.formatDuration(executionDuration) + "> " + updateCount + " row(s) affected.", false);
@@ -299,7 +305,7 @@ class LocalStatementExecutor implements QueryExecutor {
             long executionDuration = System.currentTimeMillis() - start;
             return new QueryExecution(executionDuration, new QueryExecutionMessageResult(e));
         } finally {
-            if(executorContext.isReadOnly()) {
+            if(isReadOnly) {
                 closeConnection();
             }
         }

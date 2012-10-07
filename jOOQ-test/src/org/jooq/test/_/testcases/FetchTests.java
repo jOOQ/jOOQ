@@ -76,6 +76,7 @@ import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.test.BaseTest;
@@ -1774,5 +1775,38 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(BOOK_TITLES.get(3), on(entry22.getValue().get(1)).call("getTitle").get());
 
         assertFalse(it.hasNext());
+    }
+
+    @Test
+    public void testFetchWithMaxRows() throws Exception {
+        Result<B> books =
+        create().selectFrom(TBook())
+                .orderBy(TBook_ID())
+                .maxRows(2)
+                .fetch();
+
+        assertEquals(2, books.size());
+        assertEquals(Arrays.asList(1, 2), books.getValues(TBook_ID()));
+    }
+
+    @Test
+    public void testFetchWithTimeout() throws Exception {
+        try {
+
+            // [#1856] The below query is *likely* to run into a timeout
+            create().selectOne()
+                    .from(
+                        TBook(), TBook(), TBook(), TBook(),
+                        TBook(), TBook(), TBook(), TBook(),
+                        TBook(), TBook(), TBook(), TBook(),
+                        TBook(), TBook(), TBook(), TBook(),
+                        TBook(), TBook(), TBook(), TBook(),
+                        TBook(), TBook(), TBook(), TBook(),
+                        TBook(), TBook(), TBook(), TBook())
+                    .queryTimeout(1)
+                    .fetch();
+            fail();
+        }
+        catch (DataAccessException expected) {}
     }
 }

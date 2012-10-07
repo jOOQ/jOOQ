@@ -167,12 +167,14 @@ class LocalDebugger implements Debugger {
     }
 
     @Override
-    public boolean isExecutionSupported() {
-        return databaseDescriptor != null;
+    public String[] getExecutionContextNames() {
+        // TODO: implement execution context mapping.
+        return databaseDescriptor != null? new String[] {"default"}: new String[0];
     }
 
     @Override
-    public LocalStatementExecutor createQueryExecutor() {
+    public LocalStatementExecutor createQueryExecutor(String executionContextName) {
+        // TODO: implement execution context mapping: use context name.
         return new LocalStatementExecutor(new QueryExecutorContext() {
             @Override
             public boolean isReadOnly() {

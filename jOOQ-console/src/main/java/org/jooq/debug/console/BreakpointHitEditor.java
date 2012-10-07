@@ -183,7 +183,7 @@ public class BreakpointHitEditor extends JPanel {
         tabbedPane.addTab("Execution", breakpointHitExecutionPane);
         tabbedPane.addTab("Editor", new EditorsPane(new QueryExecutorCreator() {
             @Override
-            public QueryExecutor createQueryExecutor() {
+            public QueryExecutor createQueryExecutor(String executionContextName) {
                 return debugger.createBreakpointHitStatementExecutor(hit.getThreadID());
             }
         }, false));

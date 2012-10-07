@@ -245,7 +245,10 @@ public class Console extends JFrame {
 //        	}
 //        }
         setTitle(title);
-        if(debugger.isExecutionSupported()) {
+        // TODO: use context names to have on screen selector.
+        String[] executionContextNames = debugger.getExecutionContextNames();
+        boolean isExecutionSupported = executionContextNames.length > 0;
+        if(isExecutionSupported) {
         	addEditorTab();
         }
         if(isShowingLoggingTab) {
@@ -258,7 +261,7 @@ public class Console extends JFrame {
         setLocationByPlatform(true);
         setSize(800, 600);
         addNotify();
-        if(debugger.isExecutionSupported()) {
+        if(isExecutionSupported) {
         	editorsPane.adjustDefaultFocus();
         }
         addWindowListener(new WindowAdapter() {

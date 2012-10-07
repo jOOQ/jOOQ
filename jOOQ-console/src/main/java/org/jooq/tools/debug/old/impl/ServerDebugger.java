@@ -181,19 +181,19 @@ class ServerDebugger extends LocalDebugger {
         }
     }
 
-    static class CMS_isExecutionSupported extends CommandMessage<Boolean> {
+    static class CMS_getExecutionContextNames extends CommandMessage<String[]> {
         @Override
-        public Boolean run(MessageContext context) {
-            return context.getDebugger().isExecutionSupported();
+        public String[] run(MessageContext context) {
+            return context.getDebugger().getExecutionContextNames();
         }
     }
 
     private Map<Integer, QueryExecutor> idToStatementExecutorMap = new HashMap<Integer, QueryExecutor>();
 
-    private void createStatementExecutor(int id, Long breakpointHitThreadID) {
+    private void createStatementExecutor(int id, String executionContextName, Long breakpointHitThreadID) {
         LocalStatementExecutor statementExecutor;
         if(breakpointHitThreadID == null) {
-            statementExecutor = createQueryExecutor();
+            statementExecutor = createQueryExecutor(executionContextName);
         } else {
             statementExecutor = createBreakpointHitStatementExecutor(breakpointHitThreadID);
         }
@@ -216,16 +216,18 @@ class ServerDebugger extends LocalDebugger {
 
     static class CMS_createServerStatementExecutor extends CommandMessage<NoResult> {
         private final int  id;
+        private final String executionContextName;
         private final Long breakpointHitThreadID;
 
-        CMS_createServerStatementExecutor(int id, Long breakpointHitThreadID) {
+        CMS_createServerStatementExecutor(int id, String executionContextName, Long breakpointHitThreadID) {
             this.id = id;
+            this.executionContextName = executionContextName;
             this.breakpointHitThreadID = breakpointHitThreadID;
         }
 
         @Override
         public NoResult run(MessageContext context) {
-            getServerDebugger(context).createStatementExecutor(id, breakpointHitThreadID);
+            getServerDebugger(context).createStatementExecutor(id, executionContextName, breakpointHitThreadID);
             return null;
         }
     }

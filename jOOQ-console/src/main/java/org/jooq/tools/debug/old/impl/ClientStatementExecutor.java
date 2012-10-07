@@ -66,8 +66,8 @@ class ClientStatementExecutor implements QueryExecutor {
     }
 
     @Override
-    public QueryExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold) {
-        return debugger.getCommunicationInterface().syncSend(new CMS_doStatementExecutorExecution(id, sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold));
+    public QueryExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold, boolean isUpdatable) {
+        return debugger.getCommunicationInterface().syncSend(new CMS_doStatementExecutorExecution(id, sql, maxRSRowsParsing, retainParsedRSDataRowCountThreshold, isUpdatable));
     }
 
     @Override

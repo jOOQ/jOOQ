@@ -191,4 +191,15 @@ public interface Query extends QueryPart, Attachable {
      */
     Query bind(int index, Object value) throws IllegalArgumentException, DataTypeException;
 
+    // ------------------------------------------------------------------------
+    // JDBC methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * Specify the query timeout for the underlying JDBC {@link Statement}
+     *
+     * @see Statement#setQueryTimeout(int)
+     */
+    Query queryTimeout(int timeout);
+
 }

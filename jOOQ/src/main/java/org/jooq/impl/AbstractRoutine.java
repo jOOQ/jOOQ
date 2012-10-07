@@ -301,6 +301,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
             listener.prepareStart(ctx);
             ctx.statement(connection.prepareCall(ctx.sql()));
+            // [#1856] TODO: Add Statement flags like timeout here
             listener.prepareEnd(ctx);
 
             listener.bindStart(ctx);

@@ -85,6 +85,16 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final ResultQuery<R> queryTimeout(int timeout) {
+        return getDelegate().queryTimeout(timeout);
+    }
+
+    @Override
+    public final ResultQuery<R> maxRows(int rows) {
+        return getDelegate().maxRows(rows);
+    }
+
+    @Override
     public final Class<? extends R> getRecordType() {
         return getDelegate().getRecordType();
     }

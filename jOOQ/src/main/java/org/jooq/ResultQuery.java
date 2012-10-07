@@ -880,4 +880,26 @@ public interface ResultQuery<R extends Record> extends Query {
     @Override
     ResultQuery<R> bind(int index, Object value) throws IllegalArgumentException, DataTypeException;
 
+    // ------------------------------------------------------------------------
+    // JDBC methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ResultQuery<R> queryTimeout(int timeout);
+
+    /**
+     * Specify the maximum number of rows returned by the underlying
+     * {@link Statement}
+     * <p>
+     * This is not the same as setting a <code>LIMIT .. OFFSET</code> clause
+     * onto the statement, where the result set is restricted within the
+     * database.
+     *
+     * @see Statement#setMaxRows(int)
+     */
+    ResultQuery<R> maxRows(int rows);
+
 }

@@ -98,6 +98,11 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    public final Query queryTimeout(int timeout) {
+        return getDelegate().queryTimeout(timeout);
+    }
+
+    @Override
     public final <T> UpdateImpl<R> set(Field<T> field, T value) {
         getDelegate().addValue(field, value);
         return this;

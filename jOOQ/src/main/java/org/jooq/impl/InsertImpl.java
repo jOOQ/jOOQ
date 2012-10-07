@@ -110,6 +110,11 @@ class InsertImpl<R extends Record>
         return getDelegate().bind(index, value);
     }
 
+    @Override
+    public final Query queryTimeout(int timeout) {
+        return getDelegate().queryTimeout(timeout);
+    }
+
     // -------------------------------------------------------------------------
     // The DSL API
     // -------------------------------------------------------------------------

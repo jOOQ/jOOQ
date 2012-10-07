@@ -88,6 +88,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private static final long       serialVersionUID = -5588344253566055707L;
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractResultQuery.class);
 
+    private int                     maxRows;
     private transient boolean       lazy;
     private transient int           size;
     private transient boolean       many;
@@ -116,6 +117,18 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return (ResultQuery<R>) super.bind(index, value);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final ResultQuery<R> queryTimeout(int timeout) {
+        return (ResultQuery<R>) super.queryTimeout(timeout);
+    }
+
+    @Override
+    public final ResultQuery<R> maxRows(int rows) {
+        this.maxRows = rows;
+        return this;
+    }
+
     @Override
     protected final void prepare(ExecuteContext ctx) throws SQLException {
 
@@ -137,6 +150,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                 log.debug("Setting fetch size", size);
 
             ctx.statement().setFetchSize(size);
+        }
+
+        // [#1854] Set the max number of rows for this result query
+        if (maxRows != 0) {
+            ctx.statement().setMaxRows(maxRows);
         }
     }
 

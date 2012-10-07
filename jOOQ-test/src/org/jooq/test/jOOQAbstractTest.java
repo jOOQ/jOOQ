@@ -838,6 +838,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchWithMaxRows() throws Exception {
+        new FetchTests(this).testFetchWithMaxRows();
+    }
+
+    @Test
+    public void testFetchWithTimeout() throws Exception {
+        new FetchTests(this).testFetchWithTimeout();
+    }
+
+    @Test
     public void testDAOMethods() throws Exception {
         new DaoTests(this).testDAOMethods();
     }

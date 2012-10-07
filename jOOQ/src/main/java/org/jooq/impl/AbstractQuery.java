@@ -62,6 +62,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractQuery.class);
 
     private Configuration           configuration;
+    private int                     timeout;
 
     AbstractQuery(Configuration configuration) {
         this.configuration = configuration;
@@ -130,6 +131,17 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         return this;
     }
 
+    /**
+     * Subclasses may override this for covariant result types
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public Query queryTimeout(int t) {
+        this.timeout = t;
+        return this;
+    }
+
     @SuppressWarnings("deprecation")
     @Override
     public final int execute() {
@@ -160,6 +172,12 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
                 listener.prepareStart(ctx);
                 prepare(ctx);
+
+                // [#1856] Set the query timeout onto the Statement
+                if (timeout != 0) {
+                    ctx.statement().setQueryTimeout(timeout);
+                }
+
                 listener.prepareEnd(ctx);
 
                 // [#1145] Bind variables only for true prepared statements

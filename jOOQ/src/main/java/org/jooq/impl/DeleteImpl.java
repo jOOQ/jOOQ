@@ -93,6 +93,11 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    public final Query queryTimeout(int timeout) {
+        return getDelegate().queryTimeout(timeout);
+    }
+
+    @Override
     public final DeleteImpl<R> where(Condition... conditions) {
         getDelegate().addConditions(conditions);
         return this;

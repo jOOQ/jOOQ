@@ -43,7 +43,7 @@ package org.jooq.tools.debug.old;
  */
 public interface QueryExecutor {
 
-    public QueryExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold);
+    public QueryExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold, boolean isUpdatable);
 
     public void stopExecution();
 

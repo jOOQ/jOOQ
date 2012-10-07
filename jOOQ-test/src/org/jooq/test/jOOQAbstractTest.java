@@ -893,6 +893,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testPlainSQLWithSelfJoins() throws Exception {
+        new PlainSQLTests(this).testPlainSQLWithSelfJoins();
+    }
+
+    @Test
     public void testPlainSQLExecuteWithResults() throws Exception {
         new PlainSQLTests(this).testPlainSQLExecuteWithResults();
     }

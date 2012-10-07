@@ -35,6 +35,7 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
@@ -259,6 +260,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(Integer.valueOf(2), books.getValue(1, TBook_ID()));
         assertEquals(Integer.valueOf(1), books.getValue(0, TBook_AUTHOR_ID()));
         assertEquals(Integer.valueOf(1), books.getValue(1, TBook_AUTHOR_ID()));
+    }
+
+    @Test
+    public void testPlainSQLWithSelfJoins()  throws Exception {
+
+        // [#1860] In case of ambiguous field names in plain SQL, access by
+        // index should still be possible
+        Result<Record> result =
+        create().fetch("select * from (select id from t_author) a1, (select id from t_author) a2 order by a1.id, a2.id");
+
+        assertEquals(asList(1, 1, 2, 2), result.getValues(0, int.class));
+        assertEquals(asList(1, 2, 1, 2), result.getValues(1, int.class));
+
     }
 
     @Test

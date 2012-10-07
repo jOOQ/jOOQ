@@ -123,6 +123,8 @@ public class EditorPane extends JPanel {
     private static final int MAX_ROW_COUNT = 10000;
     private boolean isUsingMaxRowCount = true;
     private JFormattedTextField displayedRowCountField;
+    // TODO: once multi contexts is implemented, make this configurable.
+    private String executionContextName = "default";
 
     private SqlTextArea editorTextArea;
     private JPanel southPanel;
@@ -276,7 +278,7 @@ public class EditorPane extends JPanel {
         });
         QueryExecutor queryExecutor;
         synchronized (STATEMENT_EXECUTOR_CREATOR_LOCK) {
-            queryExecutor = queryExecutorCreator.createQueryExecutor();
+            queryExecutor = queryExecutorCreator.createQueryExecutor(executionContextName);
             lastStatementExecutor = queryExecutor;
         }
         QueryExecution queryExecution;
@@ -851,7 +853,7 @@ public class EditorPane extends JPanel {
         List<CompletionCandidate> candidateList = new ArrayList<CompletionCandidate>();
         // Here can add more candidates depending on magic word start.
         if(candidateList.isEmpty()) {
-            QueryExecutor queryExecutor = queryExecutorCreator.createQueryExecutor();
+            QueryExecutor queryExecutor = queryExecutorCreator.createQueryExecutor(executionContextName);
             for(String s: queryExecutor.getTableNames()) {
                 candidateList.add(new CompletionCandidate(KeyWordType.TABLE, s));
             }

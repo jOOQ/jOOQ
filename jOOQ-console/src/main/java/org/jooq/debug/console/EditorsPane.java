@@ -107,7 +107,8 @@ public class EditorsPane extends JPanel {
     }
 
     private JPanel createTablePane() {
-        final String[] tableNames = queryExecutorCreator.createQueryExecutor().getTableNames();
+        // TODO: have one table pane per execution context name (lazily created).
+        final String[] tableNames = queryExecutorCreator.createQueryExecutor("default").getTableNames();
         final JList tableNamesJList = new JList(tableNames);
         tableNamesJList.addMouseListener(new MouseAdapter() {
             @Override

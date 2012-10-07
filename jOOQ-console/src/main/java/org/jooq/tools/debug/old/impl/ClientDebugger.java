@@ -53,7 +53,7 @@ import org.jooq.tools.debug.old.QueryLog;
 import org.jooq.tools.debug.old.ResultLog;
 import org.jooq.tools.debug.old.impl.Message.NoResult;
 import org.jooq.tools.debug.old.impl.ServerDebugger.CMS_addBreakpoint;
-import org.jooq.tools.debug.old.impl.ServerDebugger.CMS_isExecutionSupported;
+import org.jooq.tools.debug.old.impl.ServerDebugger.CMS_getExecutionContextNames;
 import org.jooq.tools.debug.old.impl.ServerDebugger.CMS_removeBreakpoint;
 import org.jooq.tools.debug.old.impl.ServerDebugger.CMS_setBreakpointHitHandlerActive;
 import org.jooq.tools.debug.old.impl.ServerDebugger.CMS_setLoggingActive;
@@ -180,22 +180,25 @@ class ClientDebugger implements Debugger {
         }
     }
 
-    private Boolean isExecutionSupported;
-    private final Object IS_EXECUTION_SUPPORTED_LOCK = new Object();
+    private String[] executionContextNames;
+    private final Object EXECUTION_CONTEXT_NAMES_LOCK = new Object();
 
     @Override
-    public boolean isExecutionSupported() {
-        synchronized (IS_EXECUTION_SUPPORTED_LOCK) {
-            if(isExecutionSupported == null) {
-                isExecutionSupported = comm.syncSend(new CMS_isExecutionSupported());
+    public String[] getExecutionContextNames() {
+        synchronized (EXECUTION_CONTEXT_NAMES_LOCK) {
+            if(executionContextNames == null) {
+                executionContextNames = comm.syncSend(new CMS_getExecutionContextNames());
+                if(executionContextNames == null) {
+                    executionContextNames = new String[0];
+                }
             }
         }
-        return Boolean.TRUE.equals(isExecutionSupported);
+        return executionContextNames;
     }
 
     @Override
-    public QueryExecutor createQueryExecutor() {
-        return new ClientStatementExecutor(this, null);
+    public QueryExecutor createQueryExecutor(String executionContextName) {
+        return new ClientStatementExecutor(this, executionContextName, null);
     }
 
 
@@ -326,7 +329,7 @@ class ClientDebugger implements Debugger {
 
     @Override
     public QueryExecutor createBreakpointHitStatementExecutor(long threadID) {
-        ClientStatementExecutor statementExecutor = new ClientStatementExecutor(this, threadID);
+        ClientStatementExecutor statementExecutor = new ClientStatementExecutor(this, null, threadID);
         synchronized (threadIDToStatementExecutorList) {
             List<QueryExecutor> list = threadIDToStatementExecutorList.get(threadID);
             if(list == null) {

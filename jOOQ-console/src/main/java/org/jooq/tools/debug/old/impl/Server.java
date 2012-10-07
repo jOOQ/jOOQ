@@ -80,7 +80,7 @@ public class Server {
         }
     }
 
-    public static ServerSocket openServerCommunicationChannel(final int port, final DatabaseDescriptor descriptor) throws Exception {
+    private static ServerSocket openServerCommunicationChannel(final int port, final DatabaseDescriptor descriptor) throws Exception {
         final ServerSocket serverSocket;
         try {
           serverSocket = new ServerSocket();

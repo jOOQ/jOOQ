@@ -57,12 +57,13 @@ class ClientStatementExecutor implements QueryExecutor {
     private int id;
 
     /**
+     * @param executionContextName ignored if in a breakpoint hit.
      * @param breakpointHitThreadID null if not in a breakpoint hit.
      */
-    public ClientStatementExecutor(ClientDebugger debugger, Long breakpointHitThreadID) {
+    public ClientStatementExecutor(ClientDebugger debugger, String executionContextName, Long breakpointHitThreadID) {
         id = nextID.incrementAndGet();
         this.debugger = debugger;
-        debugger.getCommunicationInterface().asyncSend((CommandMessage<?>) new CMS_createServerStatementExecutor(id, breakpointHitThreadID));
+        debugger.getCommunicationInterface().asyncSend((CommandMessage<?>) new CMS_createServerStatementExecutor(id, executionContextName, breakpointHitThreadID));
     }
 
     @Override

@@ -84,7 +84,7 @@ public interface Debugger extends QueryExecutorCreator {
 
     BreakpointHitHandler getBreakpointHitHandler();
 
-    boolean isExecutionSupported();
+    String[] getExecutionContextNames();
 
     void processBreakpointBeforeExecutionHit(ExecuteContext ctx, BreakpointHit hit);
 

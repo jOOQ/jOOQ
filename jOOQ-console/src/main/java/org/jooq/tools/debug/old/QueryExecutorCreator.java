@@ -42,6 +42,6 @@ package org.jooq.tools.debug.old;
  */
 public interface QueryExecutorCreator {
 
-    public QueryExecutor createQueryExecutor();
+    public QueryExecutor createQueryExecutor(String executionContextName);
 
 }

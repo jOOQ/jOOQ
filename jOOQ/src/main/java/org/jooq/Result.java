@@ -1865,8 +1865,29 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return A Map containing the result.
      * @throws InvalidResultException if the key is non-unique in the result
      *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
      */
     <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) throws MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given keys and mapped
+     * into the given entity type.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(Field[], Class)} instead, if
+     * your keys are non-unique.
+     *
+     * @param keys The keys. Client code must assure that keys are unique in the
+     *            result set. If this is <code>null</code> or an empty array,
+     *            the resulting map will contain at most one entry.
+     * @return A Map containing the results.
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     */
+    <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) throws MappingException;
 
     /**
      * Return a {@link Map} with one of the result's columns as key and a list
@@ -1897,8 +1918,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value);
 
     /**
-     * Execute the query and return a {@link Map} with the result grouped by the
-     * given keys.
+     * Return a {@link Map} with the result grouped by the given keys.
      * <p>
      * Unlike {@link #intoMap(Field[])}, this method allows for non-unique keys
      * in the result set.
@@ -1913,7 +1933,6 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
      * <p>
-     *
      * @param <K> The key's generic field type
      * @param <E> The generic entity type.
      * @param key The key field.
@@ -1922,6 +1941,22 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *             exception that might have occurred while mapping records
      */
     <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) throws MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given keys and mapped
+     * into the given entity type.
+     * <p>
+     * Unlike {@link #intoMap(Field[], Class)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keys The keys. If this is <code>null</code> or an empty array, the
+     *            resulting map will contain at most one entry.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     */
+    <E> Map<List<?>, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) throws MappingException;
+
 
     /**
      * Convert this result into an array of arrays

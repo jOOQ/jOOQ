@@ -1687,6 +1687,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             return;
         }
 
+        // key -> POJO
         // Group by BOOK.ID
         Map<Integer, Object> map1 =
         create().selectFrom(TBook())
@@ -1716,6 +1717,29 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         catch (Throwable t) {
             assertEquals(InvalidResultException.class, t.getClass());
         }
+
+        // keys -> POJO
+        // Grouping by BOOK.ID, BOOK.LANGUAGE_ID, BOOK.TITLE
+        Map<List<?>, Object> map4 = create().selectFrom(TBook()).orderBy(TBook_ID())
+            .fetchMap(new Field<?>[] { TBook_ID(), TBook_LANGUAGE_ID(), TBook_TITLE() }, TBookPojo());
+        assertEquals(4, map4.keySet().size());
+
+        for (List<?> keys : map4.keySet()) {
+            Object pojo = map4.get(keys);
+            assertEquals(keys.get(0), on(pojo).call("getId").get());
+            assertEquals(keys.get(1), on(pojo).call("getLanguageId").get());
+            assertEquals(keys.get(2), on(pojo).call("getTitle").get());
+        }
+
+        try {
+         // Grouping by BOOK.AUTHOR_ID
+            create().selectFrom(TBook()).orderBy(TBook_ID())
+                .fetchMap(new Field<?>[] { TBook_AUTHOR_ID(), }, TBookPojo());
+            fail("Fetching map with the non-unique key - InvalidResultException not thrown.");
+        }
+        catch (Throwable t) {
+            assertEquals(InvalidResultException.class, t.getClass());
+        }
     }
 
     @Test
@@ -1725,6 +1749,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             return;
         }
 
+        // key -> POJO
         // Group by BOOK.ID
         Map<Integer, List<Object>> map1 =
         create().selectFrom(TBook())
@@ -1775,6 +1800,44 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(BOOK_TITLES.get(3), on(entry22.getValue().get(1)).call("getTitle").get());
 
         assertFalse(it.hasNext());
+
+        // keys -> POJO
+        // Grouping by BOOK.AUTHOR_ID, BOOK.LANGUAGE_ID
+        Map<List<?>, List<Object>> map3 = create().selectFrom(TBook()).orderBy(TBook_ID())
+            .fetchGroups(new Field<?>[] { TBook_AUTHOR_ID(), TBook_LANGUAGE_ID() }, TBookPojo());
+
+        Iterator<Entry<List<?>, List<Object>>> iterator = map3.entrySet().iterator();
+        Entry<List<?>, List<Object>> entry1_en = iterator.next();
+        assertEquals(2, entry1_en.getValue().size());
+        assertEquals(entry1_en.getKey().get(0), on(entry1_en.getValue().get(0)).call("getAuthorId").get());
+        assertEquals(entry1_en.getKey().get(0), on(entry1_en.getValue().get(1)).call("getAuthorId").get());
+        assertEquals(entry1_en.getKey().get(1), on(entry1_en.getValue().get(0)).call("getLanguageId").get());
+        assertEquals(entry1_en.getKey().get(1), on(entry1_en.getValue().get(1)).call("getLanguageId").get());
+
+        Entry<List<?>, List<Object>> entry2_pt = iterator.next();
+        assertEquals(1, entry2_pt.getValue().size());
+        assertEquals(entry2_pt.getKey().get(0), on(entry2_pt.getValue().get(0)).call("getAuthorId").get());
+        assertEquals(entry2_pt.getKey().get(1), on(entry2_pt.getValue().get(0)).call("getLanguageId").get());
+
+        Entry<List<?>, List<Object>> entry2_de = iterator.next();
+        assertEquals(1, entry2_de.getValue().size());
+        assertEquals(entry2_de.getKey().get(0), on(entry2_de.getValue().get(0)).call("getAuthorId").get());
+        assertEquals(entry2_de.getKey().get(1), on(entry2_de.getValue().get(0)).call("getLanguageId").get());
+
+        assertFalse(iterator.hasNext());
+
+        // Grouping by BOOK.AUTHOR_ID, BOOK.LANGUAGE_ID, BOOK.TITLE
+        Map<List<?>, List<Object>> map4 = create().selectFrom(TBook()).orderBy(TBook_ID())
+            .fetchGroups(new Field<?>[] { TBook_ID(), TBook_LANGUAGE_ID(), TBook_TITLE() }, TBookPojo());
+        assertEquals(4, map4.size());
+
+        for (List<?> keyList : map4.keySet()) {
+            List<Object> result = map4.get(keyList);
+            assertEquals(1, result.size());
+            assertEquals(keyList.get(0), on(result.get(0)).call("getId").get());
+            assertEquals(keyList.get(1), on(result.get(0)).call("getLanguageId").get());
+            assertEquals(keyList.get(2), on(result.get(0)).call("getTitle").get());
+        }
     }
 
     @Test

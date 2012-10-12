@@ -521,6 +521,27 @@ public interface ResultQuery<R extends Record> extends Query {
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
+     * given keys and mapped into the given entity type.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #fetchGroups(Field[], Class)} instead, if
+     * your keys are non-unique.
+     *
+     * @param keys The keys. Client code must assure that keys are unique in the
+     *            result set. If this is <code>null</code> or an empty array,
+     *            the resulting map will contain at most one entry.
+     * @return A Map containing the results.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoMap(Field[], Class)
+     */
+    <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) throws MappingException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
      * given key and mapped into the given entity type.
      * <p>
      * An exception is thrown, if the key turn out to be non-unique in the
@@ -586,6 +607,23 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Result#intoGroups(Field[])
      */
     Map<Record, Result<R>> fetchGroups(Field<?>[] keys) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
+     * given keys and mapped into the given entity type.
+     * <p>
+     * Unlike {@link #fetchMap(Field[], Class)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keys The keys. If this is <code>null</code> or an empty array, the
+     *            resulting map will contain at most one entry.
+     * @return A Map containing grouped results
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoGroups(Field[], Class)
+     */
+    <E> Map<List<?>, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) throws MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped

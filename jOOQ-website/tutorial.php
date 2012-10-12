@@ -185,8 +185,6 @@ INFO: Generating classes in    : /Users/jOOQ/workspace/MySQLTest/src/test/genera
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Generating schema        : Guestbook.java
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO: Generating factory       : GuestbookFactory.java
-Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Schema generated         : Total: 122.18ms
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Sequences fetched        : 0 (0 included, 0 excluded)
@@ -271,13 +269,13 @@ This is pretty standard code for establishing a MySQL connection.
 Let's add a simple query:
 </p>
 <pre class="prettyprint lang-java">
-GuestbookFactory create = new GuestbookFactory(conn);
+Factory create = new Factory(conn, SQLDialect.MYSQL);
 Result&lt;Record&gt; result = create.select().from(POSTS).fetch();
 </pre>
 <p>
-First get an instance of <code>GuestbookFactory</code> so we can write a simple
+First get an instance of <code>Factory</code> so we can write a simple
 <code>SELECT</code> query. We pass an instance of the MySQL connection to
-<code>GuestbookFactory</code>. Note that the factory doesn't close the connection.
+<code>Factory</code>. Note that the factory doesn't close the connection.
 We'll have to do that ourselves.
 </p>
 <p>
@@ -318,8 +316,8 @@ import java.sql.Statement;
 
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.impl.Factory;
 
-import test.generated.GuestbookFactory;
 import test.generated.tables.Posts;
 
 public class Main {
@@ -338,7 +336,7 @@ public class Main {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
 
-            GuestbookFactory create = new GuestbookFactory(conn);
+            Factory create = new Factory(conn, SQLDialect.MYSQL);
             Result&lt;Record&gt; result = create.select().from(POSTS).fetch();
 
             for (Record r : result) {

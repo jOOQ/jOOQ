@@ -656,8 +656,6 @@ INFO: Generating classes in    : /Users/jOOQ/workspace/MySQLTest/src/test/genera
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Generating schema        : Guestbook.java
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO: Generating factory       : GuestbookFactory.java
-Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Schema generated         : Total: 122.18ms
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Sequences fetched        : 0 (0 included, 0 excluded)
@@ -812,7 +810,7 @@ public class Main {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
 
-            GuestbookFactory create = new GuestbookFactory(conn);
+            Factory create = new Factory(conn, SQLDialect.MYSQL);
             Result&lt;Record&gt; result = create.select().from(POSTS).fetch();
 
             for (Record r : result) {

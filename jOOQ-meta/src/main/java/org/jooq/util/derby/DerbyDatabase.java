@@ -52,6 +52,7 @@ import java.util.regex.Pattern;
 
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -67,7 +68,6 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
-import org.jooq.util.derby.sys.SysFactory;
 import org.jooq.util.derby.sys.tables.Sysconglomerates;
 import org.jooq.util.derby.sys.tables.Sysconstraints;
 import org.jooq.util.derby.sys.tables.Syskeys;
@@ -320,6 +320,6 @@ public class DerbyDatabase extends AbstractDatabase {
 
     @Override
     protected Factory create0() {
-        return new SysFactory(getConnection());
+        return new Factory(getConnection(), SQLDialect.DERBY);
     }
 }

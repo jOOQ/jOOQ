@@ -85,9 +85,9 @@ public class SchemaMapping implements Serializable {
     /**
      * Generated UID
      */
-    private static final long               serialVersionUID  = 8269660159338710470L;
-    private static final JooqLogger         log               = JooqLogger.getLogger(SchemaMapping.class);
-    private static volatile boolean         loggedDeprecation = false;
+    private static final long                        serialVersionUID  = 8269660159338710470L;
+    private static final JooqLogger                  log               = JooqLogger.getLogger(SchemaMapping.class);
+    private static volatile boolean                  loggedDeprecation = false;
 
     /**
      * The default, unmodifiable mapping that just takes generated schemata
@@ -95,12 +95,12 @@ public class SchemaMapping implements Serializable {
      * @deprecated - 2.0.5 - Do not reuse this SchemaMapping!
      */
     @Deprecated
-    public static final SchemaMapping       NO_MAPPING        = new SchemaMapping(SettingsTools.defaultSettings(), true);
+    public static final SchemaMapping                NO_MAPPING        = new SchemaMapping(SettingsTools.defaultSettings(), true);
 
-    private final RenderMapping             mapping;
-    private final boolean                   ignoreMapping;
-    private final boolean                   renderSchema;
-    private volatile transient Map<String, Schema> schemata;
+    private final RenderMapping                      mapping;
+    private final boolean                            ignoreMapping;
+    private final boolean                            renderSchema;
+    private volatile transient Map<String, Schema>   schemata;
     private volatile transient Map<String, Table<?>> tables;
 
     /**
@@ -312,6 +312,9 @@ public class SchemaMapping implements Serializable {
 
             // Lazy initialise schema mapping
             if (!getSchemata().containsKey(schemaName)) {
+
+                // [#1857] thread-safe lazy initialisation for those users who
+                // want to use Factory and dependent objects in a "thread-safe" manner
                 synchronized (this) {
                     if (!getSchemata().containsKey(schemaName)) {
                         Schema mapped = schema;
@@ -369,6 +372,9 @@ public class SchemaMapping implements Serializable {
 
             // Lazy initialise table mapping
             if (!getTables().containsKey(key)) {
+
+                // [#1857] thread-safe lazy initialisation for those users who
+                // want to use Factory and dependent objects in a "thread-safe" manner
                 synchronized (this) {
                     if (!getTables().containsKey(key)) {
                         Table<?> mapped = table;
@@ -425,6 +431,9 @@ public class SchemaMapping implements Serializable {
 
     private final Map<String, Schema> getSchemata() {
         if (schemata == null) {
+
+            // [#1857] thread-safe lazy initialisation for those users who
+            // want to use Factory and dependent objects in a "thread-safe" manner
             synchronized (this) {
                 if (schemata == null) {
                     schemata = new HashMap<String, Schema>();
@@ -436,6 +445,9 @@ public class SchemaMapping implements Serializable {
 
     private final Map<String, Table<?>> getTables() {
         if (tables == null) {
+
+            // [#1857] thread-safe lazy initialisation for those users who
+            // want to use Factory and dependent objects in a "thread-safe" manner
             synchronized (this) {
                 if (tables == null) {
                     tables = new HashMap<String, Table<?>>();

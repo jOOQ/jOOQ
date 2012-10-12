@@ -34,56 +34,39 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console;
+package org.jooq.debug;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import org.jooq.debug.TextMatcher;
-import org.jooq.debug.TextMatcher.TextMatchingType;
-
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.StringWriter;
 
 /**
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class TextMatcherPane extends JPanel {
+public class QueryExecutionMessageResult implements QueryExecutionResult, Serializable {
 
-    private JComboBox matcherTypeComboBox;
-    private JTextField textField;
-    private JCheckBox caseSensitiveCheckBox;
+    private String message;
+    private boolean isError;
 
-    public TextMatcherPane(TextMatcher textMatcher) {
-        super(new GridBagLayout());
-        setOpaque(false);
-        matcherTypeComboBox = new JComboBox(TextMatchingType.values());
-        add(matcherTypeComboBox, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        textField = new JTextField(14);
-        add(textField, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 0, 0), 0, 0));
-        caseSensitiveCheckBox = new JCheckBox("Case sensitive");
-        caseSensitiveCheckBox.setOpaque(false);
-        add(caseSensitiveCheckBox, new GridBagConstraints(2, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
-        if(textMatcher != null) {
-            matcherTypeComboBox.setSelectedItem(textMatcher.getType());
-            textField.setText(textMatcher.getText());
-            caseSensitiveCheckBox.setSelected(textMatcher.isCaseSensitive());
-        }
+    public QueryExecutionMessageResult(String message, boolean isError) {
+        this.message = message;
+        this.isError = isError;
     }
 
-    public TextMatcher getTextMatcher() {
-        return new TextMatcher((TextMatchingType)matcherTypeComboBox.getSelectedItem(), textField.getText(), caseSensitiveCheckBox.isSelected());
+    public QueryExecutionMessageResult(Exception e) {
+        StringWriter stringWriter = new StringWriter();
+        e.printStackTrace(new PrintWriter(stringWriter));
+        this.message = stringWriter.toString();
+        isError = true;
     }
 
-    public void setLocked(boolean isLocked) {
-        matcherTypeComboBox.setEnabled(!isLocked);
-        textField.setEnabled(!isLocked);
-        caseSensitiveCheckBox.setEnabled(!isLocked);
+    public String getMessage() {
+        return message;
+    }
+
+    public boolean isError() {
+        return isError;
     }
 
 }

@@ -66,8 +66,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.jooq.debug.QueryExecutorCreator;
 import org.jooq.debug.console.misc.InvisibleSplitPane;
-import org.jooq.tools.debug.old.QueryExecutorCreator;
 
 /**
  * @author Christopher Deckers

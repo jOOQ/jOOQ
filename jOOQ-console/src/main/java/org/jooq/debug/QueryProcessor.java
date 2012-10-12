@@ -34,56 +34,54 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debug.console;
+package org.jooq.debug;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.io.Serializable;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import org.jooq.debug.TextMatcher;
-import org.jooq.debug.TextMatcher.TextMatchingType;
-
+import org.jooq.debug.impl.Utils;
 
 /**
  * @author Christopher Deckers
  */
 @SuppressWarnings("serial")
-public class TextMatcherPane extends JPanel {
+public class QueryProcessor implements Serializable {
 
-    private JComboBox matcherTypeComboBox;
-    private JTextField textField;
-    private JCheckBox caseSensitiveCheckBox;
-
-    public TextMatcherPane(TextMatcher textMatcher) {
-        super(new GridBagLayout());
-        setOpaque(false);
-        matcherTypeComboBox = new JComboBox(TextMatchingType.values());
-        add(matcherTypeComboBox, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        textField = new JTextField(14);
-        add(textField, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 2, 0, 0), 0, 0));
-        caseSensitiveCheckBox = new JCheckBox("Case sensitive");
-        caseSensitiveCheckBox.setOpaque(false);
-        add(caseSensitiveCheckBox, new GridBagConstraints(2, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 2, 0, 0), 0, 0));
-        if(textMatcher != null) {
-            matcherTypeComboBox.setSelectedItem(textMatcher.getType());
-            textField.setText(textMatcher.getText());
-            caseSensitiveCheckBox.setSelected(textMatcher.isCaseSensitive());
+    public static enum ProcessorExecutionType {
+        STATIC("Static SQL"),
+        SED_LIKE_REG_EXP("Sed-like Reg. Exp."),
+        ;
+        private String name;
+        private ProcessorExecutionType(String name) {
+            this.name = name;
+        }
+        @Override
+        public String toString() {
+            return name;
         }
     }
 
-    public TextMatcher getTextMatcher() {
-        return new TextMatcher((TextMatchingType)matcherTypeComboBox.getSelectedItem(), textField.getText(), caseSensitiveCheckBox.isSelected());
+    private ProcessorExecutionType type;
+    private String text;
+
+    public QueryProcessor(ProcessorExecutionType type, String text) {
+        this.type = type;
+        this.text = text;
     }
 
-    public void setLocked(boolean isLocked) {
-        matcherTypeComboBox.setEnabled(!isLocked);
-        textField.setEnabled(!isLocked);
-        caseSensitiveCheckBox.setEnabled(!isLocked);
+    public ProcessorExecutionType getType() {
+        return type;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String processSQL(String sql) {
+        switch(type) {
+            case STATIC: return text;
+            case SED_LIKE_REG_EXP: return Utils.applySedRegularExpression(sql, text);
+        }
+        throw new IllegalStateException();
     }
 
 }

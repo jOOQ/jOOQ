@@ -77,7 +77,9 @@ import org.jooq.UpdatableTable;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.debug.Debugger;
 import org.jooq.debug.console.Console;
+import org.jooq.debug.impl.DebuggerFactory;
 import org.jooq.impl.Factory;
 import org.jooq.test._.TestStatisticsListener;
 import org.jooq.test._.converters.Boolean_10;
@@ -92,7 +94,6 @@ import org.jooq.test._.testcases.BenchmarkTests;
 import org.jooq.test._.testcases.CRUDTests;
 import org.jooq.test._.testcases.DaoTests;
 import org.jooq.test._.testcases.DataTypeTests;
-import org.jooq.test._.testcases.DebuggerTests;
 import org.jooq.test._.testcases.EnumTests;
 import org.jooq.test._.testcases.ExecuteListenerTests;
 import org.jooq.test._.testcases.ExoticTests;
@@ -118,9 +119,6 @@ import org.jooq.test._.testcases.ThreadSafetyTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
-import org.jooq.tools.debug.impl.DebuggerAPI;
-import org.jooq.tools.debug.old.Debugger;
-import org.jooq.tools.debug.old.impl.DebuggerFactory;
 import org.jooq.tools.reflect.ReflectException;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
@@ -132,7 +130,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.postgresql.util.PSQLException;
 
@@ -376,12 +373,6 @@ public abstract class jOOQAbstractTest<
         }
     }
 
-    @BeforeClass
-    public static void console() throws Exception {
-        DebuggerAPI.startServer(DEBUGGER_PORT);
-        DebuggerAPI.debug(true);
-    }
-
     @Before
     public void setUp() throws Exception {
         connection = getConnection();
@@ -432,8 +423,6 @@ public abstract class jOOQAbstractTest<
 
         log.info("---------------");
         log.info("Total", total);
-
-        DebuggerAPI.stopServer();
     }
 
     public final Connection getConnection() {
@@ -1774,36 +1763,6 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testRenderKeywordStyle() throws Exception {
         new RenderAndBindTests(this).testRenderKeywordStyle();
-    }
-
-    @Test
-    public void testDebuggerExecutor() throws Exception {
-        new DebuggerTests(this).testDebuggerExecutor();
-    }
-
-    @Test
-    public void testDebuggerLogger() throws Exception {
-        new DebuggerTests(this).testDebuggerLogger();
-    }
-
-    @Test
-    public void testDebuggerMatchCount() throws Exception {
-        new DebuggerTests(this).testDebuggerMatchCount();
-    }
-
-    @Test
-    public void testDebuggerProcessor() throws Exception {
-        new DebuggerTests(this).testDebuggerProcessor();
-    }
-
-    @Test
-    public void testDebuggerProcessorInstead() throws Exception {
-        new DebuggerTests(this).testDebuggerProcessorInstead();
-    }
-
-    @Test
-    public void testDebuggerBreakpoint() throws Exception {
-        new DebuggerTests(this).testDebuggerBreakpoint();
     }
 
     @Test

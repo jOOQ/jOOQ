@@ -50,8 +50,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.jooq.debug.Debugger;
 import org.jooq.debug.console.LoggerPane.LoggerPaneLoggingListener;
-import org.jooq.tools.debug.old.Debugger;
 
 /**
  * @author Christopher Deckers

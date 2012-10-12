@@ -55,9 +55,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
-import org.jooq.tools.debug.old.QueryMatcher;
-import org.jooq.tools.debug.old.QueryType;
-import org.jooq.tools.debug.old.TextMatcher;
+import org.jooq.debug.QueryMatcher;
+import org.jooq.debug.QueryType;
+import org.jooq.debug.TextMatcher;
 
 /**
  * @author Christopher Deckers

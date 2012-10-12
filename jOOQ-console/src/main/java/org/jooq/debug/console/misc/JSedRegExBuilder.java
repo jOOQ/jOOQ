@@ -48,7 +48,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import org.jooq.tools.debug.old.impl.Utils;
+import org.jooq.debug.impl.Utils;
 
 /**
  * @author Christopher Deckers

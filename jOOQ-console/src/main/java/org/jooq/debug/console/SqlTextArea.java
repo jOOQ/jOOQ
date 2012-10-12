@@ -51,7 +51,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
-import org.jooq.tools.debug.old.impl.Utils;
+import org.jooq.debug.impl.Utils;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaEditorKit;

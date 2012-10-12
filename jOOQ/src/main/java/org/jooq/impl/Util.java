@@ -87,8 +87,6 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
 import org.jooq.tools.StringUtils;
-import org.jooq.tools.debug.impl.DebugListener;
-import org.jooq.tools.debug.impl.DebuggerAPI;
 import org.jooq.tools.reflect.Reflect;
 
 /**
@@ -1055,10 +1053,6 @@ final class Util {
         if (!FALSE.equals(configuration.getSettings().isExecuteLogging())) {
             result.add(new StopWatchListener());
             result.add(new LoggerListener());
-        }
-
-        if (DebuggerAPI.debug()) {
-            result.add(new DebugListener());
         }
 
         for (String listener : configuration.getSettings().getExecuteListeners()) {

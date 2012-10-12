@@ -2011,136 +2011,134 @@ public class DefaultGenerator extends AbstractGenerator {
 
         // Generating the factory
         // -----------------------------------------------------------------
-        log.info("Generating factory", strategy.getFileName(schema, Mode.FACTORY));
-
-        outF = new GenerationWriter(strategy.getFile(schema, Mode.FACTORY));
-        printHeader(outF, schema);
-        printClassJavadoc(outF,
-            "A Factory for specific use with the <code>" + schema.getOutputName() +
-            "</code> schema.\n<p>\nThis Factory will not render the <code>" + schema.getOutputName() +
-            "</code> schema's schema name in rendered SQL (assuming that you use it as the default schema on your connection!). Use the more generic {@link " +
-            database.getDialect().getFactory().getName() +
-            "} or the {@link " + Factory.class.getName() + "} instead, if you want to fully qualify tables, routines, etc.");
-
-        outF.print("public class ");
-        outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
-        outF.print(" extends ");
-        outF.print(database.getDialect().getFactory());
-        printImplements(outF, schema, Mode.FACTORY);
-        outF.println(" {");
-        outF.printSerial();
-
-        outF.println();
-        outF.println("\t/**");
-        outF.println("\t * Create a factory with a connection");
-        outF.println("\t *");
-        outF.println("\t * @param connection The connection to use with objects created from this factory");
-        outF.println("\t */");
-        outF.print("\tpublic ");
-        outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
-        outF.print("(");
-        outF.print(Connection.class);
-        outF.println(" connection) {");
-        outF.println("\t\tsuper(connection);");
-        outF.println();
-        outF.println("\t\tinitDefaultSchema();");
-        outF.println("\t}");
-
-        outF.println();
-        outF.println("\t/**");
-        outF.println("\t * Create a factory with a data source");
-        outF.println("\t *");
-        outF.println("\t * @param dataSource The data source to use with objects created from this factory");
-        outF.println("\t */");
-        outF.print("\tpublic ");
-        outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
-        outF.print("(");
-        outF.print(DataSource.class);
-        outF.println(" dataSource) {");
-        outF.println("\t\tsuper(dataSource);");
-        outF.println();
-        outF.println("\t\tinitDefaultSchema();");
-        outF.println("\t}");
-
         if (generateDeprecated()) {
+            log.info("Generating factory", strategy.getFileName(schema, Mode.FACTORY));
+
+            outF = new GenerationWriter(strategy.getFile(schema, Mode.FACTORY));
+            printHeader(outF, schema);
+            printClassJavadoc(outF,
+                "@deprecated - [#1866] - 2.6.0 - Schema-specific factories will no longer be generated in the future. Do not reuse.");
+
+            outF.print("public class ");
+            outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
+            outF.print(" extends ");
+            outF.print(database.getDialect().getFactory());
+            printImplements(outF, schema, Mode.FACTORY);
+            outF.println(" {");
+            outF.printSerial();
+
             outF.println();
             outF.println("\t/**");
-            outF.println("\t * Create a factory with a connection and a schema mapping");
-            outF.println("\t * ");
-            outF.print("\t * @deprecated - 2.0.5 - Use {@link #");
-            outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
-            outF.print("(");
-            outF.print(Connection.class);
-            outF.print(", ");
-            outF.print(Settings.class);
-            outF.println(")} instead");
+            outF.println("\t * Create a factory with a connection");
+            outF.println("\t *");
+            outF.println("\t * @param connection The connection to use with objects created from this factory");
             outF.println("\t */");
-            outF.println("\t@Deprecated");
             outF.print("\tpublic ");
             outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
             outF.print("(");
             outF.print(Connection.class);
-            outF.println(" connection, org.jooq.SchemaMapping mapping) {");
-            outF.println("\t\tsuper(connection, mapping);");
+            outF.println(" connection) {");
+            outF.println("\t\tsuper(connection);");
             outF.println();
             outF.println("\t\tinitDefaultSchema();");
             outF.println("\t}");
+
+            outF.println();
+            outF.println("\t/**");
+            outF.println("\t * Create a factory with a data source");
+            outF.println("\t *");
+            outF.println("\t * @param dataSource The data source to use with objects created from this factory");
+            outF.println("\t */");
+            outF.print("\tpublic ");
+            outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
+            outF.print("(");
+            outF.print(DataSource.class);
+            outF.println(" dataSource) {");
+            outF.println("\t\tsuper(dataSource);");
+            outF.println();
+            outF.println("\t\tinitDefaultSchema();");
+            outF.println("\t}");
+
+            if (generateDeprecated()) {
+                outF.println();
+                outF.println("\t/**");
+                outF.println("\t * Create a factory with a connection and a schema mapping");
+                outF.println("\t * ");
+                outF.print("\t * @deprecated - 2.0.5 - Use {@link #");
+                outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
+                outF.print("(");
+                outF.print(Connection.class);
+                outF.print(", ");
+                outF.print(Settings.class);
+                outF.println(")} instead");
+                outF.println("\t */");
+                outF.println("\t@Deprecated");
+                outF.print("\tpublic ");
+                outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
+                outF.print("(");
+                outF.print(Connection.class);
+                outF.println(" connection, org.jooq.SchemaMapping mapping) {");
+                outF.println("\t\tsuper(connection, mapping);");
+                outF.println();
+                outF.println("\t\tinitDefaultSchema();");
+                outF.println("\t}");
+            }
+
+            outF.println();
+            outF.println("\t/**");
+            outF.println("\t * Create a factory with a connection and some settings");
+            outF.println("\t *");
+            outF.println("\t * @param connection The connection to use with objects created from this factory");
+            outF.println("\t * @param settings The settings to apply to objects created from this factory");
+            outF.println("\t */");
+            outF.print("\tpublic ");
+            outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
+            outF.print("(");
+            outF.print(Connection.class);
+            outF.print(" connection, ");
+            outF.print(Settings.class);
+            outF.println(" settings) {");
+            outF.println("\t\tsuper(connection, settings);");
+            outF.println();
+            outF.println("\t\tinitDefaultSchema();");
+            outF.println("\t}");
+
+            outF.println();
+            outF.println("\t/**");
+            outF.println("\t * Create a factory with a data source and some settings");
+            outF.println("\t *");
+            outF.println("\t * @param dataSource The data source to use with objects created from this factory");
+            outF.println("\t * @param settings The settings to apply to objects created from this factory");
+            outF.println("\t */");
+            outF.print("\tpublic ");
+            outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
+            outF.print("(");
+            outF.print(DataSource.class);
+            outF.print(" dataSource, ");
+            outF.print(Settings.class);
+            outF.println(" settings) {");
+            outF.println("\t\tsuper(dataSource, settings);");
+            outF.println();
+            outF.println("\t\tinitDefaultSchema();");
+            outF.println("\t}");
+
+            // [#1315] schema-specific factories override the default schema
+            outF.println();
+            outF.println("\t/**");
+            outF.println("\t * Initialise the render mapping's default schema.");
+            outF.println("\t * <p>");
+            outF.println("\t * For convenience, this schema-specific factory should override any pre-existing setting");
+            outF.println("\t */");
+            outF.println("\tprivate final void initDefaultSchema() {");
+            outF.print("\t\t");
+            outF.print(SettingsTools.class);
+            outF.print(".getRenderMapping(getSettings()).setDefaultSchema(");
+            outF.print(strategy.getFullJavaIdentifier(schema));
+            outF.println(".getName());");
+            outF.println("\t}");
+
+            watch.splitInfo("Factory generated");
         }
-
-        outF.println();
-        outF.println("\t/**");
-        outF.println("\t * Create a factory with a connection and some settings");
-        outF.println("\t *");
-        outF.println("\t * @param connection The connection to use with objects created from this factory");
-        outF.println("\t * @param settings The settings to apply to objects created from this factory");
-        outF.println("\t */");
-        outF.print("\tpublic ");
-        outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
-        outF.print("(");
-        outF.print(Connection.class);
-        outF.print(" connection, ");
-        outF.print(Settings.class);
-        outF.println(" settings) {");
-        outF.println("\t\tsuper(connection, settings);");
-        outF.println();
-        outF.println("\t\tinitDefaultSchema();");
-        outF.println("\t}");
-
-        outF.println();
-        outF.println("\t/**");
-        outF.println("\t * Create a factory with a data source and some settings");
-        outF.println("\t *");
-        outF.println("\t * @param dataSource The data source to use with objects created from this factory");
-        outF.println("\t * @param settings The settings to apply to objects created from this factory");
-        outF.println("\t */");
-        outF.print("\tpublic ");
-        outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
-        outF.print("(");
-        outF.print(DataSource.class);
-        outF.print(" dataSource, ");
-        outF.print(Settings.class);
-        outF.println(" settings) {");
-        outF.println("\t\tsuper(dataSource, settings);");
-        outF.println();
-        outF.println("\t\tinitDefaultSchema();");
-        outF.println("\t}");
-
-        // [#1315] schema-specific factories override the default schema
-        outF.println();
-        outF.println("\t/**");
-        outF.println("\t * Initialise the render mapping's default schema.");
-        outF.println("\t * <p>");
-        outF.println("\t * For convenience, this schema-specific factory should override any pre-existing setting");
-        outF.println("\t */");
-        outF.println("\tprivate final void initDefaultSchema() {");
-        outF.print("\t\t");
-        outF.print(SettingsTools.class);
-        outF.print(".getRenderMapping(getSettings()).setDefaultSchema(");
-        outF.print(strategy.getFullJavaIdentifier(schema));
-        outF.println(".getName());");
-        outF.println("\t}");
-
-        watch.splitInfo("Factory generated");
     }
 
     protected void printExtends(GenerationWriter out, Definition definition, Mode mode) {

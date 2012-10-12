@@ -52,6 +52,7 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -77,7 +78,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
     @Override
     protected Factory create0() {
-        return new HSQLDBFactory(getConnection());
+        return new Factory(getConnection(), SQLDialect.HSQLDB);
     }
 
     @Override

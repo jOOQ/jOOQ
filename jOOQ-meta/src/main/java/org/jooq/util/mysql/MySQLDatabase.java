@@ -51,6 +51,7 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -327,6 +328,6 @@ public class MySQLDatabase extends AbstractDatabase {
 
     @Override
     protected Factory create0() {
-        return new MySQLFactory(getConnection());
+        return new Factory(getConnection(), SQLDialect.MYSQL);
     }
 }

@@ -59,6 +59,7 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -76,7 +77,6 @@ import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
 import org.jooq.util.hsqldb.HSQLDBDatabase;
-import org.jooq.util.postgres.information_schema.InformationSchemaFactory;
 import org.jooq.util.postgres.information_schema.tables.Routines;
 
 /**
@@ -386,6 +386,6 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected Factory create0() {
-        return new InformationSchemaFactory(getConnection());
+        return new Factory(getConnection(), SQLDialect.POSTGRES);
     }
 }

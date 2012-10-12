@@ -48,6 +48,7 @@ import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
@@ -61,7 +62,6 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
-import org.jooq.util.ase.sys.DboFactory;
 import org.jooq.util.ase.sys.tables.Sysindexes;
 import org.jooq.util.ase.sys.tables.Sysreferences;
 import org.jooq.util.ase.sys.tables.Sysusers;
@@ -77,7 +77,7 @@ public class ASEDatabase extends AbstractDatabase {
 
     @Override
     protected Factory create0() {
-        return new DboFactory(getConnection());
+        return new Factory(getConnection(), SQLDialect.ASE);
     }
 
     private SchemaDefinition getSchema() {

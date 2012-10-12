@@ -52,6 +52,7 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -67,7 +68,6 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
-import org.jooq.util.ingres.ingres.$ingresFactory;
 import org.jooq.util.ingres.ingres.tables.IiconstraintIndexes;
 import org.jooq.util.ingres.ingres.tables.Iiconstraints;
 import org.jooq.util.ingres.ingres.tables.IidbComments;
@@ -85,7 +85,7 @@ public class IngresDatabase extends AbstractDatabase {
 
     @Override
     protected Factory create0() {
-        return new $ingresFactory(getConnection());
+        return new Factory(getConnection(), SQLDialect.INGRES);
     }
 
     @Override

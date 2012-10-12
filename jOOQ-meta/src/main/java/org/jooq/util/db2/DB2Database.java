@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
@@ -73,7 +74,6 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
-import org.jooq.util.db2.syscat.SyscatFactory;
 import org.jooq.util.db2.syscat.tables.Datatypes;
 import org.jooq.util.db2.syscat.tables.Keycoluse;
 import org.jooq.util.db2.syscat.tables.References;
@@ -91,7 +91,7 @@ public class DB2Database extends AbstractDatabase {
 
     @Override
     protected Factory create0() {
-        return new SyscatFactory(getConnection());
+        return new Factory(getConnection(), SQLDialect.DB2);
     }
 
     @Override

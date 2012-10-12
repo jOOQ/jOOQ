@@ -623,7 +623,7 @@ public interface ResultQuery<R extends Record> extends Query {
      *             exception that might have occurred while mapping records
      * @see Result#intoGroups(Field[], Class)
      */
-    <E> Map<List<?>, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) throws MappingException;
+    <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) throws MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped

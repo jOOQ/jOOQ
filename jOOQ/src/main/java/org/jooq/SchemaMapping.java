@@ -100,8 +100,8 @@ public class SchemaMapping implements Serializable {
     private final RenderMapping             mapping;
     private final boolean                   ignoreMapping;
     private final boolean                   renderSchema;
-    private transient Map<String, Schema>   schemata;
-    private transient Map<String, Table<?>> tables;
+    private volatile transient Map<String, Schema> schemata;
+    private volatile transient Map<String, Table<?>> tables;
 
     /**
      * Construct an empty mapping
@@ -312,24 +312,28 @@ public class SchemaMapping implements Serializable {
 
             // Lazy initialise schema mapping
             if (!getSchemata().containsKey(schemaName)) {
-                Schema mapped = schema;
+                synchronized (this) {
+                    if (!getSchemata().containsKey(schemaName)) {
+                        Schema mapped = schema;
 
-                for (MappedSchema s : mapping.getSchemata()) {
+                        for (MappedSchema s : mapping.getSchemata()) {
 
-                    // A configured mapping was found, add a renamed schema
-                    if (schemaName.equals(s.getInput())) {
+                            // A configured mapping was found, add a renamed schema
+                            if (schemaName.equals(s.getInput())) {
 
-                        // Ignore self-mappings and void-mappings
-                        if (!isBlank(s.getOutput()) && !s.getOutput().equals(s.getInput())) {
-                            mapped = new RenamedSchema(schema, s.getOutput());
+                                // Ignore self-mappings and void-mappings
+                                if (!isBlank(s.getOutput()) && !s.getOutput().equals(s.getInput())) {
+                                    mapped = new RenamedSchema(schema, s.getOutput());
+                                }
+
+                                break;
+                            }
                         }
 
-                        break;
+                        // Add mapped schema or self if no mapping was found
+                        getSchemata().put(schemaName, mapped);
                     }
                 }
-
-                // Add mapped schema or self if no mapping was found
-                getSchemata().put(schemaName, mapped);
             }
 
             result = getSchemata().get(schemaName);
@@ -365,29 +369,33 @@ public class SchemaMapping implements Serializable {
 
             // Lazy initialise table mapping
             if (!getTables().containsKey(key)) {
-                Table<?> mapped = table;
+                synchronized (this) {
+                    if (!getTables().containsKey(key)) {
+                        Table<?> mapped = table;
 
-                schemaLoop:
-                for (MappedSchema s : mapping.getSchemata()) {
-                    if (schemaName.equals(s.getInput())) {
-                        for (MappedTable t : s.getTables()) {
+                        schemaLoop:
+                        for (MappedSchema s : mapping.getSchemata()) {
+                            if (schemaName.equals(s.getInput())) {
+                                for (MappedTable t : s.getTables()) {
 
-                            // A configured mapping was found, add a renamed table
-                            if (tableName.equals(t.getInput())) {
+                                    // A configured mapping was found, add a renamed table
+                                    if (tableName.equals(t.getInput())) {
 
-                                // Ignore self-mappings and void-mappings
-                                if (!isBlank(t.getOutput()) && !t.getOutput().equals(t.getInput())) {
-                                    mapped = new RenamedTable(table, t.getOutput());
+                                        // Ignore self-mappings and void-mappings
+                                        if (!isBlank(t.getOutput()) && !t.getOutput().equals(t.getInput())) {
+                                            mapped = new RenamedTable(table, t.getOutput());
+                                        }
+
+                                        break schemaLoop;
+                                    }
                                 }
-
-                                break schemaLoop;
                             }
                         }
+
+                        // Add mapped table or self if no mapping was found
+                        getTables().put(key, mapped);
                     }
                 }
-
-                // Add mapped table or self if no mapping was found
-                getTables().put(key, mapped);
             }
 
             result = getTables().get(key);
@@ -417,17 +425,23 @@ public class SchemaMapping implements Serializable {
 
     private final Map<String, Schema> getSchemata() {
         if (schemata == null) {
-            schemata = new HashMap<String, Schema>();
+            synchronized (this) {
+                if (schemata == null) {
+                    schemata = new HashMap<String, Schema>();
+                }
+            }
         }
-
         return schemata;
     }
 
     private final Map<String, Table<?>> getTables() {
         if (tables == null) {
-            tables = new HashMap<String, Table<?>>();
+            synchronized (this) {
+                if (tables == null) {
+                    tables = new HashMap<String, Table<?>>();
+                }
+            }
         }
-
         return tables;
     }
 

@@ -1538,23 +1538,25 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final <E> Map<List<?>, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
+    public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
         if (keys == null) {
             keys = new Field[0];
         }
 
-        Map<List<?>, List<E>> map = new LinkedHashMap<List<?>, List<E>>();
+        Map<Record, List<E>> map = new LinkedHashMap<Record, List<E>>();
+        FieldList keyList = new FieldList(keys);
 
         for (R record : this) {
-            List<Object> keyValueList = new ArrayList<Object>();
-            for (Field<?> key : keys) {
-                keyValueList.add(record.getValue(key));
+            Record key = new RecordImpl(keyList);
+
+            for (Field<?> field : keys) {
+                Util.setValue(key, field, record, field);
             }
 
-            List<E> list = map.get(keyValueList);
+            List<E> list = map.get(key);
             if (list == null) {
                 list = new ArrayList<E>();
-                map.put(keyValueList, list);
+                map.put(key, list);
             }
 
             list.add(record.into(type));

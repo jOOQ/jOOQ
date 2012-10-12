@@ -1955,7 +1955,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
-    <E> Map<List<?>, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) throws MappingException;
+    <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) throws MappingException;
 
 
     /**

@@ -92,6 +92,12 @@ public interface Routine<T> extends NamedQueryPart, org.jooq.SchemaProvider {
     Schema getSchema();
 
     /**
+     * The name of this routine
+     */
+    @Override
+    String getName();
+
+    /**
      * The container package of this stored procedure or function.
      * <p>
      * This is only supported in the {@link SQLDialect#ORACLE} dialect.

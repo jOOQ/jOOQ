@@ -548,12 +548,12 @@ implements
                .formatSeparator();
 
         context.sql("(");
-        Util.toSQLNames(context, getH2Fields());
+        Util.fieldNames(context, getH2Fields());
         context.sql(")");
 
         if (!getH2Keys().isEmpty()) {
             context.keyword(" key (");
-            Util.toSQLNames(context, getH2Keys());
+            Util.fieldNames(context, getH2Keys());
             context.sql(")");
         }
 

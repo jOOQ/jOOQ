@@ -72,7 +72,6 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
-import org.jooq.NamedQueryPart;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -553,11 +552,25 @@ final class Util {
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
-    static final void toSQLNames(RenderContext context, Collection<? extends NamedQueryPart> list) {
+    static final void fieldNames(RenderContext context, Collection<? extends Field<?>> list) {
         String separator = "";
 
-        for (NamedQueryPart part : list) {
-            context.sql(separator).literal(part.getName());
+        for (Field<?> field : list) {
+            context.sql(separator).literal(field.getName());
+
+            separator = ", ";
+        }
+    }
+
+    /**
+     * Render a list of names of the <code>NamedQueryParts</code> contained in
+     * this list.
+     */
+    static final void tableNames(RenderContext context, Collection<? extends Table<?>> list) {
+        String separator = "";
+
+        for (Table<?> table : list) {
+            context.sql(separator).literal(table.getName());
 
             separator = ", ";
         }

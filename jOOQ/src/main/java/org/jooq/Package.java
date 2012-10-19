@@ -51,4 +51,10 @@ public interface Package extends NamedQueryPart, org.jooq.SchemaProvider {
     @Override
     Schema getSchema();
 
+    /**
+     * The name of this package
+     */
+    @Override
+    String getName();
+
 }

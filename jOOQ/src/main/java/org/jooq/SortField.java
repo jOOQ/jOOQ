@@ -47,6 +47,12 @@ package org.jooq;
 public interface SortField<T> extends NamedTypeProviderQueryPart<T> {
 
     /**
+     * The name of this sort field
+     */
+    @Override
+    String getName();
+
+    /**
      * Get the underlying sort order of this sort field
      */
     SortOrder getOrder();

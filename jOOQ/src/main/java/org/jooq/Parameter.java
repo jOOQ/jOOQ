@@ -48,6 +48,12 @@ import static org.jooq.SQLDialect.ORACLE;
 public interface Parameter<T> extends NamedTypeProviderQueryPart<T> {
 
     /**
+     * The name of this parameter
+     */
+    @Override
+    String getName();
+
+    /**
      * The Java type of the parameter.
      */
     @Override

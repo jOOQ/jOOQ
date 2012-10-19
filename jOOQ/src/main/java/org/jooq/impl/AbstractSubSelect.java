@@ -254,7 +254,7 @@ implements
 
             if (!forUpdateOf.isEmpty()) {
                 context.keyword(" of ");
-                Util.toSQLNames(context, forUpdateOf);
+                Util.fieldNames(context, forUpdateOf);
             }
             else if (!forUpdateOfTables.isEmpty()) {
                 context.keyword(" of ");
@@ -273,7 +273,7 @@ implements
 
                     // Render the OF [table-names] clause
                     default:
-                        Util.toSQLNames(context, forUpdateOfTables);
+                        Util.tableNames(context, forUpdateOfTables);
                         break;
                 }
             }

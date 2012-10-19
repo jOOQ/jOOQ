@@ -91,6 +91,7 @@ import org.w3c.dom.Element;
  * @author Lukas Eder
  * @author Ivan Dugic
  */
+@SuppressWarnings("deprecation")
 class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     /**

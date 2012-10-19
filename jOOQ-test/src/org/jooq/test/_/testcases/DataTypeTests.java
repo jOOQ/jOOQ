@@ -261,8 +261,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals("George", record.getValue(TAuthor_FIRST_NAME()));
         assertEquals("George", record.getValueAsString(TAuthor_FIRST_NAME()));
         assertEquals("George", record.getValueAsString(TAuthor_FIRST_NAME(), "gnarf"));
-        assertEquals("George", record.getValueAsString(1));
-        assertEquals("George", record.getValueAsString(1, "gnarf"));
+        assertEquals("George", record.getValue(1, String.class));
+        assertEquals("George", record.getValue(1, String.class, "gnarf"));
 
         assertEquals(Integer.valueOf("1903"), record.getValue(TAuthor_YEAR_OF_BIRTH()));
         assertEquals(Integer.valueOf("1903"), record.getValue(TAuthor_YEAR_OF_BIRTH(), 123));
@@ -271,33 +271,33 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         assertEquals(Short.valueOf("1903"), record.getValueAsShort(TAuthor_YEAR_OF_BIRTH()));
         assertEquals(Short.valueOf("1903"), record.getValueAsShort(TAuthor_YEAR_OF_BIRTH(), (short) 123));
-        assertEquals(Short.valueOf("1903"), record.getValueAsShort(4));
-        assertEquals(Short.valueOf("1903"), record.getValueAsShort(4, (short) 123));
+        assertEquals(Short.valueOf("1903"), record.getValue(4, Short.class));
+        assertEquals(Short.valueOf("1903"), record.getValue(4, Short.class, (short) 123));
 
         assertEquals(Long.valueOf("1903"), record.getValueAsLong(TAuthor_YEAR_OF_BIRTH()));
         assertEquals(Long.valueOf("1903"), record.getValueAsLong(TAuthor_YEAR_OF_BIRTH(), 123L));
-        assertEquals(Long.valueOf("1903"), record.getValueAsLong(4));
-        assertEquals(Long.valueOf("1903"), record.getValueAsLong(4, 123L));
+        assertEquals(Long.valueOf("1903"), record.getValue(4, Long.class));
+        assertEquals(Long.valueOf("1903"), record.getValue(4, Long.class, 123L));
 
         assertEquals(new BigInteger("1903"), record.getValueAsBigInteger(TAuthor_YEAR_OF_BIRTH()));
         assertEquals(new BigInteger("1903"), record.getValueAsBigInteger(TAuthor_YEAR_OF_BIRTH(), new BigInteger("123")));
-        assertEquals(new BigInteger("1903"), record.getValueAsBigInteger(4));
-        assertEquals(new BigInteger("1903"), record.getValueAsBigInteger(4, new BigInteger("123")));
+        assertEquals(new BigInteger("1903"), record.getValue(4, BigInteger.class));
+        assertEquals(new BigInteger("1903"), record.getValue(4, BigInteger.class, new BigInteger("123")));
 
         assertEquals(Float.valueOf("1903"), record.getValueAsFloat(TAuthor_YEAR_OF_BIRTH()));
         assertEquals(Float.valueOf("1903"), record.getValueAsFloat(TAuthor_YEAR_OF_BIRTH(), 123f));
-        assertEquals(Float.valueOf("1903"), record.getValueAsFloat(4));
-        assertEquals(Float.valueOf("1903"), record.getValueAsFloat(4, 123f));
+        assertEquals(Float.valueOf("1903"), record.getValue(4, Float.class));
+        assertEquals(Float.valueOf("1903"), record.getValue(4, Float.class, 123f));
 
         assertEquals(Double.valueOf("1903"), record.getValueAsDouble(TAuthor_YEAR_OF_BIRTH()));
         assertEquals(Double.valueOf("1903"), record.getValueAsDouble(TAuthor_YEAR_OF_BIRTH(), 123d));
-        assertEquals(Double.valueOf("1903"), record.getValueAsDouble(4));
-        assertEquals(Double.valueOf("1903"), record.getValueAsDouble(4, 123d));
+        assertEquals(Double.valueOf("1903"), record.getValue(4, Double.class));
+        assertEquals(Double.valueOf("1903"), record.getValue(4, Double.class, 123d));
 
         assertEquals(new BigDecimal("1903"), record.getValueAsBigDecimal(TAuthor_YEAR_OF_BIRTH()));
         assertEquals(new BigDecimal("1903"), record.getValueAsBigDecimal(TAuthor_YEAR_OF_BIRTH(), new BigDecimal("123")));
-        assertEquals(new BigDecimal("1903"), record.getValueAsBigDecimal(4));
-        assertEquals(new BigDecimal("1903"), record.getValueAsBigDecimal(4, new BigDecimal("123")));
+        assertEquals(new BigDecimal("1903"), record.getValue(4, BigDecimal.class));
+        assertEquals(new BigDecimal("1903"), record.getValue(4, BigDecimal.class, new BigDecimal("123")));
 
 
         long dateOfBirth = record.getValue(TAuthor_DATE_OF_BIRTH()).getTime();

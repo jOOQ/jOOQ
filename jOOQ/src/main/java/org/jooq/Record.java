@@ -350,7 +350,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse
      */
+    @Deprecated
     <A extends ArrayRecord<T>, T> T[] getValueAsArray(Field<A> field) throws IllegalArgumentException;
 
     /**
@@ -364,7 +367,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse
      */
+    @Deprecated
     <A extends ArrayRecord<T>, T> T[] getValueAsArray(Field<A> field, T[] defaultValue) throws IllegalArgumentException;
 
     /**
@@ -376,7 +382,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     String getValueAsString(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -390,7 +400,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     String getValueAsString(Field<?> field, String defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -402,7 +416,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     String getValueAsString(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -416,7 +434,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     String getValueAsString(String fieldName, String defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -428,7 +450,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Byte getValueAsByte(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -442,7 +468,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Byte getValueAsByte(Field<?> field, Byte defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -454,7 +484,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Byte getValueAsByte(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -468,7 +502,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Byte getValueAsByte(String fieldName, Byte defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -480,7 +518,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Short getValueAsShort(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -494,7 +536,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Short getValueAsShort(Field<?> field, Short defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -506,7 +552,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Short getValueAsShort(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -520,7 +570,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Short getValueAsShort(String fieldName, Short defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -532,7 +586,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Integer getValueAsInteger(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -546,7 +604,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Integer getValueAsInteger(Field<?> field, Integer defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -558,7 +620,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Integer getValueAsInteger(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -572,7 +638,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Integer getValueAsInteger(String fieldName, Integer defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
@@ -585,7 +655,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Long getValueAsLong(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -599,7 +673,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Long getValueAsLong(Field<?> field, Long defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -611,7 +689,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Long getValueAsLong(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -625,7 +707,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Long getValueAsLong(String fieldName, Long defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -637,7 +723,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     BigInteger getValueAsBigInteger(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -651,7 +741,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     BigInteger getValueAsBigInteger(Field<?> field, BigInteger defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
@@ -664,7 +758,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     BigInteger getValueAsBigInteger(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -678,7 +776,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     BigInteger getValueAsBigInteger(String fieldName, BigInteger defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
@@ -691,7 +793,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Float getValueAsFloat(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -705,7 +811,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Float getValueAsFloat(Field<?> field, Float defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -717,7 +827,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Float getValueAsFloat(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -731,7 +845,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Float getValueAsFloat(String fieldName, Float defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -743,7 +861,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Double getValueAsDouble(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -757,7 +879,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Double getValueAsDouble(Field<?> field, Double defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -769,7 +895,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Double getValueAsDouble(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -783,7 +913,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Double getValueAsDouble(String fieldName, Double defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -795,7 +929,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     BigDecimal getValueAsBigDecimal(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -809,7 +947,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     BigDecimal getValueAsBigDecimal(Field<?> field, BigDecimal defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
@@ -822,7 +964,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     BigDecimal getValueAsBigDecimal(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -836,7 +982,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     BigDecimal getValueAsBigDecimal(String fieldName, BigDecimal defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
@@ -873,7 +1023,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Boolean getValueAsBoolean(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -911,7 +1065,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Boolean getValueAsBoolean(Field<?> field, Boolean defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -947,7 +1105,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Boolean getValueAsBoolean(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -985,7 +1147,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Boolean getValueAsBoolean(String fieldName, Boolean defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
@@ -998,7 +1164,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Timestamp getValueAsTimestamp(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -1012,7 +1182,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Timestamp getValueAsTimestamp(Field<?> field, Timestamp defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
@@ -1025,7 +1199,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Timestamp getValueAsTimestamp(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -1039,7 +1217,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Timestamp getValueAsTimestamp(String fieldName, Timestamp defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
@@ -1052,7 +1234,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Date getValueAsDate(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -1066,7 +1252,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Date getValueAsDate(Field<?> field, Date defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -1078,7 +1268,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Date getValueAsDate(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -1092,7 +1286,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Date getValueAsDate(String fieldName, Date defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -1104,7 +1302,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Time getValueAsTime(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -1118,7 +1320,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     Time getValueAsTime(Field<?> field, Time defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -1130,7 +1336,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Time getValueAsTime(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -1144,7 +1354,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValue(String, Class)}
+     *             instead.
      */
+    @Deprecated
     Time getValueAsTime(String fieldName, Time defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**

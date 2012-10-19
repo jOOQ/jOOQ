@@ -65,9 +65,9 @@ public class ASETableDefinition extends AbstractTableDefinition {
 
         int position = 1;
         for (Record record : create().fetchMany("sp_help '" + getName() + "'").get(1)) {
-            String l = record.getValueAsString("Length");
-            String p = record.getValueAsString("Prec");
-            String s = record.getValueAsString("Scale");
+            String l = record.getValue("Length", String.class);
+            String p = record.getValue("Prec", String.class);
+            String s = record.getValue("Scale", String.class);
 
             int length = 0;
             int precision = 0;
@@ -80,18 +80,18 @@ public class ASETableDefinition extends AbstractTableDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.getValueAsString("Type"),
+                record.getValue("Type", String.class),
                 length,
                 precision,
                 scale);
 
             result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
-                record.getValueAsString("Column_name"),
+                record.getValue("Column_name", String.class),
                 position++,
                 type,
                 record.getValue("Nulls", boolean.class),
-                record.getValueAsBoolean("Identity", false),
+                record.getValue("Identity", boolean.class),
                 null));
         }
 

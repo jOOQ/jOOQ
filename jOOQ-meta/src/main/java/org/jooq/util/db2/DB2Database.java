@@ -289,10 +289,10 @@ public class DB2Database extends AbstractDatabase {
                 .fetch()) {
 
             result.add(new DB2RoutineDefinition(
-                getSchema(record.getValueAsString("schema")),
-                record.getValueAsString("name"),
+                getSchema(record.getValue("schema", String.class)),
+                record.getValue("name", String.class),
                 null,
-                record.getValueAsBoolean("isProcedure")));
+                record.getValue("isProcedure", boolean.class)));
         }
 
         return result;

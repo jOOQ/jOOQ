@@ -135,7 +135,10 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param field The value's field
      * @return The value
      * @throws IndexOutOfBoundsException
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse
      */
+    @Deprecated
     <A extends ArrayRecord<T>, T> T[] getValueAsArray(int index, Field<A> field) throws IndexOutOfBoundsException;
 
     /**
@@ -148,7 +151,10 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param defaultValue The default value if the value was <code>null</code>
      * @return The value
      * @throws IndexOutOfBoundsException
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse
      */
+    @Deprecated
     <A extends ArrayRecord<T>, T> T[] getValueAsArray(int index, Field<A> field, T[] defaultValue)
         throws IndexOutOfBoundsException;
 
@@ -160,7 +166,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     String getValueAsString(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -173,7 +183,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     String getValueAsString(int index, Field<?> field, String defaultValue) throws IllegalArgumentException;
 
     /**
@@ -184,7 +198,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     String getValueAsString(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -197,7 +215,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     String getValueAsString(int index, int fieldIndex, String defaultValue) throws IllegalArgumentException;
 
     /**
@@ -208,7 +230,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     String getValueAsString(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -221,7 +247,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     String getValueAsString(int index, String fieldName, String defaultValue) throws IllegalArgumentException;
 
     /**
@@ -232,7 +262,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Byte getValueAsByte(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -245,7 +279,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Byte getValueAsByte(int index, Field<?> field, Byte defaultValue) throws IllegalArgumentException;
 
     /**
@@ -256,7 +294,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Byte getValueAsByte(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -269,7 +311,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Byte getValueAsByte(int index, int fieldIndex, Byte defaultValue) throws IllegalArgumentException;
 
     /**
@@ -280,7 +326,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Byte getValueAsByte(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -293,7 +343,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Byte getValueAsByte(int index, String fieldName, Byte defaultValue) throws IllegalArgumentException;
 
     /**
@@ -304,7 +358,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Short getValueAsShort(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -317,7 +375,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Short getValueAsShort(int index, Field<?> field, Short defaultValue) throws IllegalArgumentException;
 
     /**
@@ -328,7 +390,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Short getValueAsShort(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -341,7 +407,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Short getValueAsShort(int index, int fieldIndex, Short defaultValue) throws IllegalArgumentException;
 
     /**
@@ -352,7 +422,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Short getValueAsShort(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -365,7 +439,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Short getValueAsShort(int index, String fieldName, Short defaultValue) throws IllegalArgumentException;
 
     /**
@@ -376,7 +454,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Integer getValueAsInteger(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -389,7 +471,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Integer getValueAsInteger(int index, Field<?> field, Integer defaultValue) throws IllegalArgumentException;
 
     /**
@@ -400,7 +486,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Integer getValueAsInteger(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -413,7 +503,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Integer getValueAsInteger(int index, int fieldIndex, Integer defaultValue) throws IllegalArgumentException;
 
     /**
@@ -424,7 +518,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Integer getValueAsInteger(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -437,7 +535,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Integer getValueAsInteger(int index, String fieldName, Integer defaultValue) throws IllegalArgumentException;
 
     /**
@@ -448,7 +550,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Long getValueAsLong(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -461,7 +567,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Long getValueAsLong(int index, Field<?> field, Long defaultValue) throws IllegalArgumentException;
 
     /**
@@ -472,7 +582,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Long getValueAsLong(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -485,7 +599,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Long getValueAsLong(int index, int fieldIndex, Long defaultValue) throws IllegalArgumentException;
 
     /**
@@ -496,7 +614,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Long getValueAsLong(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -509,7 +631,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Long getValueAsLong(int index, String fieldName, Long defaultValue) throws IllegalArgumentException;
 
     /**
@@ -520,7 +646,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     BigInteger getValueAsBigInteger(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -533,7 +663,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     BigInteger getValueAsBigInteger(int index, Field<?> field, BigInteger defaultValue) throws IllegalArgumentException;
 
     /**
@@ -544,7 +678,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     BigInteger getValueAsBigInteger(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -557,7 +695,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     BigInteger getValueAsBigInteger(int index, int fieldIndex, BigInteger defaultValue) throws IllegalArgumentException;
 
     /**
@@ -568,7 +710,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     BigInteger getValueAsBigInteger(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -581,7 +727,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     BigInteger getValueAsBigInteger(int index, String fieldName, BigInteger defaultValue)
         throws IllegalArgumentException;
 
@@ -593,7 +743,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Float getValueAsFloat(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -606,7 +760,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Float getValueAsFloat(int index, Field<?> field, Float defaultValue) throws IllegalArgumentException;
 
     /**
@@ -617,7 +775,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Float getValueAsFloat(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -630,7 +792,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Float getValueAsFloat(int index, int fieldIndex, Float defaultValue) throws IllegalArgumentException;
 
     /**
@@ -641,7 +807,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Float getValueAsFloat(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -654,7 +824,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Float getValueAsFloat(int index, String fieldName, Float defaultValue) throws IllegalArgumentException;
 
     /**
@@ -665,7 +839,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Double getValueAsDouble(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -678,7 +856,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Double getValueAsDouble(int index, Field<?> field, Double defaultValue) throws IllegalArgumentException;
 
     /**
@@ -689,7 +871,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Double getValueAsDouble(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -702,7 +888,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Double getValueAsDouble(int index, int fieldIndex, Double defaultValue) throws IllegalArgumentException;
 
     /**
@@ -713,7 +903,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Double getValueAsDouble(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -726,7 +920,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Double getValueAsDouble(int index, String fieldName, Double defaultValue) throws IllegalArgumentException;
 
     /**
@@ -737,7 +935,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     BigDecimal getValueAsBigDecimal(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -750,7 +952,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     BigDecimal getValueAsBigDecimal(int index, Field<?> field, BigDecimal defaultValue) throws IllegalArgumentException;
 
     /**
@@ -761,7 +967,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     BigDecimal getValueAsBigDecimal(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -774,7 +984,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     BigDecimal getValueAsBigDecimal(int index, int fieldIndex, BigDecimal defaultValue) throws IllegalArgumentException;
 
     /**
@@ -785,7 +999,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     BigDecimal getValueAsBigDecimal(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -798,7 +1016,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     BigDecimal getValueAsBigDecimal(int index, String fieldName, BigDecimal defaultValue)
         throws IllegalArgumentException;
 
@@ -834,7 +1056,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Boolean getValueAsBoolean(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -871,7 +1097,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Boolean getValueAsBoolean(int index, Field<?> field, Boolean defaultValue) throws IllegalArgumentException;
 
     /**
@@ -906,7 +1136,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Boolean getValueAsBoolean(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -943,7 +1177,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Boolean getValueAsBoolean(int index, int fieldIndex, Boolean defaultValue) throws IllegalArgumentException;
 
     /**
@@ -978,7 +1216,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Boolean getValueAsBoolean(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -1015,7 +1257,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Boolean getValueAsBoolean(int index, String fieldName, Boolean defaultValue) throws IllegalArgumentException;
 
     /**
@@ -1026,7 +1272,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Timestamp getValueAsTimestamp(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -1039,7 +1289,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Timestamp getValueAsTimestamp(int index, Field<?> field, Timestamp defaultValue) throws IllegalArgumentException;
 
     /**
@@ -1050,7 +1304,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Timestamp getValueAsTimestamp(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -1063,7 +1321,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Timestamp getValueAsTimestamp(int index, int fieldIndex, Timestamp defaultValue) throws IllegalArgumentException;
 
     /**
@@ -1074,7 +1336,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Timestamp getValueAsTimestamp(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -1087,7 +1353,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Timestamp getValueAsTimestamp(int index, String fieldName, Timestamp defaultValue) throws IllegalArgumentException;
 
     /**
@@ -1098,7 +1368,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Date getValueAsDate(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -1111,7 +1385,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Date getValueAsDate(int index, Field<?> field, Date defaultValue) throws IllegalArgumentException;
 
     /**
@@ -1122,7 +1400,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Date getValueAsDate(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -1135,7 +1417,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Date getValueAsDate(int index, int fieldIndex, Date defaultValue) throws IllegalArgumentException;
 
     /**
@@ -1146,7 +1432,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Date getValueAsDate(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -1159,7 +1449,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Date getValueAsDate(int index, String fieldName, Date defaultValue) throws IllegalArgumentException;
 
     /**
@@ -1170,7 +1464,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Time getValueAsTime(int index, Field<?> field) throws IllegalArgumentException;
 
     /**
@@ -1183,7 +1481,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(Field, Class)} instead.
      */
+    @Deprecated
     Time getValueAsTime(int index, Field<?> field, Time defaultValue) throws IllegalArgumentException;
 
     /**
@@ -1194,7 +1496,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Time getValueAsTime(int index, int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -1207,7 +1513,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link Record#getValue(int, Class)}
+     *             instead.
      */
+    @Deprecated
     Time getValueAsTime(int index, int fieldIndex, Time defaultValue) throws IllegalArgumentException;
 
     /**
@@ -1218,7 +1528,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The converted value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Time getValueAsTime(int index, String fieldName) throws IllegalArgumentException;
 
     /**
@@ -1231,7 +1545,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument name is not contained in
      *             the record
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use
+     *             {@link Record#getValue(String, Class)} instead.
      */
+    @Deprecated
     Time getValueAsTime(int index, String fieldName, Time defaultValue) throws IllegalArgumentException;
 
     /**
@@ -1340,7 +1658,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<BigDecimal> getValuesAsBigDecimal(Field<?> field);
 
     /**
@@ -1349,7 +1671,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<BigDecimal> getValuesAsBigDecimal(int fieldIndex);
 
     /**
@@ -1358,7 +1684,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<BigDecimal> getValuesAsBigDecimal(String fieldName);
 
     /**
@@ -1367,7 +1697,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<BigInteger> getValuesAsBigInteger(Field<?> field);
 
     /**
@@ -1376,7 +1710,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<BigInteger> getValuesAsBigInteger(int fieldIndex);
 
     /**
@@ -1385,7 +1723,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<BigInteger> getValuesAsBigInteger(String fieldName);
 
     /**
@@ -1394,7 +1736,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Byte> getValuesAsByte(Field<?> field);
 
     /**
@@ -1403,7 +1749,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Byte> getValuesAsByte(int fieldIndex);
 
     /**
@@ -1412,7 +1762,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Byte> getValuesAsByte(String fieldName);
 
     /**
@@ -1421,7 +1775,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Date> getValuesAsDate(Field<?> field);
 
     /**
@@ -1430,7 +1788,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Date> getValuesAsDate(int fieldIndex);
 
     /**
@@ -1439,7 +1801,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Date> getValuesAsDate(String fieldName);
 
     /**
@@ -1448,7 +1814,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Double> getValuesAsDouble(Field<?> field);
 
     /**
@@ -1457,7 +1827,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Double> getValuesAsDouble(int fieldIndex);
 
     /**
@@ -1466,7 +1840,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Double> getValuesAsDouble(String fieldName);
 
     /**
@@ -1475,7 +1853,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Float> getValuesAsFloat(Field<?> field);
 
     /**
@@ -1484,7 +1866,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Float> getValuesAsFloat(int fieldIndex);
 
     /**
@@ -1493,7 +1879,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Float> getValuesAsFloat(String fieldName);
 
     /**
@@ -1502,7 +1892,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Integer> getValuesAsInteger(Field<?> field);
 
     /**
@@ -1511,7 +1905,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Integer> getValuesAsInteger(int fieldIndex);
 
     /**
@@ -1520,7 +1918,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Integer> getValuesAsInteger(String fieldName);
 
     /**
@@ -1529,7 +1931,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Long> getValuesAsLong(Field<?> field);
 
     /**
@@ -1538,7 +1944,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Long> getValuesAsLong(int fieldIndex);
 
     /**
@@ -1547,7 +1957,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Long> getValuesAsLong(String fieldName);
 
     /**
@@ -1556,7 +1970,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Short> getValuesAsShort(Field<?> field);
 
     /**
@@ -1565,7 +1983,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Short> getValuesAsShort(int fieldIndex);
 
     /**
@@ -1574,7 +1996,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Short> getValuesAsShort(String fieldName);
 
     /**
@@ -1583,7 +2009,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<String> getValuesAsString(Field<?> field);
 
     /**
@@ -1592,7 +2022,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<String> getValuesAsString(int fieldIndex);
 
     /**
@@ -1601,7 +2035,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<String> getValuesAsString(String fieldName);
 
     /**
@@ -1610,7 +2048,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Time> getValuesAsTime(Field<?> field);
 
     /**
@@ -1619,7 +2061,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Time> getValuesAsTime(int fieldIndex);
 
     /**
@@ -1628,7 +2074,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Time> getValuesAsTime(String fieldName);
 
     /**
@@ -1637,7 +2087,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param field The values' field
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(Field, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Timestamp> getValuesAsTimestamp(Field<?> field);
 
     /**
@@ -1646,7 +2100,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldIndex The values' field index
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(int, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Timestamp> getValuesAsTimestamp(int fieldIndex);
 
     /**
@@ -1655,7 +2113,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param fieldName The values' field name
      * @return The converted values
+     * @deprecated - 2.6.0 [#1839] - These methods will be removed in the
+     *             future. Do not reuse. Use {@link #getValues(String, Class)}
+     *             instead.
      */
+    @Deprecated
     List<Timestamp> getValuesAsTimestamp(String fieldName);
 
     /**
@@ -1933,6 +2395,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
      * <p>
+     *
      * @param <K> The key's generic field type
      * @param <E> The generic entity type.
      * @param key The key field.
@@ -1956,7 +2419,6 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *             exception that might have occurred while mapping records
      */
     <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) throws MappingException;
-
 
     /**
      * Convert this result into an array of arrays

@@ -287,7 +287,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA)),
                 record.getValue(ROUTINES.ROUTINE_NAME),
                 record.getValue(ROUTINES.SPECIFIC_NAME),
-                record.getValueAsString("datatype"),
+                record.getValue("datatype", String.class),
                 record.getValue(ROUTINES.NUMERIC_PRECISION),
                 record.getValue(ROUTINES.NUMERIC_SCALE)));
         }

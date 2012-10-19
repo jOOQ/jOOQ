@@ -95,7 +95,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.getValueAsString("datatype"),
+                record.getValue("datatype", String.class),
                 record.getValue(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(COLUMNS.NUMERIC_PRECISION),
                 record.getValue(COLUMNS.NUMERIC_SCALE),
@@ -104,7 +104,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
 			ColumnDefinition column = new DefaultColumnDefinition(
 			    getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(COLUMNS.COLUMN_NAME),
-			    record.getValueAsInteger(COLUMNS.ORDINAL_POSITION),
+			    record.getValue(COLUMNS.ORDINAL_POSITION, int.class),
 			    type,
 			    record.getValue(COLUMNS.IS_NULLABLE, boolean.class),
 			    null != record.getValue(COLUMNS.IDENTITY_GENERATION),

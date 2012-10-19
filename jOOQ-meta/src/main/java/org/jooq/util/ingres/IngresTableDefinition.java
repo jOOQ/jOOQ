@@ -132,8 +132,8 @@ public class IngresTableDefinition extends AbstractTableDefinition {
                 record.getValue(Iicolumns.COLUMN_SEQUENCE),
                 type,
                 record.getValue(Iicolumns.COLUMN_NULLS, boolean.class),
-                record.getValueAsBoolean(Iicolumns.COLUMN_ALWAYS_IDENT, false) ||
-                record.getValueAsBoolean(Iicolumns.COLUMN_BYDEFAULT_IDENT, false),
+                record.getValue(Iicolumns.COLUMN_ALWAYS_IDENT, boolean.class) ||
+                record.getValue(Iicolumns.COLUMN_BYDEFAULT_IDENT, boolean.class),
                 record.getValue(trim(IidbSubcomments.LONG_REMARK)));
             result.add(column);
         }

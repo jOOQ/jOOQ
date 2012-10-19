@@ -190,7 +190,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         for (int j = 0; j < books.size(); j++) {
             for (int i = 0; i < fields.size(); i++) {
-                assertEquals(books.getValueAsString(j, i, "{null}"),
+                assertEquals(books.get(j).getValue(i, String.class, "{null}"),
                           xp.evaluate("/table/tbody/tr[" + (j + 1) + "]/td[" + (i + 1) + "]/text()", doc));
             }
         }
@@ -271,7 +271,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         for (int j = 1; j < lines.length; j++) {
             for (int i = 0; i < fields.size(); i++) {
-                String value = books.getValueAsString(j - 1, i);
+                String value = books.get(j - 1).getValue(i, String.class);
 
                 if (value == null || "".equals(value)) {
                     value = "\"\"";
@@ -407,7 +407,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             for (int i = 0; i < fields.size(); i++) {
                 assertEquals(fields.get(i).getName(),
                           xp.evaluate("/result/records/record[" + (j + 1) + "]/value[" + (i + 1) + "]/@field", doc));
-                assertEquals(books.getValueAsString(j, i, ""),
+                assertEquals(books.get(j).getValue(i, String.class, ""),
                           xp.evaluate("/result/records/record[" + (j + 1) + "]/value[" + (i + 1) + "]/text()", doc));
             }
         }

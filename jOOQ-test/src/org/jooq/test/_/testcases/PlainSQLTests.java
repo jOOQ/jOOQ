@@ -187,8 +187,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(2, result.size());
         assertEquals("Coelho", result.getValue(0, LAST_NAME));
         assertEquals("Orwell", result.getValue(1, LAST_NAME));
-        assertEquals("1", result.getValueAsString(0, COUNT1));
-        assertEquals("2", result.getValueAsString(1, COUNT1));
+        assertEquals("1", result.get(0).getValue(COUNT1, String.class));
+        assertEquals("2", result.get(1).getValue(COUNT1, String.class));
         assertEquals(Integer.valueOf(1), result.getValue(0, COUNT2));
         assertEquals(Integer.valueOf(2), result.getValue(1, COUNT2));
 
@@ -203,7 +203,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         assertEquals(1, result.size());
         assertEquals("Coelho", result.getValue(0, LAST_NAME));
-        assertEquals("1", result.getValueAsString(0, COUNT1));
+        assertEquals("1", result.get(0).getValue(COUNT1, String.class));
         assertEquals(Integer.valueOf(1), result.getValue(0, COUNT2));
 
         // Query

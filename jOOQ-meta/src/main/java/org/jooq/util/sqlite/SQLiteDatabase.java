@@ -95,8 +95,8 @@ public class SQLiteDatabase extends AbstractDatabase {
                 .fetch(SQLiteMaster.NAME)) {
 
             for (Record record : create().fetch("pragma table_info('" + tableName + "')")) {
-                if (record.getValueAsBoolean("pk", false)) {
-                    String columnName = record.getValueAsString("name");
+                if (record.getValue("pk", boolean.class)) {
+                    String columnName = record.getValue("name", String.class);
 
                     // Generate a primary key name
                     String key = "pk_" + tableName + "_" + columnName;
@@ -143,19 +143,19 @@ public class SQLiteDatabase extends AbstractDatabase {
                     "_" + sequence;
 
                 String foreignKeyTable = table.getName();
-                String foreignKeyColumn = record.getValueAsString("from");
+                String foreignKeyColumn = record.getValue("from", String.class);
 
                 // SQLite mixes up cases from the actual declaration and the
                 // reference definition! It's possible that a table is declared
                 // in lower case, and the foreign key in upper case. Hence,
                 // correct the foreign key
                 TableDefinition referencingTable = getTable(getSchemata().get(0), foreignKeyTable);
-                TableDefinition referencedTable = getTable(getSchemata().get(0), record.getValueAsString("table"), true);
+                TableDefinition referencedTable = getTable(getSchemata().get(0), record.getValue("table", String.class), true);
 
                 if (referencedTable != null) {
                     String uniqueKey =
                         "pk_" + referencedTable.getName() +
-                        "_" + referencedTable.getColumn(record.getValueAsString("to"), true).getName();
+                        "_" + referencedTable.getColumn(record.getValue("to", String.class), true).getName();
 
                     if (referencingTable != null) {
                         ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);

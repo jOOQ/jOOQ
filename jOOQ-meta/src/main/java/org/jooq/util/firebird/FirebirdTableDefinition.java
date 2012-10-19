@@ -125,7 +125,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                     getDatabase(),
                     getSchema(),
-                    record.getValueAsString("FIELD_TYPE"),
+                    record.getValue("FIELD_TYPE", String.class),
                     record.getValue(f.RDB$FIELD_LENGTH),
                     record.getValue(f.RDB$FIELD_PRECISION),
                     record.getValue("FIELD_SCALE", Integer.class));

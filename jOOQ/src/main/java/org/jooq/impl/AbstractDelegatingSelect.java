@@ -95,8 +95,13 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
-    public final ResultQuery<R> close() {
-        return getDelegate().close();
+    public final void close() {
+        getDelegate().close();
+    }
+
+    @Override
+    public final void cancel() {
+        getDelegate().cancel();
     }
 
     @Override

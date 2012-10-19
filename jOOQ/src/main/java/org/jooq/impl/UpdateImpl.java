@@ -108,8 +108,13 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
-    public final Query close() {
-        return getDelegate().close();
+    public final void close() {
+        getDelegate().close();
+    }
+
+    @Override
+    public final void cancel() {
+        getDelegate().cancel();
     }
 
     @Override

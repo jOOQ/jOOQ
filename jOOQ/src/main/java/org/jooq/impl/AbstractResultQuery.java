@@ -129,12 +129,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return (ResultQuery<R>) super.keepStatement(k);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public final ResultQuery<R> close() {
-        return (ResultQuery<R>) super.close();
-    }
-
     @Override
     public final ResultQuery<R> maxRows(int rows) {
         this.maxRows = rows;

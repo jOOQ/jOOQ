@@ -226,6 +226,19 @@ public interface Query extends QueryPart, Attachable {
      * @throws DataAccessException If something went wrong closing the statement
      * @see Statement#close()
      */
-    Query close() throws DataAccessException;
+    void close() throws DataAccessException;
+
+    /**
+     * Cancel the underlying statement
+     * <p>
+     * This cancels the query's underlying {@link Statement} or
+     * {@link PreparedStatement}. If there is no underlying open and running
+     * statement, this call is simply ignored.
+     *
+     * @throws DataAccessException If something went wrong cancelling the
+     *             statement
+     * @see Statement#cancel()
+     */
+    void cancel() throws DataAccessException;
 
 }

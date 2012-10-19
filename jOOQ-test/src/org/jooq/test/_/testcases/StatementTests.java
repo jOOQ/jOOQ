@@ -38,6 +38,7 @@ package org.jooq.test._.testcases;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 import static org.jooq.impl.Factory.val;
 
 import java.lang.reflect.InvocationHandler;
@@ -51,9 +52,11 @@ import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.Record;
 import org.jooq.ResultQuery;
+import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -111,8 +114,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         Cursor<Record> cursor = query.fetchLazy();
         assertEquals(3, cursor.fetchOne().getValue(0));
+        assertEquals(3, query.fetchOne(0));
 
-        assertEquals(3, KeepStatementListener.statements.size());
+        assertEquals(4, KeepStatementListener.statements.size());
         assertEquals(0, KeepStatementListener.closed);
         assertTrue(
             KeepStatementListener.statements.get(0) ==
@@ -154,8 +158,46 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                     }
                 });
 
-            ctx.statement(s);
+            if (!delegate.getClass().getName().toLowerCase().contains("proxy")) {
+                ctx.statement(s);
+            }
+
             statements.add(delegate);
         }
+    }
+
+    @Test
+    public void testCancelStatement() throws Exception {
+        // [#1855] The below query is *likely* to run for a long time, and can
+        // thus be cancelled
+        final Select<?> select =
+        create().selectOne()
+                .from(
+                    TBook(), TBook(), TBook(), TBook(),
+                    TBook(), TBook(), TBook(), TBook(),
+                    TBook(), TBook(), TBook(), TBook(),
+                    TBook(), TBook(), TBook(), TBook(),
+                    TBook(), TBook(), TBook(), TBook(),
+                    TBook(), TBook(), TBook(), TBook(),
+                    TBook(), TBook(), TBook(), TBook());
+
+        try {
+            new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(500);
+                    }
+                    catch (InterruptedException ignore) {}
+                    select.cancel();
+                }
+            }).start();
+
+            // The fetch should never terminate, as the above thread should cancel it
+            select.fetch();
+            fail();
+        }
+        catch (DataAccessException expected) {}
     }
 }

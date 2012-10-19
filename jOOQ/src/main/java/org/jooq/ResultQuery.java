@@ -935,12 +935,6 @@ public interface ResultQuery<R extends Record> extends Query {
     ResultQuery<R> keepStatement(boolean keepStatement);
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    ResultQuery<R> close() throws DataAccessException;
-
-    /**
      * Specify the maximum number of rows returned by the underlying
      * {@link Statement}
      * <p>

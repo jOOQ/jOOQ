@@ -211,7 +211,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
             // Native supporters of JOIN .. USING
             else {
                 context.keyword(" using (");
-                Util.toSQLNames(context, using);
+                Util.fieldNames(context, using);
                 context.sql(")");
             }
         }

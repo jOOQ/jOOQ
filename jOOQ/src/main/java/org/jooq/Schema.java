@@ -45,7 +45,14 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public interface Schema extends NamedQueryPart {
+
+    /**
+     * The name of this schema
+     */
+    @Override
+    String getName();
 
     /**
      * The complete type mapping for this schema.

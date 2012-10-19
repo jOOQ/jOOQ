@@ -55,6 +55,12 @@ public interface UDT<R extends UDTRecord<R>> extends org.jooq.Type<R> {
     Schema getSchema();
 
     /**
+     * The name of this UDT
+     */
+    @Override
+    String getName();
+
+    /**
      * @return The record type produced by this table
      */
     @Override

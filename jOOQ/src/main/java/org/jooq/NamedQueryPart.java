@@ -42,7 +42,11 @@ package org.jooq;
  * order.
  *
  * @author Lukas Eder
+ * @deprecated - 2.6.0 [#1869] - This marker interface does not have enough
+ *             momentum to be exposed in the public API. It will be removed in
+ *             the future.
  */
+@Deprecated
 public interface NamedQueryPart extends QueryPart, Comparable<NamedQueryPart> {
 
     /**

@@ -41,6 +41,7 @@ import org.jooq.NamedQueryPart;
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 abstract class AbstractNamedQueryPart extends AbstractQueryPart implements NamedQueryPart {
 
     private static final long serialVersionUID = -4496974591205380167L;

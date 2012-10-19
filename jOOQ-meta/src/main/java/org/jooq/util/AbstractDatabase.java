@@ -447,6 +447,7 @@ public abstract class AbstractDatabase implements Database {
             String literals = enumType.getLiterals();
 
             try {
+                @SuppressWarnings("resource")
                 CSVReader reader = new CSVReader(new StringReader(literals));
                 e.addLiterals(reader.readNext());
             } catch (IOException ignore) {}

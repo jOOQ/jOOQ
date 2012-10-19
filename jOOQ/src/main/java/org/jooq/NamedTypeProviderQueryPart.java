@@ -41,7 +41,11 @@ package org.jooq;
  *
  * @param <T> The type provided by this type provider
  * @author Lukas Eder
+ * @deprecated - 2.6.0 [#1870] - This marker interface does not have enough
+ *             momentum to be exposed in the public API. It will be removed in
+ *             the future.
  */
+@Deprecated
 public interface NamedTypeProviderQueryPart<T> extends NamedQueryPart {
 
     /**

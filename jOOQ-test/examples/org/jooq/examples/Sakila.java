@@ -43,8 +43,8 @@ import static org.jooq.examples.mysql.sakila.Tables.CUSTOMER;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import org.jooq.examples.mysql.sakila.SakilaFactory;
 import org.jooq.impl.Factory;
+import org.jooq.util.mysql.MySQLFactory;
 
 public class Sakila {
 
@@ -52,7 +52,7 @@ public class Sakila {
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/sakila", "root", "");
 
-        Factory create = new SakilaFactory(connection);
+        Factory create = new MySQLFactory(connection);
 
         System.out.println(create
               .select()

@@ -68,7 +68,6 @@ import org.joox.Match;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("resource")
 public class Transform {
     private static final FopFactory fopFactory = FopFactory.newInstance();
     private static final String version = "2.6";

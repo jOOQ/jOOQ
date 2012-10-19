@@ -96,8 +96,8 @@ public class ASEDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(PK_INCL, PK_EXCL)) {
-            String keyName = record.getValueAsString(0);
-            TableDefinition table = getTable(getSchema(), record.getValueAsString(1));
+            String keyName = record.getValue(0, String.class);
+            TableDefinition table = getTable(getSchema(), record.getValue(1, String.class));
 
             if (table != null) {
                 for (int i = 0; i < 8; i++) {
@@ -105,7 +105,7 @@ public class ASEDatabase extends AbstractDatabase {
                         break;
                     }
 
-                    relations.addPrimaryKey(keyName, table.getColumn(record.getValueAsString(2 + i)));
+                    relations.addPrimaryKey(keyName, table.getColumn(record.getValue(2 + i, String.class)));
                 }
             }
         }
@@ -114,8 +114,8 @@ public class ASEDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(UK_INCL, UK_EXCL)) {
-            String keyName = record.getValueAsString(0);
-            TableDefinition table = getTable(getSchema(), record.getValueAsString(1));
+            String keyName = record.getValue(0, String.class);
+            TableDefinition table = getTable(getSchema(), record.getValue(1, String.class));
 
             if (table != null) {
                 for (int i = 0; i < 8; i++) {
@@ -123,7 +123,7 @@ public class ASEDatabase extends AbstractDatabase {
                         break;
                     }
 
-                    relations.addUniqueKey(keyName, table.getColumn(record.getValueAsString(2 + i)));
+                    relations.addUniqueKey(keyName, table.getColumn(record.getValue(2 + i, String.class)));
                 }
             }
         }
@@ -195,16 +195,16 @@ public class ASEDatabase extends AbstractDatabase {
             .from(Sysreferences.SYSREFERENCES)
             .fetch()) {
 
-            TableDefinition referencingTable = getTable(getSchema(), record.getValueAsString("fk_table"));
+            TableDefinition referencingTable = getTable(getSchema(), record.getValue("fk_table", String.class));
             if (referencingTable != null) {
                 for (int i = 0; i < 16; i++) {
                     if (record.getValue(i + 3) == null) {
                         break;
                     }
 
-                    String foreignKeyName = record.getValueAsString("fk");
-                    String foreignKeyColumnName = record.getValueAsString(i + 3);
-                    String uniqueKeyName = record.getValueAsString("pk");
+                    String foreignKeyName = record.getValue("fk", String.class);
+                    String foreignKeyColumnName = record.getValue(i + 3, String.class);
+                    String uniqueKeyName = record.getValue("pk", String.class);
 
                     ColumnDefinition column = referencingTable.getColumn(foreignKeyColumnName);
                     relations.addForeignKey(foreignKeyName, uniqueKeyName, column, getSchema());
@@ -239,8 +239,8 @@ public class ASEDatabase extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
         for (Record record : fetchTables()) {
-            SchemaDefinition schema = getSchema(record.getValueAsString("Owner"));
-            String name = record.getValueAsString("Name");
+            SchemaDefinition schema = getSchema(record.getValue("Owner", String.class));
+            String name = record.getValue("Name", String.class);
 
             result.add(new ASETableDefinition(schema, name, null));
         }
@@ -252,8 +252,8 @@ public class ASEDatabase extends AbstractDatabase {
         List<Record> result = new ArrayList<Record>();
 
         for (Record record : create().fetch("sp_help")) {
-            if (asList("view", "user table", "system table").contains(record.getValueAsString("Object_type"))) {
-                if (getInputSchemata().contains(record.getValueAsString("Owner"))) {
+            if (asList("view", "user table", "system table").contains(record.getValue("Object_type", String.class))) {
+                if (getInputSchemata().contains(record.getValue("Owner", String.class))) {
                     result.add(record);
                 }
             }
@@ -267,8 +267,8 @@ public class ASEDatabase extends AbstractDatabase {
         List<Record> result = new ArrayList<Record>();
 
         for (Record record : create().fetch("sp_help")) {
-            if (asList("stored procedure").contains(record.getValueAsString("Object_type"))) {
-                if (getInputSchemata().contains(record.getValueAsString("Owner"))) {
+            if (asList("stored procedure").contains(record.getValue("Object_type", String.class))) {
+                if (getInputSchemata().contains(record.getValue("Owner", String.class))) {
                     result.add(record);
                 }
             }
@@ -285,8 +285,8 @@ public class ASEDatabase extends AbstractDatabase {
         // implemented at a later stage
 
 //        for (Record record : fetchRoutines()) {
-//            SchemaDefinition schema = getSchema(record.getValueAsString("Owner"));
-//            String name = record.getValueAsString("Name");
+//            SchemaDefinition schema = getSchema(record.getValue("Owner", String.class));
+//            String name = record.getValue("Name", String.class);
 //            result.add(new ASERoutineDefinition(schema, null, name, null, null, null));
 //        }
 

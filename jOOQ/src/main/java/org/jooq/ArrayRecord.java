@@ -48,6 +48,7 @@ import org.jooq.exception.DetachedException;
  * @param <E> The array element type
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public interface ArrayRecord<E> extends Store<E>, Iterable<E> {
 
     /**

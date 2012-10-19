@@ -134,9 +134,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(0, record.getValue(0));
         assertEquals(1, record.getValue(1));
         assertEquals(2, record.getValue(2));
-        assertEquals("3.141", record.getValueAsString(3).substring(0, 5));
-        assertEquals("2.718", record.getValueAsString(4).substring(0, 5));
-        assertEquals("3.141", record.getValueAsString(5).substring(0, 5));
+        assertEquals("3.141", record.getValue(3, String.class).substring(0, 5));
+        assertEquals("2.718", record.getValue(4, String.class).substring(0, 5));
+        assertEquals("3.141", record.getValue(5, String.class).substring(0, 5));
     }
 
     @Test

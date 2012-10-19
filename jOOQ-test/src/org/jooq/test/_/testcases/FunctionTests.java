@@ -579,10 +579,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                     ascii("a"),
                     ascii("-"),
                     ascii(" ")).fetchOne();
-                assertEquals('A', (int) record.getValueAsInteger(0));
-                assertEquals('a', (int) record.getValueAsInteger(1));
-                assertEquals('-', (int) record.getValueAsInteger(2));
-                assertEquals(' ', (int) record.getValueAsInteger(3));
+                assertEquals('A', (int) record.getValue(0, Integer.class));
+                assertEquals('a', (int) record.getValue(1, Integer.class));
+                assertEquals('-', (int) record.getValue(2, Integer.class));
+                assertEquals(' ', (int) record.getValue(3, Integer.class));
 
                 break;
         }

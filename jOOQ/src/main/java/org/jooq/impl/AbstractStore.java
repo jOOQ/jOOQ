@@ -51,6 +51,7 @@ import org.jooq.tools.Convert;
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     /**
@@ -77,7 +78,6 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
         return internalType.cast(this);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public final void attach(Configuration c) {
         configuration = c;

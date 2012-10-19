@@ -54,7 +54,11 @@ import org.jooq.tools.Convert;
  *
  * @param <E> The store's element type
  * @author Lukas Eder
+ * @deprecated - 2.6.0 [#1840] - This type provides no useful abstraction over
+ *             {@link Record} and {@link ArrayRecord} and will be removed in the
+ *             future. Do not reference it directly.
  */
+@Deprecated
 public interface Store<E> extends Attachable {
 
     /**

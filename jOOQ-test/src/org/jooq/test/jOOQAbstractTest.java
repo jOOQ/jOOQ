@@ -1782,6 +1782,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCancelStatement() throws Exception {
+        new StatementTests(this).testCancelStatement();
+    }
+
+    @Test
     public void testVoid() {
         // A final test case to clean up the test database
         System.out.println("finish");

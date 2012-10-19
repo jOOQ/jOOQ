@@ -52,7 +52,6 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.tools.JooqLogger;
 
@@ -169,18 +168,33 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      * {@inheritDoc}
      */
     @Override
-    public Query close() throws DataAccessException {
+    public final void close() {
         if (statement != null) {
             try {
                 statement.close();
                 statement = null;
             }
             catch (SQLException e) {
-                throw Util.translate(null, e);
+                throw Util.translate(sql, e);
             }
         }
+    }
 
-        return this;
+    /**
+     * Subclasses may override this for covariant result types
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public final void cancel() {
+        if (statement != null) {
+            try {
+                statement.cancel();
+            }
+            catch (SQLException e) {
+                throw Util.translate(sql, e);
+            }
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -209,7 +223,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             try {
 
                 // [#385] If a statement was previously kept open
-                if (statement != null) {
+                if (keepStatement() && statement != null) {
                     ctx.sql(sql);
                     ctx.statement(statement);
                 }
@@ -220,17 +234,13 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                     ctx.sql(getSQL());
                     listener.renderEnd(ctx);
 
-                    if (keepStatement) {
-                        sql = ctx.sql();
-                    }
+                    sql = ctx.sql();
 
                     listener.prepareStart(ctx);
                     prepare(ctx);
                     listener.prepareEnd(ctx);
 
-                    if (keepStatement) {
-                        statement = ctx.statement();
-                    }
+                    statement = ctx.statement();
                 }
 
                 // [#1856] Set the query timeout onto the Statement
@@ -257,7 +267,12 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
                 // ResultQuery.fetchLazy() needs to keep open resources
                 if (!keepResult()) {
-                    Util.safeClose(listener, ctx, keepStatement);
+                    Util.safeClose(listener, ctx, keepStatement());
+                }
+
+                if (!keepStatement()) {
+                    statement = null;
+                    sql = null;
                 }
             }
         }

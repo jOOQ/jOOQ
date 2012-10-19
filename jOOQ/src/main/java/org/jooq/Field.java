@@ -93,6 +93,18 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Class<? extends T> getType();
 
     /**
+     * The type of this field (might not be dialect-specific)
+     */
+    @Override
+    DataType<T> getDataType();
+
+    /**
+     * The dialect-specific type of this field
+     */
+    @Override
+    DataType<T> getDataType(Configuration configuration);
+
+    /**
      * Create an alias for this field
      *
      * @param alias The alias name

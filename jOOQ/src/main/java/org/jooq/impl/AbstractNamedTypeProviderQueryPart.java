@@ -43,6 +43,7 @@ import org.jooq.NamedTypeProviderQueryPart;
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 abstract class AbstractNamedTypeProviderQueryPart<T> extends AbstractNamedQueryPart implements
     NamedTypeProviderQueryPart<T> {
 

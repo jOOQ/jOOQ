@@ -115,6 +115,7 @@ import org.jooq.test._.testcases.RoutineAndUDTTests;
 import org.jooq.test._.testcases.RowValueExpressionTests;
 import org.jooq.test._.testcases.SchemaAndMappingTests;
 import org.jooq.test._.testcases.SelectTests;
+import org.jooq.test._.testcases.StatementTests;
 import org.jooq.test._.testcases.ThreadSafetyTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
@@ -1773,6 +1774,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testBenchmark() throws Exception {
         new BenchmarkTests(this).testBenchmark();
+    }
+
+    @Test
+    public void testKeepStatement() throws Exception {
+        new StatementTests(this).testKeepStatement();
     }
 
     @Test

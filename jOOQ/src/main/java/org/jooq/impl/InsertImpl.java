@@ -115,6 +115,16 @@ class InsertImpl<R extends Record>
         return getDelegate().queryTimeout(timeout);
     }
 
+    @Override
+    public final Query keepStatement(boolean keepStatement) {
+        return getDelegate().keepStatement(keepStatement);
+    }
+
+    @Override
+    public final Query close() {
+        return getDelegate().close();
+    }
+
     // -------------------------------------------------------------------------
     // The DSL API
     // -------------------------------------------------------------------------

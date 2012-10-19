@@ -98,6 +98,16 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    public final Query keepStatement(boolean keepStatement) {
+        return getDelegate().keepStatement(keepStatement);
+    }
+
+    @Override
+    public final Query close() {
+        return getDelegate().close();
+    }
+
+    @Override
     public final DeleteImpl<R> where(Condition... conditions) {
         getDelegate().addConditions(conditions);
         return this;

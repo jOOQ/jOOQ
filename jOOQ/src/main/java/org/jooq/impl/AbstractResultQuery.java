@@ -123,6 +123,18 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return (ResultQuery<R>) super.queryTimeout(timeout);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final ResultQuery<R> keepStatement(boolean k) {
+        return (ResultQuery<R>) super.keepStatement(k);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final ResultQuery<R> close() {
+        return (ResultQuery<R>) super.close();
+    }
+
     @Override
     public final ResultQuery<R> maxRows(int rows) {
         this.maxRows = rows;
@@ -197,7 +209,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             if (!many) {
                 if (ctx.resultSet() != null) {
                     FieldList fields = new FieldList(getFields(ctx.resultSet().getMetaData()));
-                    cursor = new CursorImpl<R>(ctx, listener, fields, getRecordType());
+                    cursor = new CursorImpl<R>(ctx, listener, fields, getRecordType(), keepStatement());
 
                     if (!lazy) {
                         result = cursor.fetch();
@@ -234,8 +246,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                 if (anyResults) {
                     ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
                 }
-
-                ctx.statement().close();
             }
         }
         finally {
@@ -251,7 +261,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    protected final boolean keepStatementOpen() {
+    protected final boolean keepResult() {
         return lazy;
     }
 

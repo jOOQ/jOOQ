@@ -39,6 +39,8 @@ package org.jooq.impl;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -50,6 +52,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.tools.JooqLogger;
 
@@ -58,11 +61,14 @@ import org.jooq.tools.JooqLogger;
  */
 abstract class AbstractQuery extends AbstractQueryPart implements Query, AttachableInternal {
 
-    private static final long       serialVersionUID = -8046199737354507547L;
-    private static final JooqLogger log              = JooqLogger.getLogger(AbstractQuery.class);
+    private static final long           serialVersionUID = -8046199737354507547L;
+    private static final JooqLogger     log              = JooqLogger.getLogger(AbstractQuery.class);
 
-    private Configuration           configuration;
-    private int                     timeout;
+    private Configuration               configuration;
+    private int                         timeout;
+    private boolean                     keepStatement;
+    private transient PreparedStatement statement;
+    private transient String            sql;
 
     AbstractQuery(Configuration configuration) {
         this.configuration = configuration;
@@ -142,6 +148,41 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         return this;
     }
 
+    /**
+     * Subclasses may override this for covariant result types
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public Query keepStatement(boolean k) {
+        this.keepStatement = k;
+        return this;
+    }
+
+    protected final boolean keepStatement() {
+        return keepStatement;
+    }
+
+    /**
+     * Subclasses may override this for covariant result types
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public Query close() throws DataAccessException {
+        if (statement != null) {
+            try {
+                statement.close();
+                statement = null;
+            }
+            catch (SQLException e) {
+                throw Util.translate(null, e);
+            }
+        }
+
+        return this;
+    }
+
     @SuppressWarnings("deprecation")
     @Override
     public final int execute() {
@@ -166,19 +207,36 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
             int result = 0;
             try {
-                listener.renderStart(ctx);
-                ctx.sql(getSQL());
-                listener.renderEnd(ctx);
 
-                listener.prepareStart(ctx);
-                prepare(ctx);
+                // [#385] If a statement was previously kept open
+                if (statement != null) {
+                    ctx.sql(sql);
+                    ctx.statement(statement);
+                }
+
+                // [#385] First time statement preparing
+                else {
+                    listener.renderStart(ctx);
+                    ctx.sql(getSQL());
+                    listener.renderEnd(ctx);
+
+                    if (keepStatement) {
+                        sql = ctx.sql();
+                    }
+
+                    listener.prepareStart(ctx);
+                    prepare(ctx);
+                    listener.prepareEnd(ctx);
+
+                    if (keepStatement) {
+                        statement = ctx.statement();
+                    }
+                }
 
                 // [#1856] Set the query timeout onto the Statement
                 if (timeout != 0) {
                     ctx.statement().setQueryTimeout(timeout);
                 }
-
-                listener.prepareEnd(ctx);
 
                 // [#1145] Bind variables only for true prepared statements
                 if (executePreparedStatements(c.getSettings())) {
@@ -196,8 +254,10 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 throw ctx.exception();
             }
             finally {
-                if (!keepStatementOpen()) {
-                    Util.safeClose(listener, ctx);
+
+                // ResultQuery.fetchLazy() needs to keep open resources
+                if (!keepResult()) {
+                    Util.safeClose(listener, ctx, keepStatement);
                 }
             }
         }
@@ -212,9 +272,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
     /**
      * Default implementation to indicate whether this query should close the
-     * statement after execution. Subclasses may override this method.
+     * {@link ResultSet} after execution. Subclasses may override this method.
      */
-    protected boolean keepStatementOpen() {
+    protected boolean keepResult() {
         return false;
     }
 

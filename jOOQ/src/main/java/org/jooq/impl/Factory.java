@@ -1774,7 +1774,7 @@ public class Factory implements FactoryOperations {
             FieldProvider fields = new MetaDataFieldProvider(this, rs.getMetaData());
 
             ctx.resultSet(rs);
-            return new CursorImpl<Record>(ctx, listener, fields);
+            return new CursorImpl<Record>(ctx, listener, fields, false);
         }
         catch (SQLException e) {
             ctx.sqlException(e);

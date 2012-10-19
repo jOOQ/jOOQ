@@ -625,8 +625,18 @@ final class Util {
      * Safely close a statement
      */
     static final void safeClose(ExecuteListener listener, ExecuteContext ctx) {
+        safeClose(listener, ctx, false);
+    }
+
+    /**
+     * Safely close a statement
+     */
+    static final void safeClose(ExecuteListener listener, ExecuteContext ctx, boolean keepStatement) {
         safeClose(ctx.resultSet());
-        safeClose(ctx.statement());
+        if (!keepStatement)
+            safeClose(ctx.statement());
+
+        // [#1868] TODO: This needs to be called in fetchLazy(), too
         listener.end(ctx);
 
         // [#1326] Clean up any potentially remaining temporary lobs

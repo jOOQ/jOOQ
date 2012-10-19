@@ -216,14 +216,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final <A extends ArrayRecord<T>, T> T[] getValueAsArray(int index, Field<A> field)
-        {
+    public final <A extends ArrayRecord<T>, T> T[] getValueAsArray(int index, Field<A> field) {
         return get(index).getValueAsArray(field);
     }
 
     @Override
-    public final <A extends ArrayRecord<T>, T> T[] getValueAsArray(int index, Field<A> field, T[] defaultValue)
-        {
+    public final <A extends ArrayRecord<T>, T> T[] getValueAsArray(int index, Field<A> field, T[] defaultValue) {
         return get(index).getValueAsArray(field, defaultValue);
     }
 

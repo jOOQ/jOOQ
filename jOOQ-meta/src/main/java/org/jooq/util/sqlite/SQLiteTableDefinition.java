@@ -65,15 +65,15 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
         for (Record record : create().fetch("pragma table_info('" + getName() + "')")) {
             position++;
 
-            String name = record.getValueAsString("name");
-            String dataType = record.getValueAsString("type")
+            String name = record.getValue("name", String.class);
+            String dataType = record.getValue("type", String.class)
                                     .replaceAll("\\(\\d+\\)", "");
-            Number precision = parsePrecision(record.getValueAsString("type"));
-            Number scale = parseScale(record.getValueAsString("type"));
+            Number precision = parsePrecision(record.getValue("type", String.class));
+            Number scale = parseScale(record.getValue("type", String.class));
 
             // SQLite identities are primary keys whose tables are mentioned in
             // sqlite_sequence
-            boolean pk = record.getValueAsBoolean("pk");
+            boolean pk = record.getValue("pk", Boolean.class);
             boolean identity = pk && create()
                 .fetchOne("select count(*) from sqlite_sequence where name = ?", getName())
                 .getValue(0, Boolean.class);

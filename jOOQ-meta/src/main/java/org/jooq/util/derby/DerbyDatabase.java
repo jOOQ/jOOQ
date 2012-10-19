@@ -86,7 +86,7 @@ public class DerbyDatabase extends AbstractDatabase {
 	        SchemaDefinition schema = getSchema(record.getValue(Sysschemas.SCHEMANAME));
 	        String key = record.getValue(Sysconstraints.CONSTRAINTNAME);
             String tableName = record.getValue(Systables.TABLENAME);
-            String descriptor = record.getValueAsString(Sysconglomerates.DESCRIPTOR);
+            String descriptor = record.getValue(Sysconglomerates.DESCRIPTOR, String.class);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -106,7 +106,7 @@ public class DerbyDatabase extends AbstractDatabase {
             SchemaDefinition schema = getSchema(record.getValue(Sysschemas.SCHEMANAME));
             String key = record.getValue(Sysconstraints.CONSTRAINTNAME);
             String tableName = record.getValue(Systables.TABLENAME);
-            String descriptor = record.getValueAsString(Sysconglomerates.DESCRIPTOR);
+            String descriptor = record.getValue(Sysconglomerates.DESCRIPTOR, String.class);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -173,7 +173,7 @@ public class DerbyDatabase extends AbstractDatabase {
 
 	        String foreignKeyName = record.getValue(fkName);
             String foreignKeyTableName = record.getValue(fkTable);
-            List<Integer> foreignKeyIndexes = decode(record.getValueAsString(fkDescriptor));
+            List<Integer> foreignKeyIndexes = decode(record.getValue(fkDescriptor, String.class));
             String uniqueKeyName = record.getValue(ukName);
 
 	        TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTableName);
@@ -253,7 +253,7 @@ public class DerbyDatabase extends AbstractDatabase {
 
             result.add(new DefaultSequenceDefinition(
                 schema,
-                record.getValueAsString(Syssequences.SEQUENCENAME),
+                record.getValue(Syssequences.SEQUENCENAME, String.class),
                 type));
         }
 

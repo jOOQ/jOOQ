@@ -77,14 +77,14 @@ public class OracleUDTDefinition extends AbstractUDTDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(ALL_TYPE_ATTRS.ATTR_TYPE_NAME),
-                record.getValueAsInteger(ALL_TYPE_ATTRS.LENGTH, 0),
-                record.getValueAsInteger(ALL_TYPE_ATTRS.PRECISION, 0),
-                record.getValueAsInteger(ALL_TYPE_ATTRS.SCALE, 0));
+                record.getValue(ALL_TYPE_ATTRS.LENGTH, int.class),
+                record.getValue(ALL_TYPE_ATTRS.PRECISION, int.class),
+                record.getValue(ALL_TYPE_ATTRS.SCALE, int.class));
 
             AttributeDefinition attribute = new DefaultAttributeDefinition(
                 this,
                 record.getValue(ALL_TYPE_ATTRS.ATTR_NAME),
-                record.getValueAsInteger(ALL_TYPE_ATTRS.ATTR_NO),
+                record.getValue(ALL_TYPE_ATTRS.ATTR_NO, int.class),
                 type);
 
             result.add(attribute);

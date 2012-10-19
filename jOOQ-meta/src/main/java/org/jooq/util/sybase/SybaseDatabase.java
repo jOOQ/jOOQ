@@ -117,7 +117,7 @@ public class SybaseDatabase extends AbstractDatabase {
             .orderBy(SYSIDXCOL.SEQUENCE)
             .fetch()) {
 
-            String key = record.getValueAsString("indexName");
+            String key = record.getValue("indexName", String.class);
             String tableName = record.getValue(SYSTABLE.TABLE_NAME);
             String columnName = record.getValue(SYSTABCOL.COLUMN_NAME);
 
@@ -149,7 +149,7 @@ public class SybaseDatabase extends AbstractDatabase {
             .orderBy(SYSIDXCOL.SEQUENCE)
             .fetch()) {
 
-            String key = record.getValueAsString("indexName");
+            String key = record.getValue("indexName", String.class);
             String tableName = record.getValue(SYSTABLE.TABLE_NAME);
             String columnName = record.getValue(SYSTABCOL.COLUMN_NAME);
 
@@ -196,10 +196,10 @@ public class SybaseDatabase extends AbstractDatabase {
                 SYSIDXCOL.SEQUENCE.asc())
             .fetch()) {
 
-            String foreignKey = record.getValueAsString("fkIndexName");
+            String foreignKey = record.getValue("fkIndexName", String.class);
             String foreignKeyTableName = record.getValue(SYSTABLE.TABLE_NAME);
             String foreignKeyColumn = record.getValue(SYSTABCOL.COLUMN_NAME);
-            String referencedKey = record.getValueAsString("ukIndexName");
+            String referencedKey = record.getValue("ukIndexName", String.class);
 
             TableDefinition foreignKeyTable = getTable(getSchema(), foreignKeyTableName);
 

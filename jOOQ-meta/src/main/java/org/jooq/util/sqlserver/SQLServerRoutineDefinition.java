@@ -106,7 +106,7 @@ public class SQLServerRoutineDefinition extends AbstractRoutineDefinition {
             ParameterDefinition parameter = new DefaultParameterDefinition(
                 this,
                 record.getValue(PARAMETERS.PARAMETER_NAME).replaceAll("@", ""),
-                record.getValueAsInteger(PARAMETERS.ORDINAL_POSITION),
+                record.getValue(PARAMETERS.ORDINAL_POSITION, int.class),
                 type);
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);

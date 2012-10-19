@@ -109,7 +109,7 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.getValueAsString("datatype"),
+                record.getValue("datatype", String.class),
                 record.getValue(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(PARAMETERS.NUMERIC_PRECISION),
                 record.getValue(PARAMETERS.NUMERIC_SCALE));
@@ -117,7 +117,7 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
             ParameterDefinition parameter = new DefaultParameterDefinition(
                 this,
                 record.getValue(PARAMETERS.PARAMETER_NAME).replaceAll("@", ""),
-                record.getValueAsInteger(PARAMETERS.ORDINAL_POSITION),
+                record.getValue(PARAMETERS.ORDINAL_POSITION, int.class),
                 type);
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);

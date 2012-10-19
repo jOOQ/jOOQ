@@ -77,8 +77,8 @@ public class SybaseRoutineDefinition extends AbstractRoutineDefinition {
                 .fetch()) {
 
             String paramName = record.getValue(SYSPROCPARM.PARM_NAME);
-            Boolean paramModeIn = record.getValueAsBoolean(SYSPROCPARM.PARM_MODE_IN, false);
-            Boolean paramModeOut = record.getValueAsBoolean(SYSPROCPARM.PARM_MODE_OUT, false);
+            boolean paramModeIn = record.getValue(SYSPROCPARM.PARM_MODE_IN, boolean.class);
+            boolean paramModeOut = record.getValue(SYSPROCPARM.PARM_MODE_OUT, boolean.class);
             int parmType = record.getValue(SYSPROCPARM.PARM_TYPE);
 
             InOutDefinition inOutDefinition;

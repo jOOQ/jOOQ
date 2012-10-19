@@ -69,12 +69,12 @@ class ASERoutineDefinition extends AbstractRoutineDefinition {
         }
 
         for (Record record : fetchMany.get(1)) {
-            String n = record.getValueAsString("Parameter_name");
-            String l = record.getValueAsString("Length");
-            String p = record.getValueAsString("Prec");
-            String s = record.getValueAsString("Scale");
-            int o = record.getValueAsInteger("Param_order");
-            String inOut = record.getValueAsString("Mode");
+            String n = record.getValue("Parameter_name", String.class);
+            String l = record.getValue("Length", String.class);
+            String p = record.getValue("Prec", String.class);
+            String s = record.getValue("Scale", String.class);
+            int o = record.getValue("Param_order", int.class);
+            String inOut = record.getValue("Mode", String.class);
 
             int length = 0;
             int precision = 0;
@@ -93,7 +93,7 @@ class ASERoutineDefinition extends AbstractRoutineDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                     getDatabase(),
                     getSchema(),
-                    record.getValueAsString("Type"),
+                    record.getValue("Type", String.class),
                     length,
                     precision,
                     scale);

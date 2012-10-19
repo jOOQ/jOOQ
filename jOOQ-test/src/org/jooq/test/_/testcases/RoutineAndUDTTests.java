@@ -321,27 +321,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         Result<Record> result = q.getResult();
 
         assertEquals(1, result.size());
-        assertEquals("1", result.get(0).getValueAsString(f1a));
-        assertEquals("0", result.get(0).getValueAsString(f2a));
-        assertEquals("1", result.get(0).getValueAsString(f3a));
-        assertEquals("42", result.get(0).getValueAsString(f4a));
-        assertEquals("1", result.get(0).getValueAsString(f5a));
-        assertEquals("1204", result.get(0).getValueAsString(f6a));
-        assertEquals("4301", result.get(0).getValueAsString(f7a));
-        assertEquals("1101", result.get(0).getValueAsString(f8a));
-        assertEquals("1204", result.get(0).getValueAsString(f9a));
+        assertEquals("1", result.get(0).getValue(f1a, String.class));
+        assertEquals("0", result.get(0).getValue(f2a, String.class));
+        assertEquals("1", result.get(0).getValue(f3a, String.class));
+        assertEquals("42", result.get(0).getValue(f4a, String.class));
+        assertEquals("1", result.get(0).getValue(f5a, String.class));
+        assertEquals("1204", result.get(0).getValue(f6a, String.class));
+        assertEquals("4301", result.get(0).getValue(f7a, String.class));
+        assertEquals("1101", result.get(0).getValue(f8a, String.class));
+        assertEquals("1204", result.get(0).getValue(f9a, String.class));
 
-        assertEquals("1", result.get(0).getValueAsString(f1b));
-        assertEquals("0", result.get(0).getValueAsString(f2b));
-        assertEquals("1", result.get(0).getValueAsString(f3b));
-        assertEquals("42", result.get(0).getValueAsString(f4b));
-        assertEquals("1", result.get(0).getValueAsString(f5b));
-        assertEquals("1204", result.get(0).getValueAsString(f6b));
-        assertEquals("4301", result.get(0).getValueAsString(f7b));
-        assertEquals("1101", result.get(0).getValueAsString(f8b));
-        assertEquals("1204", result.get(0).getValueAsString(f9b));
+        assertEquals("1", result.get(0).getValue(f1b, String.class));
+        assertEquals("0", result.get(0).getValue(f2b, String.class));
+        assertEquals("1", result.get(0).getValue(f3b, String.class));
+        assertEquals("42", result.get(0).getValue(f4b, String.class));
+        assertEquals("1", result.get(0).getValue(f5b, String.class));
+        assertEquals("1204", result.get(0).getValue(f6b, String.class));
+        assertEquals("4301", result.get(0).getValue(f7b, String.class));
+        assertEquals("1101", result.get(0).getValue(f8b, String.class));
+        assertEquals("1204", result.get(0).getValue(f9b, String.class));
 
-        assertEquals("0", result.get(0).getValueAsString(f10));
+        assertEquals("0", result.get(0).getValue(f10, String.class));
 
         // ---------------------------------------------------------------------
         // Functions in conditions

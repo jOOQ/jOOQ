@@ -92,14 +92,14 @@ public class OracleTableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(ALL_TAB_COLS.DATA_TYPE),
-                record.getValueAsInteger("data_length", 0),
-                record.getValueAsInteger(ALL_TAB_COLS.DATA_PRECISION, 0),
-                record.getValueAsInteger(ALL_TAB_COLS.DATA_SCALE, 0));
+                record.getValue("data_length", int.class),
+                record.getValue(ALL_TAB_COLS.DATA_PRECISION, int.class),
+                record.getValue(ALL_TAB_COLS.DATA_SCALE, int.class));
 
 			DefaultColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(ALL_TAB_COLS.COLUMN_NAME),
-			    record.getValueAsInteger(ALL_TAB_COLS.COLUMN_ID),
+			    record.getValue(ALL_TAB_COLS.COLUMN_ID, int.class),
 			    type,
 			    record.getValue(ALL_TAB_COLS.NULLABLE, boolean.class),
                 false,

@@ -80,7 +80,7 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
             .orderBy(Syscolumns.COLUMNNUMBER)
             .fetch()) {
 
-            String typeName = record.getValueAsString(Syscolumns.COLUMNDATATYPE);
+            String typeName = record.getValue(Syscolumns.COLUMNDATATYPE, String.class);
             Number precision = parsePrecision(typeName);
             Number scale = parseScale(typeName);
 

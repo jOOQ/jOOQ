@@ -120,7 +120,7 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
                 record.getValue(ALL_ARGUMENTS.TYPE_NAME));
 
             String name = record.getValue(ALL_ARGUMENTS.ARGUMENT_NAME);
-            Integer position = record.getValueAsInteger(ALL_ARGUMENTS.POSITION);
+            int position = record.getValue(ALL_ARGUMENTS.POSITION, int.class);
 
             // [#378] Oracle supports stored functions with OUT parameters.
             // They are mapped to procedures in jOOQ

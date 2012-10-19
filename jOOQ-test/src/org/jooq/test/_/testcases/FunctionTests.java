@@ -648,41 +648,41 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .fetchOne();
 
         assertNotNull(record);
-        assertEquals("1.0", record.getValueAsString(f1a));
-        assertEquals("1.11", record.getValueAsString(f2a));
-        assertEquals("1.0", record.getValueAsString(f3a));
-        assertEquals("2.0", record.getValueAsString(f4a));
-        assertEquals("1.0", record.getValueAsString(f5a));
-        assertEquals("1.11", record.getValueAsString(f6a));
-        assertEquals("10.0", record.getValueAsString(f7a));
+        assertEquals("1.0", record.getValue(f1a, String.class));
+        assertEquals("1.11", record.getValue(f2a, String.class));
+        assertEquals("1.0", record.getValue(f3a, String.class));
+        assertEquals("2.0", record.getValue(f4a, String.class));
+        assertEquals("1.0", record.getValue(f5a, String.class));
+        assertEquals("1.11", record.getValue(f6a, String.class));
+        assertEquals("10.0", record.getValue(f7a, String.class));
 
-        assertEquals("-1.0", record.getValueAsString(f1b));
-        assertEquals("-1.11", record.getValueAsString(f2b));
-        assertEquals("-2.0", record.getValueAsString(f3b));
-        assertEquals("-1.0", record.getValueAsString(f4b));
-        assertEquals("1.0", record.getValueAsString(f5b));
-        assertEquals("1.11", record.getValueAsString(f6b));
-        assertEquals("10.0", record.getValueAsString(f7b));
+        assertEquals("-1.0", record.getValue(f1b, String.class));
+        assertEquals("-1.11", record.getValue(f2b, String.class));
+        assertEquals("-2.0", record.getValue(f3b, String.class));
+        assertEquals("-1.0", record.getValue(f4b, String.class));
+        assertEquals("1.0", record.getValue(f5b, String.class));
+        assertEquals("1.11", record.getValue(f6b, String.class));
+        assertEquals("10.0", record.getValue(f7b, String.class));
 
-        assertEquals("2.0", record.getValueAsString(f1c));
-        assertEquals("2.0", record.getValueAsString(f2c));
-        assertEquals("2.0", record.getValueAsString(f3c));
-        assertEquals("2.0", record.getValueAsString(f4c));
+        assertEquals("2.0", record.getValue(f1c, String.class));
+        assertEquals("2.0", record.getValue(f2c, String.class));
+        assertEquals("2.0", record.getValue(f3c, String.class));
+        assertEquals("2.0", record.getValue(f4c, String.class));
 
-        assertEquals("-2.0", record.getValueAsString(f1d));
-        assertEquals("-2.0", record.getValueAsString(f2d));
-        assertEquals("-2.0", record.getValueAsString(f3d));
-        assertEquals("-2.0", record.getValueAsString(f4d));
+        assertEquals("-2.0", record.getValue(f1d, String.class));
+        assertEquals("-2.0", record.getValue(f2d, String.class));
+        assertEquals("-2.0", record.getValue(f3d, String.class));
+        assertEquals("-2.0", record.getValue(f4d, String.class));
 
-        assertEquals("0.0", record.getValueAsString(f1e));
-        assertEquals("0.0", record.getValueAsString(f2e));
-        assertEquals("0.0", record.getValueAsString(f3e));
-        assertEquals("0.0", record.getValueAsString(f4e));
+        assertEquals("0.0", record.getValue(f1e, String.class));
+        assertEquals("0.0", record.getValue(f2e, String.class));
+        assertEquals("0.0", record.getValue(f3e, String.class));
+        assertEquals("0.0", record.getValue(f4e, String.class));
 
-        assertEquals("0.0", record.getValueAsString(f1f));
-        assertEquals("0.0", record.getValueAsString(f2f));
-        assertEquals("0.0", record.getValueAsString(f3f));
-        assertEquals("0.0", record.getValueAsString(f4f));
+        assertEquals("0.0", record.getValue(f1f, String.class));
+        assertEquals("0.0", record.getValue(f2f, String.class));
+        assertEquals("0.0", record.getValue(f3f, String.class));
+        assertEquals("0.0", record.getValue(f4f, String.class));
 
         // Greatest and least
         record = create().select(
@@ -739,15 +739,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
                 // Rounding issues are circumvented by using substring()
                 assertNotNull(record);
-                assertEquals("1.414", record.getValueAsString(m1).substring(0, 5));
-                assertEquals("2", record.getValueAsString(m2).substring(0, 1));
-                assertEquals("7.389", record.getValueAsString(m3).substring(0, 5));
-                assertEquals("1", record.getValueAsString(m4).substring(0, 1));
-                assertEquals("0.135", record.getValueAsString(m5).substring(0, 5));
-                assertEquals("0.693", record.getValueAsString(m6).substring(0, 5));
-                assertEquals("2", record.getValueAsString(m7).substring(0, 1));
-                assertEquals("16", record.getValueAsString(m8).substring(0, 2));
-                assertEquals("2", record.getValueAsString(m9).substring(0, 1));
+                assertEquals("1.414", record.getValue(m1, String.class).substring(0, 5));
+                assertEquals("2", record.getValue(m2, String.class).substring(0, 1));
+                assertEquals("7.389", record.getValue(m3, String.class).substring(0, 5));
+                assertEquals("1", record.getValue(m4, String.class).substring(0, 1));
+                assertEquals("0.135", record.getValue(m5, String.class).substring(0, 5));
+                assertEquals("0.693", record.getValue(m6, String.class).substring(0, 5));
+                assertEquals("2", record.getValue(m7, String.class).substring(0, 1));
+                assertEquals("16", record.getValue(m8, String.class).substring(0, 2));
+                assertEquals("2", record.getValue(m9, String.class).substring(0, 1));
 
                 // Trigonometry
                 // ------------
@@ -772,16 +772,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
                 // Rounding issues are circumvented by using substring()
                 assertNotNull(record);
-                assertEquals("0.5", record.getValueAsString(t1).substring(0, 3));
-                assertEquals("0.866", record.getValueAsString(t2).substring(0, 5));
-                assertEquals("0.577", record.getValueAsString(t3).substring(0, 5));
-                assertEquals("1.732", record.getValueAsString(t4).substring(0, 5));
-                assertEquals("1", record.getValueAsString(t6).substring(0, 1));
-                assertEquals("0.551", record.getValueAsString(t7).substring(0, 5));
-                assertEquals("1.019", record.getValueAsString(t8).substring(0, 5));
-                assertEquals("0.482", record.getValueAsString(t9).substring(0, 5));
-                assertEquals("45", record.getValueAsString(ta).substring(0, 2));
-                assertEquals("1", record.getValueAsString(tb).substring(0, 1));
+                assertEquals("0.5", record.getValue(t1, String.class).substring(0, 3));
+                assertEquals("0.866", record.getValue(t2, String.class).substring(0, 5));
+                assertEquals("0.577", record.getValue(t3, String.class).substring(0, 5));
+                assertEquals("1.732", record.getValue(t4, String.class).substring(0, 5));
+                assertEquals("1", record.getValue(t6, String.class).substring(0, 1));
+                assertEquals("0.551", record.getValue(t7, String.class).substring(0, 5));
+                assertEquals("1.019", record.getValue(t8, String.class).substring(0, 5));
+                assertEquals("0.482", record.getValue(t9, String.class).substring(0, 5));
+                assertEquals("45", record.getValue(ta, String.class).substring(0, 2));
+                assertEquals("1", record.getValue(tb, String.class).substring(0, 1));
 
                 break;
             }

@@ -108,7 +108,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 			ColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(Columns.COLUMN_NAME),
-			    record.getValueAsInteger(Columns.ORDINAL_POSITION),
+			    record.getValue(Columns.ORDINAL_POSITION, int.class),
 			    type,
 			    record.getValue(Columns.IS_NULLABLE, boolean.class),
 			    "auto_increment".equalsIgnoreCase(record.getValue(Columns.EXTRA)),

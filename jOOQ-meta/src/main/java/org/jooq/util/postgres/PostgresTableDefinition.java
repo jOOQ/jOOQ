@@ -92,7 +92,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 			ColumnDefinition column = new DefaultColumnDefinition(
 			    getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(COLUMNS.COLUMN_NAME),
-			    record.getValueAsInteger(COLUMNS.ORDINAL_POSITION),
+			    record.getValue(COLUMNS.ORDINAL_POSITION, int.class),
 			    type,
 			    record.getValue(COLUMNS.IS_NULLABLE, boolean.class),
 			    record.getValue(COLUMNS.COLUMN_DEFAULT, "").startsWith("nextval"),

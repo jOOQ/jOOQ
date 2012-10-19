@@ -178,26 +178,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             .orderBy(TBook_AUTHOR_ID())
             .fetch();
 
-        assertEquals(2, (int) result.getValueAsInteger(0, 1));
-        assertEquals(2, (int) result.getValueAsInteger(0, 2));
-        assertEquals(1, (int) result.getValueAsInteger(0, 3));
-        assertEquals(3d, result.getValueAsDouble(0, 4));
-        assertEquals(1, (int) result.getValueAsInteger(0, 6));
-        assertEquals(2, (int) result.getValueAsInteger(0, 7));
+        assertEquals(2, (int) result.get(0).getValue(1, Integer.class));
+        assertEquals(2, (int) result.get(0).getValue(2, Integer.class));
+        assertEquals(1, (int) result.get(0).getValue(3, Integer.class));
+        assertEquals(3d, result.get(0).getValue(4, Double.class));
+        assertEquals(1, (int) result.get(0).getValue(6, Integer.class));
+        assertEquals(2, (int) result.get(0).getValue(7, Integer.class));
 
-        assertEquals(2, (int) result.getValueAsInteger(1, 1));
-        assertEquals(2, (int) result.getValueAsInteger(1, 2));
-        assertEquals(1, (int) result.getValueAsInteger(1, 3));
-        assertEquals(7d, result.getValueAsDouble(1, 4));
-        assertEquals(3, (int) result.getValueAsInteger(1, 6));
-        assertEquals(4, (int) result.getValueAsInteger(1, 7));
+        assertEquals(2, (int) result.get(1).getValue(1, Integer.class));
+        assertEquals(2, (int) result.get(1).getValue(2, Integer.class));
+        assertEquals(1, (int) result.get(1).getValue(3, Integer.class));
+        assertEquals(7d, result.get(1).getValue(4, Double.class));
+        assertEquals(3, (int) result.get(1).getValue(6, Integer.class));
+        assertEquals(4, (int) result.get(1).getValue(7, Integer.class));
 
         // TODO [#868] Derby, HSQLDB, and SQL Server perform rounding/truncation
         // This may need to be corrected by jOOQ
-        assertTrue(asList(1.0, 1.5, 2.0).contains(result.getValueAsDouble(0, 5)));
-        assertTrue(asList(1.0, 1.5, 2.0).contains(result.getValueAsDouble(0, 8)));
-        assertTrue(asList(3.0, 3.5, 4.0).contains(result.getValueAsDouble(1, 5)));
-        assertTrue(asList(3.0, 3.5, 4.0).contains(result.getValueAsDouble(1, 8)));
+        assertTrue(asList(1.0, 1.5, 2.0).contains(result.get(0).getValue(5, Double.class)));
+        assertTrue(asList(1.0, 1.5, 2.0).contains(result.get(0).getValue(8, Double.class)));
+        assertTrue(asList(3.0, 3.5, 4.0).contains(result.get(1).getValue(5, Double.class)));
+        assertTrue(asList(3.0, 3.5, 4.0).contains(result.get(1).getValue(8, Double.class)));
 
         // [#1042] DISTINCT keyword
         // ------------------------
@@ -239,17 +239,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                     .orderBy(TBook_AUTHOR_ID())
                     .fetch();
 
-                assertEquals(0.5, result.getValueAsDouble(0, 1));
-                assertEquals(0.25, result.getValueAsDouble(0, 3));
-                assertEquals(0.5, result.getValueAsDouble(1, 1));
-                assertEquals(0.25, result.getValueAsDouble(1, 3));
+                assertEquals(0.5, result.get(0).getValue(1, Double.class));
+                assertEquals(0.25, result.get(0).getValue(3, Double.class));
+                assertEquals(0.5, result.get(1).getValue(1, Double.class));
+                assertEquals(0.25, result.get(1).getValue(3, Double.class));
 
                 // DB2 only knows STDDEV_POP / VAR_POP
                 if (getDialect() != SQLDialect.DB2) {
-                    assertEquals("0.707", result.getValueAsString(0, 2).substring(0, 5));
-                    assertEquals(0.5, result.getValueAsDouble(0, 4));
-                    assertEquals("0.707", result.getValueAsString(1, 2).substring(0, 5));
-                    assertEquals(0.5, result.getValueAsDouble(1, 4));
+                    assertEquals("0.707", result.get(0).getValue(2, String.class).substring(0, 5));
+                    assertEquals(0.5, result.get(0).getValue(4, Double.class));
+                    assertEquals("0.707", result.get(1).getValue(2, String.class).substring(0, 5));
+                    assertEquals(0.5, result.get(1).getValue(4, Double.class));
                 }
             }
         }
@@ -266,10 +266,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .orderBy(TBook_AUTHOR_ID())
                 .fetch();
 
-        assertEquals(2, (int) result.getValueAsInteger(0, 1));
-        assertEquals(2, (int) result.getValueAsInteger(0, 2));
-        assertEquals(4, (int) result.getValueAsInteger(1, 1));
-        assertEquals(4, (int) result.getValueAsInteger(1, 2));
+        assertEquals(2, (int) result.get(0).getValue(1, Integer.class));
+        assertEquals(2, (int) result.get(0).getValue(2, Integer.class));
+        assertEquals(4, (int) result.get(1).getValue(1, Integer.class));
+        assertEquals(4, (int) result.get(1).getValue(2, Integer.class));
     }
 
     @Test
@@ -507,31 +507,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
                 // Ordered PERCENT_RANK()
                 column++;
-                assertEquals("1", result.getValueAsString(0, column));
-                assertEquals("0.6", result.getValueAsString(1, column).substring(0, 3));
-                assertEquals("0.3", result.getValueAsString(2, column).substring(0, 3));
-                assertEquals("0", result.getValueAsString(3, column));
+                assertEquals("1", result.get(0).getValue(column, String.class));
+                assertEquals("0.6", result.get(1).getValue(column, String.class).substring(0, 3));
+                assertEquals("0.3", result.get(2).getValue(column, String.class).substring(0, 3));
+                assertEquals("0", result.get(3).getValue(column, String.class));
 
                 // Partitioned and ordered PERCENT_RANK()
                 column++;
-                assertEquals("1", result.getValueAsString(0, column));
-                assertEquals("0", result.getValueAsString(1, column));
-                assertEquals("1", result.getValueAsString(2, column));
-                assertEquals("0", result.getValueAsString(3, column));
+                assertEquals("1", result.get(0).getValue(column, String.class));
+                assertEquals("0", result.get(1).getValue(column, String.class));
+                assertEquals("1", result.get(2).getValue(column, String.class));
+                assertEquals("0", result.get(3).getValue(column, String.class));
 
                 // Ordered CUME_DIST()
                 column++;
-                assertEquals("1", result.getValueAsString(0, column));
-                assertEquals("0.75", result.getValueAsString(1, column));
-                assertEquals("0.5", result.getValueAsString(2, column));
-                assertEquals("0.25", result.getValueAsString(3, column));
+                assertEquals("1", result.get(0).getValue(column, String.class));
+                assertEquals("0.75", result.get(1).getValue(column, String.class));
+                assertEquals("0.5", result.get(2).getValue(column, String.class));
+                assertEquals("0.25", result.get(3).getValue(column, String.class));
 
                 // Partitioned and ordered CUME_DIST()
                 column++;
-                assertEquals("1", result.getValueAsString(0, column));
-                assertEquals("0.5", result.getValueAsString(1, column));
-                assertEquals("1", result.getValueAsString(2, column));
-                assertEquals("0.5", result.getValueAsString(3, column));
+                assertEquals("1", result.get(0).getValue(column, String.class));
+                assertEquals("0.5", result.get(1).getValue(column, String.class));
+                assertEquals("1", result.get(2).getValue(column, String.class));
+                assertEquals("0.5", result.get(3).getValue(column, String.class));
 
                 break;
             }
@@ -583,19 +583,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .fetch();
 
         // Overall STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
-        assertEquals("1.118", result.getValueAsString(0, 1).substring(0, 5));
-        assertEquals(1.25, result.getValueAsDouble(0, 3));
+        assertEquals("1.118", result.get(0).getValue(1, String.class).substring(0, 5));
+        assertEquals(1.25, result.get(0).getValue(3, Double.class));
 
         // Partitioned STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
-        assertEquals(0.5, result.getValueAsDouble(0, 5));
-        assertEquals(0.25, result.getValueAsDouble(0, 7));
+        assertEquals(0.5, result.get(0).getValue(5, Double.class));
+        assertEquals(0.25, result.get(0).getValue(7, Double.class));
 
         // DB2 only knows STDDEV_POP / VAR_POP
         if (getDialect() != SQLDialect.DB2) {
-            assertEquals("1.290", result.getValueAsString(0, 2).substring(0, 5));
-            assertEquals("1.666", result.getValueAsString(0, 4).substring(0, 5));
-            assertEquals("0.707", result.getValueAsString(0, 6).substring(0, 5));
-            assertEquals(0.5, result.getValueAsDouble(0, 8));
+            assertEquals("1.290", result.get(0).getValue(2, String.class).substring(0, 5));
+            assertEquals("1.666", result.get(0).getValue(4, String.class).substring(0, 5));
+            assertEquals("0.707", result.get(0).getValue(6, String.class).substring(0, 5));
+            assertEquals(0.5, result.get(0).getValue(8, Double.class));
         }
 
         // NTILE()

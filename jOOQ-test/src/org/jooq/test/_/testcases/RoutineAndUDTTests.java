@@ -395,17 +395,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             assertEquals(null, arrays.getValue(0, TArrays_NUMBER_R()));
             assertEquals(null, arrays.getValue(0, TArrays_DATE_R()));
 
-            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValueAsArray(1, TArrays_STRING_R())));
-            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValueAsArray(1, TArrays_NUMBER_R())));
-            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValueAsArray(1, TArrays_DATE_R())));
+            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValue(1, TArrays_STRING_R()).get()));
+            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValue(1, TArrays_NUMBER_R()).get()));
+            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValue(1, TArrays_DATE_R()).get()));
 
-            assertEquals(Arrays.asList("a"), Arrays.asList(arrays.getValueAsArray(2, TArrays_STRING_R())));
-            assertEquals(Arrays.asList(1), Arrays.asList(arrays.getValueAsArray(2, TArrays_NUMBER_R())));
-            assertEquals("[1981-07-10]", Arrays.asList(arrays.getValueAsArray(2, TArrays_DATE_R())).toString());
+            assertEquals(Arrays.asList("a"), Arrays.asList(arrays.getValue(2, TArrays_STRING_R()).get()));
+            assertEquals(Arrays.asList(1), Arrays.asList(arrays.getValue(2, TArrays_NUMBER_R()).get()));
+            assertEquals("[1981-07-10]", Arrays.asList(arrays.getValue(2, TArrays_DATE_R()).get()).toString());
 
-            assertEquals(Arrays.asList("a", "b"), Arrays.asList(arrays.getValueAsArray(3, TArrays_STRING_R())));
-            assertEquals(Arrays.asList(1, 2), Arrays.asList(arrays.getValueAsArray(3, TArrays_NUMBER_R())));
-            assertEquals("[1981-07-10, 2000-01-01]", Arrays.asList(arrays.getValueAsArray(3, TArrays_DATE_R())).toString());
+            assertEquals(Arrays.asList("a", "b"), Arrays.asList(arrays.getValue(3, TArrays_STRING_R()).get()));
+            assertEquals(Arrays.asList(1, 2), Arrays.asList(arrays.getValue(3, TArrays_NUMBER_R()).get()));
+            assertEquals("[1981-07-10, 2000-01-01]", Arrays.asList(arrays.getValue(3, TArrays_DATE_R()).get()).toString());
 
 
 
@@ -424,9 +424,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             .where(TArrays_ID().equal(5))
             .fetchOne();
 
-            assertEquals(Arrays.asList("a", "b", "c"), Arrays.asList(array.getValueAsArray(TArrays_STRING_R())));
-            assertEquals(Arrays.asList(1, 2, 3), Arrays.asList(array.getValueAsArray(TArrays_NUMBER_R())));
-            assertEquals("[1970-01-01, 1970-01-02, 1970-01-03]", Arrays.asList(array.getValueAsArray(TArrays_DATE_R())).toString());
+            assertEquals(Arrays.asList("a", "b", "c"), Arrays.asList(array.getValue(TArrays_STRING_R()).get()));
+            assertEquals(Arrays.asList(1, 2, 3), Arrays.asList(array.getValue(TArrays_NUMBER_R()).get()));
+            assertEquals("[1970-01-01, 1970-01-02, 1970-01-03]", Arrays.asList(array.getValue(TArrays_DATE_R()).get()).toString());
 
 
 
@@ -445,9 +445,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             .where(TArrays_ID().equal(5))
             .fetchOne();
 
-            assertEquals(Arrays.asList("c", "b", "a"), Arrays.asList(array.getValueAsArray(TArrays_STRING_R())));
-            assertEquals(Arrays.asList(3, 2, 1), Arrays.asList(array.getValueAsArray(TArrays_NUMBER_R())));
-            assertEquals("[1970-01-03, 1970-01-02, 1970-01-01]", Arrays.asList(array.getValueAsArray(TArrays_DATE_R())).toString());
+            assertEquals(Arrays.asList("c", "b", "a"), Arrays.asList(array.getValue(TArrays_STRING_R()).get()));
+            assertEquals(Arrays.asList(3, 2, 1), Arrays.asList(array.getValue(TArrays_NUMBER_R()).get()));
+            assertEquals("[1970-01-03, 1970-01-02, 1970-01-01]", Arrays.asList(array.getValue(TArrays_DATE_R()).get()).toString());
         }
 
         if (TArrays_STRING() != null) {

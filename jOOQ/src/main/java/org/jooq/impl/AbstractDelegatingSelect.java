@@ -90,6 +90,16 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final ResultQuery<R> keepStatement(boolean keepStatement) {
+        return getDelegate().keepStatement(keepStatement);
+    }
+
+    @Override
+    public final ResultQuery<R> close() {
+        return getDelegate().close();
+    }
+
+    @Override
     public final ResultQuery<R> maxRows(int rows) {
         return getDelegate().maxRows(rows);
     }

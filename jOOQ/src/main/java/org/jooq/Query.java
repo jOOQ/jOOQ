@@ -202,4 +202,30 @@ public interface Query extends QueryPart, Attachable {
      */
     Query queryTimeout(int timeout);
 
+    /**
+     * Keep the query's underlying statement open after execution
+     * <p>
+     * This indicates to jOOQ that the query's underlying {@link Statement} or
+     * {@link PreparedStatement} should be kept open after execution. If it is
+     * kept open, client code is responsible for properly closing it using
+     * {@link #close()}
+     *
+     * @param keepStatement Whether to keep the underlying statement open
+     */
+    Query keepStatement(boolean keepStatement);
+
+    /**
+     * Close the underlying statement
+     * <p>
+     * This closes the query's underlying {@link Statement} or
+     * {@link PreparedStatement} if a previous call to
+     * {@link #keepStatement(boolean)} indicated that jOOQ should keep
+     * statements open after query execution. If there is no underlying open
+     * statement, this call is simply ignored.
+     *
+     * @throws DataAccessException If something went wrong closing the statement
+     * @see Statement#close()
+     */
+    Query close() throws DataAccessException;
+
 }

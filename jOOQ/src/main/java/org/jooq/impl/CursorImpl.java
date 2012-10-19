@@ -85,25 +85,17 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private transient CursorResultSet rs;
     private transient Iterator<R>     iterator;
 
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields) {
-        this(ctx, listener, fields, false);
-    }
-
     @SuppressWarnings("unchecked")
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields, boolean keepStatementOpen) {
-        this(ctx, listener, fields, (Class<? extends R>) RecordImpl.class, keepStatementOpen);
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields, boolean keepStatement) {
+        this(ctx, listener, fields, (Class<? extends R>) RecordImpl.class, keepStatement);
     }
 
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields, Class<? extends R> type) {
-        this(ctx, listener, fields, type, false);
-    }
-
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields, Class<? extends R> type, boolean keepStatementOpen) {
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields, Class<? extends R> type, boolean keepStatement) {
         this.ctx = ctx;
         this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
         this.fields = fields;
         this.type = type;
-        this.rs = new CursorResultSet(keepStatementOpen);
+        this.rs = new CursorResultSet(keepStatement);
     }
 
     @Override
@@ -245,10 +237,10 @@ class CursorImpl<R extends Record> implements Cursor<R> {
      */
     private final class CursorResultSet extends JDBC41ResultSet implements ResultSet {
 
-        private final boolean keepStatementOpen;
+        private final boolean keepStatement;
 
-        CursorResultSet(boolean keepStatementOpen) {
-            this.keepStatementOpen = keepStatementOpen;
+        CursorResultSet(boolean keepStatement) {
+            this.keepStatement = keepStatement;
         }
 
         @Override
@@ -270,7 +262,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         public final void close() throws SQLException {
             ctx.resultSet().close();
 
-            if (!keepStatementOpen) {
+            if (!keepStatement) {
                 ctx.statement().close();
             }
 

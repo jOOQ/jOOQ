@@ -40,9 +40,13 @@ import static org.jooq.tools.unsigned.Unsigned.uint;
 import static org.jooq.tools.unsigned.Unsigned.ulong;
 import static org.jooq.tools.unsigned.Unsigned.ushort;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -242,6 +246,8 @@ public final class Convert {
      * <p>
      * All other values evaluate to <code>null</code></li>
      * <li>All <code>Date</code> types can be converted into each other</li>
+     * <li>All <code>String</code> types can be converted into {@link URI},
+     * {@link URL} and {@link File}</li>
      * <li><code>byte[]</code> can be converted into <code>String</code>, using
      * the platform's default charset</li>
      * <li><code>Object[]</code> can be converted into any other array type, if
@@ -505,6 +511,36 @@ public final class Convert {
                     }
 
                     return (U) Character.valueOf(from.toString().charAt(0));
+                }
+
+                // URI types can be converted from strings
+                else if ((fromClass == String.class) && toClass == URI.class) {
+                    try {
+                        return (U) new URI(from.toString());
+                    }
+                    catch (URISyntaxException e) {
+                        return null;
+                    }
+                }
+
+                // URI types can be converted from strings
+                else if ((fromClass == String.class) && toClass == URL.class) {
+                    try {
+                        return (U) new URI(from.toString()).toURL();
+                    }
+                    catch (Exception e) {
+                        return null;
+                    }
+                }
+
+                // File types can be converted from strings
+                else if ((fromClass == String.class) && toClass == File.class) {
+                    try {
+                        return (U) new File(from.toString());
+                    }
+                    catch (Exception e) {
+                        return null;
+                    }
                 }
 
                 // Date types can be converted among each other

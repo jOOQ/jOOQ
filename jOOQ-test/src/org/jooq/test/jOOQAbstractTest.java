@@ -741,7 +741,6 @@ public abstract class jOOQAbstractTest<
             .withRenderSchema(renderSchema)
             .withRenderMapping(new RenderMapping()
                 .withDefaultSchema(defaultSchema))
-            .withExecuteLogging(false)
             .withExecuteListeners(
                 TestStatisticsListener.class.getName(),
                 PrettyPrinter.class.getName());

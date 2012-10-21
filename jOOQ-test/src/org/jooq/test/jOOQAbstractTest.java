@@ -1759,6 +1759,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testExecuteListenerFetchLazyTest() throws Exception {
+        new ExecuteListenerTests(this).testExecuteListenerFetchLazyTest();
+    }
+
+    @Test
     public void testRenderNameStyle() throws Exception {
         new RenderAndBindTests(this).testRenderNameStyle();
     }

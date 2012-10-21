@@ -52,7 +52,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
 import org.jooq.Field;
 import org.jooq.Result;
@@ -879,6 +881,226 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             checkBase(ctx);
             checkSQL(ctx, true);
             checkStatement(ctx, true);
+        }
+    }
+
+    @Test
+    public void testExecuteListenerFetchLazyTest() throws Exception {
+        Factory create = create(new Settings().withExecuteListeners(FetchLazyListener.class.getName()));
+        FetchLazyListener.reset();
+
+        create.selectFrom(TAuthor()).fetch();
+        assertEquals(1, FetchLazyListener.countStart);
+        assertEquals(1, FetchLazyListener.countRenderStart);
+        assertEquals(1, FetchLazyListener.countRenderEnd);
+        assertEquals(1, FetchLazyListener.countPrepareStart);
+        assertEquals(1, FetchLazyListener.countPrepareEnd);
+        assertEquals(1, FetchLazyListener.countBindStart);
+        assertEquals(1, FetchLazyListener.countBindEnd);
+        assertEquals(1, FetchLazyListener.countExecuteStart);
+        assertEquals(1, FetchLazyListener.countExecuteEnd);
+        assertEquals(1, FetchLazyListener.countFetchStart);
+        assertEquals(1, FetchLazyListener.countResultStart);
+        assertEquals(2, FetchLazyListener.countRecordStart);
+        assertEquals(2, FetchLazyListener.countRecordEnd);
+        assertEquals(1, FetchLazyListener.countResultEnd);
+        assertEquals(1, FetchLazyListener.countFetchEnd);
+        assertEquals(1, FetchLazyListener.countEnd);
+        assertEquals(0, FetchLazyListener.countException);
+
+        // [#1868] fetchLazy should behave almost the same as fetch
+        FetchLazyListener.reset();
+        Cursor<A> cursor = create.selectFrom(TAuthor()).fetchLazy();
+        assertEquals(1, FetchLazyListener.countStart);
+        assertEquals(1, FetchLazyListener.countRenderStart);
+        assertEquals(1, FetchLazyListener.countRenderEnd);
+        assertEquals(1, FetchLazyListener.countPrepareStart);
+        assertEquals(1, FetchLazyListener.countPrepareEnd);
+        assertEquals(1, FetchLazyListener.countBindStart);
+        assertEquals(1, FetchLazyListener.countBindEnd);
+        assertEquals(1, FetchLazyListener.countExecuteStart);
+        assertEquals(1, FetchLazyListener.countExecuteEnd);
+        assertEquals(0, FetchLazyListener.countFetchStart);
+        assertEquals(0, FetchLazyListener.countResultStart);
+        assertEquals(0, FetchLazyListener.countRecordStart);
+        assertEquals(0, FetchLazyListener.countRecordEnd);
+        assertEquals(0, FetchLazyListener.countResultEnd);
+        assertEquals(0, FetchLazyListener.countFetchEnd);
+        assertEquals(0, FetchLazyListener.countEnd);
+        assertEquals(0, FetchLazyListener.countException);
+
+        cursor.fetchOne();
+        assertEquals(1, FetchLazyListener.countStart);
+        assertEquals(1, FetchLazyListener.countRenderStart);
+        assertEquals(1, FetchLazyListener.countRenderEnd);
+        assertEquals(1, FetchLazyListener.countPrepareStart);
+        assertEquals(1, FetchLazyListener.countPrepareEnd);
+        assertEquals(1, FetchLazyListener.countBindStart);
+        assertEquals(1, FetchLazyListener.countBindEnd);
+        assertEquals(1, FetchLazyListener.countExecuteStart);
+        assertEquals(1, FetchLazyListener.countExecuteEnd);
+        assertEquals(1, FetchLazyListener.countFetchStart);
+        assertEquals(1, FetchLazyListener.countResultStart);
+        assertEquals(1, FetchLazyListener.countRecordStart);
+        assertEquals(1, FetchLazyListener.countRecordEnd);
+        assertEquals(1, FetchLazyListener.countResultEnd);
+        assertEquals(0, FetchLazyListener.countFetchEnd);
+        assertEquals(0, FetchLazyListener.countEnd);
+        assertEquals(0, FetchLazyListener.countException);
+
+        cursor.fetchOne();
+        assertEquals(1, FetchLazyListener.countStart);
+        assertEquals(1, FetchLazyListener.countRenderStart);
+        assertEquals(1, FetchLazyListener.countRenderEnd);
+        assertEquals(1, FetchLazyListener.countPrepareStart);
+        assertEquals(1, FetchLazyListener.countPrepareEnd);
+        assertEquals(1, FetchLazyListener.countBindStart);
+        assertEquals(1, FetchLazyListener.countBindEnd);
+        assertEquals(1, FetchLazyListener.countExecuteStart);
+        assertEquals(1, FetchLazyListener.countExecuteEnd);
+        assertEquals(1, FetchLazyListener.countFetchStart);
+        assertEquals(2, FetchLazyListener.countResultStart);
+        assertEquals(2, FetchLazyListener.countRecordStart);
+        assertEquals(2, FetchLazyListener.countRecordEnd);
+        assertEquals(2, FetchLazyListener.countResultEnd);
+        assertEquals(0, FetchLazyListener.countFetchEnd);
+        assertEquals(0, FetchLazyListener.countEnd);
+        assertEquals(0, FetchLazyListener.countException);
+
+        cursor.fetchOne();
+        assertEquals(1, FetchLazyListener.countStart);
+        assertEquals(1, FetchLazyListener.countRenderStart);
+        assertEquals(1, FetchLazyListener.countRenderEnd);
+        assertEquals(1, FetchLazyListener.countPrepareStart);
+        assertEquals(1, FetchLazyListener.countPrepareEnd);
+        assertEquals(1, FetchLazyListener.countBindStart);
+        assertEquals(1, FetchLazyListener.countBindEnd);
+        assertEquals(1, FetchLazyListener.countExecuteStart);
+        assertEquals(1, FetchLazyListener.countExecuteEnd);
+        assertEquals(1, FetchLazyListener.countFetchStart);
+        assertEquals(2, FetchLazyListener.countResultStart);
+        assertEquals(2, FetchLazyListener.countRecordStart);
+        assertEquals(2, FetchLazyListener.countRecordEnd);
+        assertEquals(2, FetchLazyListener.countResultEnd);
+        assertEquals(0, FetchLazyListener.countFetchEnd);
+        assertEquals(0, FetchLazyListener.countEnd);
+        assertEquals(0, FetchLazyListener.countException);
+    }
+
+    public static class FetchLazyListener implements ExecuteListener {
+
+        static int countStart;
+        static int countRenderStart;
+        static int countRenderEnd;
+        static int countPrepareStart;
+        static int countPrepareEnd;
+        static int countBindStart;
+        static int countBindEnd;
+        static int countExecuteStart;
+        static int countExecuteEnd;
+        static int countFetchStart;
+        static int countResultStart;
+        static int countRecordStart;
+        static int countRecordEnd;
+        static int countResultEnd;
+        static int countFetchEnd;
+        static int countEnd;
+        static int countException;
+
+        static void reset() {
+            for (java.lang.reflect.Field f : FetchLazyListener.class.getDeclaredFields()) {
+                f.setAccessible(true);
+
+                try {
+                    f.set(FetchLazyListener.class, 0);
+                }
+                catch (Exception ignore) {}
+            }
+        }
+
+        @Override
+        public void start(ExecuteContext ctx) {
+            countStart++;
+        }
+
+        @Override
+        public void renderStart(ExecuteContext ctx) {
+            countRenderStart++;
+        }
+
+        @Override
+        public void renderEnd(ExecuteContext ctx) {
+            countRenderEnd++;
+        }
+
+        @Override
+        public void prepareStart(ExecuteContext ctx) {
+            countPrepareStart++;
+        }
+
+        @Override
+        public void prepareEnd(ExecuteContext ctx) {
+            countPrepareEnd++;
+        }
+
+        @Override
+        public void bindStart(ExecuteContext ctx) {
+            countBindStart++;
+        }
+
+        @Override
+        public void bindEnd(ExecuteContext ctx) {
+            countBindEnd++;
+        }
+
+        @Override
+        public void executeStart(ExecuteContext ctx) {
+            countExecuteStart++;
+        }
+
+        @Override
+        public void executeEnd(ExecuteContext ctx) {
+            countExecuteEnd++;
+        }
+
+        @Override
+        public void fetchStart(ExecuteContext ctx) {
+            countFetchStart++;
+        }
+
+        @Override
+        public void resultStart(ExecuteContext ctx) {
+            countResultStart++;
+        }
+
+        @Override
+        public void recordStart(ExecuteContext ctx) {
+            countRecordStart++;
+        }
+
+        @Override
+        public void recordEnd(ExecuteContext ctx) {
+            countRecordEnd++;
+        }
+
+        @Override
+        public void resultEnd(ExecuteContext ctx) {
+            countResultEnd++;
+        }
+
+        @Override
+        public void fetchEnd(ExecuteContext ctx) {
+            countFetchEnd++;
+        }
+
+        @Override
+        public void exception(ExecuteContext ctx) {
+            countException++;
+        }
+
+        @Override
+        public void end(ExecuteContext ctx) {
+            countEnd++;
         }
     }
 }

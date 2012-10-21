@@ -978,12 +978,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(1, FetchLazyListener.countExecuteStart);
         assertEquals(1, FetchLazyListener.countExecuteEnd);
         assertEquals(1, FetchLazyListener.countFetchStart);
-        assertEquals(2, FetchLazyListener.countResultStart);
+        assertEquals(3, FetchLazyListener.countResultStart);
         assertEquals(2, FetchLazyListener.countRecordStart);
         assertEquals(2, FetchLazyListener.countRecordEnd);
-        assertEquals(2, FetchLazyListener.countResultEnd);
-        assertEquals(0, FetchLazyListener.countFetchEnd);
-        assertEquals(0, FetchLazyListener.countEnd);
+        assertEquals(3, FetchLazyListener.countResultEnd);
+        assertEquals(1, FetchLazyListener.countFetchEnd);
+        assertEquals(1, FetchLazyListener.countEnd);
         assertEquals(0, FetchLazyListener.countException);
     }
 

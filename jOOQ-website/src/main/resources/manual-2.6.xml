@@ -4964,6 +4964,48 @@ public final void toSQL(RenderContext context) {
 								</content>
 							</section>
 
+							<section id="pretty-printing">
+								<title>Pretty printing SQL</title>
+								<content>
+									<p>
+										As mentioned in the previous chapter about <reference id="sql-rendering" title="SQL rendering"/>, there are some elements in the <reference class="org.jooq.RenderContext"/> that are used for formatting / pretty-printing rendered SQL. In order to obtain pretty-printed SQL, just use the following <reference id="custom-settings" title="custom settings"/>: 
+									</p>
+	
+	
+<java><![CDATA[// Create a factory that will render "formatted" SQL
+Factory pretty = new Factory(dialect, new Settings().withRenderFormatted(true));]]></java>
+
+									<p>
+										And then, use the above factory to render pretty-printed SQL:
+									</p>
+									
+<code-pair>
+<java><![CDATA[String sql = pretty.select(
+                       AUTHOR.LAST_NAME, count().as("c"))
+                   .from(BOOK)
+                   .join(AUTHOR)
+                   .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+                   .where(BOOK.TITLE.notEqual("1984"))
+                   .groupBy(AUTHOR.LAST_NAME)
+                   .having(count().equal(2))
+                   .getSQL();]]></java>
+<sql><![CDATA[select 
+  "TEST"."AUTHOR"."LAST_NAME", 
+  count(*) "c"
+from "TEST"."BOOK"
+  join "TEST"."AUTHOR"
+  on "TEST"."BOOK"."AUTHOR_ID" = "TEST"."AUTHOR"."ID"
+where "TEST"."BOOK"."TITLE" <> '1984'
+group by "TEST"."AUTHOR"."LAST_NAME"
+having count(*) = 2]]></sql>
+</code-pair>
+
+									<p>
+										The section about <reference id="execute-listeners" title="ExecuteListeners"/> shows an example of how such pretty printing can be used to log readable SQL to the stdout.
+									</p>
+								</content>
+							</section>
+
 						    <section id="variable-binding">
 							    <title>Variable binding</title>
 								<content>

@@ -142,7 +142,13 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
     @SuppressWarnings("unchecked")
     final <T> Value<T> getValue0(int index) {
-        return (Value<T>) getValues()[index];
+        Value<?>[] v = getValues();
+
+        if (index >= v.length) {
+            throw new IllegalArgumentException("Field " + index + " is not contained in list");
+        }
+
+        return (Value<T>) v[index];
     }
 
     @SuppressWarnings("unchecked")
@@ -380,7 +386,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
     @Override
     public final Object getValue(int index) {
-        return getValue(getField(index));
+        return getValue0(index).getValue();
     }
 
     @Override

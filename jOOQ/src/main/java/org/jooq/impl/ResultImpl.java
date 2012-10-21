@@ -54,7 +54,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -615,15 +614,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return get(index).getValueAsTime(fieldName, defaultValue);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <T> List<T> getValues(Field<T> field) {
-        List<T> result = new ArrayList<T>(size());
-
-        for (R record : this) {
-            result.add(record.getValue(field));
-        }
-
-        return result;
+        return (List<T>) getValues(fields.getIndex(field));
     }
 
     @Override
@@ -638,7 +632,13 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final List<?> getValues(int fieldIndex) {
-        return getValues(getField(fieldIndex));
+        List<Object> result = new ArrayList<Object>(size());
+
+        for (R record : this) {
+            result.add(record.getValue(fieldIndex));
+        }
+
+        return result;
     }
 
     @Override
@@ -939,8 +939,13 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         final int MAX_RECORDS = min(50, maxRecords);
 
         // Get max decimal places for numeric type columns
-        Map<Field<?>, Integer> decimalPlacesMap = new HashMap<Field<?>, Integer>();
-        for (Field<?> f : getFields()) {
+        final int size = getFields().size();
+        final int[] decimalPlaces = new int[size];
+        final int[] widths = new int[size];
+
+        for (int index = 0; index < size; index++) {
+            Field<?> f = getField(index);
+
             if (Number.class.isAssignableFrom(f.getType())) {
                 List<Integer> decimalPlacesList = new ArrayList<Integer>();
 
@@ -950,19 +955,20 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 // Collect all decimal places for the column values
                 String value;
                 for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
-                    value = format0(getValue(i, f));
+                    value = format0(getValue(i, index));
                     decimalPlacesList.add(getDecimalPlaces(value));
                 }
 
                 // Find max
-                decimalPlacesMap.put(f, Collections.max(decimalPlacesList));
+                decimalPlaces[index] = Collections.max(decimalPlacesList);
             }
         }
 
         // Get max column widths
-        Map<Field<?>, Integer> widthMap = new HashMap<Field<?>, Integer>();
         int colMaxWidth;
-        for (Field<?> f : getFields()) {
+        for (int index = 0; index < size; index++) {
+            Field<?> f = getField(index);
+
             // Is number column?
             boolean isNumCol = Number.class.isAssignableFrom(f.getType());
 
@@ -977,17 +983,17 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             // Add column values width
             String value;
             for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
-                value = format0(getValue(i, f));
+                value = format0(getValue(i, index));
                 // Align number values before width is calculated
                 if (isNumCol) {
-                    value = alignNumberValue(decimalPlacesMap.get(f), value);
+                    value = alignNumberValue(decimalPlaces[index], value);
                 }
 
                 widthList.add(min(colMaxWidth, value.length()));
             }
 
             // Find max
-            widthMap.put(f, Collections.max(widthList));
+            widths[index] = Collections.max(widthList);
         }
 
         // Begin the writing
@@ -996,54 +1002,57 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
         // Write top line
         sb.append("+");
-        for (Field<?> f : getFields()) {
-            sb.append(rightPad("", widthMap.get(f), "-"));
+        for (int index = 0; index < size; index++) {
+            sb.append(rightPad("", widths[index], "-"));
             sb.append("+");
         }
 
         // Write headers
         sb.append("\n|");
-        for (Field<?> f : getFields()) {
+        for (int index = 0; index < size; index++) {
+            Field<?> f = getField(index);
             String padded;
 
             if (Number.class.isAssignableFrom(f.getType())) {
-                padded = leftPad(f.getName(), widthMap.get(f));
+                padded = leftPad(f.getName(), widths[index]);
             }
             else {
-                padded = rightPad(f.getName(), widthMap.get(f));
+                padded = rightPad(f.getName(), widths[index]);
             }
 
-            sb.append(abbreviate(padded, widthMap.get(f)));
+            sb.append(abbreviate(padded, widths[index]));
             sb.append("|");
         }
 
         // Write separator
         sb.append("\n+");
-        for (Field<?> f : getFields()) {
-            sb.append(rightPad("", widthMap.get(f), "-"));
+        for (int index = 0; index < size; index++) {
+            sb.append(rightPad("", widths[index], "-"));
             sb.append("+");
         }
 
         // Write columns
         for (int i = 0; i < min(maxRecords, size()); i++) {
             sb.append("\n|");
-            for (Field<?> f : getFields()) {
-                String value = format0(getValue(i, f)).replace("\n", "{lf}").replace("\r", "{cr}");
+
+            for (int index = 0; index < size; index++) {
+                Field<?> f = getField(index);
+                String value = format0(getValue(i, index)).replace("\n", "{lf}").replace("\r", "{cr}");
 
                 String padded;
                 if (Number.class.isAssignableFrom(f.getType())) {
                     // Align number value before left pad
-                    value = alignNumberValue(decimalPlacesMap.get(f), value);
+                    value = alignNumberValue(decimalPlaces[index], value);
 
                     // Left pad
-                    padded = leftPad(value, widthMap.get(f));
+                    padded = leftPad(value, widths[index]);
                 }
                 else {
                     // Right pad
-                    padded = rightPad(value, widthMap.get(f));
+                    padded = rightPad(value, widths[index]);
                 }
 
-                sb.append(abbreviate(padded, widthMap.get(f)));
+                sb.append(abbreviate(padded, widths[index]));
                 sb.append("|");
             }
         }
@@ -1051,8 +1060,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         // Write bottom line
         if (size() > 0) {
             sb.append("\n+");
-            for (Field<?> f : getFields()) {
-                sb.append(rightPad("", widthMap.get(f), "-"));
+
+            for (int index = 0; index < size; index++) {
+                sb.append(rightPad("", widths[index], "-"));
                 sb.append("+");
             }
         }
@@ -1097,6 +1107,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final String formatHTML() {
+        final int size = getFields().size();
+
         StringBuilder sb = new StringBuilder();
 
         sb.append("<table>");
@@ -1116,9 +1128,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (Record record : this) {
             sb.append("<tr>");
 
-            for (Field<?> field : getFields()) {
+            for (int index = 0; index < size; index++) {
                 sb.append("<td>");
-                sb.append(format0(record.getValue(field)));
+                sb.append(format0(record.getValue(index)));
                 sb.append("</td>");
             }
 
@@ -1143,6 +1155,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final String formatCSV(char delimiter, String nullString) {
+        final int size = getFields().size();
+
         StringBuilder sb = new StringBuilder();
 
         String sep1 = "";
@@ -1157,9 +1171,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
         for (Record record : this) {
             String sep2 = "";
-            for (Field<?> field : getFields()) {
+
+            for (int index = 0; index < size; index++) {
                 sb.append(sep2);
-                sb.append(formatCSV0(record.getValue(field), nullString));
+                sb.append(formatCSV0(record.getValue(index), nullString));
 
                 sep2 = Character.toString(delimiter);
             }
@@ -1216,6 +1231,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final String formatJSON() {
+        final int size = getFields().size();
+
         List<Map<String, String>> f = new ArrayList<Map<String, String>>();
         List<List<Object>> r = new ArrayList<List<Object>>();
 
@@ -1231,8 +1248,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (Record record : this) {
             List<Object> list = new ArrayList<Object>();
 
-            for (Field<?> field : getFields()) {
-                list.add(record.getValue(field));
+            for (int index = 0; index < size; index++) {
+                list.add(record.getValue(index));
             }
 
             r.add(list);
@@ -1248,6 +1265,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final String formatXML() {
+        final int size = getFields().size();
+
         StringBuilder sb = new StringBuilder();
 
         sb.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-2.6.0.xsd\">");
@@ -1268,8 +1287,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (Record record : this) {
             sb.append("<record>");
 
-            for (Field<?> field : getFields()) {
-                Object value = record.getValue(field);
+            for (int index = 0; index < size; index++) {
+                Field<?> field = getField(index);
+                Object value = record.getValue(index);
 
                 sb.append("<value field=\"");
                 sb.append(escapeXML(field.getName()));
@@ -1301,6 +1321,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Document intoXML() {
+        final int size = getFields().size();
+
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -1327,8 +1349,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 Element eRecord = document.createElement("record");
                 eRecords.appendChild(eRecord);
 
-                for (Field<?> field : getFields()) {
-                    Object value = record.getValue(field);
+                for (int index = 0; index < size; index++) {
+                    Field<?> field = getField(index);
+                    Object value = record.getValue(index);
 
                     Element eValue = document.createElement("value");
                     eValue.setAttribute("field", field.getName());
@@ -1365,12 +1388,14 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <K> Map<K, R> intoMap(Field<K> key) {
+        int index = getIndex(key);
         Map<K, R> map = new LinkedHashMap<K, R>();
 
         for (R record : this) {
-            if (map.put(record.getValue(key), record) != null) {
+            if (map.put((K) record.getValue(index), record) != null) {
                 throw new InvalidResultException("Key " + key + " is not unique in Result for " + this);
             }
         }
@@ -1378,12 +1403,16 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <K, V> Map<K, V> intoMap(Field<K> key, Field<V> value) {
+        int kIndex = getIndex(key);
+        int vIndex = getIndex(value);
+
         Map<K, V> map = new LinkedHashMap<K, V>();
 
         for (R record : this) {
-            if (map.put(record.getValue(key), record.getValue(value)) != null) {
+            if (map.put((K) record.getValue(kIndex), (V) record.getValue(vIndex)) != null) {
                 throw new InvalidResultException("Key " + key + " is not unique in Result for " + this);
             }
         }
@@ -1437,12 +1466,14 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
+        int index = getIndex(key);
         Map<K, E> map = new LinkedHashMap<K, E>();
 
         for (R record : this) {
-            if (map.put(record.getValue(key), record.into(type)) != null) {
+            if (map.put((K) record.getValue(index), record.into(type)) != null) {
                 throw new InvalidResultException("Key " + key + " is not unique in Result for " + this);
             }
         }
@@ -1450,12 +1481,14 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <K> Map<K, Result<R>> intoGroups(Field<K> key) {
+        int index = getIndex(key);
         Map<K, Result<R>> map = new LinkedHashMap<K, Result<R>>();
 
         for (R record : this) {
-            K val = record.getValue(key);
+            K val = (K) record.getValue(index);
             Result<R> result = map.get(val);
 
             if (result == null) {
@@ -1469,13 +1502,17 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value) {
+        int kIndex = getIndex(key);
+        int vIndex = getIndex(value);
+
         Map<K, List<V>> map = new LinkedHashMap<K, List<V>>();
 
         for (R record : this) {
-            K k = record.getValue(key);
-            V v = record.getValue(value);
+            K k = (K) record.getValue(kIndex);
+            V v = (V) record.getValue(vIndex);
             List<V> result = map.get(k);
 
             if (result == null) {
@@ -1517,12 +1554,14 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
+        int index = getIndex(key);
         Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
 
         for (R record : this) {
-            K keyVal = record.getValue(key);
+            K keyVal = (K) record.getValue(index);
 
             List<E> list = map.get(keyVal);
             if (list == null) {

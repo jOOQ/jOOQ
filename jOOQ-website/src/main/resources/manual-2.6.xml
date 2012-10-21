@@ -7129,6 +7129,49 @@ for (ExecuteType type : ExecuteType.values()) {
 							<p>
 								Please read the <reference class="org.jooq.ExecuteListener" title="ExecuteListener Javadoc"/> for more details
 							</p>
+							
+							<h3>Writing a custom ExecuteListener for logging</h3>
+							<p>
+								The following depicts an example of a custom ExecuteListener, which pretty-prints all queries being executed by jOOQ to stdout:
+							</p>
+
+<java><![CDATA[import org.jooq.ExecuteContext;
+import org.jooq.conf.Settings;
+import org.jooq.impl.DefaultExecuteListener;
+import org.jooq.impl.Factory;
+import org.jooq.tools.StringUtils;
+
+public class PrettyPrinter extends DefaultExecuteListener {
+
+    /**
+     * Hook into the query execution lifecycle before executing queries
+     */
+    @Override
+    public void executeStart(ExecuteContext ctx) {
+
+        // Create a new factory for logging rendering purposes
+        // This factory doesn't need a connection, only the SQLDialect...
+        Factory factory = new Factory(ctx.getDialect(), 
+        
+        // ... and the flag for pretty-printing
+        	new Settings().withRenderFormatted(true));
+
+        // If we're executing a query
+        if (ctx.query() != null) {
+            System.out.println(factory.renderInlined(ctx.query()));
+        }
+        
+        // If we're executing a routine
+        else if (ctx.routine() != null) {
+            System.out.println(factory.renderInlined(ctx.routine()));
+        }
+        
+        // If we're executing anything else (e.g. plain SQL)
+        else if (!StringUtils.isBlank(ctx.sql())) {
+            System.out.println(ctx.sql());
+        }
+    }
+}]]></java>
 							<p>
 								See also the manual's sections about <reference id="logging" title="logging"/> and the <reference id="jooq-console" title="jOOQ Console"/> for more sample implementations of actual ExecuteListeners.
 							</p>

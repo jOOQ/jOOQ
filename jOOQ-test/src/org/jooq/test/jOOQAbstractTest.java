@@ -81,6 +81,7 @@ import org.jooq.debug.Debugger;
 import org.jooq.debug.console.Console;
 import org.jooq.debug.impl.DebuggerFactory;
 import org.jooq.impl.Factory;
+import org.jooq.test._.PrettyPrinter;
 import org.jooq.test._.TestStatisticsListener;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
@@ -741,7 +742,8 @@ public abstract class jOOQAbstractTest<
             .withRenderMapping(new RenderMapping()
                 .withDefaultSchema(defaultSchema))
             .withExecuteListeners(
-                TestStatisticsListener.class.getName());
+                TestStatisticsListener.class.getName(),
+                PrettyPrinter.class.getName());
 
         return create(settings);
     }

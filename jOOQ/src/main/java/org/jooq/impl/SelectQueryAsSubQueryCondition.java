@@ -67,9 +67,11 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
                    .sql(" ")
                    .keyword(operator.toSQL())
                    .sql(" (")
-                   .formatIndentLockStart()
+                   .formatIndentStart()
+                   .formatNewLine()
                    .sql(query)
-                   .formatIndentLockEnd()
+                   .formatIndentEnd()
+                   .formatNewLine()
                    .sql(")");
         }
         else {
@@ -78,9 +80,11 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
                    .keyword(operator.toSQL())
                    .sql(" (")
                    .subquery(true)
-                   .formatIndentLockStart()
+                   .formatIndentStart()
+                   .formatNewLine()
                    .sql(query)
-                   .formatIndentLockEnd()
+                   .formatIndentEnd()
+                   .formatNewLine()
                    .subquery(false)
                    .sql(")");
         }

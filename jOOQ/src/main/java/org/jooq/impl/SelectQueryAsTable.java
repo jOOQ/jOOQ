@@ -91,11 +91,19 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
 
         // If this is already a subquery, proceed
         if (context.subquery()) {
-            context.sql(query);
+            context.formatIndentStart()
+                   .formatNewLine()
+                   .sql(query)
+                   .formatIndentEnd()
+                   .formatNewLine();
         }
         else {
             context.subquery(true)
+                   .formatIndentStart()
+                   .formatNewLine()
                    .sql(query)
+                   .formatIndentEnd()
+                   .formatNewLine()
                    .subquery(false);
         }
     }

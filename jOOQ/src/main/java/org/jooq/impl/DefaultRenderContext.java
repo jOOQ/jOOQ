@@ -68,6 +68,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private SQLDialect[]             castDialects;
     private int                      indent;
     private Stack<Integer>           indentLock       = new Stack<Integer>();
+    private int                      printMargin      = 80;
 
     // [#1632] Cached values from Settings
     private final RenderKeywordStyle cachedRenderKeywordStyle;
@@ -164,6 +165,17 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
+    @Override
+    public final RenderContext formatNewLineAfterPrintMargin() {
+        if (cachedRenderFormatted && printMargin > 0) {
+            if (sql.length() - sql.lastIndexOf("\n") > printMargin) {
+                formatNewLine();
+            }
+        }
+
+        return this;
+    }
+
     private final String indentation() {
         return StringUtils.leftPad("", indent, " ");
     }
@@ -229,6 +241,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
+    public final RenderContext formatPrintMargin(int margin) {
+        printMargin = margin;
+        return this;
+    }
+
+    @Override
     public final RenderContext literal(String literal) {
         // Literal usually originates from NamedQueryPart.getName(). This could
         // be null for CustomTable et al.
@@ -289,7 +307,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         if (part != null) {
             QueryPartInternal internal = (QueryPartInternal) part;
 
-            // If this is supposed to be a declaration section and the part isn't
+            // If this is supposed to be a declaration section and the part
+            // isn't
             // able to declare anything, then disable declaration temporarily
 
             // We're declaring fields, but "part" does not declare fields

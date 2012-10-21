@@ -574,9 +574,10 @@ implements
                .sql(table)
                .formatSeparator()
                .keyword("using ")
-               .formatIndentLockStart()
+               .formatIndentStart()
+               .formatNewLine()
                .sql(Util.wrapInParentheses(context.render(using)))
-               .formatIndentLockEnd()
+               .formatIndentEnd()
                .declareTables(false);
 
         switch (context.getDialect()) {
@@ -612,9 +613,7 @@ implements
 
         context.formatSeparator()
                .keyword("on ")
-               .formatIndentLockStart()
-               .sql(Util.wrapInParentheses(context.render(on)))
-               .formatIndentLockEnd();
+               .sql(Util.wrapInParentheses(context.render(on)));
 
         // [#999] WHEN MATCHED clause is optional
         if (matchedUpdate != null) {

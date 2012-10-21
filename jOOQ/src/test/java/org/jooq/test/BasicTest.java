@@ -2501,6 +2501,46 @@ public class BasicTest {
     }
 
     @Test
+    public void testPlaceholders1() throws Exception {
+
+        // [#1593] Check if reordering is possible
+        Field<Object> f1 = field("{1} + {0}", val(1), val(2));
+
+        assertEquals("? + ?", r_ref().render(f1));
+        assertEquals("2 + 1", r_refI().render(f1));
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 2);
+            oneOf(statement).setInt(2, 1);
+        }});
+
+        int i = b_ref().bind(f1).peekIndex();
+        assertEquals(3, i);
+
+        context.assertIsSatisfied();
+    }
+
+    @Test
+    public void testPlaceholders2() throws Exception {
+
+        // [#1593] Check if repetition is possible
+        Field<Object> f1 = field("{0} + {0}", val(1));
+
+        assertEquals("? + ?", r_ref().render(f1));
+        assertEquals("1 + 1", r_refI().render(f1));
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 1);
+            oneOf(statement).setInt(2, 1);
+        }});
+
+        int i = b_ref().bind(f1).peekIndex();
+        assertEquals(3, i);
+
+        context.assertIsSatisfied();
+    }
+
+    @Test
     public void testRenderNameStyle() {
         Query q = create.select(val(1)).from(TABLE1).where(FIELD_ID1.equal(2));
 

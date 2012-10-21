@@ -64,6 +64,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import org.jooq.ArrayRecord;
+import org.jooq.BindContext;
 import org.jooq.ConditionProvider;
 import org.jooq.Configuration;
 import org.jooq.Cursor;
@@ -381,11 +382,24 @@ final class Util {
     }
 
     /**
-     * Create SQL
+     * Render and bind a list of {@link QueryPart} to plain SQL
+     * <p>
+     * This will perform two actions:
+     * <ul>
+     * <li>When {@link RenderContext} is provided, it will render plain SQL to
+     * the context, substituting {numbered placeholders} and bind values if
+     * {@link RenderContext#inline()} is set</li>
+     * <li>When {@link BindContext} is provided, it will bind the list of
+     * {@link QueryPart} according to the {numbered placeholders} and bind
+     * values in the sql string</li>
+     * </ul>
      */
-    static final void toSQLReference(RenderContext context, String sql, List<QueryPart> substitutes) {
-        int bindIndex = 0;
+    static final void renderAndBind(RenderContext render, BindContext bind, String sql, List<QueryPart> substitutes) {
+        int substituteIndex = 0;
         char[] sqlChars = sql.toCharArray();
+
+        // [#1593] Create a dummy renderer if we're in bind mode
+        if (render == null) render = new DefaultRenderContext(bind);
 
         for (int i = 0; i < sqlChars.length; i++) {
 
@@ -396,10 +410,10 @@ final class Util {
             if (peek(sqlChars, i, "--")) {
 
                 // Consume the complete comment
-                for (; sqlChars[i] != '\r' && sqlChars[i] != '\n'; context.sql(sqlChars[i++]));
+                for (; sqlChars[i] != '\r' && sqlChars[i] != '\n'; render.sql(sqlChars[i++]));
 
                 // Consume the newline character
-                context.sql(sqlChars[i]);
+                render.sql(sqlChars[i]);
             }
 
             // [#1797] Skip content inside of multi-line comments, e.g.
@@ -409,11 +423,11 @@ final class Util {
             else if (peek(sqlChars, i, "/*")) {
 
                 // Consume the complete comment
-                for (; !peek(sqlChars, i, "*/"); context.sql(sqlChars[i++]));
+                for (; !peek(sqlChars, i, "*/"); render.sql(sqlChars[i++]));
 
                 // Consume the comment delimiter
-                context.sql(sqlChars[i++]);
-                context.sql(sqlChars[i]);
+                render.sql(sqlChars[i++]);
+                render.sql(sqlChars[i]);
             }
 
             // [#1031] [#1032] Skip ? inside of string literals, e.g.
@@ -421,14 +435,14 @@ final class Util {
             else if (sqlChars[i] == '\'') {
 
                 // Consume the initial string literal delimiter
-                context.sql(sqlChars[i++]);
+                render.sql(sqlChars[i++]);
 
                 // Consume the whole string literal
                 for (;;) {
 
                     // Consume an escaped apostrophe
                     if (peek(sqlChars, i, "''")) {
-                        context.sql(sqlChars[i++]);
+                        render.sql(sqlChars[i++]);
                     }
 
                     // Break on the terminal string literal delimiter
@@ -437,26 +451,35 @@ final class Util {
                     }
 
                     // Consume string literal content
-                    context.sql(sqlChars[i++]);
+                    render.sql(sqlChars[i++]);
                 }
 
                 // Consume the terminal string literal delimiter
-                context.sql(sqlChars[i]);
+                render.sql(sqlChars[i]);
             }
 
-            // TODO: This case should be mutually exclusive with the next one
             // Inline bind variables only outside of string literals
-            else if (sqlChars[i] == '?' && context.inline() && bindIndex < substitutes.size()) {
-                context.sql(substitutes.get(bindIndex++));
+            else if (sqlChars[i] == '?' && substituteIndex < substitutes.size()) {
+                QueryPart substitute = substitutes.get(substituteIndex++);
+
+                if (render.inline()) {
+                    render.sql(substitute);
+                }
+                else {
+                    render.sql(sqlChars[i]);
+                }
+
+                if (bind != null) {
+                    bind.bind(substitute);
+                }
             }
 
-            // TODO: This case should be mutually exclusive with the previous one
             // [#1432] Inline substitues for {numbered placeholders} outside of string literals
-            else if (sqlChars[i] == '{' && bindIndex < substitutes.size()) {
+            else if (sqlChars[i] == '{') {
 
                 // [#1461] Be careful not to match any JDBC escape syntax
                 if (JDBC_ESCAPE_PATTERN.matcher(sql.substring(i)).matches()) {
-                    context.sql(sqlChars[i]);
+                    render.sql(sqlChars[i]);
                 }
 
                 // Consume the whole token
@@ -469,20 +492,24 @@ final class Util {
 
                     // Try getting the {numbered placeholder}
                     try {
-                        int substituteIndex = Integer.valueOf(token);
-                        context.sql(substitutes.get(substituteIndex));
+                        QueryPart substitute = substitutes.get(Integer.valueOf(token));
+                        render.sql(substitute);
+
+                        if (bind != null) {
+                            bind.bind(substitute);
+                        }
                     }
 
                     // If the above failed, then we're dealing with a {keyword}
                     catch (NumberFormatException e) {
-                        context.keyword(token);
+                        render.keyword(token);
                     }
                 }
             }
 
             // Any other character
             else {
-                context.sql(sqlChars[i]);
+                render.sql(sqlChars[i]);
             }
         }
     }
@@ -535,17 +562,6 @@ final class Util {
 
             return result;
         }
-    }
-
-    /**
-     * Create SQL wrapped in parentheses
-     *
-     * @see #toSQLReference(RenderContext, String, List)
-     */
-    static final void toSQLReferenceWithParentheses(RenderContext context, String sql, List<QueryPart> substitutes) {
-        context.sql("(");
-        toSQLReference(context, sql, substitutes);
-        context.sql(")");
     }
 
     /**

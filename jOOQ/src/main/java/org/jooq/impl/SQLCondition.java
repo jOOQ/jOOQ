@@ -65,11 +65,13 @@ class SQLCondition extends AbstractCondition {
         // We have no control over the plain SQL content, hence we MUST put it
         // in parentheses to ensure correct semantics
 
-        Util.toSQLReferenceWithParentheses(context, sql, substitutes);
+        context.sql("(");
+        Util.renderAndBind(context, null, sql, substitutes);
+        context.sql(")");
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(substitutes);
+        Util.renderAndBind(null, context, sql, substitutes);
     }
 }

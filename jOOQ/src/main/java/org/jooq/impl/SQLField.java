@@ -65,12 +65,12 @@ class SQLField<T> extends AbstractField<T> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        Util.toSQLReference(context, sql, substitutes);
+        Util.renderAndBind(context, null, sql, substitutes);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(substitutes);
+        Util.renderAndBind(null, context, sql, substitutes);
     }
 
     @Override

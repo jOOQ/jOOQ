@@ -73,17 +73,15 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
 
     private final Configuration     configuration;
     private final FieldList         fields;
-    private ResultSetMetaData       meta;
 
     MetaDataFieldProvider(Configuration configuration, ResultSetMetaData meta) {
         this.configuration = configuration;
-        this.meta = meta;
         this.fields = new FieldList();
 
-        init();
+        init(meta);
     }
 
-    private final void init() {
+    private final void init(ResultSetMetaData meta) {
         int columnCount = 0;
 
         try {

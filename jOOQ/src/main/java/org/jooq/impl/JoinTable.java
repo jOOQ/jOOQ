@@ -126,21 +126,32 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     @Override
     public final void toSQL(RenderContext context) {
         context.sql(lhs)
+               .formatIndentStart()
                .formatSeparator()
                .keyword(translateType(context).toSQL())
-               .sql(" ")
+               .sql(" ");
 
-               // [#671] Some databases formally require nested JOINS to be
-               // wrapped in parentheses (e.g. MySQL)
-               .sql(rhs instanceof JoinTable ? "(" : "")
-               .sql(rhs)
-               .sql(rhs instanceof JoinTable ? ")" : "");
+        // [#671] Some databases formally require nested JOINS to be
+        // wrapped in parentheses (e.g. MySQL)
+        if (rhs instanceof JoinTable) {
+            context.sql("(")
+                   .formatIndentStart()
+                   .formatNewLine();
+        }
+
+        context.sql(rhs);
+
+        if (rhs instanceof JoinTable) {
+            context.formatIndentEnd()
+                   .formatNewLine()
+                   .sql(")");
+        }
 
         // [#1645] The Oracle PARTITION BY clause can be put to the right of an
         // OUTER JOINed table
         if (!rhsPartitionBy.isEmpty()) {
             context.formatSeparator()
-                   .keyword(" partition by (")
+                   .keyword("partition by (")
                    .sql(rhsPartitionBy)
                    .sql(")");
         }
@@ -152,6 +163,8 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                     NATURAL_RIGHT_OUTER_JOIN).contains(translateType(context))) {
             toSQLJoinCondition(context);
         }
+
+        context.formatIndentEnd();
     }
 
     /**
@@ -197,20 +210,22 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
             // [#582] Some dialects don't explicitly support a JOIN .. USING
             // syntax. This can be simulated with JOIN .. ON
             if (asList(ASE, CUBRID, DB2, H2, SQLSERVER, SYBASE).contains(context.getDialect())) {
-                String glue = " on ";
+                String glue = "on ";
                 for (Field<?> field : using) {
-                    context.keyword(glue)
+                    context.formatSeparator()
+                           .keyword(glue)
                            .sql(lhs.getField(field))
                            .sql(" = ")
                            .sql(rhs.getField(field));
 
-                    glue = " and ";
+                    glue = "and ";
                 }
             }
 
             // Native supporters of JOIN .. USING
             else {
-                context.keyword(" using (");
+                context.formatSeparator()
+                       .keyword("using (");
                 Util.fieldNames(context, using);
                 context.sql(")");
             }
@@ -222,24 +237,27 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                  simulateNaturalLeftOuterJoin(context) ||
                  simulateNaturalRightOuterJoin(context)) {
 
-            String glue = " on ";
+            String glue = "on ";
             for (Field<?> field : lhs.getFields()) {
                 Field<?> other = rhs.getField(field);
 
                 if (other != null) {
-                    context.keyword(glue)
+                    context.formatSeparator()
+                           .keyword(glue)
                            .sql(field)
                            .sql(" = ")
                            .sql(other);
 
-                    glue = " and ";
+                    glue = "and ";
                 }
             }
         }
 
         // Regular JOIN condition
         else {
-            context.keyword(" on ").sql(condition);
+            context.formatSeparator()
+                   .keyword("on ")
+                   .sql(condition);
         }
     }
 

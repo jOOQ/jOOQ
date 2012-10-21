@@ -79,27 +79,30 @@ class InCondition<T> extends AbstractCondition {
                 case ORACLE:
                 case SQLSERVER: {
                     context.sql("(")
-                           .formatIndentLockStart();
+                           .formatIndentStart()
+                           .formatNewLine();
 
                     for (int i = 0; i < list.size(); i += IN_LIMIT) {
                         if (i > 0) {
+
                             // [#1515] The connector depends on the IN / NOT IN
                             // operator
                             if (operator == InOperator.IN) {
-                                context.keyword(" or");
+                                context.formatSeparator()
+                                       .keyword("or ");
                             }
                             else {
-                                context.keyword(" and");
+                                context.formatSeparator()
+                                       .keyword("and ");
                             }
-
-                            context.formatSeparator();
                         }
 
                         toSQLSubValues(context, list.subList(i, Math.min(i + IN_LIMIT, list.size())));
                     }
 
-                    context.sql(")")
-                           .formatIndentLockEnd();
+                    context.formatIndentEnd()
+                           .formatNewLine()
+                           .sql(")");
                     break;
                 }
 
@@ -124,12 +127,23 @@ class InCondition<T> extends AbstractCondition {
                .keyword(operator.toSQL())
                .sql(" (");
 
+        if (subValues.size() > 1) {
+            context.formatIndentStart()
+                   .formatNewLine();
+        }
+
         String separator = "";
         for (Field<?> value : subValues) {
-            context.sql(separator);
-            context.sql(value);
+            context.sql(separator)
+                   .formatNewLineAfterPrintMargin()
+                   .sql(value);
 
             separator = ", ";
+        }
+
+        if (subValues.size() > 1) {
+            context.formatIndentEnd()
+                   .formatNewLine();
         }
 
         context.sql(")");

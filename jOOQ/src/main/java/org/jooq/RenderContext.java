@@ -109,6 +109,13 @@ public interface RenderContext extends Context<RenderContext> {
 
     /**
      * Render a new line character (only if {@link Settings#isRenderFormatted()}
+     * is set to <code>true</code>, and the {@link #formatPrintMargin(int)} has
+     * been exceeded)
+     */
+    RenderContext formatNewLineAfterPrintMargin();
+
+    /**
+     * Render a new line character (only if {@link Settings#isRenderFormatted()}
      * is set to <code>true</code>), or a whitespace separator character
      * otherwise
      */
@@ -155,6 +162,19 @@ public interface RenderContext extends Context<RenderContext> {
      * {@link Settings#isRenderFormatted()} is set to <code>true</code>
      */
     RenderContext formatIndentLockEnd();
+
+    /**
+     * Set a print margin that will be applied to formatted SQL, if
+     * {@link Settings#isRenderFormatted()} is set to <code>true</code>
+     * <p>
+     * The default print margin is <code>80</code>. Setting this to zero or a
+     * negative value means that no print margin will be applied.
+     * <p>
+     * The print margin is applied to any of these <code>QueryParts</code>:
+     * <ul>
+     * <li> {@link Field#in(Field...)} and related expressions</li>
+     */
+    RenderContext formatPrintMargin(int margin);
 
     /**
      * Append some (quoted) literal to the context's contained

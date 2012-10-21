@@ -35,6 +35,8 @@
  */
 package org.jooq.test._;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.jooq.ExecuteContext;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DefaultExecuteListener;
@@ -42,6 +44,8 @@ import org.jooq.impl.Factory;
 import org.jooq.tools.StringUtils;
 
 public class PrettyPrinter extends DefaultExecuteListener {
+
+    private static final AtomicInteger count = new AtomicInteger();
 
     /**
      * Hook into the query execution lifecycle before executing queries
@@ -51,19 +55,35 @@ public class PrettyPrinter extends DefaultExecuteListener {
 
         // Create a new factory for logging rendering purposes
         // This factory doesn't need a connection, only the SQLDialect...
-        Factory factory = new Factory(ctx.getDialect(),
+        Factory pretty = new Factory(ctx.getDialect(),
 
         // ... and the flag for pretty-printing
             new Settings().withRenderFormatted(true));
 
+        Factory normal = new Factory(ctx.getDialect());
+
+        String n = "" + count.incrementAndGet();
+
+        System.out.println();
+        System.out.println("Executing #" + n);
+        System.out.println("-----------" + StringUtils.leftPad("", n.length(), '-'));
+
         // If we're executing a query
         if (ctx.query() != null) {
-            System.out.println(factory.renderInlined(ctx.query()));
+            System.out.println(normal.renderInlined(ctx.query()));
+            System.out.println();
+            System.out.println(pretty.renderContext()
+                                     .inline(true)
+                                     .render(ctx.query()));
         }
 
         // If we're executing a routine
         else if (ctx.routine() != null) {
-            System.out.println(factory.renderInlined(ctx.routine()));
+            System.out.println(normal.renderInlined(ctx.routine()));
+            System.out.println();
+            System.out.println(pretty.renderContext()
+                                     .inline(true)
+                                     .render(ctx.routine()));
         }
 
         // If we're executing anything else (e.g. plain SQL)

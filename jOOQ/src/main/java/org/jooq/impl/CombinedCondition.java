@@ -108,24 +108,25 @@ class CombinedCondition extends AbstractCondition {
         }
         else {
             context.sql("(")
-                   .formatIndentLockStart();
+                   .formatIndentStart()
+                   .formatNewLine();
 
-            String operatorName = " " + operator.name().toLowerCase() + " ";
+            String operatorName = operator.name().toLowerCase() + " ";
             String separator = "";
 
             for (int i = 0; i < conditions.size(); i++) {
-                context.keyword(separator);
-
                 if (i > 0) {
-                    context.formatNewLine();
+                    context.formatSeparator();
                 }
 
+                context.keyword(separator);
                 context.sql(conditions.get(i));
                 separator = operatorName;
             }
 
-            context.sql(")")
-                   .formatIndentLockEnd();
+            context.formatIndentEnd()
+                   .formatNewLine()
+                   .sql(")");
         }
     }
 }

@@ -226,9 +226,10 @@ implements
                    .sql(table)
                    .declareTables(declareTables)
                    .formatSeparator()
-                   .keyword("pivot(")
+                   .keyword("pivot (")
                    .inline(true)
                    .declareFields(true)
+                   .formatIndentStart()
                    .sql(aggregateFunctions)
                    .formatSeparator()
                    .keyword("for ")
@@ -238,7 +239,10 @@ implements
                    .sql(in)
                    .declareFields(declareFields)
                    .inline(inline)
-                   .sql("))");
+                   .sql(")")
+                   .formatIndentEnd()
+                   .formatNewLine()
+                   .sql(")");
         }
 
         @Override

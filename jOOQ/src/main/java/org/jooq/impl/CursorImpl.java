@@ -145,7 +145,13 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final R fetchOne() {
-        return iterator().next();
+        Result<R> result = fetch(1);
+
+        if (result.size() == 1) {
+            return result.get(0);
+        }
+
+        return null;
     }
 
     @Override
@@ -160,7 +166,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         ctx.result(result);
         listener.resultStart(ctx);
 
-        for (int i = 0; i < number && ((record = fetchOne()) != null); i++) {
+        for (int i = 0; i < number && ((record = iterator().next()) != null); i++) {
             result.addRecord(record);
         }
 

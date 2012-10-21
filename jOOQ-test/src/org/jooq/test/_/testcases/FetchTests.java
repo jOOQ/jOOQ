@@ -42,6 +42,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.val;
@@ -1854,6 +1855,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
     @Test
     public void testFetchWithTimeout() throws Exception {
+
+        // Some dialects do not really implement the timeout well. In those
+        // dialects, this query will run forever
+        if (getDialect() != H2) {
+            log.info("SKIPPING", "Dangerous timeout query");
+            return;
+        }
+
         try {
 
             // [#1856] The below query is *likely* to run into a timeout

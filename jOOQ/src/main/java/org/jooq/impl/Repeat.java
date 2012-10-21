@@ -73,7 +73,7 @@ class Repeat extends AbstractFunction<String> {
             // Another option is documented here, though:
             // http://stackoverflow.com/questions/11568496/how-to-simulate-repeat-in-sqlite
             case SQLITE:
-                return Factory.field("replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, {1}), '0', {2})", String.class, count, count, string);
+                return Factory.field("replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, {0}), '0', {1})", String.class, count, string);
 
             case ASE:
             case SQLSERVER:

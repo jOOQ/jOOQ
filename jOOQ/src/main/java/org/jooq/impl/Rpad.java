@@ -86,14 +86,14 @@ class Rpad extends AbstractFunction<String> {
                                "replace(" +
                                  "substr(" +
                                    "quote(" +
-                                     "zeroblob((({1} - length({2}) - 1 + length({3})) / length({4}) + 1) / 2)" +
+                                     "zeroblob((({1} - length({0}) - 1 + length({2})) / length({2}) + 1) / 2)" +
                                    "), 3" +
                                  "), '''', ''" +
-                               "), '0', {5}" +
-                             "), 1, ({6} - length({7}))" +
+                               "), '0', {2}" +
+                             "), 1, ({1} - length({0}))" +
                            ")",
                     String.class,
-                    field, length, field, character, character, character, length, field);
+                    field, length, character);
             }
 
             // According to the Firebird documentation, LPAD outcomes should be

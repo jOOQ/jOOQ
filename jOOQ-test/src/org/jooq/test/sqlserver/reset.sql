@@ -15,6 +15,7 @@ DELETE FROM t_booleans/
 DELETE FROM t_dates/
 DELETE FROM t_identity/
 DELETE FROM t_identity_pk/
+DELETE FROM t_triggers/
 
 INSERT INTO t_language (id, cd, description, description_english) VALUES (1, 'en', 'English', 'English')/
 INSERT INTO t_language (id, cd, description, description_english) VALUES (2, 'de', 'Deutsch', 'German')/

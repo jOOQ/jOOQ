@@ -16,6 +16,7 @@ DELETE FROM t_booleans/
 DELETE FROM t_dates/
 DELETE FROM t_identity/
 DELETE FROM t_identity_pk/
+DELETE FROM t_triggers/
 
 DROP SEQUENCE IF EXISTS s_author_id/
 CREATE SEQUENCE s_author_id/

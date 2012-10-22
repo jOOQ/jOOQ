@@ -13,6 +13,7 @@ DELETE FROM t_author/
 DELETE FROM t_language/
 DELETE FROM t_booleans/
 DELETE FROM t_dates/
+DELETE FROM t_triggers/
 
 DROP SEQUENCE s_author_id;/
 CREATE SEQUENCE s_author_id;/

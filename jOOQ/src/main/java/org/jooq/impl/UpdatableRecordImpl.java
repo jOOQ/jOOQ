@@ -36,9 +36,11 @@
 package org.jooq.impl;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
@@ -98,13 +100,13 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         R copy = create().newRecord(getTable());
 
         // Copy all fields. This marks them all as isChanged, which is important
+        List<TableField<R, ?>> key = getMainKey().getFields();
         for (Field<?> field : getFields()) {
-            setValue(copy, field);
-        }
 
-        // Remove key values again
-        for (Field<?> field : getMainKey().getFields()) {
-            copy.setValue(field, null);
+            // Don't copy key values
+            if (!key.contains(field)) {
+                setValue(copy, field);
+            }
         }
 
         return copy;

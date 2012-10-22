@@ -16,6 +16,7 @@ DELETE FROM t_booleans/
 DELETE FROM t_dates/
 DELETE FROM t_identity/
 DELETE FROM t_identity_pk/
+DELETE FROM t_triggers/
 
 DROP SERIAL s_author_id/
 CREATE SERIAL s_author_id MAXVALUE 2000000000/

@@ -294,6 +294,32 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testUpdatablesCopy() throws Exception {
+        if (TTriggers() == null) {
+            log.info("SKIPPING", "UpdatableRecord.copy() tests");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        T r1 = create().newRecord(TTriggers());
+        r1.setValue(TTriggers_COUNTER(), 1);
+        assertEquals(1, r1.store());
+
+        T r2 = r1.copy();
+        T r3 = create().fetchOne(TTriggers());
+        T r4 = r3.copy();
+
+        // [#1874] Be sure that copies use "default" values for primary keys
+        // in order to have sequence values generated.
+        assertEquals(1, r2.store());
+        assertEquals(0, r3.store());
+        assertEquals(1, r4.store());
+
+        assertEquals(3, (int) create().selectCount().from(TTriggers()).fetchOne(0, int.class));
+    }
+
+    @Test
     public void testUpdatablesPK() throws Exception {
         jOOQAbstractTest.reset = false;
 

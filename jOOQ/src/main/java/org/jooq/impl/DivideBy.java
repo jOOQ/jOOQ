@@ -44,7 +44,6 @@ import java.util.Collection;
 
 import org.jooq.BindContext;
 import org.jooq.Condition;
-import org.jooq.ConditionProvider;
 import org.jooq.Configuration;
 import org.jooq.DivideByOnConditionStep;
 import org.jooq.DivideByOnStep;
@@ -161,7 +160,8 @@ implements
     /**
      * Extracted method for type-safety
      */
-    private final <T> void selfJoin(ConditionProvider selfJoin, Table<?> outer, Table<?> inner, Field<T> field) {
+    @SuppressWarnings("deprecation")
+    private final <T> void selfJoin(org.jooq.ConditionProvider selfJoin, Table<?> outer, Table<?> inner, Field<T> field) {
         Field<T> outerField = outer.getField(field);
         Field<T> innerField = inner.getField(field);
 

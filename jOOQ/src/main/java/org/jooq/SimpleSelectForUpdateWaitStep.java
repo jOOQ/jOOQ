@@ -64,7 +64,7 @@ public interface SimpleSelectForUpdateWaitStep<R extends Record> extends SimpleS
      * <p>
      * Be careful not to confuse this with {@link Object#wait(long)} !
      *
-     * @see LockProvider#setForUpdateWait(int) see LockProvider for more details
+     * @see SimpleSelectQuery#setForUpdateWait(int) see LockProvider for more details
      */
     @Support(ORACLE)
     SimpleSelectFinalStep<R> wait(int seconds);
@@ -73,7 +73,7 @@ public interface SimpleSelectForUpdateWaitStep<R extends Record> extends SimpleS
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see LockProvider#setForUpdateNoWait() see LockProvider for more details
+     * @see SimpleSelectQuery#setForUpdateNoWait() see LockProvider for more details
      */
     @Support(ORACLE)
     SimpleSelectFinalStep<R> noWait();
@@ -82,7 +82,7 @@ public interface SimpleSelectForUpdateWaitStep<R extends Record> extends SimpleS
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see LockProvider#setForUpdateSkipLocked() see LockProvider for more
+     * @see SimpleSelectQuery#setForUpdateSkipLocked() see LockProvider for more
      *      details
      */
     @Support(ORACLE)

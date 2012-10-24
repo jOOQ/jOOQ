@@ -43,7 +43,6 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import org.jooq.ConditionProvider;
 import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
@@ -239,7 +238,8 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         return result;
     }
 
-    private final void addConditionForVersionAndTimestamp(ConditionProvider query) {
+    @SuppressWarnings("deprecation")
+    private final void addConditionForVersionAndTimestamp(org.jooq.ConditionProvider query) {
         TableField<R, ?> v = getUpdatableTable().getRecordVersion();
         TableField<R, ?> t = getUpdatableTable().getRecordTimestamp();
 

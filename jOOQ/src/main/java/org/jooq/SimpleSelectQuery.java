@@ -35,6 +35,23 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
+import java.util.Collection;
+
 /**
  * A simple select query that provides Records from a single table, with no
  * joins allowed.
@@ -49,6 +66,171 @@ package org.jooq;
  * @author Lukas Eder
  * @see SelectQuery
  */
+@SuppressWarnings("deprecation")
 public interface SimpleSelectQuery<R extends Record> extends Select<R>, ConditionProvider, OrderProvider, LockProvider {
 
+    // ------------------------------------------------------------------------
+    // Methods from ConditionProvider, OrderProvider, LockProvider
+    // ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Condition... conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Collection<Condition> conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Operator operator, Condition... conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Operator operator, Collection<Condition> conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addOrderBy(Field<?>... fields);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addOrderBy(SortField<?>... fields);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addOrderBy(Collection<SortField<?>> fields);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addOrderBy(int... fieldIndexes);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support({ CUBRID, ORACLE })
+    void setOrderBySiblings(boolean orderBySiblings);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addLimit(int numberOfRows);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    void addLimit(Param<Integer> numberOfRows);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    void addLimit(int offset, int numberOfRows);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    void addLimit(Param<Integer> offset, int numberOfRows);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    void addLimit(int offset, Param<Integer> numberOfRows);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    void addLimit(Param<Integer> offset, Param<Integer> numberOfRows);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    void setForUpdate(boolean forUpdate);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    void setForUpdateOf(Field<?>... fields);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    void setForUpdateOf(Collection<? extends Field<?>> fields);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
+    void setForUpdateOf(Table<?>... tables);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support(ORACLE)
+    void setForUpdateWait(int seconds);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support(ORACLE)
+    void setForUpdateNoWait();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support(ORACLE)
+    void setForUpdateSkipLocked();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support({ MYSQL, POSTGRES })
+    void setForShare(boolean forShare);
 }

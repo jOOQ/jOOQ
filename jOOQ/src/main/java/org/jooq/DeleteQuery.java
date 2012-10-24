@@ -36,12 +36,47 @@
 
 package org.jooq;
 
+import java.util.Collection;
+
 /**
  * A query used for deletion of data
  *
  * @param <R> The record type of the table being deleted from
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete<R> {
+
+    // ------------------------------------------------------------------------
+    // Methods from ConditionProvider, OrderProvider, LockProvider
+    // ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Condition... conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Collection<Condition> conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Operator operator, Condition... conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Operator operator, Collection<Condition> conditions);
 
 }

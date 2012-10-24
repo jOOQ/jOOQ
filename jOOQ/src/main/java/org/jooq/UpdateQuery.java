@@ -36,12 +36,47 @@
 
 package org.jooq;
 
+import java.util.Collection;
+
 /**
  * A query for data updating
  *
  * @param <R> The record type of the table being updated
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionProvider, Update<R> {
+
+    // ------------------------------------------------------------------------
+    // Methods from ConditionProvider
+    // ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Condition... conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Collection<Condition> conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Operator operator, Condition... conditions);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Support
+    void addConditions(Operator operator, Collection<Condition> conditions);
 
 }

@@ -59,7 +59,11 @@ import java.util.Collection;
  * locking tables, rows using a <code>FOR UPDATE</code> clause
  *
  * @author Lukas Eder
+ * @deprecated - 2.6.0 [#1881] - This type will be removed from the public API,
+ *             soon. Its methods will be pushed down into extending interfaces.
+ *             Do not reference this type directly.
  */
+@Deprecated
 public interface LockProvider {
 
     /**

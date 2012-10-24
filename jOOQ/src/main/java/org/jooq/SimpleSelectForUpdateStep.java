@@ -77,7 +77,7 @@ public interface SimpleSelectForUpdateStep<R extends Record> extends SimpleSelec
      * {@link SQLDialect#ORACLE}. These incompatibilities are not reflected by
      * the jOOQ API.
      *
-     * @see LockProvider#setForUpdate(boolean) see LockProvider for more details
+     * @see SimpleSelectQuery#setForUpdate(boolean) see LockProvider for more details
      */
     @Support({ ASE, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SYBASE })
     SimpleSelectForUpdateOfStep<R> forUpdate();
@@ -85,7 +85,7 @@ public interface SimpleSelectForUpdateStep<R extends Record> extends SimpleSelec
     /**
      * Add a <code>FOR SHARE</code> clause to the end of the query.
      *
-     * @see LockProvider#setForShare(boolean) see LockProvider for more details
+     * @see SimpleSelectQuery#setForShare(boolean) see LockProvider for more details
      */
     @Support({ MYSQL, POSTGRES })
     SimpleSelectFinalStep<R> forShare();

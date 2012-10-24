@@ -78,6 +78,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 abstract class AbstractSubSelect<R extends Record>
 extends AbstractSelect<R>
 implements

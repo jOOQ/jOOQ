@@ -72,7 +72,7 @@ public interface SimpleSelectForUpdateOfStep<R extends Record> extends SimpleSel
      * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see LockProvider#setForUpdateOf(Field...) see LockProvider for more
+     * @see SimpleSelectQuery#setForUpdateOf(Field...) see LockProvider for more
      *      details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
@@ -82,8 +82,8 @@ public interface SimpleSelectForUpdateOfStep<R extends Record> extends SimpleSel
      * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see LockProvider#setForUpdateOf(Collection) see LockProvider for more
-     *      details
+     * @see SimpleSelectQuery#setForUpdateOf(Collection) see LockProvider for
+     *      more details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
     SimpleSelectForUpdateWaitStep<R> of(Collection<Field<?>> fields);
@@ -92,7 +92,7 @@ public interface SimpleSelectForUpdateOfStep<R extends Record> extends SimpleSel
      * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see LockProvider#setForUpdateOf(Table...) see LockProvider for more
+     * @see SimpleSelectQuery#setForUpdateOf(Table...) see LockProvider for more
      *      details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })

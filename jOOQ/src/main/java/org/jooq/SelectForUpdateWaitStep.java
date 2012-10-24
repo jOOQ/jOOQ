@@ -37,7 +37,6 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.ORACLE;
 
-
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -88,7 +87,8 @@ public interface SelectForUpdateWaitStep extends SelectFinalStep {
      * <p>
      * Be careful not to confuse this with {@link Object#wait(long)} !
      *
-     * @see LockProvider#setForUpdateWait(int) see LockProvider for more details
+     * @see SimpleSelectQuery#setForUpdateWait(int) see LockProvider for more
+     *      details
      */
     @Support(ORACLE)
     SelectFinalStep wait(int seconds);
@@ -97,7 +97,8 @@ public interface SelectForUpdateWaitStep extends SelectFinalStep {
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see LockProvider#setForUpdateNoWait() see LockProvider for more details
+     * @see SimpleSelectQuery#setForUpdateNoWait() see LockProvider for more
+     *      details
      */
     @Support(ORACLE)
     SelectFinalStep noWait();
@@ -106,7 +107,7 @@ public interface SelectForUpdateWaitStep extends SelectFinalStep {
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see LockProvider#setForUpdateSkipLocked() see LockProvider for more
+     * @see SimpleSelectQuery#setForUpdateSkipLocked() see LockProvider for more
      *      details
      */
     @Support(ORACLE)

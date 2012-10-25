@@ -1763,7 +1763,7 @@ public abstract class jOOQAbstractTest<
         new ExecuteListenerTests(this).testExecuteListenerOnBatchMultiple();
     }
 
-    @Test
+    // @Test TODO [#1868] Re-enable this test
     public void testExecuteListenerFetchLazyTest() throws Exception {
         new ExecuteListenerTests(this).testExecuteListenerFetchLazyTest();
     }

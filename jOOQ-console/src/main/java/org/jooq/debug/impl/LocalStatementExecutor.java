@@ -240,8 +240,12 @@ class LocalStatementExecutor implements QueryExecutor {
                                         StringWriter stringWriter = new StringWriter();
                                         char[] chars = new char[1024];
                                         Reader reader = new BufferedReader(clob.getCharacterStream());
-                                        for(int count; (count=reader.read(chars))>=0; ) {
-                                            stringWriter.write(chars, 0, count);
+                                        try {
+                                            for(int count; (count=reader.read(chars))>=0; ) {
+                                                stringWriter.write(chars, 0, count);
+                                            }
+                                        } finally {
+                                            reader.close();
                                         }
                                         rowData[i] = stringWriter.toString();
                                     } else {
@@ -255,8 +259,12 @@ class LocalStatementExecutor implements QueryExecutor {
                                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                                         byte[] bytes = new byte[1024];
                                         InputStream in = new BufferedInputStream(blob.getBinaryStream());
-                                        for(int count; (count=in.read(bytes))>=0; ) {
-                                            baos.write(bytes, 0, count);
+                                        try {
+                                            for(int count; (count=in.read(bytes))>=0; ) {
+                                                baos.write(bytes, 0, count);
+                                            }
+                                        } finally {
+                                            in.close();
                                         }
                                         rowData[i] = baos.toByteArray();
                                     } else {

@@ -39,17 +39,12 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.2</version>
-				<configuration>
-					<archive>
-						<!-- add the generated manifest to the jar -->
-						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-					</archive>
-				</configuration>
 			</plugin>
 			<!-- The jOOQ code generator plugin for Postgres / Sybase ASE / MySQL -->
 			<plugin>
 				<groupId>org.jooq</groupId>
 				<artifactId>jooq-codegen-maven</artifactId>
+				<version>2.6.0-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<id>exec1</id>
@@ -156,7 +151,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.scalatest</groupId>
-			<artifactId>scalatest_2.9.0</artifactId>
+			<artifactId>scalatest_2.9.1</artifactId>
 			<version>1.8</version>
 			<type>jar</type>
 			<scope>test</scope>

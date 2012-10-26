@@ -49,7 +49,7 @@ public class Columns extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The table column <code>information_schema.COLUMNS.ORDINAL_POSITION</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> ORDINAL_POSITION = createField("ORDINAL_POSITION", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, COLUMNS);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> ORDINAL_POSITION = createField("ORDINAL_POSITION", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, COLUMNS);
 
 	/**
 	 * The table column <code>information_schema.COLUMNS.COLUMN_DEFAULT</code>
@@ -69,22 +69,22 @@ public class Columns extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The table column <code>information_schema.COLUMNS.CHARACTER_MAXIMUM_LENGTH</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> CHARACTER_MAXIMUM_LENGTH = createField("CHARACTER_MAXIMUM_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, COLUMNS);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> CHARACTER_MAXIMUM_LENGTH = createField("CHARACTER_MAXIMUM_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, COLUMNS);
 
 	/**
 	 * The table column <code>information_schema.COLUMNS.CHARACTER_OCTET_LENGTH</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> CHARACTER_OCTET_LENGTH = createField("CHARACTER_OCTET_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, COLUMNS);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> CHARACTER_OCTET_LENGTH = createField("CHARACTER_OCTET_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, COLUMNS);
 
 	/**
 	 * The table column <code>information_schema.COLUMNS.NUMERIC_PRECISION</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> NUMERIC_PRECISION = createField("NUMERIC_PRECISION", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, COLUMNS);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> NUMERIC_PRECISION = createField("NUMERIC_PRECISION", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, COLUMNS);
 
 	/**
 	 * The table column <code>information_schema.COLUMNS.NUMERIC_SCALE</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> NUMERIC_SCALE = createField("NUMERIC_SCALE", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, COLUMNS);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> NUMERIC_SCALE = createField("NUMERIC_SCALE", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, COLUMNS);
 
 	/**
 	 * The table column <code>information_schema.COLUMNS.CHARACTER_SET_NAME</code>

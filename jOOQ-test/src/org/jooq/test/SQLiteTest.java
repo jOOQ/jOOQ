@@ -86,10 +86,10 @@ import org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.sqlite.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord;
-import org.jooq.tools.unsigned.UByte;
-import org.jooq.tools.unsigned.UInteger;
-import org.jooq.tools.unsigned.ULong;
-import org.jooq.tools.unsigned.UShort;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 import org.jooq.util.sqlite.SQLiteDataType;
 import org.jooq.util.sqlite.SQLiteFactory;
 

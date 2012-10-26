@@ -73,10 +73,10 @@ import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.unsigned.UByte;
-import org.jooq.tools.unsigned.UInteger;
-import org.jooq.tools.unsigned.ULong;
-import org.jooq.tools.unsigned.UShort;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 
 public abstract class BaseTest<
 

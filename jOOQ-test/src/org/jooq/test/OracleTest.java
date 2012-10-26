@@ -150,10 +150,10 @@ import org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks;
 import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record;
 import org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord;
 import org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord;
-import org.jooq.tools.unsigned.UByte;
-import org.jooq.tools.unsigned.UInteger;
-import org.jooq.tools.unsigned.ULong;
-import org.jooq.tools.unsigned.UShort;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 import org.jooq.util.oracle.OracleDataType;
 import org.jooq.util.oracle.OracleFactory;
 

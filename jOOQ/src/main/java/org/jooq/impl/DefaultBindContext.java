@@ -282,7 +282,7 @@ class DefaultBindContext extends AbstractBindContext {
         else if (type.isArray()) {
             switch (dialect) {
                 case POSTGRES: {
-                    stmt.setString(nextIndex(), postgresArrayString(value));
+                    stmt.setString(nextIndex(), postgresArrayString((Object[]) value));
                     break;
                 }
                 case HSQLDB:
@@ -322,12 +322,12 @@ class DefaultBindContext extends AbstractBindContext {
         return this;
     }
 
-    /* package private */ static String postgresArrayString(Object value) {
+    /* package private */ static String postgresArrayString(Object[] value) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
 
         String separator = "";
-        for (Object o : (Object[]) value) {
+        for (Object o : value) {
             sb.append(separator);
 
             // [#753] null must be set as a literal

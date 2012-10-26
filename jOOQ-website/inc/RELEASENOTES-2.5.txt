@@ -2,7 +2,7 @@ jOOQ Release notes
 ==================
 
 For an interactive overview, see also
-https://sourceforge.net/apps/trac/jooq/report/6
+http://github.com/jOOQ/jOOQ/issues
 
 For a formatted text version, see
 http://www.jooq.org/notes.php

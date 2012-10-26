@@ -2,7 +2,7 @@ jOOQ Release notes
 ==================
 
 For an interactive overview, see also
-https://github.com/jOOQ/jOOQ/issues
+http://github.com/jOOQ/jOOQ/issues
 
 For a formatted text version, see
 http://www.jooq.org/notes.php?version=2.2

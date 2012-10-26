@@ -74,8 +74,6 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.Arrays;
 
-import org.jooq.Configuration;
-import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -245,68 +243,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .fetchOne(TAuthor(), TAuthor_LAST_NAME().equal("Orwell"))
                 .getValue(TAuthor_FIRST_NAME()));
 
-        // Redoing the test with a ConfigurationRegistry
-        // ---------------------------------------------------------------------
-        register(create());
-        try {
-            q = create().selectFrom(TAuthor()).orderBy(TAuthor_LAST_NAME());
-            q = runSerialisation(q);
-            q.execute();
-
-            result = q.getResult();
-            result = runSerialisation(result);
-            assertEquals("Coelho", result.getValue(0, TAuthor_LAST_NAME()));
-            assertEquals("Orwell", result.getValue(1, TAuthor_LAST_NAME()));
-
-            result.get(1).setValue(TAuthor_FIRST_NAME(), "Georgie");
-            result.get(1).store();
-        }
-        finally {
-            register(null);
-        }
-
-
-        // Redoing the test with a ConfigurationRegistry, registering after
-        // deserialisation
-        // ---------------------------------------------------------------------
-        try {
-            q = create().selectFrom(TAuthor()).orderBy(TAuthor_LAST_NAME());
-            q = runSerialisation(q);
-
-            register(create());
-            q.execute();
-            register(null);
-
-            result = q.getResult();
-            result = runSerialisation(result);
-            assertEquals("Coelho", result.getValue(0, TAuthor_LAST_NAME()));
-            assertEquals("Orwell", result.getValue(1, TAuthor_LAST_NAME()));
-
-            result.get(1).setValue(TAuthor_FIRST_NAME(), "G");
-
-            register(create());
-            result.get(1).store();
-        }
-        finally {
-            register(null);
-        }
-
-        // [#775] Test for proper lazy execution after deserialisation
-        try {
-            q = create().selectFrom(TAuthor()).orderBy(TAuthor_LAST_NAME());
-            q = runSerialisation(q);
-
-            register(create());
-            Cursor<A> cursor = q.fetchLazy();
-            register(null);
-
-            assertEquals("Coelho", cursor.fetchOne().getValue(TAuthor_LAST_NAME()));
-            assertEquals("Orwell", cursor.fetchOne().getValue(TAuthor_LAST_NAME()));
-        }
-        finally {
-            register(null);
-        }
-
         // [#1191] Check execution capabilities with new features in ExecuteListener
         ConnectionProviderListener.c = create().getConnection();
         try {
@@ -348,22 +284,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         public void start(ExecuteContext ctx) {
             ctx.setConnection(c);
         }
-    }
-
-    @SuppressWarnings("deprecation")
-    protected final void register(final Configuration configuration) {
-        org.jooq.ConfigurationRegistry.setProvider(new org.jooq.ConfigurationProvider() {
-
-            @Override
-            public Configuration provideFor(Configuration c) {
-                return configuration;
-            }
-
-            @Override
-            public String toString() {
-                return "Test Provider";
-            }
-        });
     }
 
     @SuppressWarnings("unchecked")

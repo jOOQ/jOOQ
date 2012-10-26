@@ -43,7 +43,8 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.util.maven.example.postgres.PublicFactory;
+import org.jooq.SQLDialect;
+import org.jooq.impl.Factory;
 import org.jooq.util.maven.example.postgres.tables.TBook;
 import org.jooq.util.maven.example.postgres.tables.records.TBookRecord;
 
@@ -57,7 +58,7 @@ public class TestPostgres {
     @Test
     public void testFetch() throws Exception {
         Connection connection = DriverManager.getConnection("jdbc:postgresql:postgres", "postgres", "test");
-        PublicFactory create = new PublicFactory(connection);
+        Factory create = new Factory(connection, SQLDialect.POSTGRES);
 
         Result<Record> books =
         create.select(TBook.ID, TBook.TITLE)
@@ -72,7 +73,7 @@ public class TestPostgres {
     @Test
     public void testFetchInto() throws Exception {
         Connection connection = DriverManager.getConnection("jdbc:postgresql:postgres", "postgres", "test");
-        PublicFactory create = new PublicFactory(connection);
+        Factory create = new Factory(connection, SQLDialect.POSTGRES);
 
         List<TBookRecord> books =
         create.select(TBook.ID, TBook.TITLE)

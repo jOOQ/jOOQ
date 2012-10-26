@@ -39,8 +39,6 @@ import java.sql.Array;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jooq.exception.DetachedException;
-
 /**
  * A "record" that encapsulates an Oracle-style ARRAY (or VARRAY), additionally
  * providing some convenience methods
@@ -91,18 +89,4 @@ public interface ArrayRecord<E> extends Store<E>, Iterable<E> {
      * Get the data type of the array type
      */
     DataType<E> getDataType();
-
-    /**
-     * Create an {@link Array} from this ArrayRecord
-     * <p>
-     * This method is for INTERNAL use only. Do not call this method.
-     *
-     * @throws SQLException If something goes wrong during the creation of the
-     *             JDBC {@link Array}
-     * @throws DetachedException If this method is called on a detached
-     *             <code>ArrayRecord</code>
-     * @deprecated - 2.5.0 [#1638] - Do not reuse this method
-     */
-    @Deprecated
-    Array createArray() throws SQLException, DetachedException;
 }

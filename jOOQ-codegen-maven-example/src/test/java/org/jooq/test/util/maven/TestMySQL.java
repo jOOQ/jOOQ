@@ -48,7 +48,8 @@ import java.sql.DriverManager;
 
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.util.maven.example.mysql.Test2Factory;
+import org.jooq.SQLDialect;
+import org.jooq.impl.Factory;
 import org.jooq.util.maven.example.mysql.enums.BooleanTrueFalseLc;
 import org.jooq.util.maven.example.mysql.enums.BooleanTrueFalseUc;
 import org.jooq.util.maven.example.mysql.enums.BooleanYesNoLc;
@@ -73,7 +74,7 @@ public class TestMySQL {
     public void testInstanceModel() throws Exception {
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/test2", "root", "");
-        Test2Factory create = new Test2Factory(connection);
+        Factory create = new Factory(connection, SQLDialect.MYSQL);
 
         TBook b = T_BOOK.as("b");
         TAuthor a = T_AUTHOR.as("a");
@@ -105,7 +106,7 @@ public class TestMySQL {
     public void testCustomEnum() throws Exception {
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/test2", "root", "");
-        Test2Factory create = new Test2Factory(connection);
+        Factory create = new Factory(connection, SQLDialect.MYSQL);
 
         create.delete(T_BOOLEANS).execute();
 

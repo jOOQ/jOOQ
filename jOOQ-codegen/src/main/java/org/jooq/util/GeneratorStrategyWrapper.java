@@ -52,7 +52,6 @@ import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -62,8 +61,6 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
-
-    private static final JooqLogger          log             = JooqLogger.getLogger(GeneratorStrategyWrapper.class);
 
     private final Map<Class<?>, Set<String>> reservedColumns = new HashMap<Class<?>, Set<String>>();
 
@@ -280,15 +277,6 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
         className = delegate.getJavaClassName(definition, mode);
         className = overload(definition, mode, className);
         className = convertToJavaIdentifier(className);
-
-        if (mode == Mode.FACTORY) {
-            String alternative = convertToJavaIdentifier(delegate.getJavaClassName(definition, Mode.DEFAULT));
-
-            if (className.equalsIgnoreCase(alternative)) {
-                log.warn("Configuration problem", "Factory has the same name as Schema, forcing Factory suffix. Consider correcting your strategy");
-                className += "Factory";
-            }
-        }
 
         return className;
     }

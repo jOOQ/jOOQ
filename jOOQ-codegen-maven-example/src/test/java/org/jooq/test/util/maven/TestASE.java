@@ -47,7 +47,8 @@ import java.sql.DriverManager;
 
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.util.maven.example.ase.DboFactory;
+import org.jooq.SQLDialect;
+import org.jooq.impl.Factory;
 import org.jooq.util.maven.example.ase.tables.TAuthor;
 import org.jooq.util.maven.example.ase.tables.TBook;
 import org.jooq.util.maven.example.ase.tables.TBookStore;
@@ -64,7 +65,7 @@ public class TestASE {
     public void testInstanceModel() throws Exception {
         Class.forName("net.sourceforge.jtds.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:jtds:sybase://lukas-hp:5000/TEST", "sa", "");
-        DboFactory create = new DboFactory(connection);
+        Factory create = new Factory(connection, SQLDialect.ASE);
 
         TBook b = T_BOOK.as("b");
         TAuthor a = T_AUTHOR.as("a");

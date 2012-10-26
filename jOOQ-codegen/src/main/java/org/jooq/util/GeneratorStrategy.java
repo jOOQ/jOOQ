@@ -348,13 +348,7 @@ public interface GeneratorStrategy {
          * The enum mode. This is used when a {@link EnumDefinition}'s class is
          * being rendered
          */
-        ENUM,
-
-        /**
-         * The factory mode. This is used when a {@link SchemaDefinition}'s
-         * factory class is being rendered
-         */
-        FACTORY,
+        ENUM
 
     }
 }

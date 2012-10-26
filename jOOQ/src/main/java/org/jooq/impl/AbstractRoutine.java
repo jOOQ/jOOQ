@@ -114,42 +114,6 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     // Constructors
     // ------------------------------------------------------------------------
 
-    /**
-     * @deprecated - 2.1.0 [#625] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    protected AbstractRoutine(SQLDialect dialect, String name, Schema schema) {
-        this(name, schema, null, null);
-    }
-
-    /**
-     * @deprecated - 2.1.0 [#625] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    protected AbstractRoutine(SQLDialect dialect, String name, Schema schema, Package pkg) {
-        this(name, schema, pkg, null);
-    }
-
-    /**
-     * @deprecated - 2.1.0 [#625] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    protected AbstractRoutine(SQLDialect dialect, String name, Schema schema, DataType<T> type) {
-        this(name, schema, null, type);
-    }
-
-    /**
-     * @deprecated - 2.1.0 [#625] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    protected AbstractRoutine(SQLDialect dialect, String name, Schema schema, Package pkg, DataType<T> type) {
-        this(name, schema, pkg, type);
-    }
-
     protected AbstractRoutine(String name, Schema schema) {
         this(name, schema, null, null);
     }

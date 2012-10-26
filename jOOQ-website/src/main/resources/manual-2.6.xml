@@ -5579,11 +5579,16 @@ ResultSet fetchResultSet();]]></java>
        Object[][] fetchArrays();
        Object[]   fetchOneArray();
        
+// Reduce your Result object into maps
+<K>    Map<K, R>      fetchMap(Field<K> key);
+<K, V> Map<K, V>      fetchMap(Field<K> key, Field<V> value);
+<K, E> Map<K, E>      fetchMap(Field<K> key, Class<E> value);
+       Map<Record, R> fetchMap(Field<?>[] key);
+<E>    Map<Record, E> fetchMap(Field<?>[] key, Class<E> value);       
+
 // Transform your Result object into maps
-<K>    Map<K, R> fetchMap(Field<K> key);
-<K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value);
        List<Map<String, Object>> fetchMaps();
-       Map<String, Object> fetchOneMap();
+       Map<String, Object>       fetchOneMap();
 
 // Transform your Result object into groups
 <K>    Map<K, Result<R>>      fetchGroups(Field<K> key);

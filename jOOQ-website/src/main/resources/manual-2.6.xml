@@ -5288,7 +5288,8 @@ Result<Record> resultQuery.fetch();]]></java>
 							<ul>
 								<li><reference id="record-vs-tablerecord" title="Untyped vs. typed fetching"/>: Sometimes you care about the returned type of your records, sometimes (with arbitrary projections) you don't.</li>
 								<li><reference id="arrays-maps-and-lists" title="Fetching arrays, maps, or lists"/>: Instead of letting you transform your result sets into any more suitable data type, a library should do that work for you.</li>
-								<li><reference id="recordhandler" title="Fetching through callbacks"/>: This is an entirely different fetching paradigm. With Java 8's lambda expressions, this will become even more powerful.</li>
+								<li><reference id="recordhandler" title="Fetching through handler callbacks"/>: This is an entirely different fetching paradigm. With Java 8's lambda expressions, this will become even more powerful.</li>
+								<li><reference id="recordmapper" title="Fetching through mapper callbacks"/>: This is an entirely different fetching paradigm. With Java 8's lambda expressions, this will become even more powerful.</li>
 								<li><reference id="pojos" title="Fetching custom POJOs"/>: This is what made Hibernate and JPA so strong. Automatic mapping of tables to custom POJOs.</li>
 								<li><reference id="lazy-fetching" title="Lazy vs. eager fetching"/>: It should be easy to distinguish these two fetch modes.</li>
 								<li><reference id="many-fetching" title="Fetching many results"/>: Some databases allow for returning many result sets from a single query. JDBC can handle this but it's very verbose. A list of results should be returned instead.</li>
@@ -5327,6 +5328,9 @@ List<Result<Record>> fetchMany();
 
 // Fetch records into a custom callback
 <H extends RecordHandler<R>> H fetchInto(H handler);
+
+// Map records using a custom callback
+<E> List<E> fetch(RecordMapper<? super R, E> mapper);
 
 // Execute a ResultQuery with jOOQ, but return a JDBC ResultSet, not a jOOQ object
 ResultSet fetchResultSet();]]></java>
@@ -5500,6 +5504,46 @@ create.selectFrom(BOOK)
       .orderBy(BOOK.ID)
       .fetchInto(book -> { Util.doThingsWithBook(book); }; );
 ]]></java>
+
+									<p>
+										See also the manual's section about the <reference id="recordmapper" title="RecordMapper"/>, which provides similar features
+									</p>
+								</content>
+							</section>
+
+							<section id="recordmapper">
+								<title>RecordMapper</title>
+								<content>
+									<p>
+										In a more functional operating mode, you might want to write callbacks that map records from your select statement results in order to do some processing. This is a common data access pattern in Spring's JdbcTemplate, and it is also available in jOOQ. With jOOQ, you can implement your own <reference class="org.jooq.RecordMapper"/> classes and plug them into jOOQ's <reference class="org.jooq.ResultQuery"/>:
+									</p>
+									
+<java><![CDATA[// Write callbacks to receive records from select statements
+List<Integer> ids =
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetch()
+      .map(new RecordMapper<BookRecord, Integer>() {
+          @Override
+          public Integer map(BookRecord book) {
+              return book.getId();
+          }
+      });
+      
+// Or more concisely
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetch(new RecordMapper<BookRecord, Integer>() {...});
+      
+// Or even more concisely with Java 8's lambda expressions:
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetch(book -> book.getId());
+]]></java>
+
+									<p>
+										See also the manual's section about the <reference id="recordhandler" title="RecordHandler"/>, which provides similar features
+									</p>
 								</content>
 							</section>
 
@@ -5723,6 +5767,7 @@ finally {
 									<ul>
 										<li><reference id="record-vs-tablerecord" title="Strongly or weakly typed records"/>: Cursors are also typed with the &lt;R&gt; type, allowing to fetch custom, generated <reference class="org.jooq.TableRecord"/> or plain <reference class="org.jooq.Record"/> types.</li>
 										<li><reference id="recordhandler" title="RecordHandler callbacks"/>: You can use your own <reference class="org.jooq.RecordHandler"/> callbacks to receive lazily fetched records.</li>
+										<li><reference id="recordmapper" title="RecordMapper callbacks"/>: You can use your own <reference class="org.jooq.RecordMapper"/> callbacks to map lazily fetched records.</li>
 										<li><reference id="pojos" title="POJOs"/>: You can fetch data into your own custom POJO types.</li>
 									</ul>
 								</content>
@@ -8944,7 +8989,7 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 								<li><a href="http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html">JPA</a>: The de-facto standard in the javax.persistence packages, supplied by Oracle. Its annotations are useful to jOOQ as well.</li>
 								<li><a href="http://onewebsql.com">OneWebSQL</a>: A commercial SQL abstraction API with support for DAO source code generation, which was integrated also in jOOQ</li>
 								<li><a href="http://www.querydsl.com">QueryDSL</a>: A "LINQ-port" to Java. It has a similar fluent API, a similar code-generation facility, yet quite a different purpose. While jOOQ is all about SQL, QueryDSL (like LINQ) is mostly about querying.</li>
-								<li><a href="http://www.springsource.org/features/data-access">Spring Data</a>: Spring's JdbcTemplate knows RowMappers, which are reflected by jOOQ's <reference class="org.jooq.RecordHandler"/></li>
+								<li><a href="http://www.springsource.org/features/data-access">Spring Data</a>: Spring's JdbcTemplate knows RowMappers, which are reflected by jOOQ's <reference id="recordhandler"/> or <reference id="recordmapper"/></li>
 							</ul>
 						</content>
 					</section>

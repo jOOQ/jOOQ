@@ -5388,11 +5388,14 @@ ResultSet fetchResultSet();]]></java>
        Map<String, Object> fetchOneMap();
 
 // Transform your Result object into groups
-<K>    Map<K, Result<R>> fetchGroups(Field<K> key);
-<K, V> Map<K, List<V>>   fetchGroups(Field<K> key, Field<V> value);
+<K>    Map<K, Result<R>>      fetchGroups(Field<K> key);
+<K, V> Map<K, List<V>>        fetchGroups(Field<K> key, Field<V> value);
+<K, E> Map<K, List<E>>        fetchGroups(Field<K> key, Class<E> value);
+       Map<Record, Result<R>> fetchGroups(Field<?>[] key);
+<E>    Map<Record, List<E>>   fetchGroups(Field<?>[] key, Class<E> value);
 
 // Transform your Records into custom POJOs
-<E>    List<E> fetchInto(Class<? extends E> type), MappingException;
+<E>    List<E> fetchInto(Class<? extends E> type);
 
 // Transform your records into another table type
 <Z extends Record> Result<Z> fetchInto(Table<Z> table);]]></java>

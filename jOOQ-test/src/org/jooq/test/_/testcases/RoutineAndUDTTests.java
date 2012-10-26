@@ -412,7 +412,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             InsertQuery<?> insert = create().insertQuery(TArrays());
             insert.addValue(TArrays_ID(), 5);
             insert.addValueAsArray(TArrays_NUMBER_R(), 1, 2, 3);
-            insert.addValueAsArray(TArrays_STRING_R(), "a", "b", "c");
+            insert.addValueAsArray(TArrays_STRING_R(), "a", "b", "c", "d\"\\d");
             insert.addValueAsArray(TArrays_DATE_R(), new Date(0), new Date(84600 * 1000), new Date(84600 * 2000));
             insert.execute();
 
@@ -424,15 +424,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             .where(TArrays_ID().equal(5))
             .fetchOne();
 
-            assertEquals(Arrays.asList("a", "b", "c"), Arrays.asList(array.getValueAsArray(TArrays_STRING_R())));
-            assertEquals(Arrays.asList(1, 2, 3), Arrays.asList(array.getValueAsArray(TArrays_NUMBER_R())));
-            assertEquals("[1970-01-01, 1970-01-02, 1970-01-03]", Arrays.asList(array.getValueAsArray(TArrays_DATE_R())).toString());
+            assertEquals(Arrays.asList("a", "b", "c", "d\"\\d"), Arrays.asList(array.getValue(TArrays_STRING_R()).get()));
+            assertEquals(Arrays.asList(1, 2, 3), Arrays.asList(array.getValue(TArrays_NUMBER_R()).get()));
+            assertEquals("[1970-01-01, 1970-01-02, 1970-01-03]", Arrays.asList(array.getValue(TArrays_DATE_R()).get()).toString());
 
 
 
             UpdateQuery<X> update = create().updateQuery(TArrays());
             update.addValueAsArray(TArrays_NUMBER_R(), 3, 2, 1);
-            update.addValueAsArray(TArrays_STRING_R(), "c", "b", "a");
+            update.addValueAsArray(TArrays_STRING_R(), "d\"\\d", "c", "b", "a");
             update.addValueAsArray(TArrays_DATE_R(), new Date(84600 * 2000), new Date(84600 * 1000), new Date(0));
             update.addConditions(TArrays_ID().equal(5));
             update.execute();
@@ -445,9 +445,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             .where(TArrays_ID().equal(5))
             .fetchOne();
 
-            assertEquals(Arrays.asList("c", "b", "a"), Arrays.asList(array.getValueAsArray(TArrays_STRING_R())));
-            assertEquals(Arrays.asList(3, 2, 1), Arrays.asList(array.getValueAsArray(TArrays_NUMBER_R())));
-            assertEquals("[1970-01-03, 1970-01-02, 1970-01-01]", Arrays.asList(array.getValueAsArray(TArrays_DATE_R())).toString());
+            assertEquals(Arrays.asList("d\"\\d", "c", "b", "a"), Arrays.asList(array.getValue(TArrays_STRING_R()).get()));
+            assertEquals(Arrays.asList(3, 2, 1), Arrays.asList(array.getValue(TArrays_NUMBER_R()).get()));
+            assertEquals("[1970-01-03, 1970-01-02, 1970-01-01]", Arrays.asList(array.getValue(TArrays_DATE_R()).get()).toString());
         }
 
         if (TArrays_STRING() != null) {
@@ -558,7 +558,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             InsertQuery<?> insert = create().insertQuery(TArrays());
             insert.addValue(TArrays_ID(), 5);
             insert.addValue(TArrays_NUMBER(), new Integer[] { 1, 2, 3 });
-            insert.addValue(TArrays_STRING(), new String[] { "a", "b", "c" });
+            insert.addValue(TArrays_STRING(), new String[] { "a", "b", "c", "d\"\\d" });
             insert.addValue(TArrays_DATE(), new Date[] { new Date(0), new Date(84600 * 1000), new Date(84600 * 2000)});
 
             insert.execute();
@@ -574,7 +574,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             s = (Object[]) array.getValue(0);
             n = (Object[]) array.getValue(1);
             d = (Object[]) array.getValue(2);
-            assertEquals(3, s.length);
+            assertEquals(4, s.length);
             assertEquals(3, n.length);
             assertEquals(3, d.length);
             assertEquals(TArrays_STRING().getType(), s.getClass());
@@ -583,6 +583,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             assertEquals("a", s[0].toString());
             assertEquals("b", s[1].toString());
             assertEquals("c", s[2].toString());
+            assertEquals("d\"\\d", s[3].toString());
             assertEquals("1", n[0].toString());
             assertEquals("2", n[1].toString());
             assertEquals("3", n[2].toString());
@@ -594,7 +595,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
             UpdateQuery<X> update = create().updateQuery(TArrays());
             update.addValue(TArrays_NUMBER(), new Integer[] { 3, 2, 1});
-            update.addValue(TArrays_STRING(), new String[] { "c", "b", "a" });
+            update.addValue(TArrays_STRING(), new String[] { "d\"\\d", "c", "b", "a" });
             update.addValue(TArrays_DATE(), new Date[] { new Date(84600 * 2000), new Date(84600 * 1000), new Date(0) });
             update.addConditions(TArrays_ID().equal(5));
             update.execute();
@@ -610,15 +611,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             s = (Object[]) array.getValue(0);
             n = (Object[]) array.getValue(1);
             d = (Object[]) array.getValue(2);
-            assertEquals(3, s.length);
+            assertEquals(4, s.length);
             assertEquals(3, n.length);
             assertEquals(3, d.length);
             assertEquals(TArrays_STRING().getType(), s.getClass());
             assertEquals(TArrays_NUMBER().getType(), n.getClass());
             assertEquals(TArrays_DATE().getType(), d.getClass());
-            assertEquals("c", s[0].toString());
-            assertEquals("b", s[1].toString());
-            assertEquals("a", s[2].toString());
+            assertEquals("d\"\\d", s[0].toString());
+            assertEquals("c", s[1].toString());
+            assertEquals("b", s[2].toString());
+            assertEquals("a", s[3].toString());
             assertEquals("3", n[0].toString());
             assertEquals("2", n[1].toString());
             assertEquals("1", n[2].toString());

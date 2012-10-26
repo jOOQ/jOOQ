@@ -37,9 +37,7 @@
 package org.jooq.impl;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
@@ -59,13 +57,8 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
 
     private static final long           serialVersionUID = -8101463810207566546L;
 
-    @Deprecated
-    private final Map<String, Class<?>> typeMapping;
-
     public SchemaImpl(String name) {
         super(name);
-
-        this.typeMapping = new HashMap<String, Class<?>>();
     }
 
     @Override
@@ -74,20 +67,6 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
     @Override
     public final void toSQL(RenderContext context) {
         context.literal(getName());
-    }
-
-    @Override
-    @Deprecated
-    public final Map<String, Class<?>> getTypeMapping() {
-        return Collections.unmodifiableMap(typeMapping);
-    }
-
-    /**
-     * @deprecated - 2.3.0 - regenerate your schema
-     */
-    @Deprecated
-    protected final void addMapping(String name, Class<?> recordType) {
-        typeMapping.put(name, recordType);
     }
 
     @Override

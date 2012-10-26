@@ -98,11 +98,8 @@ public final class UShort extends UNumber implements Comparable<UShort> {
      *
      * @throws NumberFormatException If <code>value</code> is not in the range
      *             of an <code>unsigned short</code>
-     * @deprecated - Use {@link #valueOf(int)}, or {@link Unsigned#ushort(int)}
-     *             instead
      */
-    @Deprecated
-    public UShort(int value) throws NumberFormatException {
+    private UShort(int value) throws NumberFormatException {
         this.value = value;
         rangeCheck();
     }
@@ -111,12 +108,8 @@ public final class UShort extends UNumber implements Comparable<UShort> {
      * Create an <code>unsigned short</code> by masking it with
      * <code>0xFFFF</code> i.e. <code>(short) -1</code> becomes
      * <code>(ushort) 65535</code>
-     *
-     * @deprecated - Use {@link #valueOf(short)}, or
-     *             {@link Unsigned#ushort(short)} instead
      */
-    @Deprecated
-    public UShort(short value) {
+    private UShort(short value) {
         this.value = value & MAX_VALUE;
     }
 
@@ -125,11 +118,8 @@ public final class UShort extends UNumber implements Comparable<UShort> {
      *
      * @throws NumberFormatException If <code>value</code> does not contain a
      *             parsable <code>unsigned short</code>.
-     * @deprecated - Use {@link #valueOf(String)}, or
-     *             {@link Unsigned#ushort(String)} instead
      */
-    @Deprecated
-    public UShort(String value) throws NumberFormatException {
+    private UShort(String value) throws NumberFormatException {
         this.value = Integer.parseInt(value);
         rangeCheck();
     }

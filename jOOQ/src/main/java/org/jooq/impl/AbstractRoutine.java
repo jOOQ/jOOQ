@@ -79,7 +79,7 @@ import org.jooq.tools.Convert;
  *
  * @author Lukas Eder
  */
-public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart implements Routine<T>, AttachableInternal {
+public abstract class AbstractRoutine<T> extends AbstractNamedQueryPart implements Routine<T>, AttachableInternal {
 
     /**
      * Generated UID
@@ -90,6 +90,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     // Meta-data attributes (the same for every call)
     // ------------------------------------------------------------------------
 
+    private final Schema                      schema;
     private final Package                     pkg;
     private final List<Parameter<?>>          allParameters;
     private final List<Parameter<?>>          inParameters;
@@ -127,10 +128,11 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<T> type) {
-        super(name, schema);
+        super(name);
 
         this.parameterIndexes = new HashMap<Parameter<?>, Integer>();
 
+        this.schema = schema;
         this.pkg = pkg;
         this.allParameters = new ArrayList<Parameter<?>>();
         this.inParameters = new ArrayList<Parameter<?>>();
@@ -577,6 +579,11 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     @Override
     public final List<Parameter<?>> getParameters() {
         return Collections.unmodifiableList(allParameters);
+    }
+
+    @Override
+    public final Schema getSchema() {
+        return schema;
     }
 
     @Override

@@ -51,15 +51,24 @@ import org.jooq.Schema;
  *
  * @author Lukas Eder
  */
-public class PackageImpl extends AbstractSchemaProviderQueryPart implements Package {
+public class PackageImpl extends AbstractNamedQueryPart implements Package {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = 7466890004995197675L;
 
+    private final Schema      schema;
+
     public PackageImpl(String name, Schema schema) {
-        super(name, schema);
+        super(name);
+
+        this.schema = schema;
+    }
+
+    @Override
+    public final Schema getSchema() {
+        return schema;
     }
 
     @Override

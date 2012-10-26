@@ -48,7 +48,6 @@ public interface UDT<R extends UDTRecord<R>> extends org.jooq.Type<R> {
     /**
      * Get the UDT schema
      */
-    @Override
     Schema getSchema();
 
     /**

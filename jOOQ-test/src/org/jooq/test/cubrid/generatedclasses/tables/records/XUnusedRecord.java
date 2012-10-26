@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1752803977;
+	private static final long serialVersionUID = -854431573;
 
 	/**
 	 * The table column <code>DBA.x_unused.id</code>
@@ -50,8 +50,8 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	public java.util.List<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord> fetchXUnusedList() {
 		return create()
 			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME_REF.equal(getValueAsString(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID)))
-			.and(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID_REF.equal(getValueAsInteger(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME)))
+			.where(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME_REF.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID, String.class)))
+			.and(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID_REF.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME, Integer.class)))
 			.fetch();
 	}
 
@@ -125,8 +125,8 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	public org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()
 			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID.equal(getValueAsInteger(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME_REF)))
-			.and(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME.equal(getValueAsString(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID_REF)))
+			.where(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME_REF, Integer.class)))
+			.and(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID_REF, String.class)))
 			.fetchOne();
 	}
 

@@ -36,9 +36,7 @@
 
 package org.jooq;
 
-import java.sql.ResultSet;
 import java.util.List;
-import java.util.Map;
 
 /**
  * An entity representing a database schema
@@ -53,19 +51,6 @@ public interface Schema extends NamedQueryPart {
      */
     @Override
     String getName();
-
-    /**
-     * The complete type mapping for this schema.
-     * <p>
-     * This method returns all generated types involved with this schema. The
-     * result can be used in {@link ResultSet#getObject(int, Map)} and similar
-     * methods.
-     *
-     * @see UDT#getTypeMapping() for a UDT-specific type mapping
-     * @deprecated - 2.3.0 - Do not reuse this method
-     */
-    @Deprecated
-    Map<String, Class<?>> getTypeMapping();
 
     /**
      * List all tables contained in this schema

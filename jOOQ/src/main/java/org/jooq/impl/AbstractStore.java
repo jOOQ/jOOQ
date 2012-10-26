@@ -74,11 +74,6 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
     // -------------------------------------------------------------------------
 
     @Override
-    public final <I> I internalAPI(Class<I> internalType) {
-        return internalType.cast(this);
-    }
-
-    @Override
     public final void attach(Configuration c) {
         configuration = c;
 

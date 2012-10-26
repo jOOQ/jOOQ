@@ -128,7 +128,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     /**
      * Extracted method for very similar tests with T_IDENTITY, T_IDENTITY_PK
      */
-    @SuppressWarnings({ "unchecked", "deprecation" })
     private <R extends TableRecord<R>> void testInsertIdentity0(Table<R> table, TableField<R, Integer> id, TableField<R, Integer> val) throws Exception {
 
         // Plain insert
@@ -196,22 +195,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             assertNull(r3.getValue(1, val));
             assertEquals(3, (int) r3.getValue(0, id));
             assertEquals(4, (int) r3.getValue(1, id));
-
-            // Record.storeUsing()
-            R r4 = create().newRecord(table);
-            r4.setValue(val, 20);
-            assertEquals(1, r4.storeUsing(table.getIdentity().getField()));
-
-            if (getDialect() != POSTGRES &&
-                getDialect() != DB2) {
-
-                assertEquals(new BigInteger("5"), create().lastID());
-                assertEquals(new BigInteger("5"), create().lastID());
-            }
-
-            // TODO [#1002] Fix this
-            R r5 = create().fetchOne(table, id.equal(5));
-            assertEquals(r5, r4);
         }
     }
 
@@ -459,7 +442,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals("Hitchcock", author.getValue(TAuthor_LAST_NAME()));
     }
 
-    @SuppressWarnings({ "unchecked", "deprecation" })
     @Test
     public void testInsertReturning() throws Exception {
         if (TTriggers() == null) {
@@ -589,10 +571,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(++ID, (int) returned.getValue(TTriggers_ID()));
         assertNull(returned.getValue(TTriggers_ID_GENERATED()));
         assertNull(returned.getValue(TTriggers_COUNTER()));
-
-        returned.refreshUsing(TTriggers_ID());
-        assertEquals(  ID, (int) returned.getValue(TTriggers_ID_GENERATED()));
-        assertEquals(2*ID, (int) returned.getValue(TTriggers_COUNTER()));
 
         // store() and similar methods
         T triggered = create().newRecord(TTriggers());

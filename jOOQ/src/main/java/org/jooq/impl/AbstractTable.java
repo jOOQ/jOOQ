@@ -66,12 +66,16 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
      */
     private static final long serialVersionUID = 3155496238969274871L;
 
+    private final Schema      schema;
+
     AbstractTable(String name) {
         this(name, null);
     }
 
     AbstractTable(String name, Schema schema) {
-        super(name, schema);
+        super(name);
+
+        this.schema = schema;
     }
 
     // ------------------------------------------------------------------------
@@ -91,6 +95,11 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     // ------------------------------------------------------------------------
     // XXX: Table API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final Schema getSchema() {
+        return schema;
+    }
 
     /**
      * {@inheritDoc}

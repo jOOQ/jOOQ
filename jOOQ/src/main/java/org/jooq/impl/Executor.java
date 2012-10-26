@@ -1572,13 +1572,6 @@ public class Executor implements FactoryOperations {
     }
 
     /**
-     * Get a default <code>Factory</code> without a {@link Connection}
-     */
-    final static Executor getStaticFactory(SQLDialect dialect) {
-        return DEFAULT_INSTANCES[dialect.ordinal()];
-    }
-
-    /**
      * Get a default <code>Factory</code> with a {@link Connection}
      */
     final static Executor getNewFactory(Configuration configuration) {
@@ -1587,22 +1580,6 @@ public class Executor implements FactoryOperations {
         }
         else {
             return new Executor(configuration);
-        }
-    }
-
-    /**
-     * Whether the supplied {@link Configuration} can be obtained with
-     * {@link #getStaticFactory(SQLDialect)}
-     */
-    final static boolean isStaticFactory(Configuration configuration) {
-        if (configuration == null) {
-            return false;
-        }
-        else if (configuration instanceof DefaultConfiguration) {
-            return true;
-        }
-        else {
-            return getStaticFactory(configuration.getDialect()) == configuration;
         }
     }
 }

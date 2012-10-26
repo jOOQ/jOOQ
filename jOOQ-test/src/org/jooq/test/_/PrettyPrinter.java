@@ -38,7 +38,7 @@ package org.jooq.test._;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jooq.ExecuteContext;
-import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.Factory;
 import org.jooq.tools.StringUtils;
@@ -58,7 +58,7 @@ public class PrettyPrinter extends DefaultExecuteListener {
         Factory pretty = new Factory(ctx.getDialect(),
 
         // ... and the flag for pretty-printing
-            new Settings().withRenderFormatted(true));
+            SettingsTools.clone(ctx.getSettings()).withRenderFormatted(true));
 
         Factory normal = new Factory(ctx.getDialect());
 

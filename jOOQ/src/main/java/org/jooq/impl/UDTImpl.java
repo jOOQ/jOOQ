@@ -57,19 +57,24 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractFieldProviderQueryP
     private static final long     serialVersionUID = -2208672099190913126L;
 
     private final Schema          schema;
+    private final String          name;
     private final FieldList       fields;
     private transient DataType<R> type;
 
     public UDTImpl(String name, Schema schema) {
-        super(name);
-
         this.fields = new FieldList();
+        this.name = name;
         this.schema = schema;
     }
 
     @Override
     public final Schema getSchema() {
         return schema;
+    }
+
+    @Override
+    public final String getName() {
+        return name;
     }
 
     @Override

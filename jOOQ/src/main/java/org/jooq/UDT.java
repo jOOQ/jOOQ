@@ -53,7 +53,6 @@ public interface UDT<R extends UDTRecord<R>> extends org.jooq.Type<R> {
     /**
      * The name of this UDT
      */
-    @Override
     String getName();
 
     /**

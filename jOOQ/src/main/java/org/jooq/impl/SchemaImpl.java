@@ -53,12 +53,20 @@ import org.jooq.UDT;
  *
  * @author Lukas Eder
  */
-public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
+public class SchemaImpl extends AbstractQueryPart implements Schema {
 
-    private static final long           serialVersionUID = -8101463810207566546L;
+    private static final long serialVersionUID = -8101463810207566546L;
+    private final String      schemaName;
 
     public SchemaImpl(String name) {
-        super(name);
+        super();
+
+        this.schemaName = name;
+    }
+
+    @Override
+    public final String getName() {
+        return schemaName;
     }
 
     @Override

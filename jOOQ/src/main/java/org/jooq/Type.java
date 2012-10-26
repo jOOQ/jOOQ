@@ -46,7 +46,7 @@ package org.jooq;
  *             {@link org.jooq.UDT} with a single interface
  */
 @Deprecated
-public interface Type<R extends Record> extends NamedQueryPart, FieldProvider {
+public interface Type<R extends Record> extends QueryPart, FieldProvider {
 
     /**
      * @return The record type produced by this table

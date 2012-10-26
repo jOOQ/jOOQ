@@ -42,7 +42,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 
 @SuppressWarnings("deprecation")
-abstract class AbstractFieldProviderQueryPart<R extends Record> extends AbstractNamedQueryPart implements
+abstract class AbstractFieldProviderQueryPart<R extends Record> extends AbstractQueryPart implements
     org.jooq.Type<R> {
 
     /**
@@ -50,8 +50,8 @@ abstract class AbstractFieldProviderQueryPart<R extends Record> extends Abstract
      */
     private static final long serialVersionUID = -4629861305735726005L;
 
-    AbstractFieldProviderQueryPart(String name) {
-        super(name);
+    AbstractFieldProviderQueryPart() {
+        super();
     }
 
     @Override

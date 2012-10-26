@@ -82,8 +82,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public interface Routine<T> extends NamedQueryPart {
+public interface Routine<T> extends QueryPart {
 
     /**
      * Get the routine schema
@@ -93,7 +92,6 @@ public interface Routine<T> extends NamedQueryPart {
     /**
      * The name of this routine
      */
-    @Override
     String getName();
 
     /**

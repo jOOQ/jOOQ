@@ -180,6 +180,11 @@
 					<xsl:value-of select="text()"/>
 				</pre>
 			</xsl:when>
+			<xsl:when test="name(.) = 'scala'">
+				<pre class="prettyprint lang-scala">
+					<xsl:value-of select="text()"/>
+				</pre>
+			</xsl:when>
 			<xsl:when test="name(.) = 'sql'">
 				<pre class="prettyprint lang-sql">
 					<xsl:value-of select="text()"/>

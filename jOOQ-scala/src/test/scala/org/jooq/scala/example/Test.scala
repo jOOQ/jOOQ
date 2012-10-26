@@ -58,7 +58,7 @@ object Test {
           T_BOOK.TITLE || " abc" || " xy")
         from T_BOOK
         leftOuterJoin (
-          f select ( x.ID, x.YEAR_OF_BIRTH)
+          f select (x.ID, x.YEAR_OF_BIRTH)
           from x
           limit 1
           asTable x.getName()

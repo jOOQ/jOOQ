@@ -282,28 +282,7 @@ class DefaultBindContext extends AbstractBindContext {
         else if (type.isArray()) {
             switch (dialect) {
                 case POSTGRES: {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("{");
-
-                    String separator = "";
-                    for (Object o : (Object[]) value) {
-                        sb.append(separator);
-
-                        // [#753] null must be set as a literal
-                        if (o == null) {
-                            sb.append(o);
-                        }
-                        else {
-                            sb.append("\"");
-                            sb.append(o.toString().replaceAll("\"", "\"\""));
-                            sb.append("\"");
-                        }
-
-                        separator = ", ";
-                    }
-
-                    sb.append("}");
-                    stmt.setString(nextIndex(), sb.toString());
+                    stmt.setString(nextIndex(), postgresArrayString((Object[]) value));
                     break;
                 }
                 case HSQLDB:
@@ -341,5 +320,30 @@ class DefaultBindContext extends AbstractBindContext {
         }
 
         return this;
+    }
+
+    /* package private */ static String postgresArrayString(Object[] value) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+
+        String separator = "";
+        for (Object o : value) {
+            sb.append(separator);
+
+            // [#753] null must be set as a literal
+            if (o == null) {
+                sb.append(o);
+            }
+            else {
+                sb.append("\"");
+                sb.append(o.toString().replace("\\", "\\\\").replace("\"", "\\\""));
+                sb.append("\"");
+            }
+
+            separator = ", ";
+        }
+
+        sb.append("}");
+        return sb.toString();
     }
 }

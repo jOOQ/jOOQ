@@ -61,6 +61,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
@@ -94,7 +95,6 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.sqlserver.SQLServerDataType;
-import org.jooq.util.sqlserver.SQLServerFactory;
 
 /**
  * @author Lukas Eder
@@ -121,7 +121,7 @@ public class SQLServerTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new SQLServerFactory(getConnection(), settings);
+        return new Factory(getConnection(), SQLDialect.SQLSERVER, settings);
     }
 
     @Override

@@ -60,6 +60,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
@@ -96,7 +97,6 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
-import org.jooq.util.hsqldb.HSQLDBFactory;
 
 /**
  * @author Lukas Eder
@@ -139,7 +139,7 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
                 .withOutput(Public.PUBLIC.getName());
         }
 
-        return new HSQLDBFactory(getConnection(), settings);
+        return new Factory(getConnection(), SQLDialect.HSQLDB, settings);
     }
 
 	@Override

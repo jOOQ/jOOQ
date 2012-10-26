@@ -47,10 +47,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.jooq.SQLDialect;
+import org.jooq.impl.Factory;
 import org.jooq.test.h2.generatedclasses.Routines;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
 import org.jooq.test.h2.generatedclasses.tables.TBook;
-import org.jooq.util.h2.H2Factory;
 
 /**
  * Pre-compiled stored functions for H2
@@ -64,7 +65,7 @@ public class F {
     }
 
     public static void pCreateAuthorByName(Connection connection, String firstName, String lastName) {
-        H2Factory create = create(connection);
+        Factory create = create(connection);
 
         create.insertInto(T_AUTHOR)
               .set(TAuthor.ID, create.select(max(TAuthor.ID).add(1)).from(T_AUTHOR).<Integer>asField())
@@ -95,7 +96,7 @@ public class F {
     }
 
     public static Integer fAuthorExists(Connection connection, String authorName) {
-        H2Factory create = create(connection);
+        Factory create = create(connection);
 
         Integer result =
         create.select(sign(count()))
@@ -136,7 +137,7 @@ public class F {
         return 1;
     }
 
-    private static H2Factory create(Connection connection) {
-        return new H2Factory(connection);
+    private static Factory create(Connection connection) {
+        return new Factory(connection, SQLDialect.H2);
     }
 }

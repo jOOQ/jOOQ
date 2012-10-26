@@ -94,6 +94,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
@@ -155,7 +156,6 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.oracle.OracleDataType;
-import org.jooq.util.oracle.OracleFactory;
 
 import org.junit.Test;
 
@@ -204,8 +204,8 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected OracleFactory create(Settings settings) {
-        return new OracleFactory(getConnection(), settings);
+    protected Factory create(Settings settings) {
+        return new Factory(getConnection(), SQLDialect.ORACLE, settings);
     }
 
     @Override
@@ -814,8 +814,8 @@ public class OracleTest extends jOOQAbstractTest<
     // Oracle-specific tests
     // -------------------------------------------------------------------------
 
-    private OracleFactory ora() {
-        return new OracleFactory(create().getConnection(), create().getSettings());
+    private Factory ora() {
+        return new Factory(create().getConnection(), SQLDialect.ORACLE, create().getSettings());
     }
 
     @Test
@@ -1340,7 +1340,7 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleMultiSchemaFactories() throws Exception {
-        Factory create = new OracleFactory(getConnectionMultiSchema());
+        Factory create = new Factory(getConnectionMultiSchema(), SQLDialect.ORACLE);
 
         UAddressTypeRecord address = new UAddressTypeRecord();
         address.setStreet(new UStreetTypeRecord());

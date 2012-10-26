@@ -53,6 +53,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
@@ -98,7 +99,6 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.ingres.IngresDataType;
-import org.jooq.util.ingres.IngresFactory;
 
 
 /**
@@ -126,7 +126,7 @@ public class IngresTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new IngresFactory(getConnection(), settings);
+        return new Factory(getConnection(), SQLDialect.INGRES, settings);
     }
 
     @Override

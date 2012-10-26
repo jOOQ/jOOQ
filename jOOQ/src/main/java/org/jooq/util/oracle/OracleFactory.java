@@ -38,14 +38,10 @@ package org.jooq.util.oracle;
 import static org.jooq.SQLDialect.ORACLE;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-
-import javax.sql.DataSource;
 
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.Support;
-import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.impl.SQLDataType;
 
@@ -62,69 +58,9 @@ public class OracleFactory extends Factory {
     private static final long serialVersionUID = -1934939784130217163L;
 
     /**
-     * Create a factory with connection and a settings configured
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
+     * No instances
      */
-    public OracleFactory(Connection connection, Settings settings) {
-        super(connection, SQLDialect.ORACLE, settings);
-    }
-
-    /**
-     * Create a factory with a data source and a settings configured
-     *
-     * @param dataSource The data source to use with objects created from this
-     *            factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
-     */
-    public OracleFactory(DataSource dataSource, Settings settings) {
-        super(dataSource, SQLDialect.ORACLE, settings);
-    }
-
-    /**
-     * Create a factory with connection
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     */
-    public OracleFactory(Connection connection) {
-        super(connection, SQLDialect.ORACLE);
-    }
-
-    /**
-     * Create a factory with a data source
-     *
-     * @param dataSource The data source to use with objects created from this
-     *            factory
-     */
-    public OracleFactory(DataSource dataSource) {
-        super(dataSource, SQLDialect.ORACLE);
-    }
-
-    /**
-     * Create a factory with settings configured
-     * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
-     *
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
-     */
-    public OracleFactory(Settings settings) {
-        super(SQLDialect.ORACLE, settings);
-    }
-
-    /**
-     * Create a connection-less factory
-     * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
-     */
-    public OracleFactory() {
+    private OracleFactory() {
         super(SQLDialect.ORACLE);
     }
 

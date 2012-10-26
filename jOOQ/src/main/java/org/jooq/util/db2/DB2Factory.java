@@ -35,12 +35,7 @@
  */
 package org.jooq.util.db2;
 
-import java.sql.Connection;
-
-import javax.sql.DataSource;
-
 import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 
 /**
@@ -56,69 +51,9 @@ public class DB2Factory extends Factory {
     private static final long serialVersionUID = -5683650832655465156L;
 
     /**
-     * Create a factory with connection and a settings configured
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
+     * No instances
      */
-    public DB2Factory(Connection connection, Settings settings) {
-        super(connection, SQLDialect.DB2, settings);
-    }
-
-    /**
-     * Create a factory with a data source and a settings configured
-     *
-     * @param dataSource The data source to use with objects created from this
-     *            factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
-     */
-    public DB2Factory(DataSource dataSource, Settings settings) {
-        super(dataSource, SQLDialect.DB2, settings);
-    }
-
-    /**
-     * Create a factory with connection
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     */
-    public DB2Factory(Connection connection) {
-        super(connection, SQLDialect.DB2);
-    }
-
-    /**
-     * Create a factory with a data source
-     *
-     * @param dataSource The data source to use with objects created from this
-     *            factory
-     */
-    public DB2Factory(DataSource dataSource) {
-        super(dataSource, SQLDialect.DB2);
-    }
-
-    /**
-     * Create a factory with settings configured
-     * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
-     *
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
-     */
-    public DB2Factory(Settings settings) {
-        super(SQLDialect.DB2, settings);
-    }
-
-    /**
-     * Create a connection-less factory
-     * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
-     */
-    public DB2Factory() {
+    private DB2Factory() {
         super(SQLDialect.DB2);
     }
 }

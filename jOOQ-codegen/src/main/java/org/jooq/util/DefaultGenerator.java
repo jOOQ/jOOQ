@@ -2783,21 +2783,21 @@ public class DefaultGenerator extends AbstractGenerator {
             ColumnDefinition referencingColumn = foreignKey.getKeyColumns().get(i);
             ColumnDefinition referencedColumn = foreignKey.getReferencedColumns().get(i);
 
+            out.print("\t\t\tsetValue(");
+            out.print(getStrategy().getFullJavaIdentifier(referencingColumn));
+            out.print(", value.getValue(");
+            out.print(strategy.getFullJavaIdentifier(referencedColumn));
+
+            // Convert foreign key value, if there is a type mismatch
             DataTypeDefinition foreignType = referencingColumn.getType();
             DataTypeDefinition primaryType = referencedColumn.getType();
 
-            out.print("\t\t\tsetValue(");
-            out.print(getStrategy().getFullJavaIdentifier(referencingColumn));
-            out.print(", value.getValue");
-
-            // Convert foreign key value, if there is a type mismatch
             if (!match(foreignType, primaryType)) {
-                out.print("As");
+                out.print(", ");
                 out.print(getSimpleJavaType(referencingColumn.getType()));
+                out.print(".class");
             }
 
-            out.print("(");
-            out.print(strategy.getFullJavaIdentifier(referencedColumn));
             out.println("));");
         }
 
@@ -2834,19 +2834,19 @@ public class DefaultGenerator extends AbstractGenerator {
         for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
             out.print(connector);
             out.print(strategy.getFullJavaIdentifier(foreignKey.getReferencedColumns().get(i)));
-            out.print(".equal(getValue");
+            out.print(".equal(getValue(");
+            out.print(strategy.getFullJavaIdentifier(foreignKey.getKeyColumns().get(i)));
 
+            // Convert foreign key value, if there is a type mismatch
             DataTypeDefinition foreignType = foreignKey.getKeyColumns().get(i).getType();
             DataTypeDefinition primaryType = foreignKey.getReferencedColumns().get(i).getType();
 
-            // Convert foreign key value, if there is a type mismatch
             if (!match(foreignType, primaryType)) {
-                out.print("As");
+                out.print(", ");
                 out.print(getSimpleJavaType(foreignKey.getReferencedColumns().get(i).getType()));
+                out.print(".class");
             }
 
-            out.print("(");
-            out.print(strategy.getFullJavaIdentifier(foreignKey.getKeyColumns().get(i)));
             out.println(")))");
 
             connector = "\t\t\t.and(";
@@ -2911,21 +2911,20 @@ public class DefaultGenerator extends AbstractGenerator {
         for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
             out.print(connector);
             out.print(strategy.getFullJavaIdentifier(foreignKey.getKeyColumns().get(i)));
-            out.print(".equal(getValue");
+            out.print(".equal(getValue(");
+            out.print(strategy.getFullJavaIdentifier(uniqueKey.getKeyColumns().get(i)));
 
+            // Convert foreign key value, if there is a type mismatch
             DataTypeDefinition foreignType = foreignKey.getKeyColumns().get(i).getType();
             DataTypeDefinition primaryType = uniqueKey.getKeyColumns().get(i).getType();
 
-            // Convert foreign key value, if there is a type mismatch
             if (!match(foreignType, primaryType)) {
-                out.print("As");
+                out.print(", ");
                 out.print(getSimpleJavaType(foreignKey.getKeyColumns().get(i).getType()));
+                out.print(".class");
             }
 
-            out.print("(");
-            out.print(strategy.getFullJavaIdentifier(uniqueKey.getKeyColumns().get(i)));
             out.println(")))");
-
             connector = "\t\t\t.and(";
         }
 

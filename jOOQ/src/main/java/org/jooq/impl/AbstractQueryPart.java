@@ -49,7 +49,6 @@ import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
-import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -59,11 +58,6 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 abstract class AbstractQueryPart implements QueryPartInternal {
 
     private static final long serialVersionUID = 2078114876079493107L;
-
-    @Override
-    public final <I> I internalAPI(Class<I> internalType) {
-        return internalType.cast(this);
-    }
 
     // -------------------------------------------------------------------------
     // [#1544] The deprecated Attachable and Attachable internal API
@@ -81,12 +75,6 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // -------------------------------------------------------------------------
     // The QueryPart and QueryPart internal API
     // -------------------------------------------------------------------------
-
-    @Override
-    @Deprecated
-    public final SQLDialect getDialect() {
-        throw new UnsupportedOperationException("This method is no longer supported");
-    }
 
     /**
      * This method is also declared as {@link Query#getSQL()}
@@ -225,17 +213,6 @@ abstract class AbstractQueryPart implements QueryPartInternal {
      */
     protected final Factory create(Configuration configuration) {
         return Factory.getNewFactory(configuration);
-    }
-
-    /**
-     * Internal convenience method
-     *
-     * @deprecated - 2.3.0 - Do not reuse
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    protected final DataAccessException translate(String task, String sql, SQLException e) {
-        return translate(sql, e);
     }
 
     /**

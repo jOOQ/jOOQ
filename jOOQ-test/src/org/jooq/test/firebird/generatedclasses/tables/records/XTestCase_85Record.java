@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.IXTestCase_85 {
 
-	private static final long serialVersionUID = -677441195;
+	private static final long serialVersionUID = -338310955;
 
 	/**
 	 * The table column <code>X_TEST_CASE_85.ID</code>
@@ -71,8 +71,8 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	public org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()
 			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME.equal(getValueAsString(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID)))
-			.and(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID.equal(getValueAsInteger(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME)))
+			.where(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, String.class)))
+			.and(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME, Integer.class)))
 			.fetchOne();
 	}
 

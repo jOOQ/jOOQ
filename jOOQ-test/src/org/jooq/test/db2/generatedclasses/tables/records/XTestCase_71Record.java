@@ -9,7 +9,7 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 529613240;
+	private static final long serialVersionUID = -1081115366;
 
 	/**
 	 * The table column <code>LUKAS.X_TEST_CASE_71.ID</code>
@@ -64,7 +64,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 			setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, null);
 		}
 		else {
-			setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, value.getValueAsShort(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID));
+			setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, value.getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID, Short.class));
 		}
 	}
 
@@ -80,7 +80,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	public org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {
 		return create()
 			.selectFrom(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
-			.where(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID.equal(getValueAsInteger(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID)))
+			.where(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID.equal(getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, Integer.class)))
 			.fetchOne();
 	}
 

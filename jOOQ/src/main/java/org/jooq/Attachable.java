@@ -59,8 +59,7 @@ import javax.sql.DataSource;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public interface Attachable extends Adapter, Serializable {
+public interface Attachable extends Serializable {
 
     /**
      * Attach this object to a new {@link Configuration}

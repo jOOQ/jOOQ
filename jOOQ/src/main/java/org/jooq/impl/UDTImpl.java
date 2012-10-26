@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.Map;
-
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.QueryPart;
@@ -56,17 +54,22 @@ import org.jooq.UDTRecord;
  */
 public class UDTImpl<R extends UDTRecord<R>> extends AbstractFieldProviderQueryPart<R> implements UDT<R> {
 
-    private static final long               serialVersionUID = -2208672099190913126L;
+    private static final long     serialVersionUID = -2208672099190913126L;
 
-    private final FieldList                 fields;
-    private transient DataType<R>           type;
-    @Deprecated
-    private transient Map<String, Class<?>> typeMapping;
+    private final Schema          schema;
+    private final FieldList       fields;
+    private transient DataType<R> type;
 
     public UDTImpl(String name, Schema schema) {
-        super(name, schema);
+        super(name);
 
         this.fields = new FieldList();
+        this.schema = schema;
+    }
+
+    @Override
+    public final Schema getSchema() {
+        return schema;
     }
 
     @Override

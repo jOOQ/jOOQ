@@ -1324,11 +1324,6 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testNonUpdatables() throws Exception {
-        new CRUDTests(this).testNonUpdatables();
-    }
-
-    @Test
     public void testFormat() throws Exception {
         new FormatTests(this).testFormat();
     }

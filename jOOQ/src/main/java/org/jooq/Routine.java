@@ -83,12 +83,11 @@ import org.jooq.exception.DataAccessException;
  * @author Lukas Eder
  */
 @SuppressWarnings("deprecation")
-public interface Routine<T> extends NamedQueryPart, org.jooq.SchemaProvider {
+public interface Routine<T> extends NamedQueryPart {
 
     /**
      * Get the routine schema
      */
-    @Override
     Schema getSchema();
 
     /**

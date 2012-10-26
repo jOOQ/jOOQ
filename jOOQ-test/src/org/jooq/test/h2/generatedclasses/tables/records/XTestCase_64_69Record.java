@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_64_69 {
 
-	private static final long serialVersionUID = -374768472;
+	private static final long serialVersionUID = -2081892290;
 
 	/**
 	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.ID</code>
@@ -39,7 +39,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
 		return create()
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
-			.where(org.jooq.test.h2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID.equal(getValueAsShort(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.ID)))
+			.where(org.jooq.test.h2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.ID, Short.class)))
 			.fetch();
 	}
 

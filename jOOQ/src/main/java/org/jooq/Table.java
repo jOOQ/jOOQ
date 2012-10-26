@@ -67,7 +67,6 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
     /**
      * Get the table schema
      */
-    @Override
     Schema getSchema();
 
     /**

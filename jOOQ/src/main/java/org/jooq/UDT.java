@@ -42,8 +42,7 @@ package org.jooq;
  * @param <R> The record type
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public interface UDT<R extends UDTRecord<R>> extends org.jooq.Type<R> {
+public interface UDT<R extends UDTRecord<R>> extends FieldProvider, QueryPart {
 
     /**
      * Get the UDT schema
@@ -58,7 +57,6 @@ public interface UDT<R extends UDTRecord<R>> extends org.jooq.Type<R> {
     /**
      * @return The record type produced by this table
      */
-    @Override
     Class<? extends R> getRecordType();
 
     /**

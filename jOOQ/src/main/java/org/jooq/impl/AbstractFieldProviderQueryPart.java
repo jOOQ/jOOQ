@@ -39,11 +39,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.FieldProvider;
 import org.jooq.Record;
 
-@SuppressWarnings("deprecation")
-abstract class AbstractFieldProviderQueryPart<R extends Record> extends AbstractQueryPart implements
-    org.jooq.Type<R> {
+/**
+ * @author Lukas Eder
+ */
+abstract class AbstractFieldProviderQueryPart<R extends Record> extends AbstractQueryPart implements FieldProvider {
 
     /**
      * Generated UID

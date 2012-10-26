@@ -116,7 +116,7 @@ class DefaultBindContext extends AbstractBindContext {
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     protected final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
         SQLDialect dialect = configuration.getDialect();
 
@@ -323,10 +323,6 @@ class DefaultBindContext extends AbstractBindContext {
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             stmt.setString(nextIndex(), ((EnumType) value).getLiteral());
-        }
-        else if (org.jooq.MasterDataType.class.isAssignableFrom(type)) {
-            Object primaryKey = ((org.jooq.MasterDataType<?>) value).getPrimaryKey();
-            bindValue(primaryKey, primaryKey.getClass());
         }
         else {
             try {

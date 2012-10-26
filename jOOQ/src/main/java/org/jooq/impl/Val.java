@@ -141,14 +141,13 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private boolean shouldCast(RenderContext context) {
 
         // In default mode, casting is only done when parameters are NOT inlined
         if (!isInline(context)) {
 
             // Generated enums should not be cast...
-            if (!(getValue() instanceof EnumType) && !(getValue() instanceof org.jooq.MasterDataType)) {
+            if (!(getValue() instanceof EnumType)) {
                 switch (context.getDialect()) {
 
                     // These dialects can hardly detect the type of a bound constant.
@@ -324,7 +323,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
     /**
      * Inlining abstraction
      */
-    @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private void toSQL(RenderContext context, Object val, Class<?> type) {
         SQLDialect dialect = context.getDialect();
 
@@ -485,9 +484,6 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             }
             else if (EnumType.class.isAssignableFrom(type)) {
                 toSQL(context, ((EnumType) val).getLiteral());
-            }
-            else if (org.jooq.MasterDataType.class.isAssignableFrom(type)) {
-                toSQL(context, ((org.jooq.MasterDataType<?>) val).getPrimaryKey());
             }
             else if (UDTRecord.class.isAssignableFrom(type)) {
                 context.sql("[UDT]");

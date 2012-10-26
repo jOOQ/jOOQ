@@ -58,7 +58,6 @@ import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
-import org.jooq.MasterDataType;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
@@ -263,9 +262,6 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         else if (EnumType.class.isAssignableFrom(type)) {
             return Types.VARCHAR;
         }
-        else if (MasterDataType.class.isAssignableFrom(type)) {
-            return Types.BIGINT;
-        }
         else if (UDTRecord.class.isAssignableFrom(type)) {
             return Types.STRUCT;
         }
@@ -450,7 +446,6 @@ public abstract class AbstractDataType<T> implements DataType<T> {
                 // jOOQ data types are handled here
                 if (EnumType.class.isAssignableFrom(type) ||
                     UDTRecord.class.isAssignableFrom(type) ||
-                    MasterDataType.class.isAssignableFrom(type) ||
                     ArrayRecord.class.isAssignableFrom(type)) {
 
                     for (SQLDialect d : SQLDialect.values()) {

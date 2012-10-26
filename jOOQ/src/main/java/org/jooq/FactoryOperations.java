@@ -523,30 +523,6 @@ public interface FactoryOperations extends Configuration {
     <R extends Record> InsertValuesStep<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields);
 
     /**
-     * Create a new DSL insert statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.insertInto(table, create.select(1))
-     *       .execute();
-     * </pre></code>
-     *
-     * @deprecated - 2.0.3 - Use any of these methods instead:
-     *             <ul>
-     *             <li>{@link #insertInto(Table)} and
-     *             {@link InsertSetStep#select(Select)}</li> <li>
-     *             {@link #insertInto(Table, Field...)} and
-     *             {@link InsertValuesStep#select(Select)}</li> <li>
-     *             {@link #insertInto(Table, Collection)} and
-     *             {@link InsertValuesStep#select(Select)}</li>
-     *             </ul>
-     */
-    @Deprecated
-    @Support
-    <R extends Record> Insert<R> insertInto(Table<R> into, Select<?> select);
-
-    /**
      * Create a new {@link UpdateQuery}
      *
      * @param table The table to update data into
@@ -1085,19 +1061,6 @@ public interface FactoryOperations extends Configuration {
 
     /**
      * Insert one record
-     * <code><pre>INSERT INTO [table] ... VALUES [record] </pre></code>
-     *
-     * @return The number of inserted records
-     * @throws DataAccessException if something went wrong executing the query
-     * @deprecated - 2.5.0 [#1692] - Use {@link #executeInsert(TableRecord)}
-     *             instead
-     */
-    @Deprecated
-    @Support
-    <R extends TableRecord<R>> int executeInsert(Table<R> table, R record) throws DataAccessException;
-
-    /**
-     * Insert one record
      * <p>
      * This executes something like the following statement:
      * <code><pre>INSERT INTO [table] ... VALUES [record] </pre></code>
@@ -1112,59 +1075,6 @@ public interface FactoryOperations extends Configuration {
      */
     @Support
     <R extends TableRecord<R>> int executeInsert(R record) throws DataAccessException;
-
-    /**
-     * Update a table
-     * <code><pre>UPDATE [table] SET [modified values in record] </pre></code>
-     *
-     * @return The number of updated records
-     * @throws DataAccessException if something went wrong executing the query
-     * @deprecated - 2.5.0 [#1692] - This "mass" update is no longer supported
-     */
-    @Deprecated
-    @Support
-    <R extends TableRecord<R>> int executeUpdate(Table<R> table, R record) throws DataAccessException;
-
-    /**
-     * Update a table
-     * <code><pre>UPDATE [table] SET [modified values in record] WHERE [condition]</pre></code>
-     *
-     * @return The number of updated records
-     * @throws DataAccessException if something went wrong executing the query
-     * @deprecated - 2.5.0 [#1692] - Use
-     *             {@link #executeUpdate(TableRecord, Condition)} instead
-     */
-    @Deprecated
-    @Support
-    <R extends TableRecord<R>, T> int executeUpdate(Table<R> table, R record, Condition condition)
-        throws DataAccessException;
-
-    /**
-     * Update one record in a table
-     * <code><pre>UPDATE [table] SET [modified values in record]</pre></code>
-     *
-     * @return The number of updated records
-     * @throws DataAccessException if something went wrong executing the query
-     * @deprecated - 2.5.0 [#1692] - This "mass" update is no longer supported
-     */
-    @Deprecated
-    @Support
-    <R extends TableRecord<R>> int executeUpdateOne(Table<R> table, R record) throws DataAccessException;
-
-    /**
-     * Update one record in a table
-     * <code><pre>UPDATE [table] SET [modified values in record] WHERE [condition]</pre></code>
-     *
-     * @return The number of updated records
-     * @throws DataAccessException if something went wrong executing the query
-     * @deprecated - 2.5.0 [#1692] - The semantics of
-     *             {@link #executeUpdate(TableRecord, Condition)} has changed.
-     *             This method here is no longer necessary.
-     */
-    @Deprecated
-    @Support
-    <R extends TableRecord<R>, T> int executeUpdateOne(Table<R> table, R record, Condition condition)
-        throws DataAccessException;
 
     /**
      * Update a table
@@ -1205,60 +1115,6 @@ public interface FactoryOperations extends Configuration {
      */
     @Support
     <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) throws DataAccessException;
-
-    /**
-     * Delete records from a table <code><pre>DELETE FROM [table]</pre></code>
-     *
-     * @return The number of deleted records
-     * @throws DataAccessException if something went wrong executing the query
-     * @deprecated - 2.5.0 [#1692] - The semantics of
-     *             {@link #executeDelete(TableRecord, Condition)} has changed.
-     *             This method here is no longer necessary.
-     */
-    @Deprecated
-    @Support
-    <R extends TableRecord<R>> int executeDelete(Table<R> table) throws DataAccessException;
-
-    /**
-     * Delete records from a table
-     * <code><pre>DELETE FROM [table] WHERE [condition]</pre></code>
-     *
-     * @return The number of deleted records
-     * @throws DataAccessException if something went wrong executing the query.
-     * @deprecated - 2.5.0 [#1692] - The semantics of
-     *             {@link #executeDelete(TableRecord, Condition)} has changed.
-     *             This method here is no longer necessary.
-     */
-    @Deprecated
-    @Support
-    <R extends TableRecord<R>, T> int executeDelete(Table<R> table, Condition condition) throws DataAccessException;
-
-    /**
-     * Delete one record in a table <code><pre>DELETE FROM [table]</pre></code>
-     *
-     * @return The number of deleted records
-     * @throws DataAccessException if something went wrong executing the query
-     * @deprecated - 2.5.0 [#1692] - The semantics of
-     *             {@link #executeDelete(TableRecord, Condition)} has changed.
-     *             This method here is no longer necessary.
-     */
-    @Deprecated
-    @Support
-    <R extends TableRecord<R>> int executeDeleteOne(Table<R> table) throws DataAccessException;
-
-    /**
-     * Delete one record in a table
-     * <code><pre>DELETE FROM [table] WHERE [condition]</pre></code>
-     *
-     * @return The number of deleted records
-     * @throws DataAccessException if something went wrong executing the query
-     * @deprecated - 2.5.0 [#1692] - The semantics of
-     *             {@link #executeDelete(TableRecord, Condition)} has changed.
-     *             This method here is no longer necessary.
-     */
-    @Deprecated
-    @Support
-    <R extends TableRecord<R>, T> int executeDeleteOne(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.

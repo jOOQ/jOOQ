@@ -98,7 +98,6 @@ import org.jooq.FactoryOperations;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.GroupConcatOrderByStep;
-import org.jooq.Insert;
 import org.jooq.InsertQuery;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
@@ -271,34 +270,6 @@ public class Factory implements FactoryOperations {
      */
     public Factory(SQLDialect dialect) {
         this(null, null, dialect, null, null, null);
-    }
-
-    /**
-     * Create a factory with a connection, a dialect and a schema mapping
-     * configured.
-     * <p>
-     * If you provide a JDBC connection to a jOOQ Factory, jOOQ will use that
-     * connection for creating statements, but it will never call any of these
-     * methods:
-     * <ul>
-     * <li> {@link Connection#commit()}</li>
-     * <li> {@link Connection#rollback()}</li>
-     * <li> {@link Connection#close()}</li>
-     * </ul>
-     * Use this constructor if you want to handle transactions directly on the
-     * connection.
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     * @param dialect The dialect to use with objects created from this factory
-     * @param mapping The schema mapping to use with objects created from this
-     *            factory
-     * @deprecated - 2.0.5 - Use
-     *             {@link #Factory(Connection, SQLDialect, Settings)} instead
-     */
-    @Deprecated
-    public Factory(Connection connection, SQLDialect dialect, org.jooq.SchemaMapping mapping) {
-        this(null, connection, dialect, null, null, null);
     }
 
     /**
@@ -2002,15 +1973,6 @@ public class Factory implements FactoryOperations {
     @Override
     public final <R extends Record> InsertValuesStep<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
         return new InsertImpl<R>(this, into, fields);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public final <R extends Record> Insert<R> insertInto(Table<R> into, Select<?> select) {
-        return new InsertSelectQueryImpl<R>(this, into, into.getFields(), select);
     }
 
     /**
@@ -6211,89 +6173,6 @@ public class Factory implements FactoryOperations {
     // -------------------------------------------------------------------------
 
     /**
-     * Get a typed <code>Field</code> for a literal.
-     * <p>
-     * This is similar as calling {@link #field(String)}. A field without bind
-     * variables will be generated.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param <T> The generic field type
-     * @param literal The literal
-     * @return The literal as a field
-     * @deprecated - 2.3.0 - Use {@link #field(String)}, or
-     *             {@link #inline(Object)} instead.
-     */
-    @Deprecated
-    @SuppressWarnings("unchecked")
-    @Support
-    public static <T> Field<T> literal(T literal) {
-        if (literal == null) {
-            return (Field<T>) NULL();
-        }
-        else {
-            return literal(literal, (Class<T>) literal.getClass());
-        }
-    }
-
-    /**
-     * Get a typed <code>Field</code> for a literal.
-     * <p>
-     * This is similar as calling {@link #field(String)}. A field without bind
-     * variables will be generated.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param <T> The generic field type
-     * @param literal The literal
-     * @param type The literal's data type
-     * @return The literal as a field
-     * @deprecated - 2.3.0 - Use {@link #field(String, Class)}, or
-     *             {@link #inline(Object, Class)} instead.
-     */
-    @Deprecated
-    @Support
-    public static <T> Field<T> literal(Object literal, Class<T> type) {
-        return literal(literal, getDataType(type));
-    }
-
-    /**
-     * Get a typed <code>Field</code> for a literal.
-     * <p>
-     * This is similar as calling {@link #field(String)}. A field without bind
-     * variables will be generated.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param <T> The generic field type
-     * @param literal The literal
-     * @param type The literal's data type
-     * @return The literal as a field
-     * @deprecated - 2.3.0 - Use {@link #field(String, DataType)}, or
-     *             {@link #inline(Object, DataType)} instead.
-     */
-    @Deprecated
-    @SuppressWarnings("unchecked")
-    @Support
-    public static <T> Field<T> literal(Object literal, DataType<T> type) {
-        if (literal == null) {
-            return (Field<T>) NULL();
-        }
-        else {
-            return field(literal.toString(), type);
-        }
-    }
-
-    /**
      * Get the null field
      */
     static Field<?> NULL() {
@@ -6461,60 +6340,10 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    @Deprecated
-    public final <R extends TableRecord<R>> int executeInsert(Table<R> table, R record) {
-        InsertQuery<R> insert = insertQuery(table);
-        insert.setRecord(record);
-        return insert.execute();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public final <R extends TableRecord<R>> int executeInsert(R record) {
         InsertQuery<R> insert = insertQuery(record.getTable());
         insert.setRecord(record);
         return insert.execute();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public final <R extends TableRecord<R>> int executeUpdate(Table<R> table, R record) {
-        return executeUpdate(table, record, trueCondition());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public final <R extends TableRecord<R>, T> int executeUpdate(Table<R> table, R record, Condition condition) {
-        UpdateQuery<R> update = updateQuery(table);
-        update.addConditions(condition);
-        update.setRecord(record);
-        return update.execute();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public final <R extends TableRecord<R>> int executeUpdateOne(Table<R> table, R record) {
-        return filterUpdateOne(executeUpdate(table, record));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public final <R extends TableRecord<R>, T> int executeUpdateOne(Table<R> table, R record, Condition condition) {
-        return filterUpdateOne(executeUpdate(table, record, condition));
     }
 
     /**
@@ -6560,47 +6389,6 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public final <R extends TableRecord<R>> int executeDelete(Table<R> table) {
-        return executeDelete(table, trueCondition());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public final <R extends TableRecord<R>, T> int executeDelete(Table<R> table, Condition condition)
-        throws DataAccessException{
-        DeleteQuery<R> delete = deleteQuery(table);
-        delete.addConditions(condition);
-        return delete.execute();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public final <R extends TableRecord<R>> int executeDeleteOne(Table<R> table) {
-        return executeDeleteOne(table, trueCondition());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public final <R extends TableRecord<R>, T> int executeDeleteOne(Table<R> table, Condition condition) {
-        DeleteQuery<R> delete = deleteQuery(table);
-        delete.addConditions(condition);
-        return filterDeleteOne(delete.execute());
-    }
-
-    /**
      * Get the default data type for the {@link Factory}'s underlying
      * {@link SQLDialect} and a given Java type.
      * <p>
@@ -6633,14 +6421,6 @@ public class Factory implements FactoryOperations {
     // -------------------------------------------------------------------------
     // XXX Internals
     // -------------------------------------------------------------------------
-
-    private static int filterDeleteOne(int i) {
-        return filterOne(i, "deleted");
-    }
-
-    private static int filterUpdateOne(int i) {
-        return filterOne(i, "updated");
-    }
 
     private static int filterOne(int i, String action) {
         if (i <= 1) {

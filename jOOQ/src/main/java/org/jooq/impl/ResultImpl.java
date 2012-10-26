@@ -70,7 +70,6 @@ import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
-import org.jooq.Store;
 import org.jooq.Table;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
@@ -84,7 +83,6 @@ import org.w3c.dom.Element;
  * @author Lukas Eder
  * @author Ivan Dugic
  */
-@SuppressWarnings("deprecation")
 class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     /**
@@ -120,7 +118,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     public final List<Attachable> getAttachables() {
         List<Attachable> result = new ArrayList<Attachable>();
 
-        for (Store<?> item : records) {
+        for (Attachable item : records) {
             if (item != null) {
                 result.add(item);
             }

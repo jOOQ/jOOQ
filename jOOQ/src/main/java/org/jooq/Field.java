@@ -66,7 +66,7 @@ import org.jooq.util.oracle.OracleFactory;
  * @author Lukas Eder
  */
 @SuppressWarnings("deprecation")
-public interface Field<T> extends NamedTypeProviderQueryPart<T> {
+public interface Field<T> extends NamedQueryPart {
 
     // ------------------------------------------------------------------------
     // API
@@ -89,19 +89,16 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T> {
     /**
      * The Java type of the field.
      */
-    @Override
     Class<? extends T> getType();
 
     /**
      * The type of this field (might not be dialect-specific)
      */
-    @Override
     DataType<T> getDataType();
 
     /**
      * The dialect-specific type of this field
      */
-    @Override
     DataType<T> getDataType(Configuration configuration);
 
     /**

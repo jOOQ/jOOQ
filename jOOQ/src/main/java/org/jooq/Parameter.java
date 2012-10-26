@@ -45,7 +45,7 @@ import static org.jooq.SQLDialect.ORACLE;
  * @author Lukas Eder
  */
 @SuppressWarnings("deprecation")
-public interface Parameter<T> extends NamedTypeProviderQueryPart<T> {
+public interface Parameter<T> extends NamedQueryPart {
 
     /**
      * The name of this parameter
@@ -56,19 +56,16 @@ public interface Parameter<T> extends NamedTypeProviderQueryPart<T> {
     /**
      * The Java type of the parameter.
      */
-    @Override
     Class<? extends T> getType();
 
     /**
      * The type of this parameter (might not be dialect-specific)
      */
-    @Override
     DataType<T> getDataType();
 
     /**
      * The dialect-specific type of this parameter
      */
-    @Override
     DataType<T> getDataType(Configuration configuration);
 
     /**

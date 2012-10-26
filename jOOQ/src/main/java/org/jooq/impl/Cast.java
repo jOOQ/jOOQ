@@ -68,6 +68,10 @@ class Cast<T> extends AbstractField<T> {
         this.field = field;
     }
 
+    private final SQLDataType<T> getSQLDataType() {
+        return getDataType().getSQLDataType();
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public final void toSQL(RenderContext context) {

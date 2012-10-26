@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import org.jooq.BindContext;
+import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Parameter;
 import org.jooq.RenderContext;
@@ -46,16 +47,33 @@ import org.jooq.RenderContext;
  *
  * @author Lukas Eder
  */
-class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Parameter<T> {
+class ParameterImpl<T> extends AbstractNamedQueryPart implements Parameter<T> {
 
     private static final long serialVersionUID = -5277225593751085577L;
 
     private final boolean     isDefaulted;
+    private final DataType<T> type;
 
     ParameterImpl(String name, DataType<T> type, boolean isDefaulted) {
-        super(name, type);
+        super(name);
 
+        this.type = type;
         this.isDefaulted = isDefaulted;
+    }
+
+    @Override
+    public final DataType<T> getDataType() {
+        return type;
+    }
+
+    @Override
+    public final DataType<T> getDataType(Configuration configuration) {
+        return type.getDataType(configuration);
+    }
+
+    @Override
+    public final Class<? extends T> getType() {
+        return type.getType();
     }
 
     @Override

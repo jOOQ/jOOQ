@@ -44,7 +44,7 @@ package org.jooq;
  * @see Field#desc()
  */
 @SuppressWarnings("deprecation")
-public interface SortField<T> extends NamedTypeProviderQueryPart<T> {
+public interface SortField<T> extends NamedQueryPart {
 
     /**
      * The name of this sort field

@@ -33,14 +33,14 @@
     </licenses>
 
     <scm>
-        <developerConnection>scm:svn:https://jooq.svn.sourceforge.net/svnroot/jooq</developerConnection>
-        <url>https://jooq.svn.sourceforge.net/svnroot/jooq</url>
-        <connection>scm:svn:https://jooq.svn.sourceforge.net/svnroot/jooq</connection>
+        <developerConnection>https://github.com/jOOQ/jOOQ.git</developerConnection>
+        <url>https://github.com/jOOQ/jOOQ.git</url>
+        <connection>git://github.com/jOOQ/jOOQ.git</connection>
     </scm>
 
     <issueManagement>
         <system>Trac</system>
-        <url>https://sourceforge.net/apps/trac/jooq/report/6</url>
+        <url>http://github.com/jOOQ/jOOQ/issues</url>
     </issueManagement>
 
     <developers>

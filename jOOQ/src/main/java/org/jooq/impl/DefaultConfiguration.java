@@ -119,6 +119,6 @@ final class DefaultConfiguration implements Configuration {
 
     @Override
     public String toString() {
-        return new Factory(getConnection(), getDialect(), getSettings()).toString();
+        return new Executor(getConnection(), getDialect(), getSettings()).toString();
     }
 }

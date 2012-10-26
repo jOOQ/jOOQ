@@ -80,7 +80,7 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.debug.Debugger;
 import org.jooq.debug.console.Console;
 import org.jooq.debug.impl.DebuggerFactory;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.test._.PrettyPrinter;
 import org.jooq.test._.TestStatisticsListener;
 import org.jooq.test._.converters.Boolean_10;
@@ -724,14 +724,14 @@ public abstract class jOOQAbstractTest<
     protected abstract Class<?> cLibrary();
     protected abstract Class<?> cSequences();
     protected abstract DataType<?>[] getCastableDataTypes();
-    protected abstract Factory create(Settings settings);
+    protected abstract Executor create(Settings settings);
 
     @SuppressWarnings("deprecation")
     protected final Schema schema() {
         return create().getSchemaMapping().map(TAuthor().getSchema());
     }
 
-    protected final Factory create() {
+    protected final Executor create() {
         String defaultSchema = System.getProperty("org.jooq.settings.defaultSchema", "");
         Boolean renderSchema = Boolean.valueOf(System.getProperty("org.jooq.settings.renderSchema", "true"));
 

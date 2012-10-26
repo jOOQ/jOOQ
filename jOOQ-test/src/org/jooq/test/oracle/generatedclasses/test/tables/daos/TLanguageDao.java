@@ -21,7 +21,7 @@ public class TLanguageDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.gen
 	/**
 	 * Create a new TLanguageDao with an attached factory
 	 */
-	public TLanguageDao(org.jooq.impl.Factory factory) {
+	public TLanguageDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TLanguage.class, factory);
 	}
 

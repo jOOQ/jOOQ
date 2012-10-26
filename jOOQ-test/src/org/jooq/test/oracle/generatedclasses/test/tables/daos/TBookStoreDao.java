@@ -21,7 +21,7 @@ public class TBookStoreDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.ge
 	/**
 	 * Create a new TBookStoreDao with an attached factory
 	 */
-	public TBookStoreDao(org.jooq.impl.Factory factory) {
+	public TBookStoreDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore.class, factory);
 	}
 

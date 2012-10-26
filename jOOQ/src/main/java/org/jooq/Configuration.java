@@ -42,7 +42,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 
 /**
  * The Configuration holds data about sql dialects, connections / data sources,
@@ -54,7 +54,7 @@ import org.jooq.impl.Factory;
  * also reflected in the fact that {@link ExecuteListener} objects are
  * re-created every time a <code>Query</code> is executed
  * <p>
- * However, {@link Configuration} / {@link Factory} may be reused for several
+ * However, {@link Configuration} / {@link Executor} may be reused for several
  * consecutive queries in a single thread, if the supplied
  * <code>Connection</code> / <code>DataSource</code> allows this and if client
  * code can live with the possibility of stale state in

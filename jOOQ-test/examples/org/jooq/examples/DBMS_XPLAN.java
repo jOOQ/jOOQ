@@ -42,7 +42,7 @@ import java.sql.DriverManager;
 
 import org.jooq.SQLDialect;
 import org.jooq.examples.oracle.sys.packages.DbmsXplan;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 
 public class DBMS_XPLAN {
 
@@ -53,7 +53,7 @@ public class DBMS_XPLAN {
         Class.forName("oracle.jdbc.OracleDriver");
         Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "TEST", "TEST");
 
-        Factory ora = new Factory(connection, SQLDialect.ORACLE);
+        Executor ora = new Executor(connection, SQLDialect.ORACLE);
         ora.fetch("select * from t_book b join t_author a on b.author_id = a.id");
 
         // TODO [#1113] This doesn't work yet

@@ -48,7 +48,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.test.h2.generatedclasses.Routines;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
 import org.jooq.test.h2.generatedclasses.tables.TBook;
@@ -65,7 +65,7 @@ public class F {
     }
 
     public static void pCreateAuthorByName(Connection connection, String firstName, String lastName) {
-        Factory create = create(connection);
+        Executor create = create(connection);
 
         create.insertInto(T_AUTHOR)
               .set(TAuthor.ID, create.select(max(TAuthor.ID).add(1)).from(T_AUTHOR).<Integer>asField())
@@ -96,7 +96,7 @@ public class F {
     }
 
     public static Integer fAuthorExists(Connection connection, String authorName) {
-        Factory create = create(connection);
+        Executor create = create(connection);
 
         Integer result =
         create.select(sign(count()))
@@ -137,7 +137,7 @@ public class F {
         return 1;
     }
 
-    private static Factory create(Connection connection) {
-        return new Factory(connection, SQLDialect.H2);
+    private static Executor create(Connection connection) {
+        return new Executor(connection, SQLDialect.H2);
     }
 }

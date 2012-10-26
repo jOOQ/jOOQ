@@ -54,7 +54,7 @@ import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -354,8 +354,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         // Checking for syntax correctness and locking behaviour
         // -----------------------------------------------------
-        final Factory create1 = create();
-        final Factory create2 = create();
+        final Executor create1 = create();
+        final Executor create2 = create();
 
         create2.setConnection(getNewConnection());
         create2.getConnection().setAutoCommit(false);

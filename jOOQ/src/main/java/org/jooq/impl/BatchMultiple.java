@@ -53,10 +53,10 @@ class BatchMultiple implements Batch {
      */
     private static final long       serialVersionUID = -7337667281292354043L;
 
-    private final Factory           create;
+    private final Executor           create;
     private final Query[]           queries;
 
-    public BatchMultiple(Factory create, Query... queries) {
+    public BatchMultiple(Executor create, Query... queries) {
         this.create = create;
         this.queries = queries;
     }

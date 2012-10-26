@@ -46,14 +46,8 @@ import org.jooq.impl.Factory;
 public class SQLServerFactory extends Factory {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -351817568648116452L;
-
-    /**
      * No instances
      */
     private SQLServerFactory() {
-        super(SQLDialect.SQLSERVER);
     }
 }

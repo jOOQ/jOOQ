@@ -47,15 +47,9 @@ import org.jooq.impl.Factory;
 public class SQLiteFactory extends Factory {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -351817568648116452L;
-
-    /**
      * No instances
      */
     private SQLiteFactory() {
-        super(SQLDialect.SQLITE);
     }
 
     // -------------------------------------------------------------------------

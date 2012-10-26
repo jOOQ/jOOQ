@@ -57,7 +57,7 @@ import org.jooq.conf.MappedSchema;
 import org.jooq.conf.MappedTable;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.MySQLTestSchemaRewrite;
 import org.jooq.test.jOOQAbstractTest;
@@ -100,7 +100,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 return;
         }
 
-        Factory factory = create();
+        Executor factory = create();
         factory.use(schema().getName());
 
         Result<?> result =

@@ -117,6 +117,7 @@ import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
+import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
@@ -139,7 +140,7 @@ public class BasicTest {
 
     private Mockery context;
     private PreparedStatement statement;
-    private Factory create;
+    private Executor create;
 
     @BeforeClass
     public static void init() throws Exception {
@@ -153,7 +154,7 @@ public class BasicTest {
     public void setUp() throws Exception {
         context = new Mockery();
         statement = context.mock(PreparedStatement.class);
-        create = new Factory(SQLDialect.ORACLE);
+        create = new Executor(SQLDialect.ORACLE);
     }
 
     @After
@@ -588,8 +589,8 @@ public class BasicTest {
             Factory.timestampDiff((Timestamp) null, (Timestamp) null),
             Factory.timestampDiff((Field<Timestamp>) null, (Field<Timestamp>) null));
 //        assertEquals(
-//            Factory.trunc((Timestamp) null, null),
-//            Factory.trunc((Field<Timestamp>) null, null));
+//            SQL.trunc((Timestamp) null, null),
+//            SQL.trunc((Field<Timestamp>) null, null));
         assertEquals(
             Factory.trunc((Integer) null, null),
             Factory.trunc((Field<Integer>) null, null));

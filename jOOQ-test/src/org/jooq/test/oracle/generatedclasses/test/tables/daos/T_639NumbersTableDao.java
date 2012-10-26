@@ -19,7 +19,7 @@ public class T_639NumbersTableDao extends org.jooq.impl.DAOImpl<org.jooq.test.or
 	/**
 	 * Create a new T_639NumbersTableDao with an attached factory
 	 */
-	public T_639NumbersTableDao(org.jooq.impl.Factory factory) {
+	public T_639NumbersTableDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_639NumbersTable.class, factory);
 	}
 

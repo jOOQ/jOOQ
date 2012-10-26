@@ -19,7 +19,7 @@ public class XTestCase_71Dao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.
 	/**
 	 * Create a new XTestCase_71Dao with an attached factory
 	 */
-	public XTestCase_71Dao(org.jooq.impl.Factory factory) {
+	public XTestCase_71Dao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.oracle.generatedclasses.test.tables.pojos.XTestCase_71.class, factory);
 	}
 

@@ -60,7 +60,7 @@ import org.jooq.debug.ResultLog;
 import org.jooq.debug.impl.LocalDebugger.DebuggerRegistry;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 
 /**
  * @author Christopher Deckers
@@ -267,7 +267,7 @@ public class DebugListener extends DefaultExecuteListener {
                     try {
                         ctx.statement().close();
                         // Better return possibility? Based on originating query?
-                        String sql = new Factory(ctx.getDialect()).selectZero().where("1 = 2").getSQL();
+                        String sql = new Executor(ctx.getDialect()).selectZero().where("1 = 2").getSQL();
                         ctx.sql(sql);
                         ctx.statement(ctx.getConnection().prepareStatement(sql));
                     } catch(Exception e) {

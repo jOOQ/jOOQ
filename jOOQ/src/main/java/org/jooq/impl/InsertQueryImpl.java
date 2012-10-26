@@ -496,7 +496,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     result = ctx.statement().executeUpdate();
                     listener.executeEnd(ctx);
 
-                    Factory create = new Factory(ctx.getConnection(), SQLDialect.SQLITE, ctx.getSettings());
+                    Executor create = new Executor(ctx.getConnection(), SQLDialect.SQLITE, ctx.getSettings());
                     returned =
                     create.select(returning)
                           .from(getInto())

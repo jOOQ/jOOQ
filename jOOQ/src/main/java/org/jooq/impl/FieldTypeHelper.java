@@ -38,7 +38,7 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.impl.Factory.getNewFactory;
+import static org.jooq.impl.Executor.getNewFactory;
 import static org.jooq.impl.Util.getDriverConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 

@@ -43,7 +43,7 @@ import java.sql.SQLException;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
 
@@ -52,10 +52,10 @@ import org.jooq.tools.StopWatchListener;
  * render, prepare, bind, execute, fetch steps.
  * <p>
  * <code>ExecuteListener</code> is a base type for loggers, debuggers,
- * profilers, data collectors that can be hooked into a jOOQ {@link Factory}
+ * profilers, data collectors that can be hooked into a jOOQ {@link Executor}
  * using the {@link Settings#getExecuteListeners()} property, passing
  * <code>Settings</code> to
- * {@link Factory#Factory(java.sql.Connection, SQLDialect, Settings)}. jOOQ will
+ * {@link Executor#Executor(java.sql.Connection, SQLDialect, Settings)}. jOOQ will
  * use those settings at the beginning of a query execution event to instanciate
  * all the provided listeners. In other words, listeners have the same lifetime
  * as a single query execution, and can thus be used to store state between the
@@ -244,10 +244,10 @@ import org.jooq.tools.StopWatchListener;
  * {@link StatementType#PREPARED_STATEMENT}</li>
  * <li>Used with {@link ResultQuery} of statement type
  * {@link StatementType#STATIC_STATEMENT}</li>
- * <li>Used with {@link Factory#fetch(ResultSet)} or with
+ * <li>Used with {@link Executor#fetch(ResultSet)} or with
  * {@link InsertResultStep#fetch()}</li>
- * <li>Used with {@link Factory#batch(Query)}</li>
- * <li>Used with {@link Factory#batch(Query[])}</li>
+ * <li>Used with {@link Executor#batch(Query)}</li>
+ * <li>Used with {@link Executor#batch(Query[])}</li>
  * <li>Used with a {@link Routine} standalone call</li>
  * </ol>
  * <p>

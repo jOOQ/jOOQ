@@ -35,7 +35,7 @@
  */
 package org.jooq;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 
 /**
  * This type is used for the {@link Delete}'s DSL API.
@@ -68,7 +68,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Executor#condition(String)
      */
     DeleteConditionStep<R> and(String sql);
 
@@ -81,7 +81,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Executor#condition(String, Object...)
      */
     DeleteConditionStep<R> and(String sql, Object... bindings);
 
@@ -94,7 +94,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see Executor#condition(String, QueryPart...)
      */
     DeleteConditionStep<R> and(String sql, QueryPart... parts);
 
@@ -131,7 +131,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Executor#condition(String)
      */
     DeleteConditionStep<R> or(String sql);
 
@@ -144,7 +144,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Executor#condition(String, Object...)
      */
     DeleteConditionStep<R> or(String sql, Object... bindings);
 
@@ -157,7 +157,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see Executor#condition(String, QueryPart...)
      */
     DeleteConditionStep<R> or(String sql, QueryPart... parts);
 

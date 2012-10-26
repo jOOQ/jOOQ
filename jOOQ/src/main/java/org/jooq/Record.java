@@ -46,7 +46,7 @@ import javax.persistence.Column;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.tools.Convert;
 import org.jooq.tools.reflect.Reflect;
 
@@ -600,7 +600,7 @@ public interface Record extends FieldProvider, Store<Object> {
      * "changed" flags set to true for all values. This means that
      * {@link UpdatableRecord#store()} will perform an <code>INSERT</code>
      * statement. If you wish to store the record using an <code>UPDATE</code>
-     * statement, use {@link Factory#executeUpdate(UpdatableRecord)} instead.
+     * statement, use {@link Executor#executeUpdate(UpdatableRecord)} instead.
      *
      * @param source The source object to copy data from
      * @throws MappingException wrapping any reflection exception that might

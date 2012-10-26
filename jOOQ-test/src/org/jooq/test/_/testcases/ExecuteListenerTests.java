@@ -61,7 +61,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -94,7 +94,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testExecuteListenerCustomException() throws Exception {
-        Factory create = create(new Settings()
+        Executor create = create(new Settings()
             .withExecuteListeners(CustomExceptionListener.class.getName()));
 
         try {
@@ -114,7 +114,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testExecuteListenerOnResultQuery() throws Exception {
-        Factory create = create(new Settings()
+        Executor create = create(new Settings()
             .withExecuteListeners(ResultQueryListener.class.getName()));
 
         create.setData("Foo", "Bar");
@@ -453,7 +453,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         jOOQAbstractTest.reset = false;
 
-        Factory create = create(new Settings()
+        Executor create = create(new Settings()
             .withExecuteListeners(BatchSingleListener.class.getName()));
 
         create.setData("Foo", "Bar");
@@ -662,7 +662,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     public void testExecuteListenerOnBatchMultiple() {
         jOOQAbstractTest.reset = false;
 
-        Factory create = create(new Settings()
+        Executor create = create(new Settings()
             .withExecuteListeners(BatchMultipleListener.class.getName()));
 
         create.setData("Foo", "Bar");
@@ -883,7 +883,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testExecuteListenerFetchLazyTest() throws Exception {
-        Factory create = create(new Settings().withExecuteListeners(FetchLazyListener.class.getName()));
+        Executor create = create(new Settings().withExecuteListeners(FetchLazyListener.class.getName()));
         FetchLazyListener.reset();
 
         create.selectFrom(TAuthor()).fetch();

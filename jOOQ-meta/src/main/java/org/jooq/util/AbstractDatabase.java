@@ -46,7 +46,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -72,7 +72,7 @@ public abstract class AbstractDatabase implements Database {
 
     private SQLDialect                      dialect;
     private Connection                      connection;
-    private Factory                         create;
+    private Executor                         create;
     private String[]                        excludes;
     private String[]                        includes;
     private String[]                        recordVersionFields;
@@ -121,7 +121,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final Factory create() {
+    public final Executor create() {
         if (create == null) {
             create = create0();
         }
@@ -622,7 +622,7 @@ public abstract class AbstractDatabase implements Database {
     /**
      * Create a new Factory
      */
-    protected abstract Factory create0();
+    protected abstract Executor create0();
 
     /**
      * Retrieve primary keys and store them to relations

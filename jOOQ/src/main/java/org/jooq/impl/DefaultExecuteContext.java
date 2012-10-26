@@ -250,7 +250,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
             }
         }
 
-        // Fetching JDBC result sets, e.g. with Factory.fetch(ResultSet)
+        // Fetching JDBC result sets, e.g. with SQL.fetch(ResultSet)
         else if (resultSet != null) {
             return ExecuteType.READ;
         }

@@ -63,7 +63,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.test._.TestStatisticsListener;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
@@ -671,8 +671,8 @@ public abstract class BaseTest<
         return delegate.getCastableDataTypes();
     }
 
-    protected Factory create(Settings settings) {
-        Factory create = delegate.create(settings);
+    protected Executor create(Settings settings) {
+        Executor create = delegate.create(settings);
         create.getSettings().getExecuteListeners().add(TestStatisticsListener.class.getName());
         return create;
     }
@@ -689,7 +689,7 @@ public abstract class BaseTest<
         return delegate.getConnection0(null, null);
     }
 
-    protected final Factory create() {
+    protected final Executor create() {
         return delegate.create();
     }
 

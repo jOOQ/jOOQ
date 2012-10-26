@@ -58,11 +58,11 @@ class BatchSingle implements BatchBindStep {
      */
     private static final long       serialVersionUID = 3793967258181493207L;
 
-    private final Factory           create;
+    private final Executor           create;
     private final Query             query;
     private final List<Object[]>    allBindValues;
 
-    public BatchSingle(Factory create, Query query) {
+    public BatchSingle(Executor create, Query query) {
         this.create = create;
         this.query = query;
         this.allBindValues = new ArrayList<Object[]>();

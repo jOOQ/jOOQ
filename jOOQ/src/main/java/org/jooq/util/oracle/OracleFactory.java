@@ -53,15 +53,9 @@ import org.jooq.impl.SQLDataType;
 public class OracleFactory extends Factory {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -1934939784130217163L;
-
-    /**
      * No instances
      */
     private OracleFactory() {
-        super(SQLDialect.ORACLE);
     }
 
     // -------------------------------------------------------------------------

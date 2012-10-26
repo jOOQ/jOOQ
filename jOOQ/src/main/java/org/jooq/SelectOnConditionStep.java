@@ -37,6 +37,7 @@ package org.jooq;
 
 import org.jooq.impl.Factory;
 
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.

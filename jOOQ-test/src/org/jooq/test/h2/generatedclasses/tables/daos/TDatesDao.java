@@ -19,7 +19,7 @@ public class TDatesDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedc
 	/**
 	 * Create a new TDatesDao with an attached factory
 	 */
-	public TDatesDao(org.jooq.impl.Factory factory) {
+	public TDatesDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES, org.jooq.test.h2.generatedclasses.tables.pojos.TDates.class, factory);
 	}
 

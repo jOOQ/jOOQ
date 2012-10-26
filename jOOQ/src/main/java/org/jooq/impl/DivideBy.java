@@ -118,7 +118,7 @@ implements
      * sql-of-relational-division/</a>
      */
     private final Table<?> table(Configuration configuration) {
-        Factory create = create(configuration);
+        Executor create = create(configuration);
 
         ConditionProviderImpl selfJoin = new ConditionProviderImpl();
         FieldList select = new FieldList();

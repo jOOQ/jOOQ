@@ -199,15 +199,15 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     /**
      * Internal convenience method
      */
-    protected final Factory create() {
+    protected final Executor create() {
         return create(getConfiguration());
     }
 
     /**
      * Internal convenience method
      */
-    protected final Factory create(Configuration configuration) {
-        return Factory.getNewFactory(configuration);
+    protected final Executor create(Configuration configuration) {
+        return Executor.getNewFactory(configuration);
     }
 
     /**

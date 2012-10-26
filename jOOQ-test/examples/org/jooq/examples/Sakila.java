@@ -44,7 +44,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 
 public class Sakila {
 
@@ -52,7 +52,7 @@ public class Sakila {
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/sakila", "root", "");
 
-        Factory create = new Factory(connection, SQLDialect.MYSQL);
+        Executor create = new Executor(connection, SQLDialect.MYSQL);
 
         System.out.println(create
               .select()

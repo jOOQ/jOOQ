@@ -242,7 +242,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final int executeSelectFrom() {
-        Factory create = create(configuration);
+        Executor create = create(configuration);
         Result<?> result = create.selectFrom(table(asField())).fetch();
         results.put(returnParameter, result);
         return 0;

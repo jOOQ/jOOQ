@@ -78,7 +78,7 @@ import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -151,8 +151,8 @@ public class MySQLTest extends jOOQAbstractTest<
         T_785Record> {
 
     @Override
-    protected Factory create(Settings settings) {
-        return new Factory(getConnection(), SQLDialect.MYSQL, settings);
+    protected Executor create(Settings settings) {
+        return new Executor(getConnection(), SQLDialect.MYSQL, settings);
     }
 
     @Override
@@ -773,18 +773,16 @@ public class MySQLTest extends jOOQAbstractTest<
 
     @Test
     public void testMySQLEncryptionFunctions() throws Exception {
-        MySQLFactory create = (MySQLFactory) create();
-
-        assertNotNull(create.select(password("abc")).fetchOne(0));
-        assertNotNull(create.select(md5("abc")).fetchOne(0));
-        assertNotNull(create.select(sha1("abc")).fetchOne(0));
-        assertNotNull(create.select(sha2("abc", 256)).fetchOne(0));
-        assertEquals("abc", create.select(decode(encode("abc", "pw"), val("pw"))).fetchOne(0));
-        assertEquals("abc", create.select(aesDecrypt(aesEncrypt("abc", "pw"), val("pw"))).fetchOne(0));
-        assertEquals("abc", create.select(desDecrypt(desEncrypt("abc", "pw"), val("pw"))).fetchOne(0));
-        assertEquals("abc", create.select(desDecrypt(desEncrypt("abc"))).fetchOne(0));
-        assertEquals("abc", create.select(uncompress(compress("abc"))).fetchOne(0));
-        assertEquals(3, create.select(uncompressedLength(compress("abc"))).fetchOne(0));
+        assertNotNull(create().select(password("abc")).fetchOne(0));
+        assertNotNull(create().select(md5("abc")).fetchOne(0));
+        assertNotNull(create().select(sha1("abc")).fetchOne(0));
+        assertNotNull(create().select(sha2("abc", 256)).fetchOne(0));
+        assertEquals("abc", create().select(decode(encode("abc", "pw"), val("pw"))).fetchOne(0));
+        assertEquals("abc", create().select(aesDecrypt(aesEncrypt("abc", "pw"), val("pw"))).fetchOne(0));
+        assertEquals("abc", create().select(desDecrypt(desEncrypt("abc", "pw"), val("pw"))).fetchOne(0));
+        assertEquals("abc", create().select(desDecrypt(desEncrypt("abc"))).fetchOne(0));
+        assertEquals("abc", create().select(uncompress(compress("abc"))).fetchOne(0));
+        assertEquals(3, create().select(uncompressedLength(compress("abc"))).fetchOne(0));
     }
 
     @Test

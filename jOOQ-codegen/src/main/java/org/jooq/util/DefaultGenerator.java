@@ -72,7 +72,7 @@ import org.jooq.impl.AbstractKeys;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.impl.DAOImpl;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.impl.FieldTypeHelper;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
@@ -1270,7 +1270,7 @@ public class DefaultGenerator extends AbstractGenerator {
         out.print("\tpublic ");
         out.print(strategy.getJavaClassName(table, Mode.DAO));
         out.print("(");
-        out.print(Factory.class);
+        out.print(Executor.class);
         out.println(" factory) {");
         out.print("\t\tsuper(");
         out.print(strategy.getFullJavaIdentifier(table));

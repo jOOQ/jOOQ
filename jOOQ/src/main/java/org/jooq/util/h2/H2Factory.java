@@ -46,14 +46,8 @@ import org.jooq.impl.Factory;
 public class H2Factory extends Factory {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -9107771365147317008L;
-
-    /**
      * No instances
      */
     private H2Factory() {
-        super(SQLDialect.H2);
     }
 }

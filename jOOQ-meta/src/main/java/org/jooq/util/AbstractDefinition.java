@@ -39,7 +39,7 @@ package org.jooq.util;
 import java.sql.Connection;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 
 /**
  * A base implementation for any type of definition.
@@ -191,7 +191,7 @@ public abstract class AbstractDefinition implements Definition {
         return getQualifiedName().hashCode();
     }
 
-    protected final Factory create() {
+    protected final Executor create() {
         return database.create();
     }
 

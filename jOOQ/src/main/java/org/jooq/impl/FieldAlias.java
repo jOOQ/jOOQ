@@ -45,34 +45,34 @@ import org.jooq.RenderContext;
  */
 class FieldAlias<T> extends AbstractField<T> {
 
-    private static final long                 serialVersionUID = -85277321749681553L;
+    private static final long     serialVersionUID = -85277321749681553L;
 
-    private final AliasProviderImpl<Field<T>> aliasProvider;
+    private final Alias<Field<T>> alias;
 
     FieldAlias(Field<T> field, String alias) {
         super(alias, field.getDataType());
 
-        this.aliasProvider = new AliasProviderImpl<Field<T>>(field, alias, false);
+        this.alias = new Alias<Field<T>>(field, alias, false);
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(aliasProvider);
+        context.sql(alias);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(aliasProvider);
+        context.bind(alias);
     }
 
     @Override
-    public final Field<T> as(String alias) {
-        return aliasProvider.as(alias);
+    public final Field<T> as(String as) {
+        return alias.wrapped().as(as);
     }
 
     @Override
     public final boolean isNullLiteral() {
-        return aliasProvider.getAliasProvider().isNullLiteral();
+        return alias.wrapped().isNullLiteral();
     }
 
     @Override

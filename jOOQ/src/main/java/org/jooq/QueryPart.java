@@ -45,24 +45,9 @@ import java.io.Serializable;
  * <p>
  * A <code>QueryPart</code> essentially combines the {@link Attachable}
  * interface with SQL code generation and variable binding functionality.
- * <p>
- * Note that with jOOQ 3.0, <code>QueryPart</code> will no longer implement
- * {@link Attachable}.
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("unused")
-public interface QueryPart extends Attachable, Serializable {
+public interface QueryPart extends Serializable {
 
-    /**
-     * Attach this object to a new {@link Configuration}
-     *
-     * @deprecated - 2.5.0 [#1544] - The Attachable type will no longer be part
-     *             of the QueryPart hierarchy. Please do not attach any
-     *             <code>QueryPart</code> objects anymore, except for
-     *             <code>Query</code> objects
-     */
-    @Deprecated
-    @Override
-    void attach(Configuration configuration);
 }

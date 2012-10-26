@@ -62,7 +62,7 @@ import org.jooq.impl.Factory;
  * @author Lukas Eder
  */
 @SuppressWarnings("deprecation")
-public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider<Table<R>>, TableLike<R> {
+public interface Table<R extends Record> extends org.jooq.Type<R>, TableLike<R> {
 
     /**
      * Get the table schema
@@ -87,7 +87,6 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, AliasProvider
      * @param alias The alias name
      * @return The table alias
      */
-    @Override
     @Support
     Table<R> as(String alias);
 

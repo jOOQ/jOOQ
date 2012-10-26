@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import org.jooq.BindContext;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.RenderContext;
 import org.jooq.exception.DataAccessException;
 
@@ -86,16 +85,6 @@ public abstract class CustomCondition extends AbstractCondition {
      */
     @Override
     public abstract void bind(BindContext context) throws DataAccessException;
-
-    // -------------------------------------------------------------------------
-    // Further overrides allowed
-    // -------------------------------------------------------------------------
-
-    @Override
-    @Deprecated
-    public void attach(Configuration configuration) {
-        super.attach(configuration);
-    }
 
     // -------------------------------------------------------------------------
     // No further overrides allowed

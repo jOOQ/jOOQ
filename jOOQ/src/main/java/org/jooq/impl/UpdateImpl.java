@@ -78,6 +78,11 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    public final void attach(Configuration configuration) {
+        getDelegate().attach(configuration);
+    }
+
+    @Override
     public final int execute() {
         return getDelegate().execute();
     }

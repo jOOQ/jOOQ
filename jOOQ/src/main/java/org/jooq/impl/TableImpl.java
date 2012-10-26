@@ -51,10 +51,10 @@ import org.jooq.Table;
  */
 public class TableImpl<R extends Record> extends AbstractTable<R> {
 
-    private static final long                 serialVersionUID = 261033315221985068L;
+    private static final long     serialVersionUID = 261033315221985068L;
 
-    private final FieldList                   fields;
-    private final AliasProviderImpl<Table<R>> alias;
+    private final FieldList       fields;
+    private final Alias<Table<R>> alias;
 
     public TableImpl(String name) {
         this(name, null, null);
@@ -74,7 +74,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         this.fields = new FieldList();
 
         if (aliased != null) {
-            alias = new AliasProviderImpl<Table<R>>(aliased, name);
+            alias = new Alias<Table<R>>(aliased, name);
         }
         else {
             alias = null;
@@ -86,7 +86,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      */
     Table<R> getAliasedTable() {
         if (alias != null) {
-            return alias.getAliasProvider();
+            return alias.wrapped();
         }
 
         return null;
@@ -132,7 +132,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     @Override
     public Table<R> as(String as) {
         if (alias != null) {
-            return alias.as(as);
+            return alias.wrapped().as(as);
         }
         else {
             return new TableAlias<R>(this, as);

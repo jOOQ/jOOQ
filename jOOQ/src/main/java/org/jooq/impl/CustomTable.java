@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import java.util.List;
 
-import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
@@ -97,21 +96,6 @@ public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R>
      */
     @Override
     public abstract Class<? extends R> getRecordType();
-
-    // -------------------------------------------------------------------------
-    // Further overrides allowed
-    // -------------------------------------------------------------------------
-
-    /**
-     * Subclasses may further override this method
-     * <hr/>
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public void attach(Configuration configuration) {
-        super.attach(configuration);
-    }
 
     // -------------------------------------------------------------------------
     // No further overrides allowed

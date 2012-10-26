@@ -66,7 +66,7 @@ import org.jooq.util.oracle.OracleFactory;
  * @author Lukas Eder
  */
 @SuppressWarnings("deprecation")
-public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<Field<T>> {
+public interface Field<T> extends NamedTypeProviderQueryPart<T> {
 
     // ------------------------------------------------------------------------
     // API
@@ -110,7 +110,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @param alias The alias name
      * @return The field alias
      */
-    @Override
     @Support
     Field<T> as(String alias);
 

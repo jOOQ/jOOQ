@@ -86,6 +86,11 @@ class InsertImpl<R extends Record>
         this.fields = new ArrayList<Field<?>>(fields);
     }
 
+    @Override
+    public final void attach(Configuration configuration) {
+        getDelegate().attach(configuration);
+    }
+
     // -------------------------------------------------------------------------
     // The Query API
     // -------------------------------------------------------------------------

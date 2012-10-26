@@ -43,35 +43,34 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Arrays;
 
-import org.jooq.AliasProvider;
 import org.jooq.BindContext;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPart implements AliasProvider<T> {
+class Alias<Q extends QueryPart> extends AbstractNamedQueryPart {
 
     private static final long serialVersionUID = -2456848365524191614L;
-    private final T           aliasProvider;
+    private final Q           wrapped;
     private final String      alias;
     private final boolean     wrapInParentheses;
 
-    AliasProviderImpl(T aliasProvider, String alias) {
+    Alias(Q aliasProvider, String alias) {
         this(aliasProvider, alias, false);
     }
 
-    AliasProviderImpl(T aliasProvider, String alias, boolean wrapInParentheses) {
+    Alias(Q wrapped, String alias, boolean wrapInParentheses) {
         super(alias);
 
-        this.aliasProvider = aliasProvider;
+        this.wrapped = wrapped;
         this.alias = alias;
         this.wrapInParentheses = wrapInParentheses;
     }
 
-    protected final T getAliasProvider() {
-        return aliasProvider;
+    final Q wrapped() {
+        return wrapped;
     }
 
     @Override
@@ -81,7 +80,7 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
                 context.sql("(");
             }
 
-            context.sql(aliasProvider);
+            context.sql(wrapped);
 
             if (wrapInParentheses) {
                 context.sql(")");
@@ -107,7 +106,7 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
                 case HSQLDB:
                 case POSTGRES: {
                     // The javac compiler doesn't like casting of generics
-                    Object o = aliasProvider;
+                    Object o = wrapped;
 
                     if (context.declareTables() && o instanceof ArrayTable) {
                         ArrayTable table = (ArrayTable) o;
@@ -129,16 +128,11 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
     @Override
     public final void bind(BindContext context) {
         if (context.declareFields() || context.declareTables()) {
-            context.bind(aliasProvider);
+            context.bind(wrapped);
         }
         else {
             // Don't bind any values
         }
-    }
-
-    @Override
-    public final T as(String as) {
-        return aliasProvider.as(as);
     }
 
     @Override

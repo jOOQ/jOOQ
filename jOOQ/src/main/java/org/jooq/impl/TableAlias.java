@@ -50,10 +50,10 @@ import org.jooq.Table;
  */
 class TableAlias<R extends Record> extends AbstractTable<R> {
 
-    private static final long                 serialVersionUID = -8417114874567698325L;
+    private static final long     serialVersionUID = -8417114874567698325L;
 
-    private final AliasProviderImpl<Table<R>> aliasProvider;
-    private FieldList                         aliasedFields;
+    private final Alias<Table<R>> alias;
+    private FieldList             aliasedFields;
 
     TableAlias(Table<R> table, String alias) {
         this(table, alias, false);
@@ -62,15 +62,15 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     TableAlias(Table<R> table, String alias, boolean wrapInParentheses) {
         super(alias, table.getSchema());
 
-        this.aliasProvider = new AliasProviderImpl<Table<R>>(table, alias, wrapInParentheses);
+        this.alias = new Alias<Table<R>>(table, alias, wrapInParentheses);
     }
 
     /**
      * Get the aliased table wrapped by this table
      */
     Table<R> getAliasedTable() {
-        if (aliasProvider != null) {
-            return aliasProvider.getAliasProvider();
+        if (alias != null) {
+            return alias.wrapped();
         }
 
         return null;
@@ -78,22 +78,22 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final List<ForeignKey<R, ?>> getReferences() {
-        return aliasProvider.getAliasProvider().getReferences();
+        return alias.wrapped().getReferences();
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(aliasProvider);
+        context.sql(alias);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(aliasProvider);
+        context.bind(alias);
     }
 
     @Override
-    public final Table<R> as(String alias) {
-        return aliasProvider.as(alias);
+    public final Table<R> as(String as) {
+        return alias.wrapped().as(as);
     }
 
     @Override
@@ -106,7 +106,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
         if (aliasedFields == null) {
             aliasedFields = new FieldList();
 
-            for (Field<?> field : aliasProvider.getAliasProvider().getFields()) {
+            for (Field<?> field : alias.wrapped().getFields()) {
                 registerTableField(field);
             }
         }
@@ -123,6 +123,6 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
 
     @Override
     public Class<? extends R> getRecordType() {
-        return aliasProvider.getAliasProvider().getRecordType();
+        return alias.wrapped().getRecordType();
     }
 }

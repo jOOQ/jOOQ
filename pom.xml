@@ -77,6 +77,13 @@
             </roles>
         </contributor>
         <contributor>
+            <name>Ed Schaller</name>
+            <email>schallee@darkmist.net</email>
+            <roles>
+                <role>unsigned-datatype-support</role>
+            </roles>
+        </contributor>
+        <contributor>
         	<name>Ivan Dugic</name>
         	<email>idugic@gmail.com</email>
         	<roles>

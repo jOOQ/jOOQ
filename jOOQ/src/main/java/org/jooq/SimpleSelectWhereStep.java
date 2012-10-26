@@ -37,7 +37,7 @@ package org.jooq;
 
 import java.util.Collection;
 
-import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting specific
@@ -80,7 +80,7 @@ public interface SimpleSelectWhereStep<R extends Record> extends SimpleSelectOrd
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String)
+     * @see Factory#condition(String)
      */
     @Support
     SimpleSelectConditionStep<R> where(String sql);
@@ -93,7 +93,7 @@ public interface SimpleSelectWhereStep<R extends Record> extends SimpleSelectOrd
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, Object...)
+     * @see Factory#condition(String, Object...)
      */
     @Support
     SimpleSelectConditionStep<R> where(String sql, Object... bindings);
@@ -106,7 +106,7 @@ public interface SimpleSelectWhereStep<R extends Record> extends SimpleSelectOrd
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, QueryPart...)
+     * @see Factory#condition(String, QueryPart...)
      */
     @Support
     SimpleSelectConditionStep<R> where(String sql, QueryPart... parts);

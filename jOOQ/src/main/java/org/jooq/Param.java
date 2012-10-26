@@ -36,14 +36,14 @@
 package org.jooq;
 
 import org.jooq.exception.DataTypeException;
-import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.tools.Convert;
 
 /**
  * A named parameter and/or bind value.
  *
  * @author Lukas Eder
- * @see Executor#param(String, Object)
+ * @see Factory#param(String, Object)
  */
 public interface Param<T> extends Field<T> {
 

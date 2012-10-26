@@ -157,19 +157,11 @@ public class Executor implements FactoryOperations {
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID  = 2681360188806309513L;
-    private static final JooqLogger      log               = JooqLogger.getLogger(Factory.class);
+    private static final long       serialVersionUID  = 2681360188806309513L;
+    private static final JooqLogger log               = JooqLogger.getLogger(Factory.class);
 
-    private static final Executor[]       DEFAULT_INSTANCES = new Executor[SQLDialect.values().length];
-
-    private transient Connection         connection;
-    private transient DataSource         datasource;
-    private final SQLDialect             dialect;
-
-    @SuppressWarnings("deprecation")
-    private final org.jooq.SchemaMapping mapping;
-    private final Settings               settings;
-    private final Map<String, Object>    data;
+    private static final Executor[] DEFAULT_INSTANCES = new Executor[SQLDialect.values().length];
+    private final Configuration     configuration;
 
     // -------------------------------------------------------------------------
     // XXX Constructors
@@ -305,121 +297,214 @@ public class Executor implements FactoryOperations {
      */
     @SuppressWarnings("deprecation")
     private Executor(DataSource datasource, Connection connection, SQLDialect dialect, Settings settings, org.jooq.SchemaMapping mapping, Map<String, Object> data) {
-        this.connection = connection;
-        this.datasource = datasource;
-        this.dialect = dialect;
-        this.settings = settings != null ? settings : SettingsTools.defaultSettings();
-        this.mapping = mapping != null ? mapping : new org.jooq.SchemaMapping(this.settings);
-        this.data = data != null ? data : new HashMap<String, Object>();
+        this(new ExecutorConfiguration(datasource, connection, dialect, settings, mapping, data));
+    }
+
+    /**
+     * Create an executor from a custom configuration
+     *
+     * @param configuration The configuration
+     */
+    public Executor(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     // -------------------------------------------------------------------------
     // XXX Configuration API
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final SQLDialect getDialect() {
-        return dialect;
+        return configuration.getDialect();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final DataSource getDataSource() {
-        return datasource;
+        return configuration.getDataSource();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void setDataSource(DataSource datasource) {
-        this.datasource = datasource;
+    public final void setDataSource(DataSource datasource) {
+        configuration.setDataSource(datasource);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Connection getConnection() {
-
-        // SQL-builder only Factory
-        if (connection == null && datasource == null) {
-            return null;
-        }
-
-        // [#1424] DataSource-enabled Factory with no Connection yet
-        else if (connection == null && datasource != null) {
-            return new DataSourceConnection(datasource, null, settings);
-        }
-
-        // Factory clone
-        else if (connection.getClass() == DataSourceConnection.class) {
-            return connection;
-        }
-
-        // Factory clone
-        else if (connection.getClass() == ConnectionProxy.class) {
-            return connection;
-        }
-
-        // [#1424] Connection-based Factory
-        else {
-            return new DataSourceConnection(null, new ConnectionProxy(connection, settings), settings);
-        }
+        return configuration.getConnection();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final void setConnection(Connection connection) {
-        this.connection = connection;
+        configuration.setConnection(connection);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Deprecated
     public final org.jooq.SchemaMapping getSchemaMapping() {
-        return mapping;
+        return configuration.getSchemaMapping();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Settings getSettings() {
-        return settings;
+        return configuration.getSettings();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Map<String, Object> getData() {
-        return data;
+        return configuration.getData();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Object getData(String key) {
-        return data.get(key);
+        return configuration.getData(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Object setData(String key, Object value) {
-        return data.put(key, value);
+        return configuration.setData(key, value);
+    }
+
+    private static class ExecutorConfiguration implements Configuration {
+
+        /**
+         * Serial version UID
+         */
+        private static final long            serialVersionUID = 8193158984283234708L;
+
+        private transient Connection         connection;
+        private transient DataSource         datasource;
+        private final SQLDialect             dialect;
+
+        @SuppressWarnings("deprecation")
+        private final org.jooq.SchemaMapping mapping;
+        private final Settings               settings;
+        private final Map<String, Object>    data;
+
+        @SuppressWarnings("deprecation")
+        ExecutorConfiguration(DataSource datasource, Connection connection, SQLDialect dialect, Settings settings, org.jooq.SchemaMapping mapping, Map<String, Object> data) {
+            this.connection = connection;
+            this.datasource = datasource;
+            this.dialect = dialect;
+            this.settings = settings != null ? settings : SettingsTools.defaultSettings();
+            this.mapping = mapping != null ? mapping : new org.jooq.SchemaMapping(this.settings);
+            this.data = data != null ? data : new HashMap<String, Object>();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public final SQLDialect getDialect() {
+            return dialect;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public final DataSource getDataSource() {
+            return datasource;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setDataSource(DataSource datasource) {
+            this.datasource = datasource;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public final Connection getConnection() {
+
+            // SQL-builder only Factory
+            if (connection == null && datasource == null) {
+                return null;
+            }
+
+            // [#1424] DataSource-enabled Factory with no Connection yet
+            else if (connection == null && datasource != null) {
+                return new DataSourceConnection(datasource, null, settings);
+            }
+
+            // Factory clone
+            else if (connection.getClass() == DataSourceConnection.class) {
+                return connection;
+            }
+
+            // Factory clone
+            else if (connection.getClass() == ConnectionProxy.class) {
+                return connection;
+            }
+
+            // [#1424] Connection-based Factory
+            else {
+                return new DataSourceConnection(null, new ConnectionProxy(connection, settings), settings);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public final void setConnection(Connection connection) {
+            this.connection = connection;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        @Deprecated
+        public final org.jooq.SchemaMapping getSchemaMapping() {
+            return mapping;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public final Settings getSettings() {
+            return settings;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public final Map<String, Object> getData() {
+            return data;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public final Object getData(String key) {
+            return data.get(key);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public final Object setData(String key, Object value) {
+            return data.put(key, value);
+        }
+
+        @Override
+        public String toString() {
+            StringWriter writer = new StringWriter();
+            JAXB.marshal(settings, writer);
+
+            return "ExecutorConfiguration [\n\tconnected=" + (connection != null) +
+                ",\n\tdialect=" + dialect +
+                ",\n\tdata=" + data +
+                ",\n\tsettings=\n\t\t" + writer.toString().trim().replace("\n", "\n\t\t") +
+                "\n]";        }
     }
 
     // -------------------------------------------------------------------------
@@ -1260,7 +1345,7 @@ public class Executor implements FactoryOperations {
         try {
             String schemaName = render(schema);
 
-            switch (dialect) {
+            switch (getDialect()) {
                 case DB2:
                 case DERBY:
                 case H2:
@@ -1294,8 +1379,8 @@ public class Executor implements FactoryOperations {
             }
         }
         finally {
-            getRenderMapping(settings).setDefaultSchema(schema.getName());
-            mapping.use(schema);
+            getRenderMapping(getSettings()).setDefaultSchema(schema.getName());
+            getSchemaMapping().use(schema);
         }
 
         return result;
@@ -1470,14 +1555,7 @@ public class Executor implements FactoryOperations {
 
     @Override
     public String toString() {
-        StringWriter writer = new StringWriter();
-        JAXB.marshal(settings, writer);
-
-        return "Factory [\n\tconnected=" + (connection != null) +
-            ",\n\tdialect=" + dialect +
-            ",\n\tdata=" + data +
-            ",\n\tsettings=\n\t\t" + writer.toString().trim().replace("\n", "\n\t\t") +
-            "\n]";
+        return configuration.toString();
     }
 
     static {
@@ -1503,19 +1581,12 @@ public class Executor implements FactoryOperations {
     /**
      * Get a default <code>Factory</code> with a {@link Connection}
      */
-    @SuppressWarnings("deprecation")
     final static Executor getNewFactory(Configuration configuration) {
         if (configuration == null) {
             return getNewFactory(DefaultConfiguration.DEFAULT_CONFIGURATION);
         }
         else {
-            return new Executor(
-                configuration.getDataSource(),
-                configuration.getConnection(),
-                configuration.getDialect(),
-                configuration.getSettings(),
-                configuration.getSchemaMapping(),
-                configuration.getData());
+            return new Executor(configuration);
         }
     }
 

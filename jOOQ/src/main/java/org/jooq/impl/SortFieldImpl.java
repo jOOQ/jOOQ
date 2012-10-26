@@ -45,7 +45,7 @@ import org.jooq.RenderContext;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 
-class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements SortField<T> {
+class SortFieldImpl<T> extends AbstractNamedQueryPart implements SortField<T> {
 
     /**
      * Generated UID
@@ -58,7 +58,7 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
     private boolean           nullsLast;
 
     SortFieldImpl(Field<T> field, SortOrder order) {
-        super(field.getName(), field.getDataType());
+        super(field.getName());
 
         this.field = field;
         this.order = order;

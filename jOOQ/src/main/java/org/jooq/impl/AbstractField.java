@@ -62,6 +62,7 @@ import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Comparator;
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -73,15 +74,18 @@ import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.tools.Convert;
 
-abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
+abstract class AbstractField<T> extends AbstractNamedQueryPart implements Field<T> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = 2884811923648354905L;
+    private final DataType<T> dataType;
 
     AbstractField(String name, DataType<T> type) {
-        super(name, type);
+        super(name);
+
+        this.dataType = type;
     }
 
     // ------------------------------------------------------------------------
@@ -104,6 +108,21 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public Field<T> as(String alias) {
         return new FieldAlias<T>(this, alias);
+    }
+
+    @Override
+    public final DataType<T> getDataType() {
+        return dataType;
+    }
+
+    @Override
+    public final DataType<T> getDataType(Configuration configuration) {
+        return dataType.getDataType(configuration);
+    }
+
+    @Override
+    public final Class<? extends T> getType() {
+        return dataType.getType();
     }
 
     // ------------------------------------------------------------------------

@@ -282,8 +282,8 @@ class DefaultBindContext extends AbstractBindContext {
         else if (type.isArray()) {
             switch (dialect) {
                 case POSTGRES: {
-                    StringBuilder sb = postgresArrayString(value);
-                    stmt.setString(nextIndex(), sb.toString());
+                    String sb = postgresArrayString(value);
+                    stmt.setString(nextIndex(), sb);
                     break;
                 }
                 case HSQLDB:
@@ -319,7 +319,7 @@ class DefaultBindContext extends AbstractBindContext {
         return this;
     }
 
-    /* package private */ static StringBuilder postgresArrayString(Object value) {
+    /* package private */ static String postgresArrayString(Object value) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
 
@@ -341,6 +341,6 @@ class DefaultBindContext extends AbstractBindContext {
         }
 
         sb.append("}");
-        return sb;
+        return sb.toString();
     }
 }

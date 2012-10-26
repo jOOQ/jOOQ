@@ -30,4 +30,14 @@ public class PostgresArrayEscapingTest {
     public void nulls() {
         assertEquals("{null}", DefaultBindContext.postgresArrayString(new Object[]{null}));
     }
+
+    @Test
+    public void stringsWithQuotesShouldBeEscaped() {
+        assertEquals("{\"\\\"foo\"}", DefaultBindContext.postgresArrayString(new String[]{"\"foo"}));
+    }
+
+    @Test
+    public void stringsWithBackslashesShouldBeEncoded() {
+        assertEquals("{\"\\\\foo\"}", DefaultBindContext.postgresArrayString(new String[]{"\\foo"}));
+    }
 }

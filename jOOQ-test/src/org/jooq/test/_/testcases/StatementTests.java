@@ -111,6 +111,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         KeepStatementListener.reset();
         query.keepStatement(true);
         assertEquals(2, query.fetchOne(0));
+
+        // [#1886] TODO: Fix this for StatementType.STATIC_STATEMENT
         assertEquals(3, query.bind(1, 3).fetchOne(0));
 
         Cursor<Record> cursor = query.fetchLazy();

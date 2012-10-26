@@ -1538,7 +1538,7 @@ public interface Record extends FieldProvider, Store<Object> {
      * instance.
      *
      * @param <E> The generic entity type.
-     * @param type The entity type.
+     * @param object The receiving bean.
      * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      * @throws NullPointerException if <code>object</code> is <code>null</code>

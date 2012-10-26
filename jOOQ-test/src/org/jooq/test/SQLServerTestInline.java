@@ -36,9 +36,10 @@
 
 package org.jooq.test;
 
+import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
-import org.jooq.util.sqlserver.SQLServerFactory;
+import org.jooq.impl.Factory;
 
 
 /**
@@ -47,9 +48,9 @@ import org.jooq.util.sqlserver.SQLServerFactory;
 public class SQLServerTestInline extends SQLServerTest {
 
     @Override
-    protected SQLServerFactory create(Settings settings) {
+    protected Factory create(Settings settings) {
         settings = (settings != null) ? settings : new Settings();
         settings.withStatementType(StatementType.STATIC_STATEMENT);
-        return new SQLServerFactory(getConnection(), settings);
+        return new Factory(getConnection(), SQLDialect.SQLSERVER, settings);
     }
 }

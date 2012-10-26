@@ -38,11 +38,12 @@ package org.jooq.test;
 
 import java.util.List;
 
+import org.jooq.SQLDialect;
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
-import org.jooq.util.mysql.MySQLFactory;
+import org.jooq.impl.Factory;
 
 
 /**
@@ -63,7 +64,7 @@ public class MySQLTestSchemaMapping extends MySQLTest {
     }
 
     @Override
-    protected MySQLFactory create(Settings settings) {
+    protected Factory create(Settings settings) {
         settings = (settings != null) ? settings : new Settings();
         RenderMapping mapping = SettingsTools.getRenderMapping(settings);
         List<MappedSchema> schemata = mapping.getSchemata();
@@ -79,6 +80,6 @@ public class MySQLTestSchemaMapping extends MySQLTest {
                 .withOutput(TAuthor().getSchema().getName() + getSchemaSuffix());
         }
 
-        return new MySQLFactory(getConnection(), settings);
+        return new Factory(getConnection(), SQLDialect.MYSQL, settings);
     }
 }

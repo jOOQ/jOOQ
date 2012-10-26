@@ -35,12 +35,7 @@
  */
 package org.jooq.util.firebird;
 
-import java.sql.Connection;
-
-import javax.sql.DataSource;
-
 import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 
 /**
@@ -56,69 +51,9 @@ public class FirebirdFactory extends Factory {
     private static final long serialVersionUID = -2018237718414421677L;
 
     /**
-     * Create a factory with connection and a settings configured
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
+     * No instances
      */
-    public FirebirdFactory(Connection connection, Settings settings) {
-        super(connection, SQLDialect.FIREBIRD, settings);
-    }
-
-    /**
-     * Create a factory with a data source and a settings configured
-     *
-     * @param dataSource The data source to use with objects created from this
-     *            factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
-     */
-    public FirebirdFactory(DataSource dataSource, Settings settings) {
-        super(dataSource, SQLDialect.FIREBIRD, settings);
-    }
-
-    /**
-     * Create a factory with connection
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     */
-    public FirebirdFactory(Connection connection) {
-        super(connection, SQLDialect.FIREBIRD);
-    }
-
-    /**
-     * Create a factory with a data source
-     *
-     * @param dataSource The data source to use with objects created from this
-     *            factory
-     */
-    public FirebirdFactory(DataSource dataSource) {
-        super(dataSource, SQLDialect.FIREBIRD);
-    }
-
-    /**
-     * Create a factory with settings configured
-     * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
-     *
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
-     */
-    public FirebirdFactory(Settings settings) {
-        super(SQLDialect.FIREBIRD, settings);
-    }
-
-    /**
-     * Create a connection-less factory
-     * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
-     */
-    public FirebirdFactory() {
+    private FirebirdFactory() {
         super(SQLDialect.FIREBIRD);
     }
 }

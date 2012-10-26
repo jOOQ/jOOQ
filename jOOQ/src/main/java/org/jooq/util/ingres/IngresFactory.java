@@ -35,12 +35,7 @@
  */
 package org.jooq.util.ingres;
 
-import java.sql.Connection;
-
-import javax.sql.DataSource;
-
 import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 
 /**
@@ -56,69 +51,9 @@ public class IngresFactory extends Factory {
     private static final long serialVersionUID = -2018237718414421677L;
 
     /**
-     * Create a factory with connection and a settings configured
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
+     * No instances
      */
-    public IngresFactory(Connection connection, Settings settings) {
-        super(connection, SQLDialect.INGRES, settings);
-    }
-
-    /**
-     * Create a factory with a data source and a settings configured
-     *
-     * @param dataSource The data source to use with objects created from this
-     *            factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
-     */
-    public IngresFactory(DataSource dataSource, Settings settings) {
-        super(dataSource, SQLDialect.INGRES, settings);
-    }
-
-    /**
-     * Create a factory with connection
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     */
-    public IngresFactory(Connection connection) {
-        super(connection, SQLDialect.INGRES);
-    }
-
-    /**
-     * Create a factory with a data source
-     *
-     * @param dataSource The data source to use with objects created from this
-     *            factory
-     */
-    public IngresFactory(DataSource dataSource) {
-        super(dataSource, SQLDialect.INGRES);
-    }
-
-    /**
-     * Create a factory with settings configured
-     * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
-     *
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
-     */
-    public IngresFactory(Settings settings) {
-        super(SQLDialect.INGRES, settings);
-    }
-
-    /**
-     * Create a connection-less factory
-     * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
-     */
-    public IngresFactory() {
+    private IngresFactory() {
         super(SQLDialect.INGRES);
     }
 }

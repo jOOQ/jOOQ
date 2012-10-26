@@ -61,11 +61,13 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
+import org.jooq.impl.Factory;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -93,7 +95,6 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.mysql.MySQLDataType;
-import org.jooq.util.mysql.MySQLFactory;
 
 
 /**
@@ -125,8 +126,8 @@ public class MySQLTestSchemaRewrite extends jOOQAbstractTest<
     }
 
     @Override
-    protected MySQLFactory create(Settings settings) {
-        return new MySQLFactory(getConnection(), settings);
+    protected Factory create(Settings settings) {
+        return new Factory(getConnection(), SQLDialect.MYSQL, settings);
     }
 
     @Override

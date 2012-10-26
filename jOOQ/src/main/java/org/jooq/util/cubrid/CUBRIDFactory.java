@@ -30,13 +30,8 @@
  */
 package org.jooq.util.cubrid;
 
-import java.sql.Connection;
-
-import javax.sql.DataSource;
-
 import org.jooq.Field;
 import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 
 /**
@@ -52,69 +47,9 @@ public class CUBRIDFactory extends Factory {
     private static final long serialVersionUID = 6530433807914995633L;
 
     /**
-     * Create a factory with connection and a settings configured
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
+     * No instances
      */
-    public CUBRIDFactory(Connection connection, Settings settings) {
-        super(connection, SQLDialect.CUBRID, settings);
-    }
-
-    /**
-     * Create a factory with a data source and a settings configured
-     *
-     * @param dataSource The data source to use with objects created from this
-     *            factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
-     */
-    public CUBRIDFactory(DataSource dataSource, Settings settings) {
-        super(dataSource, SQLDialect.CUBRID, settings);
-    }
-
-    /**
-     * Create a factory with connection
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     */
-    public CUBRIDFactory(Connection connection) {
-        super(connection, SQLDialect.CUBRID);
-    }
-
-    /**
-     * Create a factory with a data source
-     *
-     * @param dataSource The data source to use with objects created from this
-     *            factory
-     */
-    public CUBRIDFactory(DataSource dataSource) {
-        super(dataSource, SQLDialect.CUBRID);
-    }
-
-    /**
-     * Create a factory with settings configured
-     * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
-     *
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
-     */
-    public CUBRIDFactory(Settings settings) {
-        super(SQLDialect.CUBRID, settings);
-    }
-
-    /**
-     * Create a connection-less factory
-     * <p>
-     * Without a connection, this factory cannot execute queries. Use it to
-     * render SQL only.
-     */
-    public CUBRIDFactory() {
+    private CUBRIDFactory() {
         super(SQLDialect.CUBRID);
     }
 

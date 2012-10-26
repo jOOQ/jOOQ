@@ -70,7 +70,6 @@ import static org.jooq.test.Table3.FIELD_ID3;
 import static org.jooq.test.Table3.TABLE3;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -106,6 +105,7 @@ import org.jooq.Row6;
 import org.jooq.Row7;
 import org.jooq.Row8;
 import org.jooq.RowN;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectFinalStep;
 import org.jooq.SelectQuery;
@@ -122,7 +122,6 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.util.oracle.OracleDataType;
-import org.jooq.util.oracle.OracleFactory;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -154,7 +153,7 @@ public class BasicTest {
     public void setUp() throws Exception {
         context = new Mockery();
         statement = context.mock(PreparedStatement.class);
-        create = new OracleFactory((Connection) null);
+        create = new Factory(SQLDialect.ORACLE);
     }
 
     @After

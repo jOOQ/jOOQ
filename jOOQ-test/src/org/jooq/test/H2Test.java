@@ -55,6 +55,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
@@ -104,7 +105,6 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.h2.H2DataType;
-import org.jooq.util.h2.H2Factory;
 
 /**
  * Integration test for the H2 database
@@ -133,7 +133,7 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new H2Factory(getConnection(), settings);
+        return new Factory(getConnection(), SQLDialect.H2, settings);
     }
 
     @Override

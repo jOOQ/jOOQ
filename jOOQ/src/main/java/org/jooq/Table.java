@@ -61,8 +61,7 @@ import org.jooq.impl.Factory;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public interface Table<R extends Record> extends org.jooq.Type<R>, TableLike<R> {
+public interface Table<R extends Record> extends FieldProvider, TableLike<R> {
 
     /**
      * Get the table schema
@@ -77,7 +76,6 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, TableLike<R> 
     /**
      * @return The record type produced by this table
      */
-    @Override
     Class<? extends R> getRecordType();
 
     /**

@@ -59,6 +59,9 @@ import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 
+/**
+ * @author Lukas Eder
+ */
 abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQueryPart<R> implements Table<R> {
 
     /**

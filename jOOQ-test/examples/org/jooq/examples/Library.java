@@ -47,7 +47,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.test.mysql.generatedclasses.enums.TBookStatus;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
@@ -57,8 +57,8 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 
 public class Library {
 
-    private static Factory create() throws Exception {
-        return new Factory(getConnection(), SQLDialect.MYSQL);
+    private static Executor create() throws Exception {
+        return new Executor(getConnection(), SQLDialect.MYSQL);
     }
 
 	public static void main(String[] args) throws Exception {

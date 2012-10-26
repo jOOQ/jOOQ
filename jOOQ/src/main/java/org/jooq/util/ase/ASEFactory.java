@@ -41,14 +41,8 @@ import org.jooq.impl.Factory;
 public class ASEFactory extends Factory {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 6530433807914995633L;
-
-    /**
      * No instances
      */
     private ASEFactory() {
-        super(SQLDialect.ASE);
     }
 }

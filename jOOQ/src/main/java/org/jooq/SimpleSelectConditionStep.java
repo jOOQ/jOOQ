@@ -35,7 +35,7 @@
  */
 package org.jooq;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting specific
@@ -74,7 +74,7 @@ public interface SimpleSelectConditionStep<R extends Record> extends SimpleSelec
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Executor#condition(String)
      */
     @Support
     SimpleSelectConditionStep<R> and(String sql);
@@ -88,7 +88,7 @@ public interface SimpleSelectConditionStep<R extends Record> extends SimpleSelec
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Executor#condition(String, Object...)
      */
     @Support
     SimpleSelectConditionStep<R> and(String sql, Object... bindings);
@@ -102,7 +102,7 @@ public interface SimpleSelectConditionStep<R extends Record> extends SimpleSelec
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see Executor#condition(String, QueryPart...)
      */
     @Support
     SimpleSelectConditionStep<R> and(String sql, QueryPart... parts);
@@ -144,7 +144,7 @@ public interface SimpleSelectConditionStep<R extends Record> extends SimpleSelec
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Executor#condition(String)
      */
     @Support
     SimpleSelectConditionStep<R> or(String sql);
@@ -158,7 +158,7 @@ public interface SimpleSelectConditionStep<R extends Record> extends SimpleSelec
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Executor#condition(String, Object...)
      */
     @Support
     SimpleSelectConditionStep<R> or(String sql, Object... bindings);
@@ -172,7 +172,7 @@ public interface SimpleSelectConditionStep<R extends Record> extends SimpleSelec
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see Executor#condition(String, QueryPart...)
      */
     @Support
     SimpleSelectConditionStep<R> or(String sql, QueryPart... parts);

@@ -49,7 +49,7 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -79,8 +79,8 @@ import org.jooq.util.h2.information_schema.tables.TypeInfo;
 public class H2Database extends AbstractDatabase {
 
     @Override
-    protected Factory create0() {
-        return new Factory(getConnection(), SQLDialect.H2);
+    protected Executor create0() {
+        return new Executor(getConnection(), SQLDialect.H2);
     }
 
     @Override

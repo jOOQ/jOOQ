@@ -46,14 +46,8 @@ import org.jooq.impl.Factory;
 public class DB2Factory extends Factory {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -5683650832655465156L;
-
-    /**
      * No instances
      */
     private DB2Factory() {
-        super(SQLDialect.DB2);
     }
 }

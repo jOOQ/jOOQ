@@ -68,7 +68,7 @@ import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.InvalidResultException;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -555,7 +555,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         jOOQAbstractTest.reset = false;
 
-        Factory create = create(new Settings().withExecuteWithOptimisticLocking(true));
+        Executor create = create(new Settings().withExecuteWithOptimisticLocking(true));
         boolean t = TBook_REC_TIMESTAMP() != null;
         boolean v = TBook_REC_VERSION() != null;
 
@@ -657,7 +657,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     private <R extends UpdatableRecord<R>> void testStoreWithOptimisticLock0(
         UpdatableTable<R> table, TableField<R, Integer> id, TableField<R, String> string) throws Exception {
 
-        Factory create = create(new Settings().withExecuteWithOptimisticLocking(true));
+        Executor create = create(new Settings().withExecuteWithOptimisticLocking(true));
 
         // Storing without changing shouldn't execute any queries
         R record1 = create.fetchOne(table, id.equal(1));

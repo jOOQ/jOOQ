@@ -21,7 +21,7 @@ public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generate
 	/**
 	 * Create a new TBookDao with an attached factory
 	 */
-	public TBookDao(org.jooq.impl.Factory factory) {
+	public TBookDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.mysql.generatedclasses.tables.pojos.TBook.class, factory);
 	}
 

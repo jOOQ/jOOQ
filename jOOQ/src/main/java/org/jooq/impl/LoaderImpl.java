@@ -99,7 +99,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     // Configuration data
     // ------------------
-    private final Factory           create;
+    private final Executor           create;
     private final Table<R>          table;
     private final UpdatableTable<R> updatable;
     private int                     onDuplicate             = ON_DUPLICATE_KEY_ERROR;
@@ -125,7 +125,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private int                     stored;
     private final List<LoaderError> errors;
 
-    LoaderImpl(Factory create, Table<R> table) {
+    LoaderImpl(Executor create, Table<R> table) {
         this.create = create;
         this.table = table;
         this.errors = new ArrayList<LoaderError>();

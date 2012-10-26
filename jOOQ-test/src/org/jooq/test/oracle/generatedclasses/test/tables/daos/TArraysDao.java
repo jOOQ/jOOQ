@@ -19,7 +19,7 @@ public class TArraysDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.gener
 	/**
 	 * Create a new TArraysDao with an attached factory
 	 */
-	public TArraysDao(org.jooq.impl.Factory factory) {
+	public TArraysDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TArrays.class, factory);
 	}
 

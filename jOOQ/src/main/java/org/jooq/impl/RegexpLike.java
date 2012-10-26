@@ -77,7 +77,7 @@ class RegexpLike extends AbstractCondition {
             // [#620] HSQLDB has its own syntax
             case HSQLDB: {
 
-                // [#1570] TODO: Replace this by Factory.condition(String, QueryPart...)
+                // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
                 context.sql(Factory.condition("{regexp_matches}({0}, {1})", search, pattern));
                 break;
             }
@@ -85,7 +85,7 @@ class RegexpLike extends AbstractCondition {
             // [#620] Postgres has its own syntax
             case POSTGRES: {
 
-                // [#1570] TODO: Replace this by Factory.condition(String, QueryPart...)
+                // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
                 context.sql(Factory.condition("{0} ~ {1}", search, pattern));
                 break;
             }
@@ -93,7 +93,7 @@ class RegexpLike extends AbstractCondition {
             // [#620] Oracle has its own syntax
             case ORACLE: {
 
-                // [#1570] TODO: Replace this by Factory.condition(String, QueryPart...)
+                // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
                 context.sql(Factory.condition("{regexp_like}({0}, {1})", search, pattern));
                 break;
             }

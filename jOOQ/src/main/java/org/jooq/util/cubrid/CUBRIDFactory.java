@@ -42,15 +42,9 @@ import org.jooq.impl.Factory;
 public class CUBRIDFactory extends Factory {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 6530433807914995633L;
-
-    /**
      * No instances
      */
     private CUBRIDFactory() {
-        super(SQLDialect.CUBRID);
     }
 
     // -------------------------------------------------------------------------

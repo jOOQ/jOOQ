@@ -19,7 +19,7 @@ public class TTriggersDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.gene
 	/**
 	 * Create a new TTriggersDao with an attached factory
 	 */
-	public TTriggersDao(org.jooq.impl.Factory factory) {
+	public TTriggersDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.mysql.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers.class, factory);
 	}
 

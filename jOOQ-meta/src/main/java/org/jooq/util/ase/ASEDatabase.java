@@ -49,7 +49,7 @@ import java.util.List;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -76,8 +76,8 @@ public class ASEDatabase extends AbstractDatabase {
     private static final JooqLogger log = JooqLogger.getLogger(ASEDatabase.class);
 
     @Override
-    protected Factory create0() {
-        return new Factory(getConnection(), SQLDialect.ASE);
+    protected Executor create0() {
+        return new Executor(getConnection(), SQLDialect.ASE);
     }
 
     private SchemaDefinition getSchema() {

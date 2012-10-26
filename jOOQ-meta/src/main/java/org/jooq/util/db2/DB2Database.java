@@ -59,7 +59,7 @@ import java.util.List;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -90,8 +90,8 @@ import org.jooq.util.db2.syscat.tables.Tables;
 public class DB2Database extends AbstractDatabase {
 
     @Override
-    protected Factory create0() {
-        return new Factory(getConnection(), SQLDialect.DB2);
+    protected Executor create0() {
+        return new Executor(getConnection(), SQLDialect.DB2);
     }
 
     @Override

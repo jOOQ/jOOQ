@@ -37,7 +37,7 @@ package org.jooq;
 
 import java.util.Collection;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 
 /**
  * This type is used for the {@link Update}'s DSL API.
@@ -76,7 +76,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Executor#condition(String)
      */
     @Support
     UpdateConditionStep<R> where(String sql);
@@ -89,7 +89,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Executor#condition(String, Object...)
      */
     @Support
     UpdateConditionStep<R> where(String sql, Object... bindings);
@@ -102,7 +102,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see Executor#condition(String, QueryPart...)
      */
     @Support
     UpdateConditionStep<R> where(String sql, QueryPart... parts);

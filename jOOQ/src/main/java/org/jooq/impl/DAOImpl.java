@@ -59,7 +59,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     private final Table<R> table;
     private final Class<P> type;
-    private Factory        create;
+    private Executor        create;
 
     // -------------------------------------------------------------------------
     // XXX: Constructors and initialisation
@@ -69,7 +69,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         this(table, type, null);
     }
 
-    protected DAOImpl(Table<R> table, Class<P> type, Factory create) {
+    protected DAOImpl(Table<R> table, Class<P> type, Executor create) {
         this.table = table;
         this.type = type;
         this.create = create;
@@ -78,7 +78,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     /**
      * Inject an attached factory
      */
-    public final void setFactory(Factory create) {
+    public final void setFactory(Executor create) {
         this.create = create;
     }
 

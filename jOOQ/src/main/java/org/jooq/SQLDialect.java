@@ -36,6 +36,7 @@
 
 package org.jooq;
 
+import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.util.ase.ASEFactory;
 import org.jooq.util.cubrid.CUBRIDFactory;
@@ -139,11 +140,11 @@ public enum SQLDialect {
     SYBASE("Sybase", SybaseFactory.class);
 
     private final String                   name;
-    private final Class<? extends Factory> factory;
+    private final Class<? extends Factory> sQL;
 
-    private SQLDialect(String name, Class<? extends Factory> factory) {
+    private SQLDialect(String name, Class<? extends Factory> sQL) {
         this.name = name;
-        this.factory = factory;
+        this.sQL = sQL;
     }
 
     /**
@@ -168,10 +169,10 @@ public enum SQLDialect {
     }
 
     /**
-     * A {@link Factory} class whose instances are pre-configured with this
+     * A {@link Executor} class whose instances are pre-configured with this
      * dialect.
      */
     public final Class<? extends Factory> getFactory() {
-        return factory;
+        return sQL;
     }
 }

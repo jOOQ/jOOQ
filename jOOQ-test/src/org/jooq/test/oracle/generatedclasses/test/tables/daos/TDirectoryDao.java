@@ -19,7 +19,7 @@ public class TDirectoryDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.ge
 	/**
 	 * Create a new TDirectoryDao with an attached factory
 	 */
-	public TDirectoryDao(org.jooq.impl.Factory factory) {
+	public TDirectoryDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TDirectory.class, factory);
 	}
 

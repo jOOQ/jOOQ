@@ -21,7 +21,7 @@ public class TAuthorDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generated
 	/**
 	 * Create a new TAuthorDao with an attached factory
 	 */
-	public TAuthorDao(org.jooq.impl.Factory factory) {
+	public TAuthorDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor.class, factory);
 	}
 

@@ -46,14 +46,8 @@ import org.jooq.impl.Factory;
 public class HSQLDBFactory extends Factory {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -2018237718414421677L;
-
-    /**
      * No instances
      */
     private HSQLDBFactory() {
-        super(SQLDialect.HSQLDB);
     }
 }

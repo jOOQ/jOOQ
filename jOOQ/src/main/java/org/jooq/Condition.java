@@ -36,7 +36,7 @@
 
 package org.jooq;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 
 /**
  * A condition to be used in a query's where part
@@ -66,7 +66,7 @@ public interface Condition extends QueryPart {
      *
      * @param sql The other condition
      * @return The combined condition
-     * @see Factory#condition(String)
+     * @see Executor#condition(String)
      */
     @Support
     Condition and(String sql);
@@ -83,7 +83,7 @@ public interface Condition extends QueryPart {
      * @param sql The other condition
      * @param bindings The bindings
      * @return The combined condition
-     * @see Factory#condition(String, Object...)
+     * @see Executor#condition(String, Object...)
      */
     @Support
     Condition and(String sql, Object... bindings);
@@ -102,7 +102,7 @@ public interface Condition extends QueryPart {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return The combined condition
-     * @see Factory#condition(String, QueryPart...)
+     * @see Executor#condition(String, QueryPart...)
      */
     @Support
     Condition and(String sql, QueryPart... parts);
@@ -158,7 +158,7 @@ public interface Condition extends QueryPart {
      *
      * @param sql The other condition
      * @return The combined condition
-     * @see Factory#condition(String)
+     * @see Executor#condition(String)
      */
     @Support
     Condition or(String sql);
@@ -175,7 +175,7 @@ public interface Condition extends QueryPart {
      * @param sql The other condition
      * @param bindings The bindings
      * @return The combined condition
-     * @see Factory#condition(String, Object...)
+     * @see Executor#condition(String, Object...)
      */
     @Support
     Condition or(String sql, Object... bindings);
@@ -194,7 +194,7 @@ public interface Condition extends QueryPart {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return The combined condition
-     * @see Factory#condition(String, Object...)
+     * @see Executor#condition(String, Object...)
      */
     @Support
     Condition or(String sql, QueryPart... parts);
@@ -232,7 +232,7 @@ public interface Condition extends QueryPart {
     /**
      * Invert this condition
      * <p>
-     * This is the same as calling {@link Factory#not(Condition)}
+     * This is the same as calling {@link Executor#not(Condition)}
      *
      * @return This condition, inverted
      */

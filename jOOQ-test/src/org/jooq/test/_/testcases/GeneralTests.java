@@ -91,7 +91,7 @@ import org.jooq.UpdateQuery;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -299,7 +299,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     @Test
     public void testAttachable() throws Exception {
         jOOQAbstractTest.reset = false;
-        Factory create = create();
+        Executor create = create();
 
         S store1 = create.newRecord(TBookStore());
         assertNotNull(store1);

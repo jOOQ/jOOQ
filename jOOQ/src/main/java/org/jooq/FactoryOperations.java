@@ -66,14 +66,15 @@ import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 
 /**
- * The public API for the jOOQ {@link Factory}
+ * The public API for the jOOQ {@link Executor}
  *
  * @author Sergey Epik
  * @author Lukas Eder
- * @see Factory
+ * @see Executor
  */
 public interface FactoryOperations extends Configuration {
 
@@ -845,7 +846,7 @@ public interface FactoryOperations extends Configuration {
 
     /**
      * Convenience method to fetch the NEXTVAL for a sequence directly from this
-     * {@link Factory}'s underlying JDBC {@link Connection}
+     * {@link Executor}'s underlying JDBC {@link Connection}
      *
      * @throws DataAccessException if something went wrong executing the query
      */
@@ -854,7 +855,7 @@ public interface FactoryOperations extends Configuration {
 
     /**
      * Convenience method to fetch the CURRVAL for a sequence directly from this
-     * {@link Factory}'s underlying JDBC {@link Connection}
+     * {@link Executor}'s underlying JDBC {@link Connection}
      *
      * @throws DataAccessException if something went wrong executing the query
      */

@@ -21,7 +21,7 @@ public class XTestCase_71Dao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.g
 	/**
 	 * Create a new XTestCase_71Dao with an attached factory
 	 */
-	public XTestCase_71Dao(org.jooq.impl.Factory factory) {
+	public XTestCase_71Dao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.mysql.generatedclasses.tables.pojos.XTestCase_71.class, factory);
 	}
 

@@ -19,7 +19,7 @@ public class TBooleansDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generat
 	/**
 	 * Create a new TBooleansDao with an attached factory
 	 */
-	public TBooleansDao(org.jooq.impl.Factory factory) {
+	public TBooleansDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS, org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans.class, factory);
 	}
 

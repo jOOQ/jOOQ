@@ -46,14 +46,8 @@ import org.jooq.impl.Factory;
 public class DerbyFactory extends Factory {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6387408751125022685L;
-
-    /**
      * No instances
      */
     private DerbyFactory() {
-        super(SQLDialect.DERBY);
     }
 }

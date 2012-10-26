@@ -46,14 +46,8 @@ import org.jooq.impl.Factory;
 public class PostgresFactory extends Factory {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 3722639614267896473L;
-
-    /**
      * No instances
      */
     private PostgresFactory() {
-        super(SQLDialect.POSTGRES);
     }
 }

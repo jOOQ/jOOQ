@@ -65,7 +65,7 @@ import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -118,8 +118,8 @@ public class FirebirdTest extends jOOQAbstractTest<
         T_785Record> {
 
     @Override
-    protected Factory create(Settings settings) {
-        return new Factory(getConnection(), SQLDialect.FIREBIRD, settings);
+    protected Executor create(Settings settings) {
+        return new Executor(getConnection(), SQLDialect.FIREBIRD, settings);
     }
 
     @Override

@@ -43,7 +43,7 @@ import java.util.Random;
 import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.tools.StopWatch;
@@ -84,7 +84,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         // https://github.com/jOOQ/jOOQ/issues/1625
 
 
-        Factory create = create();
+        Executor create = create();
         create.getSettings().setExecuteLogging(false);
         create.getSettings().setExecuteListeners(Collections.<String>emptyList());
 
@@ -107,7 +107,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         watch.splitInfo("Reuse SQL String");
     }
 
-    private void testBenchmarkReuseSQLString(Factory create, int repetitions) throws Exception {
+    private void testBenchmarkReuseSQLString(Executor create, int repetitions) throws Exception {
         String sql = createSelect(create).getSQL(false);
         PreparedStatement pst = getConnection().prepareStatement(sql);
         pst.setLong(1, 1);
@@ -122,7 +122,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         pst.close();
     }
 
-    private void testBenchmarkReuseSelect(Factory create, int repetitions) {
+    private void testBenchmarkReuseSelect(Executor create, int repetitions) {
         Select<?> scs = createSelect(create);
 
         for (int i = 0; i < repetitions; i++) {
@@ -130,13 +130,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         }
     }
 
-    private void testBenchmarkFullExecution(Factory create, int repetitions) {
+    private void testBenchmarkFullExecution(Executor create, int repetitions) {
         for (int i = 0; i < repetitions; i++) {
             createSelect(create).execute();
         }
     }
 
-    private Select<?> createSelect(Factory create) {
+    private Select<?> createSelect(Executor create) {
         return create.select()
                      .from(TBook())
                      .where(TBook_ID().equal(1))

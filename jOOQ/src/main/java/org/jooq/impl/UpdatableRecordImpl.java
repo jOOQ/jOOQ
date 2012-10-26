@@ -78,7 +78,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     /**
      * [#1537] This constant is used internally by jOOQ to omit the RETURNING
-     * clause in {@link Factory#batchStore(UpdatableRecord...)} calls for
+     * clause in {@link Executor#batchStore(UpdatableRecord...)} calls for
      * {@link SQLDialect#POSTGRES}
      */
     static final String       OMIT_RETURNING_CLAUSE = "JOOQ.OMIT_RETURNING_CLAUSE";
@@ -130,7 +130,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     private final int storeInsert() {
-        Factory create = create();
+        Executor create = create();
         InsertQuery<R> insert = create.insertQuery(getTable());
         addChangedValues(insert);
 

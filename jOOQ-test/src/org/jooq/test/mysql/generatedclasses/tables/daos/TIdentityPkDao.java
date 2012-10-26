@@ -19,7 +19,7 @@ public class TIdentityPkDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.ge
 	/**
 	 * Create a new TIdentityPkDao with an attached factory
 	 */
-	public TIdentityPkDao(org.jooq.impl.Factory factory) {
+	public TIdentityPkDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.mysql.generatedclasses.tables.pojos.TIdentityPk.class, factory);
 	}
 

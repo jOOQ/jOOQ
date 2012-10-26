@@ -19,7 +19,7 @@ public class T_725LobTestDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.gene
 	/**
 	 * Create a new T_725LobTestDao with an attached factory
 	 */
-	public T_725LobTestDao(org.jooq.impl.Factory factory) {
+	public T_725LobTestDao(org.jooq.impl.Executor factory) {
 		super(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.h2.generatedclasses.tables.pojos.T_725LobTest.class, factory);
 	}
 

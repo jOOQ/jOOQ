@@ -92,7 +92,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
 
     @Override
     public final void readSQL(SQLInput stream, String typeName) throws SQLException {
-        Factory configuration = Factory.getNewFactory(getUDT().getDataType().getDialect());
+        Executor configuration = Executor.getNewFactory(getUDT().getDataType().getDialect());
 
         for (Field<?> field : getUDT().getFields()) {
             setValue(configuration, stream, field);

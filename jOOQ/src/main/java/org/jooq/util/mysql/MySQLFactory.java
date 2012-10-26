@@ -38,6 +38,7 @@ package org.jooq.util.mysql;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
+import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 
 /**
@@ -48,15 +49,9 @@ import org.jooq.impl.Factory;
 public class MySQLFactory extends Factory {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -8433470252008110069L;
-
-    /**
      * No instances
      */
     private MySQLFactory() {
-        super(SQLDialect.MYSQL);
     }
 
     // -------------------------------------------------------------------------
@@ -66,7 +61,7 @@ public class MySQLFactory extends Factory {
     /**
      * Get the MySQL-specific <code>DECODE()</code> function
      * <p>
-     * Don't mix this up with the various {@link Factory#decode()} methods!
+     * Don't mix this up with the various {@link Executor#decode()} methods!
      */
     public static Field<String> decode(String cryptString, String keyString) {
         return decode(val(cryptString), val(keyString));
@@ -75,7 +70,7 @@ public class MySQLFactory extends Factory {
     /**
      * Get the MySQL-specific <code>DECODE()</code> function
      * <p>
-     * Don't mix this up with the various {@link Factory#decode()} methods!
+     * Don't mix this up with the various {@link Executor#decode()} methods!
      */
     public static Field<String> decode(Field<String> cryptString, Field<String> keyString) {
         return function("decode", String.class, cryptString, keyString);

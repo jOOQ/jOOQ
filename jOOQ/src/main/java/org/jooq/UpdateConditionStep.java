@@ -35,7 +35,8 @@
  */
 package org.jooq;
 
-import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
+
 
 /**
  * This type is used for the {@link Update}'s DSL API.
@@ -70,7 +71,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String)
+     * @see Factory#condition(String)
      */
     @Support
     UpdateConditionStep<R> and(String sql);
@@ -84,7 +85,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, Object...)
+     * @see Factory#condition(String, Object...)
      */
     @Support
     UpdateConditionStep<R> and(String sql, Object... bindings);
@@ -98,7 +99,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, QueryPart...)
+     * @see Factory#condition(String, QueryPart...)
      */
     @Support
     UpdateConditionStep<R> and(String sql, QueryPart... parts);
@@ -140,7 +141,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String)
+     * @see Factory#condition(String)
      */
     @Support
     UpdateConditionStep<R> or(String sql);
@@ -154,7 +155,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, Object...)
+     * @see Factory#condition(String, Object...)
      */
     @Support
     UpdateConditionStep<R> or(String sql, Object... bindings);
@@ -168,7 +169,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, QueryPart...)
+     * @see Factory#condition(String, QueryPart...)
      */
     @Support
     UpdateConditionStep<R> or(String sql, QueryPart... parts);

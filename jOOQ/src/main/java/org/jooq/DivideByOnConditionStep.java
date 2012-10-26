@@ -35,7 +35,7 @@
  */
 package org.jooq;
 
-import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 
 /**
  * An intermediate type for the construction of a relational division. This type
@@ -61,7 +61,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String)
+     * @see Factory#condition(String)
      */
     @Support
     DivideByOnConditionStep and(String sql);
@@ -75,7 +75,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, Object...)
+     * @see Factory#condition(String, Object...)
      */
     @Support
     DivideByOnConditionStep and(String sql, Object... bindings);
@@ -89,7 +89,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, QueryPart...)
+     * @see Factory#condition(String, QueryPart...)
      */
     @Support
     DivideByOnConditionStep and(String sql, QueryPart... parts);
@@ -131,7 +131,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String)
+     * @see Factory#condition(String)
      */
     @Support
     DivideByOnConditionStep or(String sql);
@@ -145,7 +145,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, Object...)
+     * @see Factory#condition(String, Object...)
      */
     @Support
     DivideByOnConditionStep or(String sql, Object... bindings);
@@ -159,7 +159,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, QueryPart...)
+     * @see Factory#condition(String, QueryPart...)
      */
     @Support
     DivideByOnConditionStep or(String sql, QueryPart... parts);

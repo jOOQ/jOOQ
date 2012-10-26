@@ -17,11 +17,6 @@ public final class Tables {
 	public static final org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
-	 * The table LUKAS.T_658_REF
-	 */
-	public static final org.jooq.test.db2.generatedclasses.tables.T_658Ref T_658_REF = org.jooq.test.db2.generatedclasses.tables.T_658Ref.T_658_REF;
-
-	/**
 	 * The table LUKAS.T_725_LOB_TEST
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.db2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
@@ -80,6 +75,11 @@ public final class Tables {
 	 * The table LUKAS.T_IDENTITY_PK
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.db2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
+	 * The table LUKAS.T_LANGUAGE
+	 */
+	public static final org.jooq.test.db2.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.db2.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table LUKAS.T_TRIGGERS

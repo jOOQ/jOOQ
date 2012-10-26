@@ -17,11 +17,6 @@ public final class Tables {
 	public static final org.jooq.test.cubrid.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.cubrid.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
-	 * The table DBA.t_658_ref
-	 */
-	public static final org.jooq.test.cubrid.generatedclasses.tables.T_658Ref T_658_REF = org.jooq.test.cubrid.generatedclasses.tables.T_658Ref.T_658_REF;
-
-	/**
 	 * The table DBA.t_725_lob_test
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.cubrid.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
@@ -85,6 +80,11 @@ public final class Tables {
 	 * The table DBA.t_identity_pk
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
+	 * The table DBA.t_language
+	 */
+	public static final org.jooq.test.cubrid.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.cubrid.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table DBA.t_triggers

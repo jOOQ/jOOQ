@@ -37,9 +37,9 @@ public final class Tables {
 	public static final org.jooq.test.sybase.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.sybase.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
-	 * The table DBA.t_658_ref
+	 * An entity holding language master data
 	 */
-	public static final org.jooq.test.sybase.generatedclasses.tables.T_658Ref T_658_REF = org.jooq.test.sybase.generatedclasses.tables.T_658Ref.T_658_REF;
+	public static final org.jooq.test.sybase.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.sybase.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table DBA.t_725_lob_test

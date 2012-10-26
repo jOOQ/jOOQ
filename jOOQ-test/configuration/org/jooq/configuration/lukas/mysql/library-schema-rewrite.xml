@@ -17,34 +17,6 @@
             <unsignedTypes>true</unsignedTypes>
             <inputSchema>test</inputSchema>
             <outputSchema>test2</outputSchema>
-            <masterDataTables>
-                <masterDataTable>
-                    <name>t_language</name>
-                    <literal>CD</literal>
-                    <description>DESCRIPTION</description>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_11</name>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_21</name>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_31</name>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_12</name>
-                    <literal>cd</literal>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_22</name>
-                    <literal>cd</literal>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_32</name>
-                    <literal>cd</literal>
-                </masterDataTable>
-            </masterDataTables>
 
             <customTypes>
                 <customType>

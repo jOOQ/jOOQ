@@ -35,6 +35,7 @@
  */
 package org.jooq.examples;
 
+import static org.jooq.test.mysql.generatedclasses.Tables.T_LANGUAGE;
 import static org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR;
 import static org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK;
 
@@ -48,9 +49,9 @@ import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.impl.Factory;
 import org.jooq.test.mysql.generatedclasses.enums.TBookStatus;
-import org.jooq.test.mysql.generatedclasses.enums.TLanguage;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
+import org.jooq.test.mysql.generatedclasses.tables.TLanguage;
 import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 
@@ -177,10 +178,16 @@ public class Library {
         }
 
         for (TAuthorRecord record : create().selectFrom(T_AUTHOR)
-                .where(TAuthor.ID.in(create().selectDistinct(TBook.AUTHOR_ID)
-                    .from(T_BOOK).where(TBook.LANGUAGE_ID.in(TLanguage.en, TLanguage.pt)))).fetch()) {
+                .where(TAuthor.ID.in(create()
+                    .selectDistinct(TBook.AUTHOR_ID)
+                    .from(T_BOOK)
+                    .where(TBook.LANGUAGE_ID.in(
+                        create().select(TLanguage.ID)
+                                .from(T_LANGUAGE)
+                                .where(TLanguage.CD.in("pt", "en"))
+                    )))).fetch()) {
 
-            System.out.println("Author : " + record.getFirstName() + " " + record.getLastName() + " have english or portuguese books");
+            System.out.println("Author : " + record.getFirstName() + " " + record.getLastName() + " has english or portuguese books");
         }
 
         Select<?> union =

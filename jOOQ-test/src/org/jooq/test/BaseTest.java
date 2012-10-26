@@ -35,8 +35,6 @@
  */
 package org.jooq.test;
 
-import static org.jooq.tools.reflect.Reflect.on;
-
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -128,7 +126,6 @@ public abstract class BaseTest<
     IPK extends UpdatableRecord<IPK>,
 
     // Various tables related to trac ticket numbers
-    T658 extends TableRecord<T658>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>> {
@@ -147,14 +144,10 @@ public abstract class BaseTest<
 
     protected static final JooqLogger      log                = JooqLogger.getLogger(jOOQAbstractTest.class);
 
-    protected final jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate;
+    protected final jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> delegate;
 
-    protected BaseTest(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    protected BaseTest(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> delegate) {
         this.delegate = delegate;
-    }
-
-    protected Table<T658> T658() {
-        return delegate.T658();
     }
 
     protected Table<T725> T725() {
@@ -441,7 +434,7 @@ public abstract class BaseTest<
         return delegate.TBook_TITLE();
     }
 
-    protected TableField<B, ?> TBook_LANGUAGE_ID() {
+    protected TableField<B, Integer> TBook_LANGUAGE_ID() {
         return delegate.TBook_LANGUAGE_ID();
     }
 
@@ -725,7 +718,6 @@ public abstract class BaseTest<
     /**
      * Convenience method to create a new dummy book
      */
-    @SuppressWarnings("unchecked")
     protected final B newBook(int id) {
         B record = create().newRecord(TBook());
 
@@ -733,7 +725,7 @@ public abstract class BaseTest<
         record.setValue(TBook_AUTHOR_ID(), 1);
         record.setValue(TBook_TITLE(), "XX");
         record.setValue(TBook_PUBLISHED_IN(), 2000);
-        record.setValue((Field<Object>)TBook_LANGUAGE_ID(), on(TBook_LANGUAGE_ID().getDataType().getType()).get("en"));
+        record.setValue(TBook_LANGUAGE_ID(), 1);
 
         return record;
     }

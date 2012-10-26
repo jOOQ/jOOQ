@@ -15,34 +15,6 @@
             <excludes>T_BOOK_DETAILS</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
-            <masterDataTables>
-                <masterDataTable>
-                    <name>T_LANGUAGE</name>
-                    <literal>CD</literal>
-                    <description>DESCRIPTION</description>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>T_658_11</name>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>T_658_21</name>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>T_658_31</name>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>T_658_12</name>
-                    <literal>CD</literal>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>T_658_22</name>
-                    <literal>CD</literal>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>T_658_32</name>
-                    <literal>CD</literal>
-                </masterDataTable>
-            </masterDataTables>
 
             <customTypes>
                 <customType>

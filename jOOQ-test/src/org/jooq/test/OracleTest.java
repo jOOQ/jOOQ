@@ -57,7 +57,6 @@ import static org.jooq.test.oracle.generatedclasses.test.Routines.pArrays1;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.pTables1;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.secondMax;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_639_NUMBERS_TABLE;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_658_REF;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_725_LOB_TEST;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_785;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_ARRAYS;
@@ -123,7 +122,6 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.T_658RefRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord;
@@ -181,7 +179,6 @@ public class OracleTest extends jOOQAbstractTest<
         XUnusedRecord,
         XUnusedRecord,
         XUnusedRecord,
-        T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
         T_785Record> {
@@ -432,11 +429,6 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Table<T_658RefRecord> T658() {
-        return T_658_REF;
-    }
-
-    @Override
     protected Table<T_639NumbersTableRecord> T639() {
         return T_639_NUMBERS_TABLE;
     }
@@ -557,7 +549,7 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TBookRecord, ? extends Enum<?>> TBook_LANGUAGE_ID() {
+    protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return T_BOOK.LANGUAGE_ID;
     }
 

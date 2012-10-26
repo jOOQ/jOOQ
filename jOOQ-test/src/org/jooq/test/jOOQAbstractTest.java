@@ -192,7 +192,6 @@ public abstract class jOOQAbstractTest<
         IPK extends UpdatableRecord<IPK>,
 
         // Various tables related to trac ticket numbers
-        T658 extends TableRecord<T658>,
         T725 extends UpdatableRecord<T725>,
         T639 extends UpdatableRecord<T639>,
         T785 extends TableRecord<T785>> {
@@ -536,7 +535,6 @@ public abstract class jOOQAbstractTest<
         return "/org/jooq/test/" + getDialect().getName().toLowerCase() + "/reset.sql";
     }
 
-    protected abstract Table<T658> T658();
     protected abstract Table<T725> T725();
     protected abstract TableField<T725, Integer> T725_ID();
     protected abstract TableField<T725, byte[]> T725_LOB();
@@ -631,7 +629,7 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<B, Integer> TBook_ID();
     protected abstract TableField<B, Integer> TBook_AUTHOR_ID();
     protected abstract TableField<B, String> TBook_TITLE();
-    protected abstract TableField<B, ?> TBook_LANGUAGE_ID();
+    protected abstract TableField<B, Integer> TBook_LANGUAGE_ID();
     protected abstract TableField<B, Integer> TBook_PUBLISHED_IN();
     protected abstract TableField<B, String> TBook_CONTENT_TEXT();
     protected abstract TableField<B, byte[]> TBook_CONTENT_PDF();
@@ -754,6 +752,12 @@ public abstract class jOOQAbstractTest<
 
     protected String getSchemaSuffix() {
         return "";
+    }
+
+    @Test
+    public void testStart() {
+        // An initial test case to clean up the test database
+        log.info("STARTING");
     }
 
     // IMPORTANT! Make this the first test, to prevent side-effects
@@ -1564,11 +1568,6 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testMasterData() throws Exception {
-        new EnumTests(this).testMasterData();
-    }
-
-    @Test
     public void testSerialisation() throws Exception {
         new GeneralTests(this).testSerialisation();
     }
@@ -1799,8 +1798,8 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testVoid() {
+    public void testFinish() {
         // A final test case to clean up the test database
-        System.out.println("finish");
+        log.info("FINISHING");
     }
 }

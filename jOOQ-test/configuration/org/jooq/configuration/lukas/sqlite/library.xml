@@ -15,34 +15,6 @@
             <excludes>t_book_details,sqlite_sequence</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
-            <masterDataTables>
-                <masterDataTable>
-                    <name>t_language</name>
-                    <literal>cd</literal>
-                    <description>description</description>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_11</name>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_21</name>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_31</name>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_12</name>
-                    <literal>cd</literal>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_22</name>
-                    <literal>cd</literal>
-                </masterDataTable>
-                <masterDataTable>
-                    <name>t_658_32</name>
-                    <literal>cd</literal>
-                </masterDataTable>
-            </masterDataTables>
 
             <customTypes>
                 <customType>

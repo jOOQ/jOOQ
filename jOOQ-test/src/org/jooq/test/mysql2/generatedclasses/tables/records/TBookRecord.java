@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "test2")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -2116766787;
+	private static final long serialVersionUID = -1071715845;
 
 	/**
 	 * The book ID
@@ -213,7 +213,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES test2.t_language (ID)
 	 * </pre></code>
 	 */
-	public void setLanguageId(org.jooq.test.mysql2.generatedclasses.enums.TLanguage value) {
+	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value);
 	}
 
@@ -227,8 +227,37 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 10)
-	public org.jooq.test.mysql2.generatedclasses.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord 
+	 * TLanguageRecord}
+	 */
+	public void setLanguageId(org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value.getValue(org.jooq.test.mysql2.generatedclasses.tables.TLanguage.T_LANGUAGE.ID));
+		}
+	}
+
+	/**
+	 * The language of the book
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT fk_t_book_language_id
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES test2.t_language (ID)
+	 * </pre></code>
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
+		return create()
+			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TLanguage.T_LANGUAGE)
+			.where(org.jooq.test.mysql2.generatedclasses.tables.TLanguage.T_LANGUAGE.ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID)))
+			.fetchOne();
 	}
 
 	/**

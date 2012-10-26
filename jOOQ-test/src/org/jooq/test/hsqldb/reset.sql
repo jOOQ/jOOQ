@@ -1,11 +1,4 @@
 DELETE FROM t_639_numbers_table/
-DELETE FROM t_658_ref/
-DELETE FROM t_658_11/
-DELETE FROM t_658_21/
-DELETE FROM t_658_31/
-DELETE FROM t_658_12/
-DELETE FROM t_658_22/
-DELETE FROM t_658_32/
 DELETE FROM t_arrays/
 DELETE FROM t_book_to_book_store/
 DELETE FROM t_book_store/
@@ -26,14 +19,6 @@ INSERT INTO t_language (id, cd, description, description_english) VALUES (2, 'de
 INSERT INTO t_language (id, cd, description, description_english) VALUES (3, 'fr', 'Français', 'French')/
 INSERT INTO t_language (id, cd, description, description_english) VALUES (4, 'pt', null, null)/
 /
-
-INSERT INTO t_658_11 VALUES ('A'), ('B'), ('C')/
-INSERT INTO t_658_21 VALUES (1), (2), (3)/
-INSERT INTO t_658_31 VALUES (1), (2), (3)/
-INSERT INTO t_658_12 VALUES ('A', 'A'), ('B', 'B'), ('C', 'C')/
-INSERT INTO t_658_22 VALUES (1, 1), (2, 2), (3, 3)/
-INSERT INTO t_658_32 VALUES (1, 1), (2, 2), (3, 3)/
-INSERT INTO t_658_ref VALUES ('A', 1, 1, 'B', 2, 2)/
 
 INSERT INTO t_author VALUES (next value for s_author_id, 'George', 'Orwell', '1903-06-25', 1903, null)/
 INSERT INTO t_author VALUES (next value for s_author_id, 'Paulo', 'Coelho', '1947-08-24', 1947, null)/

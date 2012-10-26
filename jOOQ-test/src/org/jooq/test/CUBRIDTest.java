@@ -73,7 +73,6 @@ import org.jooq.test.cubrid.generatedclasses.tables.TIdentity;
 import org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.cubrid.generatedclasses.tables.TTriggers;
 import org.jooq.test.cubrid.generatedclasses.tables.T_639NumbersTable;
-import org.jooq.test.cubrid.generatedclasses.tables.T_658Ref;
 import org.jooq.test.cubrid.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.cubrid.generatedclasses.tables.T_785;
 import org.jooq.test.cubrid.generatedclasses.tables.VLibrary;
@@ -88,7 +87,6 @@ import org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.cubrid.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.cubrid.generatedclasses.tables.records.T_639NumbersTableRecord;
-import org.jooq.test.cubrid.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.cubrid.generatedclasses.tables.records.VLibraryRecord;
@@ -122,7 +120,6 @@ public class CUBRIDTest extends jOOQAbstractTest<
         XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
-        T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
         T_785Record> {
@@ -235,11 +232,6 @@ public class CUBRIDTest extends jOOQAbstractTest<
     @Override
     protected TableField<T_725LobTestRecord, byte[]> T725_LOB() {
         return T_725LobTest.LOB;
-    }
-
-    @Override
-    protected Table<T_658RefRecord> T658() {
-        return T_658Ref.T_658_REF;
     }
 
     @Override
@@ -471,7 +463,7 @@ public class CUBRIDTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TBookRecord, ? extends Enum<?>> TBook_LANGUAGE_ID() {
+    protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return TBook.LANGUAGE_ID;
     }
 

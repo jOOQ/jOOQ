@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1575187844;
+	private static final long serialVersionUID = 631633661;
 
 	/**
 	 * The table column <code>DBA.t_book.id</code>
@@ -202,7 +202,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES DBA.t_language (id)
 	 * </pre></code>
 	 */
-	public void setLanguageId(org.jooq.test.cubrid.generatedclasses.enums.TLanguage value) {
+	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID, value);
 	}
 
@@ -215,8 +215,37 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES DBA.t_language (id)
 	 * </pre></code>
 	 */
-	public org.jooq.test.cubrid.generatedclasses.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord 
+	 * TLanguageRecord}
+	 */
+	public void setLanguageId(org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID, value.getValue(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.ID));
+		}
+	}
+
+	/**
+	 * The table column <code>DBA.t_book.language_id</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT t_book__fk_t_book_language_id
+	 * FOREIGN KEY (language_id)
+	 * REFERENCES DBA.t_language (id)
+	 * </pre></code>
+	 */
+	public org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
+		return create()
+			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.T_LANGUAGE)
+			.where(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID)))
+			.fetchOne();
 	}
 
 	/**

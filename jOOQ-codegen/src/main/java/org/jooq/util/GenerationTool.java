@@ -59,7 +59,6 @@ import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
-import org.jooq.util.jaxb.MasterDataTable;
 import org.jooq.util.jaxb.Property;
 import org.jooq.util.jaxb.Schema;
 import org.jooq.util.jaxb.Strategy;
@@ -114,11 +113,11 @@ public class GenerationTool {
     		    // TODO [#1201] Add better error handling here
     		    xml = xml.replaceAll(
     		        "<(\\w+:)?configuration xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-codegen-\\d+\\.\\d+\\.\\d+.xsd\">",
-    		        "<$1configuration xmlns$2=\"http://www.jooq.org/xsd/jooq-codegen-2.5.0.xsd\">");
+    		        "<$1configuration xmlns$2=\"http://www.jooq.org/xsd/jooq-codegen-3.0.0.xsd\">");
 
     		    xml = xml.replace(
     		        "<configuration>",
-    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.5.0.xsd\">");
+    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-3.0.0.xsd\">");
 
     		    main(JAXB.unmarshal(new StringReader(xml), Configuration.class));
     		}
@@ -148,19 +147,6 @@ public class GenerationTool {
 
 	    Strategy strategy = new Strategy();
 	    strategy.setName(properties.containsKey("generator.strategy") ? properties.getProperty("generator.strategy") : null);
-
-	    List<MasterDataTable> masterDataTables = new ArrayList<MasterDataTable>();
-	    for (String name : defaultString(properties.getProperty("generator.generate.master-data-tables")).split(",")) {
-	        if (isBlank(name)) continue;
-
-	        MasterDataTable table = new MasterDataTable();
-
-	        table.setName(name);
-	        table.setLiteral(properties.getProperty("generator.generate.master-data-table-literal." + name));
-	        table.setDescription(properties.getProperty("generator.generate.master-data-table-description." + name));
-
-	        masterDataTables.add(table);
-	    }
 
         List<EnumType> enumTypes = new ArrayList<EnumType>();
         for (String property : properties.stringPropertyNames()) {
@@ -196,9 +182,6 @@ public class GenerationTool {
 	    database.setOutputSchema(properties.containsKey("generator.database.output-schema") ? properties.getProperty("generator.database.output-schema") : null);
 
 	    // Avoid creating these empty elements when migrating
-	    if (!masterDataTables.isEmpty())
-	        database.getMasterDataTables().addAll(masterDataTables);
-
 	    if (!enumTypes.isEmpty())
 	        database.getEnumTypes().addAll(enumTypes);
 
@@ -344,7 +327,6 @@ public class GenerationTool {
             database.setExcludes(defaultString(g.getDatabase().getExcludes()).split(","));
             database.setRecordVersionFields(defaultString(g.getDatabase().getRecordVersionFields()).split(","));
             database.setRecordTimestampFields(defaultString(g.getDatabase().getRecordTimestampFields()).split(","));
-            database.setConfiguredMasterDataTables(g.getDatabase().getMasterDataTables());
             database.setConfiguredCustomTypes(g.getDatabase().getCustomTypes());
             database.setConfiguredEnumTypes(g.getDatabase().getEnumTypes());
             database.setConfiguredForcedTypes(g.getDatabase().getForcedTypes());

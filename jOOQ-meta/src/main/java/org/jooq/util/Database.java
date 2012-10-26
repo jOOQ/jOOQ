@@ -44,7 +44,6 @@ import org.jooq.impl.Factory;
 import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
-import org.jooq.util.jaxb.MasterDataTable;
 import org.jooq.util.jaxb.Schema;
 
 /**
@@ -88,25 +87,6 @@ public interface Database {
      * Get a table in this database by name
      */
     TableDefinition getTable(SchemaDefinition schema, String name, boolean ignoreCase);
-
-    /**
-     * The master data tables contained in this database (for schema
-     * {@link #getSchema(String)})
-     */
-    @SuppressWarnings("deprecation")
-    List<MasterDataTableDefinition> getMasterDataTables(SchemaDefinition schema);
-
-    /**
-     * Get a master data table in this database by name
-     */
-    @SuppressWarnings("deprecation")
-    MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name);
-
-    /**
-     * Get a master data table in this database by name
-     */
-    @SuppressWarnings("deprecation")
-    MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
      * The enum UDTs defined in this database
@@ -238,18 +218,6 @@ public interface Database {
      * record timestamp fields in generated code
      */
     String[] getRecordTimestampFields();
-
-    /**
-     * Database objects matching any of these table names will be generated as
-     * master data tables.
-     */
-    void setConfiguredMasterDataTables(List<MasterDataTable> tables);
-
-    /**
-     * Database objects matching any of these table names will be generated as
-     * master data tables.
-     */
-    List<MasterDataTable> getConfiguredMasterDataTables();
 
     /**
      * Database objects matching any of these field names will be generated as

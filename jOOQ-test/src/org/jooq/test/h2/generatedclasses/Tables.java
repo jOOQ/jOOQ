@@ -37,9 +37,9 @@ public final class Tables {
 	public static final org.jooq.test.h2.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
-	 * The table PUBLIC.T_658_REF
+	 * An entity holding language master data
 	 */
-	public static final org.jooq.test.h2.generatedclasses.tables.T_658Ref T_658_REF = org.jooq.test.h2.generatedclasses.tables.T_658Ref.T_658_REF;
+	public static final org.jooq.test.h2.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.h2.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table PUBLIC.T_725_LOB_TEST

@@ -9,7 +9,7 @@ package org.jooq.test.ase.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Dbo extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1906190113;
+	private static final long serialVersionUID = -79967263;
 
 	/**
 	 * The singleton instance of dbo
@@ -30,7 +30,6 @@ public class Dbo extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.ase.generatedclasses.tables.VBook.V_BOOK,
 			org.jooq.test.ase.generatedclasses.tables.VLibrary.V_LIBRARY,
 			org.jooq.test.ase.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
-			org.jooq.test.ase.generatedclasses.tables.T_658Ref.T_658_REF,
 			org.jooq.test.ase.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.ase.generatedclasses.tables.T_785.T_785,
 			org.jooq.test.ase.generatedclasses.tables.T_986_1.T_986_1,
@@ -43,6 +42,7 @@ public class Dbo extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.ase.generatedclasses.tables.TDates.T_DATES,
 			org.jooq.test.ase.generatedclasses.tables.TIdentity.T_IDENTITY,
 			org.jooq.test.ase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
+			org.jooq.test.ase.generatedclasses.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.ase.generatedclasses.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.ase.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69,
 			org.jooq.test.ase.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71,

@@ -17,11 +17,6 @@ public final class Tables {
 	public static final org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
-	 * The table TEST.T_658_REF
-	 */
-	public static final org.jooq.test.derby.generatedclasses.tables.T_658Ref T_658_REF = org.jooq.test.derby.generatedclasses.tables.T_658Ref.T_658_REF;
-
-	/**
 	 * The table TEST.T_725_LOB_TEST
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.derby.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
@@ -70,6 +65,11 @@ public final class Tables {
 	 * The table TEST.T_IDENTITY_PK
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.derby.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
+	 * The table TEST.T_LANGUAGE
+	 */
+	public static final org.jooq.test.derby.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.derby.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table TEST.T_TRIGGERS

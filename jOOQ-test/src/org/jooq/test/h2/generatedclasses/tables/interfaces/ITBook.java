@@ -108,7 +108,7 @@ public interface ITBook extends java.io.Serializable {
 	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
-	public void setLanguageId(org.jooq.test.h2.generatedclasses.enums.TLanguage value);
+	public void setLanguageId(java.lang.Integer value);
 
 	/**
 	 * The language of the book
@@ -119,7 +119,7 @@ public interface ITBook extends java.io.Serializable {
 	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
-	public org.jooq.test.h2.generatedclasses.enums.TLanguage getLanguageId();
+	public java.lang.Integer getLanguageId();
 
 	/**
 	 * Some textual content of the book

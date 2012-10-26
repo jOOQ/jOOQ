@@ -82,7 +82,7 @@ public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generate
 	/**
 	 * Fetch records that have <code>LANGUAGE_ID IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByLanguageId(org.jooq.test.mysql.generatedclasses.enums.TLanguage... values) {
+	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByLanguageId(java.lang.Integer... values) {
 		return fetch(org.jooq.test.mysql.generatedclasses.tables.TBook.LANGUAGE_ID, values);
 	}
 

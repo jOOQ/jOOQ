@@ -17,11 +17,6 @@ public final class Tables {
 	public static final org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
-	 * The table T_658_REF
-	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.T_658Ref T_658_REF = org.jooq.test.firebird.generatedclasses.tables.T_658Ref.T_658_REF;
-
-	/**
 	 * The table T_725_LOB_TEST
 	 */
 	public static final org.jooq.test.firebird.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.firebird.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
@@ -65,6 +60,11 @@ public final class Tables {
 	 * The table T_DATES
 	 */
 	public static final org.jooq.test.firebird.generatedclasses.tables.TDates T_DATES = org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES;
+
+	/**
+	 * The table T_LANGUAGE
+	 */
+	public static final org.jooq.test.firebird.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table T_TRIGGERS

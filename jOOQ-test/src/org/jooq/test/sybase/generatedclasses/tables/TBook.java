@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -5430233;
+	private static final long serialVersionUID = -1502877862;
 
 	/**
 	 * The singleton instance of DBA.t_book
@@ -79,7 +79,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase
 	 * REFERENCES DBA.t_language (id)
 	 * </pre></code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, org.jooq.test.sybase.generatedclasses.enums.TLanguage> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.sybase.generatedclasses.enums.TLanguage.class), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The table column <code>DBA.t_book.CONTENT_TEXT</code>
@@ -113,7 +113,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_BOOK__FK_T_BOOK_AUTHOR_ID, org.jooq.test.sybase.generatedclasses.Keys.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_BOOK__FK_T_BOOK_AUTHOR_ID, org.jooq.test.sybase.generatedclasses.Keys.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.sybase.generatedclasses.Keys.T_BOOK__FK_T_BOOK_LANGUAGE_ID);
 	}
 
 	@Override

@@ -54,7 +54,6 @@ import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
-import org.jooq.util.jaxb.MasterDataTable;
 import org.jooq.util.jaxb.Schema;
 import org.jooq.util.oracle.OracleDatabase;
 
@@ -81,7 +80,6 @@ public abstract class AbstractDatabase implements Database {
     private boolean                         supportsUnsignedTypes;
     private boolean                         dateAsTimestamp;
     private List<Schema>                    configuredSchemata;
-    private List<MasterDataTable>           configuredMasterDataTables;
     private List<CustomType>                configuredCustomTypes;
     private List<EnumType>                  configuredEnumTypes;
     private List<ForcedType>                configuredForcedTypes;
@@ -94,8 +92,6 @@ public abstract class AbstractDatabase implements Database {
     private List<SchemaDefinition>          schemata;
     private List<SequenceDefinition>        sequences;
     private List<TableDefinition>           tables;
-    @SuppressWarnings("deprecation")
-    private List<MasterDataTableDefinition> masterDataTables;
     private List<EnumDefinition>            enums;
     private List<UDTDefinition>             udts;
     private List<ArrayDefinition>           arrays;
@@ -263,16 +259,6 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final void setConfiguredMasterDataTables(List<MasterDataTable> configuredMasterDataTables) {
-        this.configuredMasterDataTables = configuredMasterDataTables;
-    }
-
-    @Override
-    public final List<MasterDataTable> getConfiguredMasterDataTables() {
-        return configuredMasterDataTables;
-    }
-
-    @Override
     public final void setConfiguredEnumTypes(List<EnumType> configuredEnumTypes) {
         this.configuredEnumTypes = configuredEnumTypes;
     }
@@ -357,7 +343,7 @@ public abstract class AbstractDatabase implements Database {
             tables = new ArrayList<TableDefinition>();
 
             try {
-                List<TableDefinition> t = filterMasterDataTables(getTables0(), false);
+                List<TableDefinition> t = getTables0();
 
                 tables = filterExcludeInclude(t);
                 log.info("Tables fetched", fetchedSize(t, tables));
@@ -376,45 +362,7 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final TableDefinition getTable(SchemaDefinition schema, String name, boolean ignoreCase) {
-        TableDefinition result = null;
-
-        result = getDefinition(getTables(schema), name, ignoreCase);
-        if (result == null) {
-            result = getDefinition(getMasterDataTables(schema), name, ignoreCase);
-        }
-
-        return result;
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public final List<MasterDataTableDefinition> getMasterDataTables(SchemaDefinition schema) {
-        if (masterDataTables == null) {
-            masterDataTables = new ArrayList<MasterDataTableDefinition>();
-
-            try {
-                List<MasterDataTableDefinition> t = filterMasterDataTables(getTables0(), true);
-                masterDataTables = filterExcludeInclude(t);
-
-                log.info("Masterdata tables fetched", fetchedSize(t, masterDataTables));
-            } catch (Exception e) {
-                log.error("Exception while fetching master data tables", e);
-            }
-        }
-
-        return filterSchema(masterDataTables, schema);
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public final MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name) {
-        return getMasterDataTable(schema, name, false);
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public final MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name, boolean ignoreCase) {
-        return getDefinition(getMasterDataTables(schema), name, ignoreCase);
+        return getDefinition(getTables(schema), name, ignoreCase);
     }
 
     @Override
@@ -635,36 +583,6 @@ public abstract class AbstractDatabase implements Database {
                     result.add(definition);
                     continue definitionsLoop;
                 }
-            }
-        }
-
-        return result;
-    }
-
-    @SuppressWarnings({ "unchecked", "deprecation" })
-    private final <T extends TableDefinition> List<T> filterMasterDataTables(List<TableDefinition> list, boolean include) {
-        List<T> result = new ArrayList<T>();
-
-        definitionLoop: for (TableDefinition definition : list) {
-            for (MasterDataTable table : configuredMasterDataTables) {
-                if (definition.getName().equals(table.getName())) {
-
-                    // If we have a match, then add the table only if master
-                    // data tables are included in the result
-                    if (include) {
-                        log.info("DEPRECATION", "Master data tables have been deprecated in jOOQ 2.5.0 and will be removed in jOOQ 3.0. Do not reuse this feature");
-                        result.add((T) new DefaultMasterDataTableDefinition(definition));
-                    }
-
-                    continue definitionLoop;
-                }
-
-            }
-
-            // If we don't have any match, then add the table only if
-            // master data tables are excluded in the result
-            if (!include) {
-                result.add((T) definition);
             }
         }
 

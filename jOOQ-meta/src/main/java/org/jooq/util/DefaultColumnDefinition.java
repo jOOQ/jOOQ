@@ -48,25 +48,14 @@ public class DefaultColumnDefinition
     implements ColumnDefinition {
 
     private final int                 position;
-    private final DataTypeDefinition  underlying;
     private final boolean             isIdentity;
     private final boolean             nullable;
 
-    private DataTypeDefinition        type;
     private boolean                   primaryKeyLoaded;
     private UniqueKeyDefinition       primaryKey;
     private List<UniqueKeyDefinition> uniqueKeys;
     private boolean                   foreignKeyLoaded;
     private ForeignKeyDefinition      foreignKey;
-
-    /**
-     * @deprecated - 2.1.0 - Use the other constructor instead
-     */
-    @Deprecated
-    public DefaultColumnDefinition(TableDefinition table, String name, int position, DataTypeDefinition type,
-        boolean isIdentity, String comment) {
-        this(table, name, position, type, true, isIdentity, comment);
-    }
 
     public DefaultColumnDefinition(TableDefinition table, String name, int position, DataTypeDefinition type,
         boolean nullable, boolean isIdentity, String comment) {
@@ -74,7 +63,6 @@ public class DefaultColumnDefinition
         super(table, name, position, type, comment);
 
         this.position = position;
-        this.underlying = type;
         this.isIdentity = isIdentity;
         this.nullable = nullable;
     }
@@ -82,32 +70,6 @@ public class DefaultColumnDefinition
     @Override
     public final int getPosition() {
         return position;
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public final DataTypeDefinition getType() {
-
-        // Lazy initialise
-        if (type == null) {
-            ForeignKeyDefinition fk = getDatabase().getRelations().getForeignKey(this);
-
-            // If this is a foreign key to a master data type
-            if (fk != null) {
-                TableDefinition referencedTable = fk.getReferencedTable();
-
-                if (referencedTable instanceof MasterDataTableDefinition) {
-                    type = new MasterDataTypeDefinition(referencedTable, underlying);
-                }
-            }
-
-            // Else...
-            if (type == null) {
-                type = super.getType();
-            }
-        }
-
-        return type;
     }
 
     @Override

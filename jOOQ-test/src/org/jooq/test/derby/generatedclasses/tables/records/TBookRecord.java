@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1390513756;
+	private static final long serialVersionUID = -805621128;
 
 	/**
 	 * The table column <code>TEST.T_BOOK.ID</code>
@@ -202,7 +202,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES TEST.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
-	public void setLanguageId(org.jooq.test.derby.generatedclasses.enums.TLanguage value) {
+	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TBook.LANGUAGE_ID, value);
 	}
 
@@ -215,8 +215,37 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES TEST.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
-	public org.jooq.test.derby.generatedclasses.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TBook.LANGUAGE_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.derby.generatedclasses.tables.records.TLanguageRecord 
+	 * TLanguageRecord}
+	 */
+	public void setLanguageId(org.jooq.test.derby.generatedclasses.tables.records.TLanguageRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.derby.generatedclasses.tables.TBook.LANGUAGE_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.derby.generatedclasses.tables.TBook.LANGUAGE_ID, value.getValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.ID));
+		}
+	}
+
+	/**
+	 * The table column <code>TEST.T_BOOK.LANGUAGE_ID</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES TEST.T_LANGUAGE (ID)
+	 * </pre></code>
+	 */
+	public org.jooq.test.derby.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
+		return create()
+			.selectFrom(org.jooq.test.derby.generatedclasses.tables.TLanguage.T_LANGUAGE)
+			.where(org.jooq.test.derby.generatedclasses.tables.TLanguage.ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.TBook.LANGUAGE_ID)))
+			.fetchOne();
 	}
 
 	/**

@@ -5246,6 +5246,7 @@ create.attach(select);]]></java>
 								<li><reference class="org.jooq.Result"/>: Unlike its JDBC counter-part, this type implements <reference class="java.util.List"/> and is fully loaded into Java memory, freeing resources as early as possible. Just like statements, this means that users don't have to deal with a "weird" internal result set state.</li>
 								<li><reference class="org.jooq.Cursor"/>: If you want more fine-grained control over how many records are fetched into memory at once, you can still do that using jOOQ's <reference id="lazy-fetching" title="lazy fetching"/> feature</li>
 								<li><reference id="statement-type" title="Statement type"/>: jOOQ does not formally distinguish between static statements and prepared statements. By default, all statements are prepared statements in jOOQ, internally. Executing a statement as a static statement can be done simply using a <reference id="custom-settings" title="custom settings flag"/></li>
+								<li><reference id="reusing-statements" title="Closing Statements"/>: JDBC keeps open resources even if they are already consumed. With JDBC, there is a lot of verbosity around safely closing resources. In jOOQ, resources are closed after consumption, by default. If you want to keep them open after consumption, you have to explicitly say so.</li>
 							</ul>
 						</content>
 					</section>
@@ -5999,6 +6000,65 @@ inlined.select(val(1)).where(val(1).equal(1)).fetch();]]></java>
 							<h3>Inlining bind values on a per-bind-value basis</h3>
 							<p>
 								Note that you don't have to inline all your bind values at once. If you know that a bind value is not really a variable and should be inlined explicitly, you can do so by using <reference class="org.jooq.impl.Factory" anchor="#inline(Object)" title="Factory.inline()"/>, as documented in the manual's section about <reference id="inlined-parameters" title="inlined parameters"/>
+							</p>
+						</content>
+					</section>
+
+					<section id="reusing-statements">
+						<title>Reusing a Query's PreparedStatement</title>
+						<content>
+							<p>
+								As previously discussed in the chapter about <reference id="comparison-with-jdbc" title="differences between jOOQ and JDBC"/>, reusing PreparedStatements is handled a bit differently in jOOQ from how it is handled in JDBC
+							</p>
+							
+							<h3>Keeping open PreparedStatements with JDBC</h3>
+							<p>
+								With JDBC, you can easily reuse a <reference class="java.sql.PreparedStatement"/> by not closing it between subsequent executions. An example is given here:
+							</p>
+							
+<java><![CDATA[PreparedStatement stmt = null;
+ResultSet rs1 = null;
+ResultSet rs2 = null;
+
+try {
+    // Execute the statement and fetch a first ResultSet
+    stmt = connection.prepareStatement("SELECT 1 FROM DUAL");
+    rs1  = stmt.executeQuery();
+
+    // Without closing the statement, execute it again to fetch another ResultSet
+    rs2  = stmt.executeQuery();
+}
+finally {
+    try { rs1.close();  } catch (Exception ignore) {}
+    try { rs2.close();  } catch (Exception ignore) {}
+    try { stmt.close(); } catch (Exception ignore) {}
+}]]></java>
+
+							<p>
+								The above technique can be quite useful when you want to reuse expensive database resources. This can be the case when your statement is executed very frequently and your database would take non-negligible time to soft-parse the prepared statement and generate a new statement / cursor resource.
+							</p>
+							
+							<h3>Keeping open PreparedStatements with jOOQ</h3>
+							<p>
+								This is also modeled in jOOQ. However, the difference to JDBC is that closing a statement is the default action, whereas keeping it open has to be configured explicitly. This is better than JDBC, because the default action should be the one that is used most often. Keeping open statements is rarely done in average applications. Here's an example of how to keep open PreparedStatements with jOOQ:
+							</p>
+							
+<java><![CDATA[// Create a query which is configured to keep its underlying PreparedStatement open
+ResultQuery<Record> query = create.selectOne().keepStatement(true);
+
+// Execute the query twice, against the same underlying PreparedStatement:
+try {
+    Result<Record> result1 = query.fetch(); // This will lazily create a new PreparedStatement
+    Result<Record> result2 = query.fetch(); // This will reuse the previous PreparedStatement
+}
+
+// ... but now, you must not forget to close the query
+finally {
+    query.close();
+}]]></java>
+
+							<p>
+								The above example shows how a query can be executed twice against the same underlying PreparedStatement. Unlike in other execution scenarios, you must not forget to close this query now
 							</p>
 						</content>
 					</section>

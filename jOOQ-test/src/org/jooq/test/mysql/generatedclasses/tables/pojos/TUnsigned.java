@@ -11,16 +11,16 @@ public class TUnsigned implements java.io.Serializable {
 
 	private static final long serialVersionUID = 12654722;
 
-	private final org.jooq.tools.unsigned.UByte    uByte;
-	private final org.jooq.tools.unsigned.UShort   uShort;
-	private final org.jooq.tools.unsigned.UInteger uInt;
-	private final org.jooq.tools.unsigned.ULong    uLong;
+	private final org.jooq.types.UByte    uByte;
+	private final org.jooq.types.UShort   uShort;
+	private final org.jooq.types.UInteger uInt;
+	private final org.jooq.types.ULong    uLong;
 
 	public TUnsigned(
-		org.jooq.tools.unsigned.UByte    uByte,
-		org.jooq.tools.unsigned.UShort   uShort,
-		org.jooq.tools.unsigned.UInteger uInt,
-		org.jooq.tools.unsigned.ULong    uLong
+		org.jooq.types.UByte    uByte,
+		org.jooq.types.UShort   uShort,
+		org.jooq.types.UInteger uInt,
+		org.jooq.types.ULong    uLong
 	) {
 		this.uByte = uByte;
 		this.uShort = uShort;
@@ -28,19 +28,19 @@ public class TUnsigned implements java.io.Serializable {
 		this.uLong = uLong;
 	}
 
-	public org.jooq.tools.unsigned.UByte getUByte() {
+	public org.jooq.types.UByte getUByte() {
 		return this.uByte;
 	}
 
-	public org.jooq.tools.unsigned.UShort getUShort() {
+	public org.jooq.types.UShort getUShort() {
 		return this.uShort;
 	}
 
-	public org.jooq.tools.unsigned.UInteger getUInt() {
+	public org.jooq.types.UInteger getUInt() {
 		return this.uInt;
 	}
 
-	public org.jooq.tools.unsigned.ULong getULong() {
+	public org.jooq.types.ULong getULong() {
 		return this.uLong;
 	}
 }

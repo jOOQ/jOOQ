@@ -54,7 +54,7 @@ public class Tables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The table column <code>information_schema.TABLES.VERSION</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> VERSION = createField("VERSION", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> VERSION = createField("VERSION", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
 
 	/**
 	 * The table column <code>information_schema.TABLES.ROW_FORMAT</code>
@@ -64,37 +64,37 @@ public class Tables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The table column <code>information_schema.TABLES.TABLE_ROWS</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> TABLE_ROWS = createField("TABLE_ROWS", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> TABLE_ROWS = createField("TABLE_ROWS", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
 
 	/**
 	 * The table column <code>information_schema.TABLES.AVG_ROW_LENGTH</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> AVG_ROW_LENGTH = createField("AVG_ROW_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> AVG_ROW_LENGTH = createField("AVG_ROW_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
 
 	/**
 	 * The table column <code>information_schema.TABLES.DATA_LENGTH</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> DATA_LENGTH = createField("DATA_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> DATA_LENGTH = createField("DATA_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
 
 	/**
 	 * The table column <code>information_schema.TABLES.MAX_DATA_LENGTH</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> MAX_DATA_LENGTH = createField("MAX_DATA_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> MAX_DATA_LENGTH = createField("MAX_DATA_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
 
 	/**
 	 * The table column <code>information_schema.TABLES.INDEX_LENGTH</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> INDEX_LENGTH = createField("INDEX_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> INDEX_LENGTH = createField("INDEX_LENGTH", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
 
 	/**
 	 * The table column <code>information_schema.TABLES.DATA_FREE</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> DATA_FREE = createField("DATA_FREE", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> DATA_FREE = createField("DATA_FREE", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
 
 	/**
 	 * The table column <code>information_schema.TABLES.AUTO_INCREMENT</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> AUTO_INCREMENT = createField("AUTO_INCREMENT", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> AUTO_INCREMENT = createField("AUTO_INCREMENT", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
 
 	/**
 	 * The table column <code>information_schema.TABLES.CREATE_TIME</code>
@@ -119,7 +119,7 @@ public class Tables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The table column <code>information_schema.TABLES.CHECKSUM</code>
 	 */
-	public static final org.jooq.TableField<org.jooq.Record, org.jooq.tools.unsigned.ULong> CHECKSUM = createField("CHECKSUM", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
+	public static final org.jooq.TableField<org.jooq.Record, org.jooq.types.ULong> CHECKSUM = createField("CHECKSUM", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, TABLES);
 
 	/**
 	 * The table column <code>information_schema.TABLES.CREATE_OPTIONS</code>

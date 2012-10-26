@@ -8938,10 +8938,10 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 										Some databases explicitly support unsigned integer data types. In most normal JDBC-based applications, they would just be mapped to their signed counterparts letting bit-wise shifting and tweaking to the user. jOOQ ships with a set of unsigned <reference class="java.lang.Number"/> implementations modelling the following types:
 									</p>
 									<ul>
-										<li><reference class="org.jooq.tools.unsigned.UByte"/>: Unsigned byte, an 8-bit unsigned integer</li>
-										<li><reference class="org.jooq.tools.unsigned.UShort"/>: Unsigned short, a 16-bit unsigned integer</li>
-										<li><reference class="org.jooq.tools.unsigned.UInteger"/>: Unsigned int, a 32-bit unsigned integer</li>
-										<li><reference class="org.jooq.tools.unsigned.ULong"/>: Unsigned long, a 64-bit unsigned integer</li>
+										<li><reference class="org.jooq.types.UByte"/>: Unsigned byte, an 8-bit unsigned integer</li>
+										<li><reference class="org.jooq.types.UShort"/>: Unsigned short, a 16-bit unsigned integer</li>
+										<li><reference class="org.jooq.types.UInteger"/>: Unsigned int, a 32-bit unsigned integer</li>
+										<li><reference class="org.jooq.types.ULong"/>: Unsigned long, a 64-bit unsigned integer</li>
 									</ul>
 									<p>
 										Each of these wrapper types extends <reference class="java.lang.Number"/>, wrapping a higher-level integer type, internally:

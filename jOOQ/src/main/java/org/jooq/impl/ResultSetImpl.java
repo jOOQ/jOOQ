@@ -70,7 +70,7 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
-import org.jooq.tools.unsigned.UNumber;
+import org.jooq.types.UNumber;
 
 /**
  * @author Lukas Eder

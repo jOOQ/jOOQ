@@ -33,145 +33,132 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.tools.unsigned;
-
-import java.math.BigInteger;
+package org.jooq.types;
 
 /**
- * The <code>unsigned long</code> type
+ * The <code>unsigned short</code> type
  *
  * @author Lukas Eder
  */
-public final class ULong extends UNumber implements Comparable<ULong> {
+public final class UShort extends UNumber implements Comparable<UShort> {
 
     /**
      * Generated UID
      */
-    private static final long      serialVersionUID = -6821055240959745390L;
+    private static final long serialVersionUID = -6821055240959745390L;
 
     /**
-     * A constant holding the minimum value an <code>unsigned long</code> can
+     * A constant holding the minimum value an <code>unsigned short</code> can
      * have, 0.
      */
-    public static final BigInteger MIN_VALUE        = BigInteger.ZERO;
+    public static final int   MIN_VALUE        = 0x0000;
 
     /**
-     * A constant holding the maximum value an <code>unsigned long</code> can
-     * have, 2<sup>64</sup>-1.
+     * A constant holding the maximum value an <code>unsigned short</code> can
+     * have, 2<sup>16</sup>-1.
      */
-    public static final BigInteger MAX_VALUE        = new BigInteger("18446744073709551615");
+    public static final int   MAX_VALUE        = 0xffff;
 
     /**
-     * A constant holding the maximum value + 1 an <code>signed long</code> can
-     * have, 2<sup>63</sup>.
+     * The value modelling the content of this <code>unsigned short</code>
      */
-    public static final BigInteger MAX_VALUE_LONG   = new BigInteger("9223372036854775808");
+    private final int         value;
 
     /**
-     * The value modelling the content of this <code>unsigned long</code>
-     */
-    private final BigInteger       value;
-
-    /**
-     * Create an <code>unsigned long</code>
+     * Create an <code>unsigned short</code>
      *
      * @throws NumberFormatException If <code>value</code> does not contain a
-     *             parsable <code>unsigned long</code>.
+     *             parsable <code>unsigned short</code>.
      */
-    public static ULong valueOf(String value) throws NumberFormatException {
-        return new ULong(value);
+    public static UShort valueOf(String value) throws NumberFormatException {
+        return new UShort(value);
     }
 
     /**
-     * Create an <code>unsigned long</code> by masking it with
-     * <code>0xFFFFFFFFFFFFFFFF</code> i.e. <code>(long) -1</code> becomes
-     * <code>(uint) 18446744073709551615</code>
+     * Create an <code>unsigned short</code> by masking it with
+     * <code>0xFFFF</code> i.e. <code>(short) -1</code> becomes
+     * <code>(ushort) 65535</code>
      */
-    public static ULong valueOf(long value) {
-        return new ULong(value);
+    public static UShort valueOf(short value) {
+        return new UShort(value);
     }
 
     /**
-     * Create an <code>unsigned long</code>
+     * Create an <code>unsigned short</code>
      *
      * @throws NumberFormatException If <code>value</code> is not in the range
-     *             of an <code>unsigned long</code>
+     *             of an <code>unsigned short</code>
      */
-    public static ULong valueOf(BigInteger value) throws NumberFormatException {
-        return new ULong(value);
+    public static UShort valueOf(int value) throws NumberFormatException {
+        return new UShort(value);
     }
 
     /**
-     * Create an <code>unsigned long</code>
+     * Create an <code>unsigned short</code>
      *
      * @throws NumberFormatException If <code>value</code> is not in the range
-     *             of an <code>unsigned long</code>
+     *             of an <code>unsigned short</code>
      */
-    private ULong(BigInteger value) throws NumberFormatException {
+    private UShort(int value) throws NumberFormatException {
         this.value = value;
         rangeCheck();
     }
 
     /**
-     * Create an <code>unsigned long</code> by masking it with
-     * <code>0xFFFFFFFFFFFFFFFF</code> i.e. <code>(long) -1</code> becomes
-     * <code>(uint) 18446744073709551615</code>
+     * Create an <code>unsigned short</code> by masking it with
+     * <code>0xFFFF</code> i.e. <code>(short) -1</code> becomes
+     * <code>(ushort) 65535</code>
      */
-    private ULong(long value) {
-        if (value >= 0) {
-            this.value = BigInteger.valueOf(value);
-        }
-        else {
-            this.value = BigInteger.valueOf(value & Long.MAX_VALUE).add(MAX_VALUE_LONG);
-        }
+    private UShort(short value) {
+        this.value = value & MAX_VALUE;
     }
 
     /**
-     * Create an <code>unsigned long</code>
+     * Create an <code>unsigned short</code>
      *
      * @throws NumberFormatException If <code>value</code> does not contain a
-     *             parsable <code>unsigned long</code>.
+     *             parsable <code>unsigned short</code>.
      */
-    private ULong(String value) throws NumberFormatException {
-        this.value = new BigInteger(value);
+    private UShort(String value) throws NumberFormatException {
+        this.value = Integer.parseInt(value);
         rangeCheck();
     }
 
     private void rangeCheck() throws NumberFormatException {
-        if (value.compareTo(MIN_VALUE) < 0 || value.compareTo(MAX_VALUE) > 0) {
+        if (value < MIN_VALUE || value > MAX_VALUE) {
             throw new NumberFormatException("Value is out of range : " + value);
         }
     }
 
     @Override
     public int intValue() {
-        return value.intValue();
+        return value;
     }
 
     @Override
     public long longValue() {
-        return value.longValue();
+        return value;
     }
 
     @Override
     public float floatValue() {
-        return value.floatValue();
+        return value;
     }
 
     @Override
     public double doubleValue() {
-        return value.doubleValue();
+        return value;
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return Integer.valueOf(value).hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ULong) {
-            return value.equals(((ULong) obj).value);
+        if (obj instanceof UShort) {
+            return value == ((UShort) obj).value;
         }
 
         return false;
@@ -179,11 +166,11 @@ public final class ULong extends UNumber implements Comparable<ULong> {
 
     @Override
     public String toString() {
-        return value.toString();
+        return Integer.valueOf(value).toString();
     }
 
     @Override
-    public int compareTo(ULong o) {
-        return value.compareTo(o.value);
+    public int compareTo(UShort o) {
+        return (value < o.value ? -1 : (value == o.value ? 0 : 1));
     }
 }

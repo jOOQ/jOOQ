@@ -68,8 +68,8 @@ import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.unsigned.UNumber;
 import org.jooq.types.DayToSecond;
+import org.jooq.types.UNumber;
 import org.jooq.types.YearToMonth;
 
 /**

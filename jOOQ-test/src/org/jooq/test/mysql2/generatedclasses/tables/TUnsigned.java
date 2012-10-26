@@ -27,22 +27,22 @@ public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gene
 	/**
 	 * The table column <code>test2.t_unsigned.u_byte</code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord, org.jooq.tools.unsigned.UByte> U_BYTE = createField("u_byte", org.jooq.impl.SQLDataType.TINYINTUNSIGNED, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UByte> U_BYTE = createField("u_byte", org.jooq.impl.SQLDataType.TINYINTUNSIGNED, this);
 
 	/**
 	 * The table column <code>test2.t_unsigned.u_short</code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord, org.jooq.tools.unsigned.UShort> U_SHORT = createField("u_short", org.jooq.impl.SQLDataType.SMALLINTUNSIGNED, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UShort> U_SHORT = createField("u_short", org.jooq.impl.SQLDataType.SMALLINTUNSIGNED, this);
 
 	/**
 	 * The table column <code>test2.t_unsigned.u_int</code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord, org.jooq.tools.unsigned.UInteger> U_INT = createField("u_int", org.jooq.impl.SQLDataType.INTEGERUNSIGNED, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UInteger> U_INT = createField("u_int", org.jooq.impl.SQLDataType.INTEGERUNSIGNED, this);
 
 	/**
 	 * The table column <code>test2.t_unsigned.u_long</code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord, org.jooq.tools.unsigned.ULong> U_LONG = createField("u_long", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.ULong> U_LONG = createField("u_long", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this);
 
 	public TUnsigned() {
 		super("t_unsigned", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);

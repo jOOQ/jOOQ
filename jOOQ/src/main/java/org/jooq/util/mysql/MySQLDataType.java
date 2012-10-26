@@ -46,10 +46,10 @@ import org.jooq.DataType;
 import org.jooq.SQLDialect;
 import org.jooq.impl.AbstractDataType;
 import org.jooq.impl.SQLDataType;
-import org.jooq.tools.unsigned.UByte;
-import org.jooq.tools.unsigned.UInteger;
-import org.jooq.tools.unsigned.ULong;
-import org.jooq.tools.unsigned.UShort;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 
 /**
  * Supported data types for the {@link SQLDialect#MYSQL} dialect

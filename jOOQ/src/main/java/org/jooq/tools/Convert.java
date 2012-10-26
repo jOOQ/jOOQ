@@ -35,10 +35,10 @@
  */
 package org.jooq.tools;
 
-import static org.jooq.tools.unsigned.Unsigned.ubyte;
-import static org.jooq.tools.unsigned.Unsigned.uint;
-import static org.jooq.tools.unsigned.Unsigned.ulong;
-import static org.jooq.tools.unsigned.Unsigned.ushort;
+import static org.jooq.types.Unsigned.ubyte;
+import static org.jooq.types.Unsigned.uint;
+import static org.jooq.types.Unsigned.ulong;
+import static org.jooq.types.Unsigned.ushort;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -62,10 +62,10 @@ import java.util.Set;
 import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.exception.DataTypeException;
-import org.jooq.tools.unsigned.UByte;
-import org.jooq.tools.unsigned.UInteger;
-import org.jooq.tools.unsigned.ULong;
-import org.jooq.tools.unsigned.UShort;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 
 /**
  * Utility methods for type conversions

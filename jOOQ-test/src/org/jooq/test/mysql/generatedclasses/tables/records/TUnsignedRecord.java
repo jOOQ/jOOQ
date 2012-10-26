@@ -14,56 +14,56 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * The table column <code>test.t_unsigned.u_byte</code>
 	 */
-	public void setUByte(org.jooq.tools.unsigned.UByte value) {
+	public void setUByte(org.jooq.types.UByte value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_BYTE, value);
 	}
 
 	/**
 	 * The table column <code>test.t_unsigned.u_byte</code>
 	 */
-	public org.jooq.tools.unsigned.UByte getUByte() {
+	public org.jooq.types.UByte getUByte() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_BYTE);
 	}
 
 	/**
 	 * The table column <code>test.t_unsigned.u_short</code>
 	 */
-	public void setUShort(org.jooq.tools.unsigned.UShort value) {
+	public void setUShort(org.jooq.types.UShort value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_SHORT, value);
 	}
 
 	/**
 	 * The table column <code>test.t_unsigned.u_short</code>
 	 */
-	public org.jooq.tools.unsigned.UShort getUShort() {
+	public org.jooq.types.UShort getUShort() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_SHORT);
 	}
 
 	/**
 	 * The table column <code>test.t_unsigned.u_int</code>
 	 */
-	public void setUInt(org.jooq.tools.unsigned.UInteger value) {
+	public void setUInt(org.jooq.types.UInteger value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_INT, value);
 	}
 
 	/**
 	 * The table column <code>test.t_unsigned.u_int</code>
 	 */
-	public org.jooq.tools.unsigned.UInteger getUInt() {
+	public org.jooq.types.UInteger getUInt() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_INT);
 	}
 
 	/**
 	 * The table column <code>test.t_unsigned.u_long</code>
 	 */
-	public void setULong(org.jooq.tools.unsigned.ULong value) {
+	public void setULong(org.jooq.types.ULong value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_LONG, value);
 	}
 
 	/**
 	 * The table column <code>test.t_unsigned.u_long</code>
 	 */
-	public org.jooq.tools.unsigned.ULong getULong() {
+	public org.jooq.types.ULong getULong() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_LONG);
 	}
 

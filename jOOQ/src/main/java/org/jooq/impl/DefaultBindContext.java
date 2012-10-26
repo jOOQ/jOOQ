@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Util.getDriverConnection;
 import static org.jooq.tools.reflect.Reflect.on;
+import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 
 import java.math.BigDecimal;
@@ -282,7 +283,7 @@ class DefaultBindContext extends AbstractBindContext {
         else if (type.isArray()) {
             switch (dialect) {
                 case POSTGRES: {
-                    stmt.setString(nextIndex(), postgresArrayString((Object[]) value));
+                    stmt.setString(nextIndex(), toPGArrayString((Object[]) value));
                     break;
                 }
                 case HSQLDB:
@@ -316,30 +317,5 @@ class DefaultBindContext extends AbstractBindContext {
         }
 
         return this;
-    }
-
-    /* package private */ static String postgresArrayString(Object[] value) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-
-        String separator = "";
-        for (Object o : value) {
-            sb.append(separator);
-
-            // [#753] null must be set as a literal
-            if (o == null) {
-                sb.append(o);
-            }
-            else {
-                sb.append("\"");
-                sb.append(o.toString().replace("\\", "\\\\").replace("\"", "\\\""));
-                sb.append("\"");
-            }
-
-            separator = ", ";
-        }
-
-        sb.append("}");
-        return sb.toString();
     }
 }

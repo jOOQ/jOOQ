@@ -52,21 +52,6 @@ public class CUBRIDFactory extends Factory {
     private static final long serialVersionUID = 6530433807914995633L;
 
     /**
-     * Create a factory with connection and a schema mapping configured
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     * @param mapping The schema mapping to use with objects created from this
-     *            factory
-     * @deprecated - 2.0.5 - Use {@link #CUBRIDFactory(Connection, Settings)}
-     *             instead
-     */
-    @Deprecated
-    public CUBRIDFactory(Connection connection, org.jooq.SchemaMapping mapping) {
-        super(connection, SQLDialect.CUBRID, mapping);
-    }
-
-    /**
      * Create a factory with connection and a settings configured
      *
      * @param connection The connection to use with objects created from this

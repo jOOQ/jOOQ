@@ -55,8 +55,6 @@ import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Util.combine;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.math.BigDecimal;
@@ -6725,30 +6723,6 @@ public class Factory implements FactoryOperations {
         }
         else {
             return getStaticFactory(configuration.getDialect()) == configuration;
-        }
-    }
-
-    // Serialisation magic.
-
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-    }
-
-    @SuppressWarnings("deprecation")
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-
-        if (log.isTraceEnabled()) {
-            log.trace("Deserialising", this);
-        }
-
-        Configuration registered = org.jooq.ConfigurationRegistry.provideFor(this);
-        if (registered != null) {
-            connection = registered.getConnection();
-        }
-
-        if (log.isTraceEnabled()) {
-            log.trace("Deserialised", this);
         }
     }
 }

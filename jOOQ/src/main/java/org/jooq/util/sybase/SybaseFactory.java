@@ -35,7 +35,6 @@ import java.sql.Connection;
 import javax.sql.DataSource;
 
 import org.jooq.SQLDialect;
-import org.jooq.SchemaMapping;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 
@@ -44,28 +43,12 @@ import org.jooq.impl.Factory;
  *
  * @author Espen Stromsnes
  */
-@SuppressWarnings("deprecation")
 public class SybaseFactory extends Factory {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = 6530433807914995633L;
-
-    /**
-     * Create a factory with connection and a schema mapping configured
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     * @param mapping The schema mapping to use with objects created from this
-     *            factory
-     * @deprecated - 2.0.5 - Use {@link #SybaseFactory(Connection, Settings)}
-     *             instead
-     */
-    @Deprecated
-    public SybaseFactory(Connection connection, SchemaMapping mapping) {
-        super(connection, SQLDialect.SYBASE, mapping);
-    }
 
     /**
      * Create a factory with connection and a settings configured

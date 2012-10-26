@@ -40,7 +40,6 @@ import java.sql.Connection;
 import javax.sql.DataSource;
 
 import org.jooq.SQLDialect;
-import org.jooq.SchemaMapping;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 
@@ -49,28 +48,12 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 public class PostgresFactory extends Factory {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = 3722639614267896473L;
-
-    /**
-     * Create a factory with connection and a schema mapping configured
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     * @param mapping The schema mapping to use with objects created from this
-     *            factory
-     * @deprecated - 2.0.5 - Use {@link #PostgresFactory(Connection, Settings)}
-     *             instead
-     */
-    @Deprecated
-    public PostgresFactory(Connection connection, SchemaMapping mapping) {
-        super(connection, SQLDialect.POSTGRES, mapping);
-    }
 
     /**
      * Create a factory with connection and a settings configured

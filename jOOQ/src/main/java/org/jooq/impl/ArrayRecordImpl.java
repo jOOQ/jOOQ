@@ -35,9 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Util.getDriverConnection;
-import static org.jooq.tools.reflect.Reflect.on;
-
 import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,9 +47,7 @@ import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
-import org.jooq.SQLDialect;
 import org.jooq.Schema;
-import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 
 /**
@@ -73,29 +68,6 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
     private final DataType<T> type;
     private final String      name;
     private T[]               array;
-
-    /**
-     * Create an empty array record
-     *
-     * @deprecated - 2.0.5 [#1179] - Please regenerate your schema and use
-     *             {@link #ArrayRecordImpl(Schema, String, DataType, Configuration)}
-     *             instead
-     */
-    @Deprecated
-    protected ArrayRecordImpl(String name, DataType<T> type, Configuration configuration) {
-        this(null, name, type, configuration);
-    }
-
-    /**
-     * Create an empty array record
-     *
-     * @deprecated - 2.0.5 [#1179] - Please regenerate your schema and use
-     *             {@link #ArrayRecordImpl(Schema, String, DataType)} instead
-     */
-    @Deprecated
-    protected ArrayRecordImpl(String name, DataType<T> type) {
-        this(null, name, type);
-    }
 
     /**
      * Create an empty array record
@@ -220,22 +192,6 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
     @Override
     public final DataType<T> getDataType() {
         return type;
-    }
-
-    @Override
-    @Deprecated
-    public final java.sql.Array createArray() throws SQLException {
-        SQLDialect dialect = getConfiguration().getDialect();
-
-        switch (dialect) {
-            case ORACLE: {
-                // [#1161] Use reflection to avoid compile-time on ojdbc
-                return on(getDriverConnection(getConfiguration())).call("createARRAY", getName(), get()).get();
-            }
-
-            default:
-                throw new SQLDialectNotSupportedException("Cannot create Array for dialect : " + dialect);
-        }
     }
 
     @Override

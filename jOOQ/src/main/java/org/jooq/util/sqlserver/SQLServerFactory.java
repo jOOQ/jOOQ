@@ -40,7 +40,6 @@ import java.sql.Connection;
 import javax.sql.DataSource;
 
 import org.jooq.SQLDialect;
-import org.jooq.SchemaMapping;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 
@@ -49,28 +48,12 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 public class SQLServerFactory extends Factory {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -351817568648116452L;
-
-    /**
-     * Create a factory with connection and a schema mapping configured
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     * @param mapping The schema mapping to use with objects created from this
-     *            factory
-     * @deprecated - 2.0.5 - Use {@link #SQLServerFactory(Connection, Settings)}
-     *             instead
-     */
-    @Deprecated
-    public SQLServerFactory(Connection connection, SchemaMapping mapping) {
-        super(connection, SQLDialect.SQLSERVER, mapping);
-    }
 
     /**
      * Create a factory with connection and a settings configured

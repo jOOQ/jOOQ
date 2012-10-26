@@ -197,16 +197,12 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public final int execute() {
         if (isExecutable()) {
 
-            // Let listeners provide a configuration to this query
-            Configuration c = org.jooq.ConfigurationRegistry.provideFor(getConfiguration());
-            if (c == null) {
-                c = getConfiguration();
-            }
+            // Get the attached configuration of this query
+            Configuration c = getConfiguration();
 
             // [#1191] The following triggers a start event on all listeners.
             // This may be used to provide jOOQ with a JDBC connection, in case

@@ -106,9 +106,6 @@ public class Oracle3Strategy extends DefaultGeneratorStrategy {
         if (mode == Mode.POJO) {
             return definition.getOutputName() + "_POJO";
         }
-        if (mode == Mode.FACTORY) {
-            return "MyFactory";
-        }
         if (mode == Mode.INTERFACE) {
             return definition.getOutputName() + "_INTERFACE";
         }

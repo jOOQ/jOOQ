@@ -206,9 +206,6 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         if (mode == Mode.RECORD) {
             result.append("Record");
         }
-        else if (mode == Mode.FACTORY) {
-            result.append("Factory");
-        }
         else if (mode == Mode.DAO) {
             result.append("Dao");
         }

@@ -1624,15 +1624,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition equalAny(Field<T[]> array);
 
     /**
-     * <code>this = some (Select<?> ...)</code>
-     *
-     * @deprecated - 2.0.2 - Use {@link #equalAny(Select)} instead
-     */
-    @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition equalSome(Select<?> query);
-
-    /**
      * <code>this = all (Select<?> ...)</code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -1679,15 +1670,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support({ H2, HSQLDB, POSTGRES })
     Condition notEqualAny(Field<T[]> array);
-
-    /**
-     * <code>this != some (Select<?> ...)</code>
-     *
-     * @deprecated - 2.0.2 - Use {@link #notEqualAny(Select)} instead
-     */
-    @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition notEqualSome(Select<?> query);
 
     /**
      * <code>this != all (Select<?> ...)</code>
@@ -1738,15 +1720,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition lessThanAny(Field<T[]> array);
 
     /**
-     * <code>this < some (Select<?> ...)</code>
-     *
-     * @deprecated - 2.0.2 - Use {@link #lessThanAny(Select)} instead
-     */
-    @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition lessThanSome(Select<?> query);
-
-    /**
      * <code>this < all (Select<?> ...)</code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -1793,15 +1766,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support({ H2, HSQLDB, POSTGRES })
     Condition lessOrEqualAny(Field<T[]> array);
-
-    /**
-     * <code>this <= some (Select<?> ...)</code>
-     *
-     * @deprecated - 2.0.2 - Use {@link #lessOrEqualAny(Select)} instead
-     */
-    @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition lessOrEqualSome(Select<?> query);
 
     /**
      * <code>this <= all (Select<?> ...)</code>
@@ -1852,15 +1816,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition greaterThanAny(Field<T[]> array);
 
     /**
-     * <code>this > some (Select<?> ...)</code>
-     *
-     * @deprecated - 2.0.2 - Use {@link #greaterThanAny(Select)} instead
-     */
-    @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition greaterThanSome(Select<?> query);
-
-    /**
      * <code>this > all (Select<?> ...)</code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -1907,15 +1862,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support({ H2, HSQLDB, POSTGRES })
     Condition greaterOrEqualAny(Field<T[]> array);
-
-    /**
-     * <code>this >= some (Select<?> ...)</code>
-     *
-     * @deprecated - 2.0.2 - Use {@link #greaterOrEqualAny(Select)} instead
-     */
-    @Deprecated
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition greaterOrEqualSome(Select<?> query);
 
     /**
      * <code>this >= all (Select<?> ...)</code>

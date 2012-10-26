@@ -604,11 +604,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 assertEquals(tables, schema.getTables().size());
             }
 
-            // [#624] The V_INCOMPLETE view is only available in Oracle
             // [#877] The T_877 table is only available in H2
-            else if (getDialect() == ORACLE ||
-                     getDialect() == H2) {
+            else if (getDialect() == H2) {
                 assertEquals(tables + 2, schema.getTables().size());
+            }
+
+            // [#624] The V_INCOMPLETE view is only available in Oracle
+            else if (getDialect() == ORACLE) {
+                assertEquals(tables + 3, schema.getTables().size());
             }
 
             // [#610] Collision-prone entities are only available in HSQLDB

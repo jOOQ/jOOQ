@@ -29,6 +29,7 @@ worth mentioning (in alphabetical order)
     <li>Aaron Digulla: jOOQ-codegen cleanup</li>
     <li>Christopher Deckers: jOOQ-Console contribution</li>
     <li>Christopher Klewes: Maven integration</li>
+    <li>Ed Schaller: Improvements to unsigned data types (jOOU)</li>
     <li>Espen Stromsnes: DB2, H2, Sybase, and HSQLDB integrations</li>
     <li>Florian Adler: jOOQ-minuteproject contribution</li>
     <li>Ivan Dugic: Various GitHub ticket contributions</li>

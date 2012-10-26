@@ -16,16 +16,19 @@
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}.jar"/>
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}.jar"/>
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}.jar"/>
+		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}.jar"/>
 
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ/target/jooq-${version}-sources.jar"/>
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-sources.jar"/>
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-sources.jar"/>
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}-sources.jar"/>
+		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}-sources.jar"/>
 
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ/target/jooq-${version}-javadoc.jar"/>
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-javadoc.jar"/>
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-javadoc.jar"/>
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}-javadoc.jar"/>
+		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}-javadoc.jar"/>
 
 		<copy todir="${dir.release}/${version}">
 			<fileset dir="${dir.release}/template">

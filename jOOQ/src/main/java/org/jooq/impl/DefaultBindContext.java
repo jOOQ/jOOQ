@@ -282,8 +282,7 @@ class DefaultBindContext extends AbstractBindContext {
         else if (type.isArray()) {
             switch (dialect) {
                 case POSTGRES: {
-                    String sb = postgresArrayString(value);
-                    stmt.setString(nextIndex(), sb);
+                    stmt.setString(nextIndex(), postgresArrayString(value));
                     break;
                 }
                 case HSQLDB:

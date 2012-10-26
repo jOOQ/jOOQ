@@ -402,4 +402,32 @@ public class PostgresUtils {
 
         return values;
     }
+
+    /**
+     * Create a Postgres string representation of an array
+     */
+    public static String toPGArrayString(Object[] value) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+
+        String separator = "";
+        for (Object o : value) {
+            sb.append(separator);
+
+            // [#753] null must be set as a literal
+            if (o == null) {
+                sb.append(o);
+            }
+            else {
+                sb.append("\"");
+                sb.append(o.toString().replace("\\", "\\\\").replace("\"", "\\\""));
+                sb.append("\"");
+            }
+
+            separator = ", ";
+        }
+
+        sb.append("}");
+        return sb.toString();
+    }
 }

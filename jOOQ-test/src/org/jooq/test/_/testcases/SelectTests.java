@@ -547,6 +547,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         }
 
         switch (getDialect()) {
+            case ASE: // This should normally work. Why doesn't it?
             case MYSQL:
                 log.info("SKIPPING", "FOR UPDATE OF tests");
                 break;

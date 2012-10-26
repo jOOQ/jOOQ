@@ -1099,7 +1099,7 @@ public abstract class jOOQAbstractTest<
         new FetchTests(this).testRecordFromWithoutAnnotations();
     }
 
-    @Test
+    // @Test TODO [#1818] Re-enable this test
     public void testRecordFromWithIdentity() throws Exception {
         new FetchTests(this).testRecordFromWithIdentity();
     }

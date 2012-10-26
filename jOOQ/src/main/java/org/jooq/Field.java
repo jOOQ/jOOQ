@@ -65,8 +65,7 @@ import org.jooq.util.oracle.OracleFactory;
  * @param <T> The field type
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public interface Field<T> extends NamedQueryPart {
+public interface Field<T> extends QueryPart {
 
     // ------------------------------------------------------------------------
     // API
@@ -83,7 +82,6 @@ public interface Field<T> extends NamedQueryPart {
      * <li>The name of a parameter if it is a named {@link Param}</li>
      * </ul>
      */
-    @Override
     String getName();
 
     /**

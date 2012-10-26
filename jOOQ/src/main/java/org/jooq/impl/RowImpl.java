@@ -83,7 +83,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-class RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractNamedQueryPart
+class RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractQueryPart
 implements
 
     // This row implementation implements all row types. Type-safety is
@@ -106,7 +106,7 @@ implements
     private final Field<?>[]  fields;
 
     RowImpl(Field<?>... fields) {
-        super("row");
+        super();
 
         this.fields = fields;
     }

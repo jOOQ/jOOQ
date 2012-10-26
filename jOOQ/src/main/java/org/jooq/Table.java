@@ -72,7 +72,6 @@ public interface Table<R extends Record> extends org.jooq.Type<R>, TableLike<R> 
     /**
      * The name of this table
      */
-    @Override
     String getName();
 
     /**

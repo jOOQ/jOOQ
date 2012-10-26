@@ -43,13 +43,11 @@ import java.util.List;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public interface Schema extends NamedQueryPart {
+public interface Schema extends QueryPart {
 
     /**
      * The name of this schema
      */
-    @Override
     String getName();
 
     /**

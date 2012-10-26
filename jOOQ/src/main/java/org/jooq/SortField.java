@@ -43,13 +43,11 @@ package org.jooq;
  * @see Field#asc()
  * @see Field#desc()
  */
-@SuppressWarnings("deprecation")
-public interface SortField<T> extends NamedQueryPart {
+public interface SortField<T> extends QueryPart {
 
     /**
      * The name of this sort field
      */
-    @Override
     String getName();
 
     /**

@@ -50,7 +50,7 @@ import org.jooq.RenderContext;
 /**
  * @author Lukas Eder
  */
-class Alias<Q extends QueryPart> extends AbstractNamedQueryPart {
+class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
     private static final long serialVersionUID = -2456848365524191614L;
     private final Q           wrapped;
@@ -62,8 +62,6 @@ class Alias<Q extends QueryPart> extends AbstractNamedQueryPart {
     }
 
     Alias(Q wrapped, String alias, boolean wrapInParentheses) {
-        super(alias);
-
         this.wrapped = wrapped;
         this.alias = alias;
         this.wrapInParentheses = wrapInParentheses;

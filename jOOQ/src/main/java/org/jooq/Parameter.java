@@ -44,13 +44,11 @@ import static org.jooq.SQLDialect.ORACLE;
  * @param <T> The parameter type
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public interface Parameter<T> extends NamedQueryPart {
+public interface Parameter<T> extends QueryPart {
 
     /**
      * The name of this parameter
      */
-    @Override
     String getName();
 
     /**

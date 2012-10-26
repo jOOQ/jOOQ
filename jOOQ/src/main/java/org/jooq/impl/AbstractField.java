@@ -74,17 +74,23 @@ import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.tools.Convert;
 
-abstract class AbstractField<T> extends AbstractNamedQueryPart implements Field<T> {
+/**
+ * @author Lukas Eder
+ */
+abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = 2884811923648354905L;
+
+    private final String      name;
     private final DataType<T> dataType;
 
     AbstractField(String name, DataType<T> type) {
-        super(name);
+        super();
 
+        this.name = name;
         this.dataType = type;
     }
 
@@ -108,6 +114,11 @@ abstract class AbstractField<T> extends AbstractNamedQueryPart implements Field<
     @Override
     public Field<T> as(String alias) {
         return new FieldAlias<T>(this, alias);
+    }
+
+    @Override
+    public final String getName() {
+        return name;
     }
 
     @Override

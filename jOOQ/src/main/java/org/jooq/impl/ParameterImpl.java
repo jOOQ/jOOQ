@@ -47,18 +47,23 @@ import org.jooq.RenderContext;
  *
  * @author Lukas Eder
  */
-class ParameterImpl<T> extends AbstractNamedQueryPart implements Parameter<T> {
+class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
 
     private static final long serialVersionUID = -5277225593751085577L;
 
-    private final boolean     isDefaulted;
+    private final String      name;
     private final DataType<T> type;
+    private final boolean     isDefaulted;
 
     ParameterImpl(String name, DataType<T> type, boolean isDefaulted) {
-        super(name);
-
+        this.name = name;
         this.type = type;
         this.isDefaulted = isDefaulted;
+    }
+
+    @Override
+    public final String getName() {
+        return name;
     }
 
     @Override

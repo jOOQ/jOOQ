@@ -42,8 +42,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public interface Package extends NamedQueryPart {
+public interface Package extends QueryPart {
 
     /**
      * Get the package schema
@@ -53,7 +52,6 @@ public interface Package extends NamedQueryPart {
     /**
      * The name of this package
      */
-    @Override
     String getName();
 
 }

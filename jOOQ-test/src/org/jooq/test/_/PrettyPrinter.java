@@ -43,6 +43,11 @@ import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.Factory;
 import org.jooq.tools.StringUtils;
 
+/**
+ * An execute listener that does pretty printing of every executed statement
+ *
+ * @author Lukas Eder
+ */
 public class PrettyPrinter extends DefaultExecuteListener {
 
     private static final AtomicInteger count = new AtomicInteger();

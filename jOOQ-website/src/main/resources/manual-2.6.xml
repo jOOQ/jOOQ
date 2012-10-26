@@ -3915,7 +3915,7 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 							</section>
 							
 							<section id="row-value-expressions">
-								<title>s or row value expressions</title>
+								<title>Tuples or row value expressions</title>
 								<content>
 									<p>
 										According to the SQL standard, row value expressions can have a degree of more than one. This is commonly used in the <reference id="insert-statement" title="INSERT statement"/>, where the VALUES row value constructor allows for providing a row value expression as a source for INSERT data. Row value expressions can appear in various other places, though. They are supported by jOOQ as s / rows. jOOQ's <reference id="factory" title="Factory"/> allows for the construction of type-safe s up to the degree / arity of 8. Higher-degree s are supported as well, but without any type-safety.  types are modelled as follows:

@@ -35,9 +35,6 @@
  */
 package org.jooq;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Map;
 
 /**
  * UDT definition
@@ -65,21 +62,6 @@ public interface UDT<R extends UDTRecord<R>> extends org.jooq.Type<R> {
      */
     @Override
     Class<? extends R> getRecordType();
-
-    /**
-     * The complete type mapping for this UDT.
-     * <p>
-     * This method returns all types involved with this UDT, including nested
-     * types. The result can be used in {@link ResultSet#getObject(int, Map)}
-     * and similar methods.
-     *
-     * @see Schema#getTypeMapping() for the {@link Schema}'s complete type
-     *      mapping
-     * @deprecated - 2.3.0 - Do not reuse this method. It will be moved to
-     *             jOOQ's internals, soon
-     */
-    @Deprecated
-    Map<String, Class<?>> getTypeMapping() throws SQLException;
 
     /**
      * The UDT's data type as known to the database

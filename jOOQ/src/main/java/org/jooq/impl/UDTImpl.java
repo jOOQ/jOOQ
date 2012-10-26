@@ -35,13 +35,10 @@
  */
 package org.jooq.impl;
 
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.jooq.BindContext;
 import org.jooq.DataType;
-import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -84,24 +81,6 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractFieldProviderQueryP
     @Override
     public Class<? extends R> getRecordType() {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @Deprecated
-    public final synchronized Map<String, Class<?>> getTypeMapping() throws SQLException {
-        if (typeMapping == null) {
-            typeMapping = new HashMap<String, Class<?>>();
-            typeMapping.put(getName(), getRecordType());
-
-            // Recursively add nested UDT types
-            for (Field<?> field : getFieldList()) {
-                if (UDTRecord.class.isAssignableFrom(field.getType())) {
-                    typeMapping.putAll(FieldTypeHelper.getTypeMapping(field.getType()));
-                }
-            }
-        }
-
-        return typeMapping;
     }
 
     @Override

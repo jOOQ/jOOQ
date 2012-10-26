@@ -62,7 +62,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.jooq.ArrayRecord;
@@ -72,7 +71,6 @@ import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
-import org.jooq.MasterDataType;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
@@ -108,7 +106,6 @@ import org.jooq.util.sybase.SybaseDataType;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 public final class FieldTypeHelper {
 
     private static final int        LONG_PRECISION    = String.valueOf(Long.MAX_VALUE).length();
@@ -222,9 +219,6 @@ public final class FieldTypeHelper {
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, stream.readString());
-        }
-        else if (MasterDataType.class.isAssignableFrom(type)) {
-            return (T) getMasterDataType(type, stream.readObject());
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
             return (T) stream.readObject();
@@ -359,24 +353,12 @@ public final class FieldTypeHelper {
         else if (EnumType.class.isAssignableFrom(type)) {
             stream.writeString(((EnumType) value).getLiteral());
         }
-        else if (MasterDataType.class.isAssignableFrom(type)) {
-            Object key = ((MasterDataType<?>) value).getPrimaryKey();
-            writeToSQLOutput(stream, key.getClass(), key);
-        }
         else if (UDTRecord.class.isAssignableFrom(type)) {
             stream.writeObject((UDTRecord<?>) value);
         }
         else {
             throw new UnsupportedOperationException("Type " + type + " is not supported");
         }
-    }
-
-    /**
-     * @deprecated - 2.3.0 - Do not reuse this method
-     */
-    @Deprecated
-    public static <T> void writeToSQLOutput(SQLOutput stream, Class<? extends T> type, T value) throws SQLException {
-        writeToSQLOutput(stream, type, null, value);
     }
 
     static <T, U> U getFromResultSet(ExecuteContext ctx, Field<U> field, int index)
@@ -515,9 +497,6 @@ public final class FieldTypeHelper {
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, rs.getString(index));
-        }
-        else if (MasterDataType.class.isAssignableFrom(type)) {
-            return (T) getMasterDataType(type, rs.getObject(index));
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
             switch (ctx.getDialect()) {
@@ -671,18 +650,6 @@ public final class FieldTypeHelper {
         }
     }
 
-    /**
-     * @deprecated - 2.3.0 - Do not reuse this method
-     */
-    @Deprecated
-    public static Map<String, Class<?>> getTypeMapping(Class<?> udtType) throws SQLException {
-        try {
-            return ((UDTRecord<?>) udtType.newInstance()).getUDT().getTypeMapping();
-        } catch (Exception e) {
-            throw new SQLException("Cannot retrieve type mapping for " + udtType, e);
-        }
-    }
-
     private static <T> T checkWasNull(SQLInput stream, T value) throws SQLException {
         return stream.wasNull() ? null : value;
     }
@@ -710,26 +677,6 @@ public final class FieldTypeHelper {
         }
         catch (Exception e) {
             throw new SQLException("Unknown enum literal found : " + literal);
-        }
-
-        return null;
-    }
-
-
-    static MasterDataType<?> getMasterDataType(Class<?> type, Object primaryKey) throws SQLException {
-        try {
-            Object[] values = (Object[]) type.getMethod("values").invoke(type);
-
-            for (Object value : values) {
-                MasterDataType<?> result = (MasterDataType<?>) value;
-
-                if (String.valueOf(primaryKey).equals(String.valueOf(result.getPrimaryKey()))) {
-                    return result;
-                }
-            }
-        }
-        catch (Exception e) {
-            throw new SQLException("Unknown enum literal found : " + primaryKey);
         }
 
         return null;
@@ -834,9 +781,6 @@ public final class FieldTypeHelper {
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, stmt.getString(index));
-        }
-        else if (MasterDataType.class.isAssignableFrom(type)) {
-            return (T) getMasterDataType(type, stmt.getString(index));
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
             switch (ctx.getDialect()) {
@@ -1062,9 +1006,6 @@ public final class FieldTypeHelper {
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, string);
-        }
-        else if (MasterDataType.class.isAssignableFrom(type)) {
-            return (T) getMasterDataType(type, string);
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
             return (T) pgNewUDTRecord(type, string);

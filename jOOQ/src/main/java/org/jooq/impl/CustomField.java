@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import org.jooq.BindContext;
-import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -100,17 +99,6 @@ public abstract class CustomField<T> extends AbstractField<T> {
     @Override
     public boolean isNullLiteral() {
         return false;
-    }
-
-    /**
-     * Subclasses may further override this method
-     * <hr/>
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public void attach(Configuration configuration) {
-        super.attach(configuration);
     }
 
     // -------------------------------------------------------------------------

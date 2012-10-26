@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
+import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.Field;
@@ -72,6 +73,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
 
     AbstractDelegatingSelect(Select<R> query) {
         super(query);
+    }
+
+    @Override
+    public final void attach(Configuration configuration) {
+        getDelegate().attach(configuration);
     }
 
     @Override

@@ -63,11 +63,6 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // [#1544] The deprecated Attachable and Attachable internal API
     // -------------------------------------------------------------------------
 
-    @Override
-    @Deprecated
-    public void attach(Configuration configuration) {
-    }
-
     Configuration getConfiguration() {
         return DefaultConfiguration.DEFAULT_CONFIGURATION;
     }

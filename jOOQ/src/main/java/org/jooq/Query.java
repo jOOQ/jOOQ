@@ -52,7 +52,6 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("unused")
 public interface Query extends QueryPart, Attachable {
 
     /**

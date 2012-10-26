@@ -71,7 +71,6 @@ import org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.sqlite.generatedclasses.tables.TBooleans;
 import org.jooq.test.sqlite.generatedclasses.tables.TTriggers;
 import org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable;
-import org.jooq.test.sqlite.generatedclasses.tables.T_658Ref;
 import org.jooq.test.sqlite.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.sqlite.generatedclasses.tables.T_785;
 import org.jooq.test.sqlite.generatedclasses.tables.VLibrary;
@@ -83,7 +82,6 @@ import org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord;
-import org.jooq.test.sqlite.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.sqlite.generatedclasses.tables.records.VLibraryRecord;
@@ -116,7 +114,6 @@ public class SQLiteTest extends jOOQAbstractTest<
         XUnusedRecord,
         XUnusedRecord,
         XUnusedRecord,
-        T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
         T_785Record> {
@@ -229,11 +226,6 @@ public class SQLiteTest extends jOOQAbstractTest<
     @Override
     protected TableField<T_725LobTestRecord, byte[]> T725_LOB() {
         return T_725LobTest.LOB;
-    }
-
-    @Override
-    protected Table<T_658RefRecord> T658() {
-        return T_658Ref.T_658_REF;
     }
 
     @Override
@@ -467,7 +459,7 @@ public class SQLiteTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TBookRecord, ?> TBook_LANGUAGE_ID() {
+    protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return TBook.LANGUAGE_ID;
     }
 

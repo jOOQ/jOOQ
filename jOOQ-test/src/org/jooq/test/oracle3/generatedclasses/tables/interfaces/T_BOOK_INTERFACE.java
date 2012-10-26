@@ -117,7 +117,7 @@ public interface T_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializa
 	 * REFERENCES TEST.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
-	public void setLANGUAGE_ID(org.jooq.test.oracle3.generatedclasses.enums.T_LANGUAGE value);
+	public void setLANGUAGE_ID(java.lang.Integer value);
 
 	/**
 	 * The language of the book
@@ -129,7 +129,7 @@ public interface T_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializa
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
-	public org.jooq.test.oracle3.generatedclasses.enums.T_LANGUAGE getLANGUAGE_ID();
+	public java.lang.Integer getLANGUAGE_ID();
 
 	/**
 	 * Some textual content of the book

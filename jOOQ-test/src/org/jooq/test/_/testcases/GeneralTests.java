@@ -63,7 +63,6 @@ import static org.jooq.impl.Factory.trim;
 import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.zero;
-import static org.jooq.tools.reflect.Reflect.on;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -115,13 +114,12 @@ public class GeneralTests<
     U    extends TableRecord<U>,
     I    extends TableRecord<I>,
     IPK  extends UpdatableRecord<IPK>,
-    T658 extends TableRecord<T658>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> {
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> {
 
-    public GeneralTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    public GeneralTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
     }
 
@@ -734,7 +732,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         testBatchAuthors("Gamma", "Helm", "Johnson");
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testBatchMultiple() throws Exception {
         jOOQAbstractTest.reset = false;
@@ -752,7 +749,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                     .set(TBook_ID(), 6)
                     .set(TBook_AUTHOR_ID(), 8)
                     .set(TBook_PUBLISHED_IN(), 1994)
-                    .set((Field<Object>)TBook_LANGUAGE_ID(), on(TBook_LANGUAGE_ID().getDataType().getType()).get("en"))
+                    .set(TBook_LANGUAGE_ID(), 1)
                     .set(TBook_CONTENT_TEXT(), "Design Patterns are awesome")
                     .set(TBook_TITLE(), "Design Patterns"),
 
@@ -766,7 +763,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         testBatchAuthors("Gamma", "Helm", "Johnson");
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testBatchStore() throws Exception {
         jOOQAbstractTest.reset = false;
@@ -786,7 +782,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         b1.setValue(TBook_AUTHOR_ID(), 8);
         b1.setValue(TBook_TITLE(), "XX 1");
         b1.setValue(TBook_PUBLISHED_IN(), 2000);
-        b1.setValue((Field<Object>)TBook_LANGUAGE_ID(), on(TBook_LANGUAGE_ID().getDataType().getType()).get("en"));
+        b1.setValue(TBook_LANGUAGE_ID(), 1);
 
         int[] result1 = create().batchStore(a1, b1, a2).execute();
         assertEquals(3, result1.length);

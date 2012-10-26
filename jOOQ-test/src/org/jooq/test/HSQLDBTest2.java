@@ -37,7 +37,6 @@
 package org.jooq.test;
 
 import static org.jooq.test.h2.generatedclasses.Tables.T_639_NUMBERS_TABLE;
-import static org.jooq.test.h2.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.h2.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.h2.generatedclasses.Tables.T_785;
 import static org.jooq.test.h2.generatedclasses.Tables.T_AUTHOR;
@@ -88,7 +87,6 @@ import org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord;
@@ -120,7 +118,6 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
         XUnusedRecord,
         XUnusedRecord,
         XUnusedRecord,
-        T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
         T_785Record> {
@@ -233,11 +230,6 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
     @Override
     protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_STOCK() {
         return T_BOOK_TO_BOOK_STORE.STOCK;
-    }
-
-    @Override
-    protected Table<T_658RefRecord> T658() {
-        return T_658_REF;
     }
 
     @Override
@@ -486,7 +478,7 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TBookRecord, ? extends Enum<?>> TBook_LANGUAGE_ID() {
+    protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return T_BOOK.LANGUAGE_ID;
     }
 

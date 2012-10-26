@@ -44,7 +44,6 @@ import static junit.framework.Assert.fail;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.val;
-import static org.jooq.tools.reflect.Reflect.on;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +55,6 @@ import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
-import org.jooq.Field;
 import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -85,13 +83,12 @@ public class ExecuteListenerTests<
     U    extends TableRecord<U>,
     I    extends TableRecord<I>,
     IPK  extends UpdatableRecord<IPK>,
-    T658 extends TableRecord<T658>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> {
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> {
 
-    public ExecuteListenerTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    public ExecuteListenerTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
     }
 
@@ -684,7 +681,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                     .set(TBook_ID(), 6)
                     .set(TBook_AUTHOR_ID(), 8)
                     .set(TBook_PUBLISHED_IN(), 1994)
-                    .set((Field<Object>)TBook_LANGUAGE_ID(), on(TBook_LANGUAGE_ID().getDataType().getType()).get("en"))
+                    .set(TBook_LANGUAGE_ID(), 1)
                     .set(TBook_CONTENT_TEXT(), "Design Patterns are awesome")
                     .set(TBook_TITLE(), "Design Patterns"),
 

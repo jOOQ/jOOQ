@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1418043787;
+	private static final long serialVersionUID = -107498314;
 
 	/**
 	 * The table column <code>DBA.t_book.ID</code>
@@ -204,7 +204,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES DBA.t_language (id)
 	 * </pre></code>
 	 */
-	public void setLanguageId(org.jooq.test.sybase.generatedclasses.enums.TLanguage value) {
+	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value);
 	}
 
@@ -217,8 +217,37 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES DBA.t_language (id)
 	 * </pre></code>
 	 */
-	public org.jooq.test.sybase.generatedclasses.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord 
+	 * TLanguageRecord}
+	 */
+	public void setLanguageId(org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value.getValue(org.jooq.test.sybase.generatedclasses.tables.TLanguage.T_LANGUAGE.ID));
+		}
+	}
+
+	/**
+	 * The table column <code>DBA.t_book.LANGUAGE_ID</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT t_book__fk_t_book_language_id
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES DBA.t_language (id)
+	 * </pre></code>
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
+		return create()
+			.selectFrom(org.jooq.test.sybase.generatedclasses.tables.TLanguage.T_LANGUAGE)
+			.where(org.jooq.test.sybase.generatedclasses.tables.TLanguage.T_LANGUAGE.ID.equal(getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID)))
+			.fetchOne();
 	}
 
 	/**

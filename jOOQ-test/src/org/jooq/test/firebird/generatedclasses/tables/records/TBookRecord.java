@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 1617268159;
+	private static final long serialVersionUID = -978476070;
 
 	/**
 	 * The table column <code>T_BOOK.ID</code>
@@ -215,7 +215,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * </pre></code>
 	 */
 	@Override
-	public void setLanguageId(org.jooq.test.firebird.generatedclasses.enums.TLanguage value) {
+	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value);
 	}
 
@@ -229,8 +229,37 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * </pre></code>
 	 */
 	@Override
-	public org.jooq.test.firebird.generatedclasses.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord 
+	 * TLanguageRecord}
+	 */
+	public void setLanguageId(org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value.getValue(org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE.ID));
+		}
+	}
+
+	/**
+	 * The table column <code>T_BOOK.LANGUAGE_ID</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES T_LANGUAGE (ID)
+	 * </pre></code>
+	 */
+	public org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
+		return create()
+			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE)
+			.where(org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE.ID.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID)))
+			.fetchOne();
 	}
 
 	/**

@@ -77,7 +77,6 @@ import org.jooq.test.derby.generatedclasses.tables.TIdentity;
 import org.jooq.test.derby.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.derby.generatedclasses.tables.TTriggers;
 import org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable;
-import org.jooq.test.derby.generatedclasses.tables.T_658Ref;
 import org.jooq.test.derby.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.derby.generatedclasses.tables.T_785;
 import org.jooq.test.derby.generatedclasses.tables.VLibrary;
@@ -91,7 +90,6 @@ import org.jooq.test.derby.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.T_639NumbersTableRecord;
-import org.jooq.test.derby.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.derby.generatedclasses.tables.records.VLibraryRecord;
@@ -122,7 +120,6 @@ public class DerbyTest extends jOOQAbstractTest<
         XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
-        T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
         T_785Record> {
@@ -230,11 +227,6 @@ public class DerbyTest extends jOOQAbstractTest<
     @Override
     protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_STOCK() {
         return TBookToBookStore.STOCK;
-    }
-
-    @Override
-    protected Table<T_658RefRecord> T658() {
-        return T_658Ref.T_658_REF;
     }
 
     @Override
@@ -483,7 +475,7 @@ public class DerbyTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TBookRecord, ? extends Enum<?>> TBook_LANGUAGE_ID() {
+    protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return TBook.LANGUAGE_ID;
     }
 

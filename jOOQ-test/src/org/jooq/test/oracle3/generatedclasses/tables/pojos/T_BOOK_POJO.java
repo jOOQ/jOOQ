@@ -13,17 +13,17 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK", schema = "TEST")
 public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = 812340756;
+	private static final long serialVersionUID = -668987488;
 
-	private java.lang.Integer                                       ID;
-	private java.lang.Integer                                       AUTHOR_ID;
-	private java.lang.Integer                                       CO_AUTHOR_ID;
-	private java.lang.Integer                                       DETAILS_ID;
-	private java.lang.String                                        TITLE;
-	private java.lang.Integer                                       PUBLISHED_IN;
-	private org.jooq.test.oracle3.generatedclasses.enums.T_LANGUAGE LANGUAGE_ID;
-	private java.lang.String                                        CONTENT_TEXT;
-	private byte[]                                                  CONTENT_PDF;
+	private java.lang.Integer ID;
+	private java.lang.Integer AUTHOR_ID;
+	private java.lang.Integer CO_AUTHOR_ID;
+	private java.lang.Integer DETAILS_ID;
+	private java.lang.String  TITLE;
+	private java.lang.Integer PUBLISHED_IN;
+	private java.lang.Integer LANGUAGE_ID;
+	private java.lang.String  CONTENT_TEXT;
+	private byte[]            CONTENT_PDF;
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -94,12 +94,12 @@ public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	@Override
-	public org.jooq.test.oracle3.generatedclasses.enums.T_LANGUAGE getLANGUAGE_ID() {
+	public java.lang.Integer getLANGUAGE_ID() {
 		return this.LANGUAGE_ID;
 	}
 
 	@Override
-	public void setLANGUAGE_ID(org.jooq.test.oracle3.generatedclasses.enums.T_LANGUAGE LANGUAGE_ID) {
+	public void setLANGUAGE_ID(java.lang.Integer LANGUAGE_ID) {
 		this.LANGUAGE_ID = LANGUAGE_ID;
 	}
 

@@ -91,13 +91,12 @@ public class RenderAndBindTests<
     U    extends TableRecord<U>,
     I    extends TableRecord<I>,
     IPK  extends UpdatableRecord<IPK>,
-    T658 extends TableRecord<T658>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> {
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> {
 
-    public RenderAndBindTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    public RenderAndBindTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
     }
 

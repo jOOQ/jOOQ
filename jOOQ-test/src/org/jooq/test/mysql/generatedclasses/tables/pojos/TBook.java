@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -124526042;
+	private static final long serialVersionUID = -574305638;
 
 	private final java.lang.Integer                                      id;
 	private final java.lang.Integer                                      authorId;
@@ -19,7 +19,7 @@ public class TBook implements java.io.Serializable {
 	private final java.lang.Integer                                      detailsId;
 	private final java.lang.String                                       title;
 	private final java.lang.Integer                                      publishedIn;
-	private final org.jooq.test.mysql.generatedclasses.enums.TLanguage   languageId;
+	private final java.lang.Integer                                      languageId;
 	private final java.lang.String                                       contentText;
 	private final byte[]                                                 contentPdf;
 	private final org.jooq.test.mysql.generatedclasses.enums.TBookStatus status;
@@ -31,7 +31,7 @@ public class TBook implements java.io.Serializable {
 		java.lang.Integer                                      detailsId,
 		java.lang.String                                       title,
 		java.lang.Integer                                      publishedIn,
-		org.jooq.test.mysql.generatedclasses.enums.TLanguage   languageId,
+		java.lang.Integer                                      languageId,
 		java.lang.String                                       contentText,
 		byte[]                                                 contentPdf,
 		org.jooq.test.mysql.generatedclasses.enums.TBookStatus status
@@ -72,7 +72,7 @@ public class TBook implements java.io.Serializable {
 		return this.publishedIn;
 	}
 
-	public org.jooq.test.mysql.generatedclasses.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return this.languageId;
 	}
 

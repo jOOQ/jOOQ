@@ -13,7 +13,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOK", schema = "TEST")
 public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = -1556639858;
+	private static final long serialVersionUID = 1496241171;
 
 	/**
 	 * The book ID
@@ -226,7 +226,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * </pre></code>
 	 */
 	@Override
-	public void setLANGUAGE_ID(org.jooq.test.oracle3.generatedclasses.enums.T_LANGUAGE value) {
+	public void setLANGUAGE_ID(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.LANGUAGE_ID, value);
 	}
 
@@ -241,8 +241,37 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	@Override
-	public org.jooq.test.oracle3.generatedclasses.enums.T_LANGUAGE getLANGUAGE_ID() {
+	public java.lang.Integer getLANGUAGE_ID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.LANGUAGE_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE 
+	 * T_LANGUAGE}
+	 */
+	public void setLANGUAGE_ID(org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE value) {
+		if (value == null) {
+			setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.LANGUAGE_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.LANGUAGE_ID, value.getValue(org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE.ID));
+		}
+	}
+
+	/**
+	 * The language of the book
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES TEST.T_LANGUAGE (ID)
+	 * </pre></code>
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE fetchT_LANGUAGE() {
+		return create()
+			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE)
+			.where(org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE.ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.LANGUAGE_ID)))
+			.fetchOne();
 	}
 
 	/**

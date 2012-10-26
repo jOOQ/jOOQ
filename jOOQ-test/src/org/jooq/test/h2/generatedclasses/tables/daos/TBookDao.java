@@ -82,7 +82,7 @@ public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedcl
 	/**
 	 * Fetch records that have <code>LANGUAGE_ID IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByLanguageId(org.jooq.test.h2.generatedclasses.enums.TLanguage... values) {
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBook> fetchByLanguageId(java.lang.Integer... values) {
 		return fetch(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID, values);
 	}
 

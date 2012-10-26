@@ -22,11 +22,6 @@ public final class Tables {
 	public static final org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
-	 * The table t_658_ref
-	 */
-	public static final org.jooq.test.sqlite.generatedclasses.tables.T_658Ref T_658_REF = org.jooq.test.sqlite.generatedclasses.tables.T_658Ref.T_658_REF;
-
-	/**
 	 * The table t_725_lob_test
 	 */
 	public static final org.jooq.test.sqlite.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.sqlite.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
@@ -75,6 +70,11 @@ public final class Tables {
 	 * The table t_dates
 	 */
 	public static final org.jooq.test.sqlite.generatedclasses.tables.TDates T_DATES = org.jooq.test.sqlite.generatedclasses.tables.TDates.T_DATES;
+
+	/**
+	 * The table t_language
+	 */
+	public static final org.jooq.test.sqlite.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.sqlite.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table t_triggers

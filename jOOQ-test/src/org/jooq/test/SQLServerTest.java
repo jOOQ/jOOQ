@@ -75,7 +75,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test.sqlserver.generatedclasses.Routines;
-import org.jooq.test.sqlserver.generatedclasses.tables.T_658Ref;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord;
@@ -86,7 +85,6 @@ import org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_639NumbersTableRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord;
@@ -117,7 +115,6 @@ public class SQLServerTest extends jOOQAbstractTest<
         XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
-        T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
         T_785Record> {
@@ -230,11 +227,6 @@ public class SQLServerTest extends jOOQAbstractTest<
     @Override
     protected TableField<T_725LobTestRecord, byte[]> T725_LOB() {
         return T_725_LOB_TEST.LOB;
-    }
-
-    @Override
-    protected Table<T_658RefRecord> T658() {
-        return T_658Ref.T_658_REF;
     }
 
     @Override
@@ -468,7 +460,7 @@ public class SQLServerTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TBookRecord, ? extends Enum<?>> TBook_LANGUAGE_ID() {
+    protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return T_BOOK.LANGUAGE_ID;
     }
 

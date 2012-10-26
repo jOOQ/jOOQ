@@ -36,7 +36,6 @@
 package org.jooq.test._.testcases;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.util.List;
@@ -74,13 +73,12 @@ public class EnumTests<
     U    extends TableRecord<U>,
     I    extends TableRecord<I>,
     IPK  extends UpdatableRecord<IPK>,
-    T658 extends TableRecord<T658>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> {
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> {
 
-    public EnumTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    public EnumTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
     }
 
@@ -241,50 +239,5 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             assertEquals(Boolean_YN_UC.N, on(b.get(0)).call("getYNUc").get());
             assertEquals(Boolean_YN_UC.Y, on(b.get(1)).call("getYNUc").get());
         }
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
-    @Test
-    public void testMasterData() throws Exception {
-        if (!supportsReferences()) {
-            log.info("SKIPPING", "master data test");
-            return;
-        }
-
-        jOOQAbstractTest.reset = false;
-
-        B book = create().fetchOne(TBook(), TBook_TITLE().equal("1984"));
-
-        Enum<?> value = (Enum<?>) book.getValue(TBook_LANGUAGE_ID());
-        assertEquals(Integer.valueOf(1), ((org.jooq.MasterDataType<?>) value).getPrimaryKey());
-        assertEquals("en", value.name());
-
-        book.setValue((Field) TBook_LANGUAGE_ID(), Enum.valueOf(value.getClass(), "de"));
-        book.store();
-
-        book = create().fetchOne(TBook(), TBook_TITLE().equal("1984"));
-        value = (Enum<?>) book.getValue(TBook_LANGUAGE_ID());
-        assertEquals(Integer.valueOf(2), ((org.jooq.MasterDataType<?>) value).getPrimaryKey());
-        assertEquals("de", value.name());
-
-        // [#658] - General master data test
-        T658 master = create().fetchOne(T658());
-        assertNotNull(master);
-        assertEquals("A", invoke(master.getValue(0), "getPrimaryKey").toString().trim());
-        assertEquals("A", invoke(master.getValue(0), "getId").toString().trim());
-        assertEquals(1, invoke(master.getValue(1), "getPrimaryKey"));
-        assertEquals(1, invoke(master.getValue(1), "getId"));
-        assertEquals(1L, invoke(master.getValue(2), "getPrimaryKey"));
-        assertEquals(1L, invoke(master.getValue(2), "getId"));
-
-        assertEquals("B", invoke(master.getValue(3), "getPrimaryKey").toString().trim());
-        assertEquals("B", invoke(master.getValue(3), "getId").toString().trim());
-        assertEquals("B", invoke(master.getValue(3), "getCd").toString().trim());
-        assertEquals(2, invoke(master.getValue(4), "getPrimaryKey"));
-        assertEquals(2, invoke(master.getValue(4), "getId"));
-        assertEquals(2, invoke(master.getValue(4), "getCd"));
-        assertEquals(2L, invoke(master.getValue(5), "getPrimaryKey"));
-        assertEquals(2L, invoke(master.getValue(5), "getId"));
-        assertEquals(2L, invoke(master.getValue(5), "getCd"));
     }
 }

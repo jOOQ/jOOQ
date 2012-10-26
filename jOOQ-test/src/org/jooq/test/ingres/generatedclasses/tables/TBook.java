@@ -11,7 +11,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 175508654;
+	private static final long serialVersionUID = -646139050;
 
 	/**
 	 * The singleton instance of test.t_book
@@ -79,7 +79,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres
 	 * REFERENCES test.t_language (id)
 	 * </pre></code>
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, org.jooq.test.ingres.generatedclasses.enums.TLanguage> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.ingres.generatedclasses.enums.TLanguage.class), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
 	 * Some textual content of the book
@@ -112,6 +112,6 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.ingres.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.ingres.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.ingres.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.ingres.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.ingres.generatedclasses.Keys.FK_T_BOOK_LANGUAGE_ID);
 	}
 }

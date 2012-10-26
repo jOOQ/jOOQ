@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 2096870446;
+	private static final long serialVersionUID = 476311199;
 
 	/**
 	 * The singleton instance of public.t_book
@@ -77,7 +77,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgr
 	 * REFERENCES public.t_language (id)
 	 * </pre></code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, org.jooq.test.postgres.generatedclasses.enums.TLanguage> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.postgres.generatedclasses.enums.TLanguage.class), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The table column <code>public.t_book.content_text</code>
@@ -116,7 +116,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgr
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.postgres.generatedclasses.Keys.T_BOOK__FK_T_BOOK_AUTHOR_ID, org.jooq.test.postgres.generatedclasses.Keys.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.postgres.generatedclasses.Keys.T_BOOK__FK_T_BOOK_AUTHOR_ID, org.jooq.test.postgres.generatedclasses.Keys.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.postgres.generatedclasses.Keys.T_BOOK__FK_T_BOOK_LANGUAGE_ID);
 	}
 
 	@Override

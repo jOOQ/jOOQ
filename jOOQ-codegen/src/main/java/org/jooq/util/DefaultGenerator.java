@@ -58,10 +58,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
-import org.jooq.MasterDataType;
 import org.jooq.Parameter;
-import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -106,7 +103,6 @@ import org.jooq.util.GeneratorStrategy.Mode;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 public class DefaultGenerator extends AbstractGenerator {
 
     private static final JooqLogger log   = JooqLogger.getLogger(DefaultGenerator.class);
@@ -196,10 +192,6 @@ public class DefaultGenerator extends AbstractGenerator {
 
         if (database.getSequences(schema).size() > 0) {
             generateSequences(schema, targetSchemaDir);
-        }
-
-        if (database.getMasterDataTables(schema).size() > 0) {
-            generateMasterTables(schema);
         }
 
         if (database.getTables(schema).size() > 0) {
@@ -351,12 +343,6 @@ public class DefaultGenerator extends AbstractGenerator {
                 List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
 
                 for (ForeignKeyDefinition foreignKey : foreignKeys) {
-
-                    // Skip master data foreign keys
-                    if (foreignKey.getReferencedTable() instanceof MasterDataTableDefinition) {
-                        continue;
-                    }
-
                     out.print("\tpublic static final ");
                     out.print(ForeignKey.class);
                     out.print("<");
@@ -1701,13 +1687,6 @@ public class DefaultGenerator extends AbstractGenerator {
 
                 String separator = "";
                 for (ForeignKeyDefinition foreignKey : foreignKeys) {
-                    TableDefinition referencedTable = foreignKey.getReferencedTable();
-
-                    // Skip master data foreign keys
-                    if (referencedTable instanceof MasterDataTableDefinition) {
-                        continue;
-                    }
-
                     out.print(separator);
                     out.print(strategy.getFullJavaIdentifier(foreignKey));
 
@@ -1795,131 +1774,6 @@ public class DefaultGenerator extends AbstractGenerator {
         }
 
         out.printStaticInitialisationStatementsPlaceholder();
-        out.println("}");
-        out.close();
-    }
-
-    protected void generateMasterTables(SchemaDefinition schema) {
-        log.info("Generating master data");
-
-        for (MasterDataTableDefinition table : database.getMasterDataTables(schema)) {
-            try {
-                generateMasterTable(table);
-            } catch (Exception e) {
-                log.error("Exception while generating master data table " + table, e);
-            }
-        }
-
-        watch.splitInfo("Master data generated");
-    }
-
-    protected void generateMasterTable(MasterDataTableDefinition table) {
-        log.info("Generating table", strategy.getFileName(table));
-
-        GenerationWriter out = new GenerationWriter(strategy.getFile(table));
-        printHeader(out, table);
-        printClassJavadoc(out, table);
-
-        ColumnDefinition pk = table.getPrimaryKeyColumn();
-        ColumnDefinition l = table.getLiteralColumn();
-        ColumnDefinition d = table.getDescriptionColumn();
-
-        Result<Record> data = table.getData();
-
-        out.print("public enum ");
-        out.print(strategy.getJavaClassName(table));
-        printImplements(out, table, Mode.ENUM,
-            MasterDataType.class.getName() + "<" + getJavaType(pk.getType()) + ">");
-        out.println(" {");
-
-        Set<ColumnDefinition> columns =
-            new LinkedHashSet<ColumnDefinition>(Arrays.asList(pk, l, d));
-
-
-        for (Record record : data) {
-            String literal = record.getValueAsString(l.getName());
-            String description = record.getValueAsString(d.getName());
-
-            if (!StringUtils.isEmpty(description)) {
-                out.println();
-                out.println("\t/**");
-                out.println("\t * " + description);
-                out.println("\t */");
-            }
-
-            out.print("\t");
-            out.print(GenerationUtil.convertToJavaIdentifier(literal));
-            out.print("(");
-
-            String separator = "";
-            for (ColumnDefinition column : columns) {
-                out.print(separator);
-                out.printNewJavaObject(getJavaType(column.getType()), record.getValue(column.getName()));
-
-                separator = ", ";
-            }
-
-            out.println("),");
-        }
-
-        out.println("\t;");
-        out.println();
-
-        // Fields
-        for (ColumnDefinition column : columns) {
-            out.print("\tprivate final ");
-            out.print(getJavaType(column.getType()));
-            out.print(" ");
-            out.println(strategy.getJavaMemberName(column) + ";");
-        }
-
-        // Constructor
-        out.println();
-        out.print("\tprivate " + strategy.getJavaClassName(table) + "(");
-
-        String separator = "";
-        for (ColumnDefinition column : columns) {
-            out.print(separator);
-            out.print(getJavaType(column.getType()));
-            out.print(" ");
-            out.print(strategy.getJavaMemberName(column));
-
-            separator = ", ";
-        }
-
-        out.println(") {");
-        for (ColumnDefinition column : columns) {
-            out.print("\t\tthis.");
-            out.print(strategy.getJavaMemberName(column));
-            out.print(" = ");
-            out.print(strategy.getJavaMemberName(column));
-            out.println(";");
-        }
-        out.println("\t}");
-
-        // Implementation methods
-        out.println();
-        printOverride(out);
-        out.print("\tpublic ");
-        out.print(getJavaType(pk.getType()));
-        out.println(" getPrimaryKey() {");
-        out.println("\t\treturn " + strategy.getJavaMemberName(pk) + ";");
-        out.println("\t}");
-
-        // Getters
-        for (ColumnDefinition column : columns) {
-            printFieldJavaDoc(out, column);
-            out.print("\tpublic final ");
-            out.print(getJavaType(column.getType()));
-            out.print(" ");
-            out.print(strategy.getJavaGetterName(column, Mode.DEFAULT));
-            out.println("() {");
-            out.print("\t\treturn ");
-            out.print(strategy.getJavaMemberName(column));
-            out.println(";");
-            out.println("\t}");
-        }
-
         out.println("}");
         out.close();
     }
@@ -2870,10 +2724,6 @@ public class DefaultGenerator extends AbstractGenerator {
 
         // Do not generate referential code for master data tables
         TableDefinition referenced = foreignKey.getReferencedTable();
-        if (referenced instanceof MasterDataTableDefinition) {
-            return;
-        }
-
         printFetchMethod(out, column, foreignKey, referenced);
     }
 
@@ -3401,42 +3251,24 @@ public class DefaultGenerator extends AbstractGenerator {
     }
 
     protected String getJavaTypeReference(Database db, DataTypeDefinition type) {
-        if (type instanceof MasterDataTypeDefinition) {
-            StringBuilder sb = new StringBuilder();
-
-            sb.append(getJavaTypeReference(db, ((MasterDataTypeDefinition) type).underlying));
-            sb.append(".asMasterDataType(");
-            sb.append(getJavaType(type));
-            sb.append(".class)");
-
-            return sb.toString();
+        if (database.isArrayType(type.getType())) {
+            String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), type.getType(), type.getUserType());
+            return getTypeReference(db, type.getSchema(), baseType, 0, 0, baseType) + ".getArrayDataType()";
         }
-
         else {
-            if (database.isArrayType(type.getType())) {
-                String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), type.getType(), type.getUserType());
-                return getTypeReference(db, type.getSchema(), baseType, 0, 0, baseType) + ".getArrayDataType()";
-            }
-            else {
-                return getTypeReference(db, type.getSchema(), type.getType(), type.getPrecision(), type.getScale(), type.getUserType());
-            }
+            return getTypeReference(db, type.getSchema(), type.getType(), type.getPrecision(), type.getScale(), type.getUserType());
         }
     }
 
     protected String getJavaType(DataTypeDefinition type) {
-        if (type instanceof MasterDataTypeDefinition) {
-            return strategy.getFullJavaClassName(((MasterDataTypeDefinition) type).table);
-        }
-        else {
-            return getType(
-                type.getDatabase(),
-                type.getSchema(),
-                type.getType(),
-                type.getPrecision(),
-                type.getScale(),
-                type.getUserType(),
-                Object.class.getName());
-        }
+        return getType(
+            type.getDatabase(),
+            type.getSchema(),
+            type.getType(),
+            type.getPrecision(),
+            type.getScale(),
+            type.getUserType(),
+            Object.class.getName());
     }
 
     protected String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String defaultType) {

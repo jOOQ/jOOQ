@@ -11,19 +11,19 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class TBook implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -1144250344;
+	private static final long serialVersionUID = -2060004160;
 
-	private java.lang.Integer                                 id;
-	private java.lang.Integer                                 authorId;
-	private java.lang.Integer                                 coAuthorId;
-	private java.lang.Integer                                 detailsId;
-	private java.lang.String                                  title;
-	private java.lang.Integer                                 publishedIn;
-	private org.jooq.test.h2.generatedclasses.enums.TLanguage languageId;
-	private java.lang.String                                  contentText;
-	private byte[]                                            contentPdf;
-	private java.lang.Integer                                 recVersion;
-	private java.sql.Timestamp                                recTimestamp;
+	private java.lang.Integer  id;
+	private java.lang.Integer  authorId;
+	private java.lang.Integer  coAuthorId;
+	private java.lang.Integer  detailsId;
+	private java.lang.String   title;
+	private java.lang.Integer  publishedIn;
+	private java.lang.Integer  languageId;
+	private java.lang.String   contentText;
+	private byte[]             contentPdf;
+	private java.lang.Integer  recVersion;
+	private java.sql.Timestamp recTimestamp;
 
 	@Override
 	public java.lang.Integer getId() {
@@ -86,12 +86,12 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public org.jooq.test.h2.generatedclasses.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return this.languageId;
 	}
 
 	@Override
-	public void setLanguageId(org.jooq.test.h2.generatedclasses.enums.TLanguage languageId) {
+	public void setLanguageId(java.lang.Integer languageId) {
 		this.languageId = languageId;
 	}
 

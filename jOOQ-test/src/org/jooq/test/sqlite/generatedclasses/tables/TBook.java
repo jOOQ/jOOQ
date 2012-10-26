@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1234234472;
+	private static final long serialVersionUID = -145459489;
 
 	/**
 	 * The singleton instance of t_book
@@ -77,7 +77,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite
 	 * REFERENCES t_language (id)
 	 * </pre></code>
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, org.jooq.test.sqlite.generatedclasses.enums.TLanguage> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.sqlite.generatedclasses.enums.TLanguage.class), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
 	 * The table column <code>t_book.CONTENT_TEXT</code>
@@ -110,6 +110,6 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.sqlite.generatedclasses.Keys.FK_T_BOOK_T_AUTHOR_2, org.jooq.test.sqlite.generatedclasses.Keys.FK_T_BOOK_T_AUTHOR_1);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.sqlite.generatedclasses.Keys.FK_T_BOOK_T_AUTHOR_2, org.jooq.test.sqlite.generatedclasses.Keys.FK_T_BOOK_T_AUTHOR_1, org.jooq.test.sqlite.generatedclasses.Keys.FK_T_BOOK_T_LANGUAGE_1);
 	}
 }

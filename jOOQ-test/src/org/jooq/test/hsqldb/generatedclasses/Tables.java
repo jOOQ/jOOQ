@@ -62,11 +62,6 @@ public final class Tables {
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
-	 * The table PUBLIC.T_658_REF
-	 */
-	public static final org.jooq.test.hsqldb.generatedclasses.tables.T_658Ref T_658_REF = org.jooq.test.hsqldb.generatedclasses.tables.T_658Ref.T_658_REF;
-
-	/**
 	 * The table PUBLIC.T_725_LOB_TEST
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
@@ -125,6 +120,11 @@ public final class Tables {
 	 * The table PUBLIC.T_IDENTITY_PK
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
+	 * The table PUBLIC.T_LANGUAGE
+	 */
+	public static final org.jooq.test.hsqldb.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table PUBLIC.T_TRIGGERS

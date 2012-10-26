@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class TEST extends org.jooq.impl.SchemaImpl implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1848905141;
+	private static final long serialVersionUID = 857324291;
 
 	/**
 	 * The singleton instance of TEST
@@ -46,9 +46,9 @@ public class TEST extends org.jooq.impl.SchemaImpl implements java.lang.Cloneabl
 			org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS,
 			org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES,
 			org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY,
+			org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE,
 			org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS,
 			org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE,
-			org.jooq.test.oracle3.generatedclasses.tables.T_658_REF.T_658_REF,
 			org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST,
 			org.jooq.test.oracle3.generatedclasses.tables.T_785.T_785,
 			org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR,

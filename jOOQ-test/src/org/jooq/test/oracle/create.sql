@@ -32,13 +32,6 @@ DROP TABLE x_test_case_85/
 DROP TABLE x_unused/
 DROP TABLE x_many_fields/
 DROP TABLE t_639_numbers_table/
-DROP TABLE t_658_ref/
-DROP TABLE t_658_11/
-DROP TABLE t_658_21/
-DROP TABLE t_658_31/
-DROP TABLE t_658_12/
-DROP TABLE t_658_22/
-DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
 DROP TABLE t_booleans/
@@ -421,67 +414,6 @@ COMMENT ON COLUMN t_language.id IS 'The language ID'/
 COMMENT ON COLUMN t_language.cd IS 'The language ISO code'/
 COMMENT ON COLUMN t_language.description IS 'The language description'/
 
-CREATE TABLE t_658_11 (
-  id CHAR(3) NOT NULL,
-
-  CONSTRAINT pk_t_658_11 PRIMARY KEY (id)
-)
-/
-
-CREATE TABLE t_658_21 (
-  id number(7) NOT NULL,
-
-  CONSTRAINT pk_t_658_21 PRIMARY KEY (id)
-)
-/
-
-CREATE TABLE t_658_31 (
-  id number(15) NOT NULL,
-
-  CONSTRAINT pk_t_658_31 PRIMARY KEY (id)
-)
-/
-
-CREATE TABLE t_658_12 (
-  id CHAR(3) NOT NULL,
-  cd CHAR(3) NOT NULL,
-
-  CONSTRAINT pk_t_658_12 PRIMARY KEY (id)
-)
-/
-
-CREATE TABLE t_658_22 (
-  id number(7) NOT NULL,
-  cd number(7) NOT NULL,
-
-  CONSTRAINT pk_t_658_22 PRIMARY KEY (id)
-)
-/
-
-CREATE TABLE t_658_32 (
-  id number(15) NOT NULL,
-  cd number(15) NOT NULL,
-
-  CONSTRAINT pk_t_658_32 PRIMARY KEY (id)
-)
-/
-
-CREATE TABLE t_658_ref (
-  ref_11 char(3),
-  ref_21 number(7),
-  ref_31 number(15),
-  ref_12 char(3),
-  ref_22 number(7),
-  ref_32 number(15),
-
-  CONSTRAINT fk_t_658_11 FOREIGN KEY (ref_11) REFERENCES t_658_11(id),
-  CONSTRAINT fk_t_658_21 FOREIGN KEY (ref_21) REFERENCES t_658_21(id),
-  CONSTRAINT fk_t_658_31 FOREIGN KEY (ref_31) REFERENCES t_658_31(id),
-  CONSTRAINT fk_t_658_12 FOREIGN KEY (ref_12) REFERENCES t_658_12(id),
-  CONSTRAINT fk_t_658_22 FOREIGN KEY (ref_22) REFERENCES t_658_22(id),
-  CONSTRAINT fk_t_658_32 FOREIGN KEY (ref_32) REFERENCES t_658_32(id)
-)
-/
 
 CREATE TABLE t_725_lob_test (
   ID NUMBER(7) NOT NULL,

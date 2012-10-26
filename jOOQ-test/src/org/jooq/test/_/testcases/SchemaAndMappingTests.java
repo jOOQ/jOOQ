@@ -59,8 +59,8 @@ import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.test.BaseTest;
-import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test.MySQLTestSchemaRewrite;
+import org.jooq.test.jOOQAbstractTest;
 
 import org.junit.Test;
 
@@ -80,13 +80,12 @@ public class SchemaAndMappingTests<
     U    extends TableRecord<U>,
     I    extends TableRecord<I>,
     IPK  extends UpdatableRecord<IPK>,
-    T658 extends TableRecord<T658>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> {
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> {
 
-    public SchemaAndMappingTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    public SchemaAndMappingTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
     }
 

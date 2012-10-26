@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_book", schema = "public")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -626739950;
+	private static final long serialVersionUID = -1192359689;
 
 	private final java.lang.Integer                                         id;
 	private final java.lang.Integer                                         authorId;
@@ -19,7 +19,7 @@ public class TBook implements java.io.Serializable {
 	private final java.lang.Integer                                         detailsId;
 	private final java.lang.String                                          title;
 	private final java.lang.Integer                                         publishedIn;
-	private final org.jooq.test.postgres.generatedclasses.enums.TLanguage   languageId;
+	private final java.lang.Integer                                         languageId;
 	private final java.lang.String                                          contentText;
 	private final byte[]                                                    contentPdf;
 	private final org.jooq.test.postgres.generatedclasses.enums.UBookStatus status;
@@ -31,7 +31,7 @@ public class TBook implements java.io.Serializable {
 		java.lang.Integer                                         detailsId,
 		java.lang.String                                          title,
 		java.lang.Integer                                         publishedIn,
-		org.jooq.test.postgres.generatedclasses.enums.TLanguage   languageId,
+		java.lang.Integer                                         languageId,
 		java.lang.String                                          contentText,
 		byte[]                                                    contentPdf,
 		org.jooq.test.postgres.generatedclasses.enums.UBookStatus status
@@ -80,7 +80,7 @@ public class TBook implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "language_id", nullable = false, precision = 32)
-	public org.jooq.test.postgres.generatedclasses.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return this.languageId;
 	}
 

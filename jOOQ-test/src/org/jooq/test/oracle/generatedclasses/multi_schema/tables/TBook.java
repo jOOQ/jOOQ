@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -89701971;
+	private static final long serialVersionUID = -651325368;
 
 	/**
 	 * The singleton instance of MULTI_SCHEMA.T_BOOK
@@ -77,7 +77,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle
 	 * REFERENCES TEST.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, org.jooq.test.oracle.generatedclasses.test.enums.TLanguage> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.oracle.generatedclasses.test.enums.TLanguage.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.CONTENT_TEXT</code>
@@ -111,7 +111,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.multi_schema.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.oracle.generatedclasses.multi_schema.Keys.FK_T_BOOK_CO_AUTHOR_ID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.multi_schema.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.oracle.generatedclasses.multi_schema.Keys.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.oracle.generatedclasses.multi_schema.Keys.FK_T_BOOK_LANGUAGE_ID);
 	}
 
 	@Override

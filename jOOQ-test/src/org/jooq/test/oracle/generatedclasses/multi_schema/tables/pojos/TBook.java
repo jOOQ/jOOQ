@@ -11,28 +11,28 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2065168919;
+	private static final long serialVersionUID = -1644570779;
 
 
 	@javax.validation.constraints.NotNull
-	private java.lang.Integer                                          id;
+	private java.lang.Integer id;
 
 	@javax.validation.constraints.NotNull
-	private java.lang.Integer                                          authorId;
-	private java.lang.Integer                                          coAuthorId;
-	private java.lang.Integer                                          detailsId;
+	private java.lang.Integer authorId;
+	private java.lang.Integer coAuthorId;
+	private java.lang.Integer detailsId;
 
 	@javax.validation.constraints.NotNull
 	@javax.validation.constraints.Size(max = 400)
-	private java.lang.String                                           title;
+	private java.lang.String  title;
 
 	@javax.validation.constraints.NotNull
-	private java.lang.Integer                                          publishedIn;
+	private java.lang.Integer publishedIn;
 
 	@javax.validation.constraints.NotNull
-	private org.jooq.test.oracle.generatedclasses.test.enums.TLanguage languageId;
-	private java.lang.String                                           contentText;
-	private byte[]                                                     contentPdf;
+	private java.lang.Integer languageId;
+	private java.lang.String  contentText;
+	private byte[]            contentPdf;
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -90,11 +90,11 @@ public class TBook implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
-	public org.jooq.test.oracle.generatedclasses.test.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return this.languageId;
 	}
 
-	public void setLanguageId(org.jooq.test.oracle.generatedclasses.test.enums.TLanguage languageId) {
+	public void setLanguageId(java.lang.Integer languageId) {
 		this.languageId = languageId;
 	}
 

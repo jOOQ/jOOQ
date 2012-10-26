@@ -370,11 +370,6 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     @Override
-    public final <M extends MasterDataType<T>> DataType<M> asMasterDataType(Class<M> masterDataType) {
-        return new DefaultDataType<M>(dialect, masterDataType, typeName, castTypeName);
-    }
-
-    @Override
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
         return new DefaultDataType<E>(dialect, enumDataType, typeName, castTypeName);
     }

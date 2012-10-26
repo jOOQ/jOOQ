@@ -216,12 +216,8 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         return result.toString();
     }
 
-    @SuppressWarnings("deprecation")
     private final String getSubPackage(Definition definition) {
-        if (definition instanceof MasterDataTableDefinition) {
-            return "enums";
-        }
-        else if (definition instanceof TableDefinition) {
+        if (definition instanceof TableDefinition) {
             return "tables";
         }
 

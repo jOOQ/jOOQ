@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1093400111;
+	private static final long serialVersionUID = -1173161041;
 
 	/**
 	 * The singleton instance of TEST
@@ -32,7 +32,6 @@ public class Test extends org.jooq.impl.SchemaImpl {
 	public final java.util.List<org.jooq.Table<?>> getTables() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
 			org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
-			org.jooq.test.derby.generatedclasses.tables.T_658Ref.T_658_REF,
 			org.jooq.test.derby.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.derby.generatedclasses.tables.T_785.T_785,
 			org.jooq.test.derby.generatedclasses.tables.TAuthor.T_AUTHOR,
@@ -43,6 +42,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.derby.generatedclasses.tables.TDates.T_DATES,
 			org.jooq.test.derby.generatedclasses.tables.TIdentity.T_IDENTITY,
 			org.jooq.test.derby.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
+			org.jooq.test.derby.generatedclasses.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.derby.generatedclasses.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.derby.generatedclasses.tables.VAuthor.V_AUTHOR,
 			org.jooq.test.derby.generatedclasses.tables.VBook.V_BOOK,

@@ -11,7 +11,7 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 726850980;
+	private static final long serialVersionUID = 1647554322;
 
 	/**
 	 * The book ID
@@ -204,7 +204,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES test.t_language (id)
 	 * </pre></code>
 	 */
-	public void setLanguageId(org.jooq.test.ingres.generatedclasses.enums.TLanguage value) {
+	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.TBook.LANGUAGE_ID, value);
 	}
 
@@ -217,8 +217,37 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES test.t_language (id)
 	 * </pre></code>
 	 */
-	public org.jooq.test.ingres.generatedclasses.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.TBook.LANGUAGE_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord 
+	 * TLanguageRecord}
+	 */
+	public void setLanguageId(org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.ingres.generatedclasses.tables.TBook.LANGUAGE_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.ingres.generatedclasses.tables.TBook.LANGUAGE_ID, value.getValue(org.jooq.test.ingres.generatedclasses.tables.TLanguage.ID));
+		}
+	}
+
+	/**
+	 * The language of the book
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT fk_t_book_language_id
+	 * FOREIGN KEY (language_id)
+	 * REFERENCES test.t_language (id)
+	 * </pre></code>
+	 */
+	public org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
+		return create()
+			.selectFrom(org.jooq.test.ingres.generatedclasses.tables.TLanguage.T_LANGUAGE)
+			.where(org.jooq.test.ingres.generatedclasses.tables.TLanguage.ID.equal(getValue(org.jooq.test.ingres.generatedclasses.tables.TBook.LANGUAGE_ID)))
+			.fetchOne();
 	}
 
 	/**

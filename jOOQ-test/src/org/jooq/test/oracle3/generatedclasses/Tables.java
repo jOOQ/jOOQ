@@ -57,6 +57,11 @@ public final class Tables {
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY T_DIRECTORY = org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY;
 
 	/**
+	 * An entity holding language master data
+	 */
+	public static final org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE T_LANGUAGE = org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE;
+
+	/**
 	 * The table TEST.T_TRIGGERS
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS T_TRIGGERS = org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS;
@@ -65,11 +70,6 @@ public final class Tables {
 	 * The table TEST.T_639_NUMBERS_TABLE
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE T_639_NUMBERS_TABLE = org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE;
-
-	/**
-	 * The table TEST.T_658_REF
-	 */
-	public static final org.jooq.test.oracle3.generatedclasses.tables.T_658_REF T_658_REF = org.jooq.test.oracle3.generatedclasses.tables.T_658_REF.T_658_REF;
 
 	/**
 	 * The table TEST.T_725_LOB_TEST

@@ -106,7 +106,7 @@ public interface ITBook extends java.io.Serializable {
 	 * REFERENCES T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
-	public void setLanguageId(org.jooq.test.firebird.generatedclasses.enums.TLanguage value);
+	public void setLanguageId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>T_BOOK.LANGUAGE_ID</code>
@@ -117,7 +117,7 @@ public interface ITBook extends java.io.Serializable {
 	 * REFERENCES T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
-	public org.jooq.test.firebird.generatedclasses.enums.TLanguage getLanguageId();
+	public java.lang.Integer getLanguageId();
 
 	/**
 	 * The table column <code>T_BOOK.CONTENT_TEXT</code>

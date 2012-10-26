@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_book", schema = "test2")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1320897474;
+	private static final long serialVersionUID = 1021357356;
 
 	private java.lang.Integer                                       id;
 	private java.lang.Integer                                       authorId;
@@ -21,7 +21,7 @@ public class TBook implements java.io.Serializable {
 	private java.lang.Integer                                       detailsId;
 	private java.lang.String                                        title;
 	private java.lang.Integer                                       publishedIn;
-	private org.jooq.test.mysql2.generatedclasses.enums.TLanguage   languageId;
+	private java.lang.Integer                                       languageId;
 	private java.lang.String                                        contentText;
 	private byte[]                                                  contentPdf;
 	private org.jooq.test.mysql2.generatedclasses.enums.TBookStatus status;
@@ -82,11 +82,11 @@ public class TBook implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 10)
-	public org.jooq.test.mysql2.generatedclasses.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return this.languageId;
 	}
 
-	public void setLanguageId(org.jooq.test.mysql2.generatedclasses.enums.TLanguage languageId) {
+	public void setLanguageId(java.lang.Integer languageId) {
 		this.languageId = languageId;
 	}
 

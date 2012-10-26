@@ -15,34 +15,6 @@
             <jooq:includes>t_.*,x_.*,v_.*,p_.*,f_.*,(f|p)[0-9]+,s_.*</jooq:includes>
             <jooq:excludes>t_book_details</jooq:excludes>
             <jooq:dateAsTimestamp>false</jooq:dateAsTimestamp>
-            <jooq:masterDataTables>
-                <jooq:masterDataTable>
-                    <jooq:name>t_language</jooq:name>
-                    <jooq:literal>cd</jooq:literal>
-                    <jooq:description>description</jooq:description>
-                </jooq:masterDataTable>
-                <jooq:masterDataTable>
-                    <jooq:name>t_658_11</jooq:name>
-                </jooq:masterDataTable>
-                <jooq:masterDataTable>
-                    <jooq:name>t_658_21</jooq:name>
-                </jooq:masterDataTable>
-                <jooq:masterDataTable>
-                    <jooq:name>t_658_31</jooq:name>
-                </jooq:masterDataTable>
-                <jooq:masterDataTable>
-                    <jooq:name>t_658_12</jooq:name>
-                    <jooq:literal>cd</jooq:literal>
-                </jooq:masterDataTable>
-                <jooq:masterDataTable>
-                    <jooq:name>t_658_22</jooq:name>
-                    <jooq:literal>cd</jooq:literal>
-                </jooq:masterDataTable>
-                <jooq:masterDataTable>
-                    <jooq:name>t_658_32</jooq:name>
-                    <jooq:literal>cd</jooq:literal>
-                </jooq:masterDataTable>
-            </jooq:masterDataTables>
             <jooq:customTypes>
                 <jooq:customType>
             		<jooq:name>org.jooq.test._.converters.Boolean_10</jooq:name>

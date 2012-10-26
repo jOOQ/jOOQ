@@ -95,14 +95,6 @@ public interface DataType<T> extends Serializable {
     <A extends ArrayRecord<T>> DataType<A> asArrayDataType(Class<A> arrayDataType);
 
     /**
-     * Retrieve the data type for a given master data type
-     *
-     * @deprecated - 2.5.0 [#1741] - This feature will be removed as of jOOQ 3.0
-     */
-    @Deprecated
-    <M extends MasterDataType<T>> DataType<M> asMasterDataType(Class<M> masterDataType);
-
-    /**
      * Retrieve the data type for a given enum data type
      */
     <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType);

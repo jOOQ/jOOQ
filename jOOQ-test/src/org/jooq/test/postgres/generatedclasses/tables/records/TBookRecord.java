@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "public")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1649915497;
+	private static final long serialVersionUID = 1452415014;
 
 	/**
 	 * The table column <code>public.t_book.id</code>
@@ -211,7 +211,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES public.t_language (id)
 	 * </pre></code>
 	 */
-	public void setLanguageId(org.jooq.test.postgres.generatedclasses.enums.TLanguage value) {
+	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value);
 	}
 
@@ -225,8 +225,37 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "language_id", nullable = false, precision = 32)
-	public org.jooq.test.postgres.generatedclasses.enums.TLanguage getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID);
+	}
+
+	/**
+	 * Link this record to a given {@link org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord 
+	 * TLanguageRecord}
+	 */
+	public void setLanguageId(org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value.getValue(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.ID));
+		}
+	}
+
+	/**
+	 * The table column <code>public.t_book.language_id</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT t_book__fk_t_book_language_id
+	 * FOREIGN KEY (language_id)
+	 * REFERENCES public.t_language (id)
+	 * </pre></code>
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
+		return create()
+			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE)
+			.where(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID)))
+			.fetchOne();
 	}
 
 	/**

@@ -17,11 +17,6 @@ public final class Tables {
 	public static final org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
-	 * The table public.t_658_ref
-	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.T_658Ref T_658_REF = org.jooq.test.postgres.generatedclasses.tables.T_658Ref.T_658_REF;
-
-	/**
 	 * The table public.t_725_lob_test
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
@@ -90,6 +85,11 @@ public final class Tables {
 	 * The table public.t_identity_pk
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
+	 * The table public.t_language
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table public.t_triggers

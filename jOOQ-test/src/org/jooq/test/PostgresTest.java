@@ -37,7 +37,6 @@
 package org.jooq.test;
 
 import static org.jooq.test.postgres.generatedclasses.Tables.T_639_NUMBERS_TABLE;
-import static org.jooq.test.postgres.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_785;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_959;
@@ -93,7 +92,6 @@ import org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord;
-import org.jooq.test.postgres.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord;
@@ -129,7 +127,6 @@ public class PostgresTest extends jOOQAbstractTest<
         XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
-        T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
         T_785Record> {
@@ -355,11 +352,6 @@ public class PostgresTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Table<T_658RefRecord> T658() {
-        return T_658_REF;
-    }
-
-    @Override
     protected Table<T_639NumbersTableRecord> T639() {
         return T_639_NUMBERS_TABLE;
     }
@@ -480,7 +472,7 @@ public class PostgresTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TBookRecord, ? extends Enum<?>> TBook_LANGUAGE_ID() {
+    protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return T_BOOK.LANGUAGE_ID;
     }
 

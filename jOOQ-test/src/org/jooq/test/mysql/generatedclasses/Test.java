@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 445658821;
+	private static final long serialVersionUID = -877524307;
 
 	/**
 	 * The singleton instance of test
@@ -27,7 +27,6 @@ public class Test extends org.jooq.impl.SchemaImpl {
 	public final java.util.List<org.jooq.Table<?>> getTables() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
 			org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
-			org.jooq.test.mysql.generatedclasses.tables.T_658Ref.T_658_REF,
 			org.jooq.test.mysql.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.mysql.generatedclasses.tables.T_785.T_785,
 			org.jooq.test.mysql.generatedclasses.tables.T_959.T_959,
@@ -38,6 +37,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.mysql.generatedclasses.tables.TBooleans.T_BOOLEANS,
 			org.jooq.test.mysql.generatedclasses.tables.TDates.T_DATES,
 			org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
+			org.jooq.test.mysql.generatedclasses.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.mysql.generatedclasses.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.mysql.generatedclasses.tables.TUnsigned.T_UNSIGNED,
 			org.jooq.test.mysql.generatedclasses.tables.VAuthor.V_AUTHOR,

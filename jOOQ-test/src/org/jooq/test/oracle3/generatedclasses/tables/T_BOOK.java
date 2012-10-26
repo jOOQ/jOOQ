@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_BOOK extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 786365177;
+	private static final long serialVersionUID = 815925870;
 
 	/**
 	 * The singleton instance of TEST.T_BOOK
@@ -79,7 +79,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracl
 	 * REFERENCES TEST.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, org.jooq.test.oracle3.generatedclasses.enums.T_LANGUAGE> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.oracle3.generatedclasses.enums.T_LANGUAGE.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * Some textual content of the book
@@ -113,7 +113,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracl
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, ?>>asList(org.jooq.test.oracle3.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.oracle3.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, ?>>asList(org.jooq.test.oracle3.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.oracle3.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.oracle3.generatedclasses.Keys.FK_T_BOOK_LANGUAGE_ID);
 	}
 
 	@Override

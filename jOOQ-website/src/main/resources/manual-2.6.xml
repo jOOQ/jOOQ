@@ -885,7 +885,73 @@ public class Main {
 					
 					<section id="jooq-and-scala">
 						<title>jOOQ and Scala</title>
-						<content></content>
+						<content>
+							<p>
+								As any other library, jOOQ can be easily used in Scala, taking advantage of the many Scala language features such as for example:
+							</p>
+							<ul>
+								<li>Optional "." to dereference methods from expressions</li>
+								<li>Optional "(" and ")" to delimit method argument lists</li>
+								<li>Optioanl ";" at the end of a Scala statement</li>
+								<li>Type inference using "var" and "val" keywords</li>
+							</ul>
+						
+							<p>
+								But jOOQ also leverages other useful Scala features, such as
+							</p>
+							<ul>
+								<li>implicit defs for operator overloading</li>
+								<li>Scala Macros (soon to come)</li>
+							</ul>
+							
+							<p>
+								A short example jOOQ application in Scala might look like this:
+							</p>
+							
+<scala><![CDATA[
+import collection.JavaConversions._                                  // Import implicit defs for iteration over org.jooq.Result
+                                                                     //
+import java.sql.DriverManager                                        //
+                                                                     //
+import org.jooq._                                                    //
+import org.jooq.impl._                                               //
+import org.jooq.impl.Factory._                                       //
+import org.jooq.scala.example.h2.Tables._                            //
+import org.jooq.scala.Conversions._                                  // Import implicit defs for overloaded jOOQ/SQL operators
+                                                                     //
+object Test {                                                        //
+  def main(args: Array[String]): Unit = {                            //
+    val c = DriverManager.getConnection("jdbc:h2:~/test", "sa", ""); // Standard JDBC connection
+    val f = new Factory(c, SQLDialect.H2);                           //
+    val x = T_AUTHOR as "x"                                          // SQL-esque table aliasing
+                                                                     //
+    for (r <- f                                                      // Iteration over Result. "r" is an org.jooq.Record
+        select (                                                     //
+          T_BOOK.ID * T_BOOK.AUTHOR_ID,                              // Using the overloaded "*" operator
+          T_BOOK.ID + T_BOOK.AUTHOR_ID * 3 + 4,                      // Using the overloaded "+" operator
+          T_BOOK.TITLE || " abc" || " xy"                            // Using the overloaded "||" operator
+        )                                                            //
+        from T_BOOK                                                  // No need to use parentheses or "." here
+        leftOuterJoin (                                              //
+          f select (x.ID, x.YEAR_OF_BIRTH)                           // Dereference fields from aliased table
+          from x                                                     //
+          limit 1                                                    //
+          asTable x.getName()                                        //
+        )                                                            //
+        on T_BOOK.AUTHOR_ID === x.ID                                 // Using the overloaded "===" operator
+        where (T_BOOK.ID <> 2)                                       // Using the olerloaded "<>" operator
+        or (T_BOOK.TITLE in ("O Alquimista", "Brida"))               // Neat IN predicate expression
+        fetch                                                        //
+    ) {                                                              //
+      println(r)                                                     //
+    }                                                                //
+  }                                                                  //
+}]]></scala>
+
+							<p>
+								For more details about jOOQ's Scala integration, please refer to the manual's section about <reference id="scala-sql-building" title="SQL building with Scala"/>.
+							</p>
+						</content>
 					</section>
 					
 					<section id="dependencies">
@@ -5200,7 +5266,135 @@ create.attach(select);]]></java>
 					
 					<section id="scala-sql-building">
 						<title>SQL building in Scala</title>
-						<content></content>
+						<content>
+							<p>
+								jOOQ-Scala is a maven module used for leveraging some advanced Scala features for those users that wish to use jOOQ with Scala.
+							</p>
+							
+							<h3>Using Scala's implicit defs to allow for operator overloading</h3>
+							<p>
+								The most obvious Scala feature to use in jOOQ are implicit defs for implicit conversions in order to enhance the <reference class="org.jooq.Field"/> type with SQL-esque operators. 
+							</p>
+							<p>
+								The following depicts a trait which wraps all fields:
+							</p>
+							
+<scala><![CDATA[/**
+ * A Scala-esque representation of {@link org.jooq.Field}, adding overloaded
+ * operators for common jOOQ operations to arbitrary fields
+ */
+trait SAnyField[T] extends Field[T] {
+
+    // String operations
+    // -----------------
+
+    def ||(value : String)            : Field[String]
+    def ||(value : Field[_])          : Field[String]
+
+    // Comparison predicates
+    // ---------------------
+
+    def ===(value : T)                : Condition
+    def ===(value : Field[T])         : Condition
+
+    def !==(value : T)                : Condition
+    def !==(value : Field[T])         : Condition
+
+    def <>(value : T)                 : Condition
+    def <>(value : Field[T])          : Condition
+
+    def >(value : T)                  : Condition
+    def >(value : Field[T])           : Condition
+
+    def >=(value : T)                 : Condition
+    def >=(value : Field[T])          : Condition
+
+    def <(value : T)                  : Condition
+    def <(value : Field[T])           : Condition
+
+    def <=(value : T)                 : Condition
+    def <=(value : Field[T])          : Condition
+
+    def <=>(value : T)                : Condition
+    def <=>(value : Field[T])         : Condition
+}]]></scala>
+
+							<p>
+								The following depicts a trait which wraps numeric fields:
+							</p>
+							
+<scala><![CDATA[/**
+ * A Scala-esque representation of {@link org.jooq.Field}, adding overloaded
+ * operators for common jOOQ operations to numeric fields
+ */
+trait SNumberField[T <: Number] extends SAnyField[T] {
+
+    // Arithmetic operations
+    // ---------------------
+
+    def unary_-                       : Field[T]
+
+    def +(value : Number)             : Field[T]
+    def +(value : Field[_ <: Number]) : Field[T]
+
+    def -(value : Number)             : Field[T]
+    def -(value : Field[_ <: Number]) : Field[T]
+
+    def *(value : Number)             : Field[T]
+    def *(value : Field[_ <: Number]) : Field[T]
+
+    def /(value : Number)             : Field[T]
+    def /(value : Field[_ <: Number]) : Field[T]
+
+    def %(value : Number)             : Field[T]
+    def %(value : Field[_ <: Number]) : Field[T]
+
+    // Bitwise operations
+    // ------------------
+
+    def unary_~                       : Field[T]
+
+    def &(value : T)                  : Field[T]
+    def &(value : Field[T])           : Field[T]
+
+    def |(value : T)                  : Field[T]
+    def |(value : Field[T])           : Field[T]
+
+    def ^(value : T)                  : Field[T]
+    def ^(value : Field[T])           : Field[T]
+
+    def <<(value : T)                 : Field[T]
+    def <<(value : Field[T])          : Field[T]
+
+    def >>(value : T)                 : Field[T]
+    def >>(value : Field[T])          : Field[T]
+}]]></scala>
+
+							<p>
+								An example query using such overloaded operators would then look like this:
+							</p>
+							
+<scala><![CDATA[select (
+  T_BOOK.ID * T_BOOK.AUTHOR_ID,
+  T_BOOK.ID + T_BOOK.AUTHOR_ID * 3 + 4,
+  T_BOOK.TITLE || " abc" || " xy")
+from T_BOOK
+leftOuterJoin (
+  f select (x.ID, x.YEAR_OF_BIRTH)
+  from x
+  limit 1
+  asTable x.getName()
+)
+on T_BOOK.AUTHOR_ID === x.ID
+where (T_BOOK.ID <> 2)
+or (T_BOOK.TITLE in ("O Alquimista", "Brida"))
+fetch]]></scala>
+
+							<h3>Scala 2.10 Macros</h3>
+							<p>
+								This feature is still being experimented with. With Scala Macros, it might be possible to inline a true SQL dialect into the Scala syntax, backed by the jOOQ API. Stay tuned!
+							</p>
+						</content>
 					</section>
 				</sections>
 			</section>
@@ -7418,11 +7612,6 @@ Finishing                : Total: 4.814ms, +3.375ms
 								Don't be put off by the above paragraphs. You should optimise wisely, i.e. only in places where you really need very high throughput to your database. jOOQ's overhead compared to plain JDBC is typically less than 1ms per query.
 							</p>
 						</content>
-					</section>
-					
-					<section id="scala-sql-execution">
-						<title>SQL execution in Scala</title>
-						<content></content>
 					</section>
 				</sections>
 			</section>

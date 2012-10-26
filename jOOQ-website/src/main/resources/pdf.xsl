@@ -517,7 +517,7 @@
 		</fo:table>
 	</xsl:template>
 
-	<xsl:template match="java | sql | xml | text | config" mode="content">
+	<xsl:template match="java | scala | sql | xml | text | config" mode="content">
 		<fo:block xsl:use-attribute-sets="pre">
 			<xsl:apply-templates mode="content" />
         </fo:block>

@@ -332,7 +332,7 @@ class DefaultBindContext extends AbstractBindContext {
             }
             else {
                 sb.append("\"");
-                sb.append(o.toString().replaceAll("\"", "\"\""));
+                sb.append(o.toString().replace("\\", "\\\\").replace("\"", "\\\""));
                 sb.append("\"");
             }
 

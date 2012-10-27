@@ -57,7 +57,7 @@ public interface UDT<R extends UDTRecord<R>> extends FieldProvider, QueryPart {
     /**
      * @return The record type produced by this table
      */
-    Class<? extends R> getRecordType();
+    Class<R> getRecordType();
 
     /**
      * The UDT's data type as known to the database

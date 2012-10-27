@@ -136,7 +136,7 @@ public class MySQLDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.MYSQL, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 
-    public static <T> DataType<T> getDataType(Class<? extends T> type) {
+    public static <T> DataType<T> getDataType(Class<T> type) {
         return getDataType(SQLDialect.MYSQL, type);
     }
 

@@ -135,7 +135,7 @@ public class DerbyDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.DERBY, sqlDataType, sqlDataType.getType(), typeName, castName);
     }
 
-    public static <T> DataType<T> getDataType(Class<? extends T> type) {
+    public static <T> DataType<T> getDataType(Class<T> type) {
         return getDataType(SQLDialect.DERBY, type);
     }
 

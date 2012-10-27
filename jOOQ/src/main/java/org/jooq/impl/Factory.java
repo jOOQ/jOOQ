@@ -1196,7 +1196,7 @@ public class Factory {
      * @return The cast field
      */
     @Support
-    public static <T> Field<T> cast(Object value, Class<? extends T> type) {
+    public static <T> Field<T> cast(Object value, Class<T> type) {
         return val(value, type).cast(type);
     }
 
@@ -1233,7 +1233,7 @@ public class Factory {
      * @return The cast field
      */
     @Support
-    public static <T> Field<T> castNull(Class<? extends T> type) {
+    public static <T> Field<T> castNull(Class<T> type) {
         return NULL().cast(type);
     }
 
@@ -1246,7 +1246,7 @@ public class Factory {
      * @return The cast fields
      */
     @SuppressWarnings("unchecked")
-    static <T> Field<T>[] castAll(Class<? extends T> type, Field<?>... fields) {
+    static <T> Field<T>[] castAll(Class<T> type, Field<?>... fields) {
         Field<?>[] castFields = new Field<?>[fields.length];
 
         for (int i = 0; i < fields.length; i++) {
@@ -4449,7 +4449,7 @@ public class Factory {
      * @see #param(String, Object)
      */
     @Support
-    public static <T> Param<T> param(String name, Class<? extends T> type) {
+    public static <T> Param<T> param(String name, Class<T> type) {
         return param(name, SQLDataType.getDataType(null, type));
     }
 
@@ -4503,7 +4503,7 @@ public class Factory {
      * @see #val(Object, Class)
      */
     @Support
-    public static <T> Field<T> value(Object value, Class<? extends T> type) {
+    public static <T> Field<T> value(Object value, Class<T> type) {
         return val(value, type);
     }
 
@@ -4611,7 +4611,7 @@ public class Factory {
      * @see #val(Object, Class)
      */
     @Support
-    public static <T> Param<T> inline(Object value, Class<? extends T> type) {
+    public static <T> Param<T> inline(Object value, Class<T> type) {
         // [#1309] TODO, make this type-safe
         Param<T> val = (Param<T>) val(value, type);
         val.setInline(true);
@@ -4714,7 +4714,7 @@ public class Factory {
      * @see #val(Object, DataType)
      */
     @Support
-    public static <T> Field<T> val(Object value, Class<? extends T> type) {
+    public static <T> Field<T> val(Object value, Class<T> type) {
         return val(value, getDataType(type));
     }
 
@@ -5145,7 +5145,7 @@ public class Factory {
      */
     @SuppressWarnings("deprecation")
     @Support
-    public static <T> DataType<T> getDataType(Class<? extends T> type) {
+    public static <T> DataType<T> getDataType(Class<T> type) {
         return FieldTypeHelper.getDataType(SQLDialect.SQL99, type);
     }
 

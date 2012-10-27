@@ -327,11 +327,11 @@ public final class SQLDataType<T> extends AbstractDataType<T> {
         } catch (Exception ignore) {}
     }
 
-    private SQLDataType(Class<? extends T> type, String typeName) {
+    private SQLDataType(Class<T> type, String typeName) {
         this(type, typeName, false);
     }
 
-    private SQLDataType(Class<? extends T> type, String typeName, boolean hasPrecisionAndScale) {
+    private SQLDataType(Class<T> type, String typeName, boolean hasPrecisionAndScale) {
         super(null, null, type, typeName, hasPrecisionAndScale);
     }
 }

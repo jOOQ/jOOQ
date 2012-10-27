@@ -127,7 +127,7 @@ public class FirebirdDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.FIREBIRD, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 
-    public static <T> DataType<T> getDataType(Class<? extends T> type) {
+    public static <T> DataType<T> getDataType(Class<T> type) {
         return getDataType(SQLDialect.FIREBIRD, type);
     }
 

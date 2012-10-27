@@ -77,7 +77,7 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
     }
 
     @Override
-    public final Class<? extends T> getType() {
+    public final Class<T> getType() {
         return type.getType();
     }
 

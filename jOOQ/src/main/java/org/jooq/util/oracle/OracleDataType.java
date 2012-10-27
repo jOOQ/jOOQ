@@ -157,7 +157,7 @@ public class OracleDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.ORACLE, sqlDataType, sqlDataType.getType(), typeName, castTypeName, hasPrecisionAndScale);
     }
 
-    public static <T> DataType<T> getDataType(Class<? extends T> type) {
+    public static <T> DataType<T> getDataType(Class<T> type) {
         return getDataType(SQLDialect.ORACLE, type);
     }
 

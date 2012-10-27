@@ -55,7 +55,7 @@ public final class TestDataType<T> extends AbstractDataType<T> {
     public static final DataType<String>  STRING_TYPE      = new TestDataType<String>(String.class);
     public static final DataType<Date>    DATE_TYPE        = new TestDataType<Date>(Date.class);
 
-    protected TestDataType(Class<? extends T> type) {
+    protected TestDataType(Class<T> type) {
         super(SQLDialect.ORACLE, null, type, type.getSimpleName());
     }
 }

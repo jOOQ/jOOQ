@@ -122,7 +122,7 @@ public class DB2DataType<T> extends AbstractDataType<T> {
         super(SQLDialect.DB2, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 
-    public static <T> DataType<T> getDataType(Class<? extends T> type) {
+    public static <T> DataType<T> getDataType(Class<T> type) {
         return getDataType(SQLDialect.DB2, type);
     }
 

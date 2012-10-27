@@ -92,7 +92,7 @@ public interface Field<T> extends GroupField {
     /**
      * The Java type of the field.
      */
-    Class<? extends T> getType();
+    Class<T> getType();
 
     /**
      * The type of this field (might not be dialect-specific)
@@ -170,7 +170,7 @@ public interface Field<T> extends GroupField {
      * @see #cast(DataType)
      */
     @Support
-    <Z> Field<Z> cast(Class<? extends Z> type);
+    <Z> Field<Z> cast(Class<Z> type);
 
     // ------------------------------------------------------------------------
     // Conversion of field into a sort field

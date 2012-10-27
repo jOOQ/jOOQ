@@ -9072,6 +9072,7 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 							<h3>Quantified comparison predicates (no deprecation yet)</h3>
 							<h3>Master data types have been removed</h3>
 							<h3>GroupField</h3>
+							<h3>? extends T has been relaxed, e.g. for casting, Field.getType(), etc.</h3>
 							
 							<h3>Object renames</h3>
 							<ul>

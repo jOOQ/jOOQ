@@ -121,7 +121,7 @@ public class SQLiteDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.SQLITE, sqlDataType, sqlDataType.getType(), typeName);
     }
 
-    public static <T> DataType<T> getDataType(Class<? extends T> type) {
+    public static <T> DataType<T> getDataType(Class<T> type) {
         return getDataType(SQLDialect.SQLITE, type);
     }
 

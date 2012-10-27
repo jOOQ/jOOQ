@@ -40,7 +40,7 @@ import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.zero;
-import static org.jooq.impl.Util.extractVal;
+import static org.jooq.impl.Utils.extractVal;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

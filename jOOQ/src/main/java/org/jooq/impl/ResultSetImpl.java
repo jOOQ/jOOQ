@@ -1239,7 +1239,7 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
                         Schema mapped = null;
 
                         if (configuration != null) {
-                            mapped = Util.getMappedSchema(configuration, schema);
+                            mapped = Utils.getMappedSchema(configuration, schema);
                         }
 
                         if (mapped != null) {

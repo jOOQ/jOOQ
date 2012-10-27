@@ -53,7 +53,7 @@ class SQLCondition extends AbstractCondition {
 
     SQLCondition(String sql, Object[] substitutes) {
         this.sql = sql;
-        this.substitutes = Util.queryParts(substitutes);
+        this.substitutes = Utils.queryParts(substitutes);
     }
 
     // ------------------------------------------------------------------------
@@ -66,12 +66,12 @@ class SQLCondition extends AbstractCondition {
         // in parentheses to ensure correct semantics
 
         context.sql("(");
-        Util.renderAndBind(context, null, sql, substitutes);
+        Utils.renderAndBind(context, null, sql, substitutes);
         context.sql(")");
     }
 
     @Override
     public final void bind(BindContext context) {
-        Util.renderAndBind(null, context, sql, substitutes);
+        Utils.renderAndBind(null, context, sql, substitutes);
     }
 }

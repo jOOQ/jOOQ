@@ -57,7 +57,7 @@ class Decode<T, Z> extends AbstractFunction<Z> {
     private final Field<?>[]  more;
 
     public Decode(Field<T> field, Field<T> search, Field<Z> result, Field<?>[] more) {
-        super("decode", result.getDataType(), Util.combine(field, search, result, more));
+        super("decode", result.getDataType(), Utils.combine(field, search, result, more));
 
         this.field = field;
         this.search = search;

@@ -57,8 +57,7 @@ import org.jooq.tools.reflect.Reflect;
  * @author Lukas Eder
  * @see SelectQuery#getResult()
  */
-@SuppressWarnings("deprecation")
-public interface Record extends FieldProvider, Store<Object> {
+public interface Record extends FieldProvider, Attachable {
 
     /**
      * Get a value from this Record, providing a field.
@@ -251,7 +250,6 @@ public interface Record extends FieldProvider, Store<Object> {
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
      */
-    @Override
     Object getValue(int index) throws IllegalArgumentException;
 
     /**
@@ -264,7 +262,6 @@ public interface Record extends FieldProvider, Store<Object> {
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
      */
-    @Override
     Object getValue(int index, Object defaultValue) throws IllegalArgumentException;
 
     /**
@@ -280,7 +277,6 @@ public interface Record extends FieldProvider, Store<Object> {
      *             might have occurred
      * @see Convert#convert(Object, Class)
      */
-    @Override
     <T> T getValue(int index, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -298,7 +294,6 @@ public interface Record extends FieldProvider, Store<Object> {
      *             might have occurred
      * @see Convert#convert(Object, Class)
      */
-    @Override
     <T> T getValue(int index, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
@@ -359,7 +354,6 @@ public interface Record extends FieldProvider, Store<Object> {
     /**
      * Get the number of fields of this record.
      */
-    @Override
     int size();
 
     /**

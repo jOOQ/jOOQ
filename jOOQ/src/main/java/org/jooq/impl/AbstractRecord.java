@@ -73,9 +73,11 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.reflect.Reflect;
 
 /**
+ * A general base class for all {@link Record} types
+ *
  * @author Lukas Eder
  */
-abstract class AbstractRecord extends AbstractStore<Object> implements Record {
+abstract class AbstractRecord extends AbstractStore implements Record {
 
     /**
      * Generated UID
@@ -189,6 +191,23 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     @Override
+    public final Object getValue(int index, Object defaultValue) {
+        final Object result = getValue(index);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <T> T getValue(int index, Class<? extends T> type) {
+        return Convert.convert(getValue(index), type);
+    }
+
+    @Override
+    public final <T> T getValue(int index, Class<? extends T> type, T defaultValue) {
+        final T result = getValue(index, type);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
     public final <U> U getValue(int index, Converter<?, U> converter) {
         return Convert.convert(getValue(index), converter);
     }
@@ -216,8 +235,8 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     @Override
-    public final <Z> Z getValue(String fieldName, Class<? extends Z> type, Z defaultValue) {
-        final Z result = getValue(fieldName, type);
+    public final <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) {
+        final T result = getValue(fieldName, type);
         return result == null ? defaultValue : result;
     }
 

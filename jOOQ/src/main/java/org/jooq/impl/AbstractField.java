@@ -39,8 +39,6 @@ import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
-import static org.jooq.impl.Factory.all;
-import static org.jooq.impl.Factory.any;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.nullSafe;
@@ -808,36 +806,6 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition equalAny(Select<?> query) {
-        return equal(any(query));
-    }
-
-    @Override
-    public final Condition equalAny(T... array) {
-        return equal(any(array));
-    }
-
-    @Override
-    public final Condition equalAny(Field<T[]> array) {
-        return equal(any(array));
-    }
-
-    @Override
-    public final Condition equalAll(Select<?> query) {
-        return equal(all(query));
-    }
-
-    @Override
-    public final Condition equalAll(T... array) {
-        return equal(all(array));
-    }
-
-    @Override
-    public final Condition equalAll(Field<T[]> array) {
-        return equal(all(array));
-    }
-
-    @Override
     public final Condition notEqual(T value) {
         return notEqual(val(value, this));
     }
@@ -868,36 +836,6 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition notEqualAny(Select<?> query) {
-        return notEqual(any(query));
-    }
-
-    @Override
-    public final Condition notEqualAny(T... array) {
-        return notEqual(any(array));
-    }
-
-    @Override
-    public final Condition notEqualAny(Field<T[]> array) {
-        return notEqual(any(array));
-    }
-
-    @Override
-    public final Condition notEqualAll(Select<?> query) {
-        return notEqual(all(query));
-    }
-
-    @Override
-    public final Condition notEqualAll(T... array) {
-        return notEqual(all(array));
-    }
-
-    @Override
-    public final Condition notEqualAll(Field<T[]> array) {
-        return notEqual(all(array));
-    }
-
-    @Override
     public final Condition lessThan(T value) {
         return lessThan(val(value, this));
     }
@@ -915,36 +853,6 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public final Condition lessThan(QuantifiedSelect<?> query) {
         return new QuantifiedComparisonCondition(query, this, Comparator.LESS);
-    }
-
-    @Override
-    public final Condition lessThanAny(Select<?> query) {
-        return lessThan(any(query));
-    }
-
-    @Override
-    public final Condition lessThanAny(T... array) {
-        return lessThan(any(array));
-    }
-
-    @Override
-    public final Condition lessThanAny(Field<T[]> array) {
-        return lessThan(any(array));
-    }
-
-    @Override
-    public final Condition lessThanAll(Select<?> query) {
-        return lessThan(all(query));
-    }
-
-    @Override
-    public final Condition lessThanAll(T... array) {
-        return lessThan(all(array));
-    }
-
-    @Override
-    public final Condition lessThanAll(Field<T[]> array) {
-        return lessThan(all(array));
     }
 
     @Override
@@ -968,36 +876,6 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition lessOrEqualAny(Select<?> query) {
-        return lessOrEqual(any(query));
-    }
-
-    @Override
-    public final Condition lessOrEqualAny(T... array) {
-        return lessOrEqual(any(array));
-    }
-
-    @Override
-    public final Condition lessOrEqualAny(Field<T[]> array) {
-        return lessOrEqual(any(array));
-    }
-
-    @Override
-    public final Condition lessOrEqualAll(Select<?> query) {
-        return lessOrEqual(all(query));
-    }
-
-    @Override
-    public final Condition lessOrEqualAll(T... array) {
-        return lessOrEqual(all(array));
-    }
-
-    @Override
-    public final Condition lessOrEqualAll(Field<T[]> array) {
-        return lessOrEqual(all(array));
-    }
-
-    @Override
     public final Condition greaterThan(T value) {
         return greaterThan(val(value, this));
     }
@@ -1018,36 +896,6 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition greaterThanAny(Select<?> query) {
-        return greaterThan(any(query));
-    }
-
-    @Override
-    public final Condition greaterThanAny(T... array) {
-        return greaterThan(any(array));
-    }
-
-    @Override
-    public final Condition greaterThanAny(Field<T[]> array) {
-        return greaterThan(any(array));
-    }
-
-    @Override
-    public final Condition greaterThanAll(Select<?> query) {
-        return greaterThan(all(query));
-    }
-
-    @Override
-    public final Condition greaterThanAll(T... array) {
-        return greaterThan(all(array));
-    }
-
-    @Override
-    public final Condition greaterThanAll(Field<T[]> array) {
-        return greaterThan(all(array));
-    }
-
-    @Override
     public final Condition greaterOrEqual(T value) {
         return greaterOrEqual(val(value, this));
     }
@@ -1065,36 +913,6 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public final Condition greaterOrEqual(QuantifiedSelect<?> query) {
         return new QuantifiedComparisonCondition(query, this, Comparator.GREATER_OR_EQUAL);
-    }
-
-    @Override
-    public final Condition greaterOrEqualAny(Select<?> query) {
-        return greaterOrEqual(any(query));
-    }
-
-    @Override
-    public final Condition greaterOrEqualAny(T... array) {
-        return greaterOrEqual(any(array));
-    }
-
-    @Override
-    public final Condition greaterOrEqualAny(Field<T[]> array) {
-        return greaterOrEqual(any(array));
-    }
-
-    @Override
-    public final Condition greaterOrEqualAll(Select<?> query) {
-        return greaterOrEqual(all(query));
-    }
-
-    @Override
-    public final Condition greaterOrEqualAll(T... array) {
-        return greaterOrEqual(all(array));
-    }
-
-    @Override
-    public final Condition greaterOrEqualAll(Field<T[]> array) {
-        return greaterOrEqual(all(array));
     }
 
     @Override

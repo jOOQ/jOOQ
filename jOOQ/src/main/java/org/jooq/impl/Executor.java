@@ -160,7 +160,6 @@ public class Executor implements FactoryOperations {
     private static final long       serialVersionUID  = 2681360188806309513L;
     private static final JooqLogger log               = JooqLogger.getLogger(Factory.class);
 
-    private static final Executor[] DEFAULT_INSTANCES = new Executor[SQLDialect.values().length];
     private final Configuration     configuration;
 
     // -------------------------------------------------------------------------
@@ -1556,19 +1555,6 @@ public class Executor implements FactoryOperations {
     @Override
     public String toString() {
         return configuration.toString();
-    }
-
-    static {
-        for (SQLDialect dialect : SQLDialect.values()) {
-            DEFAULT_INSTANCES[dialect.ordinal()] = new Executor(dialect);
-        }
-    }
-
-    /**
-     * Get a default <code>Factory</code> without a {@link Connection}
-     */
-    final static Executor getNewFactory(SQLDialect dialect) {
-        return getNewFactory(DEFAULT_INSTANCES[dialect.ordinal()]);
     }
 
     /**

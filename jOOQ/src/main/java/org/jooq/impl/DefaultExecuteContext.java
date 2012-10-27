@@ -37,9 +37,11 @@ package org.jooq.impl;
 
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +95,9 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     private static final ThreadLocal<List<Clob>> CLOBS            = new ThreadLocal<List<Clob>>();
 
     /**
-     * Clean up blobs and clobs.
+     * Clean up blobs, clobs and the local configuration.
+     * <p>
+     * <h3>BLOBS and CLOBS</h3>
      * <p>
      * [#1326] This is necessary in those dialects that have long-lived
      * temporary lob objects, which can cause memory leaks in certain contexts,
@@ -106,6 +110,22 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
      * <li>Not freeing the lob after execution will cause an
      * {@link OutOfMemoryError}</li>
      * </ol>
+     * <p>
+     * <h3>Local configuration</h3>
+     * <p>
+     * [#1544] There exist some corner-cases regarding the {@link SQLOutput}
+     * API, used for UDT serialisation / deserialisation, which have no elegant
+     * solutions of obtaining a {@link Configuration} and thus a JDBC
+     * {@link Connection} object short of:
+     * <ul>
+     * <li>Making assumptions about the JDBC driver and using proprietary API,
+     * e.g. that of ojdbc</li>
+     * <li>Dealing with this problem globally by using such a local
+     * configuration</li>
+     * </ul>
+     *
+     * @see <a
+     *      href="http://stackoverflow.com/q/11439543/521799">http://stackoverflow.com/q/11439543/521799</a>
      */
     static final void clean() {
         List<Blob> blobs = BLOBS.get();
@@ -126,6 +146,8 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
 
             CLOBS.remove();
         }
+
+        LOCAL_CONFIGURATION.remove();
     }
 
     /**
@@ -140,6 +162,30 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
      */
     static final void register(Clob clob) {
         CLOBS.get().add(clob);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Static utility methods for handling Configuration lifecycle
+    // ------------------------------------------------------------------------
+
+    private static final ThreadLocal<Configuration> LOCAL_CONFIGURATION = new ThreadLocal<Configuration>();
+
+    /**
+     * Register a configuration for later cleanup with {@link #clean()}
+     */
+    static final void register(Configuration configuration) {
+        LOCAL_CONFIGURATION.set(configuration);
+    }
+
+    /**
+     * Get the registered configuration
+     * <p>
+     * It can be safely assumed that such a configuration is available once the
+     * {@link ExecuteContext} has been established, until the statement is
+     * closed.
+     */
+    static final Configuration registeredConfiguration() {
+        return LOCAL_CONFIGURATION.get();
     }
 
     // ------------------------------------------------------------------------
@@ -182,6 +228,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
         clean();
         BLOBS.set(new ArrayList<Blob>());
         CLOBS.set(new ArrayList<Clob>());
+        LOCAL_CONFIGURATION.set(configuration);
     }
 
     @Override

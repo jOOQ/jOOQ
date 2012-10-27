@@ -56,7 +56,7 @@ class SQLField<T> extends AbstractField<T> {
         super(sql, type);
 
         this.sql = sql;
-        this.substitutes = Util.queryParts(substitutes);
+        this.substitutes = Utils.queryParts(substitutes);
     }
 
     // ------------------------------------------------------------------------
@@ -65,12 +65,12 @@ class SQLField<T> extends AbstractField<T> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        Util.renderAndBind(context, null, sql, substitutes);
+        Utils.renderAndBind(context, null, sql, substitutes);
     }
 
     @Override
     public final void bind(BindContext context) {
-        Util.renderAndBind(null, context, sql, substitutes);
+        Utils.renderAndBind(null, context, sql, substitutes);
     }
 
     @Override

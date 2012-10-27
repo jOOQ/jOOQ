@@ -405,6 +405,6 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     @Override
     public final void sqlException(SQLException e) {
         this.sqlException = e;
-        exception(Util.translate(sql(), e));
+        exception(Utils.translate(sql(), e));
     }
 }

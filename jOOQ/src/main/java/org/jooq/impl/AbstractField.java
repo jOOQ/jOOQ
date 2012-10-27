@@ -489,26 +489,26 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition startsWith(T value) {
-        Field<String> concat = Factory.concat(Util.escapeForLike(value), inline("%"));
-        return like(concat, Util.ESCAPE);
+        Field<String> concat = Factory.concat(Utils.escapeForLike(value), inline("%"));
+        return like(concat, Utils.ESCAPE);
     }
 
     @Override
     public final Condition startsWith(Field<T> value) {
-        Field<String> concat = Factory.concat(Util.escapeForLike(value), inline("%"));
-        return like(concat, Util.ESCAPE);
+        Field<String> concat = Factory.concat(Utils.escapeForLike(value), inline("%"));
+        return like(concat, Utils.ESCAPE);
     }
 
     @Override
     public final Condition endsWith(T value) {
-        Field<String> concat = Factory.concat(inline("%"), Util.escapeForLike(value));
-        return like(concat, Util.ESCAPE);
+        Field<String> concat = Factory.concat(inline("%"), Utils.escapeForLike(value));
+        return like(concat, Utils.ESCAPE);
     }
 
     @Override
     public final Condition endsWith(Field<T> value) {
-        Field<String> concat = Factory.concat(inline("%"), Util.escapeForLike(value));
-        return like(concat, Util.ESCAPE);
+        Field<String> concat = Factory.concat(inline("%"), Utils.escapeForLike(value));
+        return like(concat, Utils.ESCAPE);
     }
 
     @Override
@@ -1563,13 +1563,13 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     @Deprecated
     public final Field<String> concat(Field<?>... fields) {
-        return Factory.concat(Util.combine(this, fields));
+        return Factory.concat(Utils.combine(this, fields));
     }
 
     @Override
     @Deprecated
     public final Field<String> concat(String... values) {
-        return Factory.concat(Util.combine(this, vals((Object[]) values).toArray(new Field[0])));
+        return Factory.concat(Utils.combine(this, vals((Object[]) values).toArray(new Field[0])));
     }
 
     @Override
@@ -1713,12 +1713,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     @Deprecated
     public final Field<T> coalesce(T option, T... options) {
-        return Factory.coalesce(this, Util.combine(val(option), vals(options).toArray(new Field[0])));
+        return Factory.coalesce(this, Utils.combine(val(option), vals(options).toArray(new Field[0])));
     }
 
     @Override
     @Deprecated
     public final Field<T> coalesce(Field<T> option, Field<?>... options) {
-        return Factory.coalesce(this, Util.combine(option, options));
+        return Factory.coalesce(this, Utils.combine(option, options));
     }
 }

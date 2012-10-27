@@ -173,7 +173,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
 
         private final String getQualifiedName(Configuration configuration) {
             RenderContext local = create(configuration).renderContext();
-            Schema mappedSchema = Util.getMappedSchema(configuration, schema);
+            Schema mappedSchema = Utils.getMappedSchema(configuration, schema);
 
             if (mappedSchema != null && configuration.getDialect() != CUBRID) {
                 local.sql(mappedSchema);

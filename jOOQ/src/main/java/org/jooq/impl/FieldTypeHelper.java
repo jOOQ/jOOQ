@@ -39,7 +39,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Executor.getNewFactory;
-import static org.jooq.impl.Util.getDriverConnection;
+import static org.jooq.impl.Utils.getDriverConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.math.BigDecimal;
@@ -524,7 +524,7 @@ public final class FieldTypeHelper {
         }
         else {
             // TODO: [#523] Use array record meta data instead
-            ArrayRecord<?> record = Util.newArrayRecord(type, configuration);
+            ArrayRecord<?> record = Utils.newArrayRecord(type, configuration);
             record.set(array);
             return record;
         }
@@ -1041,7 +1041,7 @@ public final class FieldTypeHelper {
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
-        UDTRecord<?> record = (UDTRecord<?>) Util.newRecord((Class) type);
+        UDTRecord<?> record = (UDTRecord<?>) Utils.newRecord((Class) type);
         List<String> values = PostgresUtils.toPGObject(object.toString());
 
         List<Field<?>> fields = record.getFields();

@@ -1031,7 +1031,7 @@ public class Executor implements FactoryOperations {
                     Record record = new RecordImpl(fields);
 
                     for (int i = 0; i < Math.min(values.length, fields.size()); i++) {
-                        Util.setValue(record, fields.get(i), values[i]);
+                        Utils.setValue(record, fields.get(i), values[i]);
                     }
 
                     result.add(record);
@@ -1402,7 +1402,7 @@ public class Executor implements FactoryOperations {
      */
     @Override
     public final <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
-        return Util.newRecord(type, this);
+        return Utils.newRecord(type, this);
     }
 
     /**
@@ -1410,7 +1410,7 @@ public class Executor implements FactoryOperations {
      */
     @Override
     public final <R extends TableRecord<R>> R newRecord(Table<R> table) {
-        return Util.newRecord(table, this);
+        return Utils.newRecord(table, this);
     }
 
     /**
@@ -1482,7 +1482,7 @@ public class Executor implements FactoryOperations {
     @Override
     public final <R extends UpdatableRecord<R>> int executeUpdate(R record) {
         UpdateQuery<R> update = updateQuery(record.getTable());
-        Util.addConditions(update, record, record.getTable().getMainKey().getFieldsArray());
+        Utils.addConditions(update, record, record.getTable().getMainKey().getFieldsArray());
         update.setRecord(record);
         return update.execute();
     }
@@ -1504,7 +1504,7 @@ public class Executor implements FactoryOperations {
     @Override
     public final <R extends UpdatableRecord<R>> int executeDelete(R record) {
         DeleteQuery<R> delete = deleteQuery(record.getTable());
-        Util.addConditions(delete, record, record.getTable().getMainKey().getFieldsArray());
+        Utils.addConditions(delete, record, record.getTable().getMainKey().getFieldsArray());
         return delete.execute();
     }
 

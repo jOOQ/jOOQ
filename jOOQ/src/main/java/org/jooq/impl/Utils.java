@@ -88,7 +88,7 @@ import org.jooq.tools.reflect.Reflect;
  *
  * @author Lukas Eder
  */
-final class Util {
+final class Utils {
 
     /**
      * The default escape character for <code>[a] LIKE [b] ESCAPE [...]</code>

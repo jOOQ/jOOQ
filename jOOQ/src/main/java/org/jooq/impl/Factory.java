@@ -50,7 +50,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Term.ROW_NUMBER;
-import static org.jooq.impl.Util.combine;
+import static org.jooq.impl.Utils.combine;
 
 import java.math.BigDecimal;
 import java.sql.Date;

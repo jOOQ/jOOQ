@@ -94,13 +94,13 @@ class Contains<T> extends AbstractCondition {
             Field<String> concat;
 
             if (rhs == null) {
-                concat = Factory.concat(inline("%"), Util.escapeForLike(value), inline("%"));
+                concat = Factory.concat(inline("%"), Utils.escapeForLike(value), inline("%"));
             }
             else {
-                concat = Factory.concat(inline("%"), Util.escapeForLike(rhs), inline("%"));
+                concat = Factory.concat(inline("%"), Utils.escapeForLike(rhs), inline("%"));
             }
 
-            return lhs.like(concat, Util.ESCAPE);
+            return lhs.like(concat, Utils.ESCAPE);
         }
     }
 

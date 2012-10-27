@@ -35,7 +35,6 @@
  */
 package org.jooq;
 
-import java.util.List;
 
 /**
  * Base functionality declaration for all {@link Attachable}s
@@ -45,17 +44,6 @@ import java.util.List;
  * @author Lukas Eder
  */
 public interface AttachableInternal extends Attachable {
-
-    /**
-     * Get the list of dependent <code>Attachables</code>
-     * <p>
-     * This method is for JOOQ INTERNAL USE only. Do not reference directly
-     *
-     * @deprecated - 2.5.0 [#1544] - This internal method will be removed soon.
-     *             Do not reuse.
-     */
-    @Deprecated
-    List<Attachable> getAttachables();
 
     /**
      * Get the underlying configuration

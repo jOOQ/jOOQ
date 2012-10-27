@@ -36,8 +36,6 @@
 
 package org.jooq.impl;
 
-import static org.jooq.conf.SettingsTools.executePreparedStatements;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,36 +68,6 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // -------------------------------------------------------------------------
     // The QueryPart and QueryPart internal API
     // -------------------------------------------------------------------------
-
-    /**
-     * This method is also declared as {@link Query#getSQL()}
-     * <p>
-     * {@inheritDoc}
-     */
-    @Override
-    public final String getSQL() {
-        if (executePreparedStatements(getConfiguration().getSettings())) {
-            return getSQL(false);
-        }
-        else {
-            return getSQL(true);
-        }
-    }
-
-    /**
-     * This method is also declared as {@link Query#getSQL(boolean)}
-     * <p>
-     * {@inheritDoc}
-     */
-    @Override
-    public final String getSQL(boolean inline) {
-        if (inline) {
-            return create().renderInlined(this);
-        }
-        else {
-            return create().render(this);
-        }
-    }
 
     /**
      * This method is also declared as {@link Query#getBindValues()}

@@ -51,7 +51,6 @@ import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertValuesStep;
-import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Select;
@@ -61,7 +60,7 @@ import org.jooq.Table;
  * @author Lukas Eder
  */
 class InsertImpl<R extends Record>
-    extends AbstractDelegatingQueryPart<InsertQuery<R>>
+    extends AbstractDelegatingQuery<InsertQuery<R>>
     implements
 
     // Cascading interface implementations for Insert behaviour
@@ -84,55 +83,6 @@ class InsertImpl<R extends Record>
 
         this.into = into;
         this.fields = new ArrayList<Field<?>>(fields);
-    }
-
-    @Override
-    public final void attach(Configuration configuration) {
-        getDelegate().attach(configuration);
-    }
-
-    // -------------------------------------------------------------------------
-    // The Query API
-    // -------------------------------------------------------------------------
-
-    @Override
-    public final int execute() {
-        return getDelegate().execute();
-    }
-
-    @Override
-    public final boolean isExecutable() {
-        return getDelegate().isExecutable();
-    }
-
-    @Override
-    public final Query bind(String param, Object value) {
-        return getDelegate().bind(param, value);
-    }
-
-    @Override
-    public final Query bind(int index, Object value) {
-        return getDelegate().bind(index, value);
-    }
-
-    @Override
-    public final Query queryTimeout(int timeout) {
-        return getDelegate().queryTimeout(timeout);
-    }
-
-    @Override
-    public final Query keepStatement(boolean keepStatement) {
-        return getDelegate().keepStatement(keepStatement);
-    }
-
-    @Override
-    public final void close() {
-        getDelegate().close();
-    }
-
-    @Override
-    public final void cancel() {
-        getDelegate().cancel();
     }
 
     // -------------------------------------------------------------------------

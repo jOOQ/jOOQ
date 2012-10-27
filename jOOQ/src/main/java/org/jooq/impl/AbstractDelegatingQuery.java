@@ -38,13 +38,13 @@ package org.jooq.impl;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
-import org.jooq.QueryPart;
+import org.jooq.Query;
 import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractDelegatingQueryPart<Q extends QueryPart> extends AbstractQueryPart {
+abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPart implements Query {
 
     /**
      * Generated UID
@@ -52,12 +52,12 @@ abstract class AbstractDelegatingQueryPart<Q extends QueryPart> extends Abstract
     private static final long serialVersionUID = 6710523592699040547L;
     private final Q           delegate;
 
-    AbstractDelegatingQueryPart(Q delegate) {
+    AbstractDelegatingQuery(Q delegate) {
         this.delegate = delegate;
     }
 
     @Override
-    public Configuration getConfiguration() {
+    public final Configuration getConfiguration() {
         if (delegate instanceof AttachableInternal) {
             return ((AttachableInternal) delegate).getConfiguration();
         }
@@ -73,6 +73,65 @@ abstract class AbstractDelegatingQueryPart<Q extends QueryPart> extends Abstract
     @Override
     public final void bind(BindContext context) {
         context.bind(delegate);
+    }
+
+    @Override
+    public final String getSQL() {
+        return delegate.getSQL();
+    }
+
+    @Override
+    public final String getSQL(boolean inline) {
+        return delegate.getSQL(inline);
+    }
+
+    @Override
+    public final void attach(Configuration configuration) {
+        delegate.attach(configuration);
+    }
+
+    @Override
+    public final int execute() {
+        return delegate.execute();
+    }
+
+    @Override
+    public final boolean isExecutable() {
+        return delegate.isExecutable();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Q bind(String param, Object value) {
+        return (Q) delegate.bind(param, value);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Q bind(int index, Object value) {
+        return (Q) delegate.bind(index, value);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Q queryTimeout(int timeout) {
+        return (Q) delegate.queryTimeout(timeout);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Q keepStatement(boolean keepStatement) {
+        return (Q) delegate.keepStatement(keepStatement);
+    }
+
+    @Override
+    public final void close() {
+        delegate.close();
+    }
+
+    @Override
+    public final void cancel() {
+        delegate.cancel();
     }
 
     final Q getDelegate() {

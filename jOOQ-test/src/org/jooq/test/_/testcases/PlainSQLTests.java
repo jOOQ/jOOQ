@@ -527,7 +527,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                     context.statement().setInt(context.nextIndex(), 2);
                 }
                 catch (SQLException e) {
-                    throw translate(getSQL(), e);
+                    throw translate(null, e);
                 }
             }
         };
@@ -557,7 +557,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                     context.statement().setInt(context.nextIndex(), 3);
                 }
                 catch (SQLException e) {
-                    throw translate(getSQL(), e);
+                    throw translate(null, e);
                 }
             }
         };

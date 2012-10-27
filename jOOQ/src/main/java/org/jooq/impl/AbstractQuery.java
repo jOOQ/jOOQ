@@ -323,4 +323,34 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     public boolean isExecutable() {
         return true;
     }
+
+    /**
+     * This method is also declared as {@link Query#getSQL()}
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getSQL() {
+        if (executePreparedStatements(getConfiguration().getSettings())) {
+            return getSQL(false);
+        }
+        else {
+            return getSQL(true);
+        }
+    }
+
+    /**
+     * This method is also declared as {@link Query#getSQL(boolean)}
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getSQL(boolean inline) {
+        if (inline) {
+            return create().renderInlined(this);
+        }
+        else {
+            return create().render(this);
+        }
+    }
 }

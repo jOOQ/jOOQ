@@ -46,8 +46,7 @@ import java.util.List;
  * @param <E> The array element type
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public interface ArrayRecord<E> extends Store<E>, Iterable<E> {
+public interface ArrayRecord<E> extends Attachable, Iterable<E> {
 
     /**
      * Get the contained array
@@ -77,7 +76,6 @@ public interface ArrayRecord<E> extends Store<E>, Iterable<E> {
     /**
      * Get the size of the contained array
      */
-    @Override
     int size();
 
     /**

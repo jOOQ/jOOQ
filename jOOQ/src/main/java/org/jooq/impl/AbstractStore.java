@@ -37,17 +37,21 @@ package org.jooq.impl;
 
 import java.util.Arrays;
 
+import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
-import org.jooq.Store;
-import org.jooq.tools.Convert;
+import org.jooq.Record;
 
 /**
+ * A common base class for {@link Record} and {@link ArrayRecord}
+ * <p>
+ * This base class takes care of implementing similar {@link Attachable} and
+ * {@link Object#equals(Object)}, {@link Object#hashCode()} behaviour.
+ *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
+abstract class AbstractStore implements AttachableInternal {
 
     /**
      * Generated UID
@@ -68,6 +72,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
     // The Attachable API
     // -------------------------------------------------------------------------
 
+    @SuppressWarnings("deprecation")
     @Override
     public final void attach(Configuration c) {
         configuration = c;
@@ -90,29 +95,20 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
     }
 
     // -------------------------------------------------------------------------
-    // The Store API
-    // -------------------------------------------------------------------------
-
-    @Override
-    public final T getValue(int index, T defaultValue) {
-        final T result = getValue(index);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
-    public final <Z> Z getValue(int index, Class<? extends Z> type) {
-        return Convert.convert(getValue(index), type);
-    }
-
-    @Override
-    public final <Z> Z getValue(int index, Class<? extends Z> type, Z defaultValue) {
-        final Z result = getValue(index, type);
-        return result == null ? defaultValue : result;
-    }
-
-    // -------------------------------------------------------------------------
     // equals and hashCode
     // -------------------------------------------------------------------------
+
+    /**
+     * This method coincides with {@link Record#size()} and
+     * {@link ArrayRecord#size()}
+     */
+    abstract int size();
+
+    /**
+     * This method coincides with {@link Record#getValue(int)} and
+     * <code>ArrayRecordImpl.getValue(int)</code>
+     */
+    abstract Object getValue(int index);
 
     @Override
     public int hashCode() {
@@ -128,8 +124,8 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Store) {
-            final Store<?> that = (Store<?>) obj;
+        if (obj instanceof AbstractStore) {
+            final AbstractStore that = (AbstractStore) obj;
 
             if (size() == that.size()) {
                 for (int i = 0; i < size(); i++) {

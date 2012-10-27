@@ -57,7 +57,7 @@ import org.jooq.tools.Convert;
  *
  * @author Lukas Eder
  */
-public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<T> {
+public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> {
 
     /**
      * Generated UID
@@ -113,7 +113,7 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
     // -------------------------------------------------------------------------
 
     @Override
-    public final T getValue(int index) throws IllegalArgumentException {
+    final T getValue(int index) {
         return get()[index];
     }
 

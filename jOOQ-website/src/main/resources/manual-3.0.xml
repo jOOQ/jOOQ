@@ -9062,7 +9062,19 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 					
 					<section id="migrating-to-3.0">
 						<title>Migrating to jOOQ 3.0</title>
-						<content/>
+						<content>
+							<p>
+								This section is for all users of jOOQ 2.x who wish to upgrade to the next major release. In the next sub-sections, the most important changes are explained
+							</p>
+							
+							<h3>Separation of query building and query execution</h3>
+							<h3>No sub-factories anymore</h3>
+							<h3>Master data types have been removed</h3>
+							<h3>Object renames</h3>
+							<ul>
+								<li>jOOU</li>
+							</ul>
+						</content>
 					</section>
 
 					<section id="reference-credits">

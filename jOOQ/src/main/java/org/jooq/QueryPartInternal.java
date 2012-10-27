@@ -36,9 +36,6 @@
 
 package org.jooq;
 
-import java.util.List;
-import java.util.Map;
-
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -59,28 +56,6 @@ public interface QueryPartInternal extends QueryPart {
      * bind variables should be inlined or replaced by <code>'?'</code>, etc.
      */
     void toSQL(RenderContext context);
-
-    /**
-     * Retrieve the bind values that will be bound by this {@link QueryPart}
-     * <p>
-     * This method is exposed publicly in {@link Query#getBindValues()}
-     */
-    List<Object> getBindValues();
-
-    /**
-     * Retrieve the named parameters that will be bound by this
-     * {@link QueryPart}
-     * <p>
-     * This method is exposed publicly in {@link Query#getParams()}
-     */
-    Map<String, Param<?>> getParams();
-
-    /**
-     * Retrieve a named parameter that will be bound by this {@link QueryPart}
-     * <p>
-     * This method is exposed publicly in {@link Query#getParam(String)}
-     */
-    Param<?> getParam(String name);
 
     /**
      * Bind all parameters of this {@link QueryPart} to a PreparedStatement

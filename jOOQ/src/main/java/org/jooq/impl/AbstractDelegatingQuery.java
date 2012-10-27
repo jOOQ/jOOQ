@@ -35,9 +35,13 @@
  */
 package org.jooq.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.RenderContext;
 
@@ -63,6 +67,21 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
         }
 
         return super.getConfiguration();
+    }
+
+    @Override
+    public final List<Object> getBindValues() {
+        return delegate.getBindValues();
+    }
+
+    @Override
+    public final Map<String, Param<?>> getParams() {
+        return delegate.getParams();
+    }
+
+    @Override
+    public final Param<?> getParam(String name) {
+        return delegate.getParam(name);
     }
 
     @Override

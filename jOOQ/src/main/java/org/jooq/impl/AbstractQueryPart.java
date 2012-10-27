@@ -37,14 +37,8 @@
 package org.jooq.impl;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 import org.jooq.Configuration;
-import org.jooq.Param;
-import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.exception.DataAccessException;
@@ -68,44 +62,6 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // -------------------------------------------------------------------------
     // The QueryPart and QueryPart internal API
     // -------------------------------------------------------------------------
-
-    /**
-     * This method is also declared as {@link Query#getBindValues()}
-     * <p>
-     * {@inheritDoc}
-     */
-    @Override
-    public final List<Object> getBindValues() {
-        List<Object> result = new ArrayList<Object>();
-
-        for (Param<?> param : getParams().values()) {
-            result.add(param.getValue());
-        }
-
-        return Collections.unmodifiableList(result);
-    }
-
-    /**
-     * This method is also declared as {@link Query#getParams()}
-     * <p>
-     * {@inheritDoc}
-     */
-    @Override
-    public final Map<String, Param<?>> getParams() {
-        ParamCollector collector = new ParamCollector(getConfiguration());
-        collector.bind(this);
-        return Collections.unmodifiableMap(collector.result);
-    }
-
-    /**
-     * This method is also declared as {@link Query#getParam(String)}
-     * <p>
-     * {@inheritDoc}
-     */
-    @Override
-    public final Param<?> getParam(String name) {
-        return getParams().get(name);
-    }
 
     /**
      * Subclasses may override this

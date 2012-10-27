@@ -346,7 +346,7 @@ public final class FieldTypeHelper {
 
             // [#1544] We can safely assume that localConfiguration has been
             // set on DefaultBindContext, prior to serialising arrays to SQLOut
-            Connection connection = getDriverConnection(DefaultBindContext.LOCAL_CONFIGURATION.get());
+            Connection connection = getDriverConnection(DefaultExecuteContext.registeredConfiguration());
             ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
             stream.writeArray(on(connection).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
         }

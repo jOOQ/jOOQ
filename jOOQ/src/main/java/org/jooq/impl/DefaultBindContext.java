@@ -54,7 +54,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
@@ -81,22 +80,10 @@ class DefaultBindContext extends AbstractBindContext {
     /**
      * Generated UID
      */
-    private static final long         serialVersionUID   = -5457385919209241505L;
-    private static final JooqLogger   log                = JooqLogger.getLogger(DefaultBindContext.class);
+    private static final long       serialVersionUID = -5457385919209241505L;
+    private static final JooqLogger log              = JooqLogger.getLogger(DefaultBindContext.class);
 
-    /**
-     * The localConfiguration is used to communicate a Configuration to an
-     * {@link ArrayRecord}, in case that ArrayRecord is serialised to a
-     * {@link SQLOutput} object.
-     * <p>
-     * This is probably the only solution to circumvent this bad JDBC design.
-     * See also <a
-     * href="http://stackoverflow.com/q/11439543/521799">http://stackoverflow
-     * .com/q/11439543/521799</a>
-     */
-    static final ThreadLocal<Configuration> LOCAL_CONFIGURATION = new ThreadLocal<Configuration>();
-
-    private final PreparedStatement         stmt;
+    private final PreparedStatement stmt;
 
     DefaultBindContext(Configuration configuration, PreparedStatement stmt) {
         super(configuration);
@@ -305,15 +292,7 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setString(nextIndex(), ((EnumType) value).getLiteral());
         }
         else {
-            try {
-                // [#1544] Set the local configuration, in case an array needs
-                // to be serialised to SQLOutput
-                LOCAL_CONFIGURATION.set(this);
-                stmt.setObject(nextIndex(), value);
-            }
-            finally {
-                LOCAL_CONFIGURATION.remove();
-            }
+            stmt.setObject(nextIndex(), value);
         }
 
         return this;

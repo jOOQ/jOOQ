@@ -76,7 +76,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
 
         // [#1693] This needs to return the fully qualified SQL type name, in
         // case the connected user is not the owner of the UDT
-        Configuration configuration = DefaultBindContext.LOCAL_CONFIGURATION.get();
+        Configuration configuration = DefaultExecuteContext.registeredConfiguration();
         if (configuration != null) {
             Schema schema = Util.getMappedSchema(configuration, getUDT().getSchema());
 
@@ -92,10 +92,8 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
 
     @Override
     public final void readSQL(SQLInput stream, String typeName) throws SQLException {
-        Executor configuration = Executor.getNewFactory(getUDT().getDataType().getDialect());
-
         for (Field<?> field : getUDT().getFields()) {
-            setValue(configuration, stream, field);
+            setValue(DefaultExecuteContext.registeredConfiguration(), stream, field);
         }
     }
 

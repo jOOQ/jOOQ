@@ -38,7 +38,6 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.impl.Executor.getNewFactory;
 import static org.jooq.impl.Utils.getDriverConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 
@@ -509,7 +508,7 @@ public final class FieldTypeHelper {
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) rs.getObject(index);
-            return (T) getNewFactory(ctx).fetch(nested);
+            return (T) new Executor(ctx).fetch(nested);
         }
         else {
             return (T) rs.getObject(index);
@@ -793,7 +792,7 @@ public final class FieldTypeHelper {
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) stmt.getObject(index);
-            return (T) getNewFactory(ctx).fetch(nested);
+            return (T) new Executor(ctx).fetch(nested);
         }
         else {
             return (T) stmt.getObject(index);

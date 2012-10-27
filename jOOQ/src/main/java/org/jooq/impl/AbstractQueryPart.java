@@ -207,7 +207,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
      * Internal convenience method
      */
     protected final Executor create(Configuration configuration) {
-        return Executor.getNewFactory(configuration);
+        return new Executor(configuration);
     }
 
     /**

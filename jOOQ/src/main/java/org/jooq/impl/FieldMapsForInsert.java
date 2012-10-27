@@ -102,7 +102,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
         Select<Record> select = null;
         for (FieldMapForInsert map : insertMaps) {
             if (map != null) {
-                Select<Record> iteration = create().select(map.values());
+                Select<Record> iteration = new Executor(context).select(map.values());
 
                 if (select == null) {
                     select = iteration;

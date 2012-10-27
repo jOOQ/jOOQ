@@ -305,6 +305,13 @@ public class Executor implements FactoryOperations {
      * @param configuration The configuration
      */
     public Executor(Configuration configuration) {
+
+        // The Configuration can be null when unattached Query objects are
+        // executed or when unattached Records are stored...
+        if (configuration == null) {
+            configuration = DefaultConfiguration.DEFAULT_CONFIGURATION;
+        }
+
         this.configuration = configuration;
     }
 
@@ -1555,17 +1562,5 @@ public class Executor implements FactoryOperations {
     @Override
     public String toString() {
         return configuration.toString();
-    }
-
-    /**
-     * Get a default <code>Factory</code> with a {@link Connection}
-     */
-    final static Executor getNewFactory(Configuration configuration) {
-        if (configuration == null) {
-            return getNewFactory(DefaultConfiguration.DEFAULT_CONFIGURATION);
-        }
-        else {
-            return new Executor(configuration);
-        }
     }
 }

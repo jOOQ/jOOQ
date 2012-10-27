@@ -184,7 +184,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE: {
-                    context.sql(toMerge());
+                    context.sql(toMerge(context));
                     break;
                 }
 
@@ -231,7 +231,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE: {
-                    context.sql(toMerge());
+                    context.sql(toMerge(context));
                     break;
                 }
 
@@ -275,7 +275,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE: {
-                    context.bind(toMerge());
+                    context.bind(toMerge(context));
                     break;
                 }
 
@@ -314,7 +314,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE: {
-                    context.bind(toMerge());
+                    context.bind(toMerge(context));
                     break;
                 }
 
@@ -373,7 +373,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @SuppressWarnings("unchecked")
-    private final Merge<R> toMerge() {
+    private final Merge<R> toMerge(Configuration configuration) {
         if (getInto() instanceof UpdatableTable) {
             UpdatableTable<R> into = (UpdatableTable<R>) getInto();
 
@@ -396,9 +396,9 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             }
 
             MergeOnConditionStep<R> on =
-            create().mergeInto(into)
-                    .usingDual()
-                    .on(condition);
+            create(configuration).mergeInto(into)
+                                 .usingDual()
+                                 .on(condition);
 
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
             // not with ON DUPLICATE KEY IGNORE

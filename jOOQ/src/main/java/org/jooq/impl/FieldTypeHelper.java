@@ -77,6 +77,7 @@ import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -147,7 +148,7 @@ public final class FieldTypeHelper {
                     return (T) (blob == null ? null : blob.getBytes(1, (int) blob.length()));
                 }
                 finally {
-                    Util.safeFree(blob);
+                    JDBCUtils.safeFree(blob);
                 }
             }
             else {

@@ -58,6 +58,7 @@ import org.jooq.ResultQuery;
 import org.jooq.Routine;
 import org.jooq.Truncate;
 import org.jooq.Update;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
  * A default iplementation for the {@link ExecuteContext}
@@ -133,7 +134,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
 
         if (blobs != null) {
             for (Blob blob : blobs) {
-                Util.safeFree(blob);
+                JDBCUtils.safeFree(blob);
             }
 
             BLOBS.remove();
@@ -141,7 +142,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
 
         if (clobs != null) {
             for (Clob clob : clobs) {
-                Util.safeFree(clob);
+                JDBCUtils.safeFree(clob);
             }
 
             CLOBS.remove();

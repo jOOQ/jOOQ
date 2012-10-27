@@ -61,30 +61,6 @@ public interface QueryPartInternal extends QueryPart {
     void toSQL(RenderContext context);
 
     /**
-     * Retrieve the SQL that will be rendered by this {@link QueryPart}
-     * <p>
-     * This method is exposed publicly in {@link Query#getSQL()}
-     *
-     * @deprecated - 2.5.0 [#1544] - This method will be removed from the
-     *             internal API. Do not reuse it, except through
-     *             {@link Query#getSQL()}
-     */
-    @Deprecated
-    String getSQL();
-
-    /**
-     * Retrieve the SQL that will be rendered by this {@link QueryPart}
-     * <p>
-     * This method is exposed publicly in {@link Query#getSQL(boolean)}
-     *
-     * @deprecated - 2.5.0 [#1544] - This method will be removed from the
-     *             internal API. Do not reuse it, except through
-     *             {@link Query#getSQL(boolean)}
-     */
-    @Deprecated
-    String getSQL(boolean inline);
-
-    /**
      * Retrieve the bind values that will be bound by this {@link QueryPart}
      * <p>
      * This method is exposed publicly in {@link Query#getBindValues()}

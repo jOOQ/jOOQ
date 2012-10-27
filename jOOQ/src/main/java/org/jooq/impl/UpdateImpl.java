@@ -46,7 +46,6 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Operator;
-import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Select;
@@ -61,7 +60,7 @@ import org.jooq.UpdateSetMoreStep;
  * @author Lukas Eder
  */
 final class UpdateImpl<R extends Record>
-    extends AbstractDelegatingQueryPart<UpdateQuery<R>>
+    extends AbstractDelegatingQuery<UpdateQuery<R>>
     implements
 
     // Cascading interface implementations for Update behaviour
@@ -75,51 +74,6 @@ final class UpdateImpl<R extends Record>
 
     UpdateImpl(Configuration configuration, Table<R> table) {
         super(new UpdateQueryImpl<R>(configuration, table));
-    }
-
-    @Override
-    public final void attach(Configuration configuration) {
-        getDelegate().attach(configuration);
-    }
-
-    @Override
-    public final int execute() {
-        return getDelegate().execute();
-    }
-
-    @Override
-    public final boolean isExecutable() {
-        return getDelegate().isExecutable();
-    }
-
-    @Override
-    public final Query bind(String param, Object value) {
-        return getDelegate().bind(param, value);
-    }
-
-    @Override
-    public final Query bind(int index, Object value) {
-        return getDelegate().bind(index, value);
-    }
-
-    @Override
-    public final Query queryTimeout(int timeout) {
-        return getDelegate().queryTimeout(timeout);
-    }
-
-    @Override
-    public final Query keepStatement(boolean keepStatement) {
-        return getDelegate().keepStatement(keepStatement);
-    }
-
-    @Override
-    public final void close() {
-        getDelegate().close();
-    }
-
-    @Override
-    public final void cancel() {
-        getDelegate().cancel();
     }
 
     @Override

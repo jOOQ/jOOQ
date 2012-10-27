@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
-import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.Field;
@@ -63,7 +62,7 @@ import org.jooq.Table;
  * @author Lukas Eder
  */
 abstract class AbstractDelegatingSelect<R extends Record>
-    extends AbstractDelegatingQueryPart<Select<R>>
+    extends AbstractDelegatingQuery<Select<R>>
     implements Select<R> {
 
     /**
@@ -73,41 +72,6 @@ abstract class AbstractDelegatingSelect<R extends Record>
 
     AbstractDelegatingSelect(Select<R> query) {
         super(query);
-    }
-
-    @Override
-    public final void attach(Configuration configuration) {
-        getDelegate().attach(configuration);
-    }
-
-    @Override
-    public final ResultQuery<R> bind(String param, Object value) {
-        return getDelegate().bind(param, value);
-    }
-
-    @Override
-    public final ResultQuery<R> bind(int index, Object value) {
-        return getDelegate().bind(index, value);
-    }
-
-    @Override
-    public final ResultQuery<R> queryTimeout(int timeout) {
-        return getDelegate().queryTimeout(timeout);
-    }
-
-    @Override
-    public final ResultQuery<R> keepStatement(boolean keepStatement) {
-        return getDelegate().keepStatement(keepStatement);
-    }
-
-    @Override
-    public final void close() {
-        getDelegate().close();
-    }
-
-    @Override
-    public final void cancel() {
-        getDelegate().cancel();
     }
 
     @Override
@@ -398,16 +362,6 @@ abstract class AbstractDelegatingSelect<R extends Record>
     @Override
     public final FutureResult<R> fetchLater(ExecutorService executor) {
         return getDelegate().fetchLater(executor);
-    }
-
-    @Override
-    public final int execute() {
-        return getDelegate().execute();
-    }
-
-    @Override
-    public final boolean isExecutable() {
-        return getDelegate().isExecutable();
     }
 
     @Override

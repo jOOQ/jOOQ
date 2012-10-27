@@ -35,71 +35,33 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.table;
-
-import org.jooq.BindContext;
-import org.jooq.Configuration;
-import org.jooq.Field;
-import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 
 /**
+ * A quantifier used for quantified comparison predicates
+ *
  * @author Lukas Eder
  */
-class ArrayAsSubqueryCondition<T> extends AbstractCondition {
+enum Quantifier {
 
     /**
-     * Generated UID
+     * The <code>ANY</code> quantifier
      */
-    private static final long      serialVersionUID = -1074020279396496305L;
+    ANY("any"),
 
-    private final Field<T[]>       array;
-    private final Field<?>         field;
-    private final SubQueryOperator operator;
+    /**
+     * The <code>ALL</code> quantifier
+     */
+    ALL("all"),
 
-    ArrayAsSubqueryCondition(Field<T[]> array, Field<T> field, SubQueryOperator operator) {
-        this.array = array;
-        this.field = field;
-        this.operator = operator;
+    ;
+
+    private final String sql;
+
+    private Quantifier(String sql) {
+        this.sql = sql;
     }
 
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.sql(field)
-               .sql(" ")
-               .keyword(operator.toSQL())
-               .sql(" (")
-               .formatIndentStart()
-               .formatNewLine()
-               .sql(array(context))
-               .formatIndentEnd()
-               .formatNewLine()
-               .sql(")");
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.bind(field).bind(array(context));
-    }
-
-    private final QueryPart array(Configuration context) {
-        switch (context.getDialect()) {
-
-            // [#869] Postgres supports this syntax natively
-            case POSTGRES: {
-                return array;
-            }
-
-            // [#869] H2 and HSQLDB can simulate this syntax by unnesting
-            // the array in a subselect
-            case H2:
-            case HSQLDB:
-
-            // [#1048] All other dialects simulate unnesting of arrays using
-            // UNION ALL-connected subselects
-            default: {
-                return create(context).select().from(table(array));
-            }
-        }
+    public String toSQL() {
+        return sql;
     }
 }

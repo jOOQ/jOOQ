@@ -73,6 +73,7 @@ import org.jooq.GroupConcatOrderByStep;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.Param;
+import org.jooq.QuantifiedSelect;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -103,6 +104,118 @@ import org.jooq.types.DayToSecond;
  * @author Lukas Eder
  */
 public class Factory {
+
+    // -------------------------------------------------------------------------
+    // XXX Quantified comparison predicate expressions
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create an <code>ALL</code> quantified select to be used in quantified
+     * comparison predicate expressions.
+     *
+     * @see Field#equal(QuantifiedSelect)
+     * @see Field#notEqual(QuantifiedSelect)
+     * @see Field#greaterThan(QuantifiedSelect)
+     * @see Field#greaterOrEqual(QuantifiedSelect)
+     * @see Field#lessThan(QuantifiedSelect)
+     * @see Field#lessOrEqual(QuantifiedSelect)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    public static <R extends Record> QuantifiedSelect<R> all(Select<R> select) {
+        return new QuantifiedSelectImpl<R>(Quantifier.ALL, select);
+    }
+
+    /**
+     * Create an <code>ALL</code> quantified select to be used in quantified
+     * comparison predicate expressions.
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     *
+     * @see Field#equal(QuantifiedSelect)
+     * @see Field#notEqual(QuantifiedSelect)
+     * @see Field#greaterThan(QuantifiedSelect)
+     * @see Field#greaterOrEqual(QuantifiedSelect)
+     * @see Field#lessThan(QuantifiedSelect)
+     * @see Field#lessOrEqual(QuantifiedSelect)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    public static <T> QuantifiedSelect<Record> all(T... array) {
+        return all(val(array));
+    }
+
+    /**
+     * Create an <code>ALL</code> quantified select to be used in quantified
+     * comparison predicate expressions.
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     *
+     * @see Field#equal(QuantifiedSelect)
+     * @see Field#notEqual(QuantifiedSelect)
+     * @see Field#greaterThan(QuantifiedSelect)
+     * @see Field#greaterOrEqual(QuantifiedSelect)
+     * @see Field#lessThan(QuantifiedSelect)
+     * @see Field#lessOrEqual(QuantifiedSelect)
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> QuantifiedSelect<Record> all(Field<T[]> array) {
+        return new QuantifiedSelectImpl<Record>(Quantifier.ALL, array);
+    }
+
+    /**
+     * Create an <code>ANY</code> quantified select to be used in quantified
+     * comparison predicate expressions.
+     *
+     * @see Field#equal(QuantifiedSelect)
+     * @see Field#notEqual(QuantifiedSelect)
+     * @see Field#greaterThan(QuantifiedSelect)
+     * @see Field#greaterOrEqual(QuantifiedSelect)
+     * @see Field#lessThan(QuantifiedSelect)
+     * @see Field#lessOrEqual(QuantifiedSelect)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    public static <R extends Record> QuantifiedSelect<R> any(Select<R> select) {
+        return new QuantifiedSelectImpl<R>(Quantifier.ANY, select);
+    }
+
+    /**
+     * Create an <code>ANY</code> quantified select to be used in quantified
+     * comparison predicate expressions.
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     *
+     * @see Field#equal(QuantifiedSelect)
+     * @see Field#notEqual(QuantifiedSelect)
+     * @see Field#greaterThan(QuantifiedSelect)
+     * @see Field#greaterOrEqual(QuantifiedSelect)
+     * @see Field#lessThan(QuantifiedSelect)
+     * @see Field#lessOrEqual(QuantifiedSelect)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    public static <T> QuantifiedSelect<Record> any(T... array) {
+        return any(val(array));
+    }
+
+    /**
+     * Create an <code>ANY</code> quantified select to be used in quantified
+     * comparison predicate expressions.
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     *
+     * @see Field#equal(QuantifiedSelect)
+     * @see Field#notEqual(QuantifiedSelect)
+     * @see Field#greaterThan(QuantifiedSelect)
+     * @see Field#greaterOrEqual(QuantifiedSelect)
+     * @see Field#lessThan(QuantifiedSelect)
+     * @see Field#lessOrEqual(QuantifiedSelect)
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> QuantifiedSelect<Record> any(Field<T[]> array) {
+        return new QuantifiedSelectImpl<Record>(Quantifier.ANY, array);
+    }
 
     // -------------------------------------------------------------------------
     // XXX Conversion of objects into tables

@@ -42,6 +42,8 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
+import static org.jooq.impl.Factory.all;
+import static org.jooq.impl.Factory.any;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.count;
@@ -494,41 +496,41 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 // Testing = ALL(subquery)
                 assertEquals(Arrays.asList(1), create().select()
                     .from(TBook())
-                    .where(TBook_ID().equalAll(create().selectOne()))
+                    .where(TBook_ID().equal(all(create().selectOne())))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
                 assertEquals(Arrays.asList(), create().select()
                     .from(TBook())
-                    .where(TBook_ID().equalAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
+                    .where(TBook_ID().equal(all(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
 
                 // Testing = ANY(subquery)
                 assertEquals(Arrays.asList(1), create().select()
                     .from(TBook())
-                    .where(TBook_ID().equalAny(create().selectOne()))
+                    .where(TBook_ID().equal(any(create().selectOne())))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
                 assertEquals(Arrays.asList(1, 2), create().select()
                     .from(TBook())
-                    .where(TBook_ID().equalAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
+                    .where(TBook_ID().equal(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
 
                 // Testing = ALL(array)
                 assertEquals(Arrays.asList(1), create().select(TBook_ID())
                     .from(TBook())
-                    .where(TBook_ID().equalAll(1))
+                    .where(TBook_ID().equal(all(1)))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
                 assertEquals(Arrays.asList(), create().select(TBook_ID())
                     .from(TBook())
-                    .where(TBook_ID().equalAll(1, 2))
+                    .where(TBook_ID().equal(all(1, 2)))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
 
                 // Testing = ANY(array)
                 assertEquals(Arrays.asList(1), create().select(TBook_ID())
                     .from(TBook())
-                    .where(TBook_ID().equalAny(1))
+                    .where(TBook_ID().equal(any(1)))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
                 assertEquals(Arrays.asList(1, 2), create().select(TBook_ID())
                     .from(TBook())
-                    .where(TBook_ID().equalAny(1, 2))
+                    .where(TBook_ID().equal(any(1, 2)))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
 
                 // Inducing the above to work the same way as all other operators
@@ -537,35 +539,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                     .select()
                     .from(TBook())
                     .where(TBook_ID().equal(create().select(val(3))))
-                    .and(TBook_ID().equalAll(create().select(val(3))))
-                    .and(TBook_ID().equalAll(3, 3))
-                    .and(TBook_ID().equalAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4))))
-                    .and(TBook_ID().equalAny(3, 4))
+                    .and(TBook_ID().equal(all(create().select(val(3)))))
+                    .and(TBook_ID().equal(all(3, 3)))
+                    .and(TBook_ID().equal(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4)))))
+                    .and(TBook_ID().equal(any(3, 4)))
                     .and(TBook_ID().notEqual(create().select(val(1))))
-                    .and(TBook_ID().notEqualAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
-                    .and(TBook_ID().notEqualAll(1, 4, 4))
-                    .and(TBook_ID().notEqualAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
-                    .and(TBook_ID().notEqualAny(1, 4, 4))
+                    .and(TBook_ID().notEqual(all(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().notEqual(all(1, 4, 4)))
+                    .and(TBook_ID().notEqual(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().notEqual(any(1, 4, 4)))
                     .and(TBook_ID().greaterOrEqual(create().select(val(1))))
-                    .and(TBook_ID().greaterOrEqualAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
-                    .and(TBook_ID().greaterOrEqualAll(1, 2))
-                    .and(TBook_ID().greaterOrEqualAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
-                    .and(TBook_ID().greaterOrEqualAny(1, 4))
+                    .and(TBook_ID().greaterOrEqual(all(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
+                    .and(TBook_ID().greaterOrEqual(all(1, 2)))
+                    .and(TBook_ID().greaterOrEqual(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().greaterOrEqual(any(1, 4)))
                     .and(TBook_ID().greaterThan(create().select(val(1))))
-                    .and(TBook_ID().greaterThanAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
-                    .and(TBook_ID().greaterThanAll(1, 2))
-                    .and(TBook_ID().greaterThanAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
-                    .and(TBook_ID().greaterThanAny(1, 4))
+                    .and(TBook_ID().greaterThan(all(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
+                    .and(TBook_ID().greaterThan(all(1, 2)))
+                    .and(TBook_ID().greaterThan(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().greaterThan(any(1, 4)))
                     .and(TBook_ID().lessOrEqual(create().select(val(3))))
-                    .and(TBook_ID().lessOrEqualAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4))))
-                    .and(TBook_ID().lessOrEqualAll(3, 4))
-                    .and(TBook_ID().lessOrEqualAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
-                    .and(TBook_ID().lessOrEqualAny(1, 4))
+                    .and(TBook_ID().lessOrEqual(all(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4)))))
+                    .and(TBook_ID().lessOrEqual(all(3, 4)))
+                    .and(TBook_ID().lessOrEqual(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().lessOrEqual(any(1, 4)))
                     .and(TBook_ID().lessThan(create().select(val(4))))
-                    .and(TBook_ID().lessThanAll(create().select(val(4))))
-                    .and(TBook_ID().lessThanAll(4, 5))
-                    .and(TBook_ID().lessThanAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
-                    .and(TBook_ID().lessThanAny(1, 4))
+                    .and(TBook_ID().lessThan(all(create().select(val(4)))))
+                    .and(TBook_ID().lessThan(all(4, 5)))
+                    .and(TBook_ID().lessThan(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().lessThan(any(1, 4)))
                     .fetch(TBook_ID()));
 
                 break;

@@ -36,31 +36,41 @@
 
 package org.jooq.impl;
 
+
+import org.jooq.BindContext;
+import org.jooq.Comparator;
+import org.jooq.Field;
+import org.jooq.QuantifiedSelect;
+import org.jooq.RenderContext;
+
 /**
- * Any operator used in a {@link SubQueryCondition}
- *
  * @author Lukas Eder
  */
-enum SubQueryOperator {
+class QuantifiedComparisonCondition extends AbstractCondition {
 
-    IN("in"),
-    NOT_IN("not in"),
-    EQUALS("="),
-    NOT_EQUALS("<>"),
-    LESS("<"),
-    LESS_OR_EQUAL("<="),
-    GREATER(">"),
-    GREATER_OR_EQUAL(">="),
+    private static final long         serialVersionUID = -402776705884329740L;
 
-    ;
+    private final QuantifiedSelect<?> query;
+    private final Field<?>            field;
+    private final Comparator          comparator;
 
-    private final String sql;
-
-    private SubQueryOperator(String sql) {
-        this.sql = sql;
+    QuantifiedComparisonCondition(QuantifiedSelect<?> query, Field<?> field, Comparator comparator) {
+        this.query = query;
+        this.field = field;
+        this.comparator = comparator;
     }
 
-    public String toSQL() {
-        return sql;
+    @Override
+    public final void toSQL(RenderContext context) {
+        context.sql(field)
+               .sql(" ")
+               .keyword(comparator.toSQL())
+               .sql(" ")
+               .sql(query);
+    }
+
+    @Override
+    public final void bind(BindContext context) {
+        context.bind(field).bind(query);
     }
 }

@@ -39,6 +39,8 @@ import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.impl.Factory.all;
+import static org.jooq.impl.Factory.any;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.nullSafe;
@@ -66,6 +68,7 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
+import org.jooq.QuantifiedSelect;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.SortField;
@@ -670,6 +673,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition eq(QuantifiedSelect<?> query) {
+        return equal(query);
+    }
+
+    @Override
     public final Condition ne(T value) {
         return notEqual(value);
     }
@@ -681,6 +689,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition ne(Select<?> query) {
+        return notEqual(query);
+    }
+
+    @Override
+    public final Condition ne(QuantifiedSelect<?> query) {
         return notEqual(query);
     }
 
@@ -700,6 +713,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition lt(QuantifiedSelect<?> query) {
+        return lessThan(query);
+    }
+
+    @Override
     public final Condition le(T value) {
         return lessOrEqual(value);
     }
@@ -711,6 +729,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition le(Select<?> query) {
+        return lessOrEqual(query);
+    }
+
+    @Override
+    public final Condition le(QuantifiedSelect<?> query) {
         return lessOrEqual(query);
     }
 
@@ -730,6 +753,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition gt(QuantifiedSelect<?> query) {
+        return greaterThan(query);
+    }
+
+    @Override
     public final Condition ge(T value) {
         return greaterOrEqual(value);
     }
@@ -741,6 +769,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition ge(Select<?> query) {
+        return greaterOrEqual(query);
+    }
+
+    @Override
+    public final Condition ge(QuantifiedSelect<?> query) {
         return greaterOrEqual(query);
     }
 
@@ -770,33 +803,38 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition equal(QuantifiedSelect<?> query) {
+        return new QuantifiedComparisonCondition(query, this, Comparator.EQUALS);
+    }
+
+    @Override
     public final Condition equalAny(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.EQUALS_ANY);
+        return equal(any(query));
     }
 
     @Override
     public final Condition equalAny(T... array) {
-        return equalAny(val(array));
+        return equal(any(array));
     }
 
     @Override
     public final Condition equalAny(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.EQUALS_ANY);
+        return equal(any(array));
     }
 
     @Override
     public final Condition equalAll(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.EQUALS_ALL);
+        return equal(all(query));
     }
 
     @Override
     public final Condition equalAll(T... array) {
-        return equalAll(val(array));
+        return equal(all(array));
     }
 
     @Override
     public final Condition equalAll(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.EQUALS_ALL);
+        return equal(all(array));
     }
 
     @Override
@@ -825,33 +863,38 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition notEqual(QuantifiedSelect<?> query) {
+        return new QuantifiedComparisonCondition(query, this, Comparator.NOT_EQUALS);
+    }
+
+    @Override
     public final Condition notEqualAny(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.NOT_EQUALS_ANY);
+        return notEqual(any(query));
     }
 
     @Override
     public final Condition notEqualAny(T... array) {
-        return notEqualAny(val(array));
+        return notEqual(any(array));
     }
 
     @Override
     public final Condition notEqualAny(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.NOT_EQUALS_ANY);
+        return notEqual(any(array));
     }
 
     @Override
     public final Condition notEqualAll(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.NOT_EQUALS_ALL);
+        return notEqual(all(query));
     }
 
     @Override
     public final Condition notEqualAll(T... array) {
-        return notEqualAll(val(array));
+        return notEqual(all(array));
     }
 
     @Override
     public final Condition notEqualAll(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.NOT_EQUALS_ALL);
+        return notEqual(all(array));
     }
 
     @Override
@@ -870,33 +913,38 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition lessThan(QuantifiedSelect<?> query) {
+        return new QuantifiedComparisonCondition(query, this, Comparator.LESS);
+    }
+
+    @Override
     public final Condition lessThanAny(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_THAN_ANY);
+        return lessThan(any(query));
     }
 
     @Override
     public final Condition lessThanAny(T... array) {
-        return lessThanAny(val(array));
+        return lessThan(any(array));
     }
 
     @Override
     public final Condition lessThanAny(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.LESS_THAN_ANY);
+        return lessThan(any(array));
     }
 
     @Override
     public final Condition lessThanAll(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_THAN_ALL);
+        return lessThan(all(query));
     }
 
     @Override
     public final Condition lessThanAll(T... array) {
-        return lessThanAll(val(array));
+        return lessThan(all(array));
     }
 
     @Override
     public final Condition lessThanAll(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.LESS_THAN_ALL);
+        return lessThan(all(array));
     }
 
     @Override
@@ -915,33 +963,38 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition lessOrEqual(QuantifiedSelect<?> query) {
+        return new QuantifiedComparisonCondition(query, this, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
     public final Condition lessOrEqualAny(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_OR_EQUAL_ANY);
+        return lessOrEqual(any(query));
     }
 
     @Override
     public final Condition lessOrEqualAny(T... array) {
-        return lessOrEqualAny(val(array));
+        return lessOrEqual(any(array));
     }
 
     @Override
     public final Condition lessOrEqualAny(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.LESS_OR_EQUAL_ANY);
+        return lessOrEqual(any(array));
     }
 
     @Override
     public final Condition lessOrEqualAll(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_OR_EQUAL_ALL);
+        return lessOrEqual(all(query));
     }
 
     @Override
     public final Condition lessOrEqualAll(T... array) {
-        return lessOrEqualAll(val(array));
+        return lessOrEqual(all(array));
     }
 
     @Override
     public final Condition lessOrEqualAll(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.LESS_OR_EQUAL_ALL);
+        return lessOrEqual(all(array));
     }
 
     @Override
@@ -960,33 +1013,38 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition greaterThan(QuantifiedSelect<?> query) {
+        return new QuantifiedComparisonCondition(query, this, Comparator.GREATER);
+    }
+
+    @Override
     public final Condition greaterThanAny(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_THAN_ANY);
+        return greaterThan(any(query));
     }
 
     @Override
     public final Condition greaterThanAny(T... array) {
-        return greaterThanAny(val(array));
+        return greaterThan(any(array));
     }
 
     @Override
     public final Condition greaterThanAny(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.GREATER_THAN_ANY);
+        return greaterThan(any(array));
     }
 
     @Override
     public final Condition greaterThanAll(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_THAN_ALL);
+        return greaterThan(all(query));
     }
 
     @Override
     public final Condition greaterThanAll(T... array) {
-        return greaterThanAll(val(array));
+        return greaterThan(all(array));
     }
 
     @Override
     public final Condition greaterThanAll(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.GREATER_THAN_ALL);
+        return greaterThan(all(array));
     }
 
     @Override
@@ -1005,33 +1063,38 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition greaterOrEqual(QuantifiedSelect<?> query) {
+        return new QuantifiedComparisonCondition(query, this, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
     public final Condition greaterOrEqualAny(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_OR_EQUAL_ANY);
+        return greaterOrEqual(any(query));
     }
 
     @Override
     public final Condition greaterOrEqualAny(T... array) {
-        return greaterOrEqualAny(val(array));
+        return greaterOrEqual(any(array));
     }
 
     @Override
     public final Condition greaterOrEqualAny(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.GREATER_OR_EQUAL_ANY);
+        return greaterOrEqual(any(array));
     }
 
     @Override
     public final Condition greaterOrEqualAll(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_OR_EQUAL_ALL);
+        return greaterOrEqual(all(query));
     }
 
     @Override
     public final Condition greaterOrEqualAll(T... array) {
-        return greaterOrEqualAll(val(array));
+        return greaterOrEqual(all(array));
     }
 
     @Override
     public final Condition greaterOrEqualAll(Field<T[]> array) {
-        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.GREATER_OR_EQUAL_ALL);
+        return greaterOrEqual(all(array));
     }
 
     @Override

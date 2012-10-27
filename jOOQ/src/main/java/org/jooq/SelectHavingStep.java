@@ -37,7 +37,7 @@ package org.jooq;
 
 import java.util.Collection;
 
-import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -103,7 +103,7 @@ public interface SelectHavingStep extends SelectOrderByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String)
+     * @see Factory#condition(String)
      */
     @Support
     SelectHavingConditionStep having(String sql);
@@ -116,7 +116,7 @@ public interface SelectHavingStep extends SelectOrderByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, Object...)
+     * @see Factory#condition(String, Object...)
      */
     @Support
     SelectHavingConditionStep having(String sql, Object... bindings);
@@ -129,7 +129,7 @@ public interface SelectHavingStep extends SelectOrderByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, QueryPart...)
+     * @see Factory#condition(String, QueryPart...)
      */
     @Support
     SelectHavingConditionStep having(String sql, QueryPart... parts);

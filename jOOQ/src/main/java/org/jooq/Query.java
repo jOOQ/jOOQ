@@ -46,6 +46,7 @@ import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 
 /**
  * Any query
@@ -146,22 +147,22 @@ public interface Query extends QueryPart, Attachable {
      * cannot be modified, but the {@link Param} elements allow for modifying
      * bind values on an existing {@link Query}.
      * <p>
-     * Bind values created with {@link Executor#val(Object)} will have their bind
+     * Bind values created with {@link Factory#val(Object)} will have their bind
      * index as name.
      *
      * @see Param
-     * @see Executor#param(String, Object)
+     * @see Factory#param(String, Object)
      */
     Map<String, Param<?>> getParams();
 
     /**
      * Get a named parameter from the {@link Query}, provided its name.
      * <p>
-     * Bind values created with {@link Executor#val(Object)} will have their bind
+     * Bind values created with {@link Factory#val(Object)} will have their bind
      * index as name.
      *
      * @see Param
-     * @see Executor#param(String, Object)
+     * @see Factory#param(String, Object)
      */
     Param<?> getParam(String name);
 

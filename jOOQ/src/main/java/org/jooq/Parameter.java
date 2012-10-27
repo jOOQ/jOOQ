@@ -54,7 +54,7 @@ public interface Parameter<T> extends QueryPart {
     /**
      * The Java type of the parameter.
      */
-    Class<? extends T> getType();
+    Class<T> getType();
 
     /**
      * The type of this parameter (might not be dialect-specific)

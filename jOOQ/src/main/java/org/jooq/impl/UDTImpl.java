@@ -87,7 +87,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractFieldProviderQueryP
      * parameter <R> for other types than {@link Record}
      */
     @Override
-    public Class<? extends R> getRecordType() {
+    public Class<R> getRecordType() {
         throw new UnsupportedOperationException();
     }
 

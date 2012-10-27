@@ -89,11 +89,11 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     private final SQLDialect                             dialect;
 
     private final SQLDataType<T>                         sqlDataType;
-    private final Class<? extends T>                     type;
+    private final Class<T>                               type;
     private final String                                 castTypeName;
     private final String                                 typeName;
 
-    private final Class<? extends T[]>                   arrayType;
+    private final Class<T[]>                             arrayType;
 
     private final boolean                                hasPrecisionAndScale;
 
@@ -111,19 +111,19 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         sqlDataTypesByType = new LinkedHashMap<Class<?>, DataType<?>>();
     }
 
-    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqldatatype, Class<? extends T> type, String typeName) {
+    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqldatatype, Class<T> type, String typeName) {
         this(dialect, sqldatatype, type, typeName, typeName, false);
     }
 
-    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqldatatype, Class<? extends T> type, String typeName, String castTypeName) {
+    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqldatatype, Class<T> type, String typeName, String castTypeName) {
         this(dialect, sqldatatype, type, typeName, castTypeName, false);
     }
 
-    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqldatatype, Class<? extends T> type, String typeName, boolean hasPrecisionAndScale) {
+    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqldatatype, Class<T> type, String typeName, boolean hasPrecisionAndScale) {
         this(dialect, sqldatatype, type, typeName, typeName, hasPrecisionAndScale);
     }
 
-    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqlDataType, Class<? extends T> type, String typeName, String castTypeName, boolean hasPrecisionAndScale) {
+    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, boolean hasPrecisionAndScale) {
         this.dialect = dialect;
 
         // [#858] SQLDataTypes should reference themselves for more convenience
@@ -132,7 +132,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         this.typeName = typeName;
         this.castTypeName = castTypeName;
         this.hasPrecisionAndScale = hasPrecisionAndScale;
-        this.arrayType = (Class<? extends T[]>) Array.newInstance(type, 0).getClass();
+        this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
 
         init();
     }
@@ -282,7 +282,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     @Override
-    public final Class<? extends T> getType() {
+    public final Class<T> getType() {
         return type;
     }
 
@@ -297,7 +297,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     @Override
-    public final Class<? extends T[]> getArrayType() {
+    public final Class<T[]> getArrayType() {
         return arrayType;
     }
 
@@ -426,7 +426,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         return result;
     }
 
-    protected static <T> DataType<T> getDataType(SQLDialect dialect, Class<? extends T> type) {
+    protected static <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type) {
 
         // Recurse for arrays
         if (byte[].class != type && type.isArray()) {

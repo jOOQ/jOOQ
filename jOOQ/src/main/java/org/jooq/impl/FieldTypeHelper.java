@@ -118,7 +118,7 @@ public final class FieldTypeHelper {
 
     @SuppressWarnings("unchecked")
     public static <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
-        Class<? extends T> type = field.getType();
+        Class<T> type = field.getType();
         DataType<T> dataType = field.getDataType();
 
         if (type == Blob.class) {
@@ -229,12 +229,10 @@ public final class FieldTypeHelper {
     }
 
     public static <T> void writeToSQLOutput(SQLOutput stream, Field<T> field, T value) throws SQLException {
-        Class<? extends T> type = field.getType();
-
-        writeToSQLOutput(stream, type, field.getDataType(), value);
+        writeToSQLOutput(stream, field.getType(), field.getDataType(), value);
     }
 
-    private static <T> void writeToSQLOutput(SQLOutput stream, Class<? extends T> type, DataType<T> dataType, T value) throws SQLException {
+    private static <T> void writeToSQLOutput(SQLOutput stream, Class<T> type, DataType<T> dataType, T value) throws SQLException {
         if (value == null) {
             stream.writeObject(null);
         }
@@ -376,7 +374,7 @@ public final class FieldTypeHelper {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> T getFromResultSet(ExecuteContext ctx, Class<? extends T> type, int index)
+    private static <T> T getFromResultSet(ExecuteContext ctx, Class<T> type, int index)
         throws SQLException {
 
         ResultSet rs = ctx.resultSet();
@@ -390,7 +388,7 @@ public final class FieldTypeHelper {
         else if (type == BigInteger.class) {
         	// The SQLite JDBC driver doesn't support BigDecimals
             if (ctx.getDialect() == SQLDialect.SQLITE) {
-                return Convert.convert(rs.getString(index), (Class<? extends T>) BigInteger.class);
+                return Convert.convert(rs.getString(index), (Class<T>) BigInteger.class);
             }
             else {
                 BigDecimal result = rs.getBigDecimal(index);
@@ -400,7 +398,7 @@ public final class FieldTypeHelper {
         else if (type == BigDecimal.class) {
             // The SQLite JDBC driver doesn't support BigDecimals
             if (ctx.getDialect() == SQLDialect.SQLITE) {
-                return Convert.convert(rs.getString(index), (Class<? extends T>) BigDecimal.class);
+                return Convert.convert(rs.getString(index), (Class<T>) BigDecimal.class);
             }
             else {
                 return (T) rs.getBigDecimal(index);
@@ -663,7 +661,7 @@ public final class FieldTypeHelper {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> T getEnumType(Class<? extends T> type, String literal) throws SQLException {
+    private static <T> T getEnumType(Class<T> type, String literal) throws SQLException {
         try {
             Object[] list = (Object[]) type.getMethod("values").invoke(type);
 
@@ -683,7 +681,7 @@ public final class FieldTypeHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T getFromStatement(ExecuteContext ctx, Class<? extends T> type, int index) throws SQLException {
+    public static <T> T getFromStatement(ExecuteContext ctx, Class<T> type, int index) throws SQLException {
         CallableStatement stmt = (CallableStatement) ctx.statement();
 
         if (type == Blob.class) {
@@ -882,7 +880,7 @@ public final class FieldTypeHelper {
         }
     }
 
-    public static <T> DataType<T> getDataType(SQLDialect dialect, Class<? extends T> type) {
+    public static <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type) {
         switch (dialect) {
             case ASE:
                 return ASEDataType.getDataType(type);
@@ -931,7 +929,7 @@ public final class FieldTypeHelper {
     // -------------------------------------------------------------------------
 
     @SuppressWarnings("unchecked")
-    private static <T> T pgFromString(Class<? extends T> type, String string) throws SQLException {
+    private static <T> T pgFromString(Class<T> type, String string) throws SQLException {
         if (string == null) {
             return null;
         }
@@ -1055,7 +1053,7 @@ public final class FieldTypeHelper {
      * Workarounds for the unimplemented Postgres JDBC driver features
      */
     @SuppressWarnings("unchecked")
-    private static <T> T pgGetArray(ExecuteContext ctx, Class<? extends T> type, int index)
+    private static <T> T pgGetArray(ExecuteContext ctx, Class<T> type, int index)
         throws SQLException {
 
         ResultSet rs = ctx.resultSet();

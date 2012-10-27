@@ -133,7 +133,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Class<? extends T> getType() {
+    public final Class<T> getType() {
         return dataType.getType();
     }
 
@@ -160,7 +160,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final <Z> Field<Z> cast(Class<? extends Z> type) {
+    public final <Z> Field<Z> cast(Class<Z> type) {
         return cast(SQLDataType.getDataType(null, type));
     }
 

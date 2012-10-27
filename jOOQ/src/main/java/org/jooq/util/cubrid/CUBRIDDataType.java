@@ -141,7 +141,7 @@ public class CUBRIDDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.CUBRID, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 
-    public static <T> DataType<T> getDataType(Class<? extends T> type) {
+    public static <T> DataType<T> getDataType(Class<T> type) {
         return getDataType(SQLDialect.CUBRID, type);
     }
 

@@ -549,7 +549,8 @@ final class Utils {
                     result.add((QueryPart) substitute);
                 }
                 else {
-                    Class<?> type = substitute != null ? substitute.getClass() : Object.class;
+                    @SuppressWarnings("unchecked")
+                    Class<Object> type = (Class<Object>) (substitute != null ? substitute.getClass() : Object.class);
                     result.add(new Val<Object>(substitute, Factory.getDataType(type)));
                 }
             }

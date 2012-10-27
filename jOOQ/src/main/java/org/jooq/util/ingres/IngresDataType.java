@@ -146,7 +146,7 @@ public class IngresDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.INGRES, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 
-    public static <T> DataType<T> getDataType(Class<? extends T> type) {
+    public static <T> DataType<T> getDataType(Class<T> type) {
         return getDataType(SQLDialect.INGRES, type);
     }
 

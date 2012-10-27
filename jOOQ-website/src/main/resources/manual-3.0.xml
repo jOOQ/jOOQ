@@ -9068,8 +9068,11 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 							</p>
 							
 							<h3>Separation of query building and query execution</h3>
-							<h3>No sub-factories anymore</h3>
+							<h3>No sub-factories anymore (no deprecation yet)</h3>
+							<h3>Quantified comparison predicates (no deprecation yet)</h3>
 							<h3>Master data types have been removed</h3>
+							<h3>GroupField</h3>
+							
 							<h3>Object renames</h3>
 							<ul>
 								<li>jOOU</li>

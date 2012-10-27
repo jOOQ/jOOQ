@@ -1542,18 +1542,14 @@ public class Executor implements FactoryOperations {
     // XXX Internals
     // -------------------------------------------------------------------------
 
-    private static int filterOne(int i, String action) {
-        if (i <= 1) {
-            return i;
-        }
-        else {
-            throw new InvalidResultException("Too many rows " + action + " : " + i);
-        }
-    }
-
     private static <R extends Record> R filterOne(List<R> list) {
-        if (filterOne(list.size(), "selected") == 1) {
+        int size = list.size();
+
+        if (size == 1) {
             return list.get(0);
+        }
+        else if (size > 1) {
+            throw new InvalidResultException("Too many rows selected : " + size);
         }
 
         return null;

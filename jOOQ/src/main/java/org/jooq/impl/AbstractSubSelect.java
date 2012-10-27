@@ -57,6 +57,7 @@ import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.GroupField;
 import org.jooq.Operator;
 import org.jooq.Param;
 import org.jooq.QueryPart;
@@ -81,28 +82,28 @@ abstract class AbstractSubSelect<R extends Record> extends AbstractSelect<R> imp
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID = 1646393178384872967L;
+    private static final long               serialVersionUID = 1646393178384872967L;
 
-    private final FieldList             select;
-    private String                      hint;
-    private boolean                     distinct;
-    private boolean                     forUpdate;
-    private final FieldList             forUpdateOf;
-    private final TableList             forUpdateOfTables;
-    private ForUpdateMode               forUpdateMode;
-    private int                         forUpdateWait;
-    private boolean                     forShare;
-    private final TableList             from;
-    private final ConditionProviderImpl condition;
-    private final ConditionProviderImpl connectBy;
-    private boolean                     connectByNoCycle;
-    private final ConditionProviderImpl connectByStartWith;
-    private boolean                     grouping;
-    private final FieldList             groupBy;
-    private final ConditionProviderImpl having;
-    private final SortFieldList         orderBy;
-    private boolean                     orderBySiblings;
-    private final Limit                 limit;
+    private final FieldList                 select;
+    private String                          hint;
+    private boolean                         distinct;
+    private boolean                         forUpdate;
+    private final FieldList                 forUpdateOf;
+    private final TableList                 forUpdateOfTables;
+    private ForUpdateMode                   forUpdateMode;
+    private int                             forUpdateWait;
+    private boolean                         forShare;
+    private final TableList                 from;
+    private final ConditionProviderImpl     condition;
+    private final ConditionProviderImpl     connectBy;
+    private boolean                         connectByNoCycle;
+    private final ConditionProviderImpl     connectByStartWith;
+    private boolean                         grouping;
+    private final QueryPartList<GroupField> groupBy;
+    private final ConditionProviderImpl     having;
+    private final SortFieldList             orderBy;
+    private boolean                         orderBySiblings;
+    private final Limit                     limit;
 
     AbstractSubSelect(Configuration configuration) {
         this(configuration, null);
@@ -121,7 +122,7 @@ abstract class AbstractSubSelect<R extends Record> extends AbstractSelect<R> imp
         this.condition = new ConditionProviderImpl();
         this.connectBy = new ConditionProviderImpl();
         this.connectByStartWith = new ConditionProviderImpl();
-        this.groupBy = new FieldList();
+        this.groupBy = new QueryPartList<GroupField>();
         this.having = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
         this.limit = new Limit();
@@ -748,7 +749,7 @@ abstract class AbstractSubSelect<R extends Record> extends AbstractSelect<R> imp
         grouping = true;
     }
 
-    final FieldList getGroupBy() {
+    final QueryPartList<GroupField> getGroupBy() {
         return groupBy;
     }
 

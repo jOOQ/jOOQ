@@ -62,11 +62,14 @@ import org.jooq.util.oracle.OracleFactory;
 
 /**
  * A field used in tables and conditions
+ * <p>
+ * Note that all fields qualify as {@link GroupField}, i.e. they can always be
+ * used in <code>GROUP BY</code> clauses
  *
  * @param <T> The field type
  * @author Lukas Eder
  */
-public interface Field<T> extends QueryPart {
+public interface Field<T> extends GroupField {
 
     // ------------------------------------------------------------------------
     // API

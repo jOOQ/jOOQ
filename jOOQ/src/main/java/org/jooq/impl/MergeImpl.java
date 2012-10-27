@@ -437,7 +437,7 @@ implements
 
                     // [#579] TODO: Currently, this syntax may require aliasing
                     // on the call-site
-                    src = create().select(v).from(h2Select).asTable("src");
+                    src = create(config).select(v).from(h2Select).asTable("src");
                 }
                 else {
                     FieldList v = new FieldList();
@@ -446,7 +446,7 @@ implements
                         v.add(getH2Values().get(i).as("s" + (i + 1)));
                     }
 
-                    src = create().select(v).asTable("src");
+                    src = create(config).select(v).asTable("src");
                 }
 
                 // The condition for the ON clause:
@@ -513,13 +513,13 @@ implements
                     insert.put(getH2Fields().get(i), src.getField(i));
                 }
 
-                return create().mergeInto(table)
-                               .using(src)
-                               .on(condition)
-                               .whenMatchedThenUpdate()
-                               .set(update)
-                               .whenNotMatchedThenInsert()
-                               .set(insert);
+                return create(config).mergeInto(table)
+                                     .using(src)
+                                     .on(condition)
+                                     .whenMatchedThenUpdate()
+                                     .set(update)
+                                     .whenNotMatchedThenInsert()
+                                     .set(insert);
             }
             default:
                 throw new SQLDialectNotSupportedException("The H2-specific MERGE syntax is not supported in dialect : " + config.getDialect());

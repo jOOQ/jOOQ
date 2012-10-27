@@ -39,6 +39,7 @@ package org.jooq.test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.impl.Factory.any;
 import static org.jooq.impl.Factory.avg;
 import static org.jooq.impl.Factory.condition;
 import static org.jooq.impl.Factory.count;
@@ -2357,7 +2358,7 @@ public class BasicTest {
         q2.addFrom(TABLE2);
 
         q2.addSelect(FIELD_ID2);
-        q1.addConditions(FIELD_ID1.greaterThanAny(q2));
+        q1.addConditions(FIELD_ID1.greaterThan(any(q2)));
 
         assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" > any (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_refI().render(q1));
         assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" > any (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_ref().render(q1));

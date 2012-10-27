@@ -77,7 +77,8 @@ public interface Field<T> extends QueryPart {
      * <p>
      * The name is any of these:
      * <ul>
-     * <li>The formal name of the field, if it is a <i>physical table/view field</i></li>
+     * <li>The formal name of the field, if it is a <i>physical table/view
+     * field</i></li>
      * <li>The alias of an <i>aliased field</i></li>
      * <li>A generated / unspecified value for any other <i>expression</i></li>
      * <li>The name of a parameter if it is a named {@link Param}</li>
@@ -310,8 +311,7 @@ public interface Field<T> extends QueryPart {
     /**
      * Negate this field to get its negative value.
      * <p>
-     * This renders the same on all dialects:
-     * <code><pre>-[this]</pre></code>
+     * This renders the same on all dialects: <code><pre>-[this]</pre></code>
      */
     @Support
     Field<T> neg();
@@ -464,9 +464,8 @@ public interface Field<T> extends QueryPart {
      * An arithmetic expression getting the modulo of this divided by value
      * <p>
      * This renders the modulo operation where available:
-     * <code><pre>[this] % [value]</pre></code>
-     * ... or the modulo function elsewhere:
-     * <code><pre>mod([this], [value])</pre></code>
+     * <code><pre>[this] % [value]</pre></code> ... or the modulo function
+     * elsewhere: <code><pre>mod([this], [value])</pre></code>
      */
     @Support
     Field<T> mod(Number value);
@@ -475,9 +474,8 @@ public interface Field<T> extends QueryPart {
      * An arithmetic expression getting the modulo of this divided by value
      * <p>
      * This renders the modulo operation where available:
-     * <code><pre>[this] % [value]</pre></code>
-     * ... or the modulo function elsewhere:
-     * <code><pre>mod([this], [value])</pre></code>
+     * <code><pre>[this] % [value]</pre></code> ... or the modulo function
+     * elsewhere: <code><pre>mod([this], [value])</pre></code>
      */
     @Support
     Field<T> mod(Field<? extends Number> value);
@@ -654,8 +652,8 @@ public interface Field<T> extends QueryPart {
      * <td><code>[search] REGEXP [pattern]</code></td>
      * <td>POSIX</td>
      * <td><a href=
-     * "http://dev.mysql.com/doc/refman/5.6/en/regexp.html">http://dev.mysql.com/doc/refman/5.6/en/regexp.html</a
-     * ></td>
+     * "http://dev.mysql.com/doc/refman/5.6/en/regexp.html">http://dev
+     * .mysql.com/doc/refman/5.6/en/regexp.html</a ></td>
      * </tr>
      * <tr>
      * <td>{@link SQLDialect#ORACLE}</td>
@@ -1103,8 +1101,7 @@ public interface Field<T> extends QueryPart {
     /**
      * Create a condition to check this field against some bounds
      * <p>
-     * This is the same as calling
-     * <code>between(minValue).and(maxValue)</code>
+     * This is the same as calling <code>between(minValue).and(maxValue)</code>
      * <p>
      * SQL: <code>this between minValue and maxValue</code>
      */
@@ -1114,8 +1111,7 @@ public interface Field<T> extends QueryPart {
     /**
      * Create a condition to check this field against some bounds
      * <p>
-     * This is the same as calling
-     * <code>between(minValue).and(maxValue)</code>
+     * This is the same as calling <code>between(minValue).and(maxValue)</code>
      * <p>
      * SQL: <code>this between minValue and maxValue</code>
      */
@@ -1301,6 +1297,19 @@ public interface Field<T> extends QueryPart {
     Condition equal(Select<?> query);
 
     /**
+     * <code>this = [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition equal(QuantifiedSelect<?> query);
+
+    /**
      * <code>this = value</code>
      * <p>
      * If <code>value == null</code>, then this will return a condition
@@ -1329,6 +1338,19 @@ public interface Field<T> extends QueryPart {
     Condition eq(Select<?> query);
 
     /**
+     * <code>this = [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition eq(QuantifiedSelect<?> query);
+
+    /**
      * <code>this != value</code>
      * <p>
      * If <code>value == null</code>, then this will return a condition
@@ -1349,6 +1371,19 @@ public interface Field<T> extends QueryPart {
      */
     @Support
     Condition notEqual(Select<?> query);
+
+    /**
+     * <code>this != [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition notEqual(QuantifiedSelect<?> query);
 
     /**
      * <code>this != value</code>
@@ -1379,6 +1414,19 @@ public interface Field<T> extends QueryPart {
     Condition ne(Select<?> query);
 
     /**
+     * <code>this != [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition ne(QuantifiedSelect<?> query);
+
+    /**
      * <code>this < value</code>
      */
     @Support
@@ -1395,6 +1443,19 @@ public interface Field<T> extends QueryPart {
      */
     @Support
     Condition lessThan(Select<?> query);
+
+    /**
+     * <code>this < [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition lessThan(QuantifiedSelect<?> query);
 
     /**
      * <code>this < value</code>
@@ -1421,6 +1482,19 @@ public interface Field<T> extends QueryPart {
     Condition lt(Select<?> query);
 
     /**
+     * <code>this < [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition lt(QuantifiedSelect<?> query);
+
+    /**
      * <code>this <= value</code>
      */
     @Support
@@ -1437,6 +1511,19 @@ public interface Field<T> extends QueryPart {
      */
     @Support
     Condition lessOrEqual(Select<?> query);
+
+    /**
+     * <code>this <= [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition lessOrEqual(QuantifiedSelect<?> query);
 
     /**
      * <code>this <= value</code>
@@ -1463,6 +1550,19 @@ public interface Field<T> extends QueryPart {
     Condition le(Select<?> query);
 
     /**
+     * <code>this <= [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition le(QuantifiedSelect<?> query);
+
+    /**
      * <code>this > value</code>
      */
     @Support
@@ -1479,6 +1579,19 @@ public interface Field<T> extends QueryPart {
      */
     @Support
     Condition greaterThan(Select<?> query);
+
+    /**
+     * <code>this > [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition greaterThan(QuantifiedSelect<?> query);
 
     /**
      * <code>this > value</code>
@@ -1505,6 +1618,19 @@ public interface Field<T> extends QueryPart {
     Condition gt(Select<?> query);
 
     /**
+     * <code>this > [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition gt(QuantifiedSelect<?> query);
+
+    /**
      * <code>this >= value</code>
      */
     @Support
@@ -1521,6 +1647,19 @@ public interface Field<T> extends QueryPart {
      */
     @Support
     Condition greaterOrEqual(Select<?> query);
+
+    /**
+     * <code>this >= [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition greaterOrEqual(QuantifiedSelect<?> query);
 
     /**
      * <code>this >= value</code>
@@ -1545,6 +1684,19 @@ public interface Field<T> extends QueryPart {
      */
     @Support
     Condition ge(Select<?> query);
+
+    /**
+     * <code>this >= [quantifier] (Select<?> ...)</code>
+     *
+     * @see Factory#all(Field)
+     * @see Factory#all(Select)
+     * @see Factory#all(Object...)
+     * @see Factory#any(Field)
+     * @see Factory#any(Select)
+     * @see Factory#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition ge(QuantifiedSelect<?> query);
 
     /**
      * Create a condition to check this field against known string literals for
@@ -1596,7 +1748,11 @@ public interface Field<T> extends QueryPart {
 
     /**
      * <code>this = any (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAny(Select<?> query);
 
@@ -1605,7 +1761,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAny(T... array);
 
@@ -1614,13 +1774,21 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, CUBRID, HSQLDB, POSTGRES })
     Condition equalAny(Field<T[]> array);
 
     /**
      * <code>this = all (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAll(Select<?> query);
 
@@ -1629,7 +1797,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAll(T... array);
 
@@ -1638,13 +1810,21 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, HSQLDB, POSTGRES })
     Condition equalAll(Field<T[]> array);
 
     /**
      * <code>this != any (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAny(Select<?> query);
 
@@ -1653,7 +1833,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAny(T... array);
 
@@ -1662,13 +1846,21 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, HSQLDB, POSTGRES })
     Condition notEqualAny(Field<T[]> array);
 
     /**
      * <code>this != all (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAll(Select<?> query);
 
@@ -1677,7 +1869,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAll(T... array);
 
@@ -1686,13 +1882,21 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, HSQLDB, POSTGRES })
     Condition notEqualAll(Field<T[]> array);
 
     /**
      * <code>this < any (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAny(Select<?> query);
 
@@ -1701,7 +1905,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAny(T... array);
 
@@ -1710,13 +1918,21 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, HSQLDB, POSTGRES })
     Condition lessThanAny(Field<T[]> array);
 
     /**
      * <code>this < all (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAll(Select<?> query);
 
@@ -1725,7 +1941,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAll(T... array);
 
@@ -1734,13 +1954,21 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, HSQLDB, POSTGRES })
     Condition lessThanAll(Field<T[]> array);
 
     /**
      * <code>this <= any (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAny(Select<?> query);
 
@@ -1749,7 +1977,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAny(T... array);
 
@@ -1758,13 +1990,21 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, HSQLDB, POSTGRES })
     Condition lessOrEqualAny(Field<T[]> array);
 
     /**
      * <code>this <= all (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAll(Select<?> query);
 
@@ -1773,7 +2013,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAll(T... array);
 
@@ -1782,13 +2026,21 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, HSQLDB, POSTGRES })
     Condition lessOrEqualAll(Field<T[]> array);
 
     /**
      * <code>this > any (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAny(Select<?> query);
 
@@ -1797,7 +2049,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAny(T... array);
 
@@ -1806,13 +2062,21 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, HSQLDB, POSTGRES })
     Condition greaterThanAny(Field<T[]> array);
 
     /**
      * <code>this > all (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAll(Select<?> query);
 
@@ -1821,7 +2085,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAll(T... array);
 
@@ -1830,13 +2098,21 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, HSQLDB, POSTGRES })
     Condition greaterThanAll(Field<T[]> array);
 
     /**
      * <code>this >= any (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAny(Select<?> query);
 
@@ -1845,7 +2121,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAny(T... array);
 
@@ -1854,13 +2134,21 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#any(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, HSQLDB, POSTGRES })
     Condition greaterOrEqualAny(Field<T[]> array);
 
     /**
      * <code>this >= all (Select<?> ...)</code>
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Select)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAll(Select<?> query);
 
@@ -1869,7 +2157,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Object...)} instead
+     *             for quantified comparison predicates
      */
+    @Deprecated
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAll(T... array);
 
@@ -1878,7 +2170,11 @@ public interface Field<T> extends QueryPart {
      * <p>
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
+     *
+     * @deprecated - 2.7.0 [#1697] - Use {@link Factory#all(Field)} instead for
+     *             quantified comparison predicates
      */
+    @Deprecated
     @Support({ H2, HSQLDB, POSTGRES })
     Condition greaterOrEqualAll(Field<T[]> array);
 

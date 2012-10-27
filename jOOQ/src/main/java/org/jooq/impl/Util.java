@@ -46,13 +46,8 @@ import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.sql.Blob;
-import java.sql.Clob;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -66,7 +61,6 @@ import javax.persistence.Entity;
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
-import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -86,6 +80,7 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.reflect.Reflect;
 
 /**
@@ -660,83 +655,15 @@ final class Util {
      * Safely close a statement
      */
     static final void safeClose(ExecuteListener listener, ExecuteContext ctx, boolean keepStatement) {
-        safeClose(ctx.resultSet());
+        JDBCUtils.safeClose(ctx.resultSet());
         if (!keepStatement)
-            safeClose(ctx.statement());
+            JDBCUtils.safeClose(ctx.statement());
 
         // [#1868] TODO: This needs to be called in fetchLazy(), too
         listener.end(ctx);
 
         // [#1326] Clean up any potentially remaining temporary lobs
         DefaultExecuteContext.clean();
-    }
-
-    /**
-     * Safely close a statement
-     */
-    static final void safeClose(Statement statement) {
-        if (statement != null) {
-            try {
-                statement.close();
-            }
-            catch (Exception ignore) {}
-        }
-    }
-
-    /**
-     * Safely close a result set
-     */
-    static final void safeClose(ResultSet resultSet) {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            }
-            catch (Exception ignore) {}
-        }
-    }
-
-    /**
-     * Safely close a cursor
-     */
-    static final void safeClose(Cursor<?> cursor) {
-        if (cursor != null) {
-            try {
-                cursor.close();
-            }
-            catch (Exception ignore) {}
-        }
-    }
-
-    /**
-     * Safely close a result set and / or a statement
-     */
-    static final void safeClose(ResultSet resultSet, PreparedStatement statement) {
-        safeClose(resultSet);
-        safeClose(statement);
-    }
-
-    /**
-     * Safely free a blob
-     */
-    static final void safeFree(Blob blob) {
-        if (blob != null) {
-            try {
-                blob.free();
-            }
-            catch (Exception ignore) {}
-        }
-    }
-
-    /**
-     * Safely free a clob
-     */
-    static final void safeFree(Clob clob) {
-        if (clob != null) {
-            try {
-                clob.free();
-            }
-            catch (Exception ignore) {}
-        }
     }
 
     /**

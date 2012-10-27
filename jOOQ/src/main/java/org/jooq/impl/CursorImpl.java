@@ -70,6 +70,7 @@ import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
  * @author Lukas Eder
@@ -223,7 +224,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final void close() {
-        Util.safeClose(rs);
+        JDBCUtils.safeClose(rs);
         rs = null;
         isClosed = true;
     }

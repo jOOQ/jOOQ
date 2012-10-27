@@ -194,7 +194,7 @@ public interface SelectQuery extends SimpleSelectQuery<Record> {
      * @param fields The grouping fields
      */
     @Support
-    void addGroupBy(Field<?>... fields);
+    void addGroupBy(GroupField... fields);
 
     /**
      * Adds grouping fields
@@ -205,7 +205,7 @@ public interface SelectQuery extends SimpleSelectQuery<Record> {
      * @param fields The grouping fields
      */
     @Support
-    void addGroupBy(Collection<? extends Field<?>> fields);
+    void addGroupBy(Collection<? extends GroupField> fields);
 
     /**
      * Adds new conditions to the having clause of the query, connecting it to

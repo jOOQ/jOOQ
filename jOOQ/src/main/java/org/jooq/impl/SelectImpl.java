@@ -47,6 +47,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.GroupField;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Param;
@@ -391,13 +392,13 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl groupBy(Field<?>... fields) {
+    public final SelectImpl groupBy(GroupField... fields) {
         getQuery().addGroupBy(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl groupBy(Collection<? extends Field<?>> fields) {
+    public final SelectImpl groupBy(Collection<? extends GroupField> fields) {
         getQuery().addGroupBy(fields);
         return this;
     }

@@ -70,6 +70,7 @@ import org.jooq.DatePart;
 import org.jooq.FactoryOperations;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
+import org.jooq.GroupField;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.Param;
@@ -2427,7 +2428,7 @@ public class Factory {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @Support({ CUBRID, DB2, MYSQL, ORACLE, SQLSERVER, SYBASE })
-    public static Field<?> rollup(Field<?>... fields) {
+    public static GroupField rollup(Field<?>... fields) {
         return new Rollup(nullSafe(fields));
     }
 
@@ -2453,7 +2454,7 @@ public class Factory {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
-    public static Field<?> cube(Field<?>... fields) {
+    public static GroupField cube(Field<?>... fields) {
         return function("cube", Object.class, nullSafe(fields));
     }
 
@@ -2481,7 +2482,7 @@ public class Factory {
      */
     @SuppressWarnings("unchecked")
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
-    public static Field<?> groupingSets(Field<?>... fields) {
+    public static GroupField groupingSets(Field<?>... fields) {
         List<Field<?>>[] array = new List[fields.length];
 
         for (int i = 0; i < fields.length; i++) {
@@ -2515,7 +2516,7 @@ public class Factory {
      */
     @SuppressWarnings("unchecked")
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
-    public static Field<?> groupingSets(Field<?>[]... fieldSets) {
+    public static GroupField groupingSets(Field<?>[]... fieldSets) {
         List<Field<?>>[] array = new List[fieldSets.length];
 
         for (int i = 0; i < fieldSets.length; i++) {
@@ -2548,7 +2549,7 @@ public class Factory {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
-    public static Field<?> groupingSets(Collection<Field<?>>... fieldSets) {
+    public static GroupField groupingSets(Collection<Field<?>>... fieldSets) {
         WrappedList[] array = new WrappedList[fieldSets.length];
 
         for (int i = 0; i < fieldSets.length; i++) {

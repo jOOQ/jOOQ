@@ -88,7 +88,7 @@ public interface SelectGroupByStep extends SelectHavingStep {
      * <code>GROUP BY ()</code> clause being rendered.
      */
     @Support
-    SelectHavingStep groupBy(Field<?>... fields);
+    SelectHavingStep groupBy(GroupField... fields);
 
     /**
      * Add a <code>GROUP BY</code> clause to the query
@@ -97,5 +97,5 @@ public interface SelectGroupByStep extends SelectHavingStep {
      * <code>GROUP BY ()</code> clause being rendered.
      */
     @Support
-    SelectHavingStep groupBy(Collection<? extends Field<?>> fields);
+    SelectHavingStep groupBy(Collection<? extends GroupField> fields);
 }

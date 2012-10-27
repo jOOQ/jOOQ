@@ -43,6 +43,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.GroupField;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Record;
@@ -104,13 +105,13 @@ class SelectQueryImpl extends AbstractSubSelect<Record> implements SelectQuery {
     }
 
     @Override
-    public final void addGroupBy(Collection<? extends Field<?>> fields) {
+    public final void addGroupBy(Collection<? extends GroupField> fields) {
         setGrouping();
         getGroupBy().addAll(fields);
     }
 
     @Override
-    public final void addGroupBy(Field<?>... fields) {
+    public final void addGroupBy(GroupField... fields) {
         addGroupBy(Arrays.asList(fields));
     }
 

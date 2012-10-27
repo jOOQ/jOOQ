@@ -89,9 +89,9 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         this.fields = fields;
     }
 
-    final FieldProvider getFieldProvider() {
-        return fields;
-    }
+    // ------------------------------------------------------------------------
+    // XXX: Attachable API
+    // ------------------------------------------------------------------------
 
     @Override
     public final List<Attachable> getAttachables() {
@@ -107,6 +107,14 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         }
 
         return result;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: FieldProvider API
+    // ------------------------------------------------------------------------
+
+    final FieldProvider getFieldProvider() {
+        return fields;
     }
 
     @Override
@@ -130,8 +138,98 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     @Override
+    public final int getIndex(Field<?> field) {
+        return fields.getIndex(field);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Record API
+    // ------------------------------------------------------------------------
+
+    @Override
     public final int size() {
         return getFields().size();
+    }
+
+    @Override
+    public final <T> T getValue(Field<T> field) {
+        return getValue0(field).getValue();
+    }
+
+    @Override
+    public final <T> T getValue(Field<T> field, T defaultValue) {
+        return getValue0(field).getValue(defaultValue);
+    }
+
+    @Override
+    public final <T> T getValue(Field<?> field, Class<? extends T> type) {
+        return Convert.convert(getValue(field), type);
+    }
+
+    @Override
+    public final <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) {
+        final T result = getValue(field, type);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) {
+        return converter.from(getValue(field));
+    }
+
+    @Override
+    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue) {
+        final U result = getValue(field, converter);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final Object getValue(int index) {
+        return getValue0(index).getValue();
+    }
+
+    @Override
+    public final <U> U getValue(int index, Converter<?, U> converter) {
+        return Convert.convert(getValue(index), converter);
+    }
+
+    @Override
+    public final <U> U getValue(int index, Converter<?, U> converter, U defaultValue) {
+        final U result = getValue(index, converter);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final Object getValue(String fieldName) {
+        return getValue(getField(fieldName));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Object getValue(String fieldName, Object defaultValue) {
+        return getValue((Field<Object>) getField(fieldName), defaultValue);
+    }
+
+    @Override
+    public final <T> T getValue(String fieldName, Class<? extends T> type) {
+        return Convert.convert(getValue(fieldName), type);
+    }
+
+    @Override
+    public final <Z> Z getValue(String fieldName, Class<? extends Z> type, Z defaultValue) {
+        final Z result = getValue(fieldName, type);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <U> U getValue(String fieldName, Converter<?, U> converter) {
+        return Convert.convert(getValue(fieldName), converter);
+    }
+
+    @Override
+    public final <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) {
+        final U result = getValue(fieldName, converter);
+        return result == null ? defaultValue : result;
     }
 
     @SuppressWarnings("unchecked")
@@ -152,33 +250,14 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
     final Value<?>[] getValues() {
         if (values == null) {
-            init();
+            values = new Value<?>[fields.getFields().size()];
+
+            for (int i = 0; i < values.length; i++) {
+                values[i] = new Value<Object>(null);
+            }
         }
 
         return values;
-    }
-
-    @Override
-    public final int getIndex(Field<?> field) {
-        return fields.getIndex(field);
-    }
-
-    private final void init() {
-        values = new Value<?>[fields.getFields().size()];
-
-        for (int i = 0; i < values.length; i++) {
-            values[i] = new Value<Object>(null);
-        }
-    }
-
-    @Override
-    public final <T> T getValue(Field<T> field) {
-        return getValue0(field).getValue();
-    }
-
-    @Override
-    public final <T> T getValue(Field<T> field, T defaultValue) {
-        return getValue0(field).getValue(defaultValue);
     }
 
     @Override
@@ -237,84 +316,6 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         for (Value<?> value : getValues()) {
             value.setChanged(changed);
         }
-    }
-
-    @Override
-    public String toString() {
-        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(getConfiguration(), fields);
-        result.add(this);
-        return result.toString();
-    }
-
-    @Override
-    public final Object getValue(int index) {
-        return getValue0(index).getValue();
-    }
-
-    @Override
-    public final Object getValue(String fieldName) {
-        return getValue(getField(fieldName));
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final Object getValue(String fieldName, Object defaultValue) {
-        return getValue((Field<Object>) getField(fieldName), defaultValue);
-    }
-
-    @Override
-    public final <T> T getValue(Field<?> field, Class<? extends T> type) {
-        return Convert.convert(getValue(field), type);
-    }
-
-    @Override
-    public final <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) {
-        final T result = getValue(field, type);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
-    public final <T> T getValue(String fieldName, Class<? extends T> type) {
-        return Convert.convert(getValue(fieldName), type);
-    }
-
-    @Override
-    public final <Z> Z getValue(String fieldName, Class<? extends Z> type, Z defaultValue) {
-        final Z result = getValue(fieldName, type);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
-    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) {
-        return converter.from(getValue(field));
-    }
-
-    @Override
-    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue) {
-        final U result = getValue(field, converter);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
-    public final <U> U getValue(int index, Converter<?, U> converter) {
-        return Convert.convert(getValue(index), converter);
-    }
-
-    @Override
-    public final <U> U getValue(int index, Converter<?, U> converter, U defaultValue) {
-        final U result = getValue(index, converter);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
-    public final <U> U getValue(String fieldName, Converter<?, U> converter) {
-        return Convert.convert(getValue(fieldName), converter);
-    }
-
-    @Override
-    public final <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) {
-        final U result = getValue(fieldName, converter);
-        return result == null ? defaultValue : result;
     }
 
     /*
@@ -772,5 +773,16 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         else {
             Utils.setValue(this, field, member.get(source));
         }
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(getConfiguration(), fields);
+        result.add(this);
+        return result.toString();
     }
 }

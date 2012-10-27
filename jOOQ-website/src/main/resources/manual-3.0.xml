@@ -9059,6 +9059,11 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 						<title>Quality Assurance</title>
 						<content/>
 					</section>
+					
+					<section id="migrating-to-3.0">
+						<title>Migrating to jOOQ 3.0</title>
+						<content/>
+					</section>
 
 					<section id="reference-credits">
 						<title>Credits</title>

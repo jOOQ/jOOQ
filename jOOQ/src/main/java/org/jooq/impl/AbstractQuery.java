@@ -42,8 +42,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
@@ -93,8 +95,31 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     }
 
     // -------------------------------------------------------------------------
-    // The QueryPart and QueryPart internal API
+    // The Query API
     // -------------------------------------------------------------------------
+
+    @Override
+    public final List<Object> getBindValues() {
+        List<Object> result = new ArrayList<Object>();
+
+        for (Param<?> param : getParams().values()) {
+            result.add(param.getValue());
+        }
+
+        return Collections.unmodifiableList(result);
+    }
+
+    @Override
+    public final Map<String, Param<?>> getParams() {
+        ParamCollector collector = new ParamCollector(getConfiguration());
+        collector.bind(this);
+        return Collections.unmodifiableMap(collector.result);
+    }
+
+    @Override
+    public final Param<?> getParam(String name) {
+        return getParams().get(name);
+    }
 
     /**
      * Subclasses may override this for covariant result types

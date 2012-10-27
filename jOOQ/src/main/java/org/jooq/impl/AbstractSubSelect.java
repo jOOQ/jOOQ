@@ -55,17 +55,15 @@ import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.Condition;
-import org.jooq.ConditionProvider;
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.LockProvider;
 import org.jooq.Operator;
-import org.jooq.OrderProvider;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -78,13 +76,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-abstract class AbstractSubSelect<R extends Record>
-extends AbstractSelect<R>
-implements
-    ConditionProvider,
-    OrderProvider,
-    LockProvider {
+abstract class AbstractSubSelect<R extends Record> extends AbstractSelect<R> implements SimpleSelectQuery<R> {
 
     /**
      * Generated UID

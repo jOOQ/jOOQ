@@ -96,7 +96,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // ------------------------------------------------------------------------
 
     @Override
-    public final List<Attachable> getAttachables() {
+    final List<Attachable> getAttachables() {
         List<Attachable> result = new ArrayList<Attachable>();
 
         int size = getFields().size();

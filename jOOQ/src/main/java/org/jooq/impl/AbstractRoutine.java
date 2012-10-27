@@ -53,7 +53,6 @@ import java.util.Set;
 
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
-import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
@@ -182,11 +181,6 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     @Override
     public final void attach(Configuration c) {
         configuration = c;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
     }
 
     @Override

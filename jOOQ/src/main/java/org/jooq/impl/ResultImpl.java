@@ -59,7 +59,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Converter;
@@ -108,23 +107,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     public final void attach(Configuration c) {
         this.configuration = c;
 
-        for (Attachable attachable : getAttachables()) {
-            attachable.attach(c);
-        }
-    }
-
-    @Override
-    @Deprecated
-    public final List<Attachable> getAttachables() {
-        List<Attachable> result = new ArrayList<Attachable>();
-
-        for (Attachable item : records) {
-            if (item != null) {
-                result.add(item);
+        for (R record : records) {
+            if (record != null) {
+                record.attach(c);
             }
         }
-
-        return result;
     }
 
     @Override

@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
@@ -72,7 +73,8 @@ abstract class AbstractStore implements AttachableInternal {
     // The Attachable API
     // -------------------------------------------------------------------------
 
-    @SuppressWarnings("deprecation")
+    abstract List<Attachable> getAttachables();
+
     @Override
     public final void attach(Configuration c) {
         configuration = c;

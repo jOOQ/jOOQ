@@ -47,7 +47,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
@@ -87,11 +86,6 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     @Override
     public final Configuration getConfiguration() {
         return configuration;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
     }
 
     // -------------------------------------------------------------------------

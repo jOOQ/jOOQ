@@ -37,11 +37,12 @@ package org.jooq.impl;
 
 import org.jooq.Configuration;
 import org.jooq.Record;
-import org.jooq.SimpleSelectQuery;
 import org.jooq.TableLike;
 
-class SimpleSelectQueryImpl<R extends Record> extends AbstractSubSelect<R> implements
-    SimpleSelectQuery<R> {
+/**
+ * @author Lukas Eder
+ */
+class SimpleSelectQueryImpl<R extends Record> extends AbstractSubSelect<R> {
 
     /**
      * Generated UID

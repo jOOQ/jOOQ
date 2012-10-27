@@ -96,7 +96,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     // -------------------------------------------------------------------------
 
     @Override
-    public final List<Attachable> getAttachables() {
+    final List<Attachable> getAttachables() {
         List<Attachable> result = new ArrayList<Attachable>();
 
         if (Attachable.class.isAssignableFrom(type.getType())) {

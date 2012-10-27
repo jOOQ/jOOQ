@@ -201,7 +201,7 @@ final class Util {
         }
     }
 
-    private static boolean attachRecords(Configuration configuration) {
+    private static final boolean attachRecords(Configuration configuration) {
         if (configuration != null) {
             Settings settings = configuration.getSettings();
 
@@ -1025,7 +1025,7 @@ final class Util {
     /**
      * Get a property name associated with a getter/setter method name.
      */
-    static String getPropertyName(String methodName) {
+    static final String getPropertyName(String methodName) {
         String name = methodName;
 
         if (name.startsWith("is") && name.length() > 2) {

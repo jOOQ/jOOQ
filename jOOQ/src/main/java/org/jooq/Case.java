@@ -35,7 +35,7 @@
  */
 package org.jooq;
 
-import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 
 
 /**
@@ -52,7 +52,7 @@ import org.jooq.impl.Executor;
  *      ELSE            'three'
  * END
  * </pre></code> Instances of Case are created through the
- * {@link Executor#decode()} method
+ * {@link Factory#decode()} method
  *
  * @author Lukas Eder
  */

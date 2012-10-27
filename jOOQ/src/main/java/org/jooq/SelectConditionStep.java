@@ -35,7 +35,8 @@
  */
 package org.jooq;
 
-import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
+
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -97,7 +98,7 @@ public interface SelectConditionStep extends SelectConnectByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String)
+     * @see Factory#condition(String)
      */
     @Support
     SelectConditionStep and(String sql);
@@ -111,7 +112,7 @@ public interface SelectConditionStep extends SelectConnectByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, Object...)
+     * @see Factory#condition(String, Object...)
      */
     @Support
     SelectConditionStep and(String sql, Object... bindings);
@@ -125,7 +126,7 @@ public interface SelectConditionStep extends SelectConnectByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, QueryPart...)
+     * @see Factory#condition(String, QueryPart...)
      */
     @Support
     SelectConditionStep and(String sql, QueryPart... parts);
@@ -167,7 +168,7 @@ public interface SelectConditionStep extends SelectConnectByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String)
+     * @see Factory#condition(String)
      */
     @Support
     SelectConditionStep or(String sql);
@@ -181,7 +182,7 @@ public interface SelectConditionStep extends SelectConnectByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, Object...)
+     * @see Factory#condition(String, Object...)
      */
     @Support
     SelectConditionStep or(String sql, Object... bindings);
@@ -195,7 +196,7 @@ public interface SelectConditionStep extends SelectConnectByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, QueryPart...)
+     * @see Factory#condition(String, QueryPart...)
      */
     @Support
     SelectConditionStep or(String sql, QueryPart... parts);

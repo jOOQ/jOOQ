@@ -35,7 +35,8 @@
  */
 package org.jooq;
 
-import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
+
 
 /**
  * An intermediate type for the construction of a relational division
@@ -58,7 +59,7 @@ public interface DivideByOnStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String)
+     * @see Factory#condition(String)
      */
     @Support
     DivideByOnConditionStep on(String sql);
@@ -71,7 +72,7 @@ public interface DivideByOnStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, Object...)
+     * @see Factory#condition(String, Object...)
      */
     @Support
     DivideByOnConditionStep on(String sql, Object... bindings);
@@ -84,7 +85,7 @@ public interface DivideByOnStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Executor#condition(String, QueryPart...)
+     * @see Factory#condition(String, QueryPart...)
      */
     @Support
     DivideByOnConditionStep on(String sql, QueryPart... parts);

@@ -399,10 +399,6 @@ public class Factory {
         return new NameImpl(qualifiedName);
     }
 
-    // -------------------------------------------------------------------------
-    // XXX Plain SQL object factory
-    // -------------------------------------------------------------------------
-
     /**
      * Create a qualified schema, given its schema name
      * <p>
@@ -427,6 +423,143 @@ public class Factory {
     public static Schema schemaByName(String name) {
         return new SchemaImpl(name);
     }
+
+    /**
+     * Create a qualified table, given its table name
+     * <p>
+     * This constructs a table reference given the table's qualified name. jOOQ
+     * will render the table name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This table...
+     * tableByName("MY_SCHEMA", "MY_TABLE");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE]
+     * </pre></code>
+     *
+     * @param qualifiedName The various parts making up your table's reference
+     *            name.
+     * @return A table referenced by <code>tableName</code>
+     */
+    @Support
+    public static Table<Record> tableByName(String... qualifiedName) {
+        return new QualifiedTable(qualifiedName);
+    }
+
+    /**
+     * Create a qualified field, given its (qualified) field name.
+     * <p>
+     * This constructs a field reference given the field's qualified name. jOOQ
+     * will render the field name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This field...
+     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     * <p>
+     * Another example: <code><pre>
+     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
+     *       .from(tableByName("T_BOOK"))
+     *       .fetch();
+     *
+     * // ... will execute this SQL on SQL Server:
+     * select length([TITLE]) from [T_BOOK]
+     * </pre></code>
+     *
+     * @param qualifiedName The various parts making up your field's reference
+     *            name.
+     * @return A field referenced by <code>fieldName</code>
+     */
+    @Support
+    public static Field<Object> fieldByName(String... qualifiedName) {
+        return fieldByName(Object.class, qualifiedName);
+    }
+
+    /**
+     * Create a qualified field, given its (qualified) field name.
+     * <p>
+     * This constructs a field reference given the field's qualified name. jOOQ
+     * will render the field name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This field...
+     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     * <p>
+     * Another example: <code><pre>
+     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
+     *       .from(tableByName("T_BOOK"))
+     *       .fetch();
+     *
+     * // ... will execute this SQL on SQL Server:
+     * select length([TITLE]) from [T_BOOK]
+     * </pre></code>
+     *
+     * @param qualifiedName The various parts making up your field's reference
+     *            name.
+     * @param type The type of the returned field
+     * @return A field referenced by <code>fieldName</code>
+     */
+    @Support
+    public static <T> Field<T> fieldByName(Class<T> type, String... qualifiedName) {
+        return fieldByName(getDataType(type), qualifiedName);
+    }
+
+    /**
+     * Create a qualified field, given its (qualified) field name.
+     * <p>
+     * This constructs a field reference given the field's qualified name. jOOQ
+     * will render the field name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This field...
+     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     * <p>
+     * Another example: <code><pre>
+     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
+     *       .from(tableByName("T_BOOK"))
+     *       .fetch();
+     *
+     * // ... will execute this SQL on SQL Server:
+     * select length([TITLE]) from [T_BOOK]
+     * </pre></code>
+     *
+     * @param qualifiedName The various parts making up your field's reference
+     *            name.
+     * @param type The type of the returned field
+     * @return A field referenced by <code>fieldName</code>
+     */
+    @Support
+    public static <T> Field<T> fieldByName(DataType<T> type, String... qualifiedName) {
+        return new QualifiedField<T>(type, qualifiedName);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Plain SQL object factory
+    // -------------------------------------------------------------------------
 
     /**
      * A custom SQL clause that can render arbitrary table expressions.
@@ -526,133 +659,6 @@ public class Factory {
     @Support
     public static Table<Record> table(String sql, QueryPart... parts) {
         return new SQLTable(sql, parts);
-    }
-
-    /**
-     * Create a qualified table, given its table name
-     * <p>
-     * This constructs a table reference given the table's qualified name. jOOQ
-     * will render the table name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
-     * <p>
-     * Example: <code><pre>
-     * // This table...
-     * tableByName("MY_SCHEMA", "MY_TABLE");
-     *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
-     * [MY_SCHEMA].[MY_TABLE]
-     * </pre></code>
-     *
-     * @param qualifiedName The various parts making up your table's reference
-     *            name.
-     * @return A table referenced by <code>tableName</code>
-     */
-    @Support
-    public static Table<Record> tableByName(String... qualifiedName) {
-        return new QualifiedTable(qualifiedName);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary SQL elements.
-     * <p>
-     * This is useful for constructing more complex SQL syntax elements wherever
-     * <code>Field</code> types are expected. An example for this is MySQL's
-     * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
-     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
-     * GROUP_CONCAT([DISTINCT] expr [,expr ...]
-     *       [ORDER BY {unsigned_integer | col_name | expr}
-     *           [ASC | DESC] [,col_name ...]]
-     *       [SEPARATOR str_val])
-     *       </pre></code>
-     * <p>
-     * The above MySQL function can be expressed as such: <code><pre>
-     * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
-     * </pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link #name(String...)} and similar methods
-     *
-     * @param sql The SQL clause, containing {numbered placeholders} where query
-     *            parts can be injected
-     * @param parts The {@link QueryPart} objects that are rendered at the
-     *            {numbered placeholder} locations
-     * @return A field wrapping the plain SQL
-     */
-    public static Field<Object> field(String sql, QueryPart... parts) {
-        return new SQLField<Object>(sql, SQLDataType.OTHER, parts);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary SQL elements.
-     * <p>
-     * This is useful for constructing more complex SQL syntax elements wherever
-     * <code>Field</code> types are expected. An example for this is MySQL's
-     * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
-     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
-     * GROUP_CONCAT([DISTINCT] expr [,expr ...]
-     *       [ORDER BY {unsigned_integer | col_name | expr}
-     *           [ASC | DESC] [,col_name ...]]
-     *       [SEPARATOR str_val])
-     *       </pre></code>
-     * <p>
-     * The above MySQL function can be expressed as such: <code><pre>
-     * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
-     * </pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link #name(String...)} and similar methods
-     *
-     * @param sql The SQL clause, containing {numbered placeholders} where query
-     *            parts can be injected
-     * @param type The field type
-     * @param parts The {@link QueryPart} objects that are rendered at the
-     *            {numbered placeholder} locations
-     * @return A field wrapping the plain SQL
-     */
-    public static <T> Field<T> field(String sql, Class<T> type, QueryPart... parts) {
-        return new SQLField<T>(sql, getDataType(type), parts);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary SQL elements.
-     * <p>
-     * This is useful for constructing more complex SQL syntax elements wherever
-     * <code>Field</code> types are expected. An example for this is MySQL's
-     * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
-     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
-     * GROUP_CONCAT([DISTINCT] expr [,expr ...]
-     *       [ORDER BY {unsigned_integer | col_name | expr}
-     *           [ASC | DESC] [,col_name ...]]
-     *       [SEPARATOR str_val])
-     *       </pre></code>
-     * <p>
-     * The above MySQL function can be expressed as such: <code><pre>
-     * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
-     * </pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link #name(String...)} and similar methods
-     *
-     * @param sql The SQL clause, containing {numbered placeholders} where query
-     *            parts can be injected
-     * @param type The field type
-     * @param parts The {@link QueryPart} objects that are rendered at the
-     *            {numbered placeholder} locations
-     * @return A field wrapping the plain SQL
-     */
-    public static <T> Field<T> field(String sql, DataType<T> type, QueryPart... parts) {
-        return new SQLField<T>(sql, type, parts);
     }
 
     /**
@@ -813,110 +819,104 @@ public class Factory {
     }
 
     /**
-     * Create a qualified field, given its (qualified) field name.
+     * A custom SQL clause that can render arbitrary SQL elements.
      * <p>
-     * This constructs a field reference given the field's qualified name. jOOQ
-     * will render the field name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
+     * This is useful for constructing more complex SQL syntax elements wherever
+     * <code>Field</code> types are expected. An example for this is MySQL's
+     * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
+     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
+     * GROUP_CONCAT([DISTINCT] expr [,expr ...]
+     *       [ORDER BY {unsigned_integer | col_name | expr}
+     *           [ASC | DESC] [,col_name ...]]
+     *       [SEPARATOR str_val])
+     *       </pre></code>
      * <p>
-     * Example: <code><pre>
-     * // This field...
-     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
-     *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
-     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * The above MySQL function can be expressed as such: <code><pre>
+     * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
      * </pre></code>
      * <p>
-     * Another example: <code><pre>
-     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
-     *       .from(tableByName("T_BOOK"))
-     *       .fetch();
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link #name(String...)} and similar methods
      *
-     * // ... will execute this SQL on SQL Server:
-     * select length([TITLE]) from [T_BOOK]
-     * </pre></code>
-     *
-     * @param qualifiedName The various parts making up your field's reference
-     *            name.
-     * @return A field referenced by <code>fieldName</code>
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return A field wrapping the plain SQL
      */
-    @Support
-    public static Field<Object> fieldByName(String... qualifiedName) {
-        return fieldByName(Object.class, qualifiedName);
+    public static Field<Object> field(String sql, QueryPart... parts) {
+        return new SQLField<Object>(sql, SQLDataType.OTHER, parts);
     }
 
     /**
-     * Create a qualified field, given its (qualified) field name.
+     * A custom SQL clause that can render arbitrary SQL elements.
      * <p>
-     * This constructs a field reference given the field's qualified name. jOOQ
-     * will render the field name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
+     * This is useful for constructing more complex SQL syntax elements wherever
+     * <code>Field</code> types are expected. An example for this is MySQL's
+     * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
+     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
+     * GROUP_CONCAT([DISTINCT] expr [,expr ...]
+     *       [ORDER BY {unsigned_integer | col_name | expr}
+     *           [ASC | DESC] [,col_name ...]]
+     *       [SEPARATOR str_val])
+     *       </pre></code>
      * <p>
-     * Example: <code><pre>
-     * // This field...
-     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
-     *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
-     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * The above MySQL function can be expressed as such: <code><pre>
+     * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
      * </pre></code>
      * <p>
-     * Another example: <code><pre>
-     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
-     *       .from(tableByName("T_BOOK"))
-     *       .fetch();
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link #name(String...)} and similar methods
      *
-     * // ... will execute this SQL on SQL Server:
-     * select length([TITLE]) from [T_BOOK]
-     * </pre></code>
-     *
-     * @param qualifiedName The various parts making up your field's reference
-     *            name.
-     * @param type The type of the returned field
-     * @return A field referenced by <code>fieldName</code>
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param type The field type
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return A field wrapping the plain SQL
      */
-    @Support
-    public static <T> Field<T> fieldByName(Class<T> type, String... qualifiedName) {
-        return fieldByName(getDataType(type), qualifiedName);
+    public static <T> Field<T> field(String sql, Class<T> type, QueryPart... parts) {
+        return new SQLField<T>(sql, getDataType(type), parts);
     }
 
     /**
-     * Create a qualified field, given its (qualified) field name.
+     * A custom SQL clause that can render arbitrary SQL elements.
      * <p>
-     * This constructs a field reference given the field's qualified name. jOOQ
-     * will render the field name according to your
-     * {@link Settings#getRenderNameStyle()} settings. Choose
-     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
-     * injection.
+     * This is useful for constructing more complex SQL syntax elements wherever
+     * <code>Field</code> types are expected. An example for this is MySQL's
+     * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
+     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
+     * GROUP_CONCAT([DISTINCT] expr [,expr ...]
+     *       [ORDER BY {unsigned_integer | col_name | expr}
+     *           [ASC | DESC] [,col_name ...]]
+     *       [SEPARATOR str_val])
+     *       </pre></code>
      * <p>
-     * Example: <code><pre>
-     * // This field...
-     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
-     *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
-     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * The above MySQL function can be expressed as such: <code><pre>
+     * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
      * </pre></code>
      * <p>
-     * Another example: <code><pre>
-     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
-     *       .from(tableByName("T_BOOK"))
-     *       .fetch();
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link #name(String...)} and similar methods
      *
-     * // ... will execute this SQL on SQL Server:
-     * select length([TITLE]) from [T_BOOK]
-     * </pre></code>
-     *
-     * @param qualifiedName The various parts making up your field's reference
-     *            name.
-     * @param type The type of the returned field
-     * @return A field referenced by <code>fieldName</code>
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param type The field type
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return A field wrapping the plain SQL
      */
-    @Support
-    public static <T> Field<T> fieldByName(DataType<T> type, String... qualifiedName) {
-        return new QualifiedField<T>(type, qualifiedName);
+    public static <T> Field<T> field(String sql, DataType<T> type, QueryPart... parts) {
+        return new SQLField<T>(sql, type, parts);
     }
 
     /**

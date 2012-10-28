@@ -55,6 +55,8 @@ import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.max;
+import static org.jooq.impl.Factory.select;
+import static org.jooq.impl.Factory.selectOne;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
 
@@ -364,14 +366,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         Insert<A> i =
         create().insertInto(TAuthor())
-                .select(create().select(vals(
-                                    1000,
-                                    val("Lukas")))
-                                .select(vals(
-                                    "Eder",
-                                    val(new Date(363589200000L)),
-                                    castNull(Integer.class),
-                                    nullField)));
+                .select(select(vals(
+                            1000,
+                            val("Lukas")))
+                        .select(vals(
+                            "Eder",
+                            val(new Date(363589200000L)),
+                            castNull(Integer.class),
+                            nullField)));
 
         assertEquals(1, i.execute());
 
@@ -383,7 +385,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         // [#1069] Run checks for INSERT INTO t(a, b) SELECT x, y syntax
         i = create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
-                    .select(create().select(vals(1001, "Hesse")));
+                    .select(select(vals(1001, "Hesse")));
 
         assertEquals(1, i.execute());
         A author2 = create().fetchOne(TAuthor(), TAuthor_LAST_NAME().equal("Hesse"));
@@ -679,7 +681,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         // Always do an update of everything
         // --------------------------------
         create().mergeInto(TAuthor())
-                .using(create().selectOne())
+                .using(selectOne())
                 .on("1 = 1")
                 .whenMatchedThenUpdate()
                 .set(TAuthor_FIRST_NAME(), "Alfred")
@@ -695,7 +697,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         // Always do an update of the first author
         // --------------------------------
         create().mergeInto(TAuthor())
-                .using(create().selectOne())
+                .using(selectOne())
                 .on(TAuthor_ID().equal(1))
                 .whenMatchedThenUpdate()
                 .set(TAuthor_FIRST_NAME(), "John")
@@ -715,7 +717,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         // --------------------------------
         MergeFinalStep<A> q =
         create().mergeInto(TAuthor())
-                .using(create().select(f, l))
+                .using(select(f, l))
                 .on(TAuthor_LAST_NAME().equal(l))
                 .whenMatchedThenUpdate()
                 .set(TAuthor_FIRST_NAME(), "James")
@@ -841,8 +843,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 // in the system temporary table space, otherwise
 
                 // [#579] TODO: Aliasing shouldn't be necessary
-                .select(create().select(val(3).as("a"), inline("Eder").as("b")).unionAll(
-                        create().select(val(4).as("a"), inline("Eder").as("b"))))
+                .select(select(val(3).as("a"), inline("Eder").as("b")).unionAll(
+                        select(val(4).as("a"), inline("Eder").as("b"))))
                 .execute());
 
         Result<A> authors4 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();

@@ -49,6 +49,7 @@ import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.prior;
+import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.sysConnectByPath;
@@ -213,8 +214,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         Field<Integer> lang = TBook_LANGUAGE_ID().cast(Integer.class).as("lang");
         Result<Record> result3 =
         create().select()
-                .from(table(create().select(TBook_AUTHOR_ID(), lang)
-                                    .from(TBook()))
+                .from(table(select(TBook_AUTHOR_ID(), lang)
+                           .from(TBook()))
                 .pivot(count())
                 .on(lang)
                 .in(1, 2, 3, 4))

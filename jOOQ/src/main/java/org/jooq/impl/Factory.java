@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.DefaultConfiguration.DEFAULT_CONFIGURATION;
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Utils.combine;
 
@@ -91,6 +92,7 @@ import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
+import org.jooq.SelectSelectStep;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.UDTRecord;
@@ -105,6 +107,230 @@ import org.jooq.types.DayToSecond;
  * @author Lukas Eder
  */
 public class Factory {
+
+    // -------------------------------------------------------------------------
+    // XXX Static subselect factory methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#select(Field...)
+     */
+    @Support
+    public static SelectSelectStep select(Field<?>... fields) {
+        return new SelectImpl(DEFAULT_CONFIGURATION).select(fields);
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(fields)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#select(Collection)
+     */
+    @Support
+    public static SelectSelectStep select(Collection<? extends Field<?>> fields) {
+        return new SelectImpl(DEFAULT_CONFIGURATION).select(fields);
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#selectDistinct(Field...)
+     */
+    @Support
+    public static SelectSelectStep selectDistinct(Field<?>... fields) {
+        return new SelectImpl(DEFAULT_CONFIGURATION, true).select(fields);
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(fields)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#selectDistinct(Collection)
+     */
+    @Support
+    public static SelectSelectStep selectDistinct(Collection<? extends Field<?>> fields) {
+        return new SelectImpl(DEFAULT_CONFIGURATION, true).select(fields);
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectZero()
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#zero()
+     * @see FactoryOperations#selectZero()
+     */
+    @Support
+    public static SelectSelectStep selectZero() {
+        return new SelectImpl(DEFAULT_CONFIGURATION).select(zero());
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectOne()
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#one()
+     * @see FactoryOperations#selectOne()
+     */
+    @Support
+    public static SelectSelectStep selectOne() {
+        return new SelectImpl(DEFAULT_CONFIGURATION).select(one());
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectCount()
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#count()
+     * @see FactoryOperations#selectCount()
+     */
+    @Support
+    public static SelectSelectStep selectCount() {
+        return new SelectImpl(DEFAULT_CONFIGURATION).select(count());
+    }
 
     // -------------------------------------------------------------------------
     // XXX Quantified comparison predicate expressions

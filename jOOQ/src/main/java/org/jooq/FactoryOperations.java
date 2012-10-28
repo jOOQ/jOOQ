@@ -323,6 +323,12 @@ public interface FactoryOperations extends Configuration {
     /**
      * Create a new DSL select statement.
      * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field...)} instead.
+     * <p>
      * Example: <code><pre>
      * Factory create = new Factory();
      *
@@ -333,12 +339,92 @@ public interface FactoryOperations extends Configuration {
      *       .orderBy(field2)
      *       .execute();
      * </pre></code>
+     *
+     * @see Factory#select(Field...)
      */
     @Support
     SelectSelectStep select(Field<?>... fields);
 
     /**
+     * Create a new DSL select statement.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Collection)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Factory create = new Factory();
+     *
+     * create.select(fields)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#select(Collection)
+     */
+    @Support
+    SelectSelectStep select(Collection<? extends Field<?>> fields);
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field...)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Factory create = new Factory();
+     *
+     * create.selectDistinct(field1, field2)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     */
+    @Support
+    SelectSelectStep selectDistinct(Field<?>... fields);
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Collection)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Factory create = new Factory();
+     *
+     * create.selectDistinct(fields)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Collection)
+     */
+    @Support
+    SelectSelectStep selectDistinct(Collection<? extends Field<?>> fields);
+
+    /**
      * Create a new DSL select statement for constant <code>0</code> literal
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectZero()} instead.
      * <p>
      * Example: <code><pre>
      * Factory create = new Factory();
@@ -352,12 +438,19 @@ public interface FactoryOperations extends Configuration {
      * </pre></code>
      *
      * @see Factory#zero()
+     * @see Factory#selectZero()
      */
     @Support
     SelectSelectStep selectZero();
 
     /**
      * Create a new DSL select statement for constant <code>1</code> literal
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectOne()} instead.
      * <p>
      * Example: <code><pre>
      * Factory create = new Factory();
@@ -371,12 +464,19 @@ public interface FactoryOperations extends Configuration {
      * </pre></code>
      *
      * @see Factory#one()
+     * @see Factory#selectOne()
      */
     @Support
     SelectSelectStep selectOne();
 
     /**
      * Create a new DSL select statement for <code>COUNT(*)</code>
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectCount()} instead.
      * <p>
      * Example: <code><pre>
      * Factory create = new Factory();
@@ -388,57 +488,11 @@ public interface FactoryOperations extends Configuration {
      *       .orderBy(field2)
      *       .execute();
      * </pre></code>
+     *
+     * @see Factory#selectCount()
      */
     @Support
     SelectSelectStep selectCount();
-
-    /**
-     * Create a new DSL select statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.selectDistinct(field1, field2)
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2);
-     * </pre></code>
-     */
-    @Support
-    SelectSelectStep selectDistinct(Field<?>... fields);
-
-    /**
-     * Create a new DSL select statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.select(fields)
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2);
-     * </pre></code>
-     */
-    @Support
-    SelectSelectStep select(Collection<? extends Field<?>> fields);
-
-    /**
-     * Create a new DSL select statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.selectDistinct(fields)
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2);
-     * </pre></code>
-     */
-    @Support
-    SelectSelectStep selectDistinct(Collection<? extends Field<?>> fields);
 
     /**
      * Create a new {@link SelectQuery}

@@ -105,6 +105,12 @@ public interface Row1<T1> extends Row {
     Condition equal(Field<T1> t1);
 
     /**
+     * Compare this row value expression with a subselect for equality
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition equal(Select<? extends Record1<T1>> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * equality
      * <p>
@@ -139,6 +145,12 @@ public interface Row1<T1> extends Row {
      */
     @Support
     Condition eq(Field<T1> t1);
+
+    /**
+     * Compare this row value expression with a subselect for equality
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition eq(Select<? extends Record1<T1>> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -177,6 +189,12 @@ public interface Row1<T1> extends Row {
     Condition notEqual(Field<T1> t1);
 
     /**
+     * Compare this row value expression with a subselect for non-equality
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition notEqual(Select<? extends Record1<T1>> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * non-equality
      * <p>
@@ -213,6 +231,12 @@ public interface Row1<T1> extends Row {
     Condition ne(Field<T1> t1);
 
     /**
+     * Compare this row value expression with a subselect for non-equality
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition ne(Select<? extends Record1<T1>> select);
+
+    /**
      * Compare this row value expression with a set of row value expressions for
      * equality
      * <p>
@@ -235,6 +259,12 @@ public interface Row1<T1> extends Row {
      */
     @Support
     Condition in(Row1<T1>... rows);
+
+    /**
+     * Compare this row value expression with a subselect for equality
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition in(Select<? extends Record1<T1>> select);
 
     /**
      * Compare this row value expression with a set of row value expressions for
@@ -263,21 +293,7 @@ public interface Row1<T1> extends Row {
     Condition notIn(Row1<T1>... rows);
 
     /**
-     * Compare this row value expression with a subselect for equality
-     * <p>
-     * Note that the subquery must return a table of the same degree as this row
-     * value expression. This is not checked by jOOQ and will result in syntax
-     * errors in the database, if not used correctly.
-     */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
-    Condition in(Select<? extends Record1<T1>> select);
-
-    /**
      * Compare this row value expression with a subselect for non-equality
-     * <p>
-     * Note that the subquery must return a table of the same degree as this row
-     * value expression. This is not checked by jOOQ and will result in syntax
-     * errors in the database, if not used correctly.
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notIn(Select<? extends Record1<T1>> select);

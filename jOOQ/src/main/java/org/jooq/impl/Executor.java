@@ -37,12 +37,9 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.SettingsTools.getRenderMapping;
-import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.fieldByName;
-import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.trueCondition;
-import static org.jooq.impl.Factory.zero;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -114,6 +111,8 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
 
 /**
+ * TODO: Review this Javadoc
+ * <p>
  * A factory providing implementations to the org.jooq interfaces
  * <p>
  * This factory is the main entry point for client code, to access jOOQ classes
@@ -1066,39 +1065,9 @@ public class Executor implements FactoryOperations {
      */
     @Override
     public final SelectSelectStep select(Field<?>... fields) {
-        return new SelectImpl(this).select(fields);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final SelectSelectStep selectZero() {
-        return new SelectImpl(this).select(zero());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final SelectSelectStep selectOne() {
-        return new SelectImpl(this).select(one());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final SelectSelectStep selectCount() {
-        return new SelectImpl(this).select(count());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final SelectSelectStep selectDistinct(Field<?>... fields) {
-        return new SelectImpl(this, true).select(fields);
+        SelectSelectStep result = Factory.select(fields);
+        result.attach(this);
+        return result;
     }
 
     /**
@@ -1106,7 +1075,19 @@ public class Executor implements FactoryOperations {
      */
     @Override
     public final SelectSelectStep select(Collection<? extends Field<?>> fields) {
-        return new SelectImpl(this).select(fields);
+        SelectSelectStep result = Factory.select(fields);
+        result.attach(this);
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final SelectSelectStep selectDistinct(Field<?>... fields) {
+        SelectSelectStep result = Factory.selectDistinct(fields);
+        result.attach(this);
+        return result;
     }
 
     /**
@@ -1114,7 +1095,39 @@ public class Executor implements FactoryOperations {
      */
     @Override
     public final SelectSelectStep selectDistinct(Collection<? extends Field<?>> fields) {
-        return new SelectImpl(this, true).select(fields);
+        SelectSelectStep result = Factory.selectDistinct(fields);
+        result.attach(this);
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final SelectSelectStep selectZero() {
+        SelectSelectStep result = Factory.selectZero();
+        result.attach(this);
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final SelectSelectStep selectOne() {
+        SelectSelectStep result = Factory.selectOne();
+        result.attach(this);
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final SelectSelectStep selectCount() {
+        SelectSelectStep result = Factory.selectCount();
+        result.attach(this);
+        return result;
     }
 
     /**

@@ -47,6 +47,7 @@ import static org.jooq.impl.Factory.groupingId;
 import static org.jooq.impl.Factory.groupingSets;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.rollup;
+import static org.jooq.impl.Factory.selectOne;
 
 import java.util.Arrays;
 
@@ -140,7 +141,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             .groupBy(TAuthor_LAST_NAME())
             .having(count().equal(2))
             .or(count().greaterOrEqual(2))
-            .andExists(create().selectOne())
+            .andExists(selectOne())
             .fetch();
 
         assertEquals(1, result.size());

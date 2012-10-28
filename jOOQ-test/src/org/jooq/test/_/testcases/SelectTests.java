@@ -40,6 +40,8 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.countDistinct;
+import static org.jooq.impl.Factory.select;
+import static org.jooq.impl.Factory.selectOne;
 import static org.jooq.impl.Factory.trim;
 import static org.jooq.impl.Factory.val;
 
@@ -162,8 +164,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         // ---------------------------------------------------------------------
         assertEquals(3,
             create().selectFrom(TBook())
-                .where(TBook_TITLE().notIn(create()
-                    .select(TBook_TITLE())
+                .where(TBook_TITLE().notIn(
+                    select(TBook_TITLE())
                     .from(TBook())
                     .where(TBook_TITLE().in("1984"))))
                 .execute());
@@ -174,14 +176,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(3,
             create()
                 .selectFrom(TBook())
-                .whereNotExists(create()
-                    .selectOne()
+                .whereNotExists(
+                    selectOne()
                     .from(TAuthor())
                     .where(TAuthor_YEAR_OF_BIRTH().greaterOrEqual(TBook_PUBLISHED_IN())))
 
                 // Add additional useless queries to check query correctness
-                .orNotExists(create().select())
-                .andExists(create().select()).execute());
+                .orNotExists(select())
+                .andExists(select()).execute());
 
         // ---------------------------------------------------------------------
         // Testing selecting from a select

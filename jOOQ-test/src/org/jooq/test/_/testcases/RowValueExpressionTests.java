@@ -50,6 +50,7 @@ import static org.jooq.impl.Factory.currentDate;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.not;
 import static org.jooq.impl.Factory.row;
+import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.val;
 
 import java.sql.Date;
@@ -129,15 +130,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         else {
             assertEquals(1, (int)
             create().selectOne()
-                    .where(row(1, 2, 3).in(create().select(val(1), val(2), val(3))))
-                    .and(row(1, 2, 3).notIn(create().select(val(3), val(2), val(1))))
+                    .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
+                    .and(row(1, 2, 3).notIn(select(val(3), val(2), val(1))))
                     .fetchOne(0, Integer.class));
 
             // CUBRID has a bug here http://jira.cubrid.org/browse/ENGINE-61
             if (!asList(CUBRID).contains(getDialect())) {
                 assertEquals(1, (int)
                     create().selectOne()
-                            .where(row(1, 2, 3).in(create().select(val(1), val(2), val(3))))
+                            .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
                             .and(row(3, 2).notIn(
                                 create().select(val(2), val(3)).union(
                                 create().select(val(4), val(3)))))

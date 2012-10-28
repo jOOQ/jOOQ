@@ -49,6 +49,8 @@ import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.one;
+import static org.jooq.impl.Factory.select;
+import static org.jooq.impl.Factory.selectOne;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.zero;
 
@@ -109,7 +111,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         create().select()
                 .from(TAuthor())
                 .join(TBook()).on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
-                .crossJoin(create().select(one().as("one")))
+                .crossJoin(select(one().as("one")))
                 .orderBy(TBook_ID())
                 .fetch();
 
@@ -173,10 +175,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 .from(TAuthor())
                 .join(TBook())
                 .on(TAuthor_ID().equal(TBook_AUTHOR_ID())
-                .and(TBook_LANGUAGE_ID().in(create().select(field("id"))
-                                                    .from("t_language")
-                                                    .where("upper(cd) in (?, ?)", "DE", "EN")))
-                .orExists(create().selectOne().from(TAuthor()).where(falseCondition())))
+                .and(TBook_LANGUAGE_ID().in(select(field("id"))
+                                           .from("t_language")
+                                           .where("upper(cd) in (?, ?)", "DE", "EN")))
+                .orExists(selectOne().from(TAuthor()).where(falseCondition())))
                 .orderBy(TBook_ID()).fetch();
 
             assertEquals(3, result.size());
@@ -191,10 +193,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 .from(author)
                 .join(TBook())
                 .on(author.getField(TAuthor_ID()).equal(TBook_AUTHOR_ID()))
-                .and(TBook_LANGUAGE_ID().in(create().select(field("id"))
-                                                    .from("t_language")
-                                                    .where("upper(cd) in (?, ?)", "DE", "EN")))
-                .orExists(create().selectOne().where(falseCondition()))
+                .and(TBook_LANGUAGE_ID().in(select(field("id"))
+                                           .from("t_language")
+                                           .where("upper(cd) in (?, ?)", "DE", "EN")))
+                .orExists(selectOne().where(falseCondition()))
                 .orderBy(TBook_ID()).fetch();
 
             assertEquals(3, result.size());
@@ -207,10 +209,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 .from(TAuthor())
                 .join(book)
                 .on(TAuthor_ID().equal(book.getField(TBook_AUTHOR_ID())))
-                .and(book.getField(TBook_LANGUAGE_ID()).in(create().select(field("id"))
-                                                    .from("t_language")
-                                                    .where("upper(cd) in (?, ?)", "DE", "EN")))
-                .orExists(create().selectOne().where(falseCondition()))
+                .and(book.getField(TBook_LANGUAGE_ID()).in(
+                    select(field("id"))
+                    .from("t_language")
+                    .where("upper(cd) in (?, ?)", "DE", "EN")))
+                .orExists(selectOne().where(falseCondition()))
                 .orderBy(book.getField(TBook_ID())).fetch();
 
             assertEquals(3, result.size());

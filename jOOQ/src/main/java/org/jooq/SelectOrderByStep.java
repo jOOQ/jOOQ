@@ -82,25 +82,25 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectOrderByStep extends SelectLimitStep {
+public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> {
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support
-    SelectLimitStep orderBy(Field<?>... fields);
+    SelectLimitStep<R> orderBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support
-    SelectLimitStep orderBy(SortField<?>... fields);
+    SelectLimitStep<R> orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support
-    SelectLimitStep orderBy(Collection<SortField<?>> fields);
+    SelectLimitStep<R> orderBy(Collection<SortField<?>> fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
@@ -112,7 +112,7 @@ public interface SelectOrderByStep extends SelectLimitStep {
      * ordering
      */
     @Support
-    SelectLimitStep orderBy(int... fieldIndexes);
+    SelectLimitStep<R> orderBy(int... fieldIndexes);
 
     /**
      * Add an <code>ORDER SIBLINGS BY</code> clause to the query
@@ -122,7 +122,7 @@ public interface SelectOrderByStep extends SelectLimitStep {
      * and elements of each hierarchy should be ordered among themselves.
      */
     @Support({ CUBRID, ORACLE })
-    SelectLimitStep orderSiblingsBy(Field<?>... fields);
+    SelectLimitStep<R> orderSiblingsBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER SIBLINGS BY</code> clause to the query
@@ -132,7 +132,7 @@ public interface SelectOrderByStep extends SelectLimitStep {
      * and elements of each hierarchy should be ordered among themselves.
      */
     @Support({ CUBRID, ORACLE })
-    SelectLimitStep orderSiblingsBy(SortField<?>... fields);
+    SelectLimitStep<R> orderSiblingsBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER SIBLINGS BY</code> clause to the query
@@ -142,7 +142,7 @@ public interface SelectOrderByStep extends SelectLimitStep {
      * and elements of each hierarchy should be ordered among themselves.
      */
     @Support({ CUBRID, ORACLE })
-    SelectLimitStep orderSiblingsBy(Collection<SortField<?>> fields);
+    SelectLimitStep<R> orderSiblingsBy(Collection<SortField<?>> fields);
 
     /**
      * Add an <code>ORDER SIBLINGS BY</code> clause to the query
@@ -158,5 +158,5 @@ public interface SelectOrderByStep extends SelectLimitStep {
      * ordering
      */
     @Support({ CUBRID, ORACLE })
-    SelectLimitStep orderSiblingsBy(int... fieldIndexes);
+    SelectLimitStep<R> orderSiblingsBy(int... fieldIndexes);
 }

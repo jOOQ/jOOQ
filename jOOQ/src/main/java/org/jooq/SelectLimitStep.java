@@ -91,7 +91,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *
  * @author Lukas Eder
  */
-public interface SelectLimitStep extends SelectForUpdateStep {
+public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R> {
 
     /**
      * Add a <code>LIMIT</code> clause to the query
@@ -104,7 +104,7 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
     @Support
-    SelectOffsetStep limit(int numberOfRows);
+    SelectOffsetStep<R> limit(int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -122,7 +122,7 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
     @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SelectOffsetStep limit(Param<Integer> numberOfRows);
+    SelectOffsetStep<R> limit(Param<Integer> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query
@@ -136,7 +136,7 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SelectForUpdateStep limit(int offset, int numberOfRows);
+    SelectForUpdateStep<R> limit(int offset, int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -151,7 +151,7 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SelectForUpdateStep limit(int offset, Param<Integer> numberOfRows);
+    SelectForUpdateStep<R> limit(int offset, Param<Integer> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -166,7 +166,7 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SelectForUpdateStep limit(Param<Integer> offset, int numberOfRows);
+    SelectForUpdateStep<R> limit(Param<Integer> offset, int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -181,5 +181,5 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SelectForUpdateStep limit(Param<Integer> offset, Param<Integer> numberOfRows);
+    SelectForUpdateStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
 }

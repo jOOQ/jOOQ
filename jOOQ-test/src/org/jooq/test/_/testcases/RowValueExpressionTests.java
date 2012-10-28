@@ -55,6 +55,23 @@ import static org.jooq.impl.Factory.val;
 
 import java.sql.Date;
 
+import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Row1;
+import org.jooq.Row2;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
@@ -139,9 +156,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 assertEquals(1, (int)
                     create().selectOne()
                             .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
-                            .and(row(3, 2).notIn(
-                                create().select(val(2), val(3)).union(
-                                create().select(val(4), val(3)))))
+                            .and(row(3, "2").notIn(
+                                select(val(2), val("3")).union(
+                                select(val(4), val("3")))))
                             .fetchOne(0, Integer.class));
             }
         }
@@ -193,5 +210,181 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 .and(row(1, 4).overlaps(3, 2))
                 .and(not(row(1, 2).overlaps(3, 4)))
                 .fetchOne(0, Integer.class));
+    }
+
+    @Test
+    public void testRowValueExpressionRecords() {
+
+        // All record types should be assignment-compatible to the general-purpose
+        // record type, both at compile-time and at run-time
+        Record record;
+
+        // Type-safe record types
+        Record1<Integer> r1;
+        Record2<Integer, String> r2;
+        Record3<Integer, String, Integer> r3;
+        Record4<Integer, String, Integer, String> r4;
+        Record5<Integer, String, Integer, String, Integer> r5;
+        Record6<Integer, String, Integer, String, Integer, String> r6;
+        Record7<Integer, String, Integer, String, Integer, String, Integer> r7;
+        Record8<Integer, String, Integer, String, Integer, String, Integer, String> r8;
+        Record r9;
+
+        record = r1 = create().fetchOne(select(val(1)));
+        record = r2 = create().fetchOne(select(val(1), val("2")));
+        record = r3 = create().fetchOne(select(val(1), val("2"), val(3)));
+        record = r4 = create().fetchOne(select(val(1), val("2"), val(3), val("4")));
+        record = r5 = create().fetchOne(select(val(1), val("2"), val(3), val("4"), val(5)));
+        record = r6 = create().fetchOne(select(val(1), val("2"), val(3), val("4"), val(5), val("6")));
+        record = r7 = create().fetchOne(select(val(1), val("2"), val(3), val("4"), val(5), val("6"), val(7)));
+        record = r8 = create().fetchOne(select(val(1), val("2"), val(3), val("4"), val(5), val("6"), val(7), val("8")));
+        record = r9 = create().fetchOne(select(val(1), val("2"), val(3), val("4"), val(5), val("6"), val(7), val("8"), val(9)));
+
+        assertEquals(record, r9);
+
+        // Checking value[N]() and field[N]() methods
+        // ------------------------------------------
+
+        // Checking value1(), field1()
+        assertEquals(1, (int) r1.value1()); assertEquals(val(1), r1.field1());
+        assertEquals(1, (int) r2.value1()); assertEquals(val(1), r2.field1());
+        assertEquals(1, (int) r3.value1()); assertEquals(val(1), r3.field1());
+        assertEquals(1, (int) r4.value1()); assertEquals(val(1), r4.field1());
+        assertEquals(1, (int) r5.value1()); assertEquals(val(1), r5.field1());
+        assertEquals(1, (int) r6.value1()); assertEquals(val(1), r6.field1());
+        assertEquals(1, (int) r7.value1()); assertEquals(val(1), r7.field1());
+        assertEquals(1, (int) r8.value1()); assertEquals(val(1), r8.field1());
+
+        // Checking value2(), field2()
+        assertEquals("2", r2.value2()); assertEquals(val("2"), r2.field2());
+        assertEquals("2", r3.value2()); assertEquals(val("2"), r3.field2());
+        assertEquals("2", r4.value2()); assertEquals(val("2"), r4.field2());
+        assertEquals("2", r5.value2()); assertEquals(val("2"), r5.field2());
+        assertEquals("2", r6.value2()); assertEquals(val("2"), r6.field2());
+        assertEquals("2", r7.value2()); assertEquals(val("2"), r7.field2());
+        assertEquals("2", r8.value2()); assertEquals(val("2"), r8.field2());
+
+        // Checking value3(), field3()
+        assertEquals(3, (int) r3.value3()); assertEquals(val(3), r3.field3());
+        assertEquals(3, (int) r4.value3()); assertEquals(val(3), r4.field3());
+        assertEquals(3, (int) r5.value3()); assertEquals(val(3), r5.field3());
+        assertEquals(3, (int) r6.value3()); assertEquals(val(3), r6.field3());
+        assertEquals(3, (int) r7.value3()); assertEquals(val(3), r7.field3());
+        assertEquals(3, (int) r8.value3()); assertEquals(val(3), r8.field3());
+
+        // Checking value4(), field4()
+        assertEquals("4", r4.value4()); assertEquals(val("4"), r4.field4());
+        assertEquals("4", r5.value4()); assertEquals(val("4"), r5.field4());
+        assertEquals("4", r6.value4()); assertEquals(val("4"), r6.field4());
+        assertEquals("4", r7.value4()); assertEquals(val("4"), r7.field4());
+        assertEquals("4", r8.value4()); assertEquals(val("4"), r8.field4());
+
+        // Checking value5(), field5()
+        assertEquals(5, (int) r5.value5()); assertEquals(val(5), r5.field5());
+        assertEquals(5, (int) r6.value5()); assertEquals(val(5), r6.field5());
+        assertEquals(5, (int) r7.value5()); assertEquals(val(5), r7.field5());
+        assertEquals(5, (int) r8.value5()); assertEquals(val(5), r8.field5());
+
+        // Checking value6(), field6()
+        assertEquals("6", r6.value6()); assertEquals(val("6"), r6.field6());
+        assertEquals("6", r7.value6()); assertEquals(val("6"), r7.field6());
+        assertEquals("6", r8.value6()); assertEquals(val("6"), r8.field6());
+
+        // Checking value7(), field7()
+        assertEquals(7, (int) r7.value7()); assertEquals(val(7), r7.field7());
+        assertEquals(7, (int) r8.value7()); assertEquals(val(7), r8.field7());
+
+        // Checking value8(), field8()
+        assertEquals("8", r8.value8()); assertEquals(val("8"), r8.field8());
+
+        // Checking fieldsRow() and valuesRow() methods
+        // --------------------------------------------
+        Row1<Integer> row1;
+        Row2<Integer, String> row2;
+        Row3<Integer, String, Integer> row3;
+        Row4<Integer, String, Integer, String> row4;
+        Row5<Integer, String, Integer, String, Integer> row5;
+        Row6<Integer, String, Integer, String, Integer, String> row6;
+        Row7<Integer, String, Integer, String, Integer, String, Integer> row7;
+        Row8<Integer, String, Integer, String, Integer, String, Integer, String> row8;
+
+        for (int i = 0; i < 2; i++) {
+
+            // In the first run, consider the row value expression's fields...
+            if (i == 0) {
+                row1 = r1.fieldsRow();
+                row2 = r2.fieldsRow();
+                row3 = r3.fieldsRow();
+                row4 = r4.fieldsRow();
+                row5 = r5.fieldsRow();
+                row6 = r6.fieldsRow();
+                row7 = r7.fieldsRow();
+                row8 = r8.fieldsRow();
+            }
+
+            // ... in this test-case, they should coincide with the values
+            else {
+                row1 = r1.valuesRow();
+                row2 = r2.valuesRow();
+                row3 = r3.valuesRow();
+                row4 = r4.valuesRow();
+                row5 = r5.valuesRow();
+                row6 = r6.valuesRow();
+                row7 = r7.valuesRow();
+                row8 = r8.valuesRow();
+            }
+
+            // Checking field1()
+            assertEquals(val(1), row1.field1());
+            assertEquals(val(1), row2.field1());
+            assertEquals(val(1), row3.field1());
+            assertEquals(val(1), row4.field1());
+            assertEquals(val(1), row5.field1());
+            assertEquals(val(1), row6.field1());
+            assertEquals(val(1), row7.field1());
+            assertEquals(val(1), row8.field1());
+
+            // Checking field2()
+            assertEquals(val("2"), row2.field2());
+            assertEquals(val("2"), row3.field2());
+            assertEquals(val("2"), row4.field2());
+            assertEquals(val("2"), row5.field2());
+            assertEquals(val("2"), row6.field2());
+            assertEquals(val("2"), row7.field2());
+            assertEquals(val("2"), row8.field2());
+
+            // Checking field3()
+            assertEquals(val(3), row3.field3());
+            assertEquals(val(3), row4.field3());
+            assertEquals(val(3), row5.field3());
+            assertEquals(val(3), row6.field3());
+            assertEquals(val(3), row7.field3());
+            assertEquals(val(3), row8.field3());
+
+            // Checking field4()
+            assertEquals(val("4"), row4.field4());
+            assertEquals(val("4"), row5.field4());
+            assertEquals(val("4"), row6.field4());
+            assertEquals(val("4"), row7.field4());
+            assertEquals(val("4"), row8.field4());
+
+            // Checking field5()
+            assertEquals(val(5), row5.field5());
+            assertEquals(val(5), row6.field5());
+            assertEquals(val(5), row7.field5());
+            assertEquals(val(5), row8.field5());
+
+            // Checking field6()
+            assertEquals(val("6"), row6.field6());
+            assertEquals(val("6"), row7.field6());
+            assertEquals(val("6"), row8.field6());
+
+            // Checking field7()
+            assertEquals(val(7), row7.field7());
+            assertEquals(val(7), row8.field7());
+
+            // Checking field8()
+            assertEquals(val("8"), row8.field8());
+        }
     }
 }

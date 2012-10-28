@@ -76,17 +76,17 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-class SelectImpl extends AbstractDelegatingSelect<Record> implements
+class SelectImpl<R extends Record> extends AbstractDelegatingSelect<R> implements
 
     // Cascading interface implementations for Select behaviour
-    SelectSelectStep,
-    SelectOptionalOnStep,
-    SelectOnConditionStep,
-    SelectConditionStep,
-    SelectConnectByConditionStep,
-    SelectHavingConditionStep,
-    SelectOffsetStep,
-    SelectForUpdateOfStep {
+    SelectSelectStep<R>,
+    SelectOptionalOnStep<R>,
+    SelectOnConditionStep<R>,
+    SelectConditionStep<R>,
+    SelectConnectByConditionStep<R>,
+    SelectHavingConditionStep<R>,
+    SelectOffsetStep<R>,
+    SelectForUpdateOfStep<R> {
 
     /**
      * Generated UID
@@ -128,11 +128,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
         this(configuration, false);
     }
 
+    @SuppressWarnings("unchecked")
     SelectImpl(Configuration configuration, boolean distinct) {
-        this(new SelectQueryImpl(configuration, distinct));
+        this((Select<R>) new SelectQueryImpl(configuration, distinct));
     }
 
-    SelectImpl(Select<Record> query) {
+    SelectImpl(Select<R> query) {
         super(query);
     }
 
@@ -141,12 +142,22 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
         return (SelectQuery) getDelegate();
     }
 
+    /**
+     * This method must be able to return both incompatible types
+     * SelectSelectStep&lt;Record> and SelectSelectStep&lt;R>
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final SelectImpl select(Field<?>... fields) {
         getQuery().addSelect(fields);
         return this;
     }
 
+    /**
+     * This method must be able to return both incompatible types
+     * SelectSelectStep&lt;Record> and SelectSelectStep&lt;R>
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final SelectImpl select(Collection<? extends Field<?>> fields) {
         getQuery().addSelect(fields);
@@ -154,81 +165,81 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl hint(String hint) {
+    public final SelectImpl<R> hint(String hint) {
         getQuery().addHint(hint);
         return this;
     }
 
     @Override
-    public final SelectImpl from(TableLike<?>... tables) {
+    public final SelectImpl<R> from(TableLike<?>... tables) {
         getQuery().addFrom(tables);
         return this;
     }
 
     @Override
-    public final SelectImpl from(Collection<? extends TableLike<?>> tables) {
+    public final SelectImpl<R> from(Collection<? extends TableLike<?>> tables) {
         getQuery().addFrom(tables);
         return this;
     }
 
     @Override
-    public final SelectImpl from(String sql) {
+    public final SelectImpl<R> from(String sql) {
         return from(table(sql));
     }
 
     @Override
-    public final SelectImpl from(String sql, Object... bindings) {
+    public final SelectImpl<R> from(String sql, Object... bindings) {
         return from(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl from(String sql, QueryPart... parts) {
+    public final SelectImpl<R> from(String sql, QueryPart... parts) {
         return from(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl where(Condition... conditions) {
+    public final SelectImpl<R> where(Condition... conditions) {
         conditionStep = ConditionStep.WHERE;
         getQuery().addConditions(conditions);
         return this;
     }
 
     @Override
-    public final SelectImpl where(Collection<Condition> conditions) {
+    public final SelectImpl<R> where(Collection<Condition> conditions) {
         conditionStep = ConditionStep.WHERE;
         getQuery().addConditions(conditions);
         return this;
     }
 
     @Override
-    public final SelectImpl where(String sql) {
+    public final SelectImpl<R> where(String sql) {
         return where(condition(sql));
     }
 
     @Override
-    public final SelectImpl where(String sql, Object... bindings) {
+    public final SelectImpl<R> where(String sql, Object... bindings) {
         return where(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl where(String sql, QueryPart... parts) {
+    public final SelectImpl<R> where(String sql, QueryPart... parts) {
         return where(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl whereExists(Select<?> select) {
+    public final SelectImpl<R> whereExists(Select<?> select) {
         conditionStep = ConditionStep.WHERE;
         return andExists(select);
     }
 
     @Override
-    public final SelectImpl whereNotExists(Select<?> select) {
+    public final SelectImpl<R> whereNotExists(Select<?> select) {
         conditionStep = ConditionStep.WHERE;
         return andNotExists(select);
     }
 
     @Override
-    public final SelectImpl and(Condition condition) {
+    public final SelectImpl<R> and(Condition condition) {
         switch (conditionStep) {
             case WHERE:
                 getQuery().addConditions(condition);
@@ -248,37 +259,37 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl and(String sql) {
+    public final SelectImpl<R> and(String sql) {
         return and(condition(sql));
     }
 
     @Override
-    public final SelectImpl and(String sql, Object... bindings) {
+    public final SelectImpl<R> and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl and(String sql, QueryPart... parts) {
+    public final SelectImpl<R> and(String sql, QueryPart... parts) {
         return and(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl andNot(Condition condition) {
+    public final SelectImpl<R> andNot(Condition condition) {
         return and(condition.not());
     }
 
     @Override
-    public final SelectImpl andExists(Select<?> select) {
+    public final SelectImpl<R> andExists(Select<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final SelectImpl andNotExists(Select<?> select) {
+    public final SelectImpl<R> andNotExists(Select<?> select) {
         return and(notExists(select));
     }
 
     @Override
-    public final SelectImpl or(Condition condition) {
+    public final SelectImpl<R> or(Condition condition) {
         switch (conditionStep) {
             case WHERE:
                 getQuery().addConditions(Operator.OR, condition);
@@ -297,166 +308,166 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl or(String sql) {
+    public final SelectImpl<R> or(String sql) {
         return or(condition(sql));
     }
 
     @Override
-    public final SelectImpl or(String sql, Object... bindings) {
+    public final SelectImpl<R> or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl or(String sql, QueryPart... parts) {
+    public final SelectImpl<R> or(String sql, QueryPart... parts) {
         return or(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl orNot(Condition condition) {
+    public final SelectImpl<R> orNot(Condition condition) {
         return or(condition.not());
     }
 
     @Override
-    public final SelectImpl orExists(Select<?> select) {
+    public final SelectImpl<R> orExists(Select<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final SelectImpl orNotExists(Select<?> select) {
+    public final SelectImpl<R> orNotExists(Select<?> select) {
         return or(notExists(select));
     }
 
     @Override
-    public final SelectImpl connectBy(Condition condition) {
+    public final SelectImpl<R> connectBy(Condition condition) {
         conditionStep = ConditionStep.CONNECT_BY;
         getQuery().addConnectBy(condition);
         return this;
     }
 
     @Override
-    public final SelectImpl connectBy(String sql) {
+    public final SelectImpl<R> connectBy(String sql) {
         return connectBy(condition(sql));
     }
 
     @Override
-    public final SelectImpl connectBy(String sql, Object... bindings) {
+    public final SelectImpl<R> connectBy(String sql, Object... bindings) {
         return connectBy(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl connectBy(String sql, QueryPart... parts) {
+    public final SelectImpl<R> connectBy(String sql, QueryPart... parts) {
         return connectBy(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl connectByNoCycle(Condition condition) {
+    public final SelectImpl<R> connectByNoCycle(Condition condition) {
         conditionStep = ConditionStep.CONNECT_BY;
         getQuery().addConnectByNoCycle(condition);
         return this;
     }
 
     @Override
-    public final SelectImpl connectByNoCycle(String sql) {
+    public final SelectImpl<R> connectByNoCycle(String sql) {
         return connectByNoCycle(condition(sql));
     }
 
     @Override
-    public final SelectImpl connectByNoCycle(String sql, Object... bindings) {
+    public final SelectImpl<R> connectByNoCycle(String sql, Object... bindings) {
         return connectByNoCycle(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl connectByNoCycle(String sql, QueryPart... parts) {
+    public final SelectImpl<R> connectByNoCycle(String sql, QueryPart... parts) {
         return connectByNoCycle(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl startWith(Condition condition) {
+    public final SelectImpl<R> startWith(Condition condition) {
         getQuery().setConnectByStartWith(condition);
         return this;
     }
 
     @Override
-    public final SelectImpl startWith(String sql) {
+    public final SelectImpl<R> startWith(String sql) {
         return startWith(condition(sql));
     }
 
     @Override
-    public final SelectImpl startWith(String sql, Object... bindings) {
+    public final SelectImpl<R> startWith(String sql, Object... bindings) {
         return startWith(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl startWith(String sql, QueryPart... parts) {
+    public final SelectImpl<R> startWith(String sql, QueryPart... parts) {
         return startWith(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl groupBy(GroupField... fields) {
+    public final SelectImpl<R> groupBy(GroupField... fields) {
         getQuery().addGroupBy(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl groupBy(Collection<? extends GroupField> fields) {
+    public final SelectImpl<R> groupBy(Collection<? extends GroupField> fields) {
         getQuery().addGroupBy(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl orderBy(Field<?>... fields) {
+    public final SelectImpl<R> orderBy(Field<?>... fields) {
         getQuery().addOrderBy(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl orderBy(SortField<?>... fields) {
+    public final SelectImpl<R> orderBy(SortField<?>... fields) {
         getQuery().addOrderBy(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl orderBy(Collection<SortField<?>> fields) {
+    public final SelectImpl<R> orderBy(Collection<SortField<?>> fields) {
         getQuery().addOrderBy(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl orderBy(int... fieldIndexes) {
+    public final SelectImpl<R> orderBy(int... fieldIndexes) {
         getQuery().addOrderBy(fieldIndexes);
         return this;
     }
 
     @Override
-    public final SelectImpl orderSiblingsBy(Field<?>... fields) {
+    public final SelectImpl<R> orderSiblingsBy(Field<?>... fields) {
         getQuery().addOrderBy(fields);
         getQuery().setOrderBySiblings(true);
         return this;
     }
 
     @Override
-    public final SelectImpl orderSiblingsBy(SortField<?>... fields) {
+    public final SelectImpl<R> orderSiblingsBy(SortField<?>... fields) {
         getQuery().addOrderBy(fields);
         getQuery().setOrderBySiblings(true);
         return this;
     }
 
     @Override
-    public final SelectImpl orderSiblingsBy(Collection<SortField<?>> fields) {
+    public final SelectImpl<R> orderSiblingsBy(Collection<SortField<?>> fields) {
         getQuery().addOrderBy(fields);
         getQuery().setOrderBySiblings(true);
         return this;
     }
 
     @Override
-    public final SelectImpl orderSiblingsBy(int... fieldIndexes) {
+    public final SelectImpl<R> orderSiblingsBy(int... fieldIndexes) {
         getQuery().addOrderBy(fieldIndexes);
         getQuery().setOrderBySiblings(true);
         return this;
     }
 
     @Override
-    public final SelectImpl limit(int numberOfRows) {
+    public final SelectImpl<R> limit(int numberOfRows) {
         this.limit = numberOfRows;
         this.limitParam = null;
         getQuery().addLimit(numberOfRows);
@@ -464,7 +475,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl limit(Param<Integer> numberOfRows) {
+    public final SelectImpl<R> limit(Param<Integer> numberOfRows) {
         this.limit = null;
         this.limitParam = numberOfRows;
         getQuery().addLimit(numberOfRows);
@@ -472,31 +483,31 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl limit(int offset, int numberOfRows) {
+    public final SelectImpl<R> limit(int offset, int numberOfRows) {
         getQuery().addLimit(offset, numberOfRows);
         return this;
     }
 
     @Override
-    public final SelectImpl limit(int offset, Param<Integer> numberOfRows) {
+    public final SelectImpl<R> limit(int offset, Param<Integer> numberOfRows) {
         getQuery().addLimit(offset, numberOfRows);
         return this;
     }
 
     @Override
-    public final SelectImpl limit(Param<Integer> offset, int numberOfRows) {
+    public final SelectImpl<R> limit(Param<Integer> offset, int numberOfRows) {
         getQuery().addLimit(offset, numberOfRows);
         return this;
     }
 
     @Override
-    public final SelectImpl limit(Param<Integer> offset, Param<Integer> numberOfRows) {
+    public final SelectImpl<R> limit(Param<Integer> offset, Param<Integer> numberOfRows) {
         getQuery().addLimit(offset, numberOfRows);
         return this;
     }
 
     @Override
-    public final SelectImpl offset(int offset) {
+    public final SelectImpl<R> offset(int offset) {
         if (limit != null) {
             getQuery().addLimit(offset, limit);
         }
@@ -508,7 +519,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl offset(Param<Integer> offset) {
+    public final SelectImpl<R> offset(Param<Integer> offset) {
         if (limit != null) {
             getQuery().addLimit(offset, limit);
         }
@@ -520,104 +531,104 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl forUpdate() {
+    public final SelectImpl<R> forUpdate() {
         getQuery().setForUpdate(true);
         return this;
     }
 
     @Override
-    public final SelectImpl of(Field<?>... fields) {
+    public final SelectImpl<R> of(Field<?>... fields) {
         getQuery().setForUpdateOf(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl of(Collection<Field<?>> fields) {
+    public final SelectImpl<R> of(Collection<Field<?>> fields) {
         getQuery().setForUpdateOf(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl of(Table<?>... tables) {
+    public final SelectImpl<R> of(Table<?>... tables) {
         getQuery().setForUpdateOf(tables);
         return this;
     }
 
     @Override
-    public final SelectImpl wait(int seconds) {
+    public final SelectImpl<R> wait(int seconds) {
         getQuery().setForUpdateWait(seconds);
         return this;
     }
 
     @Override
-    public final SelectImpl noWait() {
+    public final SelectImpl<R> noWait() {
         getQuery().setForUpdateNoWait();
         return this;
     }
 
     @Override
-    public final SelectImpl skipLocked() {
+    public final SelectImpl<R> skipLocked() {
         getQuery().setForUpdateSkipLocked();
         return this;
     }
 
     @Override
-    public final SelectImpl forShare() {
+    public final SelectImpl<R> forShare() {
         getQuery().setForShare(true);
         return this;
     }
 
     @Override
-    public final SelectImpl union(Select<Record> select) {
-        return new SelectImpl(getDelegate().union(select));
+    public final SelectImpl<R> union(Select<R> select) {
+        return new SelectImpl<R>(getDelegate().union(select));
     }
 
     @Override
-    public final SelectImpl unionAll(Select<Record> select) {
-        return new SelectImpl(getDelegate().unionAll(select));
+    public final SelectImpl<R> unionAll(Select<R> select) {
+        return new SelectImpl<R>(getDelegate().unionAll(select));
     }
 
     @Override
-    public final SelectImpl except(Select<Record> select) {
-        return new SelectImpl(getDelegate().except(select));
+    public final SelectImpl<R> except(Select<R> select) {
+        return new SelectImpl<R>(getDelegate().except(select));
     }
 
     @Override
-    public final SelectImpl intersect(Select<Record> select) {
-        return new SelectImpl(getDelegate().intersect(select));
+    public final SelectImpl<R> intersect(Select<R> select) {
+        return new SelectImpl<R>(getDelegate().intersect(select));
     }
 
     @Override
-    public final SelectImpl having(Condition... conditions) {
+    public final SelectImpl<R> having(Condition... conditions) {
         conditionStep = ConditionStep.HAVING;
         getQuery().addHaving(conditions);
         return this;
     }
 
     @Override
-    public final SelectImpl having(Collection<Condition> conditions) {
+    public final SelectImpl<R> having(Collection<Condition> conditions) {
         conditionStep = ConditionStep.HAVING;
         getQuery().addHaving(conditions);
         return this;
     }
 
     @Override
-    public final SelectImpl having(String sql) {
+    public final SelectImpl<R> having(String sql) {
         return having(condition(sql));
     }
 
     @Override
-    public final SelectImpl having(String sql, Object... bindings) {
+    public final SelectImpl<R> having(String sql, Object... bindings) {
         return having(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl having(String sql, QueryPart... parts) {
+    public final SelectImpl<R> having(String sql, QueryPart... parts) {
         return having(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl on(Condition... conditions) {
+    public final SelectImpl<R> on(Condition... conditions) {
         conditionStep = ConditionStep.ON;
         joinConditions = new ConditionProviderImpl();
         joinConditions.addConditions(conditions);
@@ -629,22 +640,22 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl on(String sql) {
+    public final SelectImpl<R> on(String sql) {
         return on(condition(sql));
     }
 
     @Override
-    public final SelectImpl on(String sql, Object... bindings) {
+    public final SelectImpl<R> on(String sql, Object... bindings) {
         return on(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl on(String sql, QueryPart... parts) {
+    public final SelectImpl<R> on(String sql, QueryPart... parts) {
         return on(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl onKey() throws DataAccessException {
+    public final SelectImpl<R> onKey() throws DataAccessException {
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType);
         joinTable = null;
@@ -654,7 +665,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl onKey(TableField<?, ?>... keyFields) throws DataAccessException {
+    public final SelectImpl<R> onKey(TableField<?, ?>... keyFields) throws DataAccessException {
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType, keyFields);
         joinTable = null;
@@ -664,7 +675,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl onKey(ForeignKey<?, ?> key) {
+    public final SelectImpl<R> onKey(ForeignKey<?, ?> key) {
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType, key);
         joinTable = null;
@@ -675,12 +686,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl using(Field<?>... fields) {
+    public final SelectImpl<R> using(Field<?>... fields) {
         return using(Arrays.asList(fields));
     }
 
     @Override
-    public final SelectImpl using(Collection<? extends Field<?>> fields) {
+    public final SelectImpl<R> using(Collection<? extends Field<?>> fields) {
         getQuery().addJoinUsing(joinTable, joinType, fields);
         joinTable = null;
         joinPartitionBy = null;
@@ -689,27 +700,27 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl join(TableLike<?> table) {
+    public final SelectImpl<R> join(TableLike<?> table) {
         return join(table, JoinType.JOIN);
     }
 
     @Override
-    public final SelectImpl leftOuterJoin(TableLike<?> table) {
+    public final SelectImpl<R> leftOuterJoin(TableLike<?> table) {
         return join(table, JoinType.LEFT_OUTER_JOIN);
     }
 
     @Override
-    public final SelectImpl rightOuterJoin(TableLike<?> table) {
+    public final SelectImpl<R> rightOuterJoin(TableLike<?> table) {
         return join(table, JoinType.RIGHT_OUTER_JOIN);
     }
 
     @Override
-    public final SelectOnStep fullOuterJoin(TableLike<?> table) {
+    public final SelectOnStep<R> fullOuterJoin(TableLike<?> table) {
         return join(table, JoinType.FULL_OUTER_JOIN);
     }
 
     @Override
-    public final SelectImpl join(TableLike<?> table, JoinType type) {
+    public final SelectImpl<R> join(TableLike<?> table, JoinType type) {
         switch (type) {
             case CROSS_JOIN:
             case NATURAL_JOIN:
@@ -736,153 +747,153 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectJoinStep crossJoin(TableLike<?> table) {
+    public final SelectJoinStep<R> crossJoin(TableLike<?> table) {
         return join(table, JoinType.CROSS_JOIN);
     }
 
     @Override
-    public final SelectImpl naturalJoin(TableLike<?> table) {
+    public final SelectImpl<R> naturalJoin(TableLike<?> table) {
         return join(table, JoinType.NATURAL_JOIN);
     }
 
     @Override
-    public final SelectImpl naturalLeftOuterJoin(TableLike<?> table) {
+    public final SelectImpl<R> naturalLeftOuterJoin(TableLike<?> table) {
         return join(table, JoinType.NATURAL_LEFT_OUTER_JOIN);
     }
 
     @Override
-    public final SelectImpl naturalRightOuterJoin(TableLike<?> table) {
+    public final SelectImpl<R> naturalRightOuterJoin(TableLike<?> table) {
         return join(table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
     }
 
     @Override
-    public final SelectImpl join(String sql) {
+    public final SelectImpl<R> join(String sql) {
         return join(table(sql));
     }
 
     @Override
-    public final SelectImpl join(String sql, Object... bindings) {
+    public final SelectImpl<R> join(String sql, Object... bindings) {
         return join(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl join(String sql, QueryPart... parts) {
+    public final SelectImpl<R> join(String sql, QueryPart... parts) {
         return join(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl leftOuterJoin(String sql) {
+    public final SelectImpl<R> leftOuterJoin(String sql) {
         return leftOuterJoin(table(sql));
     }
 
     @Override
-    public final SelectImpl leftOuterJoin(String sql, Object... bindings) {
+    public final SelectImpl<R> leftOuterJoin(String sql, Object... bindings) {
         return leftOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl leftOuterJoin(String sql, QueryPart... parts) {
+    public final SelectImpl<R> leftOuterJoin(String sql, QueryPart... parts) {
         return leftOuterJoin(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl rightOuterJoin(String sql) {
+    public final SelectImpl<R> rightOuterJoin(String sql) {
         return rightOuterJoin(table(sql));
     }
 
     @Override
-    public final SelectImpl rightOuterJoin(String sql, Object... bindings) {
+    public final SelectImpl<R> rightOuterJoin(String sql, Object... bindings) {
         return rightOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl rightOuterJoin(String sql, QueryPart... parts) {
+    public final SelectImpl<R> rightOuterJoin(String sql, QueryPart... parts) {
         return rightOuterJoin(table(sql, parts));
     }
 
     @Override
-    public final SelectOnStep fullOuterJoin(String sql) {
+    public final SelectOnStep<R> fullOuterJoin(String sql) {
         return fullOuterJoin(table(sql));
     }
 
     @Override
-    public final SelectOnStep fullOuterJoin(String sql, Object... bindings) {
+    public final SelectOnStep<R> fullOuterJoin(String sql, Object... bindings) {
         return fullOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectOnStep fullOuterJoin(String sql, QueryPart... parts) {
+    public final SelectOnStep<R> fullOuterJoin(String sql, QueryPart... parts) {
         return fullOuterJoin(table(sql, parts));
     }
 
     @Override
-    public final SelectJoinStep crossJoin(String sql) {
+    public final SelectJoinStep<R> crossJoin(String sql) {
         return crossJoin(table(sql));
     }
 
     @Override
-    public final SelectJoinStep crossJoin(String sql, Object... bindings) {
+    public final SelectJoinStep<R> crossJoin(String sql, Object... bindings) {
         return crossJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectJoinStep crossJoin(String sql, QueryPart... parts) {
+    public final SelectJoinStep<R> crossJoin(String sql, QueryPart... parts) {
         return crossJoin(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl naturalJoin(String sql) {
+    public final SelectImpl<R> naturalJoin(String sql) {
         return naturalJoin(table(sql));
     }
 
     @Override
-    public final SelectImpl naturalJoin(String sql, Object... bindings) {
+    public final SelectImpl<R> naturalJoin(String sql, Object... bindings) {
         return naturalJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl naturalJoin(String sql, QueryPart... parts) {
+    public final SelectImpl<R> naturalJoin(String sql, QueryPart... parts) {
         return naturalJoin(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl naturalLeftOuterJoin(String sql) {
+    public final SelectImpl<R> naturalLeftOuterJoin(String sql) {
         return naturalLeftOuterJoin(table(sql));
     }
 
     @Override
-    public final SelectImpl naturalLeftOuterJoin(String sql, Object... bindings) {
+    public final SelectImpl<R> naturalLeftOuterJoin(String sql, Object... bindings) {
         return naturalLeftOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl naturalLeftOuterJoin(String sql, QueryPart... parts) {
+    public final SelectImpl<R> naturalLeftOuterJoin(String sql, QueryPart... parts) {
         return naturalLeftOuterJoin(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl naturalRightOuterJoin(String sql) {
+    public final SelectImpl<R> naturalRightOuterJoin(String sql) {
         return naturalRightOuterJoin(table(sql));
     }
 
     @Override
-    public final SelectImpl naturalRightOuterJoin(String sql, Object... bindings) {
+    public final SelectImpl<R> naturalRightOuterJoin(String sql, Object... bindings) {
         return naturalRightOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl naturalRightOuterJoin(String sql, QueryPart... parts) {
+    public final SelectImpl<R> naturalRightOuterJoin(String sql, QueryPart... parts) {
         return naturalRightOuterJoin(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl partitionBy(Field<?>... fields) {
+    public final SelectImpl<R> partitionBy(Field<?>... fields) {
         joinPartitionBy = fields;
         return this;
     }
 
     @Override
-    public final SelectImpl partitionBy(Collection<? extends Field<?>> fields) {
+    public final SelectImpl<R> partitionBy(Collection<? extends Field<?>> fields) {
         return partitionBy(fields.toArray(new Field[fields.size()]));
     }
 

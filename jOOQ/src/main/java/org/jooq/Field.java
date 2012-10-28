@@ -1043,7 +1043,7 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this in (select...)</code>
      */
     @Support
-    Condition in(Select<?> query);
+    Condition in(Select<? extends Record1<T>> query);
 
     /**
      * Create a condition to check this field against several values
@@ -1095,7 +1095,7 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not in (select...)</code>
      */
     @Support
-    Condition notIn(Select<?> query);
+    Condition notIn(Select<? extends Record1<T>> query);
 
     // ------------------------------------------------------------------------
     // BETWEEN predicates
@@ -1297,7 +1297,7 @@ public interface Field<T> extends GroupField {
      * <code>this = (Select<?> ...)</code>
      */
     @Support
-    Condition equal(Select<?> query);
+    Condition equal(Select<? extends Record1<T>> query);
 
     /**
      * <code>this = [quantifier] (Select<?> ...)</code>
@@ -1310,7 +1310,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition equal(QuantifiedSelect<?> query);
+    Condition equal(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this = value</code>
@@ -1338,7 +1338,7 @@ public interface Field<T> extends GroupField {
      * @see #equal(Select)
      */
     @Support
-    Condition eq(Select<?> query);
+    Condition eq(Select<? extends Record1<T>> query);
 
     /**
      * <code>this = [quantifier] (Select<?> ...)</code>
@@ -1351,7 +1351,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition eq(QuantifiedSelect<?> query);
+    Condition eq(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this != value</code>
@@ -1373,7 +1373,7 @@ public interface Field<T> extends GroupField {
      * <code>this != (Select<?> ...)</code>
      */
     @Support
-    Condition notEqual(Select<?> query);
+    Condition notEqual(Select<? extends Record1<T>> query);
 
     /**
      * <code>this != [quantifier] (Select<?> ...)</code>
@@ -1386,7 +1386,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition notEqual(QuantifiedSelect<?> query);
+    Condition notEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this != value</code>
@@ -1414,7 +1414,7 @@ public interface Field<T> extends GroupField {
      * @see #notEqual(Select)
      */
     @Support
-    Condition ne(Select<?> query);
+    Condition ne(Select<? extends Record1<T>> query);
 
     /**
      * <code>this != [quantifier] (Select<?> ...)</code>
@@ -1427,7 +1427,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition ne(QuantifiedSelect<?> query);
+    Condition ne(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this < value</code>
@@ -1445,7 +1445,7 @@ public interface Field<T> extends GroupField {
      * <code>this < (Select<?> ...)</code>
      */
     @Support
-    Condition lessThan(Select<?> query);
+    Condition lessThan(Select<? extends Record1<T>> query);
 
     /**
      * <code>this < [quantifier] (Select<?> ...)</code>
@@ -1458,7 +1458,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition lessThan(QuantifiedSelect<?> query);
+    Condition lessThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this < value</code>
@@ -1482,7 +1482,7 @@ public interface Field<T> extends GroupField {
      * @see #lessThan(Select)
      */
     @Support
-    Condition lt(Select<?> query);
+    Condition lt(Select<? extends Record1<T>> query);
 
     /**
      * <code>this < [quantifier] (Select<?> ...)</code>
@@ -1495,7 +1495,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition lt(QuantifiedSelect<?> query);
+    Condition lt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this <= value</code>
@@ -1513,7 +1513,7 @@ public interface Field<T> extends GroupField {
      * <code>this <= (Select<?> ...)</code>
      */
     @Support
-    Condition lessOrEqual(Select<?> query);
+    Condition lessOrEqual(Select<? extends Record1<T>> query);
 
     /**
      * <code>this <= [quantifier] (Select<?> ...)</code>
@@ -1526,7 +1526,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition lessOrEqual(QuantifiedSelect<?> query);
+    Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this <= value</code>
@@ -1550,7 +1550,7 @@ public interface Field<T> extends GroupField {
      * @see #lessOrEqual(Select)
      */
     @Support
-    Condition le(Select<?> query);
+    Condition le(Select<? extends Record1<T>> query);
 
     /**
      * <code>this <= [quantifier] (Select<?> ...)</code>
@@ -1563,7 +1563,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition le(QuantifiedSelect<?> query);
+    Condition le(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this > value</code>
@@ -1581,7 +1581,7 @@ public interface Field<T> extends GroupField {
      * <code>this > (Select<?> ...)</code>
      */
     @Support
-    Condition greaterThan(Select<?> query);
+    Condition greaterThan(Select<? extends Record1<T>> query);
 
     /**
      * <code>this > [quantifier] (Select<?> ...)</code>
@@ -1594,7 +1594,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition greaterThan(QuantifiedSelect<?> query);
+    Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this > value</code>
@@ -1618,7 +1618,7 @@ public interface Field<T> extends GroupField {
      * @see #greaterThan(Select)
      */
     @Support
-    Condition gt(Select<?> query);
+    Condition gt(Select<? extends Record1<T>> query);
 
     /**
      * <code>this > [quantifier] (Select<?> ...)</code>
@@ -1631,7 +1631,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition gt(QuantifiedSelect<?> query);
+    Condition gt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this >= value</code>
@@ -1649,7 +1649,7 @@ public interface Field<T> extends GroupField {
      * <code>this >= (Select<?> ...)</code>
      */
     @Support
-    Condition greaterOrEqual(Select<?> query);
+    Condition greaterOrEqual(Select<? extends Record1<T>> query);
 
     /**
      * <code>this >= [quantifier] (Select<?> ...)</code>
@@ -1662,7 +1662,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition greaterOrEqual(QuantifiedSelect<?> query);
+    Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this >= value</code>
@@ -1686,7 +1686,7 @@ public interface Field<T> extends GroupField {
      * @see #greaterOrEqual(Select)
      */
     @Support
-    Condition ge(Select<?> query);
+    Condition ge(Select<? extends Record1<T>> query);
 
     /**
      * <code>this >= [quantifier] (Select<?> ...)</code>
@@ -1699,7 +1699,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Condition ge(QuantifiedSelect<?> query);
+    Condition ge(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * Create a condition to check this field against known string literals for

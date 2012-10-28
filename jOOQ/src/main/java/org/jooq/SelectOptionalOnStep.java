@@ -77,6 +77,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface SelectOptionalOnStep extends SelectJoinStep, SelectJoinPartitionByStep {
+public interface SelectOptionalOnStep<R extends Record> extends SelectJoinStep<R>, SelectJoinPartitionByStep<R> {
 
 }

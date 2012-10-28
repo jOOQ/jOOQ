@@ -93,7 +93,7 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface SelectJoinStep extends SelectWhereStep {
+public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
 
     /**
      * Convenience method to join a table to the last table added to the
@@ -105,7 +105,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * required but omitted, the JOIN clause will be ignored
      */
     @Support
-    SelectOptionalOnStep join(TableLike<?> table, JoinType type);
+    SelectOptionalOnStep<R> join(TableLike<?> table, JoinType type);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -114,7 +114,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#join(TableLike)
      */
     @Support
-    SelectOnStep join(TableLike<?> table);
+    SelectOnStep<R> join(TableLike<?> table);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -129,7 +129,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#join(String)
      */
     @Support
-    SelectOnStep join(String sql);
+    SelectOnStep<R> join(String sql);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -145,7 +145,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#join(String, Object...)
      */
     @Support
-    SelectOnStep join(String sql, Object... bindings);
+    SelectOnStep<R> join(String sql, Object... bindings);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -161,7 +161,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#join(String, QueryPart...)
      */
     @Support
-    SelectOnStep join(String sql, QueryPart... parts);
+    SelectOnStep<R> join(String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>CROSS JOIN</code> a table to the last table
@@ -178,7 +178,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#crossJoin(TableLike)
      */
     @Support
-    SelectJoinStep crossJoin(TableLike<?> table);
+    SelectJoinStep<R> crossJoin(TableLike<?> table);
 
     /**
      * Convenience method to <code>CROSS JOIN</code> a table to the last table
@@ -201,7 +201,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#crossJoin(String)
      */
     @Support
-    SelectJoinStep crossJoin(String sql);
+    SelectJoinStep<R> crossJoin(String sql);
 
     /**
      * Convenience method to <code>CROSS JOIN</code> a table to the last table
@@ -224,7 +224,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#crossJoin(String, Object...)
      */
     @Support
-    SelectJoinStep crossJoin(String sql, Object... bindings);
+    SelectJoinStep<R> crossJoin(String sql, Object... bindings);
 
     /**
      * Convenience method to <code>CROSS JOIN</code> a table to the last table
@@ -247,7 +247,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#crossJoin(String, QueryPart...)
      */
     @Support
-    SelectJoinStep crossJoin(String sql, QueryPart... parts);
+    SelectJoinStep<R> crossJoin(String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -257,7 +257,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#leftOuterJoin(TableLike)
      */
     @Support
-    SelectJoinPartitionByStep leftOuterJoin(TableLike<?> table);
+    SelectJoinPartitionByStep<R> leftOuterJoin(TableLike<?> table);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -273,7 +273,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#leftOuterJoin(String)
      */
     @Support
-    SelectJoinPartitionByStep leftOuterJoin(String sql);
+    SelectJoinPartitionByStep<R> leftOuterJoin(String sql);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -289,7 +289,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#leftOuterJoin(String, Object...)
      */
     @Support
-    SelectJoinPartitionByStep leftOuterJoin(String sql, Object... bindings);
+    SelectJoinPartitionByStep<R> leftOuterJoin(String sql, Object... bindings);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -305,7 +305,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#leftOuterJoin(String, QueryPart...)
      */
     @Support
-    SelectJoinPartitionByStep leftOuterJoin(String sql, QueryPart... parts);
+    SelectJoinPartitionByStep<R> leftOuterJoin(String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -317,7 +317,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#rightOuterJoin(TableLike)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectJoinPartitionByStep rightOuterJoin(TableLike<?> table);
+    SelectJoinPartitionByStep<R> rightOuterJoin(TableLike<?> table);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -335,7 +335,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#rightOuterJoin(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectJoinPartitionByStep rightOuterJoin(String sql);
+    SelectJoinPartitionByStep<R> rightOuterJoin(String sql);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -353,7 +353,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#rightOuterJoin(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectJoinPartitionByStep rightOuterJoin(String sql, Object... bindings);
+    SelectJoinPartitionByStep<R> rightOuterJoin(String sql, Object... bindings);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -371,7 +371,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#rightOuterJoin(String, QueryPart...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectJoinPartitionByStep rightOuterJoin(String sql, QueryPart... parts);
+    SelectJoinPartitionByStep<R> rightOuterJoin(String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -383,7 +383,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#fullOuterJoin(TableLike)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectOnStep fullOuterJoin(TableLike<?> table);
+    SelectOnStep<R> fullOuterJoin(TableLike<?> table);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -401,7 +401,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#fullOuterJoin(String)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectOnStep fullOuterJoin(String sql);
+    SelectOnStep<R> fullOuterJoin(String sql);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
@@ -419,7 +419,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#fullOuterJoin(String, Object...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectOnStep fullOuterJoin(String sql, Object... bindings);
+    SelectOnStep<R> fullOuterJoin(String sql, Object... bindings);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
@@ -437,7 +437,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#fullOuterJoin(String, QueryPart...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectOnStep fullOuterJoin(String sql, QueryPart... parts);
+    SelectOnStep<R> fullOuterJoin(String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>NATURAL JOIN</code> a table to the last table
@@ -450,7 +450,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalJoin(TableLike)
      */
     @Support
-    SelectJoinStep naturalJoin(TableLike<?> table);
+    SelectJoinStep<R> naturalJoin(TableLike<?> table);
 
     /**
      * Convenience method to <code>NATURAL JOIN</code> a table to the last table
@@ -469,7 +469,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalJoin(String)
      */
     @Support
-    SelectJoinStep naturalJoin(String sql);
+    SelectJoinStep<R> naturalJoin(String sql);
 
     /**
      * Convenience method to <code>NATURAL JOIN</code> a table to the last table
@@ -488,7 +488,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalJoin(String, Object...)
      */
     @Support
-    SelectJoinStep naturalJoin(String sql, Object... bindings);
+    SelectJoinStep<R> naturalJoin(String sql, Object... bindings);
 
     /**
      * Convenience method to <code>NATURAL JOIN</code> a table to the last table
@@ -507,7 +507,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalJoin(String, QueryPart...)
      */
     @Support
-    SelectJoinStep naturalJoin(String sql, QueryPart... parts);
+    SelectJoinStep<R> naturalJoin(String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
@@ -520,7 +520,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalLeftOuterJoin(TableLike)
      */
     @Support
-    SelectJoinStep naturalLeftOuterJoin(TableLike<?> table);
+    SelectJoinStep<R> naturalLeftOuterJoin(TableLike<?> table);
 
     /**
      * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
@@ -539,7 +539,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalLeftOuterJoin(String)
      */
     @Support
-    SelectJoinStep naturalLeftOuterJoin(String sql);
+    SelectJoinStep<R> naturalLeftOuterJoin(String sql);
 
     /**
      * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
@@ -558,7 +558,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalLeftOuterJoin(String, Object...)
      */
     @Support
-    SelectJoinStep naturalLeftOuterJoin(String sql, Object... bindings);
+    SelectJoinStep<R> naturalLeftOuterJoin(String sql, Object... bindings);
 
     /**
      * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
@@ -577,7 +577,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalLeftOuterJoin(String, QueryPart...)
      */
     @Support
-    SelectJoinStep naturalLeftOuterJoin(String sql, QueryPart... parts);
+    SelectJoinStep<R> naturalLeftOuterJoin(String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
@@ -590,7 +590,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalRightOuterJoin(TableLike)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectJoinStep naturalRightOuterJoin(TableLike<?> table);
+    SelectJoinStep<R> naturalRightOuterJoin(TableLike<?> table);
 
     /**
      * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
@@ -609,7 +609,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalRightOuterJoin(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectJoinStep naturalRightOuterJoin(String sql);
+    SelectJoinStep<R> naturalRightOuterJoin(String sql);
 
     /**
      * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
@@ -628,7 +628,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalRightOuterJoin(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectJoinStep naturalRightOuterJoin(String sql, Object... bindings);
+    SelectJoinStep<R> naturalRightOuterJoin(String sql, Object... bindings);
 
     /**
      * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
@@ -647,6 +647,6 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Table#naturalRightOuterJoin(String, QueryPart...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectJoinStep naturalRightOuterJoin(String sql, QueryPart... parts);
+    SelectJoinStep<R> naturalRightOuterJoin(String sql, QueryPart... parts);
 
 }

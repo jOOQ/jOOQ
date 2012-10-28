@@ -79,7 +79,7 @@ import static org.jooq.SQLDialect.ORACLE;
  *
  * @author Lukas Eder
  */
-public interface SelectForUpdateWaitStep extends SelectFinalStep {
+public interface SelectForUpdateWaitStep<R extends Record> extends SelectFinalStep<R> {
 
     /**
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
@@ -91,7 +91,7 @@ public interface SelectForUpdateWaitStep extends SelectFinalStep {
      *      details
      */
     @Support(ORACLE)
-    SelectFinalStep wait(int seconds);
+    SelectFinalStep<R> wait(int seconds);
 
     /**
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
@@ -101,7 +101,7 @@ public interface SelectForUpdateWaitStep extends SelectFinalStep {
      *      details
      */
     @Support(ORACLE)
-    SelectFinalStep noWait();
+    SelectFinalStep<R> noWait();
 
     /**
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
@@ -111,5 +111,5 @@ public interface SelectForUpdateWaitStep extends SelectFinalStep {
      *      details
      */
     @Support(ORACLE)
-    SelectFinalStep skipLocked();
+    SelectFinalStep<R> skipLocked();
 }

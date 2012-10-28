@@ -82,14 +82,14 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface SelectStartWithStep extends SelectGroupByStep {
+public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep<R> {
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
      * <code>CONNECT BY</code> clause
      */
     @Support({ CUBRID, ORACLE })
-    SelectGroupByStep startWith(Condition condition);
+    SelectGroupByStep<R> startWith(Condition condition);
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
@@ -103,7 +103,7 @@ public interface SelectStartWithStep extends SelectGroupByStep {
      * @see Factory#condition(String)
      */
     @Support({ CUBRID, ORACLE })
-    SelectGroupByStep startWith(String sql);
+    SelectGroupByStep<R> startWith(String sql);
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
@@ -117,7 +117,7 @@ public interface SelectStartWithStep extends SelectGroupByStep {
      * @see Factory#condition(String, Object...)
      */
     @Support({ CUBRID, ORACLE })
-    SelectGroupByStep startWith(String sql, Object... bindings);
+    SelectGroupByStep<R> startWith(String sql, Object... bindings);
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
@@ -131,5 +131,5 @@ public interface SelectStartWithStep extends SelectGroupByStep {
      * @see Factory#condition(String, QueryPart...)
      */
     @Support({ CUBRID, ORACLE })
-    SelectGroupByStep startWith(String sql, QueryPart... parts);
+    SelectGroupByStep<R> startWith(String sql, QueryPart... parts);
 }

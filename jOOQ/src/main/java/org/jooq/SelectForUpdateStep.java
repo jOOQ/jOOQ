@@ -91,7 +91,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *
  * @author Lukas Eder
  */
-public interface SelectForUpdateStep extends SelectFinalStep {
+public interface SelectForUpdateStep<R extends Record> extends SelectFinalStep<R> {
 
     /**
      * Add a <code>FOR UPDATE</code> clause to the end of the query.
@@ -106,7 +106,7 @@ public interface SelectForUpdateStep extends SelectFinalStep {
      *      details
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    SelectForUpdateOfStep forUpdate();
+    SelectForUpdateOfStep<R> forUpdate();
 
     /**
      * Add a <code>FOR SHARE</code> clause to the end of the query.
@@ -115,6 +115,6 @@ public interface SelectForUpdateStep extends SelectFinalStep {
      *      details
      */
     @Support({ MYSQL, POSTGRES })
-    SelectFinalStep forShare();
+    SelectFinalStep<R> forShare();
 
 }

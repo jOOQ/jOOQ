@@ -49,6 +49,8 @@ import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.escape;
 import static org.jooq.impl.Factory.lower;
+import static org.jooq.impl.Factory.select;
+import static org.jooq.impl.Factory.selectOne;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.upper;
 import static org.jooq.impl.Factory.val;
@@ -398,7 +400,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(1, create().selectFrom(TBook()).where(c).execute());
 
         c = c.or(TBook_AUTHOR_ID().equal(
-            create().select(TAuthor_ID()).from(TAuthor()).where(TAuthor_FIRST_NAME().equal("Paulo"))));
+            select(TAuthor_ID()).from(TAuthor()).where(TAuthor_FIRST_NAME().equal("Paulo"))));
         assertEquals(3, create().selectFrom(TBook()).where(c).execute());
     }
 
@@ -496,21 +498,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 // Testing = ALL(subquery)
                 assertEquals(Arrays.asList(1), create().select()
                     .from(TBook())
-                    .where(TBook_ID().equal(all(create().selectOne())))
+                    .where(TBook_ID().equal(all(selectOne())))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
                 assertEquals(Arrays.asList(), create().select()
                     .from(TBook())
-                    .where(TBook_ID().equal(all(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
+                    .where(TBook_ID().equal(all(select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
 
                 // Testing = ANY(subquery)
                 assertEquals(Arrays.asList(1), create().select()
                     .from(TBook())
-                    .where(TBook_ID().equal(any(create().selectOne())))
+                    .where(TBook_ID().equal(any(selectOne())))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
                 assertEquals(Arrays.asList(1, 2), create().select()
                     .from(TBook())
-                    .where(TBook_ID().equal(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
+                    .where(TBook_ID().equal(any(select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
 
                 // Testing = ALL(array)
@@ -538,35 +540,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 assertEquals(Arrays.asList(3), create()
                     .select()
                     .from(TBook())
-                    .where(TBook_ID().equal(create().select(val(3))))
-                    .and(TBook_ID().equal(all(create().select(val(3)))))
+                    .where(TBook_ID().equal(select(val(3))))
+                    .and(TBook_ID().equal(all(select(val(3)))))
                     .and(TBook_ID().equal(all(3, 3)))
-                    .and(TBook_ID().equal(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4)))))
+                    .and(TBook_ID().equal(any(select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4)))))
                     .and(TBook_ID().equal(any(3, 4)))
-                    .and(TBook_ID().notEqual(create().select(val(1))))
-                    .and(TBook_ID().notEqual(all(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().notEqual(select(val(1))))
+                    .and(TBook_ID().notEqual(all(select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
                     .and(TBook_ID().notEqual(all(1, 4, 4)))
-                    .and(TBook_ID().notEqual(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().notEqual(any(select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
                     .and(TBook_ID().notEqual(any(1, 4, 4)))
-                    .and(TBook_ID().greaterOrEqual(create().select(val(1))))
-                    .and(TBook_ID().greaterOrEqual(all(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
+                    .and(TBook_ID().greaterOrEqual(select(val(1))))
+                    .and(TBook_ID().greaterOrEqual(all(select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
                     .and(TBook_ID().greaterOrEqual(all(1, 2)))
-                    .and(TBook_ID().greaterOrEqual(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().greaterOrEqual(any(select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
                     .and(TBook_ID().greaterOrEqual(any(1, 4)))
-                    .and(TBook_ID().greaterThan(create().select(val(1))))
-                    .and(TBook_ID().greaterThan(all(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
+                    .and(TBook_ID().greaterThan(select(val(1))))
+                    .and(TBook_ID().greaterThan(all(select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2)))))
                     .and(TBook_ID().greaterThan(all(1, 2)))
-                    .and(TBook_ID().greaterThan(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().greaterThan(any(select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
                     .and(TBook_ID().greaterThan(any(1, 4)))
-                    .and(TBook_ID().lessOrEqual(create().select(val(3))))
-                    .and(TBook_ID().lessOrEqual(all(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4)))))
+                    .and(TBook_ID().lessOrEqual(select(val(3))))
+                    .and(TBook_ID().lessOrEqual(all(select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4)))))
                     .and(TBook_ID().lessOrEqual(all(3, 4)))
-                    .and(TBook_ID().lessOrEqual(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().lessOrEqual(any(select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
                     .and(TBook_ID().lessOrEqual(any(1, 4)))
-                    .and(TBook_ID().lessThan(create().select(val(4))))
-                    .and(TBook_ID().lessThan(all(create().select(val(4)))))
+                    .and(TBook_ID().lessThan(select(val(4))))
+                    .and(TBook_ID().lessThan(all(select(val(4)))))
                     .and(TBook_ID().lessThan(all(4, 5)))
-                    .and(TBook_ID().lessThan(any(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
+                    .and(TBook_ID().lessThan(any(select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4)))))
                     .and(TBook_ID().lessThan(any(1, 4)))
                     .fetch(TBook_ID()));
 

@@ -84,19 +84,19 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface SelectFromStep extends SelectWhereStep {
+public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
 
     /**
      * Add a <code>FROM</code> clause to the query
      */
     @Support
-    SelectJoinStep from(TableLike<?>... table);
+    SelectJoinStep<R> from(TableLike<?>... table);
 
     /**
      * Add a <code>FROM</code> clause to the query
      */
     @Support
-    SelectJoinStep from(Collection<? extends TableLike<?>> tables);
+    SelectJoinStep<R> from(Collection<? extends TableLike<?>> tables);
 
     /**
      * Add a <code>FROM</code> clause to the query
@@ -109,7 +109,7 @@ public interface SelectFromStep extends SelectWhereStep {
      * @see Factory#table(String)
      */
     @Support
-    SelectJoinStep from(String sql);
+    SelectJoinStep<R> from(String sql);
 
     /**
      * Add a <code>FROM</code> clause to the query
@@ -122,7 +122,7 @@ public interface SelectFromStep extends SelectWhereStep {
      * @see Factory#table(String, Object...)
      */
     @Support
-    SelectJoinStep from(String sql, Object... bindings);
+    SelectJoinStep<R> from(String sql, Object... bindings);
 
     /**
      * Add a <code>FROM</code> clause to the query
@@ -135,7 +135,7 @@ public interface SelectFromStep extends SelectWhereStep {
      * @see Factory#table(String, QueryPart...)
      */
     @Support
-    SelectJoinStep from(String sql, QueryPart... parts);
+    SelectJoinStep<R> from(String sql, QueryPart... parts);
 
     /**
      * Add an Oracle-style hint to the preceding select clause
@@ -150,5 +150,5 @@ public interface SelectFromStep extends SelectWhereStep {
      * </pre></code>
      */
     @Support({ CUBRID, ORACLE })
-    SelectFromStep hint(String hint);
+    SelectFromStep<R> hint(String hint);
 }

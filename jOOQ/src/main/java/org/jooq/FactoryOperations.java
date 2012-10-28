@@ -343,7 +343,7 @@ public interface FactoryOperations extends Configuration {
      * @see Factory#select(Field...)
      */
     @Support
-    SelectSelectStep select(Field<?>... fields);
+    SelectSelectStep<Record> select(Field<?>... fields);
 
     /**
      * Create a new DSL select statement.
@@ -367,7 +367,7 @@ public interface FactoryOperations extends Configuration {
      * @see Factory#select(Collection)
      */
     @Support
-    SelectSelectStep select(Collection<? extends Field<?>> fields);
+    SelectSelectStep<Record> select(Collection<? extends Field<?>> fields);
 
     /**
      * Create a new DSL select statement.
@@ -391,7 +391,7 @@ public interface FactoryOperations extends Configuration {
      * @see Factory#selectDistinct(Field...)
      */
     @Support
-    SelectSelectStep selectDistinct(Field<?>... fields);
+    SelectSelectStep<Record> selectDistinct(Field<?>... fields);
 
     /**
      * Create a new DSL select statement.
@@ -415,7 +415,7 @@ public interface FactoryOperations extends Configuration {
      * @see Factory#selectDistinct(Collection)
      */
     @Support
-    SelectSelectStep selectDistinct(Collection<? extends Field<?>> fields);
+    SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields);
 
     /**
      * Create a new DSL select statement for constant <code>0</code> literal
@@ -441,7 +441,7 @@ public interface FactoryOperations extends Configuration {
      * @see Factory#selectZero()
      */
     @Support
-    SelectSelectStep selectZero();
+    SelectSelectStep<Record> selectZero();
 
     /**
      * Create a new DSL select statement for constant <code>1</code> literal
@@ -467,7 +467,7 @@ public interface FactoryOperations extends Configuration {
      * @see Factory#selectOne()
      */
     @Support
-    SelectSelectStep selectOne();
+    SelectSelectStep<Record> selectOne();
 
     /**
      * Create a new DSL select statement for <code>COUNT(*)</code>
@@ -492,7 +492,7 @@ public interface FactoryOperations extends Configuration {
      * @see Factory#selectCount()
      */
     @Support
-    SelectSelectStep selectCount();
+    SelectSelectStep<Record> selectCount();
 
     /**
      * Create a new {@link SelectQuery}
@@ -1039,6 +1039,15 @@ public interface FactoryOperations extends Configuration {
      * @see Record#into(Class)
      */
     <R extends TableRecord<R>> R newRecord(Table<R> table, Object source) throws MappingException;
+
+    // -------------------------------------------------------------------------
+    // XXX Executing queries
+    // -------------------------------------------------------------------------
+
+    // [#1904] TODO Improve this API
+    <R extends Record> Result<R> fetch(ResultQuery<R> query) throws DataAccessException;
+
+    <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException;
 
     // -------------------------------------------------------------------------
     // XXX Fast querying

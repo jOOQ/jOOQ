@@ -35,14 +35,45 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.vals;
+
+import java.util.List;
+
+import org.jooq.Field;
 import org.jooq.FieldProvider;
+import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
 
 /**
  * A general purpose record, typically used for ad-hoc types.
+ * <p>
+ * This type implements both the general-purpose, type-unsafe {@link Record}
+ * interface, as well as the more specific, type-safe {@link Record1},
+ * {@link Record2} through {@link Record8} interfaces
  *
  * @author Lukas Eder
  */
-class RecordImpl extends AbstractRecord {
+@SuppressWarnings({ "unchecked", "rawtypes" })
+class RecordImpl<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractRecord
+implements
+
+    // This record implementation implements all record types. Type-safety is
+    // being checked through the type-safe API. No need for further checks here
+    Record1<T1>,
+    Record2<T1, T2>,
+    Record3<T1, T2, T3>,
+    Record4<T1, T2, T3, T4>,
+    Record5<T1, T2, T3, T4, T5>,
+    Record6<T1, T2, T3, T4, T5, T6>,
+    Record7<T1, T2, T3, T4, T5, T6, T7>,
+    Record8<T1, T2, T3, T4, T5, T6, T7, T8> {
 
     /**
      * Generated UID
@@ -54,5 +85,100 @@ class RecordImpl extends AbstractRecord {
      */
     public RecordImpl(FieldProvider fields) {
         super(fields);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Type-safe Record APIs
+    // ------------------------------------------------------------------------
+
+    @Override
+    public RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> fieldsRow() {
+        return new RowImpl(getFields());
+    }
+
+    @Override
+    public final RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> valuesRow() {
+        List<Field<?>> fields = getFields();
+        return new RowImpl(vals(intoArray(), fields.toArray(new Field[fields.size()])));
+    }
+
+    @Override
+    public final Field<T1> field1() {
+        return (Field<T1>) getField(0);
+    }
+
+    @Override
+    public final Field<T2> field2() {
+        return (Field<T2>) getField(1);
+    }
+
+    @Override
+    public final Field<T3> field3() {
+        return (Field<T3>) getField(2);
+    }
+
+    @Override
+    public final Field<T4> field4() {
+        return (Field<T4>) getField(3);
+    }
+
+    @Override
+    public final Field<T5> field5() {
+        return (Field<T5>) getField(4);
+    }
+
+    @Override
+    public final Field<T6> field6() {
+        return (Field<T6>) getField(5);
+    }
+
+    @Override
+    public final Field<T7> field7() {
+        return (Field<T7>) getField(6);
+    }
+
+    @Override
+    public final Field<T8> field8() {
+        return (Field<T8>) getField(7);
+    }
+
+    @Override
+    public final T1 value1() {
+        return (T1) getValue(0);
+    }
+
+    @Override
+    public final T2 value2() {
+        return (T2) getValue(1);
+    }
+
+    @Override
+    public final T3 value3() {
+        return (T3) getValue(2);
+    }
+
+    @Override
+    public final T4 value4() {
+        return (T4) getValue(3);
+    }
+
+    @Override
+    public final T5 value5() {
+        return (T5) getValue(4);
+    }
+
+    @Override
+    public final T6 value6() {
+        return (T6) getValue(5);
+    }
+
+    @Override
+    public final T7 value7() {
+        return (T7) getValue(6);
+    }
+
+    @Override
+    public final T8 value8() {
+        return (T8) getValue(7);
     }
 }

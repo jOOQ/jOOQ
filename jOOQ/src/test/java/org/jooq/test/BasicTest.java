@@ -57,6 +57,7 @@ import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.replace;
 import static org.jooq.impl.Factory.round;
 import static org.jooq.impl.Factory.row;
+import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.tableByName;
 import static org.jooq.impl.Factory.trueCondition;
@@ -900,13 +901,13 @@ public class BasicTest {
 
     @Test
     public void testInSelectCondition() throws Exception {
-        Condition c = FIELD_ID1.in(create.selectFrom(TABLE1).where(FIELD_NAME1.equal("x")));
-        assertEquals("\"TABLE1\".\"ID1\" in (select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = 'x')", r_refI().render(c));
-        assertEquals("\"TABLE1\".\"ID1\" in (select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = ?)", r_ref().render(c));
+        Condition c = FIELD_ID1.in(select(FIELD_ID1).from(TABLE1).where(FIELD_NAME1.equal("x")));
+        assertEquals("\"TABLE1\".\"ID1\" in (select \"TABLE1\".\"ID1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = 'x')", r_refI().render(c));
+        assertEquals("\"TABLE1\".\"ID1\" in (select \"TABLE1\".\"ID1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = ?)", r_ref().render(c));
 
-        c = FIELD_ID1.notIn(create.selectFrom(TABLE1).where(FIELD_NAME1.equal("x")));
-        assertEquals("\"TABLE1\".\"ID1\" not in (select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = 'x')", r_refI().render(c));
-        assertEquals("\"TABLE1\".\"ID1\" not in (select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = ?)", r_ref().render(c));
+        c = FIELD_ID1.notIn(select(FIELD_ID1).from(TABLE1).where(FIELD_NAME1.equal("x")));
+        assertEquals("\"TABLE1\".\"ID1\" not in (select \"TABLE1\".\"ID1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = 'x')", r_refI().render(c));
+        assertEquals("\"TABLE1\".\"ID1\" not in (select \"TABLE1\".\"ID1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = ?)", r_ref().render(c));
 
         context.checking(new Expectations() {{
             oneOf(statement).setString(1, "x");
@@ -2284,8 +2285,8 @@ public class BasicTest {
     }
 
     private Select<?> createCombinedSelect() {
-        SelectFinalStep q1 = create.select().from(TABLE1).where(FIELD_ID1.equal(1));
-        SelectFinalStep q2 = create.select().from(TABLE1).where(FIELD_ID1.equal(2));
+        SelectFinalStep<Record> q1 = create.select().from(TABLE1).where(FIELD_ID1.equal(1));
+        SelectFinalStep<Record> q2 = create.select().from(TABLE1).where(FIELD_ID1.equal(2));
 
         return q1.union(q2);
     }
@@ -2321,47 +2322,35 @@ public class BasicTest {
 
     @Test
     public void testInnerSelect3() throws Exception {
-        SelectQuery q1 = create.selectQuery();
-        SelectQuery q2 = create.selectQuery();
+        SelectQuery q = create.selectQuery();
 
-        q1.addFrom(TABLE1);
-        q2.addFrom(TABLE2);
+        q.addFrom(TABLE1);
+        q.addConditions(FIELD_ID1.in(select(FIELD_ID2).from(TABLE2)));
 
-        q2.addSelect(FIELD_ID2);
-        q1.addConditions(FIELD_ID1.in(q2));
-
-        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" in (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_refI().render(q1));
-        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" in (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_ref().render(q1));
+        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" in (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_refI().render(q));
+        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" in (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_ref().render(q));
     }
 
     @Test
     public void testInnerSelect4() throws Exception {
-        SelectQuery q1 = create.selectQuery();
-        SelectQuery q2 = create.selectQuery();
+        SelectQuery q = create.selectQuery();
 
-        q1.addFrom(TABLE1);
-        q2.addFrom(TABLE2);
+        q.addFrom(TABLE1);
+        q.addConditions(FIELD_ID1.equal(select(FIELD_ID2).from(TABLE2)));
 
-        q2.addSelect(FIELD_ID2);
-        q1.addConditions(FIELD_ID1.equal(q2));
-
-        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" = (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_refI().render(q1));
-        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" = (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_ref().render(q1));
+        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" = (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_refI().render(q));
+        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" = (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_ref().render(q));
     }
 
     @Test
     public void testInnerSelect5() throws Exception {
-        SelectQuery q1 = create.selectQuery();
-        SelectQuery q2 = create.selectQuery();
+        SelectQuery q = create.selectQuery();
 
-        q1.addFrom(TABLE1);
-        q2.addFrom(TABLE2);
+        q.addFrom(TABLE1);
+        q.addConditions(FIELD_ID1.greaterThan(any(select(FIELD_ID2).from(TABLE2))));
 
-        q2.addSelect(FIELD_ID2);
-        q1.addConditions(FIELD_ID1.greaterThan(any(q2)));
-
-        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" > any (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_refI().render(q1));
-        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" > any (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_ref().render(q1));
+        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" > any (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_refI().render(q));
+        assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" > any (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_ref().render(q));
     }
 
     @Test

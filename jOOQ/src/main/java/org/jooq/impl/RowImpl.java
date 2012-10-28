@@ -858,14 +858,38 @@ implements
 
     @SuppressWarnings("rawtypes")
     @Override
+    public final Condition equal(Select select) {
+        return new Subquery(select, SubQueryOperator.EQUALS);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public final Condition eq(Select select) {
+        return equal(select);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public final Condition notEqual(Select select) {
+        return new Subquery(select, SubQueryOperator.NOT_EQUALS);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public final Condition ne(Select select) {
+        return notEqual(select);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
     public final Condition in(Select select) {
-        return new InSubquery(select, InOperator.IN);
+        return new Subquery(select, SubQueryOperator.IN);
     }
 
     @SuppressWarnings("rawtypes")
     @Override
     public final Condition notIn(Select select) {
-        return new InSubquery(select, InOperator.NOT_IN);
+        return new Subquery(select, SubQueryOperator.NOT_IN);
     }
 
     // ------------------------------------------------------------------------
@@ -1134,21 +1158,20 @@ implements
             public final void bind(BindContext context) {
                 context.bind(RowImpl.this).bind((QueryPart) other);
             }
-
         }
     }
 
-    private class InSubquery extends AbstractCondition {
+    private class Subquery extends AbstractCondition {
 
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -1806139685201770706L;
+        private static final long      serialVersionUID = -1806139685201770706L;
 
-        private final Select<?>   other;
-        private final InOperator  operator;
+        private final Select<?>        other;
+        private final SubQueryOperator operator;
 
-        InSubquery(Select<?> other, InOperator operator) {
+        Subquery(Select<?> other, SubQueryOperator operator) {
             this.other = other;
             this.operator = operator;
         }

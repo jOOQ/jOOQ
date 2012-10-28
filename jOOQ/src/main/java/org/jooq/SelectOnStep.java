@@ -82,13 +82,13 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface SelectOnStep {
+public interface SelectOnStep<R extends Record> {
 
     /**
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>
      */
     @Support
-    SelectOnConditionStep on(Condition... conditions);
+    SelectOnConditionStep<R> on(Condition... conditions);
 
     /**
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>
@@ -101,7 +101,7 @@ public interface SelectOnStep {
      * @see Factory#condition(String)
      */
     @Support
-    SelectOnConditionStep on(String sql);
+    SelectOnConditionStep<R> on(String sql);
 
     /**
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>
@@ -114,7 +114,7 @@ public interface SelectOnStep {
      * @see Factory#condition(String, Object...)
      */
     @Support
-    SelectOnConditionStep on(String sql, Object... bindings);
+    SelectOnConditionStep<R> on(String sql, Object... bindings);
 
     /**
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>
@@ -127,7 +127,7 @@ public interface SelectOnStep {
      * @see Factory#condition(String, QueryPart...)
      */
     @Support
-    SelectOnConditionStep on(String sql, QueryPart... parts);
+    SelectOnConditionStep<R> on(String sql, QueryPart... parts);
 
     /**
      * Join the previous table on a non-ambiguous foreign key relationship
@@ -140,7 +140,7 @@ public interface SelectOnStep {
      *             known to jOOQ
      */
     @Support
-    SelectJoinStep onKey() throws DataAccessException;
+    SelectJoinStep<R> onKey() throws DataAccessException;
 
     /**
      * Join the previous table on a non-ambiguous foreign key relationship
@@ -153,7 +153,7 @@ public interface SelectOnStep {
      *             known to jOOQ
      */
     @Support
-    SelectJoinStep onKey(TableField<?, ?>... keyFields) throws DataAccessException;
+    SelectJoinStep<R> onKey(TableField<?, ?>... keyFields) throws DataAccessException;
 
     /**
      * Join the table on a non-ambiguous foreign key relationship between the
@@ -164,7 +164,7 @@ public interface SelectOnStep {
      * @see TableOnStep#onKey(ForeignKey)
      */
     @Support
-    SelectJoinStep onKey(ForeignKey<?, ?> key);
+    SelectJoinStep<R> onKey(ForeignKey<?, ?> key);
 
     /**
      * Join the previous table with the <code>USING(column [, column...])</code>
@@ -174,7 +174,7 @@ public interface SelectOnStep {
      * this behaviour using the information provided in this query.
      */
     @Support
-    SelectJoinStep using(Field<?>... fields);
+    SelectJoinStep<R> using(Field<?>... fields);
 
     /**
      * Join the previous table with the <code>USING(column [, column...])</code>
@@ -184,5 +184,5 @@ public interface SelectOnStep {
      * this behaviour using the information provided in this query.
      */
     @Support
-    SelectJoinStep using(Collection<? extends Field<?>> fields);
+    SelectJoinStep<R> using(Collection<? extends Field<?>> fields);
 }

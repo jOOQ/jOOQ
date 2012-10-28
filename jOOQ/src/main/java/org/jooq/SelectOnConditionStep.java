@@ -80,14 +80,14 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface SelectOnConditionStep extends SelectJoinStep {
+public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<R> {
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
     @Support
-    SelectOnConditionStep and(Condition condition);
+    SelectOnConditionStep<R> and(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -101,7 +101,7 @@ public interface SelectOnConditionStep extends SelectJoinStep {
      * @see Factory#condition(String)
      */
     @Support
-    SelectOnConditionStep and(String sql);
+    SelectOnConditionStep<R> and(String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -115,7 +115,7 @@ public interface SelectOnConditionStep extends SelectJoinStep {
      * @see Factory#condition(String, Object...)
      */
     @Support
-    SelectOnConditionStep and(String sql, Object... bindings);
+    SelectOnConditionStep<R> and(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -129,35 +129,35 @@ public interface SelectOnConditionStep extends SelectJoinStep {
      * @see Factory#condition(String, QueryPart...)
      */
     @Support
-    SelectOnConditionStep and(String sql, QueryPart... parts);
+    SelectOnConditionStep<R> and(String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
     @Support
-    SelectOnConditionStep andNot(Condition condition);
+    SelectOnConditionStep<R> andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
     @Support
-    SelectOnConditionStep andExists(Select<?> select);
+    SelectOnConditionStep<R> andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
     @Support
-    SelectOnConditionStep andNotExists(Select<?> select);
+    SelectOnConditionStep<R> andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
     @Support
-    SelectOnConditionStep or(Condition condition);
+    SelectOnConditionStep<R> or(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -171,7 +171,7 @@ public interface SelectOnConditionStep extends SelectJoinStep {
      * @see Factory#condition(String)
      */
     @Support
-    SelectOnConditionStep or(String sql);
+    SelectOnConditionStep<R> or(String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -185,7 +185,7 @@ public interface SelectOnConditionStep extends SelectJoinStep {
      * @see Factory#condition(String, Object...)
      */
     @Support
-    SelectOnConditionStep or(String sql, Object... bindings);
+    SelectOnConditionStep<R> or(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -199,26 +199,26 @@ public interface SelectOnConditionStep extends SelectJoinStep {
      * @see Factory#condition(String, QueryPart...)
      */
     @Support
-    SelectOnConditionStep or(String sql, QueryPart... parts);
+    SelectOnConditionStep<R> or(String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
     @Support
-    SelectOnConditionStep orNot(Condition condition);
+    SelectOnConditionStep<R> orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
     @Support
-    SelectOnConditionStep orExists(Select<?> select);
+    SelectOnConditionStep<R> orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
     @Support
-    SelectOnConditionStep orNotExists(Select<?> select);
+    SelectOnConditionStep<R> orNotExists(Select<?> select);
 }

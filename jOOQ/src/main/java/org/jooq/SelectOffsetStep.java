@@ -91,7 +91,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *
  * @author Lukas Eder
  */
-public interface SelectOffsetStep extends SelectForUpdateStep {
+public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<R> {
 
     /**
      * Add an <code>OFFSET</code> clause to the query
@@ -102,7 +102,7 @@ public interface SelectOffsetStep extends SelectForUpdateStep {
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SelectForUpdateStep offset(int offset);
+    SelectForUpdateStep<R> offset(int offset);
 
     /**
      * Add an <code>OFFSET</code> clause to the query using a named parameter
@@ -113,5 +113,5 @@ public interface SelectOffsetStep extends SelectForUpdateStep {
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SelectForUpdateStep offset(Param<Integer> offset);
+    SelectForUpdateStep<R> offset(Param<Integer> offset);
 }

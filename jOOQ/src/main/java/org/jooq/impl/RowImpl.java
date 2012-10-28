@@ -51,8 +51,8 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.InOperator.NOT_IN;
 import static org.jooq.impl.Factory.row;
+import static org.jooq.impl.InOperator.NOT_IN;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,6 +109,10 @@ implements
         super();
 
         this.fields = fields;
+    }
+
+    RowImpl(Collection<? extends Field<?>> fields) {
+        this(fields.toArray(new Field[fields.size()]));
     }
 
     // ------------------------------------------------------------------------
@@ -852,13 +856,15 @@ implements
         return new InRows(list, InOperator.NOT_IN);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public final Condition in(Select<?> select) {
+    public final Condition in(Select select) {
         return new InSubquery(select, InOperator.IN);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public final Condition notIn(Select<?> select) {
+    public final Condition notIn(Select select) {
         return new InSubquery(select, InOperator.NOT_IN);
     }
 

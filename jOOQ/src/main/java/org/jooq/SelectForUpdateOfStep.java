@@ -89,7 +89,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectForUpdateOfStep extends SelectForUpdateWaitStep {
+public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdateWaitStep<R> {
 
     /**
      * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
@@ -99,7 +99,7 @@ public interface SelectForUpdateOfStep extends SelectForUpdateWaitStep {
      *      details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
-    SelectForUpdateWaitStep of(Field<?>... fields);
+    SelectForUpdateWaitStep<R> of(Field<?>... fields);
 
     /**
      * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
@@ -109,7 +109,7 @@ public interface SelectForUpdateOfStep extends SelectForUpdateWaitStep {
      *      more details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
-    SelectForUpdateWaitStep of(Collection<Field<?>> fields);
+    SelectForUpdateWaitStep<R> of(Collection<Field<?>> fields);
 
     /**
      * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
@@ -119,6 +119,6 @@ public interface SelectForUpdateOfStep extends SelectForUpdateWaitStep {
      *      details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
-    SelectForUpdateWaitStep of(Table<?>... tables);
+    SelectForUpdateWaitStep<R> of(Table<?>... tables);
 
 }

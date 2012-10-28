@@ -82,13 +82,13 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface SelectConnectByStep extends SelectGroupByStep {
+public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep<R> {
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      */
     @Support({ CUBRID, ORACLE })
-    SelectConnectByConditionStep connectBy(Condition condition);
+    SelectConnectByConditionStep<R> connectBy(Condition condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
@@ -101,7 +101,7 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * @see Factory#condition(String)
      */
     @Support({ CUBRID, ORACLE })
-    SelectConnectByConditionStep connectBy(String sql);
+    SelectConnectByConditionStep<R> connectBy(String sql);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
@@ -114,7 +114,7 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * @see Factory#condition(String, Object...)
      */
     @Support({ CUBRID, ORACLE })
-    SelectConnectByConditionStep connectBy(String sql, Object... bindings);
+    SelectConnectByConditionStep<R> connectBy(String sql, Object... bindings);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
@@ -127,14 +127,14 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * @see Factory#condition(String, QueryPart...)
      */
     @Support({ CUBRID, ORACLE })
-    SelectConnectByConditionStep connectBy(String sql, QueryPart... parts);
+    SelectConnectByConditionStep<R> connectBy(String sql, QueryPart... parts);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
      * query
      */
     @Support({ CUBRID, ORACLE })
-    SelectConnectByConditionStep connectByNoCycle(Condition condition);
+    SelectConnectByConditionStep<R> connectByNoCycle(Condition condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
@@ -148,7 +148,7 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * @see Factory#condition(String)
      */
     @Support({ CUBRID, ORACLE })
-    SelectConnectByConditionStep connectByNoCycle(String sql);
+    SelectConnectByConditionStep<R> connectByNoCycle(String sql);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
@@ -162,7 +162,7 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * @see Factory#condition(String, Object...)
      */
     @Support({ CUBRID, ORACLE })
-    SelectConnectByConditionStep connectByNoCycle(String sql, Object... bindings);
+    SelectConnectByConditionStep<R> connectByNoCycle(String sql, Object... bindings);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
@@ -176,5 +176,5 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * @see Factory#condition(String, QueryPart...)
      */
     @Support({ CUBRID, ORACLE })
-    SelectConnectByConditionStep connectByNoCycle(String sql, QueryPart... parts);
+    SelectConnectByConditionStep<R> connectByNoCycle(String sql, QueryPart... parts);
 }

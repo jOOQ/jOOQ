@@ -747,6 +747,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         FieldList keyList = new FieldList(keys);
 
         for (R record : this) {
+
+            @SuppressWarnings("rawtypes")
             Record key = new RecordImpl(keyList);
 
             for (Field<?> field : keys) {
@@ -853,6 +855,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         FieldList keyList = new FieldList(keys);
 
         for (R record : this) {
+
+            @SuppressWarnings("rawtypes")
             Record key = new RecordImpl(keyList);
 
             for (Field<?> field : keys) {
@@ -902,6 +906,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         FieldList keyList = new FieldList(keys);
 
         for (R record : this) {
+
+            @SuppressWarnings("rawtypes")
             Record key = new RecordImpl(keyList);
 
             for (Field<?> field : keys) {

@@ -67,6 +67,7 @@ import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
+import org.jooq.Record1;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.SortField;
@@ -539,7 +540,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition in(Select<?> query) {
+    public final Condition in(Select<? extends Record1<T>> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.IN);
     }
 
@@ -570,7 +571,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition notIn(Select<?> query) {
+    public final Condition notIn(Select<? extends Record1<T>> query) {
         return new SelectQueryAsSubQueryCondition(
             query, this, SubQueryOperator.NOT_IN);
     }
@@ -666,12 +667,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition eq(Select<?> query) {
+    public final Condition eq(Select<? extends Record1<T>> query) {
         return equal(query);
     }
 
     @Override
-    public final Condition eq(QuantifiedSelect<?> query) {
+    public final Condition eq(QuantifiedSelect<? extends Record1<T>> query) {
         return equal(query);
     }
 
@@ -686,12 +687,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition ne(Select<?> query) {
+    public final Condition ne(Select<? extends Record1<T>> query) {
         return notEqual(query);
     }
 
     @Override
-    public final Condition ne(QuantifiedSelect<?> query) {
+    public final Condition ne(QuantifiedSelect<? extends Record1<T>> query) {
         return notEqual(query);
     }
 
@@ -706,12 +707,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition lt(Select<?> query) {
+    public final Condition lt(Select<? extends Record1<T>> query) {
         return lessThan(query);
     }
 
     @Override
-    public final Condition lt(QuantifiedSelect<?> query) {
+    public final Condition lt(QuantifiedSelect<? extends Record1<T>> query) {
         return lessThan(query);
     }
 
@@ -726,12 +727,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition le(Select<?> query) {
+    public final Condition le(Select<? extends Record1<T>> query) {
         return lessOrEqual(query);
     }
 
     @Override
-    public final Condition le(QuantifiedSelect<?> query) {
+    public final Condition le(QuantifiedSelect<? extends Record1<T>> query) {
         return lessOrEqual(query);
     }
 
@@ -746,12 +747,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition gt(Select<?> query) {
+    public final Condition gt(Select<? extends Record1<T>> query) {
         return greaterThan(query);
     }
 
     @Override
-    public final Condition gt(QuantifiedSelect<?> query) {
+    public final Condition gt(QuantifiedSelect<? extends Record1<T>> query) {
         return greaterThan(query);
     }
 
@@ -766,12 +767,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition ge(Select<?> query) {
+    public final Condition ge(Select<? extends Record1<T>> query) {
         return greaterOrEqual(query);
     }
 
     @Override
-    public final Condition ge(QuantifiedSelect<?> query) {
+    public final Condition ge(QuantifiedSelect<? extends Record1<T>> query) {
         return greaterOrEqual(query);
     }
 
@@ -796,12 +797,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition equal(Select<?> query) {
+    public final Condition equal(Select<? extends Record1<T>> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.EQUALS);
     }
 
     @Override
-    public final Condition equal(QuantifiedSelect<?> query) {
+    public final Condition equal(QuantifiedSelect<? extends Record1<T>> query) {
         return new QuantifiedComparisonCondition(query, this, Comparator.EQUALS);
     }
 
@@ -826,12 +827,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition notEqual(Select<?> query) {
+    public final Condition notEqual(Select<? extends Record1<T>> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.NOT_EQUALS);
     }
 
     @Override
-    public final Condition notEqual(QuantifiedSelect<?> query) {
+    public final Condition notEqual(QuantifiedSelect<? extends Record1<T>> query) {
         return new QuantifiedComparisonCondition(query, this, Comparator.NOT_EQUALS);
     }
 
@@ -846,12 +847,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition lessThan(Select<?> query) {
+    public final Condition lessThan(Select<? extends Record1<T>> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS);
     }
 
     @Override
-    public final Condition lessThan(QuantifiedSelect<?> query) {
+    public final Condition lessThan(QuantifiedSelect<? extends Record1<T>> query) {
         return new QuantifiedComparisonCondition(query, this, Comparator.LESS);
     }
 
@@ -866,12 +867,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition lessOrEqual(Select<?> query) {
+    public final Condition lessOrEqual(Select<? extends Record1<T>> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_OR_EQUAL);
     }
 
     @Override
-    public final Condition lessOrEqual(QuantifiedSelect<?> query) {
+    public final Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query) {
         return new QuantifiedComparisonCondition(query, this, Comparator.LESS_OR_EQUAL);
     }
 
@@ -886,12 +887,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition greaterThan(Select<?> query) {
+    public final Condition greaterThan(Select<? extends Record1<T>> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER);
     }
 
     @Override
-    public final Condition greaterThan(QuantifiedSelect<?> query) {
+    public final Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query) {
         return new QuantifiedComparisonCondition(query, this, Comparator.GREATER);
     }
 
@@ -906,12 +907,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition greaterOrEqual(Select<?> query) {
+    public final Condition greaterOrEqual(Select<? extends Record1<T>> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_OR_EQUAL);
     }
 
     @Override
-    public final Condition greaterOrEqual(QuantifiedSelect<?> query) {
+    public final Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query) {
         return new QuantifiedComparisonCondition(query, this, Comparator.GREATER_OR_EQUAL);
     }
 

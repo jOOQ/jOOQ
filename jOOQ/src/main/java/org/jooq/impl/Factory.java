@@ -79,6 +79,14 @@ import org.jooq.QuantifiedSelect;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.Row1;
 import org.jooq.Row2;
@@ -129,37 +137,6 @@ public class Factory {
      *
      * // [...]
      *
-     * select(field1, field2)
-     *  .from(table1)
-     *  .join(table2).on(field1.equal(field2))
-     *  .where(field1.greaterThan(100))
-     *  .orderBy(field2);
-     * </pre></code>
-     *
-     * @see FactoryOperations#select(Field...)
-     */
-    @Support
-    public static SelectSelectStep select(Field<?>... fields) {
-        return new SelectImpl(DEFAULT_CONFIGURATION).select(fields);
-    }
-
-    /**
-     * Create a new DSL subselect statement.
-     * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>SELECT</code> statement. You can use this statement in two ways:
-     * <ul>
-     * <li>As a subselect within another select</li>
-     * <li>As a statement, after attaching it using
-     * {@link Select#attach(org.jooq.Configuration)}</li>
-     * </ul>
-     * <p>
-     * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
-     *
-     * // [...]
-     *
      * select(fields)
      *  .from(table1)
      *  .join(table2).on(field1.equal(field2))
@@ -169,9 +146,10 @@ public class Factory {
      *
      * @see FactoryOperations#select(Collection)
      */
+    @SuppressWarnings({ "unchecked" })
     @Support
-    public static SelectSelectStep select(Collection<? extends Field<?>> fields) {
-        return new SelectImpl(DEFAULT_CONFIGURATION).select(fields);
+    public static SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
+        return new SelectImpl<Record>(DEFAULT_CONFIGURATION).select(fields);
     }
 
     /**
@@ -191,18 +169,323 @@ public class Factory {
      *
      * // [...]
      *
-     * selectDistinct(field1, field2)
+     * select(field1, field2)
      *  .from(table1)
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#selectDistinct(Field...)
+     * @see FactoryOperations#select(Field...)
      */
+    @SuppressWarnings({ "unchecked" })
     @Support
-    public static SelectSelectStep selectDistinct(Field<?>... fields) {
-        return new SelectImpl(DEFAULT_CONFIGURATION, true).select(fields);
+    public static SelectSelectStep<Record> select(Field<?>... fields) {
+        return new SelectImpl<Record>(DEFAULT_CONFIGURATION).select(fields);
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#select(Field...)
+     * @see #select(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1> SelectSelectStep<Record1<T1>> select(Field<T1> field1) {
+        return (SelectSelectStep) select(new Field[] { field1 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#select(Field...)
+     * @see #select(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2> SelectSelectStep<Record2<T1, T2>> select(Field<T1> field1, Field<T2> field2) {
+        return (SelectSelectStep) select(new Field[] { field1, field2 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#select(Field...)
+     * @see #select(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, field4)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#select(Field...)
+     * @see #select(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, field4, field5)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#select(Field...)
+     * @see #select(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, field4, field5, field6)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#select(Field...)
+     * @see #select(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, field4, field5, field6, field7)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#select(Field...)
+     * @see #select(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, field4, field5, field6, field7, field8)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#select(Field...)
+     * @see #select(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
 
     /**
@@ -231,9 +514,346 @@ public class Factory {
      *
      * @see FactoryOperations#selectDistinct(Collection)
      */
+    @SuppressWarnings({ "unchecked" })
     @Support
-    public static SelectSelectStep selectDistinct(Collection<? extends Field<?>> fields) {
-        return new SelectImpl(DEFAULT_CONFIGURATION, true).select(fields);
+    public static SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
+        return new SelectImpl<Record>(DEFAULT_CONFIGURATION, true).select(fields);
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#selectDistinct(Field...)
+     */
+    @SuppressWarnings({ "unchecked" })
+    @Support
+    public static SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
+        return new SelectImpl<Record>(DEFAULT_CONFIGURATION, true).select(fields);
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1> SelectSelectStep<Record1<T1>> selectDistinct(Field<T1> field1) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(Field<T1> field1, Field<T2> field2) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, field4)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, field4, field5)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, field4, field5, field6)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, field4, field5, field6, field7)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, field4, field5, field6, field7, field8)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see FactoryOperations#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
 
     /**
@@ -263,9 +883,10 @@ public class Factory {
      * @see Factory#zero()
      * @see FactoryOperations#selectZero()
      */
+    @SuppressWarnings({ "unchecked" })
     @Support
-    public static SelectSelectStep selectZero() {
-        return new SelectImpl(DEFAULT_CONFIGURATION).select(zero());
+    public static SelectSelectStep<Record1<Integer>> selectZero() {
+        return new SelectImpl<Record1<Integer>>(DEFAULT_CONFIGURATION).select(zero());
     }
 
     /**
@@ -295,9 +916,10 @@ public class Factory {
      * @see Factory#one()
      * @see FactoryOperations#selectOne()
      */
+    @SuppressWarnings({ "unchecked" })
     @Support
-    public static SelectSelectStep selectOne() {
-        return new SelectImpl(DEFAULT_CONFIGURATION).select(one());
+    public static SelectSelectStep<Record1<Integer>> selectOne() {
+        return new SelectImpl<Record1<Integer>>(DEFAULT_CONFIGURATION).select(one());
     }
 
     /**
@@ -327,9 +949,10 @@ public class Factory {
      * @see Factory#count()
      * @see FactoryOperations#selectCount()
      */
+    @SuppressWarnings({ "unchecked" })
     @Support
-    public static SelectSelectStep selectCount() {
-        return new SelectImpl(DEFAULT_CONFIGURATION).select(count());
+    public static SelectSelectStep<Record1<Integer>> selectCount() {
+        return new SelectImpl<Record1<Integer>>(DEFAULT_CONFIGURATION).select(count());
     }
 
     // -------------------------------------------------------------------------
@@ -367,7 +990,7 @@ public class Factory {
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    public static <T> QuantifiedSelect<Record> all(T... array) {
+    public static <T> QuantifiedSelect<Record1<T>> all(T... array) {
         return all(val(array));
     }
 
@@ -386,8 +1009,8 @@ public class Factory {
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    public static <T> QuantifiedSelect<Record> all(Field<T[]> array) {
-        return new QuantifiedSelectImpl<Record>(Quantifier.ALL, array);
+    public static <T> QuantifiedSelect<Record1<T>> all(Field<T[]> array) {
+        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ALL, array);
     }
 
     /**
@@ -421,7 +1044,7 @@ public class Factory {
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    public static <T> QuantifiedSelect<Record> any(T... array) {
+    public static <T> QuantifiedSelect<Record1<T>> any(T... array) {
         return any(val(array));
     }
 
@@ -440,8 +1063,8 @@ public class Factory {
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    public static <T> QuantifiedSelect<Record> any(Field<T[]> array) {
-        return new QuantifiedSelectImpl<Record>(Quantifier.ANY, array);
+    public static <T> QuantifiedSelect<Record1<T>> any(Field<T[]> array) {
+        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ANY, array);
     }
 
     // -------------------------------------------------------------------------
@@ -5011,6 +5634,54 @@ public class Factory {
                 else {
                     result.add(val(value));
                 }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get a list of bind values for a matching list of fields
+     */
+    @Support
+    public static List<Field<?>> vals(Object[] values, Field<?>[] fields) {
+        FieldList result = new FieldList();
+
+        if (values != null && fields != null) {
+            for (int i = 0; i < values.length && i < fields.length; i++) {
+                result.add(val(values[i], fields[i]));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get a list of bind values for a matching list of types
+     */
+    @Support
+    public static List<Field<?>> vals(Object[] values, Class<?>[] types) {
+        FieldList result = new FieldList();
+
+        if (values != null && types != null) {
+            for (int i = 0; i < values.length && i < types.length; i++) {
+                result.add(val(values[i], types[i]));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get a list of bind values for a matching list of types
+     */
+    @Support
+    public static List<Field<?>> vals(Object[] values, DataType<?>[] types) {
+        FieldList result = new FieldList();
+
+        if (values != null && types != null) {
+            for (int i = 0; i < values.length && i < types.length; i++) {
+                result.add(val(values[i], types[i]));
             }
         }
 

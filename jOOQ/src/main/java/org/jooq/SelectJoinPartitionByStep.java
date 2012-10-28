@@ -81,7 +81,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectJoinPartitionByStep extends SelectOnStep {
+public interface SelectJoinPartitionByStep<R extends Record> extends SelectOnStep<R> {
 
     /**
      * Add a <code>PARTITION BY</code> clause to the right hand side of the
@@ -90,7 +90,7 @@ public interface SelectJoinPartitionByStep extends SelectOnStep {
      * @see TablePartitionByStep#partitionBy(Field...)
      */
     @Support(ORACLE)
-    SelectOnStep partitionBy(Field<?>... fields);
+    SelectOnStep<R> partitionBy(Field<?>... fields);
 
     /**
      * Add a <code>PARTITION BY</code> clause to the right hand side of the
@@ -99,6 +99,6 @@ public interface SelectJoinPartitionByStep extends SelectOnStep {
      * @see TablePartitionByStep#partitionBy(Collection)
      */
     @Support(ORACLE)
-    SelectOnStep partitionBy(Collection<? extends Field<?>> fields);
+    SelectOnStep<R> partitionBy(Collection<? extends Field<?>> fields);
 
 }

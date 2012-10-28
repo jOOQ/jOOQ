@@ -81,19 +81,19 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface SelectWhereStep extends SelectConnectByStep {
+public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R> {
 
     /**
      * Add a <code>WHERE</code> clause to the query
      */
     @Support
-    SelectConditionStep where(Condition... conditions);
+    SelectConditionStep<R> where(Condition... conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the query
      */
     @Support
-    SelectConditionStep where(Collection<Condition> conditions);
+    SelectConditionStep<R> where(Collection<Condition> conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the query
@@ -106,7 +106,7 @@ public interface SelectWhereStep extends SelectConnectByStep {
      * @see Factory#condition(String)
      */
     @Support
-    SelectConditionStep where(String sql);
+    SelectConditionStep<R> where(String sql);
 
     /**
      * Add a <code>WHERE</code> clause to the query
@@ -119,7 +119,7 @@ public interface SelectWhereStep extends SelectConnectByStep {
      * @see Factory#condition(String, Object...)
      */
     @Support
-    SelectConditionStep where(String sql, Object... bindings);
+    SelectConditionStep<R> where(String sql, Object... bindings);
 
     /**
      * Add a <code>WHERE</code> clause to the query
@@ -132,17 +132,17 @@ public interface SelectWhereStep extends SelectConnectByStep {
      * @see Factory#condition(String, QueryPart...)
      */
     @Support
-    SelectConditionStep where(String sql, QueryPart... parts);
+    SelectConditionStep<R> where(String sql, QueryPart... parts);
 
     /**
      * Add a <code>WHERE EXISTS</code> clause to the query
      */
     @Support
-    SelectConditionStep whereExists(Select<?> select);
+    SelectConditionStep<R> whereExists(Select<?> select);
 
     /**
      * Add a <code>WHERE NOT EXISTS</code> clause to the query
      */
     @Support
-    SelectConditionStep whereNotExists(Select<?> select);
+    SelectConditionStep<R> whereNotExists(Select<?> select);
 }

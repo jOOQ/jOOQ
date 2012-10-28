@@ -61,6 +61,7 @@ import javax.sql.DataSource;
 import javax.xml.bind.JAXB;
 
 import org.jooq.Attachable;
+import org.jooq.AttachableInternal;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
 import org.jooq.BindContext;
@@ -1034,6 +1035,8 @@ public class Executor implements FactoryOperations {
 
             if (all.size() > 1) {
                 for (String[] values : all.subList(1, all.size())) {
+
+                    @SuppressWarnings("rawtypes")
                     Record record = new RecordImpl(fields);
 
                     for (int i = 0; i < Math.min(values.length, fields.size()); i++) {
@@ -1064,8 +1067,8 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final SelectSelectStep select(Field<?>... fields) {
-        SelectSelectStep result = Factory.select(fields);
+    public final SelectSelectStep<Record> select(Field<?>... fields) {
+        SelectSelectStep<Record> result = Factory.select(fields);
         result.attach(this);
         return result;
     }
@@ -1074,8 +1077,8 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final SelectSelectStep select(Collection<? extends Field<?>> fields) {
-        SelectSelectStep result = Factory.select(fields);
+    public final SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
+        SelectSelectStep<Record> result = Factory.select(fields);
         result.attach(this);
         return result;
     }
@@ -1084,8 +1087,8 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final SelectSelectStep selectDistinct(Field<?>... fields) {
-        SelectSelectStep result = Factory.selectDistinct(fields);
+    public final SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
+        SelectSelectStep<Record> result = Factory.selectDistinct(fields);
         result.attach(this);
         return result;
     }
@@ -1094,8 +1097,8 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final SelectSelectStep selectDistinct(Collection<? extends Field<?>> fields) {
-        SelectSelectStep result = Factory.selectDistinct(fields);
+    public final SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
+        SelectSelectStep<Record> result = Factory.selectDistinct(fields);
         result.attach(this);
         return result;
     }
@@ -1104,8 +1107,9 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final SelectSelectStep selectZero() {
-        SelectSelectStep result = Factory.selectZero();
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final SelectSelectStep<Record> selectZero() {
+        SelectSelectStep<Record> result = (SelectSelectStep) Factory.selectZero();
         result.attach(this);
         return result;
     }
@@ -1114,8 +1118,9 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final SelectSelectStep selectOne() {
-        SelectSelectStep result = Factory.selectOne();
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final SelectSelectStep<Record> selectOne() {
+        SelectSelectStep<Record> result = (SelectSelectStep) Factory.selectOne();
         result.attach(this);
         return result;
     }
@@ -1124,8 +1129,9 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final SelectSelectStep selectCount() {
-        SelectSelectStep result = Factory.selectCount();
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final SelectSelectStep<Record> selectCount() {
+        SelectSelectStep<Record> result = (SelectSelectStep) Factory.selectCount();
         result.attach(this);
         return result;
     }
@@ -1442,6 +1448,46 @@ public class Executor implements FactoryOperations {
         result.from(source);
         return result;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX Executing queries
+    // -------------------------------------------------------------------------
+
+    // [#1904] TODO Improve this API
+    @Override
+    public final <R extends Record> Result<R> fetch(ResultQuery<R> query) {
+        Configuration previous = null;
+
+        if (query instanceof AttachableInternal) {
+            previous = ((AttachableInternal) query).getConfiguration();
+        }
+
+        try {
+            query.attach(this);
+            return query.fetch();
+        }
+        finally {
+            query.attach(previous);
+        }
+    }
+
+    @Override
+    public final <R extends Record> R fetchOne(ResultQuery<R> query) {
+        Configuration previous = null;
+
+        if (query instanceof AttachableInternal) {
+            previous = ((AttachableInternal) query).getConfiguration();
+        }
+
+        try {
+            query.attach(this);
+            return query.fetchOne();
+        }
+        finally {
+            query.attach(previous);
+        }
+    }
+
     // -------------------------------------------------------------------------
     // XXX Fast querying
     // -------------------------------------------------------------------------

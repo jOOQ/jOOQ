@@ -79,7 +79,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectGroupByStep extends SelectHavingStep {
+public interface SelectGroupByStep<R extends Record> extends SelectHavingStep<R> {
 
     /**
      * Add a <code>GROUP BY</code> clause to the query
@@ -88,7 +88,7 @@ public interface SelectGroupByStep extends SelectHavingStep {
      * <code>GROUP BY ()</code> clause being rendered.
      */
     @Support
-    SelectHavingStep groupBy(GroupField... fields);
+    SelectHavingStep<R> groupBy(GroupField... fields);
 
     /**
      * Add a <code>GROUP BY</code> clause to the query
@@ -97,5 +97,5 @@ public interface SelectGroupByStep extends SelectHavingStep {
      * <code>GROUP BY ()</code> clause being rendered.
      */
     @Support
-    SelectHavingStep groupBy(Collection<? extends GroupField> fields);
+    SelectHavingStep<R> groupBy(Collection<? extends GroupField> fields);
 }

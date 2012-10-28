@@ -81,19 +81,19 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface SelectHavingStep extends SelectOrderByStep {
+public interface SelectHavingStep<R extends Record> extends SelectOrderByStep<R> {
 
     /**
      * Add a <code>HAVING</code> clause to the query
      */
     @Support
-    SelectHavingConditionStep having(Condition... conditions);
+    SelectHavingConditionStep<R> having(Condition... conditions);
 
     /**
      * Add a <code>HAVING</code> clause to the query
      */
     @Support
-    SelectHavingConditionStep having(Collection<Condition> conditions);
+    SelectHavingConditionStep<R> having(Collection<Condition> conditions);
 
     /**
      * Add a <code>HAVING</code> clause to the query
@@ -106,7 +106,7 @@ public interface SelectHavingStep extends SelectOrderByStep {
      * @see Factory#condition(String)
      */
     @Support
-    SelectHavingConditionStep having(String sql);
+    SelectHavingConditionStep<R> having(String sql);
 
     /**
      * Add a <code>HAVING</code> clause to the query
@@ -119,7 +119,7 @@ public interface SelectHavingStep extends SelectOrderByStep {
      * @see Factory#condition(String, Object...)
      */
     @Support
-    SelectHavingConditionStep having(String sql, Object... bindings);
+    SelectHavingConditionStep<R> having(String sql, Object... bindings);
 
     /**
      * Add a <code>HAVING</code> clause to the query
@@ -132,5 +132,5 @@ public interface SelectHavingStep extends SelectOrderByStep {
      * @see Factory#condition(String, QueryPart...)
      */
     @Support
-    SelectHavingConditionStep having(String sql, QueryPart... parts);
+    SelectHavingConditionStep<R> having(String sql, QueryPart... parts);
 }

@@ -167,7 +167,7 @@ final class Utils {
     /**
      * Create a new record
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     static final <R extends Record> R newRecord(Class<R> type, FieldProvider provider, Configuration configuration) {
         try {
             R result;

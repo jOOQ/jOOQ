@@ -35,6 +35,7 @@
  */
 package org.jooq.examples;
 
+import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.selectDistinct;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_LANGUAGE;
 import static org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR;
@@ -183,9 +184,9 @@ public class Library {
                      selectDistinct(TBook.AUTHOR_ID)
                     .from(T_BOOK)
                     .where(TBook.LANGUAGE_ID.in(
-                        create().select(TLanguage.ID)
-                                .from(T_LANGUAGE)
-                                .where(TLanguage.CD.in("pt", "en"))
+                        select(TLanguage.ID)
+                        .from(T_LANGUAGE)
+                        .where(TLanguage.CD.in("pt", "en"))
                     )))).fetch()) {
 
             System.out.println("Author : " + record.getFirstName() + " " + record.getLastName() + " has english or portuguese books");

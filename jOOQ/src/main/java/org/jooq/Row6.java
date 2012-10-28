@@ -35,6 +35,13 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+
 import java.util.Collection;
 
 /**
@@ -264,4 +271,24 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
      */
     @Support
     Condition notIn(Row6<T1, T2, T3, T4, T5, T6>... rows);
+
+    /**
+     * Compare this row value expression with a subselect for equality
+     * <p>
+     * Note that the subquery must return a table of the same degree as this row
+     * value expression. This is not checked by jOOQ and will result in syntax
+     * errors in the database, if not used correctly.
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition in(Select<? extends Record6<T1, T2, T3, T4, T5, T6>> select);
+
+    /**
+     * Compare this row value expression with a subselect for non-equality
+     * <p>
+     * Note that the subquery must return a table of the same degree as this row
+     * value expression. This is not checked by jOOQ and will result in syntax
+     * errors in the database, if not used correctly.
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition notIn(Select<? extends Record6<T1, T2, T3, T4, T5, T6>> select);
 }

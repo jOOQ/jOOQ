@@ -9067,6 +9067,13 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 								This section is for all users of jOOQ 2.x who wish to upgrade to the next major release. In the next sub-sections, the most important changes are explained
 							</p>
 							
+							<h3>Type-safe Record1 through Record8</h3>
+							<ul>
+								<li>Subqueries from Factory.select(...) are now type-safe</li>
+								<li>IN predicates and comparison predicates changed incompatibly</li>
+								<li>Result&lt;Record> might change incompatibly</li>
+							</ul>
+							
 							<h3>Separation of query building and query execution</h3>
 							<h3>No sub-factories anymore (no deprecation yet)</h3>
 							<h3>Quantified comparison predicates (no deprecation yet)</h3>

@@ -82,14 +82,14 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface SelectConnectByConditionStep extends SelectStartWithStep {
+public interface SelectConnectByConditionStep<R extends Record> extends SelectStartWithStep<R> {
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
     @Support({CUBRID, ORACLE})
-    SelectConnectByConditionStep and(Condition condition);
+    SelectConnectByConditionStep<R> and(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -103,7 +103,7 @@ public interface SelectConnectByConditionStep extends SelectStartWithStep {
      * @see Factory#condition(String)
      */
     @Support({CUBRID, ORACLE})
-    SelectConnectByConditionStep and(String sql);
+    SelectConnectByConditionStep<R> and(String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -117,7 +117,7 @@ public interface SelectConnectByConditionStep extends SelectStartWithStep {
      * @see Factory#condition(String, Object...)
      */
     @Support({ CUBRID, ORACLE })
-    SelectConnectByConditionStep and(String sql, Object... bindings);
+    SelectConnectByConditionStep<R> and(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -131,6 +131,6 @@ public interface SelectConnectByConditionStep extends SelectStartWithStep {
      * @see Factory#condition(String, QueryPart...)
      */
     @Support({ CUBRID, ORACLE })
-    SelectConnectByConditionStep and(String sql, QueryPart... parts);
+    SelectConnectByConditionStep<R> and(String sql, QueryPart... parts);
 
 }

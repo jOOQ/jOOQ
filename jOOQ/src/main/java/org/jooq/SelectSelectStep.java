@@ -80,17 +80,17 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectSelectStep extends SelectFromStep {
+public interface SelectSelectStep<R extends Record> extends SelectFromStep<R> {
 
     /**
      * Add additional fields to the <code>SELECT</code> clause of this query
      */
     @Support
-    SelectSelectStep select(Field<?>... fields);
+    SelectSelectStep<Record> select(Field<?>... fields);
 
     /**
      * Add additional fields to the <code>SELECT</code> clause of this query
      */
     @Support
-    SelectSelectStep select(Collection<? extends Field<?>> fields);
+    SelectSelectStep<Record> select(Collection<? extends Field<?>> fields);
 }

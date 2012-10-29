@@ -35,6 +35,7 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
@@ -46,6 +47,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -55,6 +57,7 @@ import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.max;
+import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.selectOne;
 import static org.jooq.impl.Factory.val;
@@ -442,6 +445,96 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         author = create().fetchOne(TAuthor(), TAuthor_LAST_NAME().equal("Hitchcock"));
         assertEquals(Integer.valueOf(4), author.getValue(TAuthor_ID()));
         assertEquals("Hitchcock", author.getValue(TAuthor_LAST_NAME()));
+    }
+
+    @Test
+    public void testUpdateWithRowValueExpression() throws Exception {
+        if (asList(ASE, CUBRID, DERBY, FIREBIRD, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(getDialect())) {
+            log.info("SKIPPING", "UPDATE with row value expression tests");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+        A author;
+
+        // Multi-row UPDATE with degree 1
+        // ------------------------------
+        assertEquals(1,
+        create().update(TAuthor())
+                .set(row(TAuthor_FIRST_NAME()), row(val("row1")))
+                .where(TAuthor_ID().equal(1))
+                .execute());
+
+        author = getAuthor(1);
+        assertEquals("row1", author.getValue(TAuthor_FIRST_NAME()));
+
+        // Postgres doesn't support subselects here
+        if (!asList(POSTGRES).contains(getDialect())) {
+            assertEquals(1,
+            create().update(TAuthor())
+                    .set(row(TAuthor_FIRST_NAME()), select(val("select1")))
+                    .where(TAuthor_ID().equal(1))
+                    .execute());
+
+            author = getAuthor(1);
+            assertEquals("select1", author.getValue(TAuthor_FIRST_NAME()));
+        }
+
+        // Multi-row UPDATE with degree 2
+        // ------------------------------
+        assertEquals(1,
+        create().update(TAuthor())
+                .set(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME()),
+                     row(val("row2a"), val("row2b")))
+                .where(TAuthor_ID().equal(1))
+                .execute());
+
+        author = getAuthor(1);
+        assertEquals("row2a", author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("row2b", author.getValue(TAuthor_LAST_NAME()));
+
+        // Postgres doesn't support subselects here
+        if (!asList(POSTGRES).contains(getDialect())) {
+            assertEquals(1,
+            create().update(TAuthor())
+                    .set(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME()),
+                         select(val("select2a"), val("select2b")))
+                    .where(TAuthor_ID().equal(1))
+                    .execute());
+
+            author = getAuthor(1);
+            assertEquals("select2a", author.getValue(TAuthor_FIRST_NAME()));
+            assertEquals("select2b", author.getValue(TAuthor_LAST_NAME()));
+        }
+
+        // Multi-row UPDATE with degree 3 (higher degrees are currently not tested)
+        // ------------------------------------------------------------------------
+        assertEquals(1,
+        create().update(TAuthor())
+                .set(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TAuthor_YEAR_OF_BIRTH()),
+                     row(val("row3a"), val("row3b"), val(3)))
+                .where(TAuthor_ID().equal(1))
+                .execute());
+
+        author = getAuthor(1);
+        assertEquals("row3a", author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("row3b", author.getValue(TAuthor_LAST_NAME()));
+        assertEquals(3, (int) author.getValue(TAuthor_YEAR_OF_BIRTH()));
+
+        // Postgres doesn't support subselects here
+        if (!asList(POSTGRES).contains(getDialect())) {
+            assertEquals(1,
+            create().update(TAuthor())
+                    .set(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TAuthor_YEAR_OF_BIRTH()),
+                         select(val("select3a"), val("select3b"), val(33)))
+                    .where(TAuthor_ID().equal(1))
+                    .execute());
+
+            author = getAuthor(1);
+            assertEquals("select3a", author.getValue(TAuthor_FIRST_NAME()));
+            assertEquals("select3b", author.getValue(TAuthor_LAST_NAME()));
+            assertEquals(33, (int) author.getValue(TAuthor_YEAR_OF_BIRTH()));
+        }
     }
 
     @Test

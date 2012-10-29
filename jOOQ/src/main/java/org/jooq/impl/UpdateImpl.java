@@ -48,11 +48,29 @@ import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Row1;
+import org.jooq.Row2;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.UpdateConditionStep;
 import org.jooq.UpdateQuery;
+import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
+import org.jooq.UpdateWhereStep;
 
 /**
  * A wrapper for an {@link UpdateQuery}
@@ -64,6 +82,7 @@ final class UpdateImpl<R extends Record>
     implements
 
     // Cascading interface implementations for Update behaviour
+    UpdateSetFirstStep<R>,
     UpdateSetMoreStep<R>,
     UpdateConditionStep<R> {
 
@@ -91,6 +110,102 @@ final class UpdateImpl<R extends Record>
     @Override
     public final UpdateImpl<R> set(Map<? extends Field<?>, ?> map) {
         getDelegate().addValues(map);
+        return this;
+    }
+
+    @Override
+    public final <T1> UpdateWhereStep<R> set(Row1<T1> row, Row1<T1> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2> UpdateWhereStep<R> set(Row2<T1, T2> row, Row2<T1, T2> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3> UpdateWhereStep<R> set(Row3<T1, T2, T3> row, Row3<T1, T2, T3> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3, T4> UpdateWhereStep<R> set(Row4<T1, T2, T3, T4> row, Row4<T1, T2, T3, T4> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5> UpdateWhereStep<R> set(Row5<T1, T2, T3, T4, T5> row, Row5<T1, T2, T3, T4, T5> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6> UpdateWhereStep<R> set(Row6<T1, T2, T3, T4, T5, T6> row, Row6<T1, T2, T3, T4, T5, T6> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7> UpdateWhereStep<R> set(Row7<T1, T2, T3, T4, T5, T6, T7> row, Row7<T1, T2, T3, T4, T5, T6, T7> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8> UpdateWhereStep<R> set(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Row8<T1, T2, T3, T4, T5, T6, T7, T8> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Override
+    public final <T1> UpdateWhereStep<R> set(Row1<T1> row, Select<? extends Record1<T1>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2> UpdateWhereStep<R> set(Row2<T1, T2> row, Select<? extends Record2<T1, T2>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3> UpdateWhereStep<R> set(Row3<T1, T2, T3> row, Select<? extends Record3<T1, T2, T3>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3, T4> UpdateWhereStep<R> set(Row4<T1, T2, T3, T4> row, Select<? extends Record4<T1, T2, T3, T4>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5> UpdateWhereStep<R> set(Row5<T1, T2, T3, T4, T5> row, Select<? extends Record5<T1, T2, T3, T4, T5>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6> UpdateWhereStep<R> set(Row6<T1, T2, T3, T4, T5, T6> row, Select<? extends Record6<T1, T2, T3, T4, T5, T6>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7> UpdateWhereStep<R> set(Row7<T1, T2, T3, T4, T5, T6, T7> row, Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8> UpdateWhereStep<R> set(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select) {
+        getDelegate().addValues(row, select);
         return this;
     }
 

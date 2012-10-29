@@ -36,6 +36,13 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+
 import java.util.Collection;
 
 /**
@@ -46,6 +53,102 @@ import java.util.Collection;
  */
 @SuppressWarnings("deprecation")
 public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionProvider, Update<R> {
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1> void addValues(Row1<T1> row, Row1<T1> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2> void addValues(Row2<T1, T2> row, Row2<T1, T2> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3> void addValues(Row3<T1, T2, T3> row, Row3<T1, T2, T3> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4> void addValues(Row4<T1, T2, T3, T4> row, Row4<T1, T2, T3, T4> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5> void addValues(Row5<T1, T2, T3, T4, T5> row, Row5<T1, T2, T3, T4, T5> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6> void addValues(Row6<T1, T2, T3, T4, T5, T6> row, Row6<T1, T2, T3, T4, T5, T6> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7> void addValues(Row7<T1, T2, T3, T4, T5, T6, T7> row, Row7<T1, T2, T3, T4, T5, T6, T7> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8> void addValues(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Row8<T1, T2, T3, T4, T5, T6, T7, T8> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1> void addValues(Row1<T1> row, Select<? extends Record1<T1>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2> void addValues(Row2<T1, T2> row, Select<? extends Record2<T1, T2>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3> void addValues(Row3<T1, T2, T3> row, Select<? extends Record3<T1, T2, T3>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4> void addValues(Row4<T1, T2, T3, T4> row, Select<? extends Record4<T1, T2, T3, T4>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5> void addValues(Row5<T1, T2, T3, T4, T5> row, Select<? extends Record5<T1, T2, T3, T4, T5>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6> void addValues(Row6<T1, T2, T3, T4, T5, T6> row, Select<? extends Record6<T1, T2, T3, T4, T5, T6>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7> void addValues(Row7<T1, T2, T3, T4, T5, T6, T7> row, Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8> void addValues(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
 
     // ------------------------------------------------------------------------
     // Methods from ConditionProvider

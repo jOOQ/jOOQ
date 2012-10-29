@@ -102,7 +102,7 @@ import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
-import org.jooq.UpdateSetStep;
+import org.jooq.UpdateSetFirstStep;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
@@ -1196,7 +1196,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends Record> UpdateSetStep<R> update(Table<R> table) {
+    public final <R extends Record> UpdateSetFirstStep<R> update(Table<R> table) {
         return new UpdateImpl<R>(this, table);
     }
 

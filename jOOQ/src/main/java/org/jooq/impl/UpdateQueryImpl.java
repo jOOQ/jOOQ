@@ -36,6 +36,11 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.impl.Factory.select;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -45,7 +50,25 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
 import org.jooq.RenderContext;
+import org.jooq.Row;
+import org.jooq.Row1;
+import org.jooq.Row2;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
+import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
 
@@ -58,6 +81,9 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     private final FieldMapForUpdate     updateMap;
     private final ConditionProviderImpl condition;
+    private Row                         multiRow;
+    private Row                         multiValue;
+    private Select<?>                   multiSelect;
 
     UpdateQueryImpl(Configuration configuration, Table<R> table) {
         super(configuration, table);
@@ -81,13 +107,98 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    public final void addValues(Map<? extends Field<?>, ?> map) {
-        updateMap.set(map);
+    public final <T1> void addValues(Row1<T1> row, Row1<T1> value) {
+        addValues0(row, value);
     }
 
     @Override
-    public final void bind(BindContext context) {
-        context.bind(getInto()).bind(updateMap).bind(condition);
+    public final <T1, T2> void addValues(Row2<T1, T2> row, Row2<T1, T2> value) {
+        addValues0(row, value);
+    }
+
+    @Override
+    public final <T1, T2, T3> void addValues(Row3<T1, T2, T3> row, Row3<T1, T2, T3> value) {
+        addValues0(row, value);
+    }
+
+    @Override
+    public final <T1, T2, T3, T4> void addValues(Row4<T1, T2, T3, T4> row, Row4<T1, T2, T3, T4> value) {
+        addValues0(row, value);
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5> void addValues(Row5<T1, T2, T3, T4, T5> row, Row5<T1, T2, T3, T4, T5> value) {
+        addValues0(row, value);
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6> void addValues(Row6<T1, T2, T3, T4, T5, T6> row, Row6<T1, T2, T3, T4, T5, T6> value) {
+        addValues0(row, value);
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7> void addValues(Row7<T1, T2, T3, T4, T5, T6, T7> row, Row7<T1, T2, T3, T4, T5, T6, T7> value) {
+        addValues0(row, value);
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8> void addValues(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Row8<T1, T2, T3, T4, T5, T6, T7, T8> value) {
+        addValues0(row, value);
+    }
+
+    private final void addValues0(Row row, Row value) {
+        multiRow = row;
+        multiValue = value;
+    }
+
+    @Override
+    public final <T1> void addValues(Row1<T1> row, Select<? extends Record1<T1>> select) {
+        addValues0(row, select);
+    }
+
+    @Override
+    public final <T1, T2> void addValues(Row2<T1, T2> row, Select<? extends Record2<T1, T2>> select) {
+        addValues0(row, select);
+    }
+
+    @Override
+    public final <T1, T2, T3> void addValues(Row3<T1, T2, T3> row, Select<? extends Record3<T1, T2, T3>> select) {
+        addValues0(row, select);
+    }
+
+    @Override
+    public final <T1, T2, T3, T4> void addValues(Row4<T1, T2, T3, T4> row, Select<? extends Record4<T1, T2, T3, T4>> select) {
+        addValues0(row, select);
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5> void addValues(Row5<T1, T2, T3, T4, T5> row, Select<? extends Record5<T1, T2, T3, T4, T5>> select) {
+        addValues0(row, select);
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6> void addValues(Row6<T1, T2, T3, T4, T5, T6> row, Select<? extends Record6<T1, T2, T3, T4, T5, T6>> select) {
+        addValues0(row, select);
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7> void addValues(Row7<T1, T2, T3, T4, T5, T6, T7> row, Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select) {
+        addValues0(row, select);
+    }
+
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8> void addValues(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select) {
+        addValues0(row, select);
+    }
+
+    private final void addValues0(Row row, Select<?> select) {
+        multiRow = row;
+        multiSelect = select;
+    }
+
+    @Override
+    public final void addValues(Map<? extends Field<?>, ?> map) {
+        updateMap.set(map);
     }
 
     @Override
@@ -121,10 +232,49 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .sql(getInto())
                .declareTables(false)
                .formatSeparator()
-               .keyword("set ")
-               .formatIndentLockStart()
-               .sql(updateMap)
-               .formatIndentLockEnd();
+               .keyword("set ");
+
+        // A multi-row update was specified
+        if (multiRow != null) {
+            boolean qualify = context.qualify();
+
+            context.qualify(false)
+                   .sql(multiRow)
+                   .qualify(qualify)
+                   .sql(" = ");
+
+            // Some dialects don't really support row value expressions on the
+            // right hand side of a SET clause
+            if (multiValue != null && !asList(INGRES, ORACLE).contains(context.getDialect())) {
+                context.sql(multiValue);
+            }
+
+            // Subselects or subselect simulatinos of row value expressions
+            else {
+                Select<?> select = multiSelect;
+
+                if (multiValue != null) {
+                    select = select(multiValue.getFields());
+                }
+
+                context.sql("(")
+                       .formatIndentStart()
+                       .formatNewLine()
+                       .subquery(true)
+                       .sql(select)
+                       .subquery(false)
+                       .formatIndentEnd()
+                       .formatNewLine()
+                       .sql(")");
+            }
+        }
+
+        // A regular (non-multi-row) update was specified
+        else {
+            context.formatIndentLockStart()
+                   .sql(updateMap)
+                   .formatIndentLockEnd();
+        }
 
         if (!(getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
@@ -134,7 +284,33 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    public boolean isExecutable() {
-        return updateMap.size() > 0;
+    public final void bind(BindContext context) {
+        context.bind(getInto());
+
+        // A multi-row update was specified
+        if (multiRow != null) {
+            context.bind(multiRow);
+
+            if (multiValue != null) {
+                context.bind(multiValue);
+            }
+            else {
+                context.subquery(true)
+                       .bind(multiSelect)
+                       .subquery(false);
+            }
+        }
+
+        // A regular (non-multi-row) update was specified
+        else {
+            context.bind(updateMap);
+        }
+
+        context.bind(condition);
+    }
+
+    @Override
+    public final boolean isExecutable() {
+        return updateMap.size() > 0 || multiRow != null;
     }
 }

@@ -1244,6 +1244,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUpdateWithRowValueExpression() throws Exception {
+        new InsertUpdateTests(this).testUpdateWithRowValueExpression();
+    }
+
+    @Test
     public void testUpdateSelect() throws Exception {
         new InsertUpdateTests(this).testUpdateSelect();
     }

@@ -48,14 +48,14 @@ import org.jooq.RenderContext;
  */
 class InCondition<T> extends AbstractCondition {
 
-    private static final long serialVersionUID = -1653924248576930761L;
-    private static final int  IN_LIMIT         = 1000;
+    private static final long      serialVersionUID = -1653924248576930761L;
+    private static final int       IN_LIMIT         = 1000;
 
-    private final Field<T>    field;
-    private final Field<?>[]  values;
-    private final InOperator  operator;
+    private final Field<T>         field;
+    private final Field<?>[]       values;
+    private final SubqueryOperator operator;
 
-    InCondition(Field<T> field, Field<?>[] values, InOperator operator) {
+    InCondition(Field<T> field, Field<?>[] values, SubqueryOperator operator) {
         this.field = field;
         this.values = values;
         this.operator = operator;
@@ -87,7 +87,7 @@ class InCondition<T> extends AbstractCondition {
 
                             // [#1515] The connector depends on the IN / NOT IN
                             // operator
-                            if (operator == InOperator.IN) {
+                            if (operator == SubqueryOperator.IN) {
                                 context.formatSeparator()
                                        .keyword("or ");
                             }

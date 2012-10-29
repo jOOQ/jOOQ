@@ -524,7 +524,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
             return falseCondition();
         }
         else {
-            return new InCondition<T>(this, nullSafe(values), InOperator.IN);
+            return new InCondition<T>(this, nullSafe(values), SubqueryOperator.IN);
         }
     }
 
@@ -541,7 +541,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition in(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.IN);
+        return new SelectQueryAsSubQueryCondition(query, this, SubqueryOperator.IN);
     }
 
     @Override
@@ -556,7 +556,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notIn(Field<?>... values) {
-        return new InCondition<T>(this, nullSafe(values), InOperator.NOT_IN);
+        return new InCondition<T>(this, nullSafe(values), SubqueryOperator.NOT_IN);
     }
 
     @Override
@@ -572,8 +572,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notIn(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(
-            query, this, SubQueryOperator.NOT_IN);
+        return new SelectQueryAsSubQueryCondition(query, this, SubqueryOperator.NOT_IN);
     }
 
     @Override
@@ -798,7 +797,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition equal(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.EQUALS);
+        return new SelectQueryAsSubQueryCondition(query, this, SubqueryOperator.EQUALS);
     }
 
     @Override
@@ -828,7 +827,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notEqual(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.NOT_EQUALS);
+        return new SelectQueryAsSubQueryCondition(query, this, SubqueryOperator.NOT_EQUALS);
     }
 
     @Override
@@ -848,7 +847,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition lessThan(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS);
+        return new SelectQueryAsSubQueryCondition(query, this, SubqueryOperator.LESS);
     }
 
     @Override
@@ -868,7 +867,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition lessOrEqual(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_OR_EQUAL);
+        return new SelectQueryAsSubQueryCondition(query, this, SubqueryOperator.LESS_OR_EQUAL);
     }
 
     @Override
@@ -888,7 +887,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition greaterThan(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER);
+        return new SelectQueryAsSubQueryCondition(query, this, SubqueryOperator.GREATER);
     }
 
     @Override
@@ -908,7 +907,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition greaterOrEqual(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_OR_EQUAL);
+        return new SelectQueryAsSubQueryCondition(query, this, SubqueryOperator.GREATER_OR_EQUAL);
     }
 
     @Override

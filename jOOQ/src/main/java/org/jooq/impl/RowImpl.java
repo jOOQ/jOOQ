@@ -52,7 +52,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.row;
-import static org.jooq.impl.InOperator.NOT_IN;
+import static org.jooq.impl.SubqueryOperator.NOT_IN;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -846,20 +846,20 @@ implements
     @Override
     public final Condition in(Collection rows) {
         QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
-        return new InRows(list, InOperator.IN);
+        return new InRows(list, SubqueryOperator.IN);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition notIn(Collection rows) {
         QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
-        return new InRows(list, InOperator.NOT_IN);
+        return new InRows(list, SubqueryOperator.NOT_IN);
     }
 
     @SuppressWarnings("rawtypes")
     @Override
     public final Condition equal(Select select) {
-        return new Subquery(select, SubQueryOperator.EQUALS);
+        return new Subquery(select, SubqueryOperator.EQUALS);
     }
 
     @SuppressWarnings("rawtypes")
@@ -871,7 +871,7 @@ implements
     @SuppressWarnings("rawtypes")
     @Override
     public final Condition notEqual(Select select) {
-        return new Subquery(select, SubQueryOperator.NOT_EQUALS);
+        return new Subquery(select, SubqueryOperator.NOT_EQUALS);
     }
 
     @SuppressWarnings("rawtypes")
@@ -883,13 +883,13 @@ implements
     @SuppressWarnings("rawtypes")
     @Override
     public final Condition in(Select select) {
-        return new Subquery(select, SubQueryOperator.IN);
+        return new Subquery(select, SubqueryOperator.IN);
     }
 
     @SuppressWarnings("rawtypes")
     @Override
     public final Condition notIn(Select select) {
-        return new Subquery(select, SubQueryOperator.NOT_IN);
+        return new Subquery(select, SubqueryOperator.NOT_IN);
     }
 
     // ------------------------------------------------------------------------
@@ -1099,9 +1099,9 @@ implements
         private static final long                                            serialVersionUID = -1806139685201770706L;
 
         private final QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> other;
-        private final InOperator                                             operator;
+        private final SubqueryOperator                                       operator;
 
-        InRows(QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> other, InOperator operator) {
+        InRows(QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> other, SubqueryOperator operator) {
             this.other = other;
             this.operator = operator;
         }
@@ -1169,9 +1169,9 @@ implements
         private static final long      serialVersionUID = -1806139685201770706L;
 
         private final Select<?>        other;
-        private final SubQueryOperator operator;
+        private final SubqueryOperator operator;
 
-        Subquery(Select<?> other, SubQueryOperator operator) {
+        Subquery(Select<?> other, SubqueryOperator operator) {
             this.other = other;
             this.operator = operator;
         }

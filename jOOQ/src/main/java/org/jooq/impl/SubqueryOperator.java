@@ -33,28 +33,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package org.jooq.impl;
 
 /**
- * A comparator to be used in in conditions
+ * Any operator used in a {@link SubQueryCondition}
  *
  * @author Lukas Eder
  */
-enum InOperator {
+enum SubqueryOperator {
 
-    /**
-     * IN
-     */
     IN("in"),
+    NOT_IN("not in"),
+    EQUALS("="),
+    NOT_EQUALS("<>"),
+    LESS("<"),
+    LESS_OR_EQUAL("<="),
+    GREATER(">"),
+    GREATER_OR_EQUAL(">="),
 
-    /**
-     * NOT IN
-     */
-    NOT_IN("not in");
+    ;
 
     private final String sql;
 
-    private InOperator(String sql) {
+    private SubqueryOperator(String sql) {
         this.sql = sql;
     }
 

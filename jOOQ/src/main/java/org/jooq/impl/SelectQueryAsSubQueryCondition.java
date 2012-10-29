@@ -50,9 +50,9 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
 
     private final Select<?>        query;
     private final Field<?>         field;
-    private final SubQueryOperator operator;
+    private final SubqueryOperator operator;
 
-    SelectQueryAsSubQueryCondition(Select<?> query, Field<?> field, SubQueryOperator operator) {
+    SelectQueryAsSubQueryCondition(Select<?> query, Field<?> field, SubqueryOperator operator) {
         this.query = query;
         this.field = field;
         this.operator = operator;

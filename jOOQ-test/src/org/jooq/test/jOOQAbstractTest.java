@@ -200,39 +200,39 @@ public abstract class jOOQAbstractTest<
         T639 extends UpdatableRecord<T639>,
         T785 extends TableRecord<T785>> {
 
-    protected static final List<Short>     BOOK_IDS_SHORT     = Arrays.asList((short) 1, (short) 2, (short) 3, (short) 4);
-    protected static final List<Integer>   BOOK_IDS           = Arrays.asList(1, 2, 3, 4);
-    protected static final List<Integer>   BOOK_AUTHOR_IDS    = Arrays.asList(1, 1, 2, 2);
-    protected static final List<String>    BOOK_TITLES        = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
-    protected static final List<String>    BOOK_FIRST_NAMES   = Arrays.asList("George", "George", "Paulo", "Paulo");
-    protected static final List<String>    BOOK_LAST_NAMES    = Arrays.asList("Orwell", "Orwell", "Coelho", "Coelho");
-    protected static final List<Integer>   AUTHOR_IDS         = Arrays.asList(1, 2);
-    protected static final List<String>    AUTHOR_FIRST_NAMES = Arrays.asList("George", "Paulo");
-    protected static final List<String>    AUTHOR_LAST_NAMES  = Arrays.asList("Orwell", "Coelho");
+    protected static final List<Short>   BOOK_IDS_SHORT         = Arrays.asList((short) 1, (short) 2, (short) 3, (short) 4);
+    protected static final List<Integer> BOOK_IDS               = Arrays.asList(1, 2, 3, 4);
+    protected static final List<Integer> BOOK_AUTHOR_IDS        = Arrays.asList(1, 1, 2, 2);
+    protected static final List<String>  BOOK_TITLES            = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
+    protected static final List<String>  BOOK_FIRST_NAMES       = Arrays.asList("George", "George", "Paulo", "Paulo");
+    protected static final List<String>  BOOK_LAST_NAMES        = Arrays.asList("Orwell", "Orwell", "Coelho", "Coelho");
+    protected static final List<Integer> AUTHOR_IDS             = Arrays.asList(1, 2);
+    protected static final List<String>  AUTHOR_FIRST_NAMES     = Arrays.asList("George", "Paulo");
+    protected static final List<String>  AUTHOR_LAST_NAMES      = Arrays.asList("Orwell", "Coelho");
 
-    private static final String           JDBC_SCHEMA        = "jdbc.Schema";
-    private static final String           JDBC_PASSWORD      = "jdbc.Password";
-    private static final String           JDBC_USER          = "jdbc.User";
-    private static final String           JDBC_URL           = "jdbc.URL";
-    private static final String           JDBC_DRIVER        = "jdbc.Driver";
+    private static final String          JDBC_SCHEMA            = "jdbc.Schema";
+    private static final String          JDBC_PASSWORD          = "jdbc.Password";
+    private static final String          JDBC_USER              = "jdbc.User";
+    private static final String          JDBC_URL               = "jdbc.URL";
+    private static final String          JDBC_DRIVER            = "jdbc.Driver";
 
-    public static final JooqLogger        log                = JooqLogger.getLogger(jOOQAbstractTest.class);
-    public static final StopWatch         testSQLWatch       = new StopWatch();
-    public static boolean                 initialised;
-    public static boolean                 reset;
-    public static Connection              connection;
-    public static boolean                 connectionInitialised;
-    public static Connection              connectionMultiSchema;
-    public static boolean                 connectionMultiSchemaInitialised;
-    public static Connection              connectionMultiSchemaUnused;
-    public static boolean                 connectionMultiSchemaUnusedInitialised;
-    public static boolean                 autocommit;
-    public static String                  jdbcURL;
-    public static String                  jdbcSchema;
-    public static Map<String, String>     scripts            = new HashMap<String, String>();
+    public static final JooqLogger       log                    = JooqLogger.getLogger(jOOQAbstractTest.class);
+    public static final StopWatch        testSQLWatch           = new StopWatch();
+    public static boolean                initialised;
+    public static boolean                reset;
+    public static Connection             connection;
+    public static boolean                connectionInitialised;
+    public static Connection             connectionMultiSchema;
+    public static boolean                connectionMultiSchemaInitialised;
+    public static Connection             connectionMultiSchemaUnused;
+    public static boolean                connectionMultiSchemaUnusedInitialised;
+    public static boolean                autocommit;
+    public static String                 jdbcURL;
+    public static String                 jdbcSchema;
+    public static Map<String, String>    scripts                = new HashMap<String, String>();
 
-    public static final int               DEBUGGER_PORT      = 5533;
-    public static boolean                 RUN_CONSOLE_IN_PROCESS = false;
+    public static final int              DEBUGGER_PORT          = 5533;
+    public static boolean                RUN_CONSOLE_IN_PROCESS = false;
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;

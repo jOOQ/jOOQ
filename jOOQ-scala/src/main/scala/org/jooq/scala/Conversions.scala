@@ -310,6 +310,7 @@ object Conversions {
    * Enrich any {@link org.jooq.Record1} with the {@link Tuple1} case class
    */
   implicit def asTuple1[T1](r : Record1[T1]): Tuple1[T1] = r match {
+    case null => null
     case _ => Tuple1(r.value1)
   }
 
@@ -317,6 +318,7 @@ object Conversions {
    * Enrich any {@link org.jooq.Record2} with the {@link Tuple2} case class
    */
   implicit def asTuple2[T1, T2](r : Record2[T1, T2]): Tuple2[T1, T2] = r match {
+    case null => null
     case _ => Tuple2(r.value1, r.value2)
   }
 
@@ -324,6 +326,7 @@ object Conversions {
    * Enrich any {@link org.jooq.Record3} with the {@link Tuple3} case class
    */
   implicit def asTuple3[T1, T2, T3](r : Record3[T1, T2, T3]): Tuple3[T1, T2, T3] = r match {
+    case null => null
     case _ => Tuple3(r.value1, r.value2, r.value3)
   }
 
@@ -331,6 +334,7 @@ object Conversions {
    * Enrich any {@link org.jooq.Record4} with the {@link Tuple4} case class
    */
   implicit def asTuple4[T1, T2, T3, T4](r : Record4[T1, T2, T3, T4]): Tuple4[T1, T2, T3, T4] = r match {
+    case null => null
     case _ => Tuple4(r.value1, r.value2, r.value3, r.value4)
   }
 
@@ -338,6 +342,7 @@ object Conversions {
    * Enrich any {@link org.jooq.Record5} with the {@link Tuple5} case class
    */
   implicit def asTuple5[T1, T2, T3, T4, T5](r : Record5[T1, T2, T3, T4, T5]): Tuple5[T1, T2, T3, T4, T5] = r match {
+    case null => null
     case _ => Tuple5(r.value1, r.value2, r.value3, r.value4, r.value5)
   }
 
@@ -345,6 +350,7 @@ object Conversions {
    * Enrich any {@link org.jooq.Record6} with the {@link Tuple6} case class
    */
   implicit def asTuple6[T1, T2, T3, T4, T5, T6](r : Record6[T1, T2, T3, T4, T5, T6]): Tuple6[T1, T2, T3, T4, T5, T6] = r match {
+    case null => null
     case _ => Tuple6(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6)
   }
 
@@ -352,6 +358,7 @@ object Conversions {
    * Enrich any {@link org.jooq.Record7} with the {@link Tuple7} case class
    */
   implicit def asTuple7[T1, T2, T3, T4, T5, T6, T7](r : Record7[T1, T2, T3, T4, T5, T6, T7]): Tuple7[T1, T2, T3, T4, T5, T6, T7] = r match {
+    case null => null
     case _ => Tuple7(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7)
   }
 
@@ -359,6 +366,7 @@ object Conversions {
    * Enrich any {@link org.jooq.Record8} with the {@link Tuple8} case class
    */
   implicit def asTuple8[T1, T2, T3, T4, T5, T6, T7, T8](r : Record8[T1, T2, T3, T4, T5, T6, T7, T8]): Tuple8[T1, T2, T3, T4, T5, T6, T7, T8] = r match {
+    case null => null
     case _ => Tuple8(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8)
   }
 }

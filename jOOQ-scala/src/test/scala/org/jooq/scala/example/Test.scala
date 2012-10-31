@@ -48,7 +48,7 @@ import org.jooq.scala.Conversions._
 object Test {
   def main(args: Array[String]): Unit = {
     val c = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
-    val f = new Factory(c, SQLDialect.H2);
+    val f = new Executor(c, SQLDialect.H2);
     val x = T_AUTHOR as "x"
 
     for (r <- f
@@ -71,5 +71,20 @@ object Test {
 
       println(r)
     }
+
+    // Tuple assignment
+    val tuple =
+    f fetchOne (
+      select (
+        T_AUTHOR.FIRST_NAME,
+        T_AUTHOR.LAST_NAME
+      )
+      from T_AUTHOR
+      where T_AUTHOR.ID === 1
+    )
+
+
+    println("first name : " + tuple._1);
+    println("last name : " + tuple._2);
   }
 }

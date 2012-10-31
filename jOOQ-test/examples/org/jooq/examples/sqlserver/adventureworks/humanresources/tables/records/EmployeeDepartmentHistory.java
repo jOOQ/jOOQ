@@ -11,9 +11,9 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "EmployeeDepartmentHistory", schema = "HumanResources", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"EmployeeID", "StartDate", "DepartmentID", "ShiftID"})
 })
-public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory> {
+public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory> implements org.jooq.Record6<java.lang.Integer, java.lang.Short, java.lang.Byte, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -850458019;
+	private static final long serialVersionUID = 2076905394;
 
 	/**
 	 * The table column <code>HumanResources.EmployeeDepartmentHistory.EmployeeID</code>
@@ -162,5 +162,121 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	 */
 	public EmployeeDepartmentHistory() {
 		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record6 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row6<java.lang.Integer, java.lang.Short, java.lang.Byte, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row6<java.lang.Integer, java.lang.Short, java.lang.Byte, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.EmployeeID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Short> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.DepartmentID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Byte> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.ShiftID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.StartDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.EndDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getEmployeeID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Short value2() {
+		return getDepartmentID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Byte value3() {
+		return getShiftID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value4() {
+		return getStartDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value5() {
+		return getEndDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value6() {
+		return getModifiedDate();
 	}
 }

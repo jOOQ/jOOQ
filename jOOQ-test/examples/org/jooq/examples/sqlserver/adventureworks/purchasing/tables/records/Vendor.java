@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "Vendor", schema = "Purchasing")
-public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor> {
+public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor> implements org.jooq.Record8<java.lang.Integer, java.lang.String, java.lang.String, java.lang.Byte, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1650540667;
+	private static final long serialVersionUID = -456373939;
 
 	/**
 	 * The table column <code>Purchasing.Vendor.VendorID</code>
@@ -143,5 +143,153 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	 */
 	public Vendor() {
 		super(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record8 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row8<java.lang.Integer, java.lang.String, java.lang.String, java.lang.Byte, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row8<java.lang.Integer, java.lang.String, java.lang.String, java.lang.Byte, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.VendorID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.AccountNumber;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.Name;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Byte> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.CreditRating;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Boolean> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.PreferredVendorStatus;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Boolean> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.ActiveFlag;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.PurchasingWebServiceURL;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getVendorID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getAccountNumber();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Byte value4() {
+		return getCreditRating();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Boolean value5() {
+		return getPreferredVendorStatus();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Boolean value6() {
+		return getActiveFlag();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value7() {
+		return getPurchasingWebServiceURL();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value8() {
+		return getModifiedDate();
 	}
 }

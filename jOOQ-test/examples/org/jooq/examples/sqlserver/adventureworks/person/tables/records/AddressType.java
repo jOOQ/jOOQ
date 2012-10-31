@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "AddressType", schema = "Person")
-public class AddressType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressType> {
+public class AddressType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressType> implements org.jooq.Record4<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1632213259;
+	private static final long serialVersionUID = -149039238;
 
 	/**
 	 * The table column <code>Person.AddressType.AddressTypeID</code>
@@ -83,5 +83,89 @@ public class AddressType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 */
 	public AddressType() {
 		super(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record4 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.AddressTypeID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.Name;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.rowguid;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getAddressTypeID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getrowguid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value4() {
+		return getModifiedDate();
 	}
 }

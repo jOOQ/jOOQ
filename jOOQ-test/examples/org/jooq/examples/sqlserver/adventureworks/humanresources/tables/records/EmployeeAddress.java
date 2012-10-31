@@ -11,9 +11,9 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "EmployeeAddress", schema = "HumanResources", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"EmployeeID", "AddressID"})
 })
-public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeAddress> {
+public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeAddress> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1179038680;
+	private static final long serialVersionUID = -1203641618;
 
 	/**
 	 * The table column <code>HumanResources.EmployeeAddress.EmployeeID</code>
@@ -112,5 +112,89 @@ public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public EmployeeAddress() {
 		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record4 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress.EmployeeID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress.AddressID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress.rowguid;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getEmployeeID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getAddressID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getrowguid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value4() {
+		return getModifiedDate();
 	}
 }

@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "vStateProvinceCountryRegion", schema = "Person")
-public class vStateProvinceCountryRegion extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion> {
+public class vStateProvinceCountryRegion extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion> implements org.jooq.Record7<java.lang.Integer, java.lang.String, java.lang.Boolean, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -922889447;
+	private static final long serialVersionUID = -1126181555;
 
 	/**
 	 * The table column <code>Person.vStateProvinceCountryRegion.StateProvinceID</code>
@@ -123,5 +123,137 @@ public class vStateProvinceCountryRegion extends org.jooq.impl.TableRecordImpl<o
 	 */
 	public vStateProvinceCountryRegion() {
 		super(org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record7 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row7<java.lang.Integer, java.lang.String, java.lang.Boolean, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row7<java.lang.Integer, java.lang.String, java.lang.Boolean, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.StateProvinceID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.StateProvinceCode;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Boolean> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.IsOnlyStateProvinceFlag;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.StateProvinceName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.TerritoryID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.CountryRegionCode;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.CountryRegionName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getStateProvinceID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getStateProvinceCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Boolean value3() {
+		return getIsOnlyStateProvinceFlag();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getStateProvinceName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value5() {
+		return getTerritoryID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getCountryRegionCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value7() {
+		return getCountryRegionName();
 	}
 }

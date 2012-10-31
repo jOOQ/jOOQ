@@ -11,9 +11,9 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "StoreContact", schema = "Sales", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"CustomerID", "ContactID"})
 })
-public class StoreContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact> {
+public class StoreContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1957868936;
+	private static final long serialVersionUID = 324947528;
 
 	/**
 	 * The table column <code>Sales.StoreContact.CustomerID</code>
@@ -139,5 +139,105 @@ public class StoreContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 */
 	public StoreContact() {
 		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record5 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row5<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row5<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.CustomerID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.ContactID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.ContactTypeID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.rowguid;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getCustomerID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getContactID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value3() {
+		return getContactTypeID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getrowguid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value5() {
+		return getModifiedDate();
 	}
 }

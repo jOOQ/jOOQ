@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "Illustration", schema = "Production")
-public class Illustration extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration> {
+public class Illustration extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration> implements org.jooq.Record3<java.lang.Integer, java.lang.Object, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -2126733433;
+	private static final long serialVersionUID = -538501060;
 
 	/**
 	 * The table column <code>Production.Illustration.IllustrationID</code>
@@ -74,5 +74,73 @@ public class Illustration extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 */
 	public Illustration() {
 		super(org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.Illustration);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record3 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.Integer, java.lang.Object, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.Integer, java.lang.Object, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.Illustration.IllustrationID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Object> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.Illustration.Diagram;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.Illustration.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getIllustrationID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Object value2() {
+		return getDiagram();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value3() {
+		return getModifiedDate();
 	}
 }

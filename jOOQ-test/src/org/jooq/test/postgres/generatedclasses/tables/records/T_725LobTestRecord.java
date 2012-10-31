@@ -9,9 +9,9 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "t_725_lob_test", schema = "public")
-public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> {
+public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]> {
 
-	private static final long serialVersionUID = -221781871;
+	private static final long serialVersionUID = -1360592210;
 
 	/**
 	 * The table column <code>public.t_725_lob_test.id</code>
@@ -53,5 +53,57 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	public T_725LobTestRecord() {
 		super(org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record2 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row2<java.lang.Integer, byte[]> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row2<java.lang.Integer, byte[]> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<byte[]> field2() {
+		return org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public byte[] value2() {
+		return getLob();
 	}
 }

@@ -9,9 +9,9 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "x_test_case_64_69", schema = "public")
-public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> {
+public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 239850546;
+	private static final long serialVersionUID = -961710628;
 
 	/**
 	 * The table column <code>public.x_test_case_64_69.id</code>
@@ -106,5 +106,57 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 */
 	public XTestCase_64_69Record() {
 		super(org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record2 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getUnusedId();
 	}
 }

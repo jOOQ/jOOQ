@@ -9,9 +9,9 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
  * An entity holding language master data
  */
 @java.lang.SuppressWarnings("all")
-public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> {
+public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 353619208;
+	private static final long serialVersionUID = 1303566323;
 
 	/**
 	 * The language ISO code
@@ -90,5 +90,89 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public TLanguageRecord() {
 		super(org.jooq.test.mysql.generatedclasses.tables.TLanguage.T_LANGUAGE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record4 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field1() {
+		return org.jooq.test.mysql.generatedclasses.tables.TLanguage.CD;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field4() {
+		return org.jooq.test.mysql.generatedclasses.tables.TLanguage.ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value1() {
+		return getCd();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getDescription();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getDescriptionEnglish();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value4() {
+		return getId();
 	}
 }

@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "ProductModel", schema = "Production")
-public class ProductModel extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModel> {
+public class ProductModel extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModel> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.Object, java.lang.Object, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -717896457;
+	private static final long serialVersionUID = -446848524;
 
 	/**
 	 * The table column <code>Production.ProductModel.ProductModelID</code>
@@ -125,5 +125,121 @@ public class ProductModel extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 */
 	public ProductModel() {
 		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModel.ProductModel);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record6 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.Object, java.lang.Object, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.Object, java.lang.Object, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModel.ProductModel.ProductModelID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModel.ProductModel.Name;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Object> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModel.ProductModel.CatalogDescription;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Object> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModel.ProductModel.Instructions;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModel.ProductModel.rowguid;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModel.ProductModel.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getProductModelID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Object value3() {
+		return getCatalogDescription();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Object value4() {
+		return getInstructions();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getrowguid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value6() {
+		return getModifiedDate();
 	}
 }

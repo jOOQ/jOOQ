@@ -48,6 +48,11 @@ public final class Constants {
     public static final String VERSION = "3.0.0";
 
     /**
+     * The maximum degree of {@link Row} and {@link Record} subtypes
+     */
+    public static final int MAX_ROW_DEGREE = 8;
+
+    /**
      * No further instances
      */
     private Constants() {}

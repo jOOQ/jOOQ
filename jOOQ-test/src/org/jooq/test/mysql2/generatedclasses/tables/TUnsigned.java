@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = -993065882;
+	private static final long serialVersionUID = 1287275520;
 
 	/**
 	 * The singleton instance of test2.t_unsigned

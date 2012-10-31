@@ -11,9 +11,9 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "ContactCreditCard", schema = "Sales", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"ContactID", "CreditCardID"})
 })
-public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> {
+public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1550698392;
+	private static final long serialVersionUID = 1673819649;
 
 	/**
 	 * The table column <code>Sales.ContactCreditCard.ContactID</code>
@@ -97,5 +97,73 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	public ContactCreditCard() {
 		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record3 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.ContactID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.CreditCardID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getContactID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getCreditCardID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value3() {
+		return getModifiedDate();
 	}
 }

@@ -9,9 +9,9 @@ package org.jooq.examples.cubrid.demodb.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "stadium", schema = "PUBLIC")
-public class StadiumRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.cubrid.demodb.tables.records.StadiumRecord> {
+public class StadiumRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.cubrid.demodb.tables.records.StadiumRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1503499998;
+	private static final long serialVersionUID = 1993956298;
 
 	/**
 	 * The table column <code>PUBLIC.stadium.code</code>
@@ -113,5 +113,121 @@ public class StadiumRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 */
 	public StadiumRecord() {
 		super(org.jooq.examples.cubrid.demodb.tables.Stadium.STADIUM);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record6 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.cubrid.demodb.tables.Stadium.STADIUM.CODE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.cubrid.demodb.tables.Stadium.STADIUM.NATION_CODE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.cubrid.demodb.tables.Stadium.STADIUM.NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field4() {
+		return org.jooq.examples.cubrid.demodb.tables.Stadium.STADIUM.AREA;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field5() {
+		return org.jooq.examples.cubrid.demodb.tables.Stadium.STADIUM.SEATS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.cubrid.demodb.tables.Stadium.STADIUM.ADDRESS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getNationCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value4() {
+		return getArea();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value5() {
+		return getSeats();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getAddress();
 	}
 }

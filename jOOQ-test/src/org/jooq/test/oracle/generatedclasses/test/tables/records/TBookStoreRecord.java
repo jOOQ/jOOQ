@@ -11,9 +11,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK_STORE", schema = "TEST")
-public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord> {
+public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = 1596673327;
+	private static final long serialVersionUID = -699851888;
 
 	/**
 	 * The books store name
@@ -45,5 +45,41 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	public TBookStoreRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record1 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row1<java.lang.String> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row1<java.lang.String> valuesRow() {
+		return org.jooq.impl.Factory.row(value1());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field1() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE.NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value1() {
+		return getName();
 	}
 }

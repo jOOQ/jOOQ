@@ -11,9 +11,9 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SpecialOfferProduct", schema = "Sales", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"SpecialOfferID", "ProductID"})
 })
-public class SpecialOfferProduct extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct> {
+public class SpecialOfferProduct extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 742833614;
+	private static final long serialVersionUID = -1843753060;
 
 	/**
 	 * The table column <code>Sales.SpecialOfferProduct.SpecialOfferID</code>
@@ -112,5 +112,89 @@ public class SpecialOfferProduct extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 */
 	public SpecialOfferProduct() {
 		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record4 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct.SpecialOfferID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct.ProductID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct.rowguid;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getSpecialOfferID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getProductID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getrowguid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value4() {
+		return getModifiedDate();
 	}
 }

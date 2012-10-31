@@ -9,9 +9,9 @@ package org.jooq.examples.mysql.sakila.tables.records;
  * VIEW
  */
 @java.lang.SuppressWarnings("all")
-public class SalesByFilmCategoryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord> {
+public class SalesByFilmCategoryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord> implements org.jooq.Record2<java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1559247220;
+	private static final long serialVersionUID = 1366113248;
 
 	/**
 	 * The table column <code>sakila.sales_by_film_category.category</code>
@@ -46,5 +46,57 @@ public class SalesByFilmCategoryRecord extends org.jooq.impl.TableRecordImpl<org
 	 */
 	public SalesByFilmCategoryRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record2 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row2<java.lang.String, java.math.BigDecimal> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row2<java.lang.String, java.math.BigDecimal> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field1() {
+		return org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.CATEGORY;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field2() {
+		return org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.TOTAL_SALES;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value1() {
+		return getCategory();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value2() {
+		return getTotalSales();
 	}
 }

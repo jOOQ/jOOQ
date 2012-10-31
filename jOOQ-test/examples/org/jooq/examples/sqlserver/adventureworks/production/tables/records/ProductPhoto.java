@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "ProductPhoto", schema = "Production")
-public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductPhoto> {
+public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductPhoto> implements org.jooq.Record6<java.lang.Integer, byte[], java.lang.String, byte[], java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1524302087;
+	private static final long serialVersionUID = -1635009702;
 
 	/**
 	 * The table column <code>Production.ProductPhoto.ProductPhotoID</code>
@@ -113,5 +113,121 @@ public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 */
 	public ProductPhoto() {
 		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record6 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row6<java.lang.Integer, byte[], java.lang.String, byte[], java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row6<java.lang.Integer, byte[], java.lang.String, byte[], java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.ProductPhotoID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<byte[]> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.ThumbNailPhoto;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.ThumbnailPhotoFileName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<byte[]> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.LargePhoto;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.LargePhotoFileName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getProductPhotoID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public byte[] value2() {
+		return getThumbNailPhoto();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getThumbnailPhotoFileName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public byte[] value4() {
+		return getLargePhoto();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getLargePhotoFileName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value6() {
+		return getModifiedDate();
 	}
 }

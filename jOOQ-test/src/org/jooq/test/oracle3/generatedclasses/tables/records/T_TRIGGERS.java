@@ -9,9 +9,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
-public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTERFACE {
+public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTERFACE {
 
-	private static final long serialVersionUID = -1854578948;
+	private static final long serialVersionUID = -2034221467;
 
 	/**
 	 * The table column <code>TEST.T_TRIGGERS.ID_GENERATED</code>
@@ -74,5 +74,73 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 */
 	public T_TRIGGERS() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record3 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.Integer> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.Integer> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS.ID_GENERATED;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS.ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field3() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS.COUNTER;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getID_GENERATED();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value3() {
+		return getCOUNTER();
 	}
 }

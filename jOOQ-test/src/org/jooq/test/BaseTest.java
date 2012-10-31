@@ -52,6 +52,10 @@ import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -81,7 +85,7 @@ import org.jooq.types.UShort;
 public abstract class BaseTest<
 
     // T_AUTHOR table
-    A extends UpdatableRecord<A>,
+    A extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
 
     // T_AUTHOR pojo
     AP,
@@ -90,16 +94,16 @@ public abstract class BaseTest<
     B extends UpdatableRecord<B>,
 
     // T_BOOK_STORE table
-    S extends UpdatableRecord<S>,
+    S extends UpdatableRecord<S> & Record1<String>,
 
     // T_BOOK_TO_BOOK_STORE table
-    B2S extends UpdatableRecord<B2S>,
+    B2S extends UpdatableRecord<B2S> & Record3<String, Integer, Integer>,
 
     // MULTI_SCHEMA.T_BOOK_SALE table
     BS extends UpdatableRecord<BS>,
 
     // V_LIBRARY view
-    L extends TableRecord<L>,
+    L extends TableRecord<L> & Record2<String, String>,
 
     // T_ARRAYS table
     X extends TableRecord<X>,

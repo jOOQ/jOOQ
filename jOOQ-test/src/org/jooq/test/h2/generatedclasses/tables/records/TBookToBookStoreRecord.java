@@ -9,9 +9,9 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  * An m:n relation between books and book stores
  */
 @java.lang.SuppressWarnings("all")
-public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
+public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = -585391318;
+	private static final long serialVersionUID = 1484682874;
 
 	/**
 	 * The book store name
@@ -160,5 +160,73 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	public TBookToBookStoreRecord() {
 		super(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record3 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.String, java.lang.Integer, java.lang.Integer> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.String, java.lang.Integer, java.lang.Integer> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field1() {
+		return org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field3() {
+		return org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.STOCK;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value1() {
+		return getBookStoreName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getBookId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value3() {
+		return getStock();
 	}
 }

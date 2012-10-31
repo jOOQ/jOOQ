@@ -11,9 +11,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "M_LIBRARY", schema = "TEST")
-public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> {
+public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 57159103;
+	private static final long serialVersionUID = -1281477820;
 
 	/**
 	 * The table column <code>TEST.M_LIBRARY.AUTHOR</code>
@@ -50,5 +50,57 @@ public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	public MLibraryRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record2 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row2<java.lang.String, java.lang.String> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row2<java.lang.String, java.lang.String> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field1() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY.AUTHOR;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY.TITLE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value1() {
+		return getAuthor();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getTitle();
 	}
 }

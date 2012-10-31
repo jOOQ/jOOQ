@@ -9,9 +9,9 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "t_identity_pk", schema = "test2")
-public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord> {
+public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 637578186;
+	private static final long serialVersionUID = -394586797;
 
 	/**
 	 * The table column <code>test2.t_identity_pk.id</code>
@@ -53,5 +53,57 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	public TIdentityPkRecord() {
 		super(org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record2 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.VAL;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getVal();
 	}
 }

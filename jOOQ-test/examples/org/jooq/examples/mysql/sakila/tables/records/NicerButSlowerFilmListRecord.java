@@ -9,9 +9,9 @@ package org.jooq.examples.mysql.sakila.tables.records;
  * VIEW
  */
 @java.lang.SuppressWarnings("all")
-public class NicerButSlowerFilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord> {
+public class NicerButSlowerFilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord> implements org.jooq.Record8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.NicerButSlowerFilmListRating, java.lang.String> {
 
-	private static final long serialVersionUID = -1910874245;
+	private static final long serialVersionUID = 489196445;
 
 	/**
 	 * The table column <code>sakila.nicer_but_slower_film_list.FID</code>
@@ -130,5 +130,153 @@ public class NicerButSlowerFilmListRecord extends org.jooq.impl.TableRecordImpl<
 	 */
 	public NicerButSlowerFilmListRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record8 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.NicerButSlowerFilmListRating, java.lang.String> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.NicerButSlowerFilmListRating, java.lang.String> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Short> field1() {
+		return org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.FID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.TITLE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.DESCRIPTION;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.CATEGORY;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field5() {
+		return org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.PRICE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Short> field6() {
+		return org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.LENGTH;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<org.jooq.examples.mysql.sakila.enums.NicerButSlowerFilmListRating> field7() {
+		return org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.RATING;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field8() {
+		return org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.ACTORS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Short value1() {
+		return getFid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getDescription();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getCategory();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value5() {
+		return getPrice();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Short value6() {
+		return getLength();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.examples.mysql.sakila.enums.NicerButSlowerFilmListRating value7() {
+		return getRating();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value8() {
+		return getActors();
 	}
 }

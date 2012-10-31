@@ -9,9 +9,9 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
-public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
+public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1047378681;
+	private static final long serialVersionUID = -2083169857;
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>
@@ -139,5 +139,105 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public TBookSaleRecord() {
 		super(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record5 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_STORE_NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Date> field4() {
+		return org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.SOLD_AT;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field5() {
+		return org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.SOLD_FOR;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getBookId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getBookStoreName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Date value4() {
+		return getSoldAt();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value5() {
+		return getSoldFor();
 	}
 }

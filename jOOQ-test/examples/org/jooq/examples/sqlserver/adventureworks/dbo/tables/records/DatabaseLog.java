@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "DatabaseLog", schema = "dbo")
-public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog> {
+public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog> implements org.jooq.Record8<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> {
 
-	private static final long serialVersionUID = -1378450886;
+	private static final long serialVersionUID = 1882495303;
 
 	/**
 	 * The table column <code>dbo.DatabaseLog.DatabaseLogID</code>
@@ -149,5 +149,153 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 */
 	public DatabaseLog() {
 		super(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record8 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row8<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row8<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.DatabaseLogID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.PostTime;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.DatabaseUser;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.Event;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.Schema;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.Object;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.TSQL;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Object> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.XmlEvent;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getDatabaseLogID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value2() {
+		return getPostTime();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getDatabaseUser();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getEvent();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getSchema();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getObject();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value7() {
+		return getTSQL();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Object value8() {
+		return getXmlEvent();
 	}
 }

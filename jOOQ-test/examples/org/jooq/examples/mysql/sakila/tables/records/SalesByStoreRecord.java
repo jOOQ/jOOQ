@@ -9,9 +9,9 @@ package org.jooq.examples.mysql.sakila.tables.records;
  * VIEW
  */
 @java.lang.SuppressWarnings("all")
-public class SalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> {
+public class SalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -82491383;
+	private static final long serialVersionUID = -254248720;
 
 	/**
 	 * The table column <code>sakila.sales_by_store.store</code>
@@ -60,5 +60,73 @@ public class SalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.e
 	 */
 	public SalesByStoreRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record3 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.String, java.lang.String, java.math.BigDecimal> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.String, java.lang.String, java.math.BigDecimal> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field1() {
+		return org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.STORE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.MANAGER;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field3() {
+		return org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.TOTAL_SALES;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value1() {
+		return getStore();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getManager();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value3() {
+		return getTotalSales();
 	}
 }

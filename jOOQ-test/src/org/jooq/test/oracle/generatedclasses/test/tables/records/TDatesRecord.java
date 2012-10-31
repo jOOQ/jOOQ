@@ -9,9 +9,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
-public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> {
+public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> {
 
-	private static final long serialVersionUID = 639690365;
+	private static final long serialVersionUID = -181504291;
 
 	/**
 	 * The table column <code>TEST.T_DATES.ID</code>
@@ -143,5 +143,153 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	public TDatesRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record8 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row8<java.lang.Integer, java.sql.Date, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row8<java.lang.Integer, java.sql.Date, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Date> field2() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.D;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field3() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.T;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field4() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.TS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field5() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.D_INT;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Long> field6() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.TS_BIGINT;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<org.jooq.types.YearToMonth> field7() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.I_Y;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<org.jooq.types.DayToSecond> field8() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.I_D;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Date value2() {
+		return getD();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value3() {
+		return getT();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value4() {
+		return getTs();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value5() {
+		return getDInt();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Long value6() {
+		return getTsBigint();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.types.YearToMonth value7() {
+		return getIY();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.types.DayToSecond value8() {
+		return getID();
 	}
 }

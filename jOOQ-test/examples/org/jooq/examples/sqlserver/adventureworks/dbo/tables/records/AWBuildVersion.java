@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "AWBuildVersion", schema = "dbo")
-public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion> {
+public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion> implements org.jooq.Record4<java.lang.Byte, java.lang.String, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1416685289;
+	private static final long serialVersionUID = -967696847;
 
 	/**
 	 * The table column <code>dbo.AWBuildVersion.SystemInformationID</code>
@@ -83,5 +83,89 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 */
 	public AWBuildVersion() {
 		super(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record4 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Byte, java.lang.String, java.sql.Timestamp, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Byte, java.lang.String, java.sql.Timestamp, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Byte> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.SystemInformationID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.Database_Version;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.VersionDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Byte value1() {
+		return getSystemInformationID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getDatabase_Version();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value3() {
+		return getVersionDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value4() {
+		return getModifiedDate();
 	}
 }

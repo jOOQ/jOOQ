@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "Individual", schema = "Sales")
-public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual> {
+public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Object, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 24387810;
+	private static final long serialVersionUID = 1918452074;
 
 	/**
 	 * The table column <code>Sales.Individual.CustomerID</code>
@@ -113,5 +113,89 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 */
 	public Individual() {
 		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record4 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.Object, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.Object, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.CustomerID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.ContactID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Object> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.Demographics;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getCustomerID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getContactID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Object value3() {
+		return getDemographics();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value4() {
+		return getModifiedDate();
 	}
 }

@@ -9,9 +9,9 @@ package org.jooq.examples.mysql.sakila.tables.records;
  * VIEW
  */
 @java.lang.SuppressWarnings("all")
-public class ActorInfoRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord> {
+public class ActorInfoRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord> implements org.jooq.Record4<java.lang.Short, java.lang.String, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -194384196;
+	private static final long serialVersionUID = -1133446558;
 
 	/**
 	 * The table column <code>sakila.actor_info.actor_id</code>
@@ -74,5 +74,89 @@ public class ActorInfoRecord extends org.jooq.impl.TableRecordImpl<org.jooq.exam
 	 */
 	public ActorInfoRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record4 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Short, java.lang.String, java.lang.String, java.lang.String> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row4<java.lang.Short, java.lang.String, java.lang.String, java.lang.String> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Short> field1() {
+		return org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.ACTOR_ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.FIRST_NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.LAST_NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.FILM_INFO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Short value1() {
+		return getActorId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getFirstName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getLastName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getFilmInfo();
 	}
 }

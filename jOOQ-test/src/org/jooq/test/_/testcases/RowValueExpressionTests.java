@@ -81,13 +81,13 @@ import org.jooq.types.DayToSecond;
 import org.junit.Test;
 
 public class RowValueExpressionTests<
-    A    extends UpdatableRecord<A>,
+    A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
     B    extends UpdatableRecord<B>,
-    S    extends UpdatableRecord<S>,
-    B2S  extends UpdatableRecord<B2S>,
+    S    extends UpdatableRecord<S> & Record1<String>,
+    B2S  extends UpdatableRecord<B2S> & Record3<String, Integer, Integer>,
     BS   extends UpdatableRecord<BS>,
-    L    extends TableRecord<L>,
+    L    extends TableRecord<L> & Record2<String, String>,
     X    extends TableRecord<X>,
     DATE extends UpdatableRecord<DATE>,
     BOOL extends UpdatableRecord<BOOL>,
@@ -390,5 +390,55 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             // Checking field8()
             assertEquals(val("8"), row8.field8());
         }
+    }
+
+    @Test
+    public void testRowValueExpressionTableRecords() throws Exception {
+
+        // [#1918] Generated records now also implement Record[N] interfaces
+        // Check for assignment-compatibility
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        Record6<Integer, String, String, Date, Integer, Object> author = (Record6) getAuthor(1);
+
+        // Check field[N]() methods
+        assertEquals(TAuthor_ID(), author.field1());
+        assertEquals(TAuthor_FIRST_NAME(), author.field2());
+        assertEquals(TAuthor_LAST_NAME(), author.field3());
+        assertEquals(TAuthor_DATE_OF_BIRTH(), author.field4());
+        assertEquals(TAuthor_YEAR_OF_BIRTH(), author.field5());
+        // ignore field6(), which is possibly a UDT
+
+        // Check value[N]() methods
+        assertEquals(1, (int) author.value1());
+        assertEquals("George", author.value2());
+        assertEquals("Orwell", author.value3());
+        assertEquals(Date.valueOf("1903-06-25"), author.value4());
+        assertEquals(1903, (int) author.value5());
+        // ignore field6(), which is possibly a UDT
+
+        // Check if the author can be re-selected using row-value expression predicates
+        assertEquals(author,
+        create().fetchOne(
+            select(
+                author.field1(),
+                author.field2(),
+                author.field3(),
+                author.field4(),
+                author.field5(),
+                author.field6())
+            .from(TAuthor())
+            .where(author.fieldsRow().eq(author.valuesRow()))
+
+            // Add a dummy union, as a compile-time type-check
+            .union(
+            select(
+                val(1),
+                val("abc"),
+                val("xyz"),
+                val(Date.valueOf("1903-06-25")),
+                val(123),
+                val(null))
+            .where(val(1).eq(val(0))))
+        ));
     }
 }

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.packages;
 @java.lang.SuppressWarnings("all")
 public final class Library_767PackageTest extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = 690484802;
+	private static final long serialVersionUID = 904917336;
 
 	/**
 	 * The singleton instance of TEST.LIBRARY_767_PACKAGE_TEST
@@ -39,6 +39,7 @@ public final class Library_767PackageTest extends org.jooq.impl.PackageImpl {
 
 		return f.asField();
 	}
+
 	/**
 	 * No further instances allowed
 	 */

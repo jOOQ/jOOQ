@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.packages;
 @java.lang.SuppressWarnings("all")
 public final class LIBRARY_767_PACKAGE_TEST extends org.jooq.impl.PackageImpl implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1670734240;
+	private static final long serialVersionUID = 52340964;
 
 	/**
 	 * The singleton instance of TEST.LIBRARY_767_PACKAGE_TEST
@@ -39,6 +39,7 @@ public final class LIBRARY_767_PACKAGE_TEST extends org.jooq.impl.PackageImpl im
 
 		return f.asField();
 	}
+
 	/**
 	 * No further instances allowed
 	 */

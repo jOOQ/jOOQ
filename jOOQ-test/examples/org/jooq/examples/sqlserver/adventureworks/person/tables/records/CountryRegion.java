@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "CountryRegion", schema = "Person")
-public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> {
+public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> implements org.jooq.Record3<java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1209092062;
+	private static final long serialVersionUID = 1622519562;
 
 	/**
 	 * The table column <code>Person.CountryRegion.CountryRegionCode</code>
@@ -68,5 +68,73 @@ public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 */
 	public CountryRegion() {
 		super(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record3 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.String, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.String, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.CountryRegionCode;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.Name;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value1() {
+		return getCountryRegionCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value3() {
+		return getModifiedDate();
 	}
 }

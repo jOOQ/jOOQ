@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "Currency", schema = "Sales")
-public class Currency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency> {
+public class Currency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency> implements org.jooq.Record3<java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 605802020;
+	private static final long serialVersionUID = 1733976233;
 
 	/**
 	 * The table column <code>Sales.Currency.CurrencyCode</code>
@@ -68,5 +68,73 @@ public class Currency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	 */
 	public Currency() {
 		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record3 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.String, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.String, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency.CurrencyCode;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency.Name;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value1() {
+		return getCurrencyCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value3() {
+		return getModifiedDate();
 	}
 }

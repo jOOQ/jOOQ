@@ -5906,6 +5906,46 @@ public class Factory {
     }
 
     // -------------------------------------------------------------------------
+    // [#915] TODO: These are experimental VALUES() table constructors
+    // -------------------------------------------------------------------------
+
+    static <T1> Table<Record1<T1>> values(Row1<T1>... rows) {
+        return new Values<Record1<T1>>(rows);
+    }
+
+    static <T1, T2> Table<Record2<T1, T2>> values(Row2<T1, T2>... rows) {
+        return new Values<Record2<T1, T2>>(rows);
+    }
+
+    static <T1, T2, T3> Table<Record3<T1, T2, T3>> values(Row3<T1, T2, T3>... rows) {
+        return new Values<Record3<T1, T2, T3>>(rows);
+    }
+
+    static <T1, T2, T3, T4> Table<Record4<T1, T2, T3, T4>> values(Row4<T1, T2, T3, T4>... rows) {
+        return new Values<Record4<T1, T2, T3, T4>>(rows);
+    }
+
+    static <T1, T2, T3, T4, T5> Table<Record5<T1, T2, T3, T4, T5>> values(Row5<T1, T2, T3, T4, T5>... rows) {
+        return new Values<Record5<T1, T2, T3, T4, T5>>(rows);
+    }
+
+    static <T1, T2, T3, T4, T5, T6> Table<Record6<T1, T2, T3, T4, T5, T6>> values(Row6<T1, T2, T3, T4, T5, T6>... rows) {
+        return new Values<Record6<T1, T2, T3, T4, T5, T6>>(rows);
+    }
+
+    static <T1, T2, T3, T4, T5, T6, T7> Table<Record7<T1, T2, T3, T4, T5, T6, T7>> values(Row7<T1, T2, T3, T4, T5, T6, T7>... rows) {
+        return new Values<Record7<T1, T2, T3, T4, T5, T6, T7>>(rows);
+    }
+
+    static <T1, T2, T3, T4, T5, T6, T7, T8> Table<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> values(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... rows) {
+        return new Values<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
+    }
+
+    static Table<Record> values(RowN... rows) {
+        return new Values<Record>(rows);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX Literals
     // -------------------------------------------------------------------------
 

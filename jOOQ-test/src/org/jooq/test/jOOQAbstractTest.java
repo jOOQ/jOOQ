@@ -1058,6 +1058,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRowValueExpressionValuesConstructor() throws Exception {
+        new RowValueExpressionTests(this).testRowValueExpressionValuesConstructor();
+    }
+
+    @Test
     public void testIgnoreCase() throws Exception {
         new PredicateTests(this).testIgnoreCase();
     }

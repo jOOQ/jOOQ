@@ -441,4 +441,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             .where(val(1).eq(val(0))))
         ));
     }
+
+    @Test
+    public void testRowValueExpressionValuesConstructor() throws Exception {
+        // [#915] TODO: How to properly alias things in order to be able to select them?
+
+//        create().select()
+//                .from(Factory.values(row(1, 2), row(3, 4)))
+//                .fetch();
+    }
 }

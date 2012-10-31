@@ -9057,7 +9057,110 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 					
 					<section id="quality-assurance">
 						<title>Quality Assurance</title>
-						<content/>
+						<content>
+							<p>
+								jOOQ is running some of your most mission-critical logic: the interface layer between your Java / Scala application and the database. You have probably chosen jOOQ for any of the following reasons:
+							</p>
+							<ul>
+								<li>To evade JDBC's verbosity and error-proneness due to string concatenation and index-based variable binding</li>
+								<li>To add lots of type-safety to your inline SQL</li>
+								<li>To increase productivity when writing inline SQL using your favourite IDE's autocompletion capabilities</li>
+							</ul>
+							
+							<p>
+								With jOOQ being in the core of your application, you want to be sure that you can trust jOOQ. That is why jOOQ is heavily unit and integration tested with a strong focus on integration tests:
+							</p>
+							
+							<h3>Unit tests</h3>
+							<p>
+								Unit tests are performed against dummy JDBC interfaces using <a href="http://jmock.org/" title="jmock">http://jmock.org/</a>. These tests verify that various <reference class="org.jooq.QueryPart"/> implementations render correct SQL and bind variables correctly.
+							</p>
+							
+							<h3>Integration tests</h3>
+							<p>
+								This is the most important part of the jOOQ test suites. Some 1500 queries are currently run against a standard integration test database. Both the test database and the queries are translated into every one of the 14 supported SQL dialects to ensure that regressions are unlikely to be introduced into the code base.
+							</p>
+							<p>
+								For libraries like jOOQ, integration tests are much more expressive than unit tests, as there are so many subtle differences in SQL dialects. Simple mocks just don't give as much feedback as an actual database instance.
+							</p>
+							<p>
+								jOOQ integration tests run the weirdest and most unrealistic queries. As a side-effect of these extensive integration test suites, many corner-case bugs for JDBC drivers and/or open source databases have been discovered, feature requests submitted through jOOQ and reported mainly to CUBRID, Derby, H2, HSQLDB.
+							</p>
+							
+							<h3>Code generation tests</h3>
+							<p>
+								For every one of the 14 supported integration test databases, source code is generated and the tiniest differences in generated source code can be discovered. In case of compilation errors in generated source code, new test tables/views/columns are added to avoid regressions in this field.
+							</p>
+							
+							<h3>API Usability tests and proofs of concept</h3>
+							<p>
+								jOOQ is used in jOOQ-meta as a proof of concept. This includes complex queries such as the following Postgres query
+							</p>
+							
+<java><![CDATA[Routines r1 = ROUTINES.as("r1");
+Routines r2 = ROUTINES.as("r2");
+
+for (Record record : create().select(
+        r1.ROUTINE_SCHEMA,
+        r1.ROUTINE_NAME,
+        r1.SPECIFIC_NAME,
+
+        // Ignore the data type when there is at least one out parameter
+        decode()
+            .when(exists(
+                selectOne()
+                .from(PARAMETERS)
+                .where(PARAMETERS.SPECIFIC_SCHEMA.equal(r1.SPECIFIC_SCHEMA))
+                .and(PARAMETERS.SPECIFIC_NAME.equal(r1.SPECIFIC_NAME))
+                .and(upper(PARAMETERS.PARAMETER_MODE).notEqual("IN"))),
+                    val("void"))
+            .otherwise(r1.DATA_TYPE).as("data_type"),
+        r1.CHARACTER_MAXIMUM_LENGTH,
+        r1.NUMERIC_PRECISION,
+        r1.NUMERIC_SCALE,
+        r1.TYPE_UDT_NAME,
+
+        // Calculate overload index if applicable
+        decode().when(
+        exists(
+            selectOne()
+            .from(r2)
+            .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
+            .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
+            .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
+            .and(r2.SPECIFIC_NAME.notEqual(r1.SPECIFIC_NAME))),
+            select(count())
+            .from(r2)
+            .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
+            .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
+            .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
+            .and(r2.SPECIFIC_NAME.lessOrEqual(r1.SPECIFIC_NAME)).asField())
+        .as("overload"))
+    .from(r1)
+    .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
+    .orderBy(
+        r1.ROUTINE_SCHEMA.asc(),
+        r1.ROUTINE_NAME.asc())
+    .fetch()) {
+
+    result.add(new PostgresRoutineDefinition(this, record));
+}]]></java>
+							<p>
+								These rather complex queries show that the jOOQ API is fit for advanced SQL use-cases, compared to the rather simple, often unrealistic queries in the integration test suite. 
+							</p>
+							
+							<h3>Clean API and implementation. Code is kept DRY</h3>
+							<p>
+								As a general rule of thumb throughout the jOOQ code, everything is kept <a href="http://en.wikipedia.org/wiki/DRY">DRY</a>. Some examples:
+							</p>
+							<ul>
+								<li>There is only one place in the entire code base, which consumes values from a JDBC ResultSet</li>
+								<li>There is only one place in the entire code base, which transforms jOOQ Records into custom POJOs</li>
+							</ul>
+							<p>
+								Keeping things DRY leads to longer stack traces, but in turn, also increases the relevance of highly reusable code-blocks. Chances that some parts of the jOOQ code base slips by integration test coverage decrease significantly.
+							</p>
+						</content>
 					</section>
 					
 					<section id="migrating-to-3.0">

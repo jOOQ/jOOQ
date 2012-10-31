@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "ScrapReason", schema = "Production")
-public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> {
+public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> implements org.jooq.Record3<java.lang.Short, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 603777716;
+	private static final long serialVersionUID = 664595107;
 
 	/**
 	 * The table column <code>Production.ScrapReason.ScrapReasonID</code>
@@ -68,5 +68,73 @@ public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 */
 	public ScrapReason() {
 		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record3 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.Short, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row3<java.lang.Short, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Short> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.ScrapReasonID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.Name;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Short value1() {
+		return getScrapReasonID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value3() {
+		return getModifiedDate();
 	}
 }

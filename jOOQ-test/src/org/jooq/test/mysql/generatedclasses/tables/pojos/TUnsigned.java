@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class TUnsigned implements java.io.Serializable {
 
-	private static final long serialVersionUID = 12654722;
+	private static final long serialVersionUID = -1731807876;
 
 	private final org.jooq.types.UByte    uByte;
 	private final org.jooq.types.UShort   uShort;

@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "Shift", schema = "HumanResources")
-public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> {
+public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> implements org.jooq.Record5<java.lang.Byte, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1865031959;
+	private static final long serialVersionUID = 542225995;
 
 	/**
 	 * The table column <code>HumanResources.Shift.ShiftID</code>
@@ -98,5 +98,105 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	 */
 	public Shift() {
 		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record5 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row5<java.lang.Byte, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row5<java.lang.Byte, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Byte> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.ShiftID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.Name;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.StartTime;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.EndTime;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Byte value1() {
+		return getShiftID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value3() {
+		return getStartTime();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value4() {
+		return getEndTime();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value5() {
+		return getModifiedDate();
 	}
 }

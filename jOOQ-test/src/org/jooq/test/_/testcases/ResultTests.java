@@ -39,8 +39,13 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
+import java.sql.Date;
 import java.util.Comparator;
 
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -50,13 +55,13 @@ import org.jooq.test.jOOQAbstractTest;
 import org.junit.Test;
 
 public class ResultTests<
-    A    extends UpdatableRecord<A>,
+    A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
     B    extends UpdatableRecord<B>,
-    S    extends UpdatableRecord<S>,
-    B2S  extends UpdatableRecord<B2S>,
+    S    extends UpdatableRecord<S> & Record1<String>,
+    B2S  extends UpdatableRecord<B2S> & Record3<String, Integer, Integer>,
     BS   extends UpdatableRecord<BS>,
-    L    extends TableRecord<L>,
+    L    extends TableRecord<L> & Record2<String, String>,
     X    extends TableRecord<X>,
     DATE extends UpdatableRecord<DATE>,
     BOOL extends UpdatableRecord<BOOL>,

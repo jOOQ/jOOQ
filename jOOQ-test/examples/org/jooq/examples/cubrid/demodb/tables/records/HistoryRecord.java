@@ -11,9 +11,9 @@ package org.jooq.examples.cubrid.demodb.tables.records;
 @javax.persistence.Table(name = "history", schema = "PUBLIC", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"event_code", "athlete"})
 })
-public class HistoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.cubrid.demodb.tables.records.HistoryRecord> {
+public class HistoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.cubrid.demodb.tables.records.HistoryRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1022823620;
+	private static final long serialVersionUID = 1294589429;
 
 	/**
 	 * The table column <code>PUBLIC.history.event_code</code>
@@ -103,5 +103,105 @@ public class HistoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 */
 	public HistoryRecord() {
 		super(org.jooq.examples.cubrid.demodb.tables.History.HISTORY);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record5 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row5<java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row5<java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.cubrid.demodb.tables.History.HISTORY.EVENT_CODE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.cubrid.demodb.tables.History.HISTORY.ATHLETE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field3() {
+		return org.jooq.examples.cubrid.demodb.tables.History.HISTORY.HOST_YEAR;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.cubrid.demodb.tables.History.HISTORY.SCORE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.examples.cubrid.demodb.tables.History.HISTORY.UNIT;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getEventCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getAthlete();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value3() {
+		return getHostYear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getScore();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getUnit();
 	}
 }

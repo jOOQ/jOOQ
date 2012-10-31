@@ -9,9 +9,9 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "t_986_2", schema = "public")
-public class T_986_2Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> {
+public class T_986_2Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = 500391650;
+	private static final long serialVersionUID = 517517039;
 
 	/**
 	 * The table column <code>public.t_986_2.ref</code>
@@ -45,5 +45,41 @@ public class T_986_2Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	 */
 	public T_986_2Record() {
 		super(org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record1 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row1<java.lang.Integer> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row1<java.lang.Integer> valuesRow() {
+		return org.jooq.impl.Factory.row(value1());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2.REF;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getRef();
 	}
 }

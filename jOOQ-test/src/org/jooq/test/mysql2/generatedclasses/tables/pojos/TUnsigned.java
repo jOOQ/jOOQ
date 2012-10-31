@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_unsigned", schema = "test2")
 public class TUnsigned implements java.io.Serializable {
 
-	private static final long serialVersionUID = -757249397;
+	private static final long serialVersionUID = -1620906791;
 
 	private org.jooq.types.UByte    uByte;
 	private org.jooq.types.UShort   uShort;

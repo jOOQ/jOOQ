@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "vSalesPersonSalesByFiscalYears", schema = "Sales")
-public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears> {
+public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears> implements org.jooq.Record7<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1027575895;
+	private static final long serialVersionUID = -367084227;
 
 	/**
 	 * The table column <code>Sales.vSalesPersonSalesByFiscalYears.SalesPersonID</code>
@@ -123,5 +123,137 @@ public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImp
 	 */
 	public vSalesPersonSalesByFiscalYears() {
 		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record7 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row7<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row7<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears.SalesPersonID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears.FullName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears.Title;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears.SalesTerritory;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears._2002;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears._2003;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears._2004;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getSalesPersonID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getFullName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getSalesTerritory();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value5() {
+		return get2002();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value6() {
+		return get2003();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value7() {
+		return get2004();
 	}
 }

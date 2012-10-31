@@ -11,9 +11,9 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductInventory", schema = "Production", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"ProductID", "LocationID"})
 })
-public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory> {
+public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory> implements org.jooq.Record7<java.lang.Integer, java.lang.Short, java.lang.String, java.lang.Byte, java.lang.Short, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -834330783;
+	private static final long serialVersionUID = -1694735663;
 
 	/**
 	 * The table column <code>Production.ProductInventory.ProductID</code>
@@ -157,5 +157,137 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	public ProductInventory() {
 		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record7 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row7<java.lang.Integer, java.lang.Short, java.lang.String, java.lang.Byte, java.lang.Short, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row7<java.lang.Integer, java.lang.Short, java.lang.String, java.lang.Byte, java.lang.Short, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.ProductID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Short> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.LocationID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.Shelf;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Byte> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.Bin;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Short> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.Quantity;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.rowguid;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getProductID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Short value2() {
+		return getLocationID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getShelf();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Byte value4() {
+		return getBin();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Short value5() {
+		return getQuantity();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getrowguid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value7() {
+		return getModifiedDate();
 	}
 }

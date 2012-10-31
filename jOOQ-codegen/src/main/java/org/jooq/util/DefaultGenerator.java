@@ -59,6 +59,8 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Parameter;
+import org.jooq.Record;
+import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -73,6 +75,7 @@ import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.impl.DAOImpl;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.impl.FieldTypeHelper;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
@@ -569,6 +572,25 @@ public class DefaultGenerator extends AbstractGenerator {
             baseClass = TableRecordImpl.class;
         }
 
+        int degree = table.getColumns().size();
+        String rowType = null;
+        String recordType = null;
+
+        if (degree <= Constants.MAX_ROW_DEGREE) {
+            rowType = "<";
+
+            String separator = "";
+            for (ColumnDefinition column : table.getColumns()) {
+                rowType += separator;
+                rowType += getJavaType(column.getType());
+
+                separator = ", ";
+            }
+
+            rowType += ">";
+            recordType = Record.class.getName() + degree + rowType;
+        }
+
         out.print("public class ");
         out.print(strategy.getJavaClassName(table, Mode.RECORD));
         out.print(" extends ");
@@ -576,7 +598,14 @@ public class DefaultGenerator extends AbstractGenerator {
         out.print("<");
         out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
         out.print(">");
-        printImplements(out, table, Mode.RECORD);
+
+        if (degree <= Constants.MAX_ROW_DEGREE) {
+            printImplements(out, table, Mode.RECORD, recordType);
+        }
+        else {
+            printImplements(out, table, Mode.RECORD);
+        }
+
         out.println(" {");
         out.printSerial();
 
@@ -584,15 +613,101 @@ public class DefaultGenerator extends AbstractGenerator {
             printGetterAndSetter(out, column);
         }
 
-        out.println();
-        out.println("\t/**");
-        out.println("\t * Create a detached " + strategy.getJavaClassName(table, Mode.RECORD));
-        out.println("\t */");
+        printJavadoc(out, "Create a detached " + strategy.getJavaClassName(table, Mode.RECORD));
         out.println("\tpublic " + strategy.getJavaClassName(table, Mode.RECORD) + "() {");
         out.print("\t\tsuper(");
         out.print(strategy.getFullJavaIdentifier(table));
         out.println(");");
         out.println("\t}");
+
+        if (degree <= Constants.MAX_ROW_DEGREE) {
+            printSectionHeader(out, "Record" + degree + " type implementation");
+
+            // fieldsRow()
+            printOverrideInheritDoc(out);
+            out.print("\tpublic ");
+            out.print(Row.class);
+            out.print(degree);
+            out.print(rowType);
+            out.println(" fieldsRow() {");
+
+            out.print("\t\treturn ");
+            out.print(Factory.class);
+            out.print(".row(");
+            String separator1 = "";
+            for (int i = 1; i <= degree; i++) {
+                out.print(separator1);
+                out.print("field");
+                out.print(i);
+                out.print("()");
+
+                separator1 = ", ";
+            }
+            out.println(");");
+            out.println("\t}");
+
+            // valuesRow()
+            printOverrideInheritDoc(out);
+            out.print("\tpublic ");
+            out.print(Row.class);
+            out.print(degree);
+            out.print(rowType);
+            out.println(" valuesRow() {");
+
+            out.print("\t\treturn ");
+            out.print(Factory.class);
+            out.print(".row(");
+            String separator2 = "";
+            for (int i = 1; i <= degree; i++) {
+                out.print(separator2);
+                out.print("value");
+                out.print(i);
+                out.print("()");
+
+                separator2 = ", ";
+            }
+            out.println(");");
+            out.println("\t}");
+
+            // field[N]()
+            for (int i = 1; i <= degree; i++) {
+                ColumnDefinition column = table.getColumn(i - 1);
+
+                printOverrideInheritDoc(out);
+                out.print("\tpublic ");
+                out.print(Field.class);
+                out.print("<");
+                out.print(getJavaType(column.getType()));
+                out.print("> field");
+                out.print(i);
+                out.println("() {");
+
+                out.print("\t\treturn ");
+                out.print(getStrategy().getFullJavaIdentifier(column));
+                out.println(";");
+
+                out.println("\t}");
+            }
+
+            // value[N]()
+            for (int i = 1; i <= degree; i++) {
+                ColumnDefinition column = table.getColumn(i - 1);
+
+                printOverrideInheritDoc(out);
+                out.print("\tpublic ");
+                out.print(getJavaType(column.getType()));
+                out.print(" value");
+                out.print(i);
+                out.println("() {");
+
+                out.print("\t\treturn ");
+                out.print(getStrategy().getJavaGetterName(column, Mode.RECORD));
+                out.println("();");
+
+                out.println("\t}");
+            }
+        }
+
         out.println("}");
         out.close();
     }
@@ -706,8 +821,7 @@ public class DefaultGenerator extends AbstractGenerator {
             }
         }
 
-        out.println();
-        printNoFurtherInstancesAllowedJavadoc(out);
+        printJavadocNoFurtherInstancesAllowed(out);
         out.println("\tprivate " + strategy.getJavaClassName(udt) + "() {");
 
         if (!schema.isDefaultSchema()) {
@@ -1109,7 +1223,7 @@ public class DefaultGenerator extends AbstractGenerator {
             }
         }
 
-        printNoFurtherInstancesAllowedJavadoc(outPkg);
+        printJavadocNoFurtherInstancesAllowed(outPkg);
         outPkg.println("\tprivate " + strategy.getJavaClassName(pkg) + "() {");
         outPkg.print("\t\tsuper(\"");
         outPkg.print(pkg.getOutputName());
@@ -1244,7 +1358,6 @@ public class DefaultGenerator extends AbstractGenerator {
         out.print(", ");
         out.print(tType);
         out.println("> {");
-        out.println();
 
         // Default constructor
         // -------------------
@@ -1260,7 +1373,6 @@ public class DefaultGenerator extends AbstractGenerator {
         out.print(strategy.getFullJavaClassName(table, Mode.POJO));
         out.println(".class);");
         out.println("\t}");
-        out.println();
 
         // Initialising constructor
         // ------------------------
@@ -1297,7 +1409,6 @@ public class DefaultGenerator extends AbstractGenerator {
 
             // fetchBy[Column]([T]...)
             // -----------------------
-            out.println();
             printJavadoc(out, "Fetch records that have <code>" + column.getOutputName() + " IN (values)</code>");
             out.print("\tpublic ");
             out.print(List.class);
@@ -1323,7 +1434,6 @@ public class DefaultGenerator extends AbstractGenerator {
                 // If column is part of a single-column unique key...
                 if (uk.getKeyColumns().size() == 1 && uk.getKeyColumns().get(0).equals(column)) {
 
-                    out.println();
                     printJavadoc(out, "Fetch a unique that has <code>" + column.getOutputName() + " = value</code>");
                     out.print("\tpublic ");
                     out.print(strategy.getFullJavaClassName(table, Mode.POJO));
@@ -1539,12 +1649,12 @@ public class DefaultGenerator extends AbstractGenerator {
 
         // [#1255] With instance fields, the table constructor may
         // be public, as tables are no longer singletons
-        out.println();
         if (generateInstanceFields()) {
+            out.println();
             out.print("\tpublic ");
         }
         else {
-            printNoFurtherInstancesAllowedJavadoc(out);
+            printJavadocNoFurtherInstancesAllowed(out);
             out.print("\tprivate ");
         }
         out.println(strategy.getJavaClassName(table) + "() {");
@@ -1850,8 +1960,7 @@ public class DefaultGenerator extends AbstractGenerator {
         outS.println("\t */");
         outS.println("\tpublic static final " + strategy.getJavaClassName(schema) + " " + strategy.getJavaIdentifier(schema) + " = new " + strategy.getJavaClassName(schema) + "();");
 
-        outS.println();
-        printNoFurtherInstancesAllowedJavadoc(outS);
+        printJavadocNoFurtherInstancesAllowed(outS);
         outS.println("\tprivate " + strategy.getJavaClassName(schema) + "() {");
         outS.println("\t\tsuper(\"" + schema.getOutputName() + "\");");
         outS.println("\t}");
@@ -2105,7 +2214,6 @@ public class DefaultGenerator extends AbstractGenerator {
             printParameter(out, parameter, routine);
         }
 
-        out.println();
         printJavadoc(out, "Create a new routine call instance");
         out.println("\tpublic " + strategy.getJavaClassName(routine) + "() {");
         out.print("\t\tsuper(");
@@ -2586,6 +2694,11 @@ public class DefaultGenerator extends AbstractGenerator {
         else {
             out.print(strategy.getFullJavaIdentifier(definition));
         }
+    }
+
+    protected void printOverrideInheritDoc(GenerationWriter out) {
+        printJavadoc(out, "{@inheritDoc}");
+        printOverride(out);
     }
 
     protected void printOverride(GenerationWriter out) {
@@ -3130,14 +3243,22 @@ public class DefaultGenerator extends AbstractGenerator {
         }
     }
 
-    protected void printNoFurtherInstancesAllowedJavadoc(GenerationWriter out) {
+    protected void printJavadocNoFurtherInstancesAllowed(GenerationWriter out) {
         printJavadoc(out, "No further instances allowed");
     }
 
     protected void printJavadoc(GenerationWriter out, String doc) {
+        out.println();
         out.println("\t/**");
         out.println("\t * " + doc);
         out.println("\t */");
+    }
+
+    protected void printSectionHeader(GenerationWriter out, String header) {
+        out.println();
+        out.println("\t// -------------------------------------------------------------------------");
+        out.println("\t// " + header);
+        out.println("\t// -------------------------------------------------------------------------");
     }
 
     protected void printClassJavadoc(GenerationWriter out, Definition definition) {

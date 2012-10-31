@@ -9,9 +9,9 @@ package org.jooq.examples.cubrid.demodb.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "olympic", schema = "PUBLIC")
-public class OlympicRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.cubrid.demodb.tables.records.OlympicRecord> {
+public class OlympicRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.cubrid.demodb.tables.records.OlympicRecord> implements org.jooq.Record8<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.sql.Date, java.lang.String, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -394534164;
+	private static final long serialVersionUID = 2075813381;
 
 	/**
 	 * The table column <code>PUBLIC.olympic.host_year</code>
@@ -155,5 +155,153 @@ public class OlympicRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 */
 	public OlympicRecord() {
 		super(org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record8 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row8<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.sql.Date, java.lang.String, java.lang.String, java.lang.String> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row8<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.sql.Date, java.lang.String, java.lang.String, java.lang.String> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC.HOST_YEAR;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC.HOST_NATION;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC.HOST_CITY;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Date> field4() {
+		return org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC.OPENING_DATE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Date> field5() {
+		return org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC.CLOSING_DATE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC.MASCOT;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field7() {
+		return org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC.SLOGAN;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field8() {
+		return org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC.INTRODUCTION;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getHostYear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getHostNation();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getHostCity();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Date value4() {
+		return getOpeningDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Date value5() {
+		return getClosingDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getMascot();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value7() {
+		return getSlogan();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value8() {
+		return getIntroduction();
 	}
 }

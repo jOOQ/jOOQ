@@ -11,9 +11,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
-public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR> implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_AUTHOR_INTERFACE {
+public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR> implements java.lang.Cloneable, org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = -1709008540;
+	private static final long serialVersionUID = 1755390056;
 
 	/**
 	 * The author ID
@@ -151,5 +151,121 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 */
 	public T_AUTHOR() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record6 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.FIRST_NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.LAST_NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Date> field4() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.DATE_OF_BIRTH;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field5() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.YEAR_OF_BIRTH;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> field6() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ADDRESS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getFIRST_NAME();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getLAST_NAME();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Date value4() {
+		return getDATE_OF_BIRTH();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value5() {
+		return getYEAR_OF_BIRTH();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value6() {
+		return getADDRESS();
 	}
 }

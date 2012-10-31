@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.packages;
 @java.lang.SuppressWarnings("all")
 public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -202670595;
+	private static final long serialVersionUID = -1698587105;
 
 	/**
 	 * The singleton instance of TEST.PKG_1358
@@ -108,6 +108,7 @@ public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.la
 
 		p.execute(configuration);
 	}
+
 	/**
 	 * No further instances allowed
 	 */

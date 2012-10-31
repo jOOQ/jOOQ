@@ -11,7 +11,7 @@ package org.jooq.examples.oracle.sys.packages;
 @java.lang.SuppressWarnings("all")
 public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -848500436;
+	private static final long serialVersionUID = -1817657634;
 
 	/**
 	 * The singleton instance of SYS.DBMS_XPLAN
@@ -1017,6 +1017,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 		p.execute(configuration);
 		return p.getFormatFlags();
 	}
+
 	/**
 	 * No further instances allowed
 	 */

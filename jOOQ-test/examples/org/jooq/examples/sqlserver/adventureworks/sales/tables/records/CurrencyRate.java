@@ -9,9 +9,9 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "CurrencyRate", schema = "Sales")
-public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate> {
+public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate> implements org.jooq.Record7<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1027890738;
+	private static final long serialVersionUID = 1783429197;
 
 	/**
 	 * The table column <code>Sales.CurrencyRate.CurrencyRateID</code>
@@ -152,5 +152,137 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 */
 	public CurrencyRate() {
 		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record7 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row7<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row7<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.CurrencyRateID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.CurrencyRateDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.FromCurrencyCode;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.ToCurrencyCode;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.AverageRate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.EndOfDayRate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getCurrencyRateID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value2() {
+		return getCurrencyRateDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getFromCurrencyCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getToCurrencyCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value5() {
+		return getAverageRate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value6() {
+		return getEndOfDayRate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value7() {
+		return getModifiedDate();
 	}
 }

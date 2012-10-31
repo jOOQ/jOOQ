@@ -11,7 +11,7 @@ package org.jooq.test.oracle2.generatedclasses.packages;
 @java.lang.SuppressWarnings("all")
 public final class DateAsTimestampPkg_976 extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -1042002258;
+	private static final long serialVersionUID = -1651705062;
 
 	/**
 	 * The singleton instance of TEST.PKG_976
@@ -70,6 +70,7 @@ public final class DateAsTimestampPkg_976 extends org.jooq.impl.PackageImpl {
 		p.execute(configuration);
 		return p.getO();
 	}
+
 	/**
 	 * No further instances allowed
 	 */

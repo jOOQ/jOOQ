@@ -72,6 +72,10 @@ import org.jooq.Field;
 import org.jooq.Insert;
 import org.jooq.InsertQuery;
 import org.jooq.MergeFinalStep;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -84,13 +88,13 @@ import org.jooq.test.jOOQAbstractTest;
 import org.junit.Test;
 
 public class InsertUpdateTests<
-    A    extends UpdatableRecord<A>,
+    A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
     B    extends UpdatableRecord<B>,
-    S    extends UpdatableRecord<S>,
-    B2S  extends UpdatableRecord<B2S>,
+    S    extends UpdatableRecord<S> & Record1<String>,
+    B2S  extends UpdatableRecord<B2S> & Record3<String, Integer, Integer>,
     BS   extends UpdatableRecord<BS>,
-    L    extends TableRecord<L>,
+    L    extends TableRecord<L> & Record2<String, String>,
     X    extends TableRecord<X>,
     DATE extends UpdatableRecord<DATE>,
     BOOL extends UpdatableRecord<BOOL>,

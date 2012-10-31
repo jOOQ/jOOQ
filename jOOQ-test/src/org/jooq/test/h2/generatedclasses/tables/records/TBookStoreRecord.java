@@ -9,9 +9,9 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  * A book store
  */
 @java.lang.SuppressWarnings("all")
-public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore {
+public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = -1785181313;
+	private static final long serialVersionUID = 1413894326;
 
 	/**
 	 * The books store name
@@ -44,5 +44,41 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	public TBookStoreRecord() {
 		super(org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Record1 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row1<java.lang.String> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row1<java.lang.String> valuesRow() {
+		return org.jooq.impl.Factory.row(value1());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field1() {
+		return org.jooq.test.h2.generatedclasses.tables.TBookStore.NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value1() {
+		return getName();
 	}
 }

@@ -39,6 +39,8 @@ package org.jooq.util.postgres;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.decode;
 import static org.jooq.impl.Factory.exists;
+import static org.jooq.impl.Factory.select;
+import static org.jooq.impl.Factory.selectOne;
 import static org.jooq.impl.Factory.upper;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
@@ -336,8 +338,8 @@ public class PostgresDatabase extends AbstractDatabase {
 
                 // Ignore the data type when there is at least one out parameter
                 decode()
-                    .when(exists(create()
-                        .selectOne()
+                    .when(exists(
+                        selectOne()
                         .from(PARAMETERS)
                         .where(PARAMETERS.SPECIFIC_SCHEMA.equal(r1.SPECIFIC_SCHEMA))
                         .and(PARAMETERS.SPECIFIC_NAME.equal(r1.SPECIFIC_NAME))
@@ -352,18 +354,18 @@ public class PostgresDatabase extends AbstractDatabase {
                 // Calculate overload index if applicable
                 decode().when(
                 exists(
-                    create().selectOne()
-                        .from(r2)
-                        .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
-                        .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
-                        .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
-                        .and(r2.SPECIFIC_NAME.notEqual(r1.SPECIFIC_NAME))),
-                    create().select(count())
-                        .from(r2)
-                        .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
-                        .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
-                        .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
-                        .and(r2.SPECIFIC_NAME.lessOrEqual(r1.SPECIFIC_NAME)).asField())
+                    selectOne()
+                    .from(r2)
+                    .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
+                    .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
+                    .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
+                    .and(r2.SPECIFIC_NAME.notEqual(r1.SPECIFIC_NAME))),
+                    select(count())
+                    .from(r2)
+                    .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
+                    .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
+                    .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
+                    .and(r2.SPECIFIC_NAME.lessOrEqual(r1.SPECIFIC_NAME)).asField())
                 .as("overload"))
             .from(r1)
             .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))

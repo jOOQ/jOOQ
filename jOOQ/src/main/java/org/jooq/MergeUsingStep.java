@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.ORACLE;
@@ -46,7 +47,7 @@ import static org.jooq.SQLDialect.SYBASE;
  * <p>
  * Example: <code><pre>
  * Factory create = new Factory();
- * 
+ *
  * create.mergeInto(table)
  *       .using(select)
  *       .on(condition)
@@ -57,7 +58,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *       .values(value1, value2)
  *       .execute();
  * </pre></code>
- * 
+ *
  * @author Lukas Eder
  */
 public interface MergeUsingStep<R extends Record> extends MergeKeyStep<R> {
@@ -66,7 +67,7 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStep<R> {
      * Add the <code>USING</code> clause to the SQL standard <code>MERGE</code>
      * statement
      */
-    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnStep<R> using(TableLike<?> table);
 
     /**
@@ -77,6 +78,6 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStep<R> {
      * in <code>USING(SELECT 1) AS [dummy_table(dummy_field)]</code> in SQL
      * Server, where derived tables need to be aliased.
      */
-    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnStep<R> usingDual();
 }

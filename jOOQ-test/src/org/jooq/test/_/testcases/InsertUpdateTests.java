@@ -762,7 +762,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     public void testMerge() throws Exception {
         switch (getDialect()) {
             case ASE:
-            case CUBRID:
             case DERBY:
             case H2:
             case INGRES:
@@ -878,7 +877,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     public void testH2Merge() throws Exception {
         switch (getDialect()) {
             case ASE:
-            case CUBRID:
             case DERBY:
             case INGRES:
             case MYSQL:
@@ -906,8 +904,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         // H2 MERGE test leading to a single UPDATE
         // -------------------------------------------------------------
         assertEquals(1,
-        create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_FIRST_NAME())
-                .values(3, "Hermann")
+        create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+                .values(3, "Hermann", "Hesse")
                 .execute());
 
         Result<A> authors2 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
@@ -919,9 +917,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         // H2 MERGE test specifying a custom KEY clause
         // -------------------------------------------------------------
         assertEquals(1,
-        create().mergeInto(TAuthor(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+        create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
                 .key(TAuthor_LAST_NAME())
-                .values("Lukas", "Hesse")
+                .values(3, "Lukas", "Hesse")
                 .execute());
 
         Result<A> authors3 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
@@ -956,14 +954,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         // H2 MERGE test specifying a subselect
         // -------------------------------------------------------------
         assertEquals(2,
-        create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_FIRST_NAME())
+        create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
 
                 // inline() strings here. It seems that DB2 will lack page size
                 // in the system temporary table space, otherwise
 
                 // [#579] TODO: Aliasing shouldn't be necessary
-                .select(create().select(val(3).as("a"), inline("John").as("b")).unionAll(
-                        create().select(val(4).as("a"), inline("John").as("b"))))
+                .select(select(val(3).as("a"), inline("John").as("b"), inline("Eder").as("c")).unionAll(
+                        select(val(4).as("a"), inline("John").as("b"), inline("Eder").as("c"))))
                 .execute());
 
         Result<A> authors5 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();

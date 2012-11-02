@@ -419,6 +419,7 @@ implements
      */
     private final QueryPart getStandardMerge(Configuration config) {
         switch (config.getDialect()) {
+            case CUBRID:
             case DB2:
             case HSQLDB:
             case ORACLE:

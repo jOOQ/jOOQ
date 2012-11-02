@@ -1502,6 +1502,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testWindowFunctions() throws Exception {
+        new AggregateWindowFunctionTests(this).testWindowFunctions();
+    }
+
+    @Test
     public void testStoredFunctions() throws Exception {
         new RoutineAndUDTTests(this).testStoredFunctions();
     }
@@ -1644,11 +1649,6 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testDual() throws Exception {
         new GeneralTests(this).testDual();
-    }
-
-    @Test
-    public void testWindowFunctions() throws Exception {
-        new AggregateWindowFunctionTests(this).testWindowFunctions();
     }
 
     @Test

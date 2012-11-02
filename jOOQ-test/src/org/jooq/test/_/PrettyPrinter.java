@@ -56,7 +56,7 @@ public class PrettyPrinter extends DefaultExecuteListener {
      * Hook into the query execution lifecycle before executing queries
      */
     @Override
-    public void executeStart(ExecuteContext ctx) {
+    public void renderEnd(ExecuteContext ctx) {
 
         // Create a new factory for logging rendering purposes
         // This factory doesn't need a connection, only the SQLDialect...

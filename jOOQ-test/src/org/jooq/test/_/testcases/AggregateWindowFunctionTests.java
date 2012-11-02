@@ -360,7 +360,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     public void testWindowFunctions() throws Exception {
         switch (getDialect()) {
             case ASE:
-            case CUBRID:
             case FIREBIRD:
             case INGRES:
             case MYSQL:
@@ -490,6 +489,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(Integer.valueOf(1), result.getValue(3, column));
 
         switch (getDialect()) {
+            case CUBRID:
             case DB2:
             case SQLSERVER:
                 log.info("SKIPPING", "PERCENT_RANK() and CUME_DIST() window function tests");
@@ -605,7 +605,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         }
 
         // NTILE()
-        if (asList(SYBASE, DB2).contains(getDialect())) {
+        if (asList(CUBRID, DB2, SYBASE).contains(getDialect())) {
             log.info("SKIPPING", "NTILE tests");
         }
         else {
@@ -627,7 +627,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         }
 
         column = 0;
-        if (getDialect() == SQLDialect.SQLSERVER) {
+        if (asList(CUBRID, SQLSERVER).contains(getDialect())) {
             log.info("SKIPPING", "ROWS UNBOUNDED PRECEDING and similar tests");
             return;
         }

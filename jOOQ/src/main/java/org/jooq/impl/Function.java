@@ -307,8 +307,10 @@ class Function<T> extends AbstractField<T> implements
         String glue = "";
         context.keyword(" over (");
         if (!partitionBy.isEmpty()) {
-            if (partitionByOne && context.getDialect() == SQLDialect.SYBASE) {
-                // Ignore partition clause. Sybase does not support this construct
+
+            // Ignore PARTITION BY 1 clause. These databases erroneously map the
+            // 1 literal onto the column index
+            if (partitionByOne && asList(CUBRID, SYBASE).contains(context.getDialect())) {
             }
             else {
                 context.sql(glue)

@@ -35,12 +35,12 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-
 
 /**
  * This type is used for the window function DSL API.
@@ -63,17 +63,17 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
     /**
      * Add a <code>PARTITION BY</code> clause to the window functions.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowOrderByStep<T> partitionBy(Field<?>... fields);
 
     /**
      * Add a <code>PARTITION BY 1</code> clause to the window functions, where
      * such a clause is required by the syntax of an RDBMS.
      * <p>
-     * This clause is not supported in the Sybase dialect. If you use it, jOOQ
-     * will simply ignore it.
+     * This clause is not supported as such in the CUBRID and Sybase dialects.
+     * If you use it, jOOQ will simply ignore it.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowOrderByStep<T> partitionByOne();
 
 }

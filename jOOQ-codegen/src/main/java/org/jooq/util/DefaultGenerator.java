@@ -125,11 +125,6 @@ public class DefaultGenerator extends AbstractGenerator {
      */
     private GenerationWriter        outS  = null;
 
-    /**
-     * The global generated factory file
-     */
-    private GenerationWriter        outF  = null;
-
     @Override
     public void generate(Database db) {
 
@@ -1241,12 +1236,6 @@ public class DefaultGenerator extends AbstractGenerator {
         if (outS != null) {
             outS.println("}");
             outS.close();
-        }
-
-        // Finalise factory
-        if (outF != null) {
-            outF.println("}");
-            outF.close();
         }
     }
 

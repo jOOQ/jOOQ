@@ -41,10 +41,8 @@ import static java.util.Collections.emptyList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.Factory.currentUser;
-import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.table;
-import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.test.oracle.generatedclasses.multi_schema.Tables.T_BOOK_SALE;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.f691cursorIn;
@@ -1113,83 +1111,6 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(Integer.valueOf("1"), ora().nextval(Sequences.S_961_INT));
         assertEquals(Long.valueOf("1"), ora().nextval(Sequences.S_961_LONG));
         assertEquals(BigInteger.valueOf(1), ora().nextval(Sequences.S_961_BIG_INTEGER));
-    }
-
-    @Test
-    public void testOracleMergeStatementExtensions() throws Exception {
-        reset = false;
-        TAuthorRecord author;
-
-        // Test updating with a positive condition
-        // ---------------------------------------
-        assertEquals(1,
-        ora().mergeInto(T_AUTHOR)
-             .usingDual()
-             .on(T_AUTHOR.ID.equal(1))
-             .whenMatchedThenUpdate()
-             .set(T_AUTHOR.LAST_NAME, "Frisch")
-             .where(T_AUTHOR.ID.equal(1))
-             .execute());
-
-        author = create().fetchOne(T_AUTHOR, T_AUTHOR.ID.equal(1));
-        assertEquals(2, create().selectCount().from(T_AUTHOR).fetchOne(0));
-        assertEquals(1, (int) author.getId());
-        assertEquals(AUTHOR_FIRST_NAMES.get(0), author.getFirstName());
-        assertEquals("Frisch", author.getLastName());
-
-        // Test updating with a negative condition
-        // ---------------------------------------
-        assertEquals(0,
-        ora().mergeInto(T_AUTHOR)
-             .usingDual()
-             .on(T_AUTHOR.ID.equal(1))
-             .whenMatchedThenUpdate()
-             .set(T_AUTHOR.LAST_NAME, "Frisch")
-             .where(T_AUTHOR.ID.equal(3))
-             .execute());
-
-        author = create().fetchOne(T_AUTHOR, T_AUTHOR.ID.equal(1));
-        assertEquals(2, create().selectCount().from(T_AUTHOR).fetchOne(0));
-        assertEquals(1, (int) author.getId());
-        assertEquals(AUTHOR_FIRST_NAMES.get(0), author.getFirstName());
-        assertEquals("Frisch", author.getLastName());
-
-        // Test deleting
-        // -------------
-        // ON DELETE CASCADE doesn't work with MERGE...?
-        ora().delete(T_BOOK).execute();
-
-        assertEquals(1,
-        ora().mergeInto(T_AUTHOR)
-             .usingDual()
-             .on(trueCondition())
-             .whenMatchedThenUpdate()
-             .set(T_AUTHOR.LAST_NAME, "Frisch")
-             .where(T_AUTHOR.ID.equal(2))
-             .deleteWhere(T_AUTHOR.ID.equal(2))
-             .execute());
-
-        author = create().fetchOne(T_AUTHOR, T_AUTHOR.ID.equal(1));
-        assertEquals(1, create().selectCount().from(T_AUTHOR).fetchOne(0));
-        assertEquals(1, (int) author.getId());
-        assertEquals(AUTHOR_FIRST_NAMES.get(0), author.getFirstName());
-        assertEquals("Frisch", author.getLastName());
-
-        // Test inserting
-        // --------------
-        assertEquals(0,
-        ora().mergeInto(T_AUTHOR)
-             .usingDual()
-             .on(trueCondition())
-             .whenNotMatchedThenInsert(
-                 T_AUTHOR.ID,
-                 T_AUTHOR.FIRST_NAME,
-                 T_AUTHOR.LAST_NAME)
-             .values(3, "Yvette", "Z'Graggen")
-             .where(falseCondition())
-             .execute());
-
-        // No tests on results
     }
 
     @Test

@@ -1288,8 +1288,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testH2Merge() throws Exception {
-        new InsertUpdateTests(this).testH2Merge();
+    public void testMergeWithH2SyntaxExtension() throws Exception {
+        new InsertUpdateTests(this).testMergeWithH2SyntaxExtension();
+    }
+
+    @Test
+    public void testMergeWithOracleSyntaxExtension() throws Exception {
+        new InsertUpdateTests(this).testMergeWithOracleSyntaxExtension();
     }
 
     @Test

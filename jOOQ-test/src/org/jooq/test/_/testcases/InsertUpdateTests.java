@@ -55,11 +55,13 @@ import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.selectOne;
+import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
 
@@ -874,7 +876,101 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     }
 
     @Test
-    public void testH2Merge() throws Exception {
+    public void testMergeWithOracleSyntaxExtension() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+            case DB2:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case SQLSERVER:
+            case SYBASE:
+                log.info("SKIPPING", "Oracle-specific MERGE syntax test");
+                return;
+        }
+
+        jOOQAbstractTest.reset = false;
+        A author;
+
+        // Test updating with a positive condition
+        // ---------------------------------------
+        assertEquals(1,
+        create().mergeInto(TAuthor())
+                .usingDual()
+                .on(TAuthor_ID().equal(1))
+                .whenMatchedThenUpdate()
+                .set(TAuthor_LAST_NAME(), "Frisch")
+                .where(TAuthor_ID().equal(1))
+                .execute());
+
+        author = create().fetchOne(TAuthor(), TAuthor_ID().equal(1));
+        assertEquals(2, create().selectCount().from(TAuthor()).fetchOne(0));
+        assertEquals(1, (int) author.getValue(TAuthor_ID()));
+        assertEquals(AUTHOR_FIRST_NAMES.get(0), author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("Frisch", author.getValue(TAuthor_LAST_NAME()));
+
+        // Test updating with a negative condition
+        // ---------------------------------------
+        assertEquals(0,
+        create().mergeInto(TAuthor())
+                .usingDual()
+                .on(TAuthor_ID().equal(1))
+                .whenMatchedThenUpdate()
+                .set(TAuthor_LAST_NAME(), "Frisch")
+                .where(TAuthor_ID().equal(3))
+                .execute());
+
+        author = create().fetchOne(TAuthor(), TAuthor_ID().equal(1));
+        assertEquals(2, create().selectCount().from(TAuthor()).fetchOne(0));
+        assertEquals(1, (int) author.getValue(TAuthor_ID()));
+        assertEquals(AUTHOR_FIRST_NAMES.get(0), author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("Frisch", author.getValue(TAuthor_LAST_NAME()));
+
+        // Test deleting
+        // -------------
+        // ON DELETE CASCADE doesn't work with MERGE...?
+        create().delete(TBook()).execute();
+
+        assertEquals(1,
+        create().mergeInto(TAuthor())
+                .usingDual()
+                .on(trueCondition())
+                .whenMatchedThenUpdate()
+                .set(TAuthor_LAST_NAME(), "Frisch")
+                .where(TAuthor_ID().equal(2))
+                .deleteWhere(TAuthor_ID().equal(2))
+                .execute());
+
+        author = create().fetchOne(TAuthor(), TAuthor_ID().equal(1));
+        assertEquals(1, create().selectCount().from(TAuthor()).fetchOne(0));
+        assertEquals(1, (int) author.getValue(TAuthor_ID()));
+        assertEquals(AUTHOR_FIRST_NAMES.get(0), author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("Frisch", author.getValue(TAuthor_LAST_NAME()));
+
+        // Test inserting
+        // --------------
+        assertEquals(0,
+        create().mergeInto(TAuthor())
+                .usingDual()
+                .on(trueCondition())
+                .whenNotMatchedThenInsert(
+                    TAuthor_ID(),
+                    TAuthor_FIRST_NAME(),
+                    TAuthor_LAST_NAME())
+                .values(3, "Yvette", "Z'Graggen")
+                .where(falseCondition())
+                .execute());
+
+        // No tests on results
+    }
+
+    @Test
+    public void testMergeWithH2SyntaxExtension() throws Exception {
         switch (getDialect()) {
             case ASE:
             case DERBY:

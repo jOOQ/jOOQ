@@ -259,6 +259,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testFormatCSV() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        B b1 = newBook(5);
+        B b2 = newBook(6);
+        B b3 = newBook(7);
+
+        b1.setValue(TBook_TITLE(), "\"\"\"\"");
+        b2.setValue(TBook_TITLE(), "Hello\\World");
+        b3.setValue(TBook_TITLE(), "Hello\\,\\World");
+        create().batchStore(b1, b2).execute();
+
         List<Field<?>> fields = TBook().getFields();
         Result<B> books = create().selectFrom(TBook()).fetch();
         String csv = books.formatCSV();
@@ -266,14 +277,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         String[] lines = csv.split("\n");
         String[] fieldNames = lines[0].split(",");
 
-        assertEquals(5, lines.length);
+        assertEquals(books.size() + 1, lines.length);
         assertEquals(fields.size(), fieldNames.length);
 
         for (int i = 0; i < fields.size(); i++) {
             assertEquals(fields.get(i).getName(), fieldNames[i]);
         }
 
+        // Check every CSV line
         for (int j = 1; j < lines.length; j++) {
+
+            // Check every value in the record
             for (int i = 0; i < fields.size(); i++) {
                 String value = books.get(j - 1).getValue(i, String.class);
 
@@ -284,23 +298,30 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 String regex1 = "";
                 String regex2 = "";
 
+                // Generate a regular expression matching dummy values for
+                // fields != i and an actual value expression for field == i
                 for (int x = 0; x < fields.size(); x++) {
                     if (x > 0) {
                         regex1 += ",";
                         regex2 += ",";
                     }
 
+                    // This is the field whose contents we're checking.
+                    // regex1 is the actual field value, without quoting/escaping
+                    // regex2 is the quoted/escaped field value
                     if (x == i) {
-                        regex1 += value;
-                        regex2 += "\"" + value.replaceAll("\"", "\"\"") + "\"";
+                        regex1 += value.replace("\\", "\\\\");
+                        regex2 += "\"" + value.replace("\\", "\\\\\\\\").replace("\"", "\"\"") + "\"";
                     }
+
+                    // These are all the other fields
                     else {
-                        regex1 += "((?!\")[^,]+|\"[^\"]*\")";
-                        regex2 += "((?!\")[^,]+|\"[^\"]*\")";
+                        regex1 += "((?!\")[^,]+|\".*?\"(?=(,|$)))";
+                        regex2 += "((?!\")[^,]+|\".*?\"(?=(,|$)))";
                     }
                 }
 
-                assertTrue(lines[j].matches(regex1) || lines[j].matches(regex2));
+                assertTrue(lines[j], lines[j].matches(regex1) || lines[j].matches(regex2));
             }
         }
     }

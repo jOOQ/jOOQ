@@ -78,6 +78,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -992,6 +995,21 @@ public class BasicTest {
         assertEquals("\"A\".\"b\".\"';\"\"\"", r_refI().render(field));
         assertEquals("\"A\".\"b\".\"';\"\"\"", r_ref().render(table));
         assertEquals("\"A\".\"b\".\"';\"\"\"", r_refI().render(table));
+    }
+
+    @Test
+    public void testQueryPartByNameAndConditions() throws Exception {
+        List<String> v1 = Arrays.asList("1", "2");
+        Condition c1 = fieldByName(String.class, "A", "b").in(v1);
+
+        assertEquals("\"A\".\"b\" in (?, ?)", r_ref().render(c1));
+        assertEquals("\"A\".\"b\" in ('1', '2')", r_refI().render(c1));
+
+        Set<String> v2 = new TreeSet<String>(Arrays.asList("1", "2"));
+        Condition c2 = fieldByName(String.class, "A", "b").in(v2);
+
+        assertEquals("\"A\".\"b\" in (?, ?)", r_ref().render(c2));
+        assertEquals("\"A\".\"b\" in ('1', '2')", r_refI().render(c2));
     }
 
     @Test

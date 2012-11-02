@@ -5086,7 +5086,7 @@ public class Factory {
      * {@link SQLDialect#HSQLDB} can simulate this function using
      * <code>ROWNUM()</code>
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> rowNumber() {
         return new Function<Integer>(ROW_NUMBER, SQLDataType.INTEGER);
     }
@@ -5097,7 +5097,7 @@ public class Factory {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> rank() {
         return new Function<Integer>("rank", SQLDataType.INTEGER);
     }
@@ -5108,7 +5108,7 @@ public class Factory {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> denseRank() {
         return new Function<Integer>("dense_rank", SQLDataType.INTEGER);
     }

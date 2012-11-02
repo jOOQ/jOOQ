@@ -2129,7 +2129,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#count(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<Integer> countOver();
 
     /**
@@ -2140,7 +2140,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#max(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> maxOver();
 
     /**
@@ -2151,7 +2151,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#min(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> minOver();
 
     /**
@@ -2162,7 +2162,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#sum(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> sumOver();
 
     /**
@@ -2173,7 +2173,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#avg(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> avgOver();
 
     /**
@@ -2294,7 +2294,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#stddevPop(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> stddevPopOver();
 
     /**
@@ -2305,7 +2305,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#stddevSamp(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> stddevSampOver();
 
     /**
@@ -2316,7 +2316,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#varPop(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> varPopOver();
 
     /**
@@ -2327,7 +2327,7 @@ public interface Field<T> extends GroupField {
      * @see Factory#varSamp(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> varSampOver();
 
     /**

@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -63,7 +64,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Sybase.
      */
     @Override
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> over();
 
     /**

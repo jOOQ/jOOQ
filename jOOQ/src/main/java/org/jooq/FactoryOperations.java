@@ -669,7 +669,7 @@ public interface FactoryOperations extends Configuration {
      * statement without field specification. See also
      * {@link #mergeInto(Table, Field...)}
      */
-    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
 
     /**
@@ -692,7 +692,7 @@ public interface FactoryOperations extends Configuration {
      * </tr>
      * </table>
      */
-    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Field<?>... fields);
 
     /**
@@ -700,7 +700,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields);
 
     /**

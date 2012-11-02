@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.ORACLE;
@@ -66,6 +67,6 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * Add the <code>WHEN MATCHED THEN UPDATE</code> clause to the
      * <code>MERGE</code> statement
      */
-    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeMatchedSetStep<R> whenMatchedThenUpdate();
 }

@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.ORACLE;
@@ -68,14 +69,14 @@ public interface MergeMatchedSetStep<R extends Record> {
      * Set values for <code>UPDATE</code> in the <code>MERGE</code> statement's
      * <code>WHEN MATCHED</code> clause
      */
-    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <T> MergeMatchedSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set values for <code>UPDATE</code> in the <code>MERGE</code> statement's
      * <code>WHEN MATCHED</code> clause
      */
-    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <T> MergeMatchedSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
@@ -86,6 +87,6 @@ public interface MergeMatchedSetStep<R extends Record> {
      * types. Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>
      */
-    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeMatchedSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 }

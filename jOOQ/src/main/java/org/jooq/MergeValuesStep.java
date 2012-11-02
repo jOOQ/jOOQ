@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -63,19 +64,19 @@ public interface MergeValuesStep<R extends Record> {
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> values(Object... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> values(Field<?>... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> values(Collection<?> values);
 
     /**
@@ -88,6 +89,6 @@ public interface MergeValuesStep<R extends Record> {
      * {@link FactoryOperations#mergeInto(Table, Field...)} or
      * {@link FactoryOperations#mergeInto(Table, Collection)}
      */
-    @Support({ DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> select(Select<?> select);
 }

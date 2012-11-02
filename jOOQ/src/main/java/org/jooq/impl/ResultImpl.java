@@ -1026,6 +1026,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final ResultSet intoResultSet() {
+        return new ResultSetImpl(this);
+    }
+
+    @Override
     public final <E> List<E> map(RecordMapper<? super R, E> mapper) {
         List<E> result = new ArrayList<E>();
 
@@ -1034,11 +1039,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
 
         return result;
-    }
-
-    @Override
-    public final ResultSet intoResultSet() {
-        return new ResultSetImpl(this);
     }
 
     @Override

@@ -39,6 +39,8 @@ package org.jooq;
 import java.beans.ConstructorProperties;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Proxy;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -540,6 +542,38 @@ public interface Record extends FieldProvider, Attachable {
      * @param table The table type.
      */
     <R extends Record> R into(Table<R> table);
+
+    /**
+     * Generate an in-memory JDBC {@link ResultSet} containing the data of this
+     * <code>Record</code>.
+     * <p>
+     * Use this as an adapter for JDBC-compliant code that expects a
+     * {@link ResultSet} to operate on, rather than a jOOQ {@link Result}. The
+     * returned <code>ResultSet</code> allows for the following behaviour
+     * according to the JDBC specification:
+     * <ul>
+     * <li> {@link ResultSet#CLOSE_CURSORS_AT_COMMIT}: The cursors (i.e.
+     * {@link Statement} object) are no longer available</li>
+     * <li> {@link ResultSet#CONCUR_READ_ONLY}: You cannot update the database
+     * through this <code>ResultSet</code>, as the underlying {@link Result}
+     * object does not hold any open database refences anymore</li>
+     * <li> {@link ResultSet#FETCH_FORWARD}: The fetch direction is forward only,
+     * and cannot be changed</li>
+     * <li> {@link ResultSet#TYPE_SCROLL_INSENSITIVE}: You can use any of the
+     * <code>ResultSet</code>'s scrolling methods, e.g. {@link ResultSet#next()}
+     * or {@link ResultSet#previous()}, etc.</li>
+     * </ul>
+     * <p>
+     * You may use {@link FactoryOperations#fetch(ResultSet)} to unwind this
+     * wrapper again.
+     * <p>
+     * This is the same as creating a new {@link Result} with this
+     * <code>Record</code> only, and then calling {@link Result#intoResultSet()}
+     * on that <code>Result</code>
+     *
+     * @return A wrapper JDBC <code>ResultSet</code>
+     */
+    ResultSet intoResultSet();
 
     /**
      * Map this record into a custom mapper callback

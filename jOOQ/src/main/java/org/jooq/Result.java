@@ -675,14 +675,6 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     <H extends RecordHandler<R>> H into(H handler);
 
     /**
-     * Map results into a custom mapper callback
-     *
-     * @param mapper The mapper callback
-     * @return The custom mapped records
-     */
-    <E> List<E> map(RecordMapper<? super R, E> mapper);
-
-    /**
      * Generate an in-memory JDBC {@link ResultSet} containing the data of this
      * <code>Result</code>.
      * <p>
@@ -709,6 +701,14 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return A wrapper JDBC <code>ResultSet</code>
      */
     ResultSet intoResultSet();
+
+    /**
+     * Map results into a custom mapper callback
+     *
+     * @param mapper The mapper callback
+     * @return The custom mapped records
+     */
+    <E> List<E> map(RecordMapper<? super R, E> mapper);
 
     /**
      * Sort this result by one of its contained fields.

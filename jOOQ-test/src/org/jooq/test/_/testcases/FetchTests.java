@@ -69,6 +69,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.jooq.Cursor;
 import org.jooq.Field;
+import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -1518,48 +1519,100 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 //        assertEquals(result, result2);
 
         // Check the data correctness
-        ResultSet rs = result.intoResultSet();
-        check0(rs);
+        ResultSet rs1 = result.intoResultSet();
+        check0(rs1);
 
-        assertTrue(rs.next());
-        check1(rs);
+        assertTrue(rs1.next());
+        check1(rs1, false);
 
-        assertFalse(rs.previous());
-        check0(rs);
+        assertFalse(rs1.previous());
+        check0(rs1);
 
-        assertFalse(rs.absolute(0));
-        check0(rs);
+        assertFalse(rs1.absolute(0));
+        check0(rs1);
 
-        assertTrue(rs.relative(1));
-        check1(rs);
+        assertTrue(rs1.relative(1));
+        check1(rs1, false);
 
-        assertFalse(rs.relative(-1));
-        check0(rs);
+        assertFalse(rs1.relative(-1));
+        check0(rs1);
 
-        assertTrue(rs.absolute(-4));
-        check1(rs);
+        assertTrue(rs1.absolute(-4));
+        check1(rs1, false);
 
-        assertFalse(rs.absolute(-5));
-        check0(rs);
+        assertFalse(rs1.absolute(-5));
+        check0(rs1);
 
-        assertTrue(rs.absolute(1));
-        check1(rs);
+        assertTrue(rs1.absolute(1));
+        check1(rs1, false);
 
-        rs.beforeFirst();
-        check0(rs);
+        rs1.beforeFirst();
+        check0(rs1);
 
-        assertTrue(rs.last());
-        check4(rs);
+        assertTrue(rs1.last());
+        check4(rs1);
 
-        rs.afterLast();
-        check5(rs);
+        rs1.afterLast();
+        check5(rs1);
 
-        assertTrue(rs.previous());
-        check4(rs);
+        assertTrue(rs1.previous());
+        check4(rs1);
 
-        assertFalse(rs.relative(1));
-        check5(rs);
+        assertFalse(rs1.relative(1));
+        check5(rs1);
 
+        checkMetaData(result, rs1);
+
+        // [#1923] Record.intoResultSet() is similar
+        // -----------------------------------------
+        B book = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
+
+        ResultSet rs2 = book.intoResultSet();
+        check0(rs2);
+
+        assertTrue(rs2.next());
+        check1(rs2, true);
+
+        assertFalse(rs2.previous());
+        check0(rs2);
+
+        assertFalse(rs2.absolute(0));
+        check0(rs2);
+
+        assertTrue(rs2.relative(1));
+        check1(rs2, true);
+
+        assertFalse(rs2.relative(-1));
+        check0(rs2);
+
+        assertTrue(rs2.absolute(-1));
+        check1(rs2, true);
+
+        assertFalse(rs2.absolute(-2));
+        check0(rs2);
+
+        assertTrue(rs2.absolute(1));
+        check1(rs2, true);
+
+        rs2.beforeFirst();
+        check0(rs2);
+
+        assertTrue(rs2.last());
+        check1(rs2, true);
+
+        rs2.afterLast();
+        check5(rs2);
+
+        assertTrue(rs2.previous());
+        check1(rs2, true);
+
+        assertFalse(rs2.relative(1));
+        check5(rs2);
+
+        checkMetaData(book, rs2);
+    }
+
+    private void checkMetaData(FieldProvider result, ResultSet rs) throws SQLException {
         // Check the meta data
         ResultSetMetaData meta = rs.getMetaData();
         assertEquals(result.getFields().size(), meta.getColumnCount());
@@ -1630,12 +1683,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         catch (SQLException expected) {}
     }
 
-    private void check1(ResultSet rs) throws SQLException {
+    private void check1(ResultSet rs, boolean last) throws SQLException {
         assertFalse(rs.isClosed());
         assertFalse(rs.isBeforeFirst());
         assertFalse(rs.isAfterLast());
         assertTrue(rs.isFirst());
-        assertFalse(rs.isLast());
+        assertEquals(last, rs.isLast());
         assertEquals(1, rs.getRow());
 
         assertEquals(1, rs.getInt(1));

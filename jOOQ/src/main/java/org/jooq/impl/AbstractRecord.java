@@ -51,6 +51,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -662,6 +663,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         catch (Exception e) {
             throw new MappingException("An error ocurred when mapping record to " + table, e);
         }
+    }
+
+    @Override
+    public final ResultSet intoResultSet() {
+        ResultImpl<Record> result = new ResultImpl<Record>(getConfiguration(), getFieldProvider());
+        result.add(this);
+        return result.intoResultSet();
     }
 
     @Override

@@ -5,7 +5,7 @@
         <url>jdbc:cubrid:localhost:33000:test:::</url>
         <schema>DBA</schema>
         <user>dba</user>
-        <password>test</password>
+        <password></password>
     </jdbc>
     <generator>
         <name>org.jooq.util.DefaultGenerator</name>

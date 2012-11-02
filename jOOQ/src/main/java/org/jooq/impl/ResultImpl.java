@@ -521,8 +521,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
         String result = format0(value);
 
-        if (StringUtils.containsAny(result, ',', ';', '\t', '"', '\n', '\r', '\'')) {
-            return "\"" + result.replace("\"", "\"\"") + "\"";
+        if (StringUtils.containsAny(result, ',', ';', '\t', '"', '\n', '\r', '\'', '\\')) {
+            return "\"" + result.replace("\\", "\\\\").replace("\"", "\"\"") + "\"";
         }
         else {
             return result;

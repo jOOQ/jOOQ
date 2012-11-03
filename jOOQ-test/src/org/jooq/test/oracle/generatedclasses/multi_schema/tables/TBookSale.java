@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = 449530112;
+	private static final long serialVersionUID = 848140511;
 
 	/**
-	 * The singleton instance of MULTI_SCHEMA.T_BOOK_SALE
+	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK_SALE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale T_BOOK_SALE = new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale();
 
@@ -71,23 +71,33 @@ public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> getMainKey() {
 		return org.jooq.test.oracle.generatedclasses.multi_schema.Keys.PK_T_BOOK_SALE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord>>asList(org.jooq.test.oracle.generatedclasses.multi_schema.Keys.PK_T_BOOK_SALE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.multi_schema.Keys.FK_T_BOOK_TO_BOOK_STORE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale as(java.lang.String alias) {
 		return new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale(alias);

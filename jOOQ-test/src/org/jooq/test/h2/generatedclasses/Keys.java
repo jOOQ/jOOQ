@@ -49,11 +49,14 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record, org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> FK_X_TEST_CASE_85 = ForeignKeys0.FK_X_TEST_CASE_85;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings("hiding")
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = createIdentity(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.h2.generatedclasses.tables.TIdentityPk.ID);
 		public static org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> IDENTITY_T_IDENTITY = createIdentity(org.jooq.test.h2.generatedclasses.tables.TIdentity.T_IDENTITY, org.jooq.test.h2.generatedclasses.tables.TIdentity.ID);
@@ -61,7 +64,6 @@ public class Keys {
 		public static org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.T_877Record, java.lang.Integer> IDENTITY_T_877 = createIdentity(org.jooq.test.h2.generatedclasses.tables.T_877.T_877, org.jooq.test.h2.generatedclasses.tables.T_877.ID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> PK_T_IDENTITY_PK = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.h2.generatedclasses.tables.TIdentityPk.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> PK_T_DATES = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES, org.jooq.test.h2.generatedclasses.tables.TDates.ID);
@@ -82,7 +84,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record> PK_X_TEST_CASE_85 = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85, org.jooq.test.h2.generatedclasses.tables.XTestCase_85.ID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_AUTHOR_ID = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_T_AUTHOR, org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID);
 		public static final org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_T_AUTHOR, org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID);

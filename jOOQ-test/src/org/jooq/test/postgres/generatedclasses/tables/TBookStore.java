@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1966886682;
+	private static final long serialVersionUID = 1175669421;
 
 	/**
-	 * The singleton instance of public.t_book_store
+	 * The singleton instance of <code>public.t_book_store</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TBookStore T_BOOK_STORE = new org.jooq.test.postgres.generatedclasses.tables.TBookStore();
 
@@ -37,17 +37,25 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.p
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.UK_T_BOOK_STORE_NAME;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.UK_T_BOOK_STORE_NAME);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TBookStore as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.TBookStore(alias);

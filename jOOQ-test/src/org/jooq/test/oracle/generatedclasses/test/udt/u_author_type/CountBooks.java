@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.u_author_type;
 @java.lang.SuppressWarnings("all")
 public class CountBooks extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -947470958;
+	private static final long serialVersionUID = -1901790590;
 
 
 	/**
@@ -40,9 +40,7 @@ public class CountBooks extends org.jooq.impl.AbstractRoutine<java.math.BigDecim
 	}
 
 	/**
-	 * Set the <code>SELF</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>SELF</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setSelf(org.jooq.Field<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> field) {
 		setField(SELF, field);

@@ -23,6 +23,9 @@ public class T_725LobTestDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.
 		super(org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest object) {
 		return object.getId();
@@ -36,7 +39,7 @@ public class T_725LobTestDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.
 	}
 
 	/**
-	 * Fetch a unique that has <code>ID = value</code>
+	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest fetchOneById(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST.ID, value);

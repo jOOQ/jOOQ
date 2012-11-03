@@ -8,6 +8,7 @@ package org.jooq.test.postgres.generatedclasses.enums;
  */
 @java.lang.SuppressWarnings("all")
 public enum UBookStatus implements org.jooq.EnumType {
+
 	ON_STOCK("ON STOCK"),
 
 	ORDERED("ORDERED"),
@@ -22,11 +23,17 @@ public enum UBookStatus implements org.jooq.EnumType {
 		this.literal = literal;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getName() {
 		return "u_book_status";
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getLiteral() {
 		return literal;

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 999693907;
+	private static final long serialVersionUID = 271247587;
 
 
 	/**
@@ -40,9 +40,7 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal>
 	}
 
 	/**
-	 * Set the <code>N</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>N</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setN(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(N, field);

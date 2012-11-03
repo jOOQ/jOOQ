@@ -194,4 +194,21 @@ class GenerationUtil {
 
         throw new SQLDialectNotSupportedException("getArrayBaseType() is not supported for dialect " + dialect);
     }
+
+    /**
+     * Generate a range between two bounds
+     *
+     * @param from The lower bound (inclusive)
+     * @param to The upper bound (inclusive)
+     * @return A range from <code>from</code> to <code>to</code>
+     */
+    public static Integer[] range(Integer from, Integer to) {
+        Integer[] result = new Integer[to - from + 1];
+
+        for (int i = from; i <= to; i++) {
+            result[i - from] = i;
+        }
+
+        return result;
+    }
 }

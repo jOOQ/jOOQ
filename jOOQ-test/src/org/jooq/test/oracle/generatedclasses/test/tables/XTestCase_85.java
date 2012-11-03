@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 738213758;
+	private static final long serialVersionUID = -1223989939;
 
 	/**
-	 * The singleton instance of TEST.X_TEST_CASE_85
+	 * The singleton instance of <code>TEST.X_TEST_CASE_85</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85 X_TEST_CASE_85 = new org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85();
 
@@ -61,23 +61,33 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record> getMainKey() {
 		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_X_TEST_CASE_85;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_X_TEST_CASE_85);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record, ?>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.FK_X_TEST_CASE_85);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85 as(java.lang.String alias) {
 		return new org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85(alias);

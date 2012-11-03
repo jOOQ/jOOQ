@@ -11,10 +11,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 897320989;
+	private static final long serialVersionUID = 813238252;
 
 	/**
-	 * The singleton instance of TEST.T_BOOK
+	 * The singleton instance of <code>TEST.T_BOOK</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TBook T_BOOK = new org.jooq.test.oracle.generatedclasses.test.tables.TBook();
 
@@ -99,23 +99,33 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> getMainKey() {
 		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_BOOK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_BOOK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.oracle.generatedclasses.test.Keys.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.oracle.generatedclasses.test.Keys.FK_T_BOOK_LANGUAGE_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.TBook as(java.lang.String alias) {
 		return new org.jooq.test.oracle.generatedclasses.test.tables.TBook(alias);

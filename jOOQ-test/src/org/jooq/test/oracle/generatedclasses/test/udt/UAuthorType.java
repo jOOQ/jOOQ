@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings("all")
 public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> implements org.jooq.Package {
 
-	private static final long serialVersionUID = 792173116;
+	private static final long serialVersionUID = 1787790851;
 
 	/**
-	 * The singleton instance of TEST.U_AUTHOR_TYPE
+	 * The singleton instance of <code>TEST.U_AUTHOR_TYPE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType U_AUTHOR_TYPE = new org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType();
 
@@ -40,10 +40,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, U_AUTHOR_TYPE);
 
 	/**
-	 * Call TEST.U_AUTHOR_TYPE.COUNT_BOOKS
-	 *
-	 * @param self
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS</code>
 	 */
 	public static java.math.BigDecimal countBooks(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord self) {
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.CountBooks f = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.CountBooks();
@@ -54,9 +51,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Get TEST.U_AUTHOR_TYPE.COUNT_BOOKS as a field
-	 *
-	 * @param self
+	 * Get <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> countBooks(org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord self) {
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.CountBooks f = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.CountBooks();
@@ -66,9 +61,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Get TEST.U_AUTHOR_TYPE.COUNT_BOOKS as a field
-	 *
-	 * @param self
+	 * Get <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> countBooks(org.jooq.Field<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> self) {
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.CountBooks f = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.CountBooks();
@@ -78,10 +71,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Call TEST.U_AUTHOR_TYPE.GET_AUTHOR
-	 *
-	 * @param pId
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.U_AUTHOR_TYPE.GET_AUTHOR</code>
 	 */
 	public static org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord getAuthor(org.jooq.Configuration configuration, java.lang.Number pId) {
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor f = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor();
@@ -92,9 +82,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Get TEST.U_AUTHOR_TYPE.GET_AUTHOR as a field
-	 *
-	 * @param pId
+	 * Get <code>TEST.U_AUTHOR_TYPE.GET_AUTHOR</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> getAuthor(java.lang.Number pId) {
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor f = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor();
@@ -104,9 +92,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Get TEST.U_AUTHOR_TYPE.GET_AUTHOR as a field
-	 *
-	 * @param pId
+	 * Get <code>TEST.U_AUTHOR_TYPE.GET_AUTHOR</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> getAuthor(org.jooq.Field<? extends java.lang.Number> pId) {
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor f = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetAuthor();
@@ -116,13 +102,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Call TEST.U_AUTHOR_TYPE.GET_BOOKS
-	 *
-	 * @param self IN OUT parameter
-	 * @param book1 OUT parameter
-	 * @param book2 OUT parameter
-	 * @param books OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.U_AUTHOR_TYPE.GET_BOOKS</code>
 	 */
 	public static org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks getBooks(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord self) {
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks p = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks();
@@ -133,10 +113,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Call TEST.U_AUTHOR_TYPE.LOAD
-	 *
-	 * @param self IN OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.U_AUTHOR_TYPE.LOAD</code>
 	 */
 	public static org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord load(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord self) {
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.Load p = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.Load();
@@ -147,13 +124,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Call TEST.U_AUTHOR_TYPE.NEW_AUTHOR
-	 *
-	 * @param pId IN parameter
-	 * @param pFirstName IN parameter
-	 * @param pLastName IN parameter
-	 * @param pAuthor OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.U_AUTHOR_TYPE.NEW_AUTHOR</code>
 	 */
 	public static org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord newAuthor(org.jooq.Configuration configuration, java.lang.Number pId, java.lang.String pFirstName, java.lang.String pLastName) {
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.NewAuthor p = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.NewAuthor();

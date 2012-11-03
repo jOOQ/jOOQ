@@ -9,9 +9,12 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings("all")
 public class UInvalidTableRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UInvalidTableRecord> {
 
-	private static final long serialVersionUID = -833340431;
+	private static final long serialVersionUID = -1494515633;
 
 
+	/**
+	 * Create a new <code>TEST.U_INVALID_TABLE</code> record
+	 */
 	public UInvalidTableRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.udt.UInvalidTable.U_INVALID_TABLE);
 	}

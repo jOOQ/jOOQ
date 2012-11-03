@@ -36,6 +36,7 @@
 package org.jooq.util;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -85,6 +86,16 @@ public interface GeneratorStrategy {
     String getJavaIdentifier(Definition definition);
 
     /**
+     * @see #getJavaIdentifier(Definition)
+     */
+    List<String> getJavaIdentifiers(Collection<? extends Definition> definitions);
+
+    /**
+     * @see #getJavaIdentifier(Definition)
+     */
+    List<String> getJavaIdentifiers(Definition... definitions);
+
+    /**
      * This is applied to definitions that can result in singleton static and
      * instance members. For instance, the singleton instance of a
      * {@link TableDefinition} is a java identifier
@@ -92,6 +103,16 @@ public interface GeneratorStrategy {
      * @return The Java identifier representing this object, e.g. [my_table]
      */
     String getFullJavaIdentifier(Definition definition);
+
+    /**
+     * @see #getFullJavaIdentifier(Definition)
+     */
+    List<String> getFullJavaIdentifiers(Collection<? extends Definition> definitions);
+
+    /**
+     * @see #getFullJavaIdentifier(Definition)
+     */
+    List<String> getFullJavaIdentifiers(Definition... definitions);
 
     /**
      * This is applied to definitions that can result in setters of a container.

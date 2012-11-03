@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1536728010;
+	private static final long serialVersionUID = 1431191498;
 
 	/**
-	 * The singleton instance of public
+	 * The singleton instance of <code>public</code>
 	 */
 	public static final Public PUBLIC = new Public();
 
@@ -25,7 +25,8 @@ public class Public extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
-		return java.util.Arrays.<org.jooq.Sequence<?>>asList(org.jooq.test.postgres.generatedclasses.Sequences.S_AUTHOR_ID);
+		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
+			org.jooq.test.postgres.generatedclasses.Sequences.S_AUTHOR_ID);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings("all")
 public class UBookTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> {
 
-	private static final long serialVersionUID = -954145931;
+	private static final long serialVersionUID = 272748381;
 
 
 	/**
@@ -40,6 +40,9 @@ public class UBookTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.o
 		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UBookType.TITLE);
 	}
 
+	/**
+	 * Create a new <code>TEST.U_BOOK_TYPE</code> record
+	 */
 	public UBookTypeRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE);
 	}

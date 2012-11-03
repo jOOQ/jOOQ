@@ -23,6 +23,9 @@ public class TArraysDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generated
 		super(org.jooq.test.h2.generatedclasses.tables.TArrays.T_ARRAYS, org.jooq.test.h2.generatedclasses.tables.pojos.TArrays.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.h2.generatedclasses.tables.pojos.TArrays object) {
 		return object.getId();
@@ -36,7 +39,7 @@ public class TArraysDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generated
 	}
 
 	/**
-	 * Fetch a unique that has <code>ID = value</code>
+	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.TArrays fetchOneById(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TArrays.ID, value);

@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -502078055;
+	private static final long serialVersionUID = 1606914784;
 
 	/**
-	 * The singleton instance of public.t_booleans
+	 * The singleton instance of <code>public.t_booleans</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TBooleans T_BOOLEANS = new org.jooq.test.postgres.generatedclasses.tables.TBooleans();
 
@@ -89,17 +89,25 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.po
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_BOOLEANS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_BOOLEANS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TBooleans as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.TBooleans(alias);

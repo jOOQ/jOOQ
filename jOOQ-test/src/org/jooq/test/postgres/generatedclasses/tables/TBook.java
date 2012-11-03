@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 476311199;
+	private static final long serialVersionUID = 1550609782;
 
 	/**
-	 * The singleton instance of public.t_book
+	 * The singleton instance of <code>public.t_book</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TBook T_BOOK = new org.jooq.test.postgres.generatedclasses.tables.TBook();
 
@@ -102,23 +102,33 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgr
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_BOOK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_BOOK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.postgres.generatedclasses.Keys.T_BOOK__FK_T_BOOK_AUTHOR_ID, org.jooq.test.postgres.generatedclasses.Keys.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.postgres.generatedclasses.Keys.T_BOOK__FK_T_BOOK_LANGUAGE_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TBook as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.TBook(alias);

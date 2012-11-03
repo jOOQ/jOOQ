@@ -36,6 +36,9 @@
 package org.jooq.util;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -85,6 +88,12 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
             else {
                 sb.append(getFullJavaClassName(e.getContainer()));
             }
+        }
+
+        // Sequences
+        else if (definition instanceof SequenceDefinition) {
+            sb.append(getJavaPackageName(definition.getSchema()));
+            sb.append(".Sequences");
         }
 
         // Attributes, Parameters
@@ -178,4 +187,51 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
         return sb.toString();
     }
 
+    // -------------------------------------------------------------------------
+    // List methods
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final List<String> getJavaIdentifiers(Collection<? extends Definition> definitions) {
+        List<String> result = new ArrayList<String>();
+
+        for (Definition definition : nonNull(definitions)) {
+            result.add(getJavaIdentifier(definition));
+        }
+
+        return result;
+    }
+
+    @Override
+    public final List<String> getJavaIdentifiers(Definition... definitions) {
+        return getJavaIdentifiers(Arrays.asList(definitions));
+    }
+
+    @Override
+    public final List<String> getFullJavaIdentifiers(Collection<? extends Definition> definitions) {
+        List<String> result = new ArrayList<String>();
+
+        for (Definition definition : nonNull(definitions)) {
+            result.add(getFullJavaIdentifier(definition));
+        }
+
+        return result;
+    }
+
+    @Override
+    public final List<String> getFullJavaIdentifiers(Definition... definitions) {
+        return getFullJavaIdentifiers(Arrays.asList(definitions));
+    }
+
+    private static final <T> List<T> nonNull(Collection<? extends T> collection) {
+        List<T> result = new ArrayList<T>();
+
+        for (T t : collection) {
+            if (t != null) {
+                result.add(t);
+            }
+        }
+
+        return result;
+    }
 }

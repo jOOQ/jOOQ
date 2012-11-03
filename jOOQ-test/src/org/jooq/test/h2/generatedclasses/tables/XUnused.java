@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 811393596;
+	private static final long serialVersionUID = 3392587;
 
 	/**
-	 * The singleton instance of PUBLIC.X_UNUSED
+	 * The singleton instance of <code>PUBLIC.X_UNUSED</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.XUnused X_UNUSED = new org.jooq.test.h2.generatedclasses.tables.XUnused();
 
@@ -127,19 +127,26 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.g
 		super("X_UNUSED", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> getMainKey() {
 		return org.jooq.test.h2.generatedclasses.Keys.PK_X_UNUSED;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_X_UNUSED, org.jooq.test.h2.generatedclasses.Keys.UK_X_UNUSED_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.h2.generatedclasses.Keys.FK_X_UNUSED_SELF);
 	}

@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book_store", schema = "public")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = 336452757;
+	private static final long serialVersionUID = 1506330081;
 
 	/**
 	 * The table column <code>public.t_book_store.name</code>
@@ -31,7 +31,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * The table column <code>public.t_book_store.name</code>
 	 */
-	public java.util.List<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
+	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()
 			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
 			.where(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME)))

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings("all")
 public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord> {
 
-	private static final long serialVersionUID = -1127440869;
+	private static final long serialVersionUID = -1356055255;
 
 
 	/**
@@ -82,6 +82,9 @@ public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UStreetType.F_1326);
 	}
 
+	/**
+	 * Create a new <code>TEST.U_STREET_TYPE</code> record
+	 */
 	public UStreetTypeRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.udt.UStreetType.U_STREET_TYPE);
 	}

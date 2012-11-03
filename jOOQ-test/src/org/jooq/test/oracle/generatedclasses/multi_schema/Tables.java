@@ -27,7 +27,7 @@ public final class Tables {
 	public static final org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale T_BOOK_SALE = org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

@@ -25,6 +25,9 @@ public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedcl
 		super(org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.h2.generatedclasses.tables.pojos.TBook.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.h2.generatedclasses.tables.pojos.TBook object) {
 		return object.getId();
@@ -38,7 +41,7 @@ public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedcl
 	}
 
 	/**
-	 * Fetch a unique that has <code>ID = value</code>
+	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.TBook fetchOneById(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TBook.ID, value);

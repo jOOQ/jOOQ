@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1831176505;
+	private static final long serialVersionUID = 1459918940;
 
 	/**
-	 * The singleton instance of TEST.V_BOOK
+	 * The singleton instance of <code>TEST.V_BOOK</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.VBook V_BOOK = new org.jooq.test.oracle.generatedclasses.test.tables.VBook();
 
@@ -77,6 +77,9 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.VBook as(java.lang.String alias) {
 		return new org.jooq.test.oracle.generatedclasses.test.tables.VBook(alias);

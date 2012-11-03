@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_64_69", schema = "TEST")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -444273311;
+	private static final long serialVersionUID = 816838653;
 
 	/**
 	 * The table column <code>TEST.X_TEST_CASE_64_69.ID</code>
@@ -38,7 +38,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
+	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
 		return create()
 			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71.X_TEST_CASE_71)
 			.where(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, Short.class)))

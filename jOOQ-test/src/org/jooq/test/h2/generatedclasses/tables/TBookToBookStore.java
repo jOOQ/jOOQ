@@ -11,10 +11,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1271130478;
+	private static final long serialVersionUID = 260700843;
 
 	/**
-	 * The singleton instance of PUBLIC.T_BOOK_TO_BOOK_STORE
+	 * The singleton instance of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.h2.generatedclasses.tables.TBookToBookStore();
 
@@ -64,19 +64,26 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 		super("T_BOOK_TO_BOOK_STORE", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
 		return org.jooq.test.h2.generatedclasses.Keys.PK_B2BS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_B2BS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.h2.generatedclasses.Keys.FK_B2BS_BS_NAME, org.jooq.test.h2.generatedclasses.Keys.FK_B2BS_B_ID);
 	}

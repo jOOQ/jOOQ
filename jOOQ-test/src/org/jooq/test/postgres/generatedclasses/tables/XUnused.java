@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1916207950;
+	private static final long serialVersionUID = 2065268079;
 
 	/**
-	 * The singleton instance of public.x_unused
+	 * The singleton instance of <code>public.x_unused</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.XUnused X_UNUSED = new org.jooq.test.postgres.generatedclasses.tables.XUnused();
 
@@ -123,23 +123,33 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_X_UNUSED;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_X_UNUSED, org.jooq.test.postgres.generatedclasses.Keys.UK_X_UNUSED_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.postgres.generatedclasses.Keys.X_UNUSED__FK_X_UNUSED_SELF);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.XUnused as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.XUnused(alias);

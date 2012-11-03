@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 816211875;
+	private static final long serialVersionUID = -1009357128;
 
 	/**
-	 * The singleton instance of public.t_639_numbers_table
+	 * The singleton instance of <code>public.t_639_numbers_table</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = new org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable();
 
@@ -94,17 +94,25 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_639_NUMBERS_TABLE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_639_NUMBERS_TABLE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable(alias);

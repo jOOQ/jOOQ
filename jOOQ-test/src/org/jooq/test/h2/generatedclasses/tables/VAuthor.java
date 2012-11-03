@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -2137641361;
+	private static final long serialVersionUID = 1155693624;
 
 	/**
-	 * The singleton instance of PUBLIC.V_AUTHOR
+	 * The singleton instance of <code>PUBLIC.V_AUTHOR</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.VAuthor V_AUTHOR = new org.jooq.test.h2.generatedclasses.tables.VAuthor();
 

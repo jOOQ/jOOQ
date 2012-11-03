@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = 95760461;
+	private static final long serialVersionUID = -855597251;
 
 
 	/**
@@ -40,9 +40,7 @@ public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result
 	}
 
 	/**
-	 * Set the <code>book_ids</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>book_ids</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setBookIds(org.jooq.Field<java.lang.Integer[]> field) {
 		setField(BOOK_IDS, field);

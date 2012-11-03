@@ -46,11 +46,14 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> FK_X_UNUSED_SELF = ForeignKeys0.FK_X_UNUSED_SELF;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings({"hiding", "unchecked"})
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> PK_T_ARRAYS = createUniqueKey(org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS, org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR, org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ID);
@@ -71,7 +74,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> UK_X_UNUSED_ID = createUniqueKey(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED, org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> FK_T_BOOK_AUTHOR_ID = createForeignKey(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_AUTHOR, org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK, org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.AUTHOR_ID);
 		public static final org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_AUTHOR, org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK, org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CO_AUTHOR_ID);

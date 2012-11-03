@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = 606280889;
+	private static final long serialVersionUID = -964333944;
 
 	/**
-	 * The singleton instance of public.t_986_2
+	 * The singleton instance of <code>public.t_986_2</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.T_986_2 T_986_2 = new org.jooq.test.postgres.generatedclasses.tables.T_986_2();
 
@@ -43,12 +43,17 @@ public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record, ?>>asList(org.jooq.test.postgres.generatedclasses.Keys.T_986_2__FK_986);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.T_986_2 as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.T_986_2(alias);

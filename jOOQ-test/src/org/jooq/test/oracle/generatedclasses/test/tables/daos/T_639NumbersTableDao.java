@@ -23,6 +23,9 @@ public class T_639NumbersTableDao extends org.jooq.impl.DAOImpl<org.jooq.test.or
 		super(org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_639NumbersTable.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_639NumbersTable object) {
 		return object.getId();
@@ -36,7 +39,7 @@ public class T_639NumbersTableDao extends org.jooq.impl.DAOImpl<org.jooq.test.or
 	}
 
 	/**
-	 * Fetch a unique that has <code>ID = value</code>
+	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_639NumbersTable fetchOneById(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID, value);

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.Object> {
 
-	private static final long serialVersionUID = -232655886;
+	private static final long serialVersionUID = -481699130;
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_AUTHOR.ID</code>
@@ -38,7 +38,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> fetchTBookListByAuthorId() {
+	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> fetchTBookListByAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK)
 			.where(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.AUTHOR_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ID)))
@@ -50,7 +50,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
+	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK)
 			.where(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ID)))

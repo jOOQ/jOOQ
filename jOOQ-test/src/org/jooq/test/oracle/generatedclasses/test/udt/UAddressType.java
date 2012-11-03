@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings("all")
 public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -655178409;
+	private static final long serialVersionUID = 336457732;
 
 	/**
-	 * The singleton instance of TEST.U_ADDRESS_TYPE
+	 * The singleton instance of <code>TEST.U_ADDRESS_TYPE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.udt.UAddressType U_ADDRESS_TYPE = new org.jooq.test.oracle.generatedclasses.test.udt.UAddressType();
 

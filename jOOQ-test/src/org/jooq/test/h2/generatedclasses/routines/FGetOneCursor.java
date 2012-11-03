@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = 1230793621;
+	private static final long serialVersionUID = -1500087675;
 
 
 	/**
@@ -43,9 +43,7 @@ public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result
 	}
 
 	/**
-	 * Set the <code>P2</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>P2</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP2(org.jooq.Field<java.lang.Object[]> field) {
 		setField(P2, field);

@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -224363466;
+	private static final long serialVersionUID = -568952793;
 
 	/**
-	 * The singleton instance of public.t_book_to_book_store
+	 * The singleton instance of <code>public.t_book_to_book_store</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore();
 
@@ -63,23 +63,33 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_B2BS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_B2BS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.postgres.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_BS_NAME, org.jooq.test.postgres.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_B_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore(alias);

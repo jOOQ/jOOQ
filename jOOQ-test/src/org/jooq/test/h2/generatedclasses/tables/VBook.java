@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 1001789228;
+	private static final long serialVersionUID = 1490142855;
 
 	/**
-	 * The singleton instance of PUBLIC.V_BOOK
+	 * The singleton instance of <code>PUBLIC.V_BOOK</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.VBook V_BOOK = new org.jooq.test.h2.generatedclasses.tables.VBook();
 

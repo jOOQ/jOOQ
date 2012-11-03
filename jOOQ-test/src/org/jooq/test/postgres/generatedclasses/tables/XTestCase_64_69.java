@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -1761475285;
+	private static final long serialVersionUID = 368448890;
 
 	/**
-	 * The singleton instance of public.x_test_case_64_69
+	 * The singleton instance of <code>public.x_test_case_64_69</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = new org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69();
 
@@ -50,23 +50,33 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_X_TEST_CASE_64_69;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_X_TEST_CASE_64_69);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record, ?>>asList(org.jooq.test.postgres.generatedclasses.Keys.X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69 as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69(alias);

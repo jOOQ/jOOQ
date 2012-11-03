@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1251323013;
+	private static final long serialVersionUID = 1612625924;
 
 	/**
-	 * The singleton instance of public.t_language
+	 * The singleton instance of <code>public.t_language</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TLanguage T_LANGUAGE = new org.jooq.test.postgres.generatedclasses.tables.TLanguage();
 
@@ -54,17 +54,25 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.po
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_LANGUAGE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_LANGUAGE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TLanguage as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.TLanguage(alias);

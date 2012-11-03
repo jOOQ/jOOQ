@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 421042384;
+	private static final long serialVersionUID = -1582538736;
 
 
 	/**
@@ -58,9 +58,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>p1</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>p1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP1(org.jooq.Field<java.lang.Integer> field) {
 		setField(P1, field);
@@ -74,9 +72,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>p2</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>p2</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP2(org.jooq.Field<java.lang.Integer> field) {
 		setField(P2, field);
@@ -90,9 +86,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>p3</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>p3</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP3(org.jooq.Field<java.lang.Integer> field) {
 		setField(P3, field);
@@ -106,9 +100,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>p4</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>p4</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP4(org.jooq.Field<java.lang.Integer> field) {
 		setField(P4, field);

@@ -13,7 +13,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_LANGUAGE", schema = "TEST")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1655688567;
+	private static final long serialVersionUID = -1619814701;
 
 	/**
 	 * The language ISO code
@@ -85,7 +85,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> fetchTBookList() {
+	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> fetchTBookList() {
 		return create()
 			.selectFrom(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK)
 			.where(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.LANGUAGE_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.ID)))

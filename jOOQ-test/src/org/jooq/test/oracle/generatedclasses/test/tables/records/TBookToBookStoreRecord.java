@@ -15,7 +15,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1086719117;
+	private static final long serialVersionUID = 1587408335;
 
 	/**
 	 * The book store name
@@ -59,7 +59,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * REFERENCES TEST.T_BOOK_STORE (NAME)
 	 * </pre></code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> fetchTBookSaleList() {
+	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> fetchTBookSaleList() {
 		return create()
 			.selectFrom(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE)
 			.where(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_STORE_NAME.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)))

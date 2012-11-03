@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 1176099919;
+	private static final long serialVersionUID = 948742898;
 
 	/**
-	 * The singleton instance of public.t_triggers
+	 * The singleton instance of <code>public.t_triggers</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TTriggers T_TRIGGERS = new org.jooq.test.postgres.generatedclasses.tables.TTriggers();
 
@@ -49,22 +49,33 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.po
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.test.postgres.generatedclasses.Keys.IDENTITY_T_TRIGGERS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_TRIGGERS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_TRIGGERS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TTriggers as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.TTriggers(alias);

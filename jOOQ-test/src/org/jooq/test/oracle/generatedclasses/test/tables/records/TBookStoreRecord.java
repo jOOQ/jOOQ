@@ -13,7 +13,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_BOOK_STORE", schema = "TEST")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = -699851888;
+	private static final long serialVersionUID = 1607710878;
 
 	/**
 	 * The books store name
@@ -33,7 +33,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * The books store name
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
+	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()
 			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
 			.where(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE.NAME)))

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 628584583;
+	private static final long serialVersionUID = -278641273;
 
 
 	/**
@@ -2434,9 +2434,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F000</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F000</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF000(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F000, field);
@@ -2450,9 +2448,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F001</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F001</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF001(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F001, field);
@@ -2466,9 +2462,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F002</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F002</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF002(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F002, field);
@@ -2482,9 +2476,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F003</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F003</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF003(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F003, field);
@@ -2498,9 +2490,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F004</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F004</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF004(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F004, field);
@@ -2514,9 +2504,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F005</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F005</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF005(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F005, field);
@@ -2530,9 +2518,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F006</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F006</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF006(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F006, field);
@@ -2546,9 +2532,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F007</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F007</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF007(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F007, field);
@@ -2562,9 +2546,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F008</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F008</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF008(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F008, field);
@@ -2578,9 +2560,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F009</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F009</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF009(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F009, field);
@@ -2594,9 +2574,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F010</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F010</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF010(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F010, field);
@@ -2610,9 +2588,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F011</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F011</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF011(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F011, field);
@@ -2626,9 +2602,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F012</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F012</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF012(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F012, field);
@@ -2642,9 +2616,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F013</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F013</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF013(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F013, field);
@@ -2658,9 +2630,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F014</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F014</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF014(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F014, field);
@@ -2674,9 +2644,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F015</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F015</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF015(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F015, field);
@@ -2690,9 +2658,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F016</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F016</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF016(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F016, field);
@@ -2706,9 +2672,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F017</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F017</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF017(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F017, field);
@@ -2722,9 +2686,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F018</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F018</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF018(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F018, field);
@@ -2738,9 +2700,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F019</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F019</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF019(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F019, field);
@@ -2754,9 +2714,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F020</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F020</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF020(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F020, field);
@@ -2770,9 +2728,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F021</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F021</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF021(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F021, field);
@@ -2786,9 +2742,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F022</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F022</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF022(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F022, field);
@@ -2802,9 +2756,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F023</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F023</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF023(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F023, field);
@@ -2818,9 +2770,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F024</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F024</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF024(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F024, field);
@@ -2834,9 +2784,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F025</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F025</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF025(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F025, field);
@@ -2850,9 +2798,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F026</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F026</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF026(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F026, field);
@@ -2866,9 +2812,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F027</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F027</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF027(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F027, field);
@@ -2882,9 +2826,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F028</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F028</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF028(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F028, field);
@@ -2898,9 +2840,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F029</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F029</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF029(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F029, field);
@@ -2914,9 +2854,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F030</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F030</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF030(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F030, field);
@@ -2930,9 +2868,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F031</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F031</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF031(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F031, field);
@@ -2946,9 +2882,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F032</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F032</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF032(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F032, field);
@@ -2962,9 +2896,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F033</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F033</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF033(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F033, field);
@@ -2978,9 +2910,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F034</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F034</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF034(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F034, field);
@@ -2994,9 +2924,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F035</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F035</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF035(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F035, field);
@@ -3010,9 +2938,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F036</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F036</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF036(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F036, field);
@@ -3026,9 +2952,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F037</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F037</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF037(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F037, field);
@@ -3042,9 +2966,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F038</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F038</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF038(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F038, field);
@@ -3058,9 +2980,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F039</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F039</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF039(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F039, field);
@@ -3074,9 +2994,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F040</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F040</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF040(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F040, field);
@@ -3090,9 +3008,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F041</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F041</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF041(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F041, field);
@@ -3106,9 +3022,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F042</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F042</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF042(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F042, field);
@@ -3122,9 +3036,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F043</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F043</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF043(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F043, field);
@@ -3138,9 +3050,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F044</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F044</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF044(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F044, field);
@@ -3154,9 +3064,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F045</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F045</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF045(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F045, field);
@@ -3170,9 +3078,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F046</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F046</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF046(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F046, field);
@@ -3186,9 +3092,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F047</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F047</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF047(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F047, field);
@@ -3202,9 +3106,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F048</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F048</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF048(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F048, field);
@@ -3218,9 +3120,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F049</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F049</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF049(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F049, field);
@@ -3234,9 +3134,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F050</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F050</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF050(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F050, field);
@@ -3250,9 +3148,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F051</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F051</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF051(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F051, field);
@@ -3266,9 +3162,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F052</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F052</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF052(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F052, field);
@@ -3282,9 +3176,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F053</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F053</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF053(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F053, field);
@@ -3298,9 +3190,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F054</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F054</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF054(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F054, field);
@@ -3314,9 +3204,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F055</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F055</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF055(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F055, field);
@@ -3330,9 +3218,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F056</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F056</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF056(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F056, field);
@@ -3346,9 +3232,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F057</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F057</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF057(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F057, field);
@@ -3362,9 +3246,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F058</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F058</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF058(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F058, field);
@@ -3378,9 +3260,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F059</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F059</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF059(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F059, field);
@@ -3394,9 +3274,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F060</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F060</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF060(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F060, field);
@@ -3410,9 +3288,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F061</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F061</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF061(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F061, field);
@@ -3426,9 +3302,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F062</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F062</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF062(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F062, field);
@@ -3442,9 +3316,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F063</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F063</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF063(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F063, field);
@@ -3458,9 +3330,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F064</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F064</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF064(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F064, field);
@@ -3474,9 +3344,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F065</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F065</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF065(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F065, field);
@@ -3490,9 +3358,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F066</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F066</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF066(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F066, field);
@@ -3506,9 +3372,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F067</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F067</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF067(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F067, field);
@@ -3522,9 +3386,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F068</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F068</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF068(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F068, field);
@@ -3538,9 +3400,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F069</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F069</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF069(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F069, field);
@@ -3554,9 +3414,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F070</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F070</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF070(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F070, field);
@@ -3570,9 +3428,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F071</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F071</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF071(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F071, field);
@@ -3586,9 +3442,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F072</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F072</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF072(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F072, field);
@@ -3602,9 +3456,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F073</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F073</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF073(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F073, field);
@@ -3618,9 +3470,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F074</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F074</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF074(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F074, field);
@@ -3634,9 +3484,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F075</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F075</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF075(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F075, field);
@@ -3650,9 +3498,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F076</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F076</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF076(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F076, field);
@@ -3666,9 +3512,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F077</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F077</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF077(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F077, field);
@@ -3682,9 +3526,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F078</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F078</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF078(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F078, field);
@@ -3698,9 +3540,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F079</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F079</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF079(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F079, field);
@@ -3714,9 +3554,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F080</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F080</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF080(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F080, field);
@@ -3730,9 +3568,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F081</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F081</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF081(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F081, field);
@@ -3746,9 +3582,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F082</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F082</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF082(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F082, field);
@@ -3762,9 +3596,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F083</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F083</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF083(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F083, field);
@@ -3778,9 +3610,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F084</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F084</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF084(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F084, field);
@@ -3794,9 +3624,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F085</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F085</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF085(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F085, field);
@@ -3810,9 +3638,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F086</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F086</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF086(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F086, field);
@@ -3826,9 +3652,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F087</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F087</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF087(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F087, field);
@@ -3842,9 +3666,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F088</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F088</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF088(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F088, field);
@@ -3858,9 +3680,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F089</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F089</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF089(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F089, field);
@@ -3874,9 +3694,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F090</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F090</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF090(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F090, field);
@@ -3890,9 +3708,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F091</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F091</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF091(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F091, field);
@@ -3906,9 +3722,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F092</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F092</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF092(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F092, field);
@@ -3922,9 +3736,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F093</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F093</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF093(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F093, field);
@@ -3938,9 +3750,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F094</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F094</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF094(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F094, field);
@@ -3954,9 +3764,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F095</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F095</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF095(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F095, field);
@@ -3970,9 +3778,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F096</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F096</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF096(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F096, field);
@@ -3986,9 +3792,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F097</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F097</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF097(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F097, field);
@@ -4002,9 +3806,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F098</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F098</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF098(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F098, field);
@@ -4018,9 +3820,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F099</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F099</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF099(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F099, field);
@@ -4034,9 +3834,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F100</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F100</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF100(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F100, field);
@@ -4050,9 +3848,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F101</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F101</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF101(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F101, field);
@@ -4066,9 +3862,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F102</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F102</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF102(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F102, field);
@@ -4082,9 +3876,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F103</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F103</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF103(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F103, field);
@@ -4098,9 +3890,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F104</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F104</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF104(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F104, field);
@@ -4114,9 +3904,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F105</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F105</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF105(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F105, field);
@@ -4130,9 +3918,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F106</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F106</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF106(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F106, field);
@@ -4146,9 +3932,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F107</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F107</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF107(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F107, field);
@@ -4162,9 +3946,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F108</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F108</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF108(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F108, field);
@@ -4178,9 +3960,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F109</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F109</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF109(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F109, field);
@@ -4194,9 +3974,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F110</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F110</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF110(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F110, field);
@@ -4210,9 +3988,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F111</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F111</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF111(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F111, field);
@@ -4226,9 +4002,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F112</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F112</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF112(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F112, field);
@@ -4242,9 +4016,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F113</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F113</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF113(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F113, field);
@@ -4258,9 +4030,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F114</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F114</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF114(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F114, field);
@@ -4274,9 +4044,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F115</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F115</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF115(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F115, field);
@@ -4290,9 +4058,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F116</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F116</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF116(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F116, field);
@@ -4306,9 +4072,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F117</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F117</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF117(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F117, field);
@@ -4322,9 +4086,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F118</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F118</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF118(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F118, field);
@@ -4338,9 +4100,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F119</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F119</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF119(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F119, field);
@@ -4354,9 +4114,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F120</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F120</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF120(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F120, field);
@@ -4370,9 +4128,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F121</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F121</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF121(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F121, field);
@@ -4386,9 +4142,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F122</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F122</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF122(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F122, field);
@@ -4402,9 +4156,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F123</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F123</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF123(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F123, field);
@@ -4418,9 +4170,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F124</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F124</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF124(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F124, field);
@@ -4434,9 +4184,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F125</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F125</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF125(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F125, field);
@@ -4450,9 +4198,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F126</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F126</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF126(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F126, field);
@@ -4466,9 +4212,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F127</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F127</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF127(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F127, field);
@@ -4482,9 +4226,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F128</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F128</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF128(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F128, field);
@@ -4498,9 +4240,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F129</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F129</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF129(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F129, field);
@@ -4514,9 +4254,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F130</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F130</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF130(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F130, field);
@@ -4530,9 +4268,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F131</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F131</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF131(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F131, field);
@@ -4546,9 +4282,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F132</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F132</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF132(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F132, field);
@@ -4562,9 +4296,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F133</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F133</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF133(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F133, field);
@@ -4578,9 +4310,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F134</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F134</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF134(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F134, field);
@@ -4594,9 +4324,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F135</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F135</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF135(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F135, field);
@@ -4610,9 +4338,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F136</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F136</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF136(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F136, field);
@@ -4626,9 +4352,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F137</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F137</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF137(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F137, field);
@@ -4642,9 +4366,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F138</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F138</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF138(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F138, field);
@@ -4658,9 +4380,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F139</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F139</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF139(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F139, field);
@@ -4674,9 +4394,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F140</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F140</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF140(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F140, field);
@@ -4690,9 +4408,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F141</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F141</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF141(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F141, field);
@@ -4706,9 +4422,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F142</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F142</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF142(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F142, field);
@@ -4722,9 +4436,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F143</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F143</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF143(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F143, field);
@@ -4738,9 +4450,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F144</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F144</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF144(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F144, field);
@@ -4754,9 +4464,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F145</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F145</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF145(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F145, field);
@@ -4770,9 +4478,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F146</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F146</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF146(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F146, field);
@@ -4786,9 +4492,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F147</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F147</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF147(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F147, field);
@@ -4802,9 +4506,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F148</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F148</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF148(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F148, field);
@@ -4818,9 +4520,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F149</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F149</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF149(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F149, field);
@@ -4834,9 +4534,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F150</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F150</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF150(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F150, field);
@@ -4850,9 +4548,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F151</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F151</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF151(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F151, field);
@@ -4866,9 +4562,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F152</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F152</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF152(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F152, field);
@@ -4882,9 +4576,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F153</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F153</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF153(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F153, field);
@@ -4898,9 +4590,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F154</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F154</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF154(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F154, field);
@@ -4914,9 +4604,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F155</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F155</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF155(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F155, field);
@@ -4930,9 +4618,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F156</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F156</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF156(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F156, field);
@@ -4946,9 +4632,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F157</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F157</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF157(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F157, field);
@@ -4962,9 +4646,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F158</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F158</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF158(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F158, field);
@@ -4978,9 +4660,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F159</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F159</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF159(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F159, field);
@@ -4994,9 +4674,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F160</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F160</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF160(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F160, field);
@@ -5010,9 +4688,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F161</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F161</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF161(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F161, field);
@@ -5026,9 +4702,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F162</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F162</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF162(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F162, field);
@@ -5042,9 +4716,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F163</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F163</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF163(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F163, field);
@@ -5058,9 +4730,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F164</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F164</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF164(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F164, field);
@@ -5074,9 +4744,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F165</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F165</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF165(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F165, field);
@@ -5090,9 +4758,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F166</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F166</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF166(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F166, field);
@@ -5106,9 +4772,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F167</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F167</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF167(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F167, field);
@@ -5122,9 +4786,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F168</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F168</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF168(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F168, field);
@@ -5138,9 +4800,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F169</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F169</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF169(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F169, field);
@@ -5154,9 +4814,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F170</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F170</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF170(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F170, field);
@@ -5170,9 +4828,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F171</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F171</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF171(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F171, field);
@@ -5186,9 +4842,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F172</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F172</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF172(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F172, field);
@@ -5202,9 +4856,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F173</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F173</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF173(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F173, field);
@@ -5218,9 +4870,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F174</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F174</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF174(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F174, field);
@@ -5234,9 +4884,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F175</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F175</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF175(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F175, field);
@@ -5250,9 +4898,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F176</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F176</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF176(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F176, field);
@@ -5266,9 +4912,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F177</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F177</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF177(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F177, field);
@@ -5282,9 +4926,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F178</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F178</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF178(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F178, field);
@@ -5298,9 +4940,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F179</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F179</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF179(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F179, field);
@@ -5314,9 +4954,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F180</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F180</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF180(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F180, field);
@@ -5330,9 +4968,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F181</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F181</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF181(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F181, field);
@@ -5346,9 +4982,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F182</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F182</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF182(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F182, field);
@@ -5362,9 +4996,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F183</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F183</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF183(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F183, field);
@@ -5378,9 +5010,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F184</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F184</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF184(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F184, field);
@@ -5394,9 +5024,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F185</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F185</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF185(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F185, field);
@@ -5410,9 +5038,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F186</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F186</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF186(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F186, field);
@@ -5426,9 +5052,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F187</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F187</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF187(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F187, field);
@@ -5442,9 +5066,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F188</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F188</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF188(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F188, field);
@@ -5458,9 +5080,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F189</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F189</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF189(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F189, field);
@@ -5474,9 +5094,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F190</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F190</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF190(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F190, field);
@@ -5490,9 +5108,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F191</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F191</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF191(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F191, field);
@@ -5506,9 +5122,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F192</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F192</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF192(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F192, field);
@@ -5522,9 +5136,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F193</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F193</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF193(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F193, field);
@@ -5538,9 +5150,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F194</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F194</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF194(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F194, field);
@@ -5554,9 +5164,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F195</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F195</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF195(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F195, field);
@@ -5570,9 +5178,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F196</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F196</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF196(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F196, field);
@@ -5586,9 +5192,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F197</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F197</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF197(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F197, field);
@@ -5602,9 +5206,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F198</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F198</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF198(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F198, field);
@@ -5618,9 +5220,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F199</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F199</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF199(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F199, field);
@@ -5634,9 +5234,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F200</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F200</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF200(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F200, field);
@@ -5650,9 +5248,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F201</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F201</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF201(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F201, field);
@@ -5666,9 +5262,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F202</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F202</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF202(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F202, field);
@@ -5682,9 +5276,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F203</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F203</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF203(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F203, field);
@@ -5698,9 +5290,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F204</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F204</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF204(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F204, field);
@@ -5714,9 +5304,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F205</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F205</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF205(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F205, field);
@@ -5730,9 +5318,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F206</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F206</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF206(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F206, field);
@@ -5746,9 +5332,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F207</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F207</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF207(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F207, field);
@@ -5762,9 +5346,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F208</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F208</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF208(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F208, field);
@@ -5778,9 +5360,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F209</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F209</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF209(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F209, field);
@@ -5794,9 +5374,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F210</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F210</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF210(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F210, field);
@@ -5810,9 +5388,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F211</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F211</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF211(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F211, field);
@@ -5826,9 +5402,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F212</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F212</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF212(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F212, field);
@@ -5842,9 +5416,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F213</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F213</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF213(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F213, field);
@@ -5858,9 +5430,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F214</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F214</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF214(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F214, field);
@@ -5874,9 +5444,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F215</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F215</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF215(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F215, field);
@@ -5890,9 +5458,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F216</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F216</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF216(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F216, field);
@@ -5906,9 +5472,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F217</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F217</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF217(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F217, field);
@@ -5922,9 +5486,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F218</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F218</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF218(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F218, field);
@@ -5938,9 +5500,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F219</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F219</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF219(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F219, field);
@@ -5954,9 +5514,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F220</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F220</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF220(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F220, field);
@@ -5970,9 +5528,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F221</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F221</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF221(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F221, field);
@@ -5986,9 +5542,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F222</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F222</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF222(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F222, field);
@@ -6002,9 +5556,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F223</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F223</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF223(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F223, field);
@@ -6018,9 +5570,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F224</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F224</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF224(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F224, field);
@@ -6034,9 +5584,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F225</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F225</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF225(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F225, field);
@@ -6050,9 +5598,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F226</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F226</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF226(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F226, field);
@@ -6066,9 +5612,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F227</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F227</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF227(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F227, field);
@@ -6082,9 +5626,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F228</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F228</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF228(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F228, field);
@@ -6098,9 +5640,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F229</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F229</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF229(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F229, field);
@@ -6114,9 +5654,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F230</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F230</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF230(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F230, field);
@@ -6130,9 +5668,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F231</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F231</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF231(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F231, field);
@@ -6146,9 +5682,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F232</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F232</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF232(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F232, field);
@@ -6162,9 +5696,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F233</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F233</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF233(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F233, field);
@@ -6178,9 +5710,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F234</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F234</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF234(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F234, field);
@@ -6194,9 +5724,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F235</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F235</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF235(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F235, field);
@@ -6210,9 +5738,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F236</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F236</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF236(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F236, field);
@@ -6226,9 +5752,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F237</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F237</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF237(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F237, field);
@@ -6242,9 +5766,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F238</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F238</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF238(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F238, field);
@@ -6258,9 +5780,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F239</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F239</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF239(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F239, field);
@@ -6274,9 +5794,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F240</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F240</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF240(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F240, field);
@@ -6290,9 +5808,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F241</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F241</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF241(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F241, field);
@@ -6306,9 +5822,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F242</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F242</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF242(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F242, field);
@@ -6322,9 +5836,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F243</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F243</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF243(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F243, field);
@@ -6338,9 +5850,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F244</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F244</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF244(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F244, field);
@@ -6354,9 +5864,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F245</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F245</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF245(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F245, field);
@@ -6370,9 +5878,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F246</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F246</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF246(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F246, field);
@@ -6386,9 +5892,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F247</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F247</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF247(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F247, field);
@@ -6402,9 +5906,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F248</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F248</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF248(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F248, field);
@@ -6418,9 +5920,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F249</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F249</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF249(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F249, field);
@@ -6434,9 +5934,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F250</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F250</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF250(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F250, field);
@@ -6450,9 +5948,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F251</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F251</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF251(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F251, field);
@@ -6466,9 +5962,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F252</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F252</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF252(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F252, field);
@@ -6482,9 +5976,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F253</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F253</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF253(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F253, field);
@@ -6498,9 +5990,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F254</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F254</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF254(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F254, field);
@@ -6514,9 +6004,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F255</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F255</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF255(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F255, field);
@@ -6530,9 +6018,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F256</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F256</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF256(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F256, field);
@@ -6546,9 +6032,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F257</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F257</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF257(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F257, field);
@@ -6562,9 +6046,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F258</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F258</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF258(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F258, field);
@@ -6578,9 +6060,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F259</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F259</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF259(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F259, field);
@@ -6594,9 +6074,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F260</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F260</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF260(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F260, field);
@@ -6610,9 +6088,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F261</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F261</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF261(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F261, field);
@@ -6626,9 +6102,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F262</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F262</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF262(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F262, field);
@@ -6642,9 +6116,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F263</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F263</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF263(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F263, field);
@@ -6658,9 +6130,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F264</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F264</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF264(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F264, field);
@@ -6674,9 +6144,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F265</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F265</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF265(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F265, field);
@@ -6690,9 +6158,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F266</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F266</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF266(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F266, field);
@@ -6706,9 +6172,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F267</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F267</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF267(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F267, field);
@@ -6722,9 +6186,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F268</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F268</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF268(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F268, field);
@@ -6738,9 +6200,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F269</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F269</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF269(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F269, field);
@@ -6754,9 +6214,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F270</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F270</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF270(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F270, field);
@@ -6770,9 +6228,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F271</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F271</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF271(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F271, field);
@@ -6786,9 +6242,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F272</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F272</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF272(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F272, field);
@@ -6802,9 +6256,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F273</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F273</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF273(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F273, field);
@@ -6818,9 +6270,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F274</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F274</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF274(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F274, field);
@@ -6834,9 +6284,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F275</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F275</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF275(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F275, field);
@@ -6850,9 +6298,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F276</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F276</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF276(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F276, field);
@@ -6866,9 +6312,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F277</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F277</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF277(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F277, field);
@@ -6882,9 +6326,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F278</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F278</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF278(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F278, field);
@@ -6898,9 +6340,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F279</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F279</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF279(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F279, field);
@@ -6914,9 +6354,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F280</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F280</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF280(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F280, field);
@@ -6930,9 +6368,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F281</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F281</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF281(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F281, field);
@@ -6946,9 +6382,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F282</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F282</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF282(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F282, field);
@@ -6962,9 +6396,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F283</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F283</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF283(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F283, field);
@@ -6978,9 +6410,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F284</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F284</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF284(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F284, field);
@@ -6994,9 +6424,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F285</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F285</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF285(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F285, field);
@@ -7010,9 +6438,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F286</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F286</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF286(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F286, field);
@@ -7026,9 +6452,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F287</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F287</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF287(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F287, field);
@@ -7042,9 +6466,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F288</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F288</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF288(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F288, field);
@@ -7058,9 +6480,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F289</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F289</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF289(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F289, field);
@@ -7074,9 +6494,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F290</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F290</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF290(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F290, field);
@@ -7090,9 +6508,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F291</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F291</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF291(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F291, field);
@@ -7106,9 +6522,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F292</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F292</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF292(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F292, field);
@@ -7122,9 +6536,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F293</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F293</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF293(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F293, field);
@@ -7138,9 +6550,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F294</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F294</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF294(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F294, field);
@@ -7154,9 +6564,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F295</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F295</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF295(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F295, field);
@@ -7170,9 +6578,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F296</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F296</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF296(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F296, field);
@@ -7186,9 +6592,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F297</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F297</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF297(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F297, field);
@@ -7202,9 +6606,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F298</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F298</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF298(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F298, field);
@@ -7218,9 +6620,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F299</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F299</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF299(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F299, field);
@@ -7234,9 +6634,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F300</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F300</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF300(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F300, field);
@@ -7250,9 +6648,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F301</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F301</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF301(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F301, field);
@@ -7266,9 +6662,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F302</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F302</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF302(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F302, field);
@@ -7282,9 +6676,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F303</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F303</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF303(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F303, field);
@@ -7298,9 +6690,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F304</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F304</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF304(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F304, field);
@@ -7314,9 +6704,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F305</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F305</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF305(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F305, field);
@@ -7330,9 +6718,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F306</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F306</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF306(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F306, field);
@@ -7346,9 +6732,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F307</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F307</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF307(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F307, field);
@@ -7362,9 +6746,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F308</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F308</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF308(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F308, field);
@@ -7378,9 +6760,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F309</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F309</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF309(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F309, field);
@@ -7394,9 +6774,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F310</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F310</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF310(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F310, field);
@@ -7410,9 +6788,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F311</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F311</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF311(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F311, field);
@@ -7426,9 +6802,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F312</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F312</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF312(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F312, field);
@@ -7442,9 +6816,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F313</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F313</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF313(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F313, field);
@@ -7458,9 +6830,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F314</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F314</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF314(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F314, field);
@@ -7474,9 +6844,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F315</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F315</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF315(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F315, field);
@@ -7490,9 +6858,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F316</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F316</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF316(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F316, field);
@@ -7506,9 +6872,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F317</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F317</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF317(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F317, field);
@@ -7522,9 +6886,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F318</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F318</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF318(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F318, field);
@@ -7538,9 +6900,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F319</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F319</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF319(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F319, field);
@@ -7554,9 +6914,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F320</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F320</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF320(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F320, field);
@@ -7570,9 +6928,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F321</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F321</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF321(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F321, field);
@@ -7586,9 +6942,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F322</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F322</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF322(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F322, field);
@@ -7602,9 +6956,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F323</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F323</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF323(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F323, field);
@@ -7618,9 +6970,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F324</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F324</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF324(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F324, field);
@@ -7634,9 +6984,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F325</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F325</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF325(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F325, field);
@@ -7650,9 +6998,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F326</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F326</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF326(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F326, field);
@@ -7666,9 +7012,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F327</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F327</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF327(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F327, field);
@@ -7682,9 +7026,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F328</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F328</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF328(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F328, field);
@@ -7698,9 +7040,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F329</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F329</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF329(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F329, field);
@@ -7714,9 +7054,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F330</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F330</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF330(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F330, field);
@@ -7730,9 +7068,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F331</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F331</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF331(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F331, field);
@@ -7746,9 +7082,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F332</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F332</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF332(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F332, field);
@@ -7762,9 +7096,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F333</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F333</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF333(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F333, field);
@@ -7778,9 +7110,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F334</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F334</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF334(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F334, field);
@@ -7794,9 +7124,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F335</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F335</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF335(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F335, field);
@@ -7810,9 +7138,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F336</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F336</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF336(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F336, field);
@@ -7826,9 +7152,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F337</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F337</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF337(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F337, field);
@@ -7842,9 +7166,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F338</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F338</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF338(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F338, field);
@@ -7858,9 +7180,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F339</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F339</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF339(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F339, field);
@@ -7874,9 +7194,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F340</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F340</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF340(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F340, field);
@@ -7890,9 +7208,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F341</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F341</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF341(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F341, field);
@@ -7906,9 +7222,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F342</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F342</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF342(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F342, field);
@@ -7922,9 +7236,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F343</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F343</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF343(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F343, field);
@@ -7938,9 +7250,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F344</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F344</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF344(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F344, field);
@@ -7954,9 +7264,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F345</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F345</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF345(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F345, field);
@@ -7970,9 +7278,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F346</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F346</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF346(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F346, field);
@@ -7986,9 +7292,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F347</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F347</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF347(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F347, field);
@@ -8002,9 +7306,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F348</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F348</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF348(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F348, field);
@@ -8018,9 +7320,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F349</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F349</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF349(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F349, field);
@@ -8034,9 +7334,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F350</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F350</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF350(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F350, field);
@@ -8050,9 +7348,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F351</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F351</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF351(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F351, field);
@@ -8066,9 +7362,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F352</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F352</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF352(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F352, field);
@@ -8082,9 +7376,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F353</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F353</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF353(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F353, field);
@@ -8098,9 +7390,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F354</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F354</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF354(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F354, field);
@@ -8114,9 +7404,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F355</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F355</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF355(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F355, field);
@@ -8130,9 +7418,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F356</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F356</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF356(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F356, field);
@@ -8146,9 +7432,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F357</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F357</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF357(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F357, field);
@@ -8162,9 +7446,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F358</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F358</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF358(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F358, field);
@@ -8178,9 +7460,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F359</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F359</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF359(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F359, field);
@@ -8194,9 +7474,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F360</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F360</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF360(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F360, field);
@@ -8210,9 +7488,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F361</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F361</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF361(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F361, field);
@@ -8226,9 +7502,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F362</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F362</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF362(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F362, field);
@@ -8242,9 +7516,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F363</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F363</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF363(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F363, field);
@@ -8258,9 +7530,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F364</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F364</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF364(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F364, field);
@@ -8274,9 +7544,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F365</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F365</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF365(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F365, field);
@@ -8290,9 +7558,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F366</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F366</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF366(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F366, field);
@@ -8306,9 +7572,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F367</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F367</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF367(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F367, field);
@@ -8322,9 +7586,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F368</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F368</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF368(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F368, field);
@@ -8338,9 +7600,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F369</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F369</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF369(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F369, field);
@@ -8354,9 +7614,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F370</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F370</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF370(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F370, field);
@@ -8370,9 +7628,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F371</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F371</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF371(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F371, field);
@@ -8386,9 +7642,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F372</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F372</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF372(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F372, field);
@@ -8402,9 +7656,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F373</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F373</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF373(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F373, field);
@@ -8418,9 +7670,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F374</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F374</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF374(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F374, field);
@@ -8434,9 +7684,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F375</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F375</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF375(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F375, field);
@@ -8450,9 +7698,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F376</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F376</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF376(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F376, field);
@@ -8466,9 +7712,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F377</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F377</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF377(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F377, field);
@@ -8482,9 +7726,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F378</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F378</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF378(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F378, field);
@@ -8498,9 +7740,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F379</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F379</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF379(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F379, field);
@@ -8514,9 +7754,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F380</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F380</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF380(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F380, field);
@@ -8530,9 +7768,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F381</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F381</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF381(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F381, field);
@@ -8546,9 +7782,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F382</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F382</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF382(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F382, field);
@@ -8562,9 +7796,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F383</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F383</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF383(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F383, field);
@@ -8578,9 +7810,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F384</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F384</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF384(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F384, field);
@@ -8594,9 +7824,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F385</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F385</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF385(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F385, field);
@@ -8610,9 +7838,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F386</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F386</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF386(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F386, field);
@@ -8626,9 +7852,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F387</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F387</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF387(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F387, field);
@@ -8642,9 +7866,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F388</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F388</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF388(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F388, field);
@@ -8658,9 +7880,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F389</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F389</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF389(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F389, field);
@@ -8674,9 +7894,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F390</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F390</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF390(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F390, field);
@@ -8690,9 +7908,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F391</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F391</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF391(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F391, field);
@@ -8706,9 +7922,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F392</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F392</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF392(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F392, field);
@@ -8722,9 +7936,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F393</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F393</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF393(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F393, field);
@@ -8738,9 +7950,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F394</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F394</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF394(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F394, field);
@@ -8754,9 +7964,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F395</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F395</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF395(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F395, field);
@@ -8770,9 +7978,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F396</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F396</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF396(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F396, field);
@@ -8786,9 +7992,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F397</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F397</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF397(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F397, field);
@@ -8802,9 +8006,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F398</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F398</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF398(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F398, field);
@@ -8818,9 +8020,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.math.Big
 	}
 
 	/**
-	 * Set the <code>F399</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F399</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF399(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F399, field);

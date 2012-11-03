@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.packages.library;
 @java.lang.SuppressWarnings("all")
 public class PkgFAuthorExists1 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1441817081;
+	private static final long serialVersionUID = 1391129495;
 
 
 	/**
@@ -41,9 +41,7 @@ public class PkgFAuthorExists1 extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>AUTHOR_NAME</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>AUTHOR_NAME</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setAuthorName(org.jooq.Field<java.lang.String> field) {
 		setField(AUTHOR_NAME, field);

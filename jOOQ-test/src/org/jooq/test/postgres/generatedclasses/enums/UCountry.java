@@ -8,6 +8,7 @@ package org.jooq.test.postgres.generatedclasses.enums;
  */
 @java.lang.SuppressWarnings("all")
 public enum UCountry implements org.jooq.EnumType {
+
 	Brazil("Brazil"),
 
 	England("England"),
@@ -22,11 +23,17 @@ public enum UCountry implements org.jooq.EnumType {
 		this.literal = literal;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getName() {
 		return "u_country";
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getLiteral() {
 		return literal;

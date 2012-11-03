@@ -1,7 +1,6 @@
 package org.jooq.util;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -21,36 +20,24 @@ import org.jooq.tools.StringUtils;
 /**
  * A wrapper for a {@link PrintWriter}
  * <p>
- * This wrapper postpones the actual write to the wrapped {@link PrintWriter}
- * until all information about the target Java class is available. This way, the
- * import dependencies can be calculated at the end.
+ * This wrapper adds Java printing features to the general
+ * {@link GeneratorWriter}
  *
  * @author Lukas Eder
  */
-public class GenerationWriter {
+public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     private static final String STATIC_INITIALISATION_STATEMENT = "__STATIC_INITIALISATION_STATEMENT__";
     private static final String INITIALISATION_STATEMENT        = "__INITIALISATION_STATEMENT__";
     private static final String SERIAL_STATEMENT                = "__SERIAL_STATEMENT__";
 
-    private final File          file;
-    private final PrintWriter   writer;
-    private final StringBuilder sb;
     private final List<String>  staticInitialisationStatements;
     private final List<String>  initialisationStatements;
     private final Set<Object>   alreadyPrinted;
 
-    public GenerationWriter(File file) {
-        file.getParentFile().mkdirs();
+    public JavaWriter(File file) {
+        super(file);
 
-        this.file = file;
-        try {
-            this.writer = new PrintWriter(file);
-        }
-        catch (FileNotFoundException e) {
-            throw new GeneratorException("Error writing "+file.getAbsolutePath());
-        }
-        this.sb = new StringBuilder();
         this.staticInitialisationStatements = new ArrayList<String>();
         this.initialisationStatements = new ArrayList<String>();
         this.alreadyPrinted = new HashSet<Object>();
@@ -72,42 +59,56 @@ public class GenerationWriter {
         initialisationStatements.add(statement);
     }
 
-    public void print(char value) {
-        sb.append(value);
+    public JavaWriter print(Class<?> clazz) {
+        print(clazz.getCanonicalName());
+        return this;
     }
 
-    public void print(int value) {
-        sb.append(value);
+    public JavaWriter javadoc(String string, Object... args) {
+        final int t = tab();
+
+        tab(t).println();
+        tab(t).println("/**");
+        tab(t).println(" * " + string, args);
+        tab(t).println(" */");
+
+        return this;
     }
 
-    public void print(CharSequence string) {
-        sb.append(string);
+    public JavaWriter header(String header, Object... args) {
+        int t = tab();
+
+        tab(t).println();
+        tab(t).println("// -------------------------------------------------------------------------");
+        tab(t).println("// " + header, args);
+        tab(t).println("// -------------------------------------------------------------------------");
+
+        return this;
     }
 
-    public void println(int value) {
-        print(value);
-        println();
+    public JavaWriter override() {
+        println("@Override");
+        return this;
     }
 
-    public void println(CharSequence string) {
-        print(string);
-        println();
+    public JavaWriter overrideInherit() {
+        final int t = tab();
+
+        tab(t).javadoc("{@inheritDoc}");
+        tab(t).println("@Override");
+
+        return this;
     }
 
-    public void println() {
-        sb.append("\n");
-    }
-
-    public boolean println(boolean doPrint) {
-        if (doPrint) {
-            println();
+    public JavaWriter suppress(String... warnings) {
+        if (warnings.length == 1) {
+            println("@SuppressWarnings(\"%s\")", warnings[0]);
+        }
+        else {
+            println("@SuppressWarnings({ [[join|\"%s\"]] })", (Object) warnings);
         }
 
-        return false;
-    }
-
-    public void print(Class<?> clazz) {
-        print(clazz.getCanonicalName());
+        return this;
     }
 
     public boolean printOnlyOnce(Object object) {
@@ -121,12 +122,11 @@ public class GenerationWriter {
 
     public void printSerial() {
         println();
-        println("\tprivate static final long serialVersionUID = " + SERIAL_STATEMENT + ";");
+        println("\tprivate static final long serialVersionUID = %s;", SERIAL_STATEMENT);
     }
 
-    public void close() {
-        String string = sb.toString();
-
+    @Override
+    protected String beforeClose(String string) {
         StringBuilder staticInits = new StringBuilder();
         StringBuilder inits = new StringBuilder();
 
@@ -173,13 +173,10 @@ public class GenerationWriter {
 
         string = string.replaceAll(STATIC_INITIALISATION_STATEMENT + "\\n",
             Matcher.quoteReplacement(staticInits.toString()));
-        string = string.replaceAll(INITIALISATION_STATEMENT + "\\n",
-            Matcher.quoteReplacement(inits.toString()));
-        string = string.replaceAll(SERIAL_STATEMENT,
-            Matcher.quoteReplacement(String.valueOf(string.hashCode())));
+        string = string.replaceAll(INITIALISATION_STATEMENT + "\\n", Matcher.quoteReplacement(inits.toString()));
+        string = string.replaceAll(SERIAL_STATEMENT, Matcher.quoteReplacement(String.valueOf(string.hashCode())));
 
-        writer.append(string);
-        writer.close();
+        return string;
     }
 
     public <T> void printNewJavaObject(String type, Object value) {
@@ -256,10 +253,5 @@ public class GenerationWriter {
         else {
             return false;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "GenerationWriter [" + file + "]";
     }
 }

@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -342175782;
+	private static final long serialVersionUID = 1776550453;
 
 	/**
-	 * The singleton instance of TEST.T_BOOLEANS
+	 * The singleton instance of <code>TEST.T_BOOLEANS</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TBooleans T_BOOLEANS = new org.jooq.test.oracle.generatedclasses.test.tables.TBooleans();
 
@@ -89,17 +89,25 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord> getMainKey() {
 		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_BOOLEANS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_BOOLEANS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.TBooleans as(java.lang.String alias) {
 		return new org.jooq.test.oracle.generatedclasses.test.tables.TBooleans(alias);

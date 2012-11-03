@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -557983605;
+	private static final long serialVersionUID = 705758710;
 
 	/**
-	 * The singleton instance of public.t_dates
+	 * The singleton instance of <code>public.t_dates</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TDates T_DATES = new org.jooq.test.postgres.generatedclasses.tables.TDates();
 
@@ -64,17 +64,25 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postg
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_DATES;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_DATES);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TDates as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.TDates(alias);

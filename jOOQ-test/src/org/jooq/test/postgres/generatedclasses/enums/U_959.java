@@ -8,6 +8,7 @@ package org.jooq.test.postgres.generatedclasses.enums;
  */
 @java.lang.SuppressWarnings("all")
 public enum U_959 implements org.jooq.EnumType {
+
 	abstract_("abstract"),
 
 	assert_("assert"),
@@ -120,11 +121,17 @@ public enum U_959 implements org.jooq.EnumType {
 		this.literal = literal;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getName() {
 		return "u_959";
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getLiteral() {
 		return literal;

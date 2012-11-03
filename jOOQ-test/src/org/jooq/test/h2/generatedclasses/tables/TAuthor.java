@@ -11,10 +11,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 231329326;
+	private static final long serialVersionUID = -1310954157;
 
 	/**
-	 * The singleton instance of PUBLIC.T_AUTHOR
+	 * The singleton instance of <code>PUBLIC.T_AUTHOR</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TAuthor T_AUTHOR = new org.jooq.test.h2.generatedclasses.tables.TAuthor();
 
@@ -65,13 +65,18 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.g
 		super("T_AUTHOR", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
 		return org.jooq.test.h2.generatedclasses.Keys.PK_T_AUTHOR;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_AUTHOR);
 	}

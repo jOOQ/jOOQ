@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = 124350888;
+	private static final long serialVersionUID = 725725149;
 
 	/**
-	 * The singleton instance of public.t_959
+	 * The singleton instance of <code>public.t_959</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.T_959 T_959 = new org.jooq.test.postgres.generatedclasses.tables.T_959();
 
@@ -37,6 +37,9 @@ public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.genera
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.T_959.T_959);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.T_959 as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.T_959(alias);

@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -1058437673;
+	private static final long serialVersionUID = -1449815258;
 
 	/**
-	 * The singleton instance of public.t_identity_pk
+	 * The singleton instance of <code>public.t_identity_pk</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = new org.jooq.test.postgres.generatedclasses.tables.TIdentityPk();
 
@@ -44,22 +44,33 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.test.postgres.generatedclasses.Keys.IDENTITY_T_IDENTITY_PK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_IDENTITY_PK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_IDENTITY_PK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TIdentityPk as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.TIdentityPk(alias);

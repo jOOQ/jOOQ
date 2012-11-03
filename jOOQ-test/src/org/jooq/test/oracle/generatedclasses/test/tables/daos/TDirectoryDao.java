@@ -23,6 +23,9 @@ public class TDirectoryDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.ge
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TDirectory.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.oracle.generatedclasses.test.tables.pojos.TDirectory object) {
 		return object.getId();
@@ -36,7 +39,7 @@ public class TDirectoryDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.ge
 	}
 
 	/**
-	 * Fetch a unique that has <code>ID = value</code>
+	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.pojos.TDirectory fetchOneById(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.ID, value);

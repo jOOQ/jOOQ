@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class FTables1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord> {
 
-	private static final long serialVersionUID = -812756548;
+	private static final long serialVersionUID = -1761732820;
 
 
 	/**
@@ -40,9 +40,7 @@ public class FTables1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle
 	}
 
 	/**
-	 * Set the <code>IN_TABLE</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>IN_TABLE</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setInTable(org.jooq.Field<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord> field) {
 		setField(IN_TABLE, field);

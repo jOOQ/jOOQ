@@ -11,10 +11,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1342782850;
+	private static final long serialVersionUID = -416150109;
 
 	/**
-	 * The singleton instance of TEST.T_LANGUAGE
+	 * The singleton instance of <code>TEST.T_LANGUAGE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TLanguage T_LANGUAGE = new org.jooq.test.oracle.generatedclasses.test.tables.TLanguage();
 
@@ -56,17 +56,25 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> getMainKey() {
 		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_LANGUAGE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_LANGUAGE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.TLanguage as(java.lang.String alias) {
 		return new org.jooq.test.oracle.generatedclasses.test.tables.TLanguage(alias);

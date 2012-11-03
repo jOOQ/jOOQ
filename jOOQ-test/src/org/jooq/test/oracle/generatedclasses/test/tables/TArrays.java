@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 1404313034;
+	private static final long serialVersionUID = -577633693;
 
 	/**
-	 * The singleton instance of TEST.T_ARRAYS
+	 * The singleton instance of <code>TEST.T_ARRAYS</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TArrays T_ARRAYS = new org.jooq.test.oracle.generatedclasses.test.tables.TArrays();
 
@@ -59,17 +59,25 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> getMainKey() {
 		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_ARRAYS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_ARRAYS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.TArrays as(java.lang.String alias) {
 		return new org.jooq.test.oracle.generatedclasses.test.tables.TArrays(alias);

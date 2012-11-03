@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.u_author_type;
 @java.lang.SuppressWarnings("all")
 public class GetAuthor extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> {
 
-	private static final long serialVersionUID = 965891856;
+	private static final long serialVersionUID = -2126159744;
 
 
 	/**
@@ -40,9 +40,7 @@ public class GetAuthor extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracl
 	}
 
 	/**
-	 * Set the <code>P_ID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>P_ID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setPId(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(P_ID, field);

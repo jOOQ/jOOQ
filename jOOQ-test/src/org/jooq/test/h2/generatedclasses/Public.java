@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -85539578;
+	private static final long serialVersionUID = -676408043;
 
 	/**
-	 * The singleton instance of PUBLIC
+	 * The singleton instance of <code>PUBLIC</code>
 	 */
 	public static final Public PUBLIC = new Public();
 

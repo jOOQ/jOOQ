@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1496105893;
+	private static final long serialVersionUID = 1504596827;
 
 
 	/**
@@ -58,9 +58,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 	}
 
 	/**
-	 * Set the <code>P1</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>P1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP1(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(P1, field);
@@ -74,9 +72,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 	}
 
 	/**
-	 * Set the <code>P2</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>P2</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP2(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(P2, field);
@@ -90,9 +86,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 	}
 
 	/**
-	 * Set the <code>P3</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>P3</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP3(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(P3, field);
@@ -106,9 +100,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 	}
 
 	/**
-	 * Set the <code>P4</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>P4</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP4(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(P4, field);

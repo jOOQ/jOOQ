@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class F691cursorIn extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 2056955033;
+	private static final long serialVersionUID = 2146907657;
 
 
 	/**
@@ -40,9 +40,7 @@ public class F691cursorIn extends org.jooq.impl.AbstractRoutine<java.math.BigDec
 	}
 
 	/**
-	 * Set the <code>C</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>C</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setC(org.jooq.Field<org.jooq.Result<org.jooq.Record>> field) {
 		setField(C, field);

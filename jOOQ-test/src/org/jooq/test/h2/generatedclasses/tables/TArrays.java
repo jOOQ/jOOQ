@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -1239793953;
+	private static final long serialVersionUID = -320461116;
 
 	/**
-	 * The singleton instance of PUBLIC.T_ARRAYS
+	 * The singleton instance of <code>PUBLIC.T_ARRAYS</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TArrays T_ARRAYS = new org.jooq.test.h2.generatedclasses.tables.TArrays();
 
@@ -62,13 +62,18 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.g
 		super("T_ARRAYS", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> getMainKey() {
 		return org.jooq.test.h2.generatedclasses.Keys.PK_T_ARRAYS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_ARRAYS);
 	}

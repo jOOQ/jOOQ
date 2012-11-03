@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class VIncomplete extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> {
 
-	private static final long serialVersionUID = 1008251888;
+	private static final long serialVersionUID = -1955886599;
 
 	/**
-	 * The singleton instance of TEST.V_INCOMPLETE
+	 * The singleton instance of <code>TEST.V_INCOMPLETE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete V_INCOMPLETE = new org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete();
 
@@ -104,6 +104,9 @@ public class VIncomplete extends org.jooq.impl.TableImpl<org.jooq.test.oracle.ge
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete as(java.lang.String alias) {
 		return new org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete(alias);

@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -1569549760;
+	private static final long serialVersionUID = 1649119285;
 
 	/**
-	 * The singleton instance of TEST.T_639_NUMBERS_TABLE
+	 * The singleton instance of <code>TEST.T_639_NUMBERS_TABLE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable T_639_NUMBERS_TABLE = new org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable();
 
@@ -89,17 +89,25 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord> getMainKey() {
 		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_639_NUMBERS_TABLE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_639_NUMBERS_TABLE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable as(java.lang.String alias) {
 		return new org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable(alias);

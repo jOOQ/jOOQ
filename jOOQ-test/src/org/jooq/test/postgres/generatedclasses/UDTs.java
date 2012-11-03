@@ -12,17 +12,17 @@ package org.jooq.test.postgres.generatedclasses;
 public final class UDTs {
 
 	/**
-	 * The type public.u_address_type
+	 * The type <code>public.u_address_type</code>
 	 */
 	public static org.jooq.test.postgres.generatedclasses.udt.UAddressType U_ADDRESS_TYPE = org.jooq.test.postgres.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE;
 
 	/**
-	 * The type public.u_street_type
+	 * The type <code>public.u_street_type</code>
 	 */
 	public static org.jooq.test.postgres.generatedclasses.udt.UStreetType U_STREET_TYPE = org.jooq.test.postgres.generatedclasses.udt.UStreetType.U_STREET_TYPE;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private UDTs() {}
 }

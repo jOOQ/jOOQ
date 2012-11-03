@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings("all")
 public class OInvalidType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.OInvalidTypeRecord> {
 
-	private static final long serialVersionUID = -126027391;
+	private static final long serialVersionUID = 1569202750;
 
 	/**
-	 * The singleton instance of TEST.O_INVALID_TYPE
+	 * The singleton instance of <code>TEST.O_INVALID_TYPE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.udt.OInvalidType O_INVALID_TYPE = new org.jooq.test.oracle.generatedclasses.test.udt.OInvalidType();
 

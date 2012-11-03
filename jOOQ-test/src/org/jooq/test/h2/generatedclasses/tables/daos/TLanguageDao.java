@@ -25,6 +25,9 @@ public class TLanguageDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generat
 		super(org.jooq.test.h2.generatedclasses.tables.TLanguage.T_LANGUAGE, org.jooq.test.h2.generatedclasses.tables.pojos.TLanguage.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.h2.generatedclasses.tables.pojos.TLanguage object) {
 		return object.getId();
@@ -59,7 +62,7 @@ public class TLanguageDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generat
 	}
 
 	/**
-	 * Fetch a unique that has <code>ID = value</code>
+	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.TLanguage fetchOneById(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TLanguage.ID, value);

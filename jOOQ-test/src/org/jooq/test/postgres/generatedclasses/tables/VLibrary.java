@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1078656569;
+	private static final long serialVersionUID = 1850064076;
 
 	/**
-	 * The singleton instance of public.v_library
+	 * The singleton instance of <code>public.v_library</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.VLibrary V_LIBRARY = new org.jooq.test.postgres.generatedclasses.tables.VLibrary();
 
@@ -42,6 +42,9 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.VLibrary as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.VLibrary(alias);

@@ -25,6 +25,9 @@ public class TAuthorDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.gener
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor object) {
 		return object.getId();
@@ -38,7 +41,7 @@ public class TAuthorDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.gener
 	}
 
 	/**
-	 * Fetch a unique that has <code>ID = value</code>
+	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor fetchOneById(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ID, value);

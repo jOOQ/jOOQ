@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -796203839;
+	private static final long serialVersionUID = -802471296;
 
 	/**
-	 * The singleton instance of PUBLIC.T_725_LOB_TEST
+	 * The singleton instance of <code>PUBLIC.T_725_LOB_TEST</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = new org.jooq.test.h2.generatedclasses.tables.T_725LobTest();
 
@@ -43,13 +43,18 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 		super("T_725_LOB_TEST", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord> getMainKey() {
 		return org.jooq.test.h2.generatedclasses.Keys.PK_T_725_LOB_TEST;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_725_LOB_TEST);
 	}

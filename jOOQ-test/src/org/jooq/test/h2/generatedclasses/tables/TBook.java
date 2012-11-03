@@ -11,10 +11,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1931838636;
+	private static final long serialVersionUID = 1232100775;
 
 	/**
-	 * The singleton instance of PUBLIC.T_BOOK
+	 * The singleton instance of <code>PUBLIC.T_BOOK</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TBook T_BOOK = new org.jooq.test.h2.generatedclasses.tables.TBook();
 
@@ -108,28 +108,41 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.gen
 		super("T_BOOK", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> getMainKey() {
 		return org.jooq.test.h2.generatedclasses.Keys.PK_T_BOOK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_BOOK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.h2.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.h2.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.h2.generatedclasses.Keys.FK_T_BOOK_LANGUAGE_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> getRecordVersion() {
 		return org.jooq.test.h2.generatedclasses.tables.TBook.REC_VERSION;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.sql.Timestamp> getRecordTimestamp() {
 		return org.jooq.test.h2.generatedclasses.tables.TBook.REC_TIMESTAMP;

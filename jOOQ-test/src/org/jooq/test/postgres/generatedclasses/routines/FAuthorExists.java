@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1346487928;
+	private static final long serialVersionUID = -99515000;
 
 
 	/**
@@ -40,9 +40,7 @@ public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integ
 	}
 
 	/**
-	 * Set the <code>author_name</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>author_name</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setAuthorName(org.jooq.Field<java.lang.String> field) {
 		setField(AUTHOR_NAME, field);

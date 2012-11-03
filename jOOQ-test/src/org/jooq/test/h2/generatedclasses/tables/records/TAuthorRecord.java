@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 1905061834;
+	private static final long serialVersionUID = -58135072;
 
 	/**
 	 * The author ID
@@ -38,7 +38,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
 	 */
-	public java.util.List<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
+	public org.jooq.Result<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID)))
@@ -50,7 +50,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
 	 */
-	public java.util.List<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
+	public org.jooq.Result<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID)))

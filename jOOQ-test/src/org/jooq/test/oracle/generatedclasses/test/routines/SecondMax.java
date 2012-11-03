@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class SecondMax extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1622535955;
+	private static final long serialVersionUID = -1859215965;
 
 
 	/**
@@ -40,9 +40,7 @@ public class SecondMax extends org.jooq.impl.AbstractRoutine<java.math.BigDecima
 	}
 
 	/**
-	 * Set the <code>INPUT</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>INPUT</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setInput(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(INPUT, field);

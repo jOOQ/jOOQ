@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 746230221;
+	private static final long serialVersionUID = -1800135844;
 
 	/**
-	 * The singleton instance of MULTI_SCHEMA.T_AUTHOR
+	 * The singleton instance of <code>MULTI_SCHEMA.T_AUTHOR</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor T_AUTHOR = new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor();
 
@@ -67,17 +67,25 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> getMainKey() {
 		return org.jooq.test.oracle.generatedclasses.multi_schema.Keys.PK_T_AUTHOR;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord>>asList(org.jooq.test.oracle.generatedclasses.multi_schema.Keys.PK_T_AUTHOR);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor as(java.lang.String alias) {
 		return new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor(alias);

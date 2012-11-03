@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 2005600546;
+	private static final long serialVersionUID = 681799085;
 
 	/**
-	 * The singleton instance of public.t_arrays
+	 * The singleton instance of <code>public.t_arrays</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TArrays T_ARRAYS = new org.jooq.test.postgres.generatedclasses.tables.TArrays();
 
@@ -69,17 +69,25 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> getMainKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_ARRAYS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_ARRAYS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TArrays as(java.lang.String alias) {
 		return new org.jooq.test.postgres.generatedclasses.tables.TArrays(alias);

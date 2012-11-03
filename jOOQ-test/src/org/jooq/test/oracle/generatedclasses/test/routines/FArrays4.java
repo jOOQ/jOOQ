@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class FArrays4 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookArrayRecord> {
 
-	private static final long serialVersionUID = 1783801113;
+	private static final long serialVersionUID = -1328942455;
 
 
 	/**
@@ -40,9 +40,7 @@ public class FArrays4 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle
 	}
 
 	/**
-	 * Set the <code>IN_ARRAY</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>IN_ARRAY</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setInArray(org.jooq.Field<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookArrayRecord> field) {
 		setField(IN_ARRAY, field);

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Integer[]> {
 
-	private static final long serialVersionUID = -870915279;
+	private static final long serialVersionUID = 67431457;
 
 
 	/**
@@ -41,9 +41,7 @@ public class FArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Integer[]>
 	}
 
 	/**
-	 * Set the <code>in_array</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>in_array</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setInArray(org.jooq.Field<java.lang.Integer[]> field) {
 		setField(IN_ARRAY, field);

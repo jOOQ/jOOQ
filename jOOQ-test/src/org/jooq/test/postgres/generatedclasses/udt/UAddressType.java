@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.udt;
 @java.lang.SuppressWarnings("all")
 public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -1776412511;
+	private static final long serialVersionUID = -373733762;
 
 	/**
-	 * The singleton instance of public.u_address_type
+	 * The singleton instance of <code>public.u_address_type</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.udt.UAddressType U_ADDRESS_TYPE = new org.jooq.test.postgres.generatedclasses.udt.UAddressType();
 

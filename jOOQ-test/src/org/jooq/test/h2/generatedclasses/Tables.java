@@ -122,7 +122,7 @@ public final class Tables {
 	public static final org.jooq.test.h2.generatedclasses.tables.VBook V_BOOK = org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

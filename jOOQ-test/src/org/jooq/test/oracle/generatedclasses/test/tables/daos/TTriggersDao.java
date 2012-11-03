@@ -23,6 +23,9 @@ public class TTriggersDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.gen
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TTriggers.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.oracle.generatedclasses.test.tables.pojos.TTriggers object) {
 		return object.getIdGenerated();
@@ -36,7 +39,7 @@ public class TTriggersDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.gen
 	}
 
 	/**
-	 * Fetch a unique that has <code>ID_GENERATED = value</code>
+	 * Fetch a unique record that has <code>ID_GENERATED = value</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.pojos.TTriggers fetchOneByIdGenerated(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS.ID_GENERATED, value);

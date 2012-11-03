@@ -50,18 +50,20 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> X_UNUSED__FK_X_UNUSED_SELF = ForeignKeys0.X_UNUSED__FK_X_UNUSED_SELF;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings("hiding")
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> IDENTITY_T_IDENTITY = createIdentity(org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY, org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY.ID);
 		public static org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = createIdentity(org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
 		public static org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = createIdentity(org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);
@@ -82,7 +84,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> UK_X_UNUSED_ID = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record, org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> T_986_1__FK_986 = createForeignKey(org.jooq.test.postgres.generatedclasses.Keys.UK_X_UNUSED_ID, org.jooq.test.postgres.generatedclasses.tables.T_986_1.T_986_1, org.jooq.test.postgres.generatedclasses.tables.T_986_1.T_986_1.REF, org.jooq.test.postgres.generatedclasses.tables.T_986_1.T_986_1.REF);
 		public static final org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record, org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> T_986_2__FK_986 = createForeignKey(org.jooq.test.postgres.generatedclasses.Keys.UK_X_UNUSED_ID, org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2, org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2.REF, org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2.REF);

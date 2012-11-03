@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test;
 @java.lang.SuppressWarnings("all")
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -2054301366;
+	private static final long serialVersionUID = 607515421;
 
 	/**
-	 * The singleton instance of TEST
+	 * The singleton instance of <code>TEST</code>
 	 */
 	public static final Test TEST = new Test();
 

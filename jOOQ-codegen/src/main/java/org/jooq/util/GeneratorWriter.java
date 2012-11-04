@@ -144,7 +144,10 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                             separator = gSeparator;
                         }
 
-                        replacement.append(gAfter);
+                        if (((Object[]) arg).length > 0) {
+                            replacement.append(gAfter);
+                        }
+
                         string = string.substring(0, start) + replacement + string.substring(end + 2);
                     }
                     else {

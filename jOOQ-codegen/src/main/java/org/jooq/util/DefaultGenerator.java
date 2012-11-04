@@ -2201,49 +2201,39 @@ public class DefaultGenerator extends AbstractGenerator {
 
     protected void printFetchMethod(JavaWriter out, ColumnDefinition column, ForeignKeyDefinition foreignKey,
         TableDefinition referenced) {
-        printFKSetter(out, column, foreignKey, referenced);
 
+        printFKSetter(out, column, foreignKey, referenced);
         printFieldJavaDoc(out, column);
 
-        out.print("\tpublic ");
-        out.print(getStrategy().getFullJavaClassName(referenced, Mode.RECORD));
-        out.print(" fetch");
-        out.print(getStrategy().getJavaClassName(referenced));
+        final String referencedId = getStrategy().getFullJavaIdentifier(referenced);
+        final String referencedType = getStrategy().getFullJavaClassName(referenced, Mode.RECORD);
+        final String referencedClassName = getStrategy().getJavaClassName(referenced);
 
-        // #350 - Disambiguate multiple foreign keys referencing
+        // [#350] - Disambiguate multiple foreign keys referencing
         // the same table
-        if (foreignKey.countSimilarReferences() > 1) {
-            out.print("By");
-            out.print(getStrategy().getJavaClassName(column));
-        }
+        List<String> disambiguation = list(foreignKey.countSimilarReferences() > 1
+            ? getStrategy().getJavaClassName(column)
+            : null);
 
-        out.println("() {");
-        out.println("\t\treturn create()");
-        out.print("\t\t\t.selectFrom(");
-        out.print(getStrategy().getFullJavaIdentifier(referenced));
-        out.println(")");
+        out.tab(1).println("public %s fetch%s[[before=By][%s]]() {", referencedType, referencedClassName, disambiguation);
+        out.tab(2).println("return create()");
+        out.tab(3).println(".selectFrom(%s)", referencedId);
 
-        String connector = "\t\t\t.where(";
-
+        String connector = "where";
         for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
-            out.print(connector);
-            out.print(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedColumns().get(i)));
-            out.print(".equal(getValue(");
-            out.print(getStrategy().getFullJavaIdentifier(foreignKey.getKeyColumns().get(i)));
+            final String ukId = getStrategy().getFullJavaIdentifier(foreignKey.getReferencedColumns().get(i));
+            final String fkId = getStrategy().getFullJavaIdentifier(foreignKey.getKeyColumns().get(i));
 
             // Convert foreign key value, if there is a type mismatch
             DataTypeDefinition foreignType = foreignKey.getKeyColumns().get(i).getType();
             DataTypeDefinition primaryType = foreignKey.getReferencedColumns().get(i).getType();
 
-            if (!match(foreignType, primaryType)) {
-                out.print(", ");
-                out.print(getSimpleJavaType(foreignKey.getReferencedColumns().get(i).getType()));
-                out.print(".class");
-            }
+            List<String> conversion = list(!match(foreignType, primaryType)
+                ? getSimpleJavaType(foreignKey.getReferencedColumns().get(i).getType())
+                : null);
 
-            out.println(")))");
-
-            connector = "\t\t\t.and(";
+            out.tab(3).println(".%s(%s.equal(getValue(%s[[before=, ][after=.class][%s]])))", connector, ukId, fkId, conversion);
+            connector = "and";
         }
 
         out.println("\t\t\t.fetchOne();");
@@ -2251,79 +2241,67 @@ public class DefaultGenerator extends AbstractGenerator {
     }
 
     private void generateFetchFKList(JavaWriter out, UniqueKeyDefinition uniqueKey, ForeignKeyDefinition foreignKey, ColumnDefinition column, Set<String> fetchMethodNames) {
-        // #64 - If the foreign key does not match the referenced key, it
+        // [#64] - If the foreign key does not match the referenced key, it
         // is most likely because it references a non-primary unique key
         // Skip code generation for this foreign key
 
-        // #69 - Should resolve this issue more thoroughly.
+        // [#69] - Should resolve this issue more thoroughly.
         if (foreignKey.getReferencedColumns().size() != foreignKey.getKeyColumns().size()) {
             log.warn("Foreign key mismatch", foreignKey.getName() + " does not match its primary key! No code is generated for this key. See trac tickets #64 and #69");
             return;
         }
 
-        TableDefinition referencing = foreignKey.getKeyTable();
+        final TableDefinition referencing = foreignKey.getKeyTable();
+        final String referencingType = getStrategy().getFullJavaClassName(referencing, Mode.RECORD);
+        final String referencingId = getStrategy().getFullJavaIdentifier(referencing);
+        final StringBuilder method = new StringBuilder();
 
-        StringBuilder fetchMethodName = new StringBuilder();
-        fetchMethodName.append("fetch");
-        fetchMethodName.append(getStrategy().getJavaClassName(referencing));
+        method.append("fetch");
+        method.append(getStrategy().getJavaClassName(referencing));
 
-        // #352 - Disambiguate foreign key navigation directions
-        fetchMethodName.append("List");
+        // [#352] - Disambiguate foreign key navigation directions
+        method.append("List");
 
-        // #350 - Disambiguate multiple foreign keys referencing
+        // [#350] - Disambiguate multiple foreign keys referencing
         // the same table
         if (foreignKey.countSimilarReferences() > 1) {
-            fetchMethodName.append("By");
-            fetchMethodName.append(getStrategy().getJavaClassName(foreignKey.getKeyColumns().get(0)));
+            method.append("By");
+            method.append(getStrategy().getJavaClassName(foreignKey.getKeyColumns().get(0)));
         }
 
-        // #1270 - Disambiguate identical foreign keys
-        if (fetchMethodNames.contains(fetchMethodName.toString())) {
+        // [#1270] - Disambiguate identical foreign keys
+        if (fetchMethodNames.contains(method.toString())) {
             log.warn("Duplicate foreign key", foreignKey.getName() + " has the same properties as another foreign key! No code is generated for this key. See trac ticket #1270");
             return;
         }
         else {
-            fetchMethodNames.add(fetchMethodName.toString());
+            fetchMethodNames.add(method.toString());
         }
 
         printFieldJavaDoc(out, column);
-        out.print("\tpublic ");
-        out.print(Result.class);
-        out.print("<");
-        out.print(getStrategy().getFullJavaClassName(referencing, Mode.RECORD));
-        out.print("> ");
-        out.print(fetchMethodName.toString());
+        out.tab(1).println("public %s<%s> %s() {", Result.class, referencingType, method);
+        out.tab(2).println("return create()");
+        out.tab(3).println(".selectFrom(%s)", referencingId);
 
-        out.println("() {");
-        out.println("\t\treturn create()");
-        out.print("\t\t\t.selectFrom(");
-        out.print(getStrategy().getFullJavaIdentifier(referencing));
-        out.println(")");
-
-        String connector = "\t\t\t.where(";
-
+        String connector = "where";
         for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
-            out.print(connector);
-            out.print(getStrategy().getFullJavaIdentifier(foreignKey.getKeyColumns().get(i)));
-            out.print(".equal(getValue(");
-            out.print(getStrategy().getFullJavaIdentifier(uniqueKey.getKeyColumns().get(i)));
+            final String fkId = getStrategy().getFullJavaIdentifier(foreignKey.getKeyColumns().get(i));
+            final String ukId = getStrategy().getFullJavaIdentifier(uniqueKey.getKeyColumns().get(i));
 
             // Convert foreign key value, if there is a type mismatch
             DataTypeDefinition foreignType = foreignKey.getKeyColumns().get(i).getType();
             DataTypeDefinition primaryType = uniqueKey.getKeyColumns().get(i).getType();
 
-            if (!match(foreignType, primaryType)) {
-                out.print(", ");
-                out.print(getSimpleJavaType(foreignKey.getKeyColumns().get(i).getType()));
-                out.print(".class");
-            }
+            List<String> conversion = list(!match(foreignType, primaryType)
+                ? getSimpleJavaType(foreignKey.getKeyColumns().get(i).getType())
+                : null);
 
-            out.println(")))");
-            connector = "\t\t\t.and(";
+            out.tab(3).println(".%s(%s.equal(getValue(%s[[before=, ][after=.class][%s]])))", connector, fkId, ukId, conversion);
+            connector = "and";
         }
 
-        out.println("\t\t\t.fetch();");
-        out.println("\t}");
+        out.tab(3).println(".fetch();");
+        out.tab(1).println("}");
     }
 
     protected void printUDTColumn(JavaWriter out, AttributeDefinition attribute, Definition table) {

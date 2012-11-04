@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -165004237;
+	private static final long serialVersionUID = 1443731837;
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_85.ID</code>
+	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_85.ID</code>
+	 * Getter for <code>TEST.X_TEST_CASE_85.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -30,19 +30,38 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>
+	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>
+	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_ID", precision = 7)
 	public java.lang.Integer getXUnusedId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID);
 	}
+
+	/**
+	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 */
+	public void setXUnusedName(java.lang.String value) {
+		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 */
+	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
+	public java.lang.String getXUnusedName() {
+		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.X_TEST_CASE_85</code>
@@ -53,28 +72,6 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 			.where(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID)))
 			.and(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME)))
 			.fetchOne();
-	}
-
-	/**
-	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>
-	 */
-	public void setXUnusedName(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME, value);
-	}
-
-	/**
-	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>
-	 */
-	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
-	public java.lang.String getXUnusedName() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
-	}
-
-	/**
-	 * Create a detached XTestCase_85Record
-	 */
-	public XTestCase_85Record() {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 
 	// -------------------------------------------------------------------------
@@ -143,5 +140,16 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.String value3() {
 		return getXUnusedName();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_85Record
+	 */
+	public XTestCase_85Record() {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 }

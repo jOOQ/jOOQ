@@ -9,16 +9,15 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = -855597251;
-
+	private static final long serialVersionUID = 473728705;
 
 	/**
-	 * The procedure parameter <code>public.f_get_one_cursor.RETURN_VALUE</code>
+	 * The parameter <code>public.f_get_one_cursor.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * The procedure parameter <code>public.f_get_one_cursor.book_ids</code>
+	 * The parameter <code>public.f_get_one_cursor.book_ids</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer[]> BOOK_IDS = createParameter("book_ids", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType());
 

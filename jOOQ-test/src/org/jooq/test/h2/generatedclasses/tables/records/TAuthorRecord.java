@@ -11,10 +11,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 802436190;
+	private static final long serialVersionUID = 332787292;
 
 	/**
-	 * The author ID
+	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,12 +22,96 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The author ID
+	 * Getter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
 	 */
 	@Override
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID);
 	}
+
+	/**
+	 * Setter for <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. The author's first name
+	 */
+	@Override
+	public void setFirstName(java.lang.String value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME, value);
+	}
+
+	/**
+	 * Getter for <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. The author's first name
+	 */
+	@Override
+	public java.lang.String getFirstName() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME);
+	}
+
+	/**
+	 * Setter for <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. The author's last name
+	 */
+	@Override
+	public void setLastName(java.lang.String value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME, value);
+	}
+
+	/**
+	 * Getter for <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. The author's last name
+	 */
+	@Override
+	public java.lang.String getLastName() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME);
+	}
+
+	/**
+	 * Setter for <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
+	 */
+	@Override
+	public void setDateOfBirth(java.sql.Date value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.DATE_OF_BIRTH, value);
+	}
+
+	/**
+	 * Getter for <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
+	 */
+	@Override
+	public java.sql.Date getDateOfBirth() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.DATE_OF_BIRTH);
+	}
+
+	/**
+	 * Setter for <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
+	 */
+	@Override
+	public void setYearOfBirth(java.lang.Integer value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH, value);
+	}
+
+	/**
+	 * Getter for <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
+	 */
+	@Override
+	public java.lang.Integer getYearOfBirth() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH);
+	}
+
+	/**
+	 * Setter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. The author's address
+	 */
+	@Override
+	public void setAddress(java.lang.String value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ADDRESS, value);
+	}
+
+	/**
+	 * Getter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. The author's address
+	 */
+	@Override
+	public java.lang.String getAddress() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ADDRESS);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Fetch a list of <code>PUBLIC.T_BOOK</code> referencing this <code>PUBLIC.T_AUTHOR</code>
@@ -47,93 +131,6 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID)))
 			.fetch();
-	}
-
-	/**
-	 * The author's first name
-	 */
-	@Override
-	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME, value);
-	}
-
-	/**
-	 * The author's first name
-	 */
-	@Override
-	public java.lang.String getFirstName() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME);
-	}
-
-	/**
-	 * The author's last name
-	 */
-	@Override
-	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME, value);
-	}
-
-	/**
-	 * The author's last name
-	 */
-	@Override
-	public java.lang.String getLastName() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME);
-	}
-
-	/**
-	 * The author's date of birth
-	 */
-	@Override
-	public void setDateOfBirth(java.sql.Date value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.DATE_OF_BIRTH, value);
-	}
-
-	/**
-	 * The author's date of birth
-	 */
-	@Override
-	public java.sql.Date getDateOfBirth() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.DATE_OF_BIRTH);
-	}
-
-	/**
-	 * The author's year of birth
-	 */
-	@Override
-	public void setYearOfBirth(java.lang.Integer value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH, value);
-	}
-
-	/**
-	 * The author's year of birth
-	 */
-	@Override
-	public java.lang.Integer getYearOfBirth() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH);
-	}
-
-	/**
-	 * The author's address
-	 */
-	@Override
-	public void setAddress(java.lang.String value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ADDRESS, value);
-	}
-
-	/**
-	 * The author's address
-	 */
-	@Override
-	public java.lang.String getAddress() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ADDRESS);
-	}
-
-	/**
-	 * Create a detached TAuthorRecord
-	 */
-	public TAuthorRecord() {
-		super(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 
 	// -------------------------------------------------------------------------
@@ -250,5 +247,16 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.String value6() {
 		return getAddress();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TAuthorRecord
+	 */
+	public TAuthorRecord() {
+		super(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 }

@@ -44,7 +44,7 @@ import org.jooq.DAO;
 import org.jooq.tools.StringUtils;
 
 /**
- * The default naming strategy for the {@link DefaultGenerator}
+ * The default naming strategy for the {@link JavaGenerator}
  *
  * @author Lukas Eder
  */

@@ -9,16 +9,15 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = 397292722;
-
+	private static final long serialVersionUID = -962145476;
 
 	/**
-	 * The procedure parameter <code>TEST.F_GET_ONE_CURSOR.RETURN_VALUE</code>
+	 * The parameter <code>TEST.F_GET_ONE_CURSOR.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * The procedure parameter <code>TEST.F_GET_ONE_CURSOR.BOOK_IDS</code>
+	 * The parameter <code>TEST.F_GET_ONE_CURSOR.BOOK_IDS</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord> BOOK_IDS = createParameter("BOOK_IDS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord.class));
 

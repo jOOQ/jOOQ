@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1782347095;
+	private static final long serialVersionUID = 1941590157;
 
 	/**
 	 * The singleton instance of <code>TEST.T_725_LOB_TEST</code>
@@ -25,12 +25,12 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>TEST.T_725_LOB_TEST.ID</code>
+	 * The column <code>TEST.T_725_LOB_TEST.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>TEST.T_725_LOB_TEST.LOB</code>
+	 * The column <code>TEST.T_725_LOB_TEST.LOB</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, this);
 

@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers {
 
-	private static final long serialVersionUID = -1822669211;
+	private static final long serialVersionUID = -864652827;
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>
+	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	@Override
 	public void setIdGenerated(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>
+	 * Getter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	@Override
 	public java.lang.Integer getIdGenerated() {
@@ -28,7 +28,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID</code>
+	 * Setter for <code>PUBLIC.T_TRIGGERS.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -36,7 +36,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID</code>
+	 * Getter for <code>PUBLIC.T_TRIGGERS.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -44,7 +44,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.COUNTER</code>
+	 * Setter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
 	 */
 	@Override
 	public void setCounter(java.lang.Integer value) {
@@ -52,19 +52,16 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.COUNTER</code>
+	 * Getter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
 	 */
 	@Override
 	public java.lang.Integer getCounter() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TTriggers.COUNTER);
 	}
 
-	/**
-	 * Create a detached TTriggersRecord
-	 */
-	public TTriggersRecord() {
-		super(org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record3 type implementation
@@ -132,5 +129,16 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.lang.Integer value3() {
 		return getCounter();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TTriggersRecord
+	 */
+	public TTriggersRecord() {
+		super(org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 }

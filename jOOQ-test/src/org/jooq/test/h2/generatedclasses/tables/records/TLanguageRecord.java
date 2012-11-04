@@ -11,10 +11,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = -1226175754;
+	private static final long serialVersionUID = 2112973098;
 
 	/**
-	 * The language ISO code
+	 * Setter for <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	@Override
 	public void setCd(java.lang.String value) {
@@ -22,7 +22,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The language ISO code
+	 * Getter for <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	@Override
 	public java.lang.String getCd() {
@@ -30,7 +30,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The language description
+	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	@Override
 	public void setDescription(java.lang.String value) {
@@ -38,7 +38,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The language description
+	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	@Override
 	public java.lang.String getDescription() {
@@ -46,7 +46,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>
+	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	@Override
 	public void setDescriptionEnglish(java.lang.String value) {
@@ -54,7 +54,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>
+	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	@Override
 	public java.lang.String getDescriptionEnglish() {
@@ -62,7 +62,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The language ID
+	 * Setter for <code>PUBLIC.T_LANGUAGE.ID</code>. The language ID
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -70,12 +70,16 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The language ID
+	 * Getter for <code>PUBLIC.T_LANGUAGE.ID</code>. The language ID
 	 */
 	@Override
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TLanguage.ID);
 	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Fetch a list of <code>PUBLIC.T_BOOK</code> referencing this <code>PUBLIC.T_LANGUAGE</code>
@@ -85,13 +89,6 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TLanguage.ID)))
 			.fetch();
-	}
-
-	/**
-	 * Create a detached TLanguageRecord
-	 */
-	public TLanguageRecord() {
-		super(org.jooq.test.h2.generatedclasses.tables.TLanguage.T_LANGUAGE);
 	}
 
 	// -------------------------------------------------------------------------
@@ -176,5 +173,16 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.lang.Integer value4() {
 		return getId();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TLanguageRecord
+	 */
+	public TLanguageRecord() {
+		super(org.jooq.test.h2.generatedclasses.tables.TLanguage.T_LANGUAGE);
 	}
 }

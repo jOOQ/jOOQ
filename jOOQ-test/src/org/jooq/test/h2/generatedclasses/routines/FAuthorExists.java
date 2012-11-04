@@ -9,16 +9,15 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 515652183;
-
+	private static final long serialVersionUID = 1510951009;
 
 	/**
-	 * The procedure parameter <code>PUBLIC.F_AUTHOR_EXISTS.RETURN_VALUE</code>
+	 * The parameter <code>PUBLIC.F_AUTHOR_EXISTS.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>PUBLIC.F_AUTHOR_EXISTS.P2</code>
+	 * The parameter <code>PUBLIC.F_AUTHOR_EXISTS.P2</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P2 = createParameter("P2", org.jooq.impl.SQLDataType.VARCHAR);
 

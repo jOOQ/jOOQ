@@ -12,32 +12,32 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface ITBookToBookStore extends java.io.Serializable {
 
 	/**
-	 * The book store name
+	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
 	public void setBookStoreName(java.lang.String value);
 
 	/**
-	 * The book store name
+	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
 	public java.lang.String getBookStoreName();
 
 	/**
-	 * The book ID
+	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
 	public void setBookId(java.lang.Integer value);
 
 	/**
-	 * The book ID
+	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
 	public java.lang.Integer getBookId();
 
 	/**
-	 * The number of books on stock
+	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
 	public void setStock(java.lang.Integer value);
 
 	/**
-	 * The number of books on stock
+	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
 	public java.lang.Integer getStock();
 }

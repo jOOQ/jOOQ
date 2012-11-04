@@ -9,16 +9,15 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class FArrays4 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookArrayRecord> {
 
-	private static final long serialVersionUID = -1328942455;
-
+	private static final long serialVersionUID = 1111903671;
 
 	/**
-	 * The procedure parameter <code>TEST.F_ARRAYS4.RETURN_VALUE</code>
+	 * The parameter <code>TEST.F_ARRAYS4.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookArrayRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UBookArrayRecord.class));
 
 	/**
-	 * The procedure parameter <code>TEST.F_ARRAYS4.IN_ARRAY</code>
+	 * The parameter <code>TEST.F_ARRAYS4.IN_ARRAY</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookArrayRecord> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UBookArrayRecord.class));
 

@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_785", schema = "TEST")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 640161462;
+	private static final long serialVersionUID = -2116545382;
 
 	/**
-	 * The table column <code>TEST.T_785.ID</code>
+	 * Setter for <code>TEST.T_785.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785.ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_785.ID</code>
+	 * Getter for <code>TEST.T_785.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", precision = 7)
 	public java.lang.Integer getId() {
@@ -29,14 +29,14 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * The table column <code>TEST.T_785.NAME</code>
+	 * Setter for <code>TEST.T_785.NAME</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785.NAME, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_785.NAME</code>
+	 * Getter for <code>TEST.T_785.NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "NAME", length = 50)
 	public java.lang.String getName() {
@@ -44,26 +44,23 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * The table column <code>TEST.T_785.VALUE</code>
+	 * Setter for <code>TEST.T_785.VALUE</code>. 
 	 */
 	public void setValue(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785.VALUE, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_785.VALUE</code>
+	 * Getter for <code>TEST.T_785.VALUE</code>. 
 	 */
 	@javax.persistence.Column(name = "VALUE", length = 50)
 	public java.lang.String getValue() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785.VALUE);
 	}
 
-	/**
-	 * Create a detached T_785Record
-	 */
-	public T_785Record() {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record3 type implementation
@@ -131,5 +128,16 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	@Override
 	public java.lang.String value3() {
 		return getValue();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_785Record
+	 */
+	public T_785Record() {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785);
 	}
 }

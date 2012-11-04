@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -494850867;
+	private static final long serialVersionUID = 471268907;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK_STORE</code>
@@ -27,7 +27,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h
 	}
 
 	/**
-	 * The books store name
+	 * The column <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_STORE);
 

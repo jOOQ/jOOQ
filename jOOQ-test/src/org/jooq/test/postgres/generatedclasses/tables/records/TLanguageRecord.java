@@ -11,17 +11,17 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_language", schema = "public")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 110456624;
+	private static final long serialVersionUID = -1276554630;
 
 	/**
-	 * The table column <code>public.t_language.cd</code>
+	 * Setter for <code>public.t_language.cd</code>. 
 	 */
 	public void setCd(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.CD, value);
 	}
 
 	/**
-	 * The table column <code>public.t_language.cd</code>
+	 * Getter for <code>public.t_language.cd</code>. 
 	 */
 	@javax.persistence.Column(name = "cd", nullable = false, length = 2)
 	public java.lang.String getCd() {
@@ -29,14 +29,14 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>public.t_language.description</code>
+	 * Setter for <code>public.t_language.description</code>. 
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.DESCRIPTION, value);
 	}
 
 	/**
-	 * The table column <code>public.t_language.description</code>
+	 * Getter for <code>public.t_language.description</code>. 
 	 */
 	@javax.persistence.Column(name = "description", length = 50)
 	public java.lang.String getDescription() {
@@ -44,14 +44,14 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>public.t_language.description_english</code>
+	 * Setter for <code>public.t_language.description_english</code>. 
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.DESCRIPTION_ENGLISH, value);
 	}
 
 	/**
-	 * The table column <code>public.t_language.description_english</code>
+	 * Getter for <code>public.t_language.description_english</code>. 
 	 */
 	@javax.persistence.Column(name = "description_english", length = 50)
 	public java.lang.String getDescriptionEnglish() {
@@ -59,20 +59,24 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>public.t_language.id</code>
+	 * Setter for <code>public.t_language.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.ID, value);
 	}
 
 	/**
-	 * The table column <code>public.t_language.id</code>
+	 * Getter for <code>public.t_language.id</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.ID);
 	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Fetch a list of <code>public.t_book</code> referencing this <code>public.t_language</code>
@@ -82,13 +86,6 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.ID)))
 			.fetch();
-	}
-
-	/**
-	 * Create a detached TLanguageRecord
-	 */
-	public TLanguageRecord() {
-		super(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE);
 	}
 
 	// -------------------------------------------------------------------------
@@ -173,5 +170,16 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.lang.Integer value4() {
 		return getId();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TLanguageRecord
+	 */
+	public TLanguageRecord() {
+		super(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE);
 	}
 }

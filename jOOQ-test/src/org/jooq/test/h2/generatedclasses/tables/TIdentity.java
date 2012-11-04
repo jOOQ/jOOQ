@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -1641258769;
+	private static final long serialVersionUID = 652386323;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_IDENTITY</code>
@@ -25,12 +25,12 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.h2.generate
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY.ID</code>
+	 * The column <code>PUBLIC.T_IDENTITY.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY.VAL</code>
+	 * The column <code>PUBLIC.T_IDENTITY.VAL</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 

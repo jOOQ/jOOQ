@@ -9,21 +9,20 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1141552402;
-
+	private static final long serialVersionUID = -1456071553;
 
 	/**
-	 * The procedure parameter <code>public.p_unused.in1</code>
+	 * The parameter <code>public.p_unused.in1</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> IN1 = createParameter("in1", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>public.p_unused.out1</code>
+	 * The parameter <code>public.p_unused.out1</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> OUT1 = createParameter("out1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>public.p_unused.out2</code>
+	 * The parameter <code>public.p_unused.out2</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> OUT2 = createParameter("out2", org.jooq.impl.SQLDataType.INTEGER);
 

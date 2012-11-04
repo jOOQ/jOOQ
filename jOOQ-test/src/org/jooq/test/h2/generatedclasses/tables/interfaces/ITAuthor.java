@@ -12,62 +12,62 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface ITAuthor extends java.io.Serializable {
 
 	/**
-	 * The author ID
+	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The author ID
+	 * Getter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The author's first name
+	 * Setter for <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
 	public void setFirstName(java.lang.String value);
 
 	/**
-	 * The author's first name
+	 * Getter for <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
 	public java.lang.String getFirstName();
 
 	/**
-	 * The author's last name
+	 * Setter for <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
 	public void setLastName(java.lang.String value);
 
 	/**
-	 * The author's last name
+	 * Getter for <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
 	public java.lang.String getLastName();
 
 	/**
-	 * The author's date of birth
+	 * Setter for <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	public void setDateOfBirth(java.sql.Date value);
 
 	/**
-	 * The author's date of birth
+	 * Getter for <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	public java.sql.Date getDateOfBirth();
 
 	/**
-	 * The author's year of birth
+	 * Setter for <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	public void setYearOfBirth(java.lang.Integer value);
 
 	/**
-	 * The author's year of birth
+	 * Getter for <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	public java.lang.Integer getYearOfBirth();
 
 	/**
-	 * The author's address
+	 * Setter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. The author's address
 	 */
 	public void setAddress(java.lang.String value);
 
 	/**
-	 * The author's address
+	 * Getter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. The author's address
 	 */
 	public java.lang.String getAddress();
 }

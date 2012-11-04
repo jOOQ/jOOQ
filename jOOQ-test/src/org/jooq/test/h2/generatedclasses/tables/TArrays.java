@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -537691812;
+	private static final long serialVersionUID = 1463697206;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_ARRAYS</code>
@@ -25,31 +25,22 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.g
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * The column <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_ARRAYS);
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord, java.lang.Object[]> STRING_ARRAY = createField("STRING_ARRAY", org.jooq.impl.SQLDataType.OTHER.getArrayDataType(), T_ARRAYS);
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord, java.lang.Object[]> NUMBER_ARRAY = createField("NUMBER_ARRAY", org.jooq.impl.SQLDataType.OTHER.getArrayDataType(), T_ARRAYS);
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord, java.lang.Object[]> DATE_ARRAY = createField("DATE_ARRAY", org.jooq.impl.SQLDataType.OTHER.getArrayDataType(), T_ARRAYS);
 

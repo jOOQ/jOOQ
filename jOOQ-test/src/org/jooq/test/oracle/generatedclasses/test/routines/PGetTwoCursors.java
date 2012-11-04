@@ -9,16 +9,15 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class PGetTwoCursors extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -104942379;
-
+	private static final long serialVersionUID = 443740213;
 
 	/**
-	 * The procedure parameter <code>TEST.P_GET_TWO_CURSORS.BOOKS</code>
+	 * The parameter <code>TEST.P_GET_TWO_CURSORS.BOOKS</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * The procedure parameter <code>TEST.P_GET_TWO_CURSORS.AUTHORS</code>
+	 * The parameter <code>TEST.P_GET_TWO_CURSORS.AUTHORS</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> AUTHORS = createParameter("AUTHORS", org.jooq.impl.SQLDataType.RESULT);
 

@@ -9,11 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 901942596;
-
+	private static final long serialVersionUID = -1786894455;
 
 	/**
-	 * The procedure parameter <code>TEST.P1490.value</code>
+	 * The parameter <code>TEST.P1490.value</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> VALUE = createParameter("value", org.jooq.impl.SQLDataType.NUMERIC);
 

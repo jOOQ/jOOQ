@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -753686357;
+	private static final long serialVersionUID = -1037365809;
 
 	/**
 	 * The singleton instance of <code>public.t_identity_pk</code>
@@ -25,12 +25,12 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>public.t_identity_pk.id</code>
+	 * The column <code>public.t_identity_pk.id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>public.t_identity_pk.val</code>
+	 * The column <code>public.t_identity_pk.val</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this);
 

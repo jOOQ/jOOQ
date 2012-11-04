@@ -11,10 +11,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = 1125536545;
+	private static final long serialVersionUID = 96904439;
 
 	/**
-	 * The books store name
+	 * Setter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
 	 */
 	@Override
 	public void setName(java.lang.String value) {
@@ -22,12 +22,16 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * The books store name
+	 * Getter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
 	 */
 	@Override
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBookStore.NAME);
 	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Fetch a list of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> referencing this <code>PUBLIC.T_BOOK_STORE</code>
@@ -37,13 +41,6 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
 			.where(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBookStore.NAME)))
 			.fetch();
-	}
-
-	/**
-	 * Create a detached TBookStoreRecord
-	 */
-	public TBookStoreRecord() {
-		super(org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 
 	// -------------------------------------------------------------------------
@@ -80,5 +77,16 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value1() {
 		return getName();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TBookStoreRecord
+	 */
+	public TBookStoreRecord() {
+		super(org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 }

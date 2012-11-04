@@ -183,8 +183,12 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
     @SuppressWarnings("unchecked")
     public final W println() {
-        sb.append("\n");
-        newline = true;
+
+        // Don't add empty lines at the beginning of files
+        if (sb.length() > 0) {
+            sb.append("\n");
+            newline = true;
+        }
 
         return (W) this;
     }

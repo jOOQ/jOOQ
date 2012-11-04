@@ -11,23 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
 public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> {
 
-	private static final long serialVersionUID = -2043431195;
+	private static final long serialVersionUID = -196431525;
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>. 
 	 */
 	public void setId(java.lang.Object value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID")
 	public java.lang.Object getId() {
@@ -35,20 +29,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>. 
 	 */
 	public void setAuthorId(java.lang.Object value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.AUTHOR_ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID")
 	public java.lang.Object getAuthorId() {
@@ -56,20 +44,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Object value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.CO_AUTHOR_ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID")
 	public java.lang.Object getCoAuthorId() {
@@ -77,20 +59,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.DETAILS_ID</code>. 
 	 */
 	public void setDetailsId(java.lang.Object value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.DETAILS_ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.DETAILS_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID")
 	public java.lang.Object getDetailsId() {
@@ -98,20 +74,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.TITLE</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.Object value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.TITLE, value);
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.TITLE</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.TITLE</code>. 
 	 */
 	@javax.persistence.Column(name = "TITLE")
 	public java.lang.Object getTitle() {
@@ -119,20 +89,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>. 
 	 */
 	public void setPublishedIn(java.lang.Object value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.PUBLISHED_IN, value);
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>. 
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN")
 	public java.lang.Object getPublishedIn() {
@@ -140,20 +104,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>. 
 	 */
 	public void setLanguageId(java.lang.Object value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.LANGUAGE_ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID")
 	public java.lang.Object getLanguageId() {
@@ -161,20 +119,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>. 
 	 */
 	public void setContentText(java.lang.Object value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.CONTENT_TEXT, value);
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>. 
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.Object getContentText() {
@@ -182,25 +134,27 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>. 
 	 */
 	public void setContentPdf(java.lang.Object value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.CONTENT_PDF, value);
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>. 
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	public java.lang.Object getContentPdf() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.CONTENT_PDF);
 	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached VIncompleteRecord

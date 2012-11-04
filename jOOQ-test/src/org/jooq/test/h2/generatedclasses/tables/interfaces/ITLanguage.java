@@ -12,42 +12,42 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface ITLanguage extends java.io.Serializable {
 
 	/**
-	 * The language ISO code
+	 * Setter for <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	public void setCd(java.lang.String value);
 
 	/**
-	 * The language ISO code
+	 * Getter for <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	public java.lang.String getCd();
 
 	/**
-	 * The language description
+	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	public void setDescription(java.lang.String value);
 
 	/**
-	 * The language description
+	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	public java.lang.String getDescription();
 
 	/**
-	 * The table column <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>
+	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public void setDescriptionEnglish(java.lang.String value);
 
 	/**
-	 * The table column <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>
+	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public java.lang.String getDescriptionEnglish();
 
 	/**
-	 * The language ID
+	 * Setter for <code>PUBLIC.T_LANGUAGE.ID</code>. The language ID
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The language ID
+	 * Getter for <code>PUBLIC.T_LANGUAGE.ID</code>. The language ID
 	 */
 	public java.lang.Integer getId();
 }

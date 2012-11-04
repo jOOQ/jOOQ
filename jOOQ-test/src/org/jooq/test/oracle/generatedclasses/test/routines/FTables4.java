@@ -9,16 +9,15 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class FTables4 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord> {
 
-	private static final long serialVersionUID = -146584213;
-
+	private static final long serialVersionUID = -1779426067;
 
 	/**
-	 * The procedure parameter <code>TEST.F_TABLES4.RETURN_VALUE</code>
+	 * The parameter <code>TEST.F_TABLES4.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord.class));
 
 	/**
-	 * The procedure parameter <code>TEST.F_TABLES4.IN_TABLE</code>
+	 * The parameter <code>TEST.F_TABLES4.IN_TABLE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord> IN_TABLE = createParameter("IN_TABLE", org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord.class));
 

@@ -9,16 +9,15 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class PArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -443124913;
-
+	private static final long serialVersionUID = 997761895;
 
 	/**
-	 * The procedure parameter <code>TEST.P_ARRAYS2.IN_ARRAY</code>
+	 * The parameter <code>TEST.P_ARRAYS2.IN_ARRAY</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord.class));
 
 	/**
-	 * The procedure parameter <code>TEST.P_ARRAYS2.OUT_ARRAY</code>
+	 * The parameter <code>TEST.P_ARRAYS2.OUT_ARRAY</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord.class));
 

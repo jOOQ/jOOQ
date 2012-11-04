@@ -9,60 +9,60 @@ package org.jooq.test.postgres.generatedclasses.udt.records;
 @java.lang.SuppressWarnings("all")
 public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord> {
 
-	private static final long serialVersionUID = -134497597;
+	private static final long serialVersionUID = -2119553249;
 
 
 	/**
-	 * The UDT column <code>public.u_street_type.street</code>
+	 * Setter for <code>public.u_street_type.street</code>. 
 	 */
 	public void setStreet(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.STREET, value);
 	}
 
 	/**
-	 * The UDT column <code>public.u_street_type.street</code>
+	 * Getter for <code>public.u_street_type.street</code>. 
 	 */
 	public java.lang.String getStreet() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.STREET);
 	}
 
 	/**
-	 * The UDT column <code>public.u_street_type.no</code>
+	 * Setter for <code>public.u_street_type.no</code>. 
 	 */
 	public void setNo(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.NO, value);
 	}
 
 	/**
-	 * The UDT column <code>public.u_street_type.no</code>
+	 * Getter for <code>public.u_street_type.no</code>. 
 	 */
 	public java.lang.String getNo() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.NO);
 	}
 
 	/**
-	 * The UDT column <code>public.u_street_type.floors</code>
+	 * Setter for <code>public.u_street_type.floors</code>. 
 	 */
 	public void setFloors(java.lang.Integer[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.FLOORS, value);
 	}
 
 	/**
-	 * The UDT column <code>public.u_street_type.floors</code>
+	 * Getter for <code>public.u_street_type.floors</code>. 
 	 */
 	public java.lang.Integer[] getFloors() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.FLOORS);
 	}
 
 	/**
-	 * The UDT column <code>public.u_street_type.f_1323</code>
+	 * Setter for <code>public.u_street_type.f_1323</code>. 
 	 */
 	public void setF_1323(byte[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.F_1323, value);
 	}
 
 	/**
-	 * The UDT column <code>public.u_street_type.f_1323</code>
+	 * Getter for <code>public.u_street_type.f_1323</code>. 
 	 */
 	public byte[] getF_1323() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.F_1323);

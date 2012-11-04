@@ -9,16 +9,15 @@ package org.jooq.test.oracle.generatedclasses.test.udt.u_author_type;
 @java.lang.SuppressWarnings("all")
 public class CountBooks extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1901790590;
-
+	private static final long serialVersionUID = 1906253508;
 
 	/**
-	 * The procedure parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.RETURN_VALUE</code>
+	 * The parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.SELF</code>
+	 * The parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.SELF</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> SELF = createParameter("SELF", org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.U_AUTHOR_TYPE.getDataType());
 

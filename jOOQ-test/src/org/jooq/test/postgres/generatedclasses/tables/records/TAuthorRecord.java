@@ -11,23 +11,102 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_author", schema = "public")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -1891228419;
+	private static final long serialVersionUID = -968773525;
 
 	/**
-	 * The table column <code>public.t_author.id</code>
+	 * Setter for <code>public.t_author.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID, value);
 	}
 
 	/**
-	 * The table column <code>public.t_author.id</code>
+	 * Getter for <code>public.t_author.id</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID);
 	}
+
+	/**
+	 * Setter for <code>public.t_author.first_name</code>. 
+	 */
+	public void setFirstName(java.lang.String value) {
+		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME, value);
+	}
+
+	/**
+	 * Getter for <code>public.t_author.first_name</code>. 
+	 */
+	@javax.persistence.Column(name = "first_name", length = 50)
+	public java.lang.String getFirstName() {
+		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME);
+	}
+
+	/**
+	 * Setter for <code>public.t_author.last_name</code>. 
+	 */
+	public void setLastName(java.lang.String value) {
+		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME, value);
+	}
+
+	/**
+	 * Getter for <code>public.t_author.last_name</code>. 
+	 */
+	@javax.persistence.Column(name = "last_name", nullable = false, length = 50)
+	public java.lang.String getLastName() {
+		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME);
+	}
+
+	/**
+	 * Setter for <code>public.t_author.date_of_birth</code>. 
+	 */
+	public void setDateOfBirth(java.sql.Date value) {
+		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH, value);
+	}
+
+	/**
+	 * Getter for <code>public.t_author.date_of_birth</code>. 
+	 */
+	@javax.persistence.Column(name = "date_of_birth")
+	public java.sql.Date getDateOfBirth() {
+		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH);
+	}
+
+	/**
+	 * Setter for <code>public.t_author.year_of_birth</code>. 
+	 */
+	public void setYearOfBirth(java.lang.Integer value) {
+		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH, value);
+	}
+
+	/**
+	 * Getter for <code>public.t_author.year_of_birth</code>. 
+	 */
+	@javax.persistence.Column(name = "year_of_birth", precision = 32)
+	public java.lang.Integer getYearOfBirth() {
+		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH);
+	}
+
+	/**
+	 * Setter for <code>public.t_author.address</code>. 
+	 */
+	public void setAddress(org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord value) {
+		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS, value);
+	}
+
+	/**
+	 * Getter for <code>public.t_author.address</code>. 
+	 */
+	@javax.persistence.Column(name = "address")
+	public org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord getAddress() {
+		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Fetch a list of <code>public.t_book</code> referencing this <code>public.t_author</code>
@@ -47,88 +126,6 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
 			.fetch();
-	}
-
-	/**
-	 * The table column <code>public.t_author.first_name</code>
-	 */
-	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME, value);
-	}
-
-	/**
-	 * The table column <code>public.t_author.first_name</code>
-	 */
-	@javax.persistence.Column(name = "first_name", length = 50)
-	public java.lang.String getFirstName() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME);
-	}
-
-	/**
-	 * The table column <code>public.t_author.last_name</code>
-	 */
-	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME, value);
-	}
-
-	/**
-	 * The table column <code>public.t_author.last_name</code>
-	 */
-	@javax.persistence.Column(name = "last_name", nullable = false, length = 50)
-	public java.lang.String getLastName() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME);
-	}
-
-	/**
-	 * The table column <code>public.t_author.date_of_birth</code>
-	 */
-	public void setDateOfBirth(java.sql.Date value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH, value);
-	}
-
-	/**
-	 * The table column <code>public.t_author.date_of_birth</code>
-	 */
-	@javax.persistence.Column(name = "date_of_birth")
-	public java.sql.Date getDateOfBirth() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH);
-	}
-
-	/**
-	 * The table column <code>public.t_author.year_of_birth</code>
-	 */
-	public void setYearOfBirth(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH, value);
-	}
-
-	/**
-	 * The table column <code>public.t_author.year_of_birth</code>
-	 */
-	@javax.persistence.Column(name = "year_of_birth", precision = 32)
-	public java.lang.Integer getYearOfBirth() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH);
-	}
-
-	/**
-	 * The table column <code>public.t_author.address</code>
-	 */
-	public void setAddress(org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS, value);
-	}
-
-	/**
-	 * The table column <code>public.t_author.address</code>
-	 */
-	@javax.persistence.Column(name = "address")
-	public org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord getAddress() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS);
-	}
-
-	/**
-	 * Create a detached TAuthorRecord
-	 */
-	public TAuthorRecord() {
-		super(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 
 	// -------------------------------------------------------------------------
@@ -245,5 +242,16 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord value6() {
 		return getAddress();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TAuthorRecord
+	 */
+	public TAuthorRecord() {
+		super(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 }

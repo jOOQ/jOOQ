@@ -11,17 +11,17 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_85", schema = "public")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 957926952;
+	private static final long serialVersionUID = 145478290;
 
 	/**
-	 * The table column <code>public.x_test_case_85.id</code>
+	 * Setter for <code>public.x_test_case_85.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID, value);
 	}
 
 	/**
-	 * The table column <code>public.x_test_case_85.id</code>
+	 * Getter for <code>public.x_test_case_85.id</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -30,19 +30,38 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>public.x_test_case_85.x_unused_id</code>
+	 * Setter for <code>public.x_test_case_85.x_unused_id</code>. 
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, value);
 	}
 
 	/**
-	 * The table column <code>public.x_test_case_85.x_unused_id</code>
+	 * Getter for <code>public.x_test_case_85.x_unused_id</code>. 
 	 */
 	@javax.persistence.Column(name = "x_unused_id", precision = 32)
 	public java.lang.Integer getXUnusedId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID);
 	}
+
+	/**
+	 * Setter for <code>public.x_test_case_85.x_unused_name</code>. 
+	 */
+	public void setXUnusedName(java.lang.String value) {
+		setValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME, value);
+	}
+
+	/**
+	 * Getter for <code>public.x_test_case_85.x_unused_name</code>. 
+	 */
+	@javax.persistence.Column(name = "x_unused_name", length = 10)
+	public java.lang.String getXUnusedName() {
+		return getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Fetch a <code>public.x_unused</code> referenced by this <code>public.x_test_case_85</code>
@@ -53,28 +72,6 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 			.where(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID)))
 			.and(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME)))
 			.fetchOne();
-	}
-
-	/**
-	 * The table column <code>public.x_test_case_85.x_unused_name</code>
-	 */
-	public void setXUnusedName(java.lang.String value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME, value);
-	}
-
-	/**
-	 * The table column <code>public.x_test_case_85.x_unused_name</code>
-	 */
-	@javax.persistence.Column(name = "x_unused_name", length = 10)
-	public java.lang.String getXUnusedName() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
-	}
-
-	/**
-	 * Create a detached XTestCase_85Record
-	 */
-	public XTestCase_85Record() {
-		super(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 
 	// -------------------------------------------------------------------------
@@ -143,5 +140,16 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.String value3() {
 		return getXUnusedName();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_85Record
+	 */
+	public XTestCase_85Record() {
+		super(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 }

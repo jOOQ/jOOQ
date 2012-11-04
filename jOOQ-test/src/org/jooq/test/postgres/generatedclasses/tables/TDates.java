@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 276660177;
+	private static final long serialVersionUID = 2001779801;
 
 	/**
 	 * The singleton instance of <code>public.t_dates</code>
@@ -25,32 +25,32 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postg
 	}
 
 	/**
-	 * The table column <code>public.t_dates.id</code>
+	 * The column <code>public.t_dates.id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>public.t_dates.d</code>
+	 * The column <code>public.t_dates.d</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("d", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
-	 * The table column <code>public.t_dates.t</code>
+	 * The column <code>public.t_dates.t</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("t", org.jooq.impl.SQLDataType.TIME, this);
 
 	/**
-	 * The table column <code>public.t_dates.ts</code>
+	 * The column <code>public.t_dates.ts</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>public.t_dates.d_int</code>
+	 * The column <code>public.t_dates.d_int</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>public.t_dates.ts_bigint</code>
+	 * The column <code>public.t_dates.ts_bigint</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, this);
 

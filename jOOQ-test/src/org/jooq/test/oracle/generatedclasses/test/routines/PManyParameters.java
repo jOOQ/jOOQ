@@ -9,2006 +9,2005 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class PManyParameters extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1233660320;
-
+	private static final long serialVersionUID = 1080753560;
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F000</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F000</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F000 = createParameter("F000", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F001</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F001</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F001 = createParameter("F001", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F002</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F002</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F002 = createParameter("F002", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F003</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F003</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F003 = createParameter("F003", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F004</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F004</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F004 = createParameter("F004", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F005</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F005</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F005 = createParameter("F005", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F006</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F006</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F006 = createParameter("F006", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F007</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F007</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F007 = createParameter("F007", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F008</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F008</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F008 = createParameter("F008", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F009</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F009</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F009 = createParameter("F009", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F010</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F010</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F010 = createParameter("F010", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F011</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F011</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F011 = createParameter("F011", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F012</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F012</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F012 = createParameter("F012", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F013</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F013</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F013 = createParameter("F013", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F014</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F014</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F014 = createParameter("F014", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F015</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F015</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F015 = createParameter("F015", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F016</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F016</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F016 = createParameter("F016", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F017</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F017</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F017 = createParameter("F017", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F018</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F018</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F018 = createParameter("F018", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F019</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F019</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F019 = createParameter("F019", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F020</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F020</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F020 = createParameter("F020", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F021</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F021</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F021 = createParameter("F021", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F022</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F022</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F022 = createParameter("F022", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F023</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F023</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F023 = createParameter("F023", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F024</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F024</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F024 = createParameter("F024", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F025</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F025</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F025 = createParameter("F025", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F026</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F026</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F026 = createParameter("F026", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F027</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F027</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F027 = createParameter("F027", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F028</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F028</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F028 = createParameter("F028", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F029</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F029</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F029 = createParameter("F029", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F030</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F030</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F030 = createParameter("F030", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F031</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F031</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F031 = createParameter("F031", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F032</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F032</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F032 = createParameter("F032", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F033</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F033</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F033 = createParameter("F033", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F034</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F034</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F034 = createParameter("F034", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F035</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F035</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F035 = createParameter("F035", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F036</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F036</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F036 = createParameter("F036", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F037</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F037</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F037 = createParameter("F037", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F038</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F038</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F038 = createParameter("F038", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F039</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F039</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F039 = createParameter("F039", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F040</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F040</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F040 = createParameter("F040", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F041</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F041</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F041 = createParameter("F041", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F042</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F042</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F042 = createParameter("F042", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F043</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F043</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F043 = createParameter("F043", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F044</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F044</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F044 = createParameter("F044", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F045</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F045</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F045 = createParameter("F045", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F046</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F046</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F046 = createParameter("F046", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F047</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F047</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F047 = createParameter("F047", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F048</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F048</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F048 = createParameter("F048", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F049</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F049</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F049 = createParameter("F049", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F050</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F050</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F050 = createParameter("F050", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F051</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F051</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F051 = createParameter("F051", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F052</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F052</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F052 = createParameter("F052", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F053</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F053</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F053 = createParameter("F053", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F054</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F054</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F054 = createParameter("F054", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F055</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F055</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F055 = createParameter("F055", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F056</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F056</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F056 = createParameter("F056", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F057</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F057</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F057 = createParameter("F057", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F058</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F058</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F058 = createParameter("F058", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F059</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F059</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F059 = createParameter("F059", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F060</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F060</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F060 = createParameter("F060", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F061</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F061</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F061 = createParameter("F061", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F062</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F062</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F062 = createParameter("F062", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F063</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F063</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F063 = createParameter("F063", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F064</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F064</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F064 = createParameter("F064", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F065</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F065</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F065 = createParameter("F065", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F066</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F066</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F066 = createParameter("F066", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F067</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F067</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F067 = createParameter("F067", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F068</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F068</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F068 = createParameter("F068", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F069</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F069</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F069 = createParameter("F069", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F070</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F070</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F070 = createParameter("F070", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F071</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F071</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F071 = createParameter("F071", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F072</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F072</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F072 = createParameter("F072", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F073</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F073</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F073 = createParameter("F073", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F074</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F074</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F074 = createParameter("F074", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F075</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F075</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F075 = createParameter("F075", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F076</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F076</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F076 = createParameter("F076", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F077</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F077</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F077 = createParameter("F077", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F078</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F078</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F078 = createParameter("F078", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F079</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F079</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F079 = createParameter("F079", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F080</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F080</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F080 = createParameter("F080", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F081</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F081</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F081 = createParameter("F081", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F082</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F082</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F082 = createParameter("F082", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F083</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F083</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F083 = createParameter("F083", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F084</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F084</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F084 = createParameter("F084", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F085</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F085</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F085 = createParameter("F085", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F086</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F086</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F086 = createParameter("F086", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F087</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F087</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F087 = createParameter("F087", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F088</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F088</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F088 = createParameter("F088", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F089</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F089</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F089 = createParameter("F089", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F090</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F090</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F090 = createParameter("F090", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F091</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F091</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F091 = createParameter("F091", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F092</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F092</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F092 = createParameter("F092", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F093</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F093</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F093 = createParameter("F093", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F094</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F094</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F094 = createParameter("F094", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F095</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F095</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F095 = createParameter("F095", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F096</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F096</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F096 = createParameter("F096", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F097</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F097</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F097 = createParameter("F097", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F098</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F098</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F098 = createParameter("F098", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F099</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F099</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F099 = createParameter("F099", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F100</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F100</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F100 = createParameter("F100", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F101</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F101</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F101 = createParameter("F101", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F102</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F102</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F102 = createParameter("F102", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F103</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F103</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F103 = createParameter("F103", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F104</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F104</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F104 = createParameter("F104", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F105</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F105</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F105 = createParameter("F105", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F106</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F106</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F106 = createParameter("F106", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F107</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F107</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F107 = createParameter("F107", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F108</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F108</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F108 = createParameter("F108", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F109</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F109</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F109 = createParameter("F109", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F110</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F110</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F110 = createParameter("F110", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F111</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F111</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F111 = createParameter("F111", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F112</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F112</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F112 = createParameter("F112", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F113</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F113</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F113 = createParameter("F113", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F114</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F114</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F114 = createParameter("F114", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F115</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F115</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F115 = createParameter("F115", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F116</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F116</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F116 = createParameter("F116", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F117</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F117</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F117 = createParameter("F117", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F118</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F118</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F118 = createParameter("F118", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F119</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F119</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F119 = createParameter("F119", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F120</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F120</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F120 = createParameter("F120", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F121</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F121</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F121 = createParameter("F121", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F122</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F122</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F122 = createParameter("F122", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F123</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F123</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F123 = createParameter("F123", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F124</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F124</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F124 = createParameter("F124", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F125</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F125</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F125 = createParameter("F125", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F126</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F126</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F126 = createParameter("F126", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F127</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F127</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F127 = createParameter("F127", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F128</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F128</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F128 = createParameter("F128", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F129</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F129</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F129 = createParameter("F129", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F130</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F130</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F130 = createParameter("F130", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F131</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F131</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F131 = createParameter("F131", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F132</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F132</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F132 = createParameter("F132", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F133</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F133</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F133 = createParameter("F133", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F134</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F134</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F134 = createParameter("F134", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F135</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F135</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F135 = createParameter("F135", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F136</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F136</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F136 = createParameter("F136", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F137</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F137</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F137 = createParameter("F137", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F138</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F138</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F138 = createParameter("F138", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F139</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F139</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F139 = createParameter("F139", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F140</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F140</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F140 = createParameter("F140", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F141</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F141</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F141 = createParameter("F141", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F142</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F142</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F142 = createParameter("F142", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F143</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F143</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F143 = createParameter("F143", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F144</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F144</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F144 = createParameter("F144", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F145</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F145</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F145 = createParameter("F145", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F146</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F146</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F146 = createParameter("F146", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F147</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F147</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F147 = createParameter("F147", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F148</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F148</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F148 = createParameter("F148", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F149</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F149</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F149 = createParameter("F149", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F150</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F150</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F150 = createParameter("F150", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F151</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F151</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F151 = createParameter("F151", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F152</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F152</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F152 = createParameter("F152", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F153</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F153</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F153 = createParameter("F153", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F154</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F154</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F154 = createParameter("F154", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F155</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F155</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F155 = createParameter("F155", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F156</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F156</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F156 = createParameter("F156", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F157</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F157</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F157 = createParameter("F157", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F158</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F158</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F158 = createParameter("F158", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F159</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F159</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F159 = createParameter("F159", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F160</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F160</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F160 = createParameter("F160", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F161</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F161</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F161 = createParameter("F161", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F162</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F162</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F162 = createParameter("F162", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F163</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F163</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F163 = createParameter("F163", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F164</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F164</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F164 = createParameter("F164", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F165</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F165</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F165 = createParameter("F165", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F166</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F166</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F166 = createParameter("F166", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F167</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F167</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F167 = createParameter("F167", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F168</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F168</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F168 = createParameter("F168", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F169</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F169</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F169 = createParameter("F169", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F170</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F170</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F170 = createParameter("F170", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F171</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F171</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F171 = createParameter("F171", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F172</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F172</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F172 = createParameter("F172", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F173</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F173</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F173 = createParameter("F173", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F174</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F174</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F174 = createParameter("F174", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F175</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F175</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F175 = createParameter("F175", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F176</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F176</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F176 = createParameter("F176", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F177</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F177</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F177 = createParameter("F177", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F178</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F178</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F178 = createParameter("F178", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F179</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F179</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F179 = createParameter("F179", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F180</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F180</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F180 = createParameter("F180", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F181</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F181</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F181 = createParameter("F181", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F182</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F182</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F182 = createParameter("F182", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F183</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F183</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F183 = createParameter("F183", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F184</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F184</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F184 = createParameter("F184", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F185</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F185</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F185 = createParameter("F185", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F186</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F186</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F186 = createParameter("F186", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F187</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F187</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F187 = createParameter("F187", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F188</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F188</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F188 = createParameter("F188", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F189</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F189</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F189 = createParameter("F189", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F190</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F190</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F190 = createParameter("F190", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F191</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F191</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F191 = createParameter("F191", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F192</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F192</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F192 = createParameter("F192", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F193</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F193</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F193 = createParameter("F193", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F194</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F194</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F194 = createParameter("F194", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F195</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F195</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F195 = createParameter("F195", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F196</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F196</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F196 = createParameter("F196", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F197</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F197</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F197 = createParameter("F197", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F198</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F198</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F198 = createParameter("F198", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F199</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F199</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F199 = createParameter("F199", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F200</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F200</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F200 = createParameter("F200", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F201</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F201</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F201 = createParameter("F201", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F202</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F202</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F202 = createParameter("F202", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F203</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F203</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F203 = createParameter("F203", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F204</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F204</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F204 = createParameter("F204", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F205</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F205</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F205 = createParameter("F205", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F206</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F206</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F206 = createParameter("F206", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F207</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F207</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F207 = createParameter("F207", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F208</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F208</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F208 = createParameter("F208", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F209</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F209</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F209 = createParameter("F209", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F210</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F210</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F210 = createParameter("F210", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F211</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F211</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F211 = createParameter("F211", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F212</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F212</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F212 = createParameter("F212", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F213</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F213</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F213 = createParameter("F213", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F214</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F214</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F214 = createParameter("F214", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F215</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F215</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F215 = createParameter("F215", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F216</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F216</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F216 = createParameter("F216", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F217</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F217</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F217 = createParameter("F217", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F218</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F218</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F218 = createParameter("F218", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F219</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F219</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F219 = createParameter("F219", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F220</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F220</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F220 = createParameter("F220", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F221</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F221</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F221 = createParameter("F221", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F222</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F222</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F222 = createParameter("F222", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F223</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F223</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F223 = createParameter("F223", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F224</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F224</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F224 = createParameter("F224", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F225</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F225</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F225 = createParameter("F225", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F226</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F226</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F226 = createParameter("F226", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F227</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F227</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F227 = createParameter("F227", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F228</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F228</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F228 = createParameter("F228", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F229</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F229</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F229 = createParameter("F229", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F230</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F230</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F230 = createParameter("F230", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F231</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F231</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F231 = createParameter("F231", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F232</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F232</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F232 = createParameter("F232", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F233</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F233</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F233 = createParameter("F233", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F234</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F234</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F234 = createParameter("F234", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F235</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F235</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F235 = createParameter("F235", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F236</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F236</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F236 = createParameter("F236", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F237</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F237</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F237 = createParameter("F237", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F238</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F238</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F238 = createParameter("F238", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F239</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F239</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F239 = createParameter("F239", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F240</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F240</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F240 = createParameter("F240", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F241</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F241</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F241 = createParameter("F241", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F242</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F242</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F242 = createParameter("F242", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F243</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F243</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F243 = createParameter("F243", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F244</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F244</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F244 = createParameter("F244", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F245</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F245</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F245 = createParameter("F245", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F246</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F246</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F246 = createParameter("F246", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F247</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F247</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F247 = createParameter("F247", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F248</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F248</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F248 = createParameter("F248", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F249</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F249</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F249 = createParameter("F249", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F250</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F250</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F250 = createParameter("F250", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F251</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F251</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F251 = createParameter("F251", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F252</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F252</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F252 = createParameter("F252", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F253</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F253</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F253 = createParameter("F253", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F254</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F254</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F254 = createParameter("F254", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F255</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F255</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F255 = createParameter("F255", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F256</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F256</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F256 = createParameter("F256", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F257</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F257</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F257 = createParameter("F257", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F258</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F258</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F258 = createParameter("F258", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F259</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F259</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F259 = createParameter("F259", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F260</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F260</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F260 = createParameter("F260", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F261</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F261</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F261 = createParameter("F261", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F262</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F262</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F262 = createParameter("F262", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F263</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F263</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F263 = createParameter("F263", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F264</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F264</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F264 = createParameter("F264", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F265</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F265</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F265 = createParameter("F265", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F266</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F266</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F266 = createParameter("F266", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F267</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F267</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F267 = createParameter("F267", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F268</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F268</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F268 = createParameter("F268", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F269</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F269</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F269 = createParameter("F269", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F270</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F270</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F270 = createParameter("F270", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F271</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F271</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F271 = createParameter("F271", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F272</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F272</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F272 = createParameter("F272", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F273</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F273</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F273 = createParameter("F273", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F274</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F274</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F274 = createParameter("F274", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F275</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F275</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F275 = createParameter("F275", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F276</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F276</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F276 = createParameter("F276", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F277</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F277</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F277 = createParameter("F277", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F278</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F278</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F278 = createParameter("F278", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F279</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F279</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F279 = createParameter("F279", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F280</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F280</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F280 = createParameter("F280", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F281</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F281</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F281 = createParameter("F281", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F282</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F282</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F282 = createParameter("F282", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F283</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F283</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F283 = createParameter("F283", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F284</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F284</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F284 = createParameter("F284", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F285</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F285</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F285 = createParameter("F285", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F286</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F286</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F286 = createParameter("F286", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F287</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F287</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F287 = createParameter("F287", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F288</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F288</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F288 = createParameter("F288", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F289</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F289</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F289 = createParameter("F289", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F290</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F290</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F290 = createParameter("F290", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F291</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F291</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F291 = createParameter("F291", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F292</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F292</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F292 = createParameter("F292", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F293</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F293</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F293 = createParameter("F293", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F294</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F294</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F294 = createParameter("F294", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F295</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F295</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F295 = createParameter("F295", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F296</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F296</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F296 = createParameter("F296", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F297</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F297</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F297 = createParameter("F297", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F298</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F298</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F298 = createParameter("F298", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F299</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F299</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F299 = createParameter("F299", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F300</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F300</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F300 = createParameter("F300", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F301</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F301</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F301 = createParameter("F301", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F302</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F302</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F302 = createParameter("F302", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F303</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F303</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F303 = createParameter("F303", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F304</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F304</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F304 = createParameter("F304", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F305</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F305</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F305 = createParameter("F305", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F306</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F306</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F306 = createParameter("F306", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F307</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F307</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F307 = createParameter("F307", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F308</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F308</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F308 = createParameter("F308", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F309</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F309</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F309 = createParameter("F309", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F310</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F310</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F310 = createParameter("F310", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F311</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F311</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F311 = createParameter("F311", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F312</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F312</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F312 = createParameter("F312", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F313</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F313</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F313 = createParameter("F313", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F314</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F314</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F314 = createParameter("F314", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F315</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F315</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F315 = createParameter("F315", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F316</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F316</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F316 = createParameter("F316", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F317</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F317</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F317 = createParameter("F317", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F318</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F318</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F318 = createParameter("F318", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F319</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F319</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F319 = createParameter("F319", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F320</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F320</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F320 = createParameter("F320", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F321</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F321</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F321 = createParameter("F321", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F322</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F322</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F322 = createParameter("F322", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F323</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F323</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F323 = createParameter("F323", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F324</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F324</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F324 = createParameter("F324", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F325</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F325</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F325 = createParameter("F325", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F326</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F326</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F326 = createParameter("F326", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F327</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F327</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F327 = createParameter("F327", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F328</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F328</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F328 = createParameter("F328", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F329</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F329</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F329 = createParameter("F329", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F330</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F330</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F330 = createParameter("F330", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F331</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F331</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F331 = createParameter("F331", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F332</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F332</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F332 = createParameter("F332", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F333</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F333</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F333 = createParameter("F333", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F334</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F334</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F334 = createParameter("F334", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F335</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F335</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F335 = createParameter("F335", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F336</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F336</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F336 = createParameter("F336", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F337</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F337</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F337 = createParameter("F337", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F338</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F338</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F338 = createParameter("F338", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F339</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F339</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F339 = createParameter("F339", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F340</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F340</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F340 = createParameter("F340", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F341</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F341</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F341 = createParameter("F341", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F342</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F342</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F342 = createParameter("F342", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F343</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F343</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F343 = createParameter("F343", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F344</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F344</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F344 = createParameter("F344", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F345</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F345</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F345 = createParameter("F345", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F346</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F346</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F346 = createParameter("F346", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F347</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F347</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F347 = createParameter("F347", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F348</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F348</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F348 = createParameter("F348", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F349</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F349</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F349 = createParameter("F349", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F350</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F350</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F350 = createParameter("F350", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F351</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F351</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F351 = createParameter("F351", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F352</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F352</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F352 = createParameter("F352", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F353</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F353</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F353 = createParameter("F353", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F354</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F354</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F354 = createParameter("F354", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F355</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F355</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F355 = createParameter("F355", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F356</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F356</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F356 = createParameter("F356", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F357</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F357</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F357 = createParameter("F357", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F358</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F358</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F358 = createParameter("F358", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F359</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F359</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F359 = createParameter("F359", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F360</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F360</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F360 = createParameter("F360", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F361</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F361</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F361 = createParameter("F361", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F362</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F362</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F362 = createParameter("F362", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F363</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F363</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F363 = createParameter("F363", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F364</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F364</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F364 = createParameter("F364", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F365</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F365</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F365 = createParameter("F365", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F366</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F366</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F366 = createParameter("F366", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F367</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F367</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F367 = createParameter("F367", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F368</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F368</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F368 = createParameter("F368", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F369</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F369</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F369 = createParameter("F369", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F370</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F370</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F370 = createParameter("F370", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F371</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F371</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F371 = createParameter("F371", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F372</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F372</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F372 = createParameter("F372", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F373</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F373</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F373 = createParameter("F373", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F374</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F374</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F374 = createParameter("F374", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F375</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F375</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F375 = createParameter("F375", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F376</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F376</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F376 = createParameter("F376", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F377</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F377</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F377 = createParameter("F377", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F378</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F378</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F378 = createParameter("F378", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F379</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F379</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F379 = createParameter("F379", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F380</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F380</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F380 = createParameter("F380", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F381</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F381</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F381 = createParameter("F381", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F382</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F382</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F382 = createParameter("F382", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F383</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F383</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F383 = createParameter("F383", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F384</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F384</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F384 = createParameter("F384", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F385</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F385</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F385 = createParameter("F385", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F386</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F386</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F386 = createParameter("F386", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F387</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F387</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F387 = createParameter("F387", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F388</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F388</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F388 = createParameter("F388", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F389</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F389</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F389 = createParameter("F389", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F390</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F390</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F390 = createParameter("F390", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F391</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F391</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F391 = createParameter("F391", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F392</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F392</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F392 = createParameter("F392", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F393</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F393</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F393 = createParameter("F393", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F394</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F394</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F394 = createParameter("F394", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F395</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F395</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F395 = createParameter("F395", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F396</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F396</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F396 = createParameter("F396", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F397</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F397</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F397 = createParameter("F397", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F398</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F398</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F398 = createParameter("F398", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_MANY_PARAMETERS.F399</code>
+	 * The parameter <code>TEST.P_MANY_PARAMETERS.F399</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F399 = createParameter("F399", org.jooq.impl.SQLDataType.NUMERIC);
 

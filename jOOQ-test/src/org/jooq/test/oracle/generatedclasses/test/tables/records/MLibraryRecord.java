@@ -13,17 +13,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "M_LIBRARY", schema = "TEST")
 public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1281477820;
+	private static final long serialVersionUID = -351773400;
 
 	/**
-	 * The table column <code>TEST.M_LIBRARY.AUTHOR</code>
+	 * Setter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY.AUTHOR, value);
 	}
 
 	/**
-	 * The table column <code>TEST.M_LIBRARY.AUTHOR</code>
+	 * Getter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	public java.lang.String getAuthor() {
@@ -31,26 +31,23 @@ public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>TEST.M_LIBRARY.TITLE</code>
+	 * Setter for <code>TEST.M_LIBRARY.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY.TITLE, value);
 	}
 
 	/**
-	 * The table column <code>TEST.M_LIBRARY.TITLE</code>
+	 * Getter for <code>TEST.M_LIBRARY.TITLE</code>. 
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY.TITLE);
 	}
 
-	/**
-	 * Create a detached MLibraryRecord
-	 */
-	public MLibraryRecord() {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -102,5 +99,16 @@ public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.String value2() {
 		return getTitle();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached MLibraryRecord
+	 */
+	public MLibraryRecord() {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY);
 	}
 }

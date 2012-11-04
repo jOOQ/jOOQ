@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings("all")
 public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord> {
 
-	private static final long serialVersionUID = 1100354146;
+	private static final long serialVersionUID = -909078793;
 
 	/**
 	 * The singleton instance of <code>TEST.U_STREET_TYPE</code>
@@ -25,27 +25,27 @@ public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * The UDT column <code>TEST.U_STREET_TYPE.STREET</code>
+	 * The attribute <code>TEST.U_STREET_TYPE.STREET</code>. 
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord, java.lang.String> STREET = createField("STREET", org.jooq.impl.SQLDataType.VARCHAR, U_STREET_TYPE);
 
 	/**
-	 * The UDT column <code>TEST.U_STREET_TYPE.NO</code>
+	 * The attribute <code>TEST.U_STREET_TYPE.NO</code>. 
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord, java.lang.String> NO = createField("NO", org.jooq.impl.SQLDataType.VARCHAR, U_STREET_TYPE);
 
 	/**
-	 * The UDT column <code>TEST.U_STREET_TYPE.FLOORS</code>
+	 * The attribute <code>TEST.U_STREET_TYPE.FLOORS</code>. 
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord> FLOORS = createField("FLOORS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord.class), U_STREET_TYPE);
 
 	/**
-	 * The UDT column <code>TEST.U_STREET_TYPE.F_1323</code>
+	 * The attribute <code>TEST.U_STREET_TYPE.F_1323</code>. 
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord, byte[]> F_1323 = createField("F_1323", org.jooq.impl.SQLDataType.BLOB, U_STREET_TYPE);
 
 	/**
-	 * The UDT column <code>TEST.U_STREET_TYPE.F_1326</code>
+	 * The attribute <code>TEST.U_STREET_TYPE.F_1326</code>. 
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord, java.lang.String> F_1326 = createField("F_1326", org.jooq.impl.SQLDataType.CLOB, U_STREET_TYPE);
 

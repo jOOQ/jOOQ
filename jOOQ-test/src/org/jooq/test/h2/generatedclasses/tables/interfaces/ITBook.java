@@ -12,112 +12,112 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface ITBook extends java.io.Serializable {
 
 	/**
-	 * The book ID
+	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The book ID
+	 * Getter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The author ID in entity 'author'
+	 * Setter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	public void setAuthorId(java.lang.Integer value);
 
 	/**
-	 * The author ID in entity 'author'
+	 * Getter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	public java.lang.Integer getAuthorId();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
+	 * Setter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
+	 * Getter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public java.lang.Integer getCoAuthorId();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
+	 * Setter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>. 
 	 */
 	public void setDetailsId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
+	 * Getter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>. 
 	 */
 	public java.lang.Integer getDetailsId();
 
 	/**
-	 * The book's title
+	 * Setter for <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
 	 */
 	public void setTitle(java.lang.String value);
 
 	/**
-	 * The book's title
+	 * Getter for <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
 	 */
 	public java.lang.String getTitle();
 
 	/**
-	 * The year the book was published in
+	 * Setter for <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	public void setPublishedIn(java.lang.Integer value);
 
 	/**
-	 * The year the book was published in
+	 * Getter for <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	public java.lang.Integer getPublishedIn();
 
 	/**
-	 * The language of the book
+	 * Setter for <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
 	public void setLanguageId(java.lang.Integer value);
 
 	/**
-	 * The language of the book
+	 * Getter for <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
 	public java.lang.Integer getLanguageId();
 
 	/**
-	 * Some textual content of the book
+	 * Setter for <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
 	public void setContentText(java.lang.String value);
 
 	/**
-	 * Some textual content of the book
+	 * Getter for <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
 	public java.lang.String getContentText();
 
 	/**
-	 * Some binary content of the book
+	 * Setter for <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
 	public void setContentPdf(byte[] value);
 
 	/**
-	 * Some binary content of the book
+	 * Getter for <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
 	public byte[] getContentPdf();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
+	 * Setter for <code>PUBLIC.T_BOOK.REC_VERSION</code>. 
 	 */
 	public void setRecVersion(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
+	 * Getter for <code>PUBLIC.T_BOOK.REC_VERSION</code>. 
 	 */
 	public java.lang.Integer getRecVersion();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
+	 * Setter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
 	 */
 	public void setRecTimestamp(java.sql.Timestamp value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
+	 * Getter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
 	 */
 	public java.sql.Timestamp getRecTimestamp();
 }

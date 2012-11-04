@@ -11,29 +11,26 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_959", schema = "public")
 public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_959Record> implements org.jooq.Record1<org.jooq.test.postgres.generatedclasses.enums.U_959> {
 
-	private static final long serialVersionUID = 1366660139;
+	private static final long serialVersionUID = 1519953781;
 
 	/**
-	 * The table column <code>public.t_959.java_keywords</code>
+	 * Setter for <code>public.t_959.java_keywords</code>. 
 	 */
 	public void setJavaKeywords(org.jooq.test.postgres.generatedclasses.enums.U_959 value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.T_959.T_959.JAVA_KEYWORDS, value);
 	}
 
 	/**
-	 * The table column <code>public.t_959.java_keywords</code>
+	 * Getter for <code>public.t_959.java_keywords</code>. 
 	 */
 	@javax.persistence.Column(name = "java_keywords")
 	public org.jooq.test.postgres.generatedclasses.enums.U_959 getJavaKeywords() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_959.T_959.JAVA_KEYWORDS);
 	}
 
-	/**
-	 * Create a detached T_959Record
-	 */
-	public T_959Record() {
-		super(org.jooq.test.postgres.generatedclasses.tables.T_959.T_959);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record1 type implementation
@@ -69,5 +66,16 @@ public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	@Override
 	public org.jooq.test.postgres.generatedclasses.enums.U_959 value1() {
 		return getJavaKeywords();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_959Record
+	 */
+	public T_959Record() {
+		super(org.jooq.test.postgres.generatedclasses.tables.T_959.T_959);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1155861055;
+	private static final long serialVersionUID = 1290602052;
 
 	/**
 	 * The singleton instance of <code>TEST.V_LIBRARY</code>
@@ -34,10 +34,16 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gener
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>TEST.V_LIBRARY</code> table reference
+	 */
 	public VLibrary() {
 		super("V_LIBRARY", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.V_LIBRARY</code> table reference
+	 */
 	public VLibrary(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.VLibrary.V_LIBRARY);
 	}

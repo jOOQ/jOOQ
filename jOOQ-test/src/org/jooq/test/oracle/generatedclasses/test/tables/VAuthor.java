@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -1120289978;
+	private static final long serialVersionUID = -1498954247;
 
 	/**
 	 * The singleton instance of <code>TEST.V_AUTHOR</code>
@@ -54,10 +54,16 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VAuthorRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> ADDRESS = createField("ADDRESS", org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.U_ADDRESS_TYPE.getDataType(), this);
 
+	/**
+	 * Create a <code>TEST.V_AUTHOR</code> table reference
+	 */
 	public VAuthor() {
 		super("V_AUTHOR", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.V_AUTHOR</code> table reference
+	 */
 	public VAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.VAuthor.V_AUTHOR);
 	}

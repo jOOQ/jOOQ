@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -1982368536;
+	private static final long serialVersionUID = -2140563503;
 
 	/**
 	 * The singleton instance of <code>public.t_identity</code>
@@ -34,10 +34,16 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.postgres.ge
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>public.t_identity</code> table reference
+	 */
 	public TIdentity() {
 		super("t_identity", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>public.t_identity</code> table reference
+	 */
 	public TIdentity(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY);
 	}

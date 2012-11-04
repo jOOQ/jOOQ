@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -1984791626;
+	private static final long serialVersionUID = -733810183;
 
 	/**
 	 * The singleton instance of <code>public.v_author</code>
@@ -54,10 +54,16 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.VAuthorRecord, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> ADDRESS = createField("address", org.jooq.test.postgres.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE.getDataType(), this);
 
+	/**
+	 * Create a <code>public.v_author</code> table reference
+	 */
 	public VAuthor() {
 		super("v_author", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>public.v_author</code> table reference
+	 */
 	public VAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}

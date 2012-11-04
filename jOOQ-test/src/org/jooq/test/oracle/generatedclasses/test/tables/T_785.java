@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -1254306995;
+	private static final long serialVersionUID = -1081428712;
 
 	/**
 	 * The singleton instance of <code>TEST.T_785</code>
@@ -39,10 +39,16 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>TEST.T_785</code> table reference
+	 */
 	public T_785() {
 		super("T_785", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.T_785</code> table reference
+	 */
 	public T_785(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785);
 	}

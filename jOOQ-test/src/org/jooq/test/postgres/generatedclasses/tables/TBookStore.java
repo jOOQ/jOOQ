@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1175669421;
+	private static final long serialVersionUID = 1202275860;
 
 	/**
 	 * The singleton instance of <code>public.t_book_store</code>
@@ -29,10 +29,16 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.p
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>public.t_book_store</code> table reference
+	 */
 	public TBookStore() {
 		super("t_book_store", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>public.t_book_store</code> table reference
+	 */
 	public TBookStore(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}

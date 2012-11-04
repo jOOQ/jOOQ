@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -815334130;
+	private static final long serialVersionUID = 831288309;
 
 	/**
 	 * The singleton instance of <code>TEST.T_TRIGGERS</code>
@@ -41,10 +41,16 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>TEST.T_TRIGGERS</code> table reference
+	 */
 	public TTriggers() {
 		super("T_TRIGGERS", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.T_TRIGGERS</code> table reference
+	 */
 	public TTriggers(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS);
 	}

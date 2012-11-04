@@ -1356,7 +1356,7 @@ public class DefaultGenerator extends AbstractGenerator {
         // [#1255] With instance fields, the table constructor may
         // be public, as tables are no longer singletons
         if (generateInstanceFields()) {
-            out.println();
+            out.tab(1).javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
             out.tab(1).println("public %s() {", className);
         }
         else {
@@ -1377,7 +1377,7 @@ public class DefaultGenerator extends AbstractGenerator {
             // [#1730] Prevent compilation errors
             final String schemaId = schema.isDefaultSchema() ? "null" : getStrategy().getFullJavaIdentifier(schema);
 
-            out.println();
+            out.tab(1).javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
             out.tab(1).println("public %s(%s alias) {", className, String.class);
             out.tab(2).println("super(alias, %s, %s);", schemaId, fullTableId);
             out.tab(1).println("}");

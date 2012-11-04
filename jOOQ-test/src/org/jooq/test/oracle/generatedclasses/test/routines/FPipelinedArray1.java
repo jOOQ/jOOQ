@@ -9,11 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class FPipelinedArray1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord> {
 
-	private static final long serialVersionUID = -764217755;
-
+	private static final long serialVersionUID = -1996979634;
 
 	/**
-	 * The procedure parameter <code>TEST.F_PIPELINED_ARRAY1.RETURN_VALUE</code>
+	 * The parameter <code>TEST.F_PIPELINED_ARRAY1.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord.class));
 

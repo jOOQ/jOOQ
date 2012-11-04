@@ -13,21 +13,13 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 203304328;
+	private static final long serialVersionUID = 1142206144;
 
 	/**
-	 * The table column <code>public.t_book_to_book_store.book_store_name</code>
+	 * Setter for <code>public.t_book_to_book_store.book_store_name</code>. 
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value);
-	}
-
-	/**
-	 * The table column <code>public.t_book_to_book_store.book_store_name</code>
-	 */
-	@javax.persistence.Column(name = "book_store_name", nullable = false, length = 400)
-	public java.lang.String getBookStoreName() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
 	}
 
 	/**
@@ -43,28 +35,18 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Fetch a <code>public.t_book_store</code> referenced by this <code>public.t_book_to_book_store</code>
+	 * Getter for <code>public.t_book_to_book_store.book_store_name</code>. 
 	 */
-	public org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE)
-			.where(org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)))
-			.fetchOne();
+	@javax.persistence.Column(name = "book_store_name", nullable = false, length = 400)
+	public java.lang.String getBookStoreName() {
+		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
 	}
 
 	/**
-	 * The table column <code>public.t_book_to_book_store.book_id</code>
+	 * Setter for <code>public.t_book_to_book_store.book_id</code>. 
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value);
-	}
-
-	/**
-	 * The table column <code>public.t_book_to_book_store.book_id</code>
-	 */
-	@javax.persistence.Column(name = "book_id", nullable = false, precision = 32)
-	public java.lang.Integer getBookId() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
 	}
 
 	/**
@@ -80,6 +62,43 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
+	 * Getter for <code>public.t_book_to_book_store.book_id</code>. 
+	 */
+	@javax.persistence.Column(name = "book_id", nullable = false, precision = 32)
+	public java.lang.Integer getBookId() {
+		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+	}
+
+	/**
+	 * Setter for <code>public.t_book_to_book_store.stock</code>. 
+	 */
+	public void setStock(java.lang.Integer value) {
+		setValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK, value);
+	}
+
+	/**
+	 * Getter for <code>public.t_book_to_book_store.stock</code>. 
+	 */
+	@javax.persistence.Column(name = "stock", precision = 32)
+	public java.lang.Integer getStock() {
+		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a <code>public.t_book_store</code> referenced by this <code>public.t_book_to_book_store</code>
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
+		return create()
+			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE)
+			.where(org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)))
+			.fetchOne();
+	}
+
+	/**
 	 * Fetch a <code>public.t_book</code> referenced by this <code>public.t_book_to_book_store</code>
 	 */
 	public org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord fetchTBook() {
@@ -87,28 +106,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID)))
 			.fetchOne();
-	}
-
-	/**
-	 * The table column <code>public.t_book_to_book_store.stock</code>
-	 */
-	public void setStock(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK, value);
-	}
-
-	/**
-	 * The table column <code>public.t_book_to_book_store.stock</code>
-	 */
-	@javax.persistence.Column(name = "stock", precision = 32)
-	public java.lang.Integer getStock() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK);
-	}
-
-	/**
-	 * Create a detached TBookToBookStoreRecord
-	 */
-	public TBookToBookStoreRecord() {
-		super(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
 	// -------------------------------------------------------------------------
@@ -177,5 +174,16 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.Integer value3() {
 		return getStock();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TBookToBookStoreRecord
+	 */
+	public TBookToBookStoreRecord() {
+		super(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 }

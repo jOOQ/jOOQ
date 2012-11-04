@@ -11,17 +11,17 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_71", schema = "public")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Short> {
 
-	private static final long serialVersionUID = -1936181498;
+	private static final long serialVersionUID = 1378191340;
 
 	/**
-	 * The table column <code>public.x_test_case_71.id</code>
+	 * Setter for <code>public.x_test_case_71.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.ID, value);
 	}
 
 	/**
-	 * The table column <code>public.x_test_case_71.id</code>
+	 * Getter for <code>public.x_test_case_71.id</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -30,18 +30,10 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>public.x_test_case_71.test_case_64_69_id</code>
+	 * Setter for <code>public.x_test_case_71.test_case_64_69_id</code>. 
 	 */
 	public void setTestCase_64_69Id(java.lang.Short value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID, value);
-	}
-
-	/**
-	 * The table column <code>public.x_test_case_71.test_case_64_69_id</code>
-	 */
-	@javax.persistence.Column(name = "test_case_64_69_id", precision = 16)
-	public java.lang.Short getTestCase_64_69Id() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
 	}
 
 	/**
@@ -57,6 +49,18 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
+	 * Getter for <code>public.x_test_case_71.test_case_64_69_id</code>. 
+	 */
+	@javax.persistence.Column(name = "test_case_64_69_id", precision = 16)
+	public java.lang.Short getTestCase_64_69Id() {
+		return getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Fetch a <code>public.x_test_case_64_69</code> referenced by this <code>public.x_test_case_71</code>
 	 */
 	public org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {
@@ -64,13 +68,6 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
 			.where(org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID, Integer.class)))
 			.fetchOne();
-	}
-
-	/**
-	 * Create a detached XTestCase_71Record
-	 */
-	public XTestCase_71Record() {
-		super(org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
 	}
 
 	// -------------------------------------------------------------------------
@@ -123,5 +120,16 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.Short value2() {
 		return getTestCase_64_69Id();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_71Record
+	 */
+	public XTestCase_71Record() {
+		super(org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
 	}
 }

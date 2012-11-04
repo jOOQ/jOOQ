@@ -11,10 +11,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 1614017877;
+	private static final long serialVersionUID = -1757077845;
 
 	/**
-	 * The book ID
+	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The book ID
+	 * Getter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -30,29 +30,11 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Fetch a list of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> referencing this <code>PUBLIC.T_BOOK</code>
-	 */
-	public org.jooq.Result<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBook.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The author ID in entity 'author'
+	 * Setter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	@Override
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID, value);
-	}
-
-	/**
-	 * The author ID in entity 'author'
-	 */
-	@Override
-	public java.lang.Integer getAuthorId() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID);
 	}
 
 	/**
@@ -68,29 +50,19 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Fetch a <code>PUBLIC.T_AUTHOR</code> referenced by this <code>PUBLIC.T_BOOK</code>
+	 * Getter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	public org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID)))
-			.fetchOne();
+	@Override
+	public java.lang.Integer getAuthorId() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID);
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
+	 * Setter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	@Override
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID, value);
-	}
-
-	/**
-	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
-	 */
-	@Override
-	public java.lang.Integer getCoAuthorId() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID);
 	}
 
 	/**
@@ -106,17 +78,15 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Fetch a <code>PUBLIC.T_AUTHOR</code> referenced by this <code>PUBLIC.T_BOOK</code>
+	 * Getter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
-	public org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID)))
-			.fetchOne();
+	@Override
+	public java.lang.Integer getCoAuthorId() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID);
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
+	 * Setter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>. 
 	 */
 	@Override
 	public void setDetailsId(java.lang.Integer value) {
@@ -124,7 +94,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
+	 * Getter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getDetailsId() {
@@ -132,7 +102,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The book's title
+	 * Setter for <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
 	 */
 	@Override
 	public void setTitle(java.lang.String value) {
@@ -140,7 +110,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The book's title
+	 * Getter for <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
 	 */
 	@Override
 	public java.lang.String getTitle() {
@@ -148,7 +118,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The year the book was published in
+	 * Setter for <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	@Override
 	public void setPublishedIn(java.lang.Integer value) {
@@ -156,7 +126,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The year the book was published in
+	 * Getter for <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	@Override
 	public java.lang.Integer getPublishedIn() {
@@ -164,19 +134,11 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The language of the book
+	 * Setter for <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
 	@Override
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID, value);
-	}
-
-	/**
-	 * The language of the book
-	 */
-	@Override
-	public java.lang.Integer getLanguageId() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID);
 	}
 
 	/**
@@ -192,6 +154,112 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
+	 * Getter for <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. The language of the book
+	 */
+	@Override
+	public java.lang.Integer getLanguageId() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID);
+	}
+
+	/**
+	 * Setter for <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
+	 */
+	@Override
+	public void setContentText(java.lang.String value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_TEXT, value);
+	}
+
+	/**
+	 * Getter for <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
+	 */
+	@Override
+	public java.lang.String getContentText() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_TEXT);
+	}
+
+	/**
+	 * Setter for <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
+	 */
+	@Override
+	public void setContentPdf(byte[] value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_PDF, value);
+	}
+
+	/**
+	 * Getter for <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
+	 */
+	@Override
+	public byte[] getContentPdf() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_PDF);
+	}
+
+	/**
+	 * Setter for <code>PUBLIC.T_BOOK.REC_VERSION</code>. 
+	 */
+	@Override
+	public void setRecVersion(java.lang.Integer value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_VERSION, value);
+	}
+
+	/**
+	 * Getter for <code>PUBLIC.T_BOOK.REC_VERSION</code>. 
+	 */
+	@Override
+	public java.lang.Integer getRecVersion() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_VERSION);
+	}
+
+	/**
+	 * Setter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
+	 */
+	@Override
+	public void setRecTimestamp(java.sql.Timestamp value) {
+		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_TIMESTAMP, value);
+	}
+
+	/**
+	 * Getter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
+	 */
+	@Override
+	public java.sql.Timestamp getRecTimestamp() {
+		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_TIMESTAMP);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> referencing this <code>PUBLIC.T_BOOK</code>
+	 */
+	public org.jooq.Result<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
+		return create()
+			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
+			.where(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBook.ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a <code>PUBLIC.T_AUTHOR</code> referenced by this <code>PUBLIC.T_BOOK</code>
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR)
+			.where(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>PUBLIC.T_AUTHOR</code> referenced by this <code>PUBLIC.T_BOOK</code>
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR)
+			.where(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID)))
+			.fetchOne();
+	}
+
+	/**
 	 * Fetch a <code>PUBLIC.T_LANGUAGE</code> referenced by this <code>PUBLIC.T_BOOK</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
@@ -201,69 +269,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 			.fetchOne();
 	}
 
-	/**
-	 * Some textual content of the book
-	 */
-	@Override
-	public void setContentText(java.lang.String value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_TEXT, value);
-	}
-
-	/**
-	 * Some textual content of the book
-	 */
-	@Override
-	public java.lang.String getContentText() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_TEXT);
-	}
-
-	/**
-	 * Some binary content of the book
-	 */
-	@Override
-	public void setContentPdf(byte[] value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_PDF, value);
-	}
-
-	/**
-	 * Some binary content of the book
-	 */
-	@Override
-	public byte[] getContentPdf() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_PDF);
-	}
-
-	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
-	 */
-	@Override
-	public void setRecVersion(java.lang.Integer value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_VERSION, value);
-	}
-
-	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
-	 */
-	@Override
-	public java.lang.Integer getRecVersion() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_VERSION);
-	}
-
-	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
-	 */
-	@Override
-	public void setRecTimestamp(java.sql.Timestamp value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_TIMESTAMP, value);
-	}
-
-	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
-	 */
-	@Override
-	public java.sql.Timestamp getRecTimestamp() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_TIMESTAMP);
-	}
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached TBookRecord

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1066436545;
+	private static final long serialVersionUID = 392752825;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_DATES</code>
@@ -25,32 +25,32 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.ge
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_DATES.ID</code>
+	 * The column <code>PUBLIC.T_DATES.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
 
 	/**
-	 * The table column <code>PUBLIC.T_DATES.D</code>
+	 * The column <code>PUBLIC.T_DATES.D</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("D", org.jooq.impl.SQLDataType.DATE, T_DATES);
 
 	/**
-	 * The table column <code>PUBLIC.T_DATES.T</code>
+	 * The column <code>PUBLIC.T_DATES.T</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("T", org.jooq.impl.SQLDataType.TIME, T_DATES);
 
 	/**
-	 * The table column <code>PUBLIC.T_DATES.TS</code>
+	 * The column <code>PUBLIC.T_DATES.TS</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("TS", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
 
 	/**
-	 * The table column <code>PUBLIC.T_DATES.D_INT</code>
+	 * The column <code>PUBLIC.T_DATES.D_INT</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("D_INT", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
 
 	/**
-	 * The table column <code>PUBLIC.T_DATES.TS_BIGINT</code>
+	 * The column <code>PUBLIC.T_DATES.TS_BIGINT</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT, T_DATES);
 

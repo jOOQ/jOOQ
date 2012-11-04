@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_877Record> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877 {
 
-	private static final long serialVersionUID = 1756825319;
+	private static final long serialVersionUID = -145481039;
 
 	/**
-	 * The table column <code>PUBLIC.T_877.ID</code>
+	 * Setter for <code>PUBLIC.T_877.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,19 +20,16 @@ public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_877.ID</code>
+	 * Getter for <code>PUBLIC.T_877.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.T_877.ID);
 	}
 
-	/**
-	 * Create a detached T_877Record
-	 */
-	public T_877Record() {
-		super(org.jooq.test.h2.generatedclasses.tables.T_877.T_877);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record1 type implementation
@@ -68,5 +65,16 @@ public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	@Override
 	public java.lang.Integer value1() {
 		return getId();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_877Record
+	 */
+	public T_877Record() {
+		super(org.jooq.test.h2.generatedclasses.tables.T_877.T_877);
 	}
 }

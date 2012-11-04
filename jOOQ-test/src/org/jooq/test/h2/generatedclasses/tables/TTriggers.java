@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -436155636;
+	private static final long serialVersionUID = 578487568;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_TRIGGERS</code>
@@ -25,17 +25,17 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>
+	 * The column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID</code>
+	 * The column <code>PUBLIC.T_TRIGGERS.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.COUNTER</code>
+	 * The column <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 

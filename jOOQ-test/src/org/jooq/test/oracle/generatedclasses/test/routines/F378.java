@@ -9,26 +9,25 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class F378 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -160642807;
-
+	private static final long serialVersionUID = 1018875169;
 
 	/**
-	 * The procedure parameter <code>TEST.F378.RETURN_VALUE</code>
+	 * The parameter <code>TEST.F378.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F378.I</code>
+	 * The parameter <code>TEST.F378.I</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> I = createParameter("I", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F378.IO</code>
+	 * The parameter <code>TEST.F378.IO</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> IO = createParameter("IO", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F378.O</code>
+	 * The parameter <code>TEST.F378.O</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> O = createParameter("O", org.jooq.impl.SQLDataType.NUMERIC);
 

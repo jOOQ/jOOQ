@@ -9,21 +9,20 @@ package org.jooq.test.oracle.generatedclasses.test.packages.library;
 @java.lang.SuppressWarnings("all")
 public class PkgPAuthorExists2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 479819700;
-
+	private static final long serialVersionUID = -1985827777;
 
 	/**
-	 * The procedure parameter <code>TEST.LIBRARY.PKG_P_AUTHOR_EXISTS.AUTHOR_NAME</code>
+	 * The parameter <code>TEST.LIBRARY.PKG_P_AUTHOR_EXISTS.AUTHOR_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>TEST.LIBRARY.PKG_P_AUTHOR_EXISTS.RESULT</code>
+	 * The parameter <code>TEST.LIBRARY.PKG_P_AUTHOR_EXISTS.RESULT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RESULT = createParameter("RESULT", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.LIBRARY.PKG_P_AUTHOR_EXISTS.UNUSED</code>
+	 * The parameter <code>TEST.LIBRARY.PKG_P_AUTHOR_EXISTS.UNUSED</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> UNUSED = createParameter("UNUSED", org.jooq.impl.SQLDataType.NUMERIC);
 

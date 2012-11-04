@@ -35,6 +35,8 @@
  */
 package org.jooq.util;
 
+import java.io.File;
+
 
 /**
  * A common base implementation for {@link Generator} objects
@@ -213,5 +215,27 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public String getTargetPackage() {
         return strategy.getTargetPackage();
+    }
+
+    /**
+     * If file is a directory, recursively empty its children.
+     * If file is a file, delete it
+     */
+    protected void empty(File file, String suffix) {
+        if (file != null) {
+            if (file.isDirectory()) {
+                File[] children = file.listFiles();
+
+                if (children != null) {
+                    for (File child : children) {
+                        empty(child, suffix);
+                    }
+                }
+            } else {
+                if (file.getName().endsWith(suffix)) {
+                    file.delete();
+                }
+            }
+        }
     }
 }

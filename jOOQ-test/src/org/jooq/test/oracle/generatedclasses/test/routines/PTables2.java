@@ -9,16 +9,15 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class PTables2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1399400357;
-
+	private static final long serialVersionUID = -1290147661;
 
 	/**
-	 * The procedure parameter <code>TEST.P_TABLES2.IN_TABLE</code>
+	 * The parameter <code>TEST.P_TABLES2.IN_TABLE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord.class));
 
 	/**
-	 * The procedure parameter <code>TEST.P_TABLES2.OUT_TABLE</code>
+	 * The parameter <code>TEST.P_TABLES2.OUT_TABLE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord> OUT_TABLE = createParameter("OUT_TABLE", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord.class));
 

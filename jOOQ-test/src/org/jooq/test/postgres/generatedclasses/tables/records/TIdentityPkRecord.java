@@ -11,17 +11,17 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_identity_pk", schema = "public")
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -2041054659;
+	private static final long serialVersionUID = -914357303;
 
 	/**
-	 * The table column <code>public.t_identity_pk.id</code>
+	 * Setter for <code>public.t_identity_pk.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID, value);
 	}
 
 	/**
-	 * The table column <code>public.t_identity_pk.id</code>
+	 * Getter for <code>public.t_identity_pk.id</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -30,26 +30,23 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * The table column <code>public.t_identity_pk.val</code>
+	 * Setter for <code>public.t_identity_pk.val</code>. 
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.VAL, value);
 	}
 
 	/**
-	 * The table column <code>public.t_identity_pk.val</code>
+	 * Getter for <code>public.t_identity_pk.val</code>. 
 	 */
 	@javax.persistence.Column(name = "val", precision = 32)
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.VAL);
 	}
 
-	/**
-	 * Create a detached TIdentityPkRecord
-	 */
-	public TIdentityPkRecord() {
-		super(org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -101,5 +98,16 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@Override
 	public java.lang.Integer value2() {
 		return getVal();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TIdentityPkRecord
+	 */
+	public TIdentityPkRecord() {
+		super(org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
 	}
 }

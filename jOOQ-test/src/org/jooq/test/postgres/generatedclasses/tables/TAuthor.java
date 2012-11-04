@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 1529345821;
+	private static final long serialVersionUID = -1535164315;
 
 	/**
 	 * The singleton instance of <code>public.t_author</code>
@@ -25,32 +25,32 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 	}
 
 	/**
-	 * The table column <code>public.t_author.id</code>
+	 * The column <code>public.t_author.id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>public.t_author.first_name</code>
+	 * The column <code>public.t_author.first_name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>public.t_author.last_name</code>
+	 * The column <code>public.t_author.last_name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>public.t_author.date_of_birth</code>
+	 * The column <code>public.t_author.date_of_birth</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("date_of_birth", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
-	 * The table column <code>public.t_author.year_of_birth</code>
+	 * The column <code>public.t_author.year_of_birth</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("year_of_birth", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>public.t_author.address</code>
+	 * The column <code>public.t_author.address</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> ADDRESS = createField("address", org.jooq.test.postgres.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE.getDataType(), this);
 

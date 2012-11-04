@@ -9,8 +9,7 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PCreateAuthor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1444816000;
-
+	private static final long serialVersionUID = -758699536;
 
 	/**
 	 * Create a new routine call instance

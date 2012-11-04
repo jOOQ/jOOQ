@@ -9,14 +9,10 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PTriggers extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = -1837541251;
-
+	private static final long serialVersionUID = -1955351553;
 
 	/**
-	 * The procedure parameter <code>public.p_triggers.RETURN_VALUE</code>
-	 * <p>
-	 * The SQL type of this item (trigger) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The parameter <code>public.p_triggers.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.postgres.PostgresDataType.getDefaultDataType("trigger"));
 

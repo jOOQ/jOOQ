@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Object[], java.lang.Object[], java.lang.Object[]>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = -1894865727;
+	private static final long serialVersionUID = -1809428901;
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * Getter for <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,10 +28,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	@Override
 	public void setStringArray(java.lang.Object[] value) {
@@ -39,10 +36,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	@Override
 	public java.lang.Object[] getStringArray() {
@@ -50,10 +44,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	@Override
 	public void setNumberArray(java.lang.Object[] value) {
@@ -61,10 +52,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	@Override
 	public java.lang.Object[] getNumberArray() {
@@ -72,10 +60,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	@Override
 	public void setDateArray(java.lang.Object[] value) {
@@ -83,22 +68,16 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	@Override
 	public java.lang.Object[] getDateArray() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TArrays.DATE_ARRAY);
 	}
 
-	/**
-	 * Create a detached TArraysRecord
-	 */
-	public TArraysRecord() {
-		super(org.jooq.test.h2.generatedclasses.tables.TArrays.T_ARRAYS);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record4 type implementation
@@ -182,5 +161,16 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.Object[] value4() {
 		return getDateArray();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TArraysRecord
+	 */
+	public TArraysRecord() {
+		super(org.jooq.test.h2.generatedclasses.tables.TArrays.T_ARRAYS);
 	}
 }

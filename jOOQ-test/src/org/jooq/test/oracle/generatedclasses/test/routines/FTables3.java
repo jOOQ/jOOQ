@@ -9,16 +9,15 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class FTables3 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringTableRecord> {
 
-	private static final long serialVersionUID = 386157377;
-
+	private static final long serialVersionUID = 2067008391;
 
 	/**
-	 * The procedure parameter <code>TEST.F_TABLES3.RETURN_VALUE</code>
+	 * The parameter <code>TEST.F_TABLES3.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringTableRecord.class));
 
 	/**
-	 * The procedure parameter <code>TEST.F_TABLES3.IN_TABLE</code>
+	 * The parameter <code>TEST.F_TABLES3.IN_TABLE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringTableRecord> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.VARCHAR.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringTableRecord.class));
 

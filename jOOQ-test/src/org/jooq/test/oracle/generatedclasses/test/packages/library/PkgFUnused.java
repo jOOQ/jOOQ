@@ -9,11 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.packages.library;
 @java.lang.SuppressWarnings("all")
 public class PkgFUnused extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1676259794;
-
+	private static final long serialVersionUID = 2099368937;
 
 	/**
-	 * The procedure parameter <code>TEST.LIBRARY.PKG_F_UNUSED.RETURN_VALUE</code>
+	 * The parameter <code>TEST.LIBRARY.PKG_F_UNUSED.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 

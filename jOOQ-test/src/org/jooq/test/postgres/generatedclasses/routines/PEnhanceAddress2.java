@@ -9,11 +9,10 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PEnhanceAddress2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1774498129;
-
+	private static final long serialVersionUID = -661555002;
 
 	/**
-	 * The procedure parameter <code>public.p_enhance_address2.address</code>
+	 * The parameter <code>public.p_enhance_address2.address</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> ADDRESS = createParameter("address", org.jooq.test.postgres.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE.getDataType());
 

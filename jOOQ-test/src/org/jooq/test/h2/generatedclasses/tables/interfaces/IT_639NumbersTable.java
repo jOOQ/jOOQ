@@ -10,132 +10,132 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface IT_639NumbersTable extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE</code>. 
 	 */
 	public void setByte(java.lang.Byte value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE</code>. 
 	 */
 	public java.lang.Byte getByte();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT</code>. 
 	 */
 	public void setShort(java.lang.Short value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT</code>. 
 	 */
 	public java.lang.Short getShort();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER</code>. 
 	 */
 	public void setInteger(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER</code>. 
 	 */
 	public java.lang.Integer getInteger();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.LONG</code>. 
 	 */
 	public void setLong(java.lang.Long value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.LONG</code>. 
 	 */
 	public java.lang.Long getLong();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
 	public void setByteDecimal(java.lang.Byte value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
 	public java.lang.Byte getByteDecimal();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
 	public void setShortDecimal(java.lang.Short value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
 	public java.lang.Short getShortDecimal();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
 	public void setIntegerDecimal(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
 	public java.lang.Integer getIntegerDecimal();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
 	public void setLongDecimal(java.lang.Long value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
 	public java.lang.Long getLongDecimal();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
 	public void setBigInteger(java.math.BigInteger value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
 	public java.math.BigInteger getBigInteger();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
 	 */
 	public void setBigDecimal(java.math.BigDecimal value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
 	 */
 	public java.math.BigDecimal getBigDecimal();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.FLOAT</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.FLOAT</code>. 
 	 */
 	public void setFloat(java.lang.Float value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.FLOAT</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.FLOAT</code>. 
 	 */
 	public java.lang.Float getFloat();
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.DOUBLE</code>
+	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.DOUBLE</code>. 
 	 */
 	public void setDouble(java.lang.Double value);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.DOUBLE</code>
+	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.DOUBLE</code>. 
 	 */
 	public java.lang.Double getDouble();
 }

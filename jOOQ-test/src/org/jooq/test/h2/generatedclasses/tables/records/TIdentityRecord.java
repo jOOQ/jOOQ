@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity {
 
-	private static final long serialVersionUID = -1973378181;
+	private static final long serialVersionUID = 311325901;
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY.ID</code>
+	 * Setter for <code>PUBLIC.T_IDENTITY.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY.ID</code>
+	 * Getter for <code>PUBLIC.T_IDENTITY.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY.VAL</code>
+	 * Setter for <code>PUBLIC.T_IDENTITY.VAL</code>. 
 	 */
 	@Override
 	public void setVal(java.lang.Integer value) {
@@ -36,19 +36,16 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY.VAL</code>
+	 * Getter for <code>PUBLIC.T_IDENTITY.VAL</code>. 
 	 */
 	@Override
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TIdentity.VAL);
 	}
 
-	/**
-	 * Create a detached TIdentityRecord
-	 */
-	public TIdentityRecord() {
-		super(org.jooq.test.h2.generatedclasses.tables.TIdentity.T_IDENTITY);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -100,5 +97,16 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	@Override
 	public java.lang.Integer value2() {
 		return getVal();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TIdentityRecord
+	 */
+	public TIdentityRecord() {
+		super(org.jooq.test.h2.generatedclasses.tables.TIdentity.T_IDENTITY);
 	}
 }

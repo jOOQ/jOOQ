@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings("all")
 public class UBookType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> {
 
-	private static final long serialVersionUID = 347629227;
+	private static final long serialVersionUID = 1938716235;
 
 	/**
 	 * The singleton instance of <code>TEST.U_BOOK_TYPE</code>
@@ -25,12 +25,12 @@ public class UBookType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.genera
 	}
 
 	/**
-	 * The UDT column <code>TEST.U_BOOK_TYPE.ID</code>
+	 * The attribute <code>TEST.U_BOOK_TYPE.ID</code>. 
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, U_BOOK_TYPE);
 
 	/**
-	 * The UDT column <code>TEST.U_BOOK_TYPE.TITLE</code>
+	 * The attribute <code>TEST.U_BOOK_TYPE.TITLE</code>. 
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, U_BOOK_TYPE);
 

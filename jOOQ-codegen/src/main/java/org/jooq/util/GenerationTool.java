@@ -272,7 +272,7 @@ public class GenerationTool {
             // --------------------
             Class<Generator> generatorClass = (Class<Generator>) (!isBlank(g.getName())
                 ? Class.forName(trim(g.getName()))
-                : DefaultGenerator.class);
+                : JavaGenerator.class);
             Generator generator = generatorClass.newInstance();
 
             Class<GeneratorStrategy> strategyClass = (Class<GeneratorStrategy>) (!isBlank(g.getStrategy().getName())

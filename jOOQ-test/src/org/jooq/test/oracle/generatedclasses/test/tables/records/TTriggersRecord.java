@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -852965117;
+	private static final long serialVersionUID = 123019099;
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.ID_GENERATED</code>
+	 * Setter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	public void setIdGenerated(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS.ID_GENERATED, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.ID_GENERATED</code>
+	 * Getter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, precision = 7)
@@ -30,14 +30,14 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.ID</code>
+	 * Setter for <code>TEST.T_TRIGGERS.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS.ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.ID</code>
+	 * Getter for <code>TEST.T_TRIGGERS.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getId() {
@@ -45,26 +45,23 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.COUNTER</code>
+	 * Setter for <code>TEST.T_TRIGGERS.COUNTER</code>. 
 	 */
 	public void setCounter(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS.COUNTER, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.COUNTER</code>
+	 * Getter for <code>TEST.T_TRIGGERS.COUNTER</code>. 
 	 */
 	@javax.persistence.Column(name = "COUNTER", nullable = false, precision = 7)
 	public java.lang.Integer getCounter() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS.COUNTER);
 	}
 
-	/**
-	 * Create a detached TTriggersRecord
-	 */
-	public TTriggersRecord() {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record3 type implementation
@@ -132,5 +129,16 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.lang.Integer value3() {
 		return getCounter();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TTriggersRecord
+	 */
+	public TTriggersRecord() {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS);
 	}
 }

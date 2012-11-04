@@ -10,22 +10,22 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface IXTestCase_64_69 extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.ID</code>
+	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.ID</code>
+	 * Getter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>
+	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	public void setUnusedId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>
+	 * Getter for <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	public java.lang.Integer getUnusedId();
 }

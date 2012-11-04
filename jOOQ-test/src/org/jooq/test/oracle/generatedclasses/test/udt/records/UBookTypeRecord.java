@@ -9,32 +9,32 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings("all")
 public class UBookTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> {
 
-	private static final long serialVersionUID = 272748381;
+	private static final long serialVersionUID = 1463074085;
 
 
 	/**
-	 * The UDT column <code>TEST.U_BOOK_TYPE.ID</code>
+	 * Setter for <code>TEST.U_BOOK_TYPE.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.udt.UBookType.ID, value);
 	}
 
 	/**
-	 * The UDT column <code>TEST.U_BOOK_TYPE.ID</code>
+	 * Getter for <code>TEST.U_BOOK_TYPE.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UBookType.ID);
 	}
 
 	/**
-	 * The UDT column <code>TEST.U_BOOK_TYPE.TITLE</code>
+	 * Setter for <code>TEST.U_BOOK_TYPE.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.udt.UBookType.TITLE, value);
 	}
 
 	/**
-	 * The UDT column <code>TEST.U_BOOK_TYPE.TITLE</code>
+	 * Getter for <code>TEST.U_BOOK_TYPE.TITLE</code>. 
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UBookType.TITLE);

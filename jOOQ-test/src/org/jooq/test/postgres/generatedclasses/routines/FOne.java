@@ -9,11 +9,10 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FOne extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1721347068;
-
+	private static final long serialVersionUID = -425629189;
 
 	/**
-	 * The procedure parameter <code>public.f_one.RETURN_VALUE</code>
+	 * The parameter <code>public.f_one.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 

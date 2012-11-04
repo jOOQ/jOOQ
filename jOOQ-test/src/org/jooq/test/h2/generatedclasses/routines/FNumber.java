@@ -9,16 +9,15 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -2129331630;
-
+	private static final long serialVersionUID = 118766126;
 
 	/**
-	 * The procedure parameter <code>PUBLIC.F_NUMBER.RETURN_VALUE</code>
+	 * The parameter <code>PUBLIC.F_NUMBER.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>PUBLIC.F_NUMBER.P1</code>
+	 * The parameter <code>PUBLIC.F_NUMBER.P1</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P1 = createParameter("P1", org.jooq.impl.SQLDataType.INTEGER);
 

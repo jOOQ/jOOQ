@@ -9,8 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class F377 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1907898600;
-
+	private static final long serialVersionUID = -1859427972;
 
 	/**
 	 * Create a new routine call instance

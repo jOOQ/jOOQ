@@ -11,29 +11,26 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_986_2", schema = "public")
 public class T_986_2Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = -269830705;
+	private static final long serialVersionUID = 209933887;
 
 	/**
-	 * The table column <code>public.t_986_2.ref</code>
+	 * Setter for <code>public.t_986_2.ref</code>. 
 	 */
 	public void setRef(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2.REF, value);
 	}
 
 	/**
-	 * The table column <code>public.t_986_2.ref</code>
+	 * Getter for <code>public.t_986_2.ref</code>. 
 	 */
 	@javax.persistence.Column(name = "ref", precision = 32)
 	public java.lang.Integer getRef() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2.REF);
 	}
 
-	/**
-	 * Create a detached T_986_2Record
-	 */
-	public T_986_2Record() {
-		super(org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record1 type implementation
@@ -69,5 +66,16 @@ public class T_986_2Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	@Override
 	public java.lang.Integer value1() {
 		return getRef();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_986_2Record
+	 */
+	public T_986_2Record() {
+		super(org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2);
 	}
 }

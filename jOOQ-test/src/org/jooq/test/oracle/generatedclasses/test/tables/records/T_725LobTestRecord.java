@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_725_LOB_TEST", schema = "TEST")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]> {
 
-	private static final long serialVersionUID = 1697415918;
+	private static final long serialVersionUID = -1410522288;
 
 	/**
-	 * The table column <code>TEST.T_725_LOB_TEST.ID</code>
+	 * Setter for <code>TEST.T_725_LOB_TEST.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST.ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_725_LOB_TEST.ID</code>
+	 * Getter for <code>TEST.T_725_LOB_TEST.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -30,26 +30,23 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>TEST.T_725_LOB_TEST.LOB</code>
+	 * Setter for <code>TEST.T_725_LOB_TEST.LOB</code>. 
 	 */
 	public void setLob(byte[] value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST.LOB, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_725_LOB_TEST.LOB</code>
+	 * Getter for <code>TEST.T_725_LOB_TEST.LOB</code>. 
 	 */
 	@javax.persistence.Column(name = "LOB")
 	public byte[] getLob() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST.LOB);
 	}
 
-	/**
-	 * Create a detached T_725LobTestRecord
-	 */
-	public T_725LobTestRecord() {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -101,5 +98,16 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public byte[] value2() {
 		return getLob();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_725LobTestRecord
+	 */
+	public T_725LobTestRecord() {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST);
 	}
 }

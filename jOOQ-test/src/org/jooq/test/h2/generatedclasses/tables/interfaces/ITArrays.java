@@ -10,60 +10,42 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface ITArrays extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
+	 * Getter for <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	public void setStringArray(java.lang.Object[] value);
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	public java.lang.Object[] getStringArray();
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	public void setNumberArray(java.lang.Object[] value);
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	public java.lang.Object[] getNumberArray();
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	public void setDateArray(java.lang.Object[] value);
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
-	 * <p>
-	 * The SQL type of this item (ARRAY) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	public java.lang.Object[] getDateArray();
 }

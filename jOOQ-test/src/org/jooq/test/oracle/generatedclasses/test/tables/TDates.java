@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -1713842456;
+	private static final long serialVersionUID = 261977673;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DATES</code>
@@ -66,10 +66,16 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracl
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, org.jooq.types.DayToSecond> I_D = createField("I_D", org.jooq.impl.SQLDataType.INTERVALDAYTOSECOND, this);
 
+	/**
+	 * Create a <code>TEST.T_DATES</code> table reference
+	 */
 	public TDates() {
 		super("T_DATES", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.T_DATES</code> table reference
+	 */
 	public TDates(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES);
 	}

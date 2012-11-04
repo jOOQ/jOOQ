@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1608377907;
+	private static final long serialVersionUID = -1816906106;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK_TO_BOOK_STORE</code>
@@ -57,10 +57,16 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>TEST.T_BOOK_TO_BOOK_STORE</code> table reference
+	 */
 	public TBookToBookStore() {
 		super("T_BOOK_TO_BOOK_STORE", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.T_BOOK_TO_BOOK_STORE</code> table reference
+	 */
 	public TBookToBookStore(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}

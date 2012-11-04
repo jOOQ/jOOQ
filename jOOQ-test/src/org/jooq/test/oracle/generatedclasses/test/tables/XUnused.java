@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 315159426;
+	private static final long serialVersionUID = -1601660423;
 
 	/**
 	 * The singleton instance of <code>TEST.X_UNUSED</code>
@@ -122,10 +122,16 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.String> MS_UNUSED_NAME_REF = createField("MS_UNUSED_NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>TEST.X_UNUSED</code> table reference
+	 */
 	public XUnused() {
 		super("X_UNUSED", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.X_UNUSED</code> table reference
+	 */
 	public XUnused(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED);
 	}

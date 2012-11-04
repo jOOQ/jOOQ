@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 681799085;
+	private static final long serialVersionUID = -1156135462;
 
 	/**
 	 * The singleton instance of <code>public.t_arrays</code>
@@ -61,10 +61,16 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer[]> ARRAY_ARRAY = createField("array_array", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), this);
 
+	/**
+	 * Create a <code>public.t_arrays</code> table reference
+	 */
 	public TArrays() {
 		super("t_arrays", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>public.t_arrays</code> table reference
+	 */
 	public TArrays(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS);
 	}

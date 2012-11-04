@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = 725725149;
+	private static final long serialVersionUID = 328318598;
 
 	/**
 	 * The singleton instance of <code>public.t_959</code>
@@ -29,10 +29,16 @@ public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.genera
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_959Record, org.jooq.test.postgres.generatedclasses.enums.U_959> JAVA_KEYWORDS = createField("java_keywords", org.jooq.util.postgres.PostgresDataType.VARCHAR.asEnumDataType(org.jooq.test.postgres.generatedclasses.enums.U_959.class), this);
 
+	/**
+	 * Create a <code>public.t_959</code> table reference
+	 */
 	public T_959() {
 		super("t_959", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>public.t_959</code> table reference
+	 */
 	public T_959(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.T_959.T_959);
 	}

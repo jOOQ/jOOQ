@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class MLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> {
 
-	private static final long serialVersionUID = 785976198;
+	private static final long serialVersionUID = 1002758703;
 
 	/**
 	 * The singleton instance of <code>TEST.M_LIBRARY</code>
@@ -36,10 +36,16 @@ public class MLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gener
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>TEST.M_LIBRARY</code> table reference
+	 */
 	public MLibrary() {
 		super("M_LIBRARY", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.M_LIBRARY</code> table reference
+	 */
 	public MLibrary(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY);
 	}

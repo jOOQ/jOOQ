@@ -58,6 +58,18 @@ import org.jooq.tools.StringUtils;
  */
 public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
+    /**
+     * A pattern to be used with "list" expressions
+     */
+    private static final Pattern PATTERN_LIST = Pattern.compile(
+        "\\[" +
+           "(?:\\[before=([^\\]]+)\\])?" +
+           "(?:\\[separator=([^\\]]+)\\])?" +
+           "(?:\\[after=([^\\]]+)\\])?" +
+           "(?:\\[(.*)\\])" +
+        "\\]", Pattern.DOTALL);
+
+
     private final File          file;
     private final PrintWriter   writer;
     private final StringBuilder sb;
@@ -121,12 +133,9 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                         int end = string.indexOf("]]");
 
                         String expression = string.substring(start, end + 2);
-
                         StringBuilder replacement = new StringBuilder();
 
-                        Pattern p = Pattern.compile("\\[(?:\\[before=([^\\]]+)\\])?" + "(?:\\[separator=([^\\]]+)\\])?"
-                            + "(?:\\[after=([^\\]]+)\\])?" + "(?:\\[(.*)\\]\\])");
-                        Matcher m = p.matcher(expression);
+                        Matcher m = PATTERN_LIST.matcher(expression);
                         m.find();
 
                         String gBefore = StringUtils.defaultString(m.group(1));

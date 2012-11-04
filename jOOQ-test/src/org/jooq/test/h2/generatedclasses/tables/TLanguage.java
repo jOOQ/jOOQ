@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1212698263;
+	private static final long serialVersionUID = -693684115;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_LANGUAGE</code>
@@ -43,8 +43,6 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2
 
 	/**
 	 * The language ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_LANGUAGE);
 

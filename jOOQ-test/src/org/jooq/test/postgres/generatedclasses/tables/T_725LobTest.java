@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 662325606;
+	private static final long serialVersionUID = -1774814408;
 
 	/**
 	 * The singleton instance of <code>public.t_725_lob_test</code>
@@ -26,8 +26,6 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 
 	/**
 	 * The table column <code>public.t_725_lob_test.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 

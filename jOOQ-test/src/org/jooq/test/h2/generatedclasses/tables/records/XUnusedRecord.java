@@ -9,12 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -1237468031;
+	private static final long serialVersionUID = 1507730384;
 
 	/**
 	 * The table column <code>PUBLIC.X_UNUSED.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -23,8 +21,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>PUBLIC.X_UNUSED.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -32,9 +28,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.X_UNUSED.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Fetch a list of <code>PUBLIC.X_TEST_CASE_64_69</code> referencing this <code>PUBLIC.X_UNUSED</code>
 	 */
 	public org.jooq.Result<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69List() {
 		return create()
@@ -45,8 +39,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>PUBLIC.X_UNUSED.NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setName(java.lang.String value) {
@@ -55,8 +47,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>PUBLIC.X_UNUSED.NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.String getName() {
@@ -81,12 +71,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>PUBLIC.X_UNUSED.ID_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_UNUSED_SELF
-	 * FOREIGN KEY (ID_REF, ID_REF, NAME_REF, NAME_REF)
-	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
-	 * </pre></code>
 	 */
 	@Override
 	public void setIdRef(java.lang.Integer value) {
@@ -95,12 +79,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>PUBLIC.X_UNUSED.ID_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_UNUSED_SELF
-	 * FOREIGN KEY (ID_REF, ID_REF, NAME_REF, NAME_REF)
-	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
-	 * </pre></code>
 	 */
 	@Override
 	public java.lang.Integer getIdRef() {
@@ -109,12 +87,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>PUBLIC.X_UNUSED.NAME_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_UNUSED_SELF
-	 * FOREIGN KEY (ID_REF, ID_REF, NAME_REF, NAME_REF)
-	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
-	 * </pre></code>
 	 */
 	@Override
 	public void setNameRef(java.lang.String value) {
@@ -123,12 +95,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>PUBLIC.X_UNUSED.NAME_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_UNUSED_SELF
-	 * FOREIGN KEY (ID_REF, ID_REF, NAME_REF, NAME_REF)
-	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
-	 * </pre></code>
 	 */
 	@Override
 	public java.lang.String getNameRef() {

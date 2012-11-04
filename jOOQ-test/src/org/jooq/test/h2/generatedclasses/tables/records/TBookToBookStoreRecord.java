@@ -11,18 +11,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = 1484682874;
+	private static final long serialVersionUID = -1754438751;
 
 	/**
 	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
-	 * </pre></code>
 	 */
 	@Override
 	public void setBookStoreName(java.lang.String value) {
@@ -31,14 +23,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
-	 * </pre></code>
 	 */
 	@Override
 	public java.lang.String getBookStoreName() {
@@ -46,8 +30,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord 
-	 * TBookStoreRecord}
+	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord}
 	 */
 	public void setBookStoreName(org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord value) {
 		if (value == null) {
@@ -59,15 +42,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * Fetch a <code>PUBLIC.T_BOOK_STORE</code> referenced by this <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
 		return create()
@@ -78,14 +53,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES PUBLIC.T_BOOK (ID)
-	 * </pre></code>
 	 */
 	@Override
 	public void setBookId(java.lang.Integer value) {
@@ -94,14 +61,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES PUBLIC.T_BOOK (ID)
-	 * </pre></code>
 	 */
 	@Override
 	public java.lang.Integer getBookId() {
@@ -109,8 +68,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TBookRecord 
-	 * TBookRecord}
+	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TBookRecord}
 	 */
 	public void setBookId(org.jooq.test.h2.generatedclasses.tables.records.TBookRecord value) {
 		if (value == null) {
@@ -122,15 +80,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES PUBLIC.T_BOOK (ID)
-	 * </pre></code>
+	 * Fetch a <code>PUBLIC.T_BOOK</code> referenced by this <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.records.TBookRecord fetchTBook() {
 		return create()

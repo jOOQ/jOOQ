@@ -9,12 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -1826330349;
+	private static final long serialVersionUID = -929134699;
 
 	/**
 	 * The table column <code>PUBLIC.T_BOOLEANS.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -23,8 +21,6 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 
 	/**
 	 * The table column <code>PUBLIC.T_BOOLEANS.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@Override
 	public java.lang.Integer getId() {

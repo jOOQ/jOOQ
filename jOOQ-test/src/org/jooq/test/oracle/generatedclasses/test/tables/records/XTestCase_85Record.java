@@ -11,12 +11,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1337332951;
+	private static final long serialVersionUID = -165004237;
 
 	/**
 	 * The table column <code>TEST.X_TEST_CASE_85.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.ID, value);
@@ -24,8 +22,6 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 
 	/**
 	 * The table column <code>TEST.X_TEST_CASE_85.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -35,12 +31,6 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 
 	/**
 	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, value);
@@ -48,12 +38,6 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 
 	/**
 	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_ID", precision = 7)
 	public java.lang.Integer getXUnusedId() {
@@ -61,13 +45,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.X_TEST_CASE_85</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord fetchXUnused() {
 		return create()
@@ -79,12 +57,6 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 
 	/**
 	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
 	 */
 	public void setXUnusedName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME, value);
@@ -92,12 +64,6 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 
 	/**
 	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
 	public java.lang.String getXUnusedName() {

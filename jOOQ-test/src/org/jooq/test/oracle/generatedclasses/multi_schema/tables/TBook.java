@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1246139238;
+	private static final long serialVersionUID = -435732745;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK</code>
@@ -26,30 +26,16 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
-	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
-	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
@@ -70,12 +56,6 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.LANGUAGE_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES TEST.T_LANGUAGE (ID)
-	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 

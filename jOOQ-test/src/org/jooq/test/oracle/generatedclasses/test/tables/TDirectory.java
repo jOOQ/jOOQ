@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = -434517464;
+	private static final long serialVersionUID = -1107395970;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DIRECTORY</code>
@@ -26,19 +26,11 @@ public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.o
 
 	/**
 	 * The table column <code>TEST.T_DIRECTORY.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT PK_T_DIRECTORY_SELF
-	 * FOREIGN KEY (PARENT_ID)
-	 * REFERENCES TEST.T_DIRECTORY (ID)
-	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.Integer> PARENT_ID = createField("PARENT_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 

@@ -15,18 +15,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1587408335;
+	private static final long serialVersionUID = -1798303110;
 
 	/**
 	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES TEST.T_BOOK_STORE (NAME)
-	 * </pre></code>
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value);
@@ -34,14 +26,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES TEST.T_BOOK_STORE (NAME)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	public java.lang.String getBookStoreName() {
@@ -49,15 +33,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES TEST.T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * Fetch a list of <code>MULTI_SCHEMA.T_BOOK_SALE</code> referencing this <code>TEST.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> fetchTBookSaleList() {
 		return create()
@@ -68,8 +44,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord 
-	 * TBookStoreRecord}
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord}
 	 */
 	public void setBookStoreName(org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord value) {
 		if (value == null) {
@@ -81,15 +56,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES TEST.T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * Fetch a <code>TEST.T_BOOK_STORE</code> referenced by this <code>TEST.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord fetchTBookStore() {
 		return create()
@@ -100,14 +67,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES TEST.T_BOOK (ID)
-	 * </pre></code>
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value);
@@ -115,14 +74,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES TEST.T_BOOK (ID)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
 	public java.lang.Integer getBookId() {
@@ -130,8 +81,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord 
-	 * TBookRecord}
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord}
 	 */
 	public void setBookId(org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord value) {
 		if (value == null) {
@@ -143,15 +93,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES TEST.T_BOOK (ID)
-	 * </pre></code>
+	 * Fetch a <code>TEST.T_BOOK</code> referenced by this <code>TEST.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord fetchTBook() {
 		return create()

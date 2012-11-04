@@ -13,15 +13,11 @@ public interface ITAuthor extends java.io.Serializable {
 
 	/**
 	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
 	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 

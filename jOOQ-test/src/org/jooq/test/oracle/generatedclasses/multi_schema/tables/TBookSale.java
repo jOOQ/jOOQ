@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = -1320461060;
+	private static final long serialVersionUID = 2003871986;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK_SALE</code>
@@ -26,30 +26,16 @@ public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
-	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
-	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
-	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
-	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
-	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
-	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 

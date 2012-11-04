@@ -11,15 +11,11 @@ public interface ITIdentityPk extends java.io.Serializable {
 
 	/**
 	 * The table column <code>PUBLIC.T_IDENTITY_PK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>PUBLIC.T_IDENTITY_PK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 

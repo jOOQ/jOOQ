@@ -11,12 +11,10 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 568022891;
+	private static final long serialVersionUID = -586444737;
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.ID, value);
@@ -24,8 +22,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -35,12 +31,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
-	 * </pre></code>
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.AUTHOR_ID, value);
@@ -48,12 +38,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
 	public java.lang.Integer getAuthorId() {
@@ -61,8 +45,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord 
-	 * TAuthorRecord}
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord}
 	 */
 	public void setAuthorId(org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord value) {
 		if (value == null) {
@@ -74,13 +57,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>MULTI_SCHEMA.T_BOOK.AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Fetch a <code>MULTI_SCHEMA.T_AUTHOR</code> referenced by this <code>MULTI_SCHEMA.T_BOOK</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
 		return create()
@@ -91,12 +68,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
-	 * </pre></code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.CO_AUTHOR_ID, value);
@@ -104,12 +75,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
 	public java.lang.Integer getCoAuthorId() {
@@ -117,8 +82,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord 
-	 * TAuthorRecord}
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord}
 	 */
 	public void setCoAuthorId(org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord value) {
 		if (value == null) {
@@ -130,13 +94,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>MULTI_SCHEMA.T_BOOK.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Fetch a <code>MULTI_SCHEMA.T_AUTHOR</code> referenced by this <code>MULTI_SCHEMA.T_BOOK</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
 		return create()
@@ -192,12 +150,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.LANGUAGE_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES TEST.T_LANGUAGE (ID)
-	 * </pre></code>
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.LANGUAGE_ID, value);
@@ -205,12 +157,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK.LANGUAGE_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES TEST.T_LANGUAGE (ID)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	public java.lang.Integer getLanguageId() {
@@ -218,8 +164,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord 
-	 * TLanguageRecord}
+	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord}
 	 */
 	public void setLanguageId(org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord value) {
 		if (value == null) {
@@ -231,13 +176,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>MULTI_SCHEMA.T_BOOK.LANGUAGE_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES TEST.T_LANGUAGE (ID)
-	 * </pre></code>
+	 * Fetch a <code>TEST.T_LANGUAGE</code> referenced by this <code>MULTI_SCHEMA.T_BOOK</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord fetchTLanguage() {
 		return create()

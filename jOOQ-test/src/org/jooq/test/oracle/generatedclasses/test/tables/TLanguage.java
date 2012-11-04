@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -593334406;
+	private static final long serialVersionUID = -1958950018;
 
 	/**
 	 * The singleton instance of <code>TEST.T_LANGUAGE</code>
@@ -43,8 +43,6 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 
 	/**
 	 * The language ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 

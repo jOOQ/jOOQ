@@ -11,12 +11,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_author", schema = "public")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -460896797;
+	private static final long serialVersionUID = -1891228419;
 
 	/**
 	 * The table column <code>public.t_author.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID, value);
@@ -24,8 +22,6 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>public.t_author.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
@@ -34,9 +30,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>public.t_author.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Fetch a list of <code>public.t_book</code> referencing this <code>public.t_author</code>
 	 */
 	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
 		return create()
@@ -46,9 +40,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>public.t_author.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Fetch a list of <code>public.t_book</code> referencing this <code>public.t_author</code>
 	 */
 	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
 		return create()

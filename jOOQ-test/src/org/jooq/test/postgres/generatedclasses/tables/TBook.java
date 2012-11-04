@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1718149345;
+	private static final long serialVersionUID = -970121897;
 
 	/**
 	 * The singleton instance of <code>public.t_book</code>
@@ -26,30 +26,16 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgr
 
 	/**
 	 * The table column <code>public.t_book.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The table column <code>public.t_book.author_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book__fk_t_book_author_id
-	 * FOREIGN KEY (author_id)
-	 * REFERENCES public.t_author (id)
-	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The table column <code>public.t_book.co_author_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book__fk_t_book_co_author_id
-	 * FOREIGN KEY (co_author_id)
-	 * REFERENCES public.t_author (id)
-	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
@@ -70,12 +56,6 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgr
 
 	/**
 	 * The table column <code>public.t_book.language_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book__fk_t_book_language_id
-	 * FOREIGN KEY (language_id)
-	 * REFERENCES public.t_language (id)
-	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER, this);
 

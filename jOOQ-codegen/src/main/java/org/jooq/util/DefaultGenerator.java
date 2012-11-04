@@ -361,7 +361,7 @@ public class DefaultGenerator extends AbstractGenerator {
         // ----------
 
         for (IdentityDefinition identity : allIdentities) {
-            generateIdentity(out, identityCounter, identity);
+            printIdentity(out, identityCounter, identity);
             identityCounter++;
         }
 
@@ -373,7 +373,7 @@ public class DefaultGenerator extends AbstractGenerator {
         // ----------
 
         for (UniqueKeyDefinition uniqueKey : allUniqueKeys) {
-            generateUniqueKey(out, uniqueKeyCounter, uniqueKey);
+            printUniqueKey(out, uniqueKeyCounter, uniqueKey);
             uniqueKeyCounter++;
         }
 
@@ -385,7 +385,7 @@ public class DefaultGenerator extends AbstractGenerator {
         // -----------
 
         for (ForeignKeyDefinition foreignKey : allForeignKeys) {
-            generateForeignKey(out, foreignKeyCounter, foreignKey);
+            printForeignKey(out, foreignKeyCounter, foreignKey);
             foreignKeyCounter++;
         }
 
@@ -399,7 +399,7 @@ public class DefaultGenerator extends AbstractGenerator {
         watch.splitInfo("Keys generated");
     }
 
-    protected void generateIdentity(JavaWriter out, int identityCounter, IdentityDefinition identity) {
+    protected void printIdentity(JavaWriter out, int identityCounter, IdentityDefinition identity) {
         final int block = identityCounter / INITIALISER_SIZE;
 
         // Print new nested class
@@ -421,7 +421,7 @@ public class DefaultGenerator extends AbstractGenerator {
             getStrategy().getFullJavaIdentifier(identity.getColumn()));
     }
 
-    protected void generateUniqueKey(JavaWriter out, int uniqueKeyCounter, UniqueKeyDefinition uniqueKey) {
+    protected void printUniqueKey(JavaWriter out, int uniqueKeyCounter, UniqueKeyDefinition uniqueKey) {
         final int block = uniqueKeyCounter / INITIALISER_SIZE;
 
         // Print new nested class
@@ -442,7 +442,7 @@ public class DefaultGenerator extends AbstractGenerator {
             getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()));
     }
 
-    protected void generateForeignKey(JavaWriter out, int foreignKeyCounter, ForeignKeyDefinition foreignKey) {
+    protected void printForeignKey(JavaWriter out, int foreignKeyCounter, ForeignKeyDefinition foreignKey) {
         final int block = foreignKeyCounter / INITIALISER_SIZE;
 
         // Print new nested class
@@ -2039,7 +2039,7 @@ public class DefaultGenerator extends AbstractGenerator {
 
             ColumnDefinition column = (ColumnDefinition) element;
 
-            generateNavigateMethods(out, column);
+            printNavigateMethods(out, column);
         }
     }
 
@@ -2077,8 +2077,7 @@ public class DefaultGenerator extends AbstractGenerator {
         }
     }
 
-    protected void generateNavigateMethods(JavaWriter out, ColumnDefinition column) {
-
+    protected void printNavigateMethods(JavaWriter out, ColumnDefinition column) {
         List<UniqueKeyDefinition> uniqueKeys = column.getUniqueKeys();
 
         // Print references from this column's unique keys to all
@@ -2090,7 +2089,7 @@ public class DefaultGenerator extends AbstractGenerator {
         for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
             if (out.printOnlyOnce(uniqueKey)) {
                 for (ForeignKeyDefinition foreignKey : uniqueKey.getForeignKeys()) {
-                    generateFetchFKList(out, uniqueKey, foreignKey, column, fetchMethodNames);
+                    printFetchFKList(out, foreignKey, fetchMethodNames);
                 }
             }
         }
@@ -2100,11 +2099,11 @@ public class DefaultGenerator extends AbstractGenerator {
         // -----------------------------------------------------------------
         ForeignKeyDefinition foreignKey = column.getForeignKey();
         if (foreignKey != null && out.printOnlyOnce(foreignKey)) {
-            generateFetchFK(out, column, foreignKey);
+            printFetchFK(out, column, foreignKey);
         }
     }
 
-    protected void generateFetchFK(JavaWriter out, ColumnDefinition column, ForeignKeyDefinition foreignKey) {
+    protected void printFetchFK(JavaWriter out, ColumnDefinition column, ForeignKeyDefinition foreignKey) {
 
         // #64 - If the foreign key does not match the referenced key, it
         // is most likely because it references a non-primary unique key
@@ -2134,80 +2133,52 @@ public class DefaultGenerator extends AbstractGenerator {
             return;
         }
 
-        out.println("");
-        out.println("\t/**");
+        final String referencedType = getStrategy().getFullJavaClassName(referencedTable, Mode.RECORD);
+        final String setter = foreignKey.getKeyColumns().size() == 1
+            // Single-column foreign keys use the referencing column name for the setter
+            ? getStrategy().getJavaSetterName(column, Mode.RECORD)
+            // Multi-column foreign keys "could" use the referenced table name for the setter
+            : getStrategy().getJavaSetterName(referencedTable, Mode.RECORD);
 
-        String comment =
-            "Link this record to a given {@link " +
-            getStrategy().getFullJavaClassName(referencedTable, Mode.RECORD) +
-            " " +
-            getStrategy().getJavaClassName(referencedTable, Mode.RECORD) +
-            "}";
-        printJavadocParagraph(out, comment, "\t");
-        out.println("\t */");
-
-        out.print("\tpublic void ");
-
-        // Single-column foreign keys use the referencing column name for the setter
-        if (foreignKey.getKeyColumns().size() == 1) {
-            out.print(getStrategy().getJavaSetterName(column, Mode.RECORD));
-        }
-
-        // Multi-column foreign keys "could" use the referenced table name for the setter
-        else {
-            out.print(getStrategy().getJavaSetterName(referencedTable, Mode.RECORD));
-        }
-
-        out.print("(");
-        out.print(getStrategy().getFullJavaClassName(referencedTable, Mode.RECORD));
-        out.println(" value) {");
-
-        out.println("\t\tif (value == null) {");
-
-        for (int i = 0; i < foreignKey.getKeyColumns().size(); i++) {
-            out.print("\t\t\tsetValue(");
-            out.print(getStrategy().getFullJavaIdentifier(foreignKey.getKeyColumns().get(i)));
-            out.println(", null);");
-        }
-
-        out.println("\t\t}");
-        out.println("\t\telse {");
+        out.tab(1).javadoc("Link this record to a given {@link %s}", referencedType);
+        out.tab(1).println("public void %s(%s value) {", setter, referencedType);
+        out.tab(2).println("if (value == null) {");
+        out.print("[[\t\t\tsetValue(%s, null);\n]]", getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()));
+        out.tab(2).println("}");
+        out.tab(2).println("else {");
 
         for (int i = 0; i < foreignKey.getKeyColumns().size(); i++) {
             ColumnDefinition referencingColumn = foreignKey.getKeyColumns().get(i);
             ColumnDefinition referencedColumn = foreignKey.getReferencedColumns().get(i);
 
-            out.print("\t\t\tsetValue(");
-            out.print(getStrategy().getFullJavaIdentifier(referencingColumn));
-            out.print(", value.getValue(");
-            out.print(getStrategy().getFullJavaIdentifier(referencedColumn));
+            final String referencingId = getStrategy().getFullJavaIdentifier(referencingColumn);
+            final String referencedId = getStrategy().getFullJavaIdentifier(referencedColumn);
 
             // Convert foreign key value, if there is a type mismatch
             DataTypeDefinition foreignType = referencingColumn.getType();
             DataTypeDefinition primaryType = referencedColumn.getType();
 
-            if (!match(foreignType, primaryType)) {
-                out.print(", ");
-                out.print(getSimpleJavaType(referencingColumn.getType()));
-                out.print(".class");
-            }
+            List<String> conversion = list(!match(foreignType, primaryType)
+                ? getSimpleJavaType(referencingColumn.getType())
+                : null);
 
-            out.println("));");
+            out.tab(3).println("setValue(%s, value.getValue(%s[[before=, ][after=.class][%s]]));", referencingId, referencedId, conversion);
         }
 
-        out.println("\t\t}");
-        out.println("\t}");
+        out.tab(2).println("}");
+        out.tab(1).println("}");
     }
 
     protected void printFetchMethod(JavaWriter out, ColumnDefinition column, ForeignKeyDefinition foreignKey,
         TableDefinition referenced) {
 
-        printFKSetter(out, column, foreignKey, referenced);
-        printFieldJavaDoc(out, column);
+        final TableDefinition referencing = foreignKey.getKeyTable();
 
         final String referencedId = getStrategy().getFullJavaIdentifier(referenced);
         final String referencedType = getStrategy().getFullJavaClassName(referenced, Mode.RECORD);
         final String referencedClassName = getStrategy().getJavaClassName(referenced);
+
+        printFKSetter(out, column, foreignKey, referenced);
 
         // [#350] - Disambiguate multiple foreign keys referencing
         // the same table
@@ -2215,6 +2186,7 @@ public class DefaultGenerator extends AbstractGenerator {
             ? getStrategy().getJavaClassName(column)
             : null);
 
+        out.tab(1).javadoc("Fetch a <code>%s</code> referenced by this <code>%s</code>", referenced.getQualifiedOutputName(), referencing.getQualifiedOutputName());
         out.tab(1).println("public %s fetch%s[[before=By][%s]]() {", referencedType, referencedClassName, disambiguation);
         out.tab(2).println("return create()");
         out.tab(3).println(".selectFrom(%s)", referencedId);
@@ -2240,10 +2212,11 @@ public class DefaultGenerator extends AbstractGenerator {
         out.println("\t}");
     }
 
-    private void generateFetchFKList(JavaWriter out, UniqueKeyDefinition uniqueKey, ForeignKeyDefinition foreignKey, ColumnDefinition column, Set<String> fetchMethodNames) {
+    protected void printFetchFKList(JavaWriter out, ForeignKeyDefinition foreignKey, Set<String> fetchMethodNames) {
         // [#64] - If the foreign key does not match the referenced key, it
         // is most likely because it references a non-primary unique key
         // Skip code generation for this foreign key
+
 
         // [#69] - Should resolve this issue more thoroughly.
         if (foreignKey.getReferencedColumns().size() != foreignKey.getKeyColumns().size()) {
@@ -2252,6 +2225,9 @@ public class DefaultGenerator extends AbstractGenerator {
         }
 
         final TableDefinition referencing = foreignKey.getKeyTable();
+        final TableDefinition referenced = foreignKey.getReferencedTable();
+        final UniqueKeyDefinition uniqueKey = foreignKey.getReferencedKey();
+
         final String referencingType = getStrategy().getFullJavaClassName(referencing, Mode.RECORD);
         final String referencingId = getStrategy().getFullJavaIdentifier(referencing);
         final StringBuilder method = new StringBuilder();
@@ -2278,7 +2254,7 @@ public class DefaultGenerator extends AbstractGenerator {
             fetchMethodNames.add(method.toString());
         }
 
-        printFieldJavaDoc(out, column);
+        out.tab(1).javadoc("Fetch a list of <code>%s</code> referencing this <code>%s</code>", referencing.getQualifiedOutputName(), referenced.getQualifiedOutputName());
         out.tab(1).println("public %s<%s> %s() {", Result.class, referencingType, method);
         out.tab(2).println("return create()");
         out.tab(3).println(".selectFrom(%s)", referencingId);
@@ -2415,50 +2391,6 @@ public class DefaultGenerator extends AbstractGenerator {
             out.println("\t * Deserialising this field might not work!");
 
             log.warn("Unknown type", element.getQualifiedName() + " (" + combined + ")");
-        }
-
-        if (element instanceof ColumnDefinition) {
-            ColumnDefinition column = (ColumnDefinition) element;
-
-            UniqueKeyDefinition primaryKey = column.getPrimaryKey();
-            ForeignKeyDefinition foreignKey = column.getForeignKey();
-
-            if (primaryKey != null) {
-                out.println("\t * <p>");
-                out.print("\t * This column is part of the table's PRIMARY KEY");
-                out.println();
-            }
-
-            if (foreignKey != null) {
-                out.println("\t * <p>");
-                out.println("\t * This column is part of a FOREIGN KEY: <code><pre>");
-
-                out.print("\t * CONSTRAINT ");
-                out.println(foreignKey.getOutputName());
-                out.print("\t * FOREIGN KEY (");
-
-                String separator = "";
-                for (ColumnDefinition fkColumn : foreignKey.getKeyColumns()) {
-                    out.print(separator);
-                    out.print(fkColumn.getOutputName());
-                    separator = ", ";
-                }
-
-                out.println(")");
-                out.print("\t * REFERENCES ");
-                out.print(foreignKey.getReferencedTable().getQualifiedOutputName());
-                out.print(" (");
-
-                separator = "";
-                for (ColumnDefinition fkColumn : foreignKey.getReferencedColumns()) {
-                    out.print(separator);
-                    out.print(fkColumn.getOutputName());
-                    separator = ", ";
-                }
-
-                out.println(")");
-                out.println("\t * </pre></code>");
-            }
         }
 
         out.println("\t */");

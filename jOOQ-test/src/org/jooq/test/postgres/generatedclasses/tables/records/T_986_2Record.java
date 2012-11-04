@@ -11,16 +11,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_986_2", schema = "public")
 public class T_986_2Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = 517517039;
+	private static final long serialVersionUID = -269830705;
 
 	/**
 	 * The table column <code>public.t_986_2.ref</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_986_2__fk_986
-	 * FOREIGN KEY (ref, ref)
-	 * REFERENCES public.x_unused (id)
-	 * </pre></code>
 	 */
 	public void setRef(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2.REF, value);
@@ -28,12 +22,6 @@ public class T_986_2Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 
 	/**
 	 * The table column <code>public.t_986_2.ref</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_986_2__fk_986
-	 * FOREIGN KEY (ref, ref)
-	 * REFERENCES public.x_unused (id)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ref", precision = 32)
 	public java.lang.Integer getRef() {

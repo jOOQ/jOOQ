@@ -13,18 +13,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1939261538;
+	private static final long serialVersionUID = 203304328;
 
 	/**
 	 * The table column <code>public.t_book_to_book_store.book_store_name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES public.t_book_store (name)
-	 * </pre></code>
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value);
@@ -32,14 +24,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The table column <code>public.t_book_to_book_store.book_store_name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES public.t_book_store (name)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "book_store_name", nullable = false, length = 400)
 	public java.lang.String getBookStoreName() {
@@ -47,8 +31,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord 
-	 * TBookStoreRecord}
+	 * Link this record to a given {@link org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord}
 	 */
 	public void setBookStoreName(org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord value) {
 		if (value == null) {
@@ -60,15 +43,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The table column <code>public.t_book_to_book_store.book_store_name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES public.t_book_store (name)
-	 * </pre></code>
+	 * Fetch a <code>public.t_book_store</code> referenced by this <code>public.t_book_to_book_store</code>
 	 */
 	public org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
 		return create()
@@ -79,14 +54,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The table column <code>public.t_book_to_book_store.book_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES public.t_book (id)
-	 * </pre></code>
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value);
@@ -94,14 +61,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 
 	/**
 	 * The table column <code>public.t_book_to_book_store.book_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES public.t_book (id)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "book_id", nullable = false, precision = 32)
 	public java.lang.Integer getBookId() {
@@ -109,8 +68,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord 
-	 * TBookRecord}
+	 * Link this record to a given {@link org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord}
 	 */
 	public void setBookId(org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord value) {
 		if (value == null) {
@@ -122,15 +80,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The table column <code>public.t_book_to_book_store.book_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES public.t_book (id)
-	 * </pre></code>
+	 * Fetch a <code>public.t_book</code> referenced by this <code>public.t_book_to_book_store</code>
 	 */
 	public org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord fetchTBook() {
 		return create()

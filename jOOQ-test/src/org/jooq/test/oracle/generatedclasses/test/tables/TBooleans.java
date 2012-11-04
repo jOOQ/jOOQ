@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -843098930;
+	private static final long serialVersionUID = 29732572;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOLEANS</code>
@@ -26,8 +26,6 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 
 	/**
 	 * The table column <code>TEST.T_BOOLEANS.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 

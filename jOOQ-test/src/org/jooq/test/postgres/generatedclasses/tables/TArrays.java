@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -1156135462;
+	private static final long serialVersionUID = 721830906;
 
 	/**
 	 * The singleton instance of <code>public.t_arrays</code>
@@ -26,8 +26,6 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 
 	/**
 	 * The table column <code>public.t_arrays.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 

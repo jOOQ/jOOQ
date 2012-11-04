@@ -11,37 +11,21 @@ public interface IXTestCase_71 extends java.io.Serializable {
 
 	/**
 	 * The table column <code>PUBLIC.X_TEST_CASE_71.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>PUBLIC.X_TEST_CASE_71.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 
 	/**
 	 * The table column <code>PUBLIC.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES PUBLIC.X_TEST_CASE_64_69 (ID)
-	 * </pre></code>
 	 */
 	public void setTestCase_64_69Id(java.lang.Short value);
 
 	/**
 	 * The table column <code>PUBLIC.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES PUBLIC.X_TEST_CASE_64_69 (ID)
-	 * </pre></code>
 	 */
 	public java.lang.Short getTestCase_64_69Id();
 }

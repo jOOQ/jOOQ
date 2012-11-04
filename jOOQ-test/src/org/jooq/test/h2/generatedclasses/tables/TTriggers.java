@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 544916478;
+	private static final long serialVersionUID = -436155636;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_TRIGGERS</code>
@@ -26,8 +26,6 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2
 
 	/**
 	 * The table column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 

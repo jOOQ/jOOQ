@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1650998237;
+	private static final long serialVersionUID = 2093296891;
 
 	/**
 	 * The singleton instance of <code>public.t_language</code>
@@ -41,8 +41,6 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.po
 
 	/**
 	 * The table column <code>public.t_language.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1601660423;
+	private static final long serialVersionUID = 1646419401;
 
 	/**
 	 * The singleton instance of <code>TEST.X_UNUSED</code>
@@ -28,15 +28,11 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 
 	/**
 	 * The table column <code>TEST.X_UNUSED.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The table column <code>TEST.X_UNUSED.NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
@@ -47,12 +43,6 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 
 	/**
 	 * The table column <code>TEST.X_UNUSED.ID_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_UNUSED_SELF
-	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.Integer> ID_REF = createField("ID_REF", org.jooq.impl.SQLDataType.INTEGER, this);
 
@@ -98,12 +88,6 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 
 	/**
 	 * The table column <code>TEST.X_UNUSED.NAME_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_UNUSED_SELF
-	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, this);
 

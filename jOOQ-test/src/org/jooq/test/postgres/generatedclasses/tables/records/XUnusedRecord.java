@@ -13,12 +13,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1545031347;
+	private static final long serialVersionUID = -131415034;
 
 	/**
 	 * The table column <code>public.x_unused.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID, value);
@@ -26,8 +24,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>public.x_unused.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
 	public java.lang.Integer getId() {
@@ -35,9 +31,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>public.x_unused.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Fetch a list of <code>public.x_test_case_85</code> referencing this <code>public.x_unused</code>
 	 */
 	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record> fetchXTestCase_85List() {
 		return create()
@@ -48,9 +42,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>public.x_unused.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Fetch a list of <code>public.x_unused</code> referencing this <code>public.x_unused</code>
 	 */
 	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> fetchXUnusedList() {
 		return create()
@@ -61,9 +53,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>public.x_unused.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Fetch a list of <code>public.x_test_case_64_69</code> referencing this <code>public.x_unused</code>
 	 */
 	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69List() {
 		return create()
@@ -74,8 +64,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>public.x_unused.name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME, value);
@@ -83,8 +71,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>public.x_unused.name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Column(name = "name", nullable = false, length = 10)
 	public java.lang.String getName() {
@@ -108,12 +94,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>public.x_unused.id_ref</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_unused__fk_x_unused_self
-	 * FOREIGN KEY (id_ref, name_ref)
-	 * REFERENCES public.x_unused (id, name)
-	 * </pre></code>
 	 */
 	public void setIdRef(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID_REF, value);
@@ -121,12 +101,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>public.x_unused.id_ref</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_unused__fk_x_unused_self
-	 * FOREIGN KEY (id_ref, name_ref)
-	 * REFERENCES public.x_unused (id, name)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "id_ref", precision = 32)
 	public java.lang.Integer getIdRef() {
@@ -134,13 +108,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>public.x_unused.id_ref</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_unused__fk_x_unused_self
-	 * FOREIGN KEY (id_ref, name_ref)
-	 * REFERENCES public.x_unused (id, name)
-	 * </pre></code>
+	 * Fetch a <code>public.x_unused</code> referenced by this <code>public.x_unused</code>
 	 */
 	public org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()
@@ -287,12 +255,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>public.x_unused.name_ref</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_unused__fk_x_unused_self
-	 * FOREIGN KEY (id_ref, name_ref)
-	 * REFERENCES public.x_unused (id, name)
-	 * </pre></code>
 	 */
 	public void setNameRef(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME_REF, value);
@@ -300,12 +262,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The table column <code>public.x_unused.name_ref</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_unused__fk_x_unused_self
-	 * FOREIGN KEY (id_ref, name_ref)
-	 * REFERENCES public.x_unused (id, name)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "name_ref", length = 10)
 	public java.lang.String getNameRef() {

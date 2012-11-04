@@ -11,12 +11,10 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -2083169857;
+	private static final long serialVersionUID = -670781609;
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.ID, value);
@@ -24,8 +22,6 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -35,12 +31,6 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
-	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
-	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
-	 * </pre></code>
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_ID, value);
@@ -48,12 +38,6 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
-	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
-	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
 	public java.lang.Integer getBookId() {
@@ -61,13 +45,7 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
-	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
-	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
-	 * </pre></code>
+	 * Fetch a <code>TEST.T_BOOK_TO_BOOK_STORE</code> referenced by this <code>MULTI_SCHEMA.T_BOOK_SALE</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord fetchTBookToBookStore() {
 		return create()
@@ -79,12 +57,6 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
-	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
-	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
-	 * </pre></code>
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_STORE_NAME, value);
@@ -92,12 +64,6 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 
 	/**
 	 * The table column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_TO_BOOK_STORE
-	 * FOREIGN KEY (BOOK_STORE_NAME, BOOK_ID)
-	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
-	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	public java.lang.String getBookStoreName() {

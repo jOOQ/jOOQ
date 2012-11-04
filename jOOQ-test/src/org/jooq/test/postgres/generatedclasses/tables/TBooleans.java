@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -2134479769;
+	private static final long serialVersionUID = -131977667;
 
 	/**
 	 * The singleton instance of <code>public.t_booleans</code>
@@ -26,8 +26,6 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.po
 
 	/**
 	 * The table column <code>public.t_booleans.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 

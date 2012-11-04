@@ -11,15 +11,11 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 
 	/**
 	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
 	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.Integer getId();
 

@@ -13,12 +13,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = 485903170;
+	private static final long serialVersionUID = -1203316494;
 
 	/**
 	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ID, value);
@@ -26,8 +24,6 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 
 	/**
 	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -36,9 +32,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Fetch a list of <code>TEST.T_BOOK</code> referencing this <code>TEST.T_AUTHOR</code>
 	 */
 	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> fetchTBookListByAuthorId() {
 		return create()
@@ -48,9 +42,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Fetch a list of <code>TEST.T_BOOK</code> referencing this <code>TEST.T_AUTHOR</code>
 	 */
 	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
 		return create()

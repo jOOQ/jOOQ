@@ -536,11 +536,37 @@ public abstract class AbstractDataType<T> implements DataType<T> {
 
     @Override
     public int hashCode() {
-        return toString().hashCode();
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((dialect == null) ? 0 : dialect.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((typeName == null) ? 0 : typeName.hashCode());
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        return toString().equals("" + obj);
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        AbstractDataType<?> other = (AbstractDataType<?>) obj;
+        if (dialect != other.dialect)
+            return false;
+        if (type == null) {
+            if (other.type != null)
+                return false;
+        }
+        else if (!type.equals(other.type))
+            return false;
+        if (typeName == null) {
+            if (other.typeName != null)
+                return false;
+        }
+        else if (!typeName.equals(other.typeName))
+            return false;
+        return true;
     }
 }

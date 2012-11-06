@@ -769,11 +769,15 @@ final class Utils {
     static final List<java.lang.reflect.Field> getMatchingMembers(Class<?> type, String name) {
         List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
 
+        // [#1942] Caching these values before the field-loop significantly
+        // accerates POJO mapping
+        String camelCaseLC = StringUtils.toCamelCaseLC(name);
+
         for (java.lang.reflect.Field member : getInstanceMembers(type)) {
             if (name.equals(member.getName())) {
                 result.add(accessible(member));
             }
-            else if (StringUtils.toCamelCaseLC(name).equals(member.getName())) {
+            else if (camelCaseLC.equals(member.getName())) {
                 result.add(accessible(member));
             }
         }
@@ -871,6 +875,11 @@ final class Utils {
     static final List<Method> getMatchingSetters(Class<?> type, String name) {
         List<Method> result = new ArrayList<Method>();
 
+        // [#1942] Caching these values before the method-loop significantly
+        // accerates POJO mapping
+        String camelCase = StringUtils.toCamelCase(name);
+        String camelCaseLC = StringUtils.toLC(camelCase);
+
         for (Method method : getInstanceMethods(type)) {
             Class<?>[] parameterTypes = method.getParameterTypes();
 
@@ -880,13 +889,13 @@ final class Utils {
                 if (name.equals(method.getName())) {
                     result.add(accessible(method));
                 }
-                else if (StringUtils.toCamelCaseLC(name).equals(method.getName())) {
+                else if (camelCaseLC.equals(method.getName())) {
                     result.add(accessible(method));
                 }
                 else if (("set" + name).equals(method.getName())) {
                     result.add(accessible(method));
                 }
-                else if (("set" + StringUtils.toCamelCase(name)).equals(method.getName())) {
+                else if (("set" + camelCase).equals(method.getName())) {
                     result.add(accessible(method));
                 }
             }
@@ -900,24 +909,30 @@ final class Utils {
      * Get the first getter method matching a given column name
      */
     static final Method getMatchingGetter(Class<?> type, String name) {
+
+        // [#1942] Caching these values before the method-loop significantly
+        // accerates POJO mapping
+        String camelCase = StringUtils.toCamelCase(name);
+        String camelCaseLC = StringUtils.toLC(camelCase);
+
         for (Method method : getInstanceMethods(type)) {
             if (method.getParameterTypes().length == 0) {
                 if (name.equals(method.getName())) {
                     return accessible(method);
                 }
-                else if (StringUtils.toCamelCaseLC(name).equals(method.getName())) {
+                else if (camelCaseLC.equals(method.getName())) {
                     return accessible(method);
                 }
                 else if (("get" + name).equals(method.getName())) {
                     return accessible(method);
                 }
-                else if (("get" + StringUtils.toCamelCase(name)).equals(method.getName())) {
+                else if (("get" + camelCase).equals(method.getName())) {
                     return accessible(method);
                 }
                 else if (("is" + name).equals(method.getName())) {
                     return accessible(method);
                 }
-                else if (("is" + StringUtils.toCamelCase(name)).equals(method.getName())) {
+                else if (("is" + camelCase).equals(method.getName())) {
                     return accessible(method);
                 }
             }

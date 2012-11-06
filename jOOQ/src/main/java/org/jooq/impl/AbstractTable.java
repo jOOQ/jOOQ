@@ -344,4 +344,16 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     public final Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts) {
         return naturalRightOuterJoin(table(sql, parts));
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+
+        // [#1938] This is a much more efficient hashCode() implementation
+        // compared to that of standard QueryParts
+        return name.hashCode();
+    }
 }

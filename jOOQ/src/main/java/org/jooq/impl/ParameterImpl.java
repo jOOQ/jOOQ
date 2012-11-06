@@ -93,4 +93,16 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
     public final boolean isDefaulted() {
         return isDefaulted;
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+
+        // [#1938] This is a much more efficient hashCode() implementation
+        // compared to that of standard QueryParts
+        return name.hashCode();
+    }
 }

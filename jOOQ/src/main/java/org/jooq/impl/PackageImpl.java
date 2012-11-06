@@ -69,4 +69,16 @@ public class PackageImpl extends AbstractSchemaProviderQueryPart implements Pack
 
     @Override
     public final void bind(BindContext context) {}
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+
+        // [#1938] This is a much more efficient hashCode() implementation
+        // compared to that of standard QueryParts
+        return name.hashCode();
+    }
 }

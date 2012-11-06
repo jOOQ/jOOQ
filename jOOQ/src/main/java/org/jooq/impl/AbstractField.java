@@ -97,7 +97,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     // ------------------------------------------------------------------------
-    // API (not implemented)
+    // XXX: API (not implemented)
     // ------------------------------------------------------------------------
 
     @Override
@@ -110,7 +110,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     public abstract boolean isNullLiteral();
 
     // ------------------------------------------------------------------------
-    // API
+    // XXX: API
     // ------------------------------------------------------------------------
 
     @Override
@@ -139,7 +139,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     // ------------------------------------------------------------------------
-    // Type casts
+    // XXX: Type casts
     // ------------------------------------------------------------------------
 
     @Override
@@ -166,7 +166,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     // ------------------------------------------------------------------------
-    // Conversion of field into a sort field
+    // XXX: Conversion of field into a sort field
     // ------------------------------------------------------------------------
 
     @Override
@@ -241,7 +241,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     // ------------------------------------------------------------------------
-    // Arithmetic operations
+    // XXX: Arithmetic operations
     // ------------------------------------------------------------------------
 
     @Override
@@ -308,7 +308,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     // ------------------------------------------------------------------------
-    // Conditions created from this field
+    // XXX: Conditions created from this field
     // ------------------------------------------------------------------------
 
     @Override
@@ -933,8 +933,8 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     // ------------------------------------------------------------------------
-    // Pre-2.0 API. This API is maintained for backwards-compatibility. It will
-    // be removed in the future. Consider using equivalent methods from
+    // XXX: Pre-2.0 API. This API is maintained for backwards-compatibility. It
+    // will be removed in the future. Consider using equivalent methods from
     // org.jooq.Factory
     // ------------------------------------------------------------------------
 
@@ -1601,5 +1601,17 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Deprecated
     public final Field<T> coalesce(Field<T> option, Field<?>... options) {
         return Factory.coalesce(this, Utils.combine(option, options));
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+
+        // [#1938] This is a much more efficient hashCode() implementation
+        // compared to that of standard QueryParts
+        return name.hashCode();
     }
 }

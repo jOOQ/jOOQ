@@ -133,4 +133,16 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractFieldProviderQueryP
     protected static final <R extends UDTRecord<R>, T> UDTField<R, T> createField(String name, DataType<T> type, UDT<R> udt) {
         return new UDTFieldImpl<R, T>(name, type, udt);
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+
+        // [#1938] This is a much more efficient hashCode() implementation
+        // compared to that of standard QueryParts
+        return name.hashCode();
+    }
 }

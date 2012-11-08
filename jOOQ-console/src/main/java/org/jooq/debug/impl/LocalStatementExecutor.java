@@ -151,6 +151,7 @@ class LocalStatementExecutor implements QueryExecutor {
                 return new QueryExecution(executionDuration, new QueryExecutionMessageResult("Interrupted by user after " + Utils.formatDuration(executionDuration), true));
             }
             List<QueryExecutionResult> statementExecutionResultList = new ArrayList<QueryExecutionResult>();
+            int updateCount = stmt.getUpdateCount();
             do {
                 QueryExecutionResult queryExecutionResult;
                 if(executeResult) {
@@ -294,7 +295,6 @@ class LocalStatementExecutor implements QueryExecutor {
                     final long resultSetParsingDuration = System.currentTimeMillis() - rsStart;
                     queryExecutionResult = new LocalStatementExecutionResultSetResult(rs, columnNames, typeInfos, columnClasses, rowDataList.toArray(new Object[0][]), rowCount, resultSetParsingDuration, retainParsedRSDataRowCountThreshold, isReadOnly);
                 } else {
-                    final int updateCount = stmt.getUpdateCount();
                     queryExecutionResult = new QueryExecutionMessageResult(Utils.formatDuration(executionDuration) + "> " + updateCount + " row(s) affected.", false);
                 }
                 if(executorContext.getSQLDialect() == SQLDialect.SQLSERVER) {
@@ -303,11 +303,13 @@ class LocalStatementExecutor implements QueryExecutor {
                     } catch(Exception e) {
                         executeResult = stmt.getMoreResults();
                     }
+                    updateCount = stmt.getUpdateCount();
                 } else {
                     executeResult = false;
+                    updateCount = -1;
                 }
                 statementExecutionResultList.add(queryExecutionResult);
-            } while(executeResult || stmt.getUpdateCount() != -1);
+            } while(executeResult || updateCount != -1);
             return new QueryExecution(executionDuration, statementExecutionResultList.toArray(new QueryExecutionResult[0]));
         } catch(Exception e) {
             long executionDuration = System.currentTimeMillis() - start;

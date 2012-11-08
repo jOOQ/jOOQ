@@ -84,6 +84,9 @@ class LocalStatementExecutor implements QueryExecutor {
 
     @Override
     public QueryExecution execute(String sql, int maxRSRowsParsing, int retainParsedRSDataRowCountThreshold, boolean isUpdatable) {
+        if(sql.trim().length() == 0) {
+            return new QueryExecution(0, new QueryExecutionMessageResult("The statement to evaluate cannot be empty.", true));
+        }
         boolean isReadOnly = executorContext.isReadOnly();
         isUpdatable = !isReadOnly && isUpdatable;
         boolean isAllowed = true;

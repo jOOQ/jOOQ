@@ -206,7 +206,7 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     // ------------------------------------------------------------------------
 
     @Override
-    public TableOptionalOnStep join(TableLike<?> table, JoinType type) {
+    public final TableOptionalOnStep join(TableLike<?> table, JoinType type) {
         return new JoinTable(this, table, type);
     }
 

@@ -128,6 +128,31 @@ public interface Table<R extends Record> extends FieldProvider, TableLike<R> {
     <O extends Record> List<ForeignKey<R, O>> getReferencesTo(Table<O> other);
 
     /**
+     * Specify a SQL Server style table hint for query optimisation
+     * <p>
+     * This makes sense only on an actual database table or view, not on other
+     * composed table sources.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").with("READUNCOMMITTED")
+     *       .fetch();
+     * </pre></code>
+     * <p>
+     * For {@link SQLDialect#ORACLE} style hints, see
+     * {@link SelectFromStep#hint(String)} and {@link SelectQuery#addHint(String)}
+     *
+     * @see <a
+     *      href="http://msdn.microsoft.com/en-us/library/ms187373.aspx">http://msdn.microsoft.com/en-us/library/ms187373.aspx</a>
+     * @see SelectFromStep#hint(String)
+     * @see SelectQuery#addHint(String)
+     */
+    @Support({ SQLSERVER, SYBASE })
+    Table<R> with(String hint);
+
+    /**
      * Create a new <code>TABLE</code> reference from this table, pivoting it
      * into another form
      * <p>

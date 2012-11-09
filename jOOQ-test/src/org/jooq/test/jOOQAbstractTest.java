@@ -1753,6 +1753,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testTableWithHint() throws Exception {
+        new ExoticTests(this).testTableWithHint();
+    }
+
+    @Test
     public void testPivotClause() throws Exception {
         new ExoticTests(this).testPivotClause();
     }

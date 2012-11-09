@@ -258,6 +258,10 @@ public interface SelectQuery extends SimpleSelectQuery<Record> {
      *       .from(table1)
      *       .execute();
      * </pre></code>
+     * <p>
+     * For SQL Server style table hints, see {@link Table#with(String)}
+     *
+     * @see Table#with(String)
      */
     @Support({ CUBRID, ORACLE })
     void addHint(String hint);

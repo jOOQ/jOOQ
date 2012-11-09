@@ -515,7 +515,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final void commit() {
+    public final void commit() throws DataAccessException {
         try {
             log.debug("commit");
             getConnection().commit();
@@ -537,7 +537,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final void rollback() {
+    public final void rollback() throws DataAccessException {
         try {
             log.debug("rollback");
             getConnection().rollback();
@@ -559,7 +559,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final void rollback(Savepoint savepoint) {
+    public final void rollback(Savepoint savepoint) throws DataAccessException {
         try {
             log.debug("rollback to savepoint");
             getConnection().rollback(savepoint);
@@ -581,7 +581,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final Savepoint setSavepoint() {
+    public final Savepoint setSavepoint() throws DataAccessException {
         try {
             log.debug("set savepoint");
             return getConnection().setSavepoint();
@@ -603,7 +603,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final Savepoint setSavepoint(String name) {
+    public final Savepoint setSavepoint(String name) throws DataAccessException {
         try {
             log.debug("set savepoint", name);
             return getConnection().setSavepoint(name);
@@ -626,7 +626,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final void releaseSavepoint(Savepoint savepoint) {
+    public final void releaseSavepoint(Savepoint savepoint) throws DataAccessException {
         try {
             log.debug("release savepoint");
             getConnection().releaseSavepoint(savepoint);
@@ -648,7 +648,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final void setAutoCommit(boolean autoCommit) {
+    public final void setAutoCommit(boolean autoCommit) throws DataAccessException {
         try {
             log.debug("setting auto commit", autoCommit);
             getConnection().setAutoCommit(autoCommit);
@@ -670,7 +670,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final boolean getAutoCommit() {
+    public final boolean getAutoCommit() throws DataAccessException {
         try {
             return getConnection().getAutoCommit();
         }
@@ -691,7 +691,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final void setHoldability(int holdability) {
+    public final void setHoldability(int holdability) throws DataAccessException {
         try {
             log.debug("setting holdability", holdability);
             getConnection().setHoldability(holdability);
@@ -713,7 +713,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final int getHoldability() {
+    public final int getHoldability() throws DataAccessException {
         try {
             return getConnection().getHoldability();
         }
@@ -735,7 +735,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final void setTransactionIsolation(int level) {
+    public final void setTransactionIsolation(int level) throws DataAccessException {
         try {
             log.debug("setting tx isolation", level);
             getConnection().setTransactionIsolation(level);
@@ -757,7 +757,7 @@ public class Executor implements Configuration {
      * @see Configuration#setConnection(Connection)
      * @see Configuration#setDataSource(DataSource)
      */
-    public final int getTransactionIsolation() {
+    public final int getTransactionIsolation() throws DataAccessException {
         try {
             return getConnection().getTransactionIsolation();
         }
@@ -990,7 +990,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final Result<Record> fetch(String sql) {
+    public final Result<Record> fetch(String sql) throws DataAccessException {
         return resultQuery(sql).fetch();
     }
 
@@ -1020,7 +1020,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final Result<Record> fetch(String sql, Object... bindings) {
+    public final Result<Record> fetch(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetch();
     }
 
@@ -1052,7 +1052,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final Result<Record> fetch(String sql, QueryPart... parts) {
+    public final Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException {
         return resultQuery(sql, parts).fetch();
     }
 
@@ -1086,7 +1086,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final Cursor<Record> fetchLazy(String sql) {
+    public final Cursor<Record> fetchLazy(String sql) throws DataAccessException {
         return resultQuery(sql).fetchLazy();
     }
 
@@ -1122,7 +1122,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final Cursor<Record> fetchLazy(String sql, Object... bindings) {
+    public final Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetchLazy();
     }
 
@@ -1160,7 +1160,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final Cursor<Record> fetchLazy(String sql, QueryPart... parts) {
+    public final Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException {
         return resultQuery(sql, parts).fetchLazy();
     }
 
@@ -1185,7 +1185,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final List<Result<Record>> fetchMany(String sql) {
+    public final List<Result<Record>> fetchMany(String sql) throws DataAccessException {
         return resultQuery(sql).fetchMany();
     }
 
@@ -1212,7 +1212,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final List<Result<Record>> fetchMany(String sql, Object... bindings) {
+    public final List<Result<Record>> fetchMany(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetchMany();
     }
 
@@ -1245,7 +1245,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final List<Result<Record>> fetchMany(String sql, QueryPart... parts) {
+    public final List<Result<Record>> fetchMany(String sql, QueryPart... parts) throws DataAccessException {
         return resultQuery(sql, parts).fetchMany();
     }
 
@@ -1274,7 +1274,7 @@ public class Executor implements Configuration {
      * @throws InvalidResultException if the query returned more than one record
      */
     @Support
-    public final Record fetchOne(String sql) {
+    public final Record fetchOne(String sql) throws DataAccessException, InvalidResultException {
         return resultQuery(sql).fetchOne();
     }
 
@@ -1304,7 +1304,7 @@ public class Executor implements Configuration {
      * @throws InvalidResultException if the query returned more than one record
      */
     @Support
-    public final Record fetchOne(String sql, Object... bindings) {
+    public final Record fetchOne(String sql, Object... bindings) throws DataAccessException, InvalidResultException {
         return resultQuery(sql, bindings).fetchOne();
     }
 
@@ -1338,7 +1338,7 @@ public class Executor implements Configuration {
      * @throws InvalidResultException if the query returned more than one record
      */
     @Support
-    public final Record fetchOne(String sql, QueryPart... parts) {
+    public final Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException {
         return resultQuery(sql, parts).fetchOne();
     }
 
@@ -1355,7 +1355,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final int execute(String sql) {
+    public final int execute(String sql) throws DataAccessException {
         return query(sql).execute();
     }
 
@@ -1374,7 +1374,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final int execute(String sql, Object... bindings) {
+    public final int execute(String sql, Object... bindings) throws DataAccessException {
         return query(sql, bindings).execute();
     }
 
@@ -1406,7 +1406,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final int execute(String sql, QueryPart... parts) {
+    public final int execute(String sql, QueryPart... parts) throws DataAccessException {
         return query(sql, parts).execute();
     }
 
@@ -1559,7 +1559,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final Result<Record> fetch(ResultSet rs) {
+    public final Result<Record> fetch(ResultSet rs) throws DataAccessException {
         return fetchLazy(rs).fetch();
     }
 
@@ -1574,7 +1574,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final Cursor<Record> fetchLazy(ResultSet rs) {
+    public final Cursor<Record> fetchLazy(ResultSet rs) throws DataAccessException {
         ExecuteContext ctx = new DefaultExecuteContext(this);
         ExecuteListener listener = new ExecuteListeners(ctx);
 
@@ -1618,7 +1618,7 @@ public class Executor implements Configuration {
      * @see #fetchFromCSV(String, char)
      */
     @Support
-    public final Result<Record> fetchFromCSV(String string) {
+    public final Result<Record> fetchFromCSV(String string) throws DataAccessException {
         return fetchFromCSV(string, ',');
     }
 
@@ -1649,7 +1649,7 @@ public class Executor implements Configuration {
      * @see #fetchFromCSV(String)
      */
     @Support
-    public final Result<Record> fetchFromCSV(String string, char delimiter) {
+    public final Result<Record> fetchFromCSV(String string, char delimiter) throws DataAccessException {
         CSVReader reader = new CSVReader(new StringReader(string), delimiter);
         List<String[]> all = null;
 
@@ -2366,7 +2366,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support({ ASE, CUBRID, DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE, SQLSERVER, SYBASE })
-    public final BigInteger lastID() {
+    public final BigInteger lastID() throws DataAccessException {
         switch (getDialect()) {
             case DERBY: {
                 Field<BigInteger> field = field("identity_val_local()", BigInteger.class);
@@ -2426,7 +2426,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support({ CUBRID, DB2, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SYBASE })
-    public final <T extends Number> T currval(Sequence<T> sequence) {
+    public final <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException {
         Field<T> currval = sequence.currval();
         return select(currval).fetchOne(currval);
     }
@@ -2487,7 +2487,7 @@ public class Executor implements Configuration {
      */
     @SuppressWarnings("deprecation")
     @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, SYBASE, ORACLE, POSTGRES, SYBASE })
-    public final int use(Schema schema) {
+    public final int use(Schema schema) throws DataAccessException {
         int result = 0;
 
         try {
@@ -2541,7 +2541,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, SYBASE, ORACLE, POSTGRES, SYBASE })
-    public final int use(String schema) {
+    public final int use(String schema) throws DataAccessException {
         return use(new SchemaImpl(schema));
     }
 
@@ -2624,7 +2624,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      * @see ResultQuery#fetch()
      */
-    public final <R extends Record> Result<R> fetch(ResultQuery<R> query) {
+    public final <R extends Record> Result<R> fetch(ResultQuery<R> query) throws DataAccessException {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
@@ -2645,7 +2645,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      * @see ResultQuery#fetchLazy()
      */
-    public final <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) {
+    public final <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
@@ -2666,7 +2666,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      * @see ResultQuery#fetchMany()
      */
-    public final <R extends Record> List<Result<Record>> fetchMany(ResultQuery<R> query) {
+    public final <R extends Record> List<Result<Record>> fetchMany(ResultQuery<R> query) throws DataAccessException {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
@@ -2685,9 +2685,10 @@ public class Executor implements Configuration {
      * @param query The query to execute
      * @return The record
      * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
      * @see ResultQuery#fetchOne()
      */
-    public final <R extends Record> R fetchOne(ResultQuery<R> query) {
+    public final <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException, InvalidResultException {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
@@ -2707,7 +2708,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      * @see Query#execute()
      */
-    public final int execute(Query query) {
+    public final int execute(Query query) throws DataAccessException {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
@@ -2734,7 +2735,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final <R extends Record> Result<R> fetch(Table<R> table) {
+    public final <R extends Record> Result<R> fetch(Table<R> table) throws DataAccessException {
         return fetch(table, trueCondition());
     }
 
@@ -2749,7 +2750,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final <R extends Record> Result<R> fetch(Table<R> table, Condition condition) {
+    public final <R extends Record> Result<R> fetch(Table<R> table, Condition condition) throws DataAccessException {
         return selectFrom(table).where(condition).fetch();
     }
 
@@ -2766,7 +2767,7 @@ public class Executor implements Configuration {
      * @throws InvalidResultException if the query returned more than one record
      */
     @Support
-    public final <R extends Record> R fetchOne(Table<R> table) {
+    public final <R extends Record> R fetchOne(Table<R> table) throws DataAccessException, InvalidResultException {
         return filterOne(fetch(table));
     }
 
@@ -2783,7 +2784,7 @@ public class Executor implements Configuration {
      * @throws InvalidResultException if the query returned more than one record
      */
     @Support
-    public final <R extends Record> R fetchOne(Table<R> table, Condition condition) {
+    public final <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException, InvalidResultException {
         return filterOne(fetch(table, condition));
     }
 
@@ -2799,7 +2800,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final <R extends Record> R fetchAny(Table<R> table) {
+    public final <R extends Record> R fetchAny(Table<R> table) throws DataAccessException {
         return filterOne(selectFrom(table).limit(1).fetch());
     }
 
@@ -2818,7 +2819,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final <R extends TableRecord<R>> int executeInsert(R record) {
+    public final <R extends TableRecord<R>> int executeInsert(R record) throws DataAccessException {
         InsertQuery<R> insert = insertQuery(record.getTable());
         insert.setRecord(record);
         return insert.execute();
@@ -2832,7 +2833,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final <R extends UpdatableRecord<R>> int executeUpdate(R record) {
+    public final <R extends UpdatableRecord<R>> int executeUpdate(R record) throws DataAccessException {
         UpdateQuery<R> update = updateQuery(record.getTable());
         Utils.addConditions(update, record, record.getTable().getMainKey().getFieldsArray());
         update.setRecord(record);
@@ -2847,7 +2848,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) {
+    public final <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) throws DataAccessException {
         UpdateQuery<R> update = updateQuery(record.getTable());
         update.addConditions(condition);
         update.setRecord(record);
@@ -2862,7 +2863,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final <R extends UpdatableRecord<R>> int executeDelete(R record) {
+    public final <R extends UpdatableRecord<R>> int executeDelete(R record) throws DataAccessException {
         DeleteQuery<R> delete = deleteQuery(record.getTable());
         Utils.addConditions(delete, record, record.getTable().getMainKey().getFieldsArray());
         return delete.execute();
@@ -2876,7 +2877,7 @@ public class Executor implements Configuration {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
-    public final <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) {
+    public final <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) throws DataAccessException {
         DeleteQuery<R> delete = deleteQuery(record.getTable());
         delete.addConditions(condition);
         return delete.execute();

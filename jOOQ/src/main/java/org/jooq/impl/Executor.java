@@ -61,7 +61,6 @@ import javax.sql.DataSource;
 import javax.xml.bind.JAXB;
 
 import org.jooq.Attachable;
-import org.jooq.AttachableInternal;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
 import org.jooq.BindContext;
@@ -521,7 +520,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final void commit() throws DataAccessException {
+    public final void commit() {
         try {
             log.debug("commit");
             getConnection().commit();
@@ -535,7 +534,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final void rollback() throws DataAccessException {
+    public final void rollback() {
         try {
             log.debug("rollback");
             getConnection().rollback();
@@ -549,7 +548,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final void rollback(Savepoint savepoint) throws DataAccessException {
+    public final void rollback(Savepoint savepoint) {
         try {
             log.debug("rollback to savepoint");
             getConnection().rollback(savepoint);
@@ -563,7 +562,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Savepoint setSavepoint() throws DataAccessException {
+    public final Savepoint setSavepoint() {
         try {
             log.debug("set savepoint");
             return getConnection().setSavepoint();
@@ -577,7 +576,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Savepoint setSavepoint(String name) throws DataAccessException {
+    public final Savepoint setSavepoint(String name) {
         try {
             log.debug("set savepoint", name);
             return getConnection().setSavepoint(name);
@@ -591,7 +590,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final void releaseSavepoint(Savepoint savepoint) throws DataAccessException {
+    public final void releaseSavepoint(Savepoint savepoint) {
         try {
             log.debug("release savepoint");
             getConnection().releaseSavepoint(savepoint);
@@ -605,7 +604,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final void setAutoCommit(boolean autoCommit) throws DataAccessException {
+    public final void setAutoCommit(boolean autoCommit) {
         try {
             log.debug("setting auto commit", autoCommit);
             getConnection().setAutoCommit(autoCommit);
@@ -619,7 +618,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final boolean getAutoCommit() throws DataAccessException {
+    public final boolean getAutoCommit() {
         try {
             return getConnection().getAutoCommit();
         }
@@ -632,7 +631,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final void setHoldability(int holdability) throws DataAccessException {
+    public final void setHoldability(int holdability) {
         try {
             log.debug("setting holdability", holdability);
             getConnection().setHoldability(holdability);
@@ -646,7 +645,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final int getHoldability() throws DataAccessException {
+    public final int getHoldability() {
         try {
             return getConnection().getHoldability();
         }
@@ -659,7 +658,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final void setTransactionIsolation(int level) throws DataAccessException {
+    public final void setTransactionIsolation(int level) {
         try {
             log.debug("setting tx isolation", level);
             getConnection().setTransactionIsolation(level);
@@ -673,7 +672,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final int getTransactionIsolation() throws DataAccessException {
+    public final int getTransactionIsolation() {
         try {
             return getConnection().getTransactionIsolation();
         }
@@ -819,7 +818,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Result<Record> fetch(String sql) throws DataAccessException {
+    public final Result<Record> fetch(String sql) {
         return resultQuery(sql).fetch();
     }
 
@@ -827,7 +826,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Result<Record> fetch(String sql, Object... bindings) throws DataAccessException {
+    public final Result<Record> fetch(String sql, Object... bindings) {
         return resultQuery(sql, bindings).fetch();
     }
 
@@ -835,7 +834,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException {
+    public final Result<Record> fetch(String sql, QueryPart... parts) {
         return resultQuery(sql, parts).fetch();
     }
 
@@ -843,7 +842,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Cursor<Record> fetchLazy(String sql) throws DataAccessException {
+    public final Cursor<Record> fetchLazy(String sql) {
         return resultQuery(sql).fetchLazy();
     }
 
@@ -851,7 +850,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException {
+    public final Cursor<Record> fetchLazy(String sql, Object... bindings) {
         return resultQuery(sql, bindings).fetchLazy();
     }
 
@@ -859,7 +858,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException {
+    public final Cursor<Record> fetchLazy(String sql, QueryPart... parts) {
         return resultQuery(sql, parts).fetchLazy();
     }
 
@@ -867,7 +866,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final List<Result<Record>> fetchMany(String sql) throws DataAccessException {
+    public final List<Result<Record>> fetchMany(String sql) {
         return resultQuery(sql).fetchMany();
     }
 
@@ -875,7 +874,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final List<Result<Record>> fetchMany(String sql, Object... bindings) throws DataAccessException {
+    public final List<Result<Record>> fetchMany(String sql, Object... bindings) {
         return resultQuery(sql, bindings).fetchMany();
     }
 
@@ -883,7 +882,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final List<Result<Record>> fetchMany(String sql, QueryPart... parts) throws DataAccessException {
+    public final List<Result<Record>> fetchMany(String sql, QueryPart... parts) {
         return resultQuery(sql, parts).fetchMany();
     }
 
@@ -891,7 +890,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Record fetchOne(String sql) throws DataAccessException {
+    public final Record fetchOne(String sql) {
         return resultQuery(sql).fetchOne();
     }
 
@@ -899,7 +898,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Record fetchOne(String sql, Object... bindings) throws DataAccessException {
+    public final Record fetchOne(String sql, Object... bindings) {
         return resultQuery(sql, bindings).fetchOne();
     }
 
@@ -907,7 +906,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final Record fetchOne(String sql, QueryPart... parts) throws DataAccessException {
+    public final Record fetchOne(String sql, QueryPart... parts) {
         return resultQuery(sql, parts).fetchOne();
     }
 
@@ -915,7 +914,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final int execute(String sql) throws DataAccessException {
+    public final int execute(String sql) {
         return query(sql).execute();
     }
 
@@ -923,7 +922,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final int execute(String sql, Object... bindings) throws DataAccessException {
+    public final int execute(String sql, Object... bindings) {
         return query(sql, bindings).execute();
     }
 
@@ -931,7 +930,7 @@ public class Executor implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final int execute(String sql, QueryPart... parts) throws DataAccessException {
+    public final int execute(String sql, QueryPart... parts) {
         return query(sql, parts).execute();
     }
 
@@ -1453,14 +1452,9 @@ public class Executor implements FactoryOperations {
     // XXX Executing queries
     // -------------------------------------------------------------------------
 
-    // [#1904] TODO Improve this API
     @Override
     public final <R extends Record> Result<R> fetch(ResultQuery<R> query) {
-        Configuration previous = null;
-
-        if (query instanceof AttachableInternal) {
-            previous = ((AttachableInternal) query).getConfiguration();
-        }
+        final Configuration previous = Utils.getConfiguration(query);
 
         try {
             query.attach(this);
@@ -1472,16 +1466,51 @@ public class Executor implements FactoryOperations {
     }
 
     @Override
-    public final <R extends Record> R fetchOne(ResultQuery<R> query) {
-        Configuration previous = null;
+    public final <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) {
+        final Configuration previous = Utils.getConfiguration(query);
 
-        if (query instanceof AttachableInternal) {
-            previous = ((AttachableInternal) query).getConfiguration();
+        try {
+            query.attach(this);
+            return query.fetchLazy();
         }
+        finally {
+            query.attach(previous);
+        }
+    }
+
+    @Override
+    public final <R extends Record> List<Result<Record>> fetchMany(ResultQuery<R> query) {
+        final Configuration previous = Utils.getConfiguration(query);
+
+        try {
+            query.attach(this);
+            return query.fetchMany();
+        }
+        finally {
+            query.attach(previous);
+        }
+    }
+
+    @Override
+    public final <R extends Record> R fetchOne(ResultQuery<R> query) {
+        final Configuration previous = Utils.getConfiguration(query);
 
         try {
             query.attach(this);
             return query.fetchOne();
+        }
+        finally {
+            query.attach(previous);
+        }
+    }
+
+    @Override
+    public final int execute(Query query) {
+        final Configuration previous = Utils.getConfiguration(query);
+
+        try {
+            query.attach(this);
+            return query.execute();
         }
         finally {
             query.attach(previous);

@@ -1042,10 +1042,59 @@ public interface FactoryOperations extends Configuration {
     // XXX Executing queries
     // -------------------------------------------------------------------------
 
-    // [#1904] TODO Improve this API
+    /**
+     * Execute a {@link ResultQuery} in the context of this executor and return
+     * results.
+     *
+     * @param query The query to execute
+     * @return The result
+     * @throws DataAccessException if something went wrong executing the query
+     * @see ResultQuery#fetch()
+     */
     <R extends Record> Result<R> fetch(ResultQuery<R> query) throws DataAccessException;
 
+    /**
+     * Execute a {@link ResultQuery} in the context of this executor and return
+     * a cursor.
+     *
+     * @param query The query to execute
+     * @return The cursor
+     * @throws DataAccessException if something went wrong executing the query
+     * @see ResultQuery#fetchLazy()
+     */
+    <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException;
+
+    /**
+     * Execute a {@link ResultQuery} in the context of this executor and return
+     * a cursor.
+     *
+     * @param query The query to execute
+     * @return The results
+     * @throws DataAccessException if something went wrong executing the query
+     * @see ResultQuery#fetchMany()
+     */
+    <R extends Record> List<Result<Record>> fetchMany(ResultQuery<R> query) throws DataAccessException;
+
+    /**
+     * Execute a {@link ResultQuery} in the context of this executor and return
+     * a cursor.
+     *
+     * @param query The query to execute
+     * @return The record
+     * @throws DataAccessException if something went wrong executing the query
+     * @see ResultQuery#fetchOne()
+     */
     <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException;
+
+    /**
+     * Execute a {@link Query} in the context of this executor.
+     *
+     * @param query The query to execute
+     * @return The number of affected rows
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Query#execute()
+     */
+    int execute(Query query) throws DataAccessException;
 
     // -------------------------------------------------------------------------
     // XXX Fast querying

@@ -57,23 +57,23 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     /**
      * Generated UID
      */
-    private static final long        serialVersionUID = -8358225526567622252L;
+    private static final long   serialVersionUID = -8358225526567622252L;
 
-    private final StringBuilder      sql;
-    private boolean                  inline;
-    private boolean                  renderNamedParams;
-    private boolean                  qualify          = true;
-    private int                      alias;
-    private CastMode                 castMode         = CastMode.DEFAULT;
-    private SQLDialect[]             castDialects;
-    private int                      indent;
-    private Stack<Integer>           indentLock       = new Stack<Integer>();
-    private int                      printMargin      = 80;
+    private final StringBuilder sql;
+    private boolean             inline;
+    private boolean             renderNamedParams;
+    private boolean             qualify          = true;
+    private int                 alias;
+    private CastMode            castMode         = CastMode.DEFAULT;
+    private SQLDialect[]        castDialects;
+    private int                 indent;
+    private Stack<Integer>      indentLock       = new Stack<Integer>();
+    private int                 printMargin      = 80;
 
     // [#1632] Cached values from Settings
-    private final RenderKeywordStyle cachedRenderKeywordStyle;
-    private final RenderNameStyle    cachedRenderNameStyle;
-    private final boolean            cachedRenderFormatted;
+    private RenderKeywordStyle  cachedRenderKeywordStyle;
+    private RenderNameStyle     cachedRenderNameStyle;
+    private boolean             cachedRenderFormatted;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration);
@@ -178,6 +178,17 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     private final String indentation() {
         return StringUtils.leftPad("", indent, " ");
+    }
+
+    @Override
+    public final RenderContext format(boolean format) {
+        cachedRenderFormatted = format;
+        return this;
+    }
+
+    @Override
+    public final boolean format() {
+        return cachedRenderFormatted;
     }
 
     @Override

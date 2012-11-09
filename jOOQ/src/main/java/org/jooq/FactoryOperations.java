@@ -236,9 +236,7 @@ public interface FactoryOperations extends Configuration {
     Result<Record> fetch(ResultSet rs) throws DataAccessException;
 
     /**
-     * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
-     * {@link Result}. After fetching all data, the JDBC ResultSet will be
-     * closed.
+     * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Cursor}.
      * <p>
      * Use {@link #fetch(ResultSet)}, to load the entire <code>ResultSet</code>
      * into a jOOQ <code>Result</code> at once.

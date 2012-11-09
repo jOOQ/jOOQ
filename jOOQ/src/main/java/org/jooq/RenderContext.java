@@ -102,6 +102,16 @@ public interface RenderContext extends Context<RenderContext> {
     RenderContext sql(QueryPart part);
 
     /**
+     * Override the value of {@link Settings#isRenderFormatted()}
+     */
+    RenderContext format(boolean format);
+
+    /**
+     * The value of {@link Settings#isRenderFormatted()}
+     */
+    boolean format();
+
+    /**
      * Render a new line character (only if {@link Settings#isRenderFormatted()}
      * is set to <code>true</code>)
      */

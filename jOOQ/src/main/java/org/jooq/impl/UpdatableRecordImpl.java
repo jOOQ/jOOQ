@@ -76,13 +76,6 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
      */
     private static final long serialVersionUID      = -1012420583600561579L;
 
-    /**
-     * [#1537] This constant is used internally by jOOQ to omit the RETURNING
-     * clause in {@link Executor#batchStore(UpdatableRecord...)} calls for
-     * {@link SQLDialect#POSTGRES}
-     */
-    static final String       OMIT_RETURNING_CLAUSE = "JOOQ.OMIT_RETURNING_CLAUSE";
-
     public UpdatableRecordImpl(UpdatableTable<R> table) {
         super(table);
     }
@@ -145,7 +138,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         // [#1002] Consider also identity columns of non-updatable records
         // [#1537] Avoid refreshing identity columns on batch inserts
         Collection<Field<?>> key = null;
-        if (!TRUE.equals(create.getData(OMIT_RETURNING_CLAUSE))) {
+        if (!TRUE.equals(create.getData(Utils.DATA_OMIT_RETURNING_CLAUSE))) {
             key = getReturning();
             insert.setReturning(key);
         }

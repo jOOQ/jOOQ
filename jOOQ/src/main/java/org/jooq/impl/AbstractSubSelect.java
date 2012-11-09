@@ -46,9 +46,10 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.inline;
+import static org.jooq.impl.Factory.name;
 import static org.jooq.impl.Factory.one;
+import static org.jooq.impl.Factory.rowNumber;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -310,66 +311,37 @@ abstract class AbstractSubSelect<R extends Record> extends AbstractSelect<R> imp
      * {@link SQLDialect#SQLSERVER} and {@link SQLDialect#SYBASE} dialects
      */
     private final void toSQLReferenceLimitDB2SQLServerSybase(RenderContext context) {
+
+        // [#1954] Render enclosed SELECT first to obtain a "unique" hash code
+        RenderContext tmpLocal = new DefaultRenderContext(context);
+        toSQLReference0(tmpLocal);
+        String tmpEnclosed = tmpLocal.render();
+
+        String subqueryName = "limit_" + Utils.hash(tmpEnclosed);
+        String rownumName = "rownum_" + Utils.hash(tmpEnclosed);
+
+        // Render enclosed SELECT again, adding an additional ROW_NUMBER() OVER()
+        // window function, calculating row numbers for the LIMIT .. OFFSET clause
         RenderContext local = new DefaultRenderContext(context);
-        toSQLReference0(local);
+        toSQLReference0(local, rowNumber().over().orderBy(getNonEmptyOrderBy()).as(rownumName));
         String enclosed = local.render();
 
-        String subqueryName = "limit_" + Utils.hash(enclosed);
-        String rownumName = "rownum_" + Utils.hash(enclosed);
-
         context.keyword("select * from (")
-               .formatIndentStart()
-               .formatNewLine()
-               .keyword("select ")
-               .sql(subqueryName)
-               .sql(".*, row_number() ")
-               .keyword("over (");
-
-        // [#1954] DB2 can do without ORDER BY clause in ranking functions
-        if (asList(SQLSERVER, SYBASE).contains(context.getDialect())) {
-            context.keyword("order by ");
-
-            if (getOrderBy().isEmpty()) {
-                context.literal(getSelect().get(0).getName());
-            }
-            else {
-                String separator = "";
-
-                for (SortField<?> field : getOrderBy()) {
-                    context.sql(separator)
-                           .literal(field.getName())
-                           .sql(" ")
-                           .keyword(field.getOrder().toSQL());
-
-                    separator = ", ";
-                }
-            }
-        }
-
-        context.keyword(") as ")
-               .sql(rownumName)
-               .formatSeparator()
-               .keyword("from (")
                .formatIndentStart()
                .formatNewLine()
                .sql(enclosed)
                .formatIndentEnd()
                .formatNewLine()
                .keyword(") as ")
-               .sql(subqueryName)
-               .formatIndentEnd()
-               .formatNewLine()
-               .keyword(") as ")
-               .sql("outer_")
-               .sql(subqueryName)
+               .sql(name(subqueryName))
                .formatSeparator()
                .keyword("where ")
-               .sql(rownumName)
+               .sql(name(rownumName))
                .sql(" > ")
                .sql(getLimit().getLowerRownum())
                .formatSeparator()
                .keyword("and ")
-               .sql(rownumName)
+               .sql(name(rownumName))
                .sql(" <= ")
                .sql(getLimit().getUpperRownum());
     }
@@ -390,9 +362,9 @@ abstract class AbstractSubSelect<R extends Record> extends AbstractSelect<R> imp
                .formatIndentStart()
                .formatNewLine()
                  .keyword("select ")
-                 .sql(subqueryName)
+                 .sql(name(subqueryName))
                  .keyword(".*, rownum as ")
-                 .sql(rownumName)
+                 .sql(name(rownumName))
                  .formatSeparator()
                  .keyword("from (")
                  .formatIndentStart()
@@ -401,7 +373,7 @@ abstract class AbstractSubSelect<R extends Record> extends AbstractSelect<R> imp
                  .formatIndentEnd()
                  .formatNewLine()
                  .sql(") ")
-                 .sql(subqueryName)
+                 .sql(name(subqueryName))
                  .formatSeparator()
                  .keyword("where rownum <= ")
                  .sql(getLimit().getUpperRownum())
@@ -410,7 +382,7 @@ abstract class AbstractSubSelect<R extends Record> extends AbstractSelect<R> imp
                .sql(") ")
                .formatSeparator()
                .keyword("where ")
-               .sql(rownumName)
+               .sql(name(rownumName))
                .sql(" > ")
                .sql(getLimit().getLowerRownum());
     }
@@ -420,6 +392,14 @@ abstract class AbstractSubSelect<R extends Record> extends AbstractSelect<R> imp
      * This part is common to any type of limited query
      */
     private final void toSQLReference0(RenderContext context) {
+        toSQLReference0(context, null);
+    }
+
+    /**
+     * This method renders the main part of a query without the LIMIT clause.
+     * This part is common to any type of limited query
+     */
+    private final void toSQLReference0(RenderContext context, QueryPart limitOffsetRownumber) {
 
         // SELECT clause
         // -------------
@@ -471,6 +451,23 @@ abstract class AbstractSubSelect<R extends Record> extends AbstractSelect<R> imp
 
         context.declareFields(true);
         context.sql(getSelect1());
+
+        if (limitOffsetRownumber != null) {
+
+            // [#1724] Inlining is necessary to avoid further complexity between
+            // toSQL()'s LIMIT .. OFFSET rendering and bind()'s "obliviousness"
+            // thereof. This should be improved by delegating to composed Select
+            // objects.
+            boolean inline = context.inline();
+            context.inline(true)
+                   .sql(",")
+                   .formatIndentStart()
+                   .formatSeparator()
+                   .sql(limitOffsetRownumber)
+                   .formatIndentEnd()
+                   .inline(inline);
+        }
+
         context.declareFields(false);
 
         // FROM and JOIN clauses
@@ -781,6 +778,16 @@ abstract class AbstractSubSelect<R extends Record> extends AbstractSelect<R> imp
 
     final SortFieldList getOrderBy() {
         return orderBy;
+    }
+
+    final SortFieldList getNonEmptyOrderBy() {
+        if (getOrderBy().isEmpty()) {
+            SortFieldList result = new SortFieldList();
+            result.add(getSelect().get(0).asc());
+            return result;
+        }
+
+        return getOrderBy();
     }
 
     @Override

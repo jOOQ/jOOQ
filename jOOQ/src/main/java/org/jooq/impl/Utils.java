@@ -59,6 +59,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import org.jooq.ArrayRecord;
+import org.jooq.Attachable;
+import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -1202,5 +1204,16 @@ final class Utils {
     @SuppressWarnings("deprecation")
     static final <T> void addCondition(org.jooq.ConditionProvider provider, Record record, Field<T> field) {
         provider.addConditions(field.equal(record.getValue(field)));
+    }
+
+    /**
+     * Extract the configuration from an attachable.
+     */
+    static final Configuration getConfiguration(Attachable attachable) {
+        if (attachable instanceof AttachableInternal) {
+            return ((AttachableInternal) attachable).getConfiguration();
+        }
+    
+        return null;
     }
 }

@@ -68,7 +68,6 @@ import org.jooq.Case;
 import org.jooq.Condition;
 import org.jooq.DataType;
 import org.jooq.DatePart;
-import org.jooq.FactoryOperations;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupField;
@@ -112,6 +111,38 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.types.DayToSecond;
 
 /**
+ * A factory providing implementations to the org.jooq interfaces
+ * <p>
+ * This factory is the main entry point for client code, to access jOOQ classes
+ * and functionality. Here, you can instanciate all of those objects that cannot
+ * be accessed through other objects. For example, to create a {@link Field}
+ * representing a constant value, you can write:
+ * <p>
+ * <code><pre>
+ * Field&lt;String&gt; field = Factory.val("Hello World")
+ * </pre></code>
+ * <p>
+ * Also, some SQL clauses cannot be expressed easily with DSL, for instance the
+ * EXISTS clause, as it is not applied on a concrete object (yet). Hence you
+ * should write
+ * <p>
+ * <code><pre>
+ * Condition condition = Factory.exists(Factory.select(...));
+ * </pre></code>
+ * <p>
+ * <h3>Factory and static imports</h3> For increased fluency and readability of
+ * your jOOQ client code, it is recommended that you static import all methods
+ * from the <code>Factory</code>. For example: <code><pre>
+ * import static org.jooq.impl.Factory.*;
+ *
+ * public class Main {
+ *   public static void main(String[] args) {
+ *     Factory.select(val("Hello"), inline("World"));
+ *     // Factory.val ^^^           ^^^^^^ Factory.inline
+ *   }
+ * }
+ * </pre></code>
+ *
  * @author Lukas Eder
  */
 public class Factory {
@@ -144,7 +175,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#select(Collection)
+     * @see Executor#select(Collection)
      */
     @SuppressWarnings({ "unchecked" })
     @Support
@@ -176,7 +207,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#select(Field...)
+     * @see Executor#select(Field...)
      */
     @SuppressWarnings({ "unchecked" })
     @Support
@@ -213,7 +244,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#select(Field...)
+     * @see Executor#select(Field...)
      * @see #select(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -251,7 +282,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#select(Field...)
+     * @see Executor#select(Field...)
      * @see #select(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -289,7 +320,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#select(Field...)
+     * @see Executor#select(Field...)
      * @see #select(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -327,7 +358,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#select(Field...)
+     * @see Executor#select(Field...)
      * @see #select(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -365,7 +396,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#select(Field...)
+     * @see Executor#select(Field...)
      * @see #select(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -403,7 +434,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#select(Field...)
+     * @see Executor#select(Field...)
      * @see #select(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -441,7 +472,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#select(Field...)
+     * @see Executor#select(Field...)
      * @see #select(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -479,7 +510,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#select(Field...)
+     * @see Executor#select(Field...)
      * @see #select(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -512,7 +543,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#selectDistinct(Collection)
+     * @see Executor#selectDistinct(Collection)
      */
     @SuppressWarnings({ "unchecked" })
     @Support
@@ -544,7 +575,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#selectDistinct(Field...)
+     * @see Executor#selectDistinct(Field...)
      */
     @SuppressWarnings({ "unchecked" })
     @Support
@@ -581,7 +612,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#selectDistinct(Field...)
+     * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -619,7 +650,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#selectDistinct(Field...)
+     * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -657,7 +688,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#selectDistinct(Field...)
+     * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -695,7 +726,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#selectDistinct(Field...)
+     * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -733,7 +764,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#selectDistinct(Field...)
+     * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -771,7 +802,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#selectDistinct(Field...)
+     * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -809,7 +840,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#selectDistinct(Field...)
+     * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -847,7 +878,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see FactoryOperations#selectDistinct(Field...)
+     * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -881,7 +912,7 @@ public class Factory {
      * </pre></code>
      *
      * @see Factory#zero()
-     * @see FactoryOperations#selectZero()
+     * @see Executor#selectZero()
      */
     @SuppressWarnings({ "unchecked" })
     @Support
@@ -914,7 +945,7 @@ public class Factory {
      * </pre></code>
      *
      * @see Factory#one()
-     * @see FactoryOperations#selectOne()
+     * @see Executor#selectOne()
      */
     @SuppressWarnings({ "unchecked" })
     @Support
@@ -947,7 +978,7 @@ public class Factory {
      * </pre></code>
      *
      * @see Factory#count()
-     * @see FactoryOperations#selectCount()
+     * @see Executor#selectCount()
      */
     @SuppressWarnings({ "unchecked" })
     @Support
@@ -5319,7 +5350,7 @@ public class Factory {
      * <ul>
      * <li>They can be used with Spring's <code>JdbcTemplate</code>, which
      * supports named parameters. Use
-     * {@link FactoryOperations#renderNamedParams(QueryPart)} to render
+     * {@link Executor#renderNamedParams(QueryPart)} to render
      * parameter names in SQL</li>
      * <li>Named parameters can be retrieved using a well-known name from
      * {@link Query#getParam(String)} and {@link Query#getParams()}.</li>
@@ -6086,4 +6117,8 @@ public class Factory {
         return FieldTypeHelper.getDataType(SQLDialect.SQL99, type);
     }
 
+    /**
+     * No instances
+     */
+    protected Factory() {}
 }

@@ -942,21 +942,6 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testLimit() throws Exception {
-        new OrderByTests(this).testLimit();
-    }
-
-    @Test
-    public void testLimitNested() throws Exception {
-        new OrderByTests(this).testLimitNested();
-    }
-
-    @Test
-    public void testLimitNamedParams() throws Exception {
-        new OrderByTests(this).testLimitNamedParams();
-    }
-
-    @Test
     public void testTypeConversions() throws Exception {
         new DataTypeTests(this).testTypeConversions();
     }
@@ -1299,6 +1284,27 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testLimitBindValues() throws Exception {
         new OrderByTests(this).testLimitBindValues();
+    }
+
+
+    @Test
+    public void testOrderByAndLimit() throws Exception {
+        new OrderByTests(this).testOrderByAndLimit();
+    }
+
+    @Test
+    public void testLimit() throws Exception {
+        new OrderByTests(this).testLimit();
+    }
+
+    @Test
+    public void testLimitNested() throws Exception {
+        new OrderByTests(this).testLimitNested();
+    }
+
+    @Test
+    public void testLimitNamedParams() throws Exception {
+        new OrderByTests(this).testLimitNamedParams();
     }
 
     @Test

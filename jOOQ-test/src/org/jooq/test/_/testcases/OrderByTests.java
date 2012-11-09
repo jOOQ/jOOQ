@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.val;
@@ -224,6 +225,43 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
             create().selectFrom(TBook())
                     .orderBy(TBook_ID().sort(map))
                     .fetch(TBook_ID()));
+    }
+
+    @Test
+    public void testOrderByAndLimit() throws Exception {
+
+        // [#1954] The combination of ORDER BY and LIMIT clauses has some
+        // implications on the ROW_NUMBER() window function in certain databases
+        List<Integer> result1 =
+        create().select(TBook_ID())
+                .from(TBook())
+
+                // Avoid fetching 1984 as ordering differs between DBs
+                .where(TBook_ID().between(2).and(4))
+                .orderBy(
+                    TBook_AUTHOR_ID().mul(2).asc(),
+                    lower(TBook_TITLE()).asc())
+                .limit(2)
+                .fetch(TBook_ID());
+
+        assertEquals(asList(2, 4), result1);
+
+        // [#1954] LIMIT .. OFFSET is more trouble than LIMIT, as it is
+        // simulated using ROW_NUMBER() in DB2, SQL Server
+        List<Integer> result2 =
+        create().select(TBook_ID())
+                .from(TBook())
+
+                // Avoid fetching 1984 as ordering differs between DBs
+                .where(TBook_ID().between(2).and(4))
+                .orderBy(
+                    TBook_AUTHOR_ID().mul(2).asc(),
+                    lower(TBook_TITLE()).asc())
+                .limit(2)
+                .offset(1)
+                .fetch(TBook_ID());
+
+        assertEquals(asList(4, 3), result2);
     }
 
     @Test

@@ -85,14 +85,6 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
 
     @Override
     public final void toSQL(RenderContext context) {
-        toSQLReference0(context, false);
-    }
-
-    final void toSQLInAnalyticClause(RenderContext context) {
-        toSQLReference0(context, true);
-    }
-
-    private final void toSQLReference0(RenderContext context, boolean inAnalyticClause) {
         if (nullsFirst || nullsLast) {
             switch (context.getDialect()) {
 
@@ -107,24 +99,23 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
                 case SQLITE:
                 case SQLSERVER:
                 case SYBASE: {
-                    if (!inAnalyticClause) {
-                        Field<Integer> ifNull = nullsFirst ? zero() : one();
-                        Field<Integer> ifNotNull = nullsFirst ? one() : zero();
+                    Field<Integer> ifNull = nullsFirst ? zero() : one();
+                    Field<Integer> ifNotNull = nullsFirst ? one() : zero();
 
-                        context.sql(nvl2(field, ifNotNull, ifNull));
-                        context.sql(", ");
+                    context.sql(nvl2(field, ifNotNull, ifNull))
+                           .sql(", ")
+                           .sql(field)
+                           .sql(" ")
+                           .keyword(order.toSQL());
 
-                        toSQLReference1(context, inAnalyticClause);
-                        break;
-                    }
-                    else {
-                        // Fall through to default
-                    }
+                    break;
                 }
 
                 // DERBY, H2, HSQLDB, ORACLE, POSTGRES
                 default: {
-                    toSQLReference1(context, inAnalyticClause);
+                    context.sql(field)
+                           .sql(" ")
+                           .keyword(order.toSQL());
 
                     if (nullsFirst) {
                         context.keyword(" nulls first");
@@ -138,30 +129,10 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
             }
         }
         else {
-            toSQLReference1(context, inAnalyticClause);
+            context.sql(field)
+                   .sql(" ")
+                   .keyword(order.toSQL());
         }
-    }
-
-    private final void toSQLReference1(RenderContext context, boolean inAnalyticClause) {
-        switch (context.getDialect()) {
-            case SQLSERVER:
-            case SYBASE: {
-                if (inAnalyticClause) {
-                    context.literal(field.getName());
-                    break;
-                }
-                else {
-                    // Fall through to default
-                }
-            }
-            default: {
-                context.sql(field);
-                break;
-            }
-        }
-
-        context.sql(" ");
-        context.keyword(order.toSQL());
     }
 
     @Override

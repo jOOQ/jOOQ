@@ -291,9 +291,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         Result<Record> result =
         create().select(TBook_ID(),
 // [#1535] TODO:        rowNumber().over(),
+
+                        // [#1958] Check if expressions in ORDER BY clauess work
+                        // correctly for all databases
                         rowNumber().over()
                                    .partitionByOne()
-                                   .orderBy(TBook_ID().desc()),
+                                   .orderBy(
+                                       TBook_ID().mul(2).desc(),
+                                       TBook_ID().add(1).desc()),
                         rowNumber().over()
                                    .partitionBy(TBook_AUTHOR_ID())
                                    .orderBy(TBook_ID().desc()))

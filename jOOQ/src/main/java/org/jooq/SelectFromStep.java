@@ -148,6 +148,10 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      *       .from(table1)
      *       .execute();
      * </pre></code>
+     * <p>
+     * For SQL Server style table hints, see {@link Table#with(String)}
+     *
+     * @see Table#with(String)
      */
     @Support({ CUBRID, ORACLE })
     SelectFromStep<R> hint(String hint);

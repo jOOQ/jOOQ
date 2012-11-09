@@ -104,6 +104,40 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     }
 
     @Test
+    public void testTableWithHint() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+            case CUBRID:
+            case DB2:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
+            case ORACLE:
+            case POSTGRES:
+            case SQLITE:
+                log.info("SKIPPING", "[ table ] WITH [ hint ] tests");
+                return;
+        }
+
+        Table<B> b = TBook().as("b").with("READUNCOMMITTED");
+        Table<A> a = TAuthor().with("READUNCOMMITTED").as("a");
+
+        Result<?> result =
+        create().select()
+                .from(b)
+                .join(a)
+                .on(b.getField(TBook_AUTHOR_ID()).eq(a.getField(TAuthor_ID())))
+                .orderBy(b.getField(TBook_ID()))
+                .fetch();
+
+        assertEquals(4, result.size());
+        assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
+    }
+
+    @Test
     public void testPivotClause() throws Exception {
         switch (getDialect()) {
             case ASE:

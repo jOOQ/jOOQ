@@ -179,6 +179,15 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     }
 
     // ------------------------------------------------------------------------
+    // XXX: Other API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Table<R> with(String hint) {
+        return new WithTable<R>(this, hint);
+    }
+
+    // ------------------------------------------------------------------------
     // XXX: PIVOT API
     // ------------------------------------------------------------------------
 

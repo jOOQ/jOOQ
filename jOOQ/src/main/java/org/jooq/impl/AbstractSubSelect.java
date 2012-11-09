@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.one;
 
@@ -335,21 +336,26 @@ implements
                .keyword("select ")
                .sql(subqueryName)
                .sql(".*, row_number() ")
-               .keyword("over (order by ");
+               .keyword("over (");
 
-        if (getOrderBy().isEmpty()) {
-            context.literal(getSelect().get(0).getName());
-        }
-        else {
-            String separator = "";
+        // [#1954] DB2 can do without ORDER BY clause in ranking functions
+        if (asList(SQLSERVER, SYBASE).contains(context.getDialect())) {
+            context.keyword("order by ");
 
-            for (SortField<?> field : getOrderBy()) {
-                context.sql(separator)
-                       .literal(field.getName())
-                       .sql(" ")
-                       .keyword(field.getOrder().toSQL());
+            if (getOrderBy().isEmpty()) {
+                context.literal(getSelect().get(0).getName());
+            }
+            else {
+                String separator = "";
 
-                separator = ", ";
+                for (SortField<?> field : getOrderBy()) {
+                    context.sql(separator)
+                           .literal(field.getName())
+                           .sql(" ")
+                           .keyword(field.getOrder().toSQL());
+
+                    separator = ", ";
+                }
             }
         }
 

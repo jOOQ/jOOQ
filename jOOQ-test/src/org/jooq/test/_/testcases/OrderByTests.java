@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.table;
@@ -257,7 +258,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .orderBy(
                     TBook_AUTHOR_ID().mul(2).asc(),
                     lower(TBook_TITLE()).asc())
-                .limit(2)
+
+                // Force Sybase to simulate TOP .. START AT
+                .limit(inline(2))
                 .offset(1)
                 .fetch(TBook_ID());
 

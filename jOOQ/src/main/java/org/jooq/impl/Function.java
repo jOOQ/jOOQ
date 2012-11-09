@@ -321,27 +321,8 @@ class Function<T> extends AbstractField<T> implements
 
         if (!orderBy.isEmpty()) {
             context.sql(glue)
-                   .keyword("order by ");
-
-            switch (context.getDialect()) {
-
-                // SQL Server and Sybase don't allow for fully qualified fields
-                // in the ORDER BY clause of an analytic expression
-                case SQLSERVER: // No break
-                case SYBASE: {
-                    for (SortField<?> f : orderBy) {
-                        SortFieldImpl<?> field = (SortFieldImpl<?>) f;
-                        field.toSQLInAnalyticClause(context);
-                    }
-
-                    break;
-                }
-
-                default: {
-                    context.sql(orderBy);
-                    break;
-                }
-            }
+                   .keyword("order by ")
+                   .sql(orderBy);
 
             glue = " ";
         }

@@ -564,7 +564,7 @@ public interface Record extends FieldProvider, Attachable {
      * or {@link ResultSet#previous()}, etc.</li>
      * </ul>
      * <p>
-     * You may use {@link FactoryOperations#fetch(ResultSet)} to unwind this
+     * You may use {@link Executor#fetch(ResultSet)} to unwind this
      * wrapper again.
      * <p>
      * This is the same as creating a new {@link Result} with this

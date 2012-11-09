@@ -37,6 +37,8 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.impl.Executor;
+
 /**
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
@@ -81,8 +83,8 @@ public interface InsertValuesStep<R extends Record> extends InsertOnDuplicateSte
      * This variant of the <code>INSERT .. SELECT</code> statement expects a
      * select returning exactly as many fields as specified previously in the
      * <code>INTO</code> clause:
-     * {@link FactoryOperations#insertInto(Table, Field...)} or
-     * {@link FactoryOperations#insertInto(Table, Collection)}
+     * {@link Executor#insertInto(Table, Field...)} or
+     * {@link Executor#insertInto(Table, Collection)}
      */
     @Support
     Insert<R> select(Select<?> select);

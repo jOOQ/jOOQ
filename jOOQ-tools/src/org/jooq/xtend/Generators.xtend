@@ -1,10 +1,76 @@
+/**
+ * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
+ * All rights reserved.
+ *
+ * This software is licensed to you under the Apache License, Version 2.0
+ * (the "License"); You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * . Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ *
+ * . Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * . Neither the name "jOOQ" nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
 package org.jooq.xtend
 
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
+import java.io.RandomAccessFile
 
+/**
+ * @author Lukas Eder
+ */
 abstract class Generators {
+	
+	def read(String className) {
+		val file = new File("./../jOOQ/src/main/java/" + className.replace(".", "/") + ".java");
+		
+		try {
+			val f = new RandomAccessFile(file, "r");
+			val contents = Util::newByteArray(f.length);
+			f.readFully(contents);
+			return new String(contents);
+		}
+		catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	def insert(String className, CharSequence contents, String section) {
+		val result = new StringBuilder();
+		val original = read(className);
+		val start = "// [jooq-tools] START [" + section + "]";
+		val end = "// [jooq-tools] END [" + section + "]"
+		
+		result.append(original.substring(0, original.indexOf(start) + start.length + 1))
+		result.append(contents);
+		result.append(original.substring(original.indexOf(end)));
+		
+		write(className, result);
+	}
 	
     def write(String className, CharSequence contents) {
         val file = new File("./../jOOQ/src/main/java/" + className.replace(".", "/") + ".java");
@@ -98,15 +164,26 @@ abstract class Generators {
         @Generated("This class was generated using jOOQ-tools")
         '''
     }
+   
+    def generatedMethod() {
+        '''
+        @Generated("This method was generated using jOOQ-tools")
+        '''
+    }
     
     def TN(int degree) {
         // A comma-separated list of types T1, T2, .., TN
         (1..degree).join(", ", [e | "T" + e])
     }
     
-       def tn(int degree) {
+    def tn(int degree) {
         // A comma-separated list of types T1, T2, .., TN
         (1..degree).join(", ", [e | "t" + e])
+    }
+    
+    def fieldn(int degree) {
+        // A comma-separated list of types T1, T2, .., TN
+        (1..degree).join(", ", [e | "field" + e])
     }
     
     def TN_tn(int degree) {
@@ -116,6 +193,10 @@ abstract class Generators {
     
     def Field_TN_tn(int degree) {
         (1..degree).join(", ", [e | "Field<T" + e + "> t" + e])
+    }
+    
+    def Field_TN_fieldn(int degree) {
+        (1..degree).join(", ", [e | "Field<T" + e + "> field" + e])
     }
     
 	

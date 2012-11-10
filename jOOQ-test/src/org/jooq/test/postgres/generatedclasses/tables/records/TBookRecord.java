@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "public")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1396917426;
+	private static final long serialVersionUID = 896457213;
 
 	/**
 	 * Setter for <code>public.t_book.id</code>. 
@@ -242,6 +242,18 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE)
 			.where(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID)))
 			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

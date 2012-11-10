@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = 1440646026;
+	private static final long serialVersionUID = 1183238215;
 
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>. 
@@ -222,6 +222,18 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	// -------------------------------------------------------------------------
 	// Foreign key navigation methods
 	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
 
 	// -------------------------------------------------------------------------
 	// Constructors

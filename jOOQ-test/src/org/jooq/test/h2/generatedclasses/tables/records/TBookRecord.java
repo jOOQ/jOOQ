@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -1757077845;
+	private static final long serialVersionUID = 211351230;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
@@ -267,6 +267,18 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TLanguage.T_LANGUAGE)
 			.where(org.jooq.test.h2.generatedclasses.tables.TLanguage.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID)))
 			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

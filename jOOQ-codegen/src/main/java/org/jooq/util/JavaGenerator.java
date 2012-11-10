@@ -43,6 +43,7 @@ import java.io.File;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -471,6 +472,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateRecord(TableDefinition table) {
         log.info("Generating record", getStrategy().getFileName(table, Mode.RECORD));
 
+        final UniqueKeyDefinition key = table.getMainUniqueKey();
         final String className = getStrategy().getJavaClassName(table, Mode.RECORD);
         final String tableIdentifier = getStrategy().getFullJavaIdentifier(table);
         final String recordType = getStrategy().getFullJavaClassName(table, Mode.RECORD);
@@ -483,7 +485,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         Class<?> baseClass;
 
-        if (generateRelations() && table.getMainUniqueKey() != null) {
+        if (generateRelations() && key != null) {
             baseClass = UpdatableRecordImpl.class;
         } else {
             baseClass = TableRecordImpl.class;
@@ -494,19 +496,8 @@ public class JavaGenerator extends AbstractGenerator {
         String rowTypeRecord = null;
 
         if (degree <= Constants.MAX_ROW_DEGREE) {
-            rowType = "<";
-
-            String separator = "";
-            for (ColumnDefinition column : table.getColumns()) {
-                rowType += separator;
-                rowType += getJavaType(column.getType());
-
-                separator = ", ";
-            }
-
-            rowType += ">";
-            rowTypeRecord = Record.class.getName() + degree + rowType;
-
+            rowType = getRowType(table.getColumns());
+            rowTypeRecord = Record.class.getName() + degree + "<" + rowType + ">";
             interfaces.add(rowTypeRecord);
         }
 
@@ -555,18 +546,32 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
+        if (generateRelations() && key != null) {
+            int keyDegree = key.getKeyColumns().size();
+
+            if (keyDegree <= Constants.MAX_ROW_DEGREE) {
+                String keyType = getRowType(key.getKeyColumns());
+                out.tab(1).header("Primary key information");
+
+                out.tab(1).overrideInherit();
+                out.tab(1).println("public %s%s<%s> key() {", Record.class, keyDegree, keyType);
+                out.tab(2).println("return (%s%s) super.key();", Record.class, keyDegree);
+                out.tab(1).println("}");
+            }
+        }
+
         if (degree <= Constants.MAX_ROW_DEGREE) {
             out.tab(1).header("Record%s type implementation", degree);
 
             // fieldsRow()
             out.tab(1).overrideInherit();
-            out.tab(1).println("public %s%s%s fieldsRow() {", Row.class, degree, rowType);
+            out.tab(1).println("public %s%s<%s> fieldsRow() {", Row.class, degree, rowType);
             out.tab(2).println("return %s.row([[field%s()]]);", Factory.class, range(1, degree));
             out.tab(1).println("}");
 
             // valuesRow()
             out.tab(1).overrideInherit();
-            out.tab(1).println("public %s%s%s valuesRow() {", Row.class, degree, rowType);
+            out.tab(1).println("public %s%s<%s> valuesRow() {", Row.class, degree, rowType);
             out.tab(2).println("return %s.row([[value%s()]]);", Factory.class, range(1, degree));
             out.tab(1).println("}");
 
@@ -605,6 +610,20 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println("}");
         out.close();
+    }
+
+    private final String getRowType(Collection<? extends ColumnDefinition> columns) {
+        StringBuilder result = new StringBuilder();
+        String separator = "";
+
+        for (ColumnDefinition column : columns) {
+            result.append(separator);
+            result.append(getJavaType(column.getType()));
+
+            separator = ", ";
+        }
+
+        return result.toString();
     }
 
     protected void generateInterfaces(SchemaDefinition schema) {

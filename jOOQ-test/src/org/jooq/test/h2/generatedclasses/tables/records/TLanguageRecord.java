@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = 2112973098;
+	private static final long serialVersionUID = -407430777;
 
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code
@@ -89,6 +89,18 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TLanguage.ID)))
 			.fetch();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

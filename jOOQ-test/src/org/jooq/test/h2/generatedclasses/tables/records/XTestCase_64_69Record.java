@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_64_69 {
 
-	private static final long serialVersionUID = -1069057201;
+	private static final long serialVersionUID = -1620941594;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>. 
@@ -77,6 +77,18 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED)
 			.where(org.jooq.test.h2.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID)))
 			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

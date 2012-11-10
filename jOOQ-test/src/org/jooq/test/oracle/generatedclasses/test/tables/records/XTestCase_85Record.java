@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1443731837;
+	private static final long serialVersionUID = 169621996;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>. 
@@ -72,6 +72,18 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 			.where(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID)))
 			.and(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME)))
 			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

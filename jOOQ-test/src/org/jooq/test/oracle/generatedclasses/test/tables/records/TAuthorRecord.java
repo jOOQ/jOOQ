@@ -13,7 +13,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -448463510;
+	private static final long serialVersionUID = -488301039;
 
 	/**
 	 * Setter for <code>TEST.T_AUTHOR.ID</code>. The author ID
@@ -128,6 +128,18 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK)
 			.where(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ID)))
 			.fetch();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = 1018761209;
+	private static final long serialVersionUID = 2113465648;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.ID</code>. 
@@ -190,6 +190,18 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	// -------------------------------------------------------------------------
 	// Foreign key navigation methods
 	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
 
 	// -------------------------------------------------------------------------
 	// Constructors

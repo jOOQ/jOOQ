@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -878897772;
+	private static final long serialVersionUID = 78781824;
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.ID</code>. 
@@ -279,6 +279,18 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
 			.where(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.XUnused.ID)))
 			.fetch();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.String> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> implements org.jooq.Record5<java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord> {
 
-	private static final long serialVersionUID = 776934757;
+	private static final long serialVersionUID = 1849853896;
 
 	/**
 	 * Setter for <code>TEST.T_ARRAYS.ID</code>. 
@@ -92,6 +92,18 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	// -------------------------------------------------------------------------
 	// Foreign key navigation methods
 	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
 
 	// -------------------------------------------------------------------------
 	// Record5 type implementation

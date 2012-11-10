@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.Object> {
 
-	private static final long serialVersionUID = 460760410;
+	private static final long serialVersionUID = 878357535;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.ID</code>. 
@@ -126,6 +126,18 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 			.selectFrom(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK)
 			.where(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ID)))
 			.fetch();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

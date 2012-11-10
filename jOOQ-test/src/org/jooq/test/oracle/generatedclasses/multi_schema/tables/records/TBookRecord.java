@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 200926121;
+	private static final long serialVersionUID = -137687764;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK.ID</code>. 
@@ -217,6 +217,18 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE)
 			.where(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.LANGUAGE_ID)))
 			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

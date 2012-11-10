@@ -83,6 +83,21 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
     UpdatableTable<R> getTable();
 
     /**
+     * A view holding values for the {@link UpdatableTable#getMainKey()}
+     * <p>
+     * This method returns a "view" of this record itself. Modifications to the
+     * returned record will affect values in this record.
+     * <p>
+     * The returned record consists exactly of those fields as returned by the
+     * table's main key: {@link UniqueKey#getFields()}.
+     * <p>
+     * Generated subtypes may covariantly override this method to add more
+     * record type information. For instance, they may return {@link Record1},
+     * {@link Record2}, ...
+     */
+    Record key();
+
+    /**
      * Store this record back to the database.
      * <p>
      * Depending on the state of the primary key's or main unique key's value,

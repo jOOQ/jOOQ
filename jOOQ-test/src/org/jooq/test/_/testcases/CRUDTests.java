@@ -322,6 +322,39 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(3, (int) create().selectCount().from(TTriggers()).fetchOne(0, int.class));
     }
 
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testUpdatablesKeysMethod() throws Exception {
+        B b = create().selectFrom(TBook())
+                      .where(TBook_ID().eq(1))
+                      .fetchOne();
+        B2S b2s = create()
+                      .selectFrom(TBookToBookStore())
+                      .where(TBookToBookStore_BOOK_ID().eq(1))
+                      .and(TBookToBookStore_BOOK_STORE_NAME().eq("Ex Libris"))
+                      .fetchOne();
+
+        // [#1690] Check if values returned by the key() record are correct
+        Record1<Integer> bKey = (Record1<Integer>) b.key();
+        Record2<String, Integer> b2sKey = (Record2<String, Integer>) b2s.key();
+
+        assertEquals(1, (int) bKey.value1());
+        assertEquals("Ex Libris", b2sKey.value1());
+        assertEquals(1, (int) b2sKey.value2());
+
+        assertEquals(TBook_ID(), bKey.field1());
+        assertEquals(TBookToBookStore_BOOK_STORE_NAME(), b2sKey.field1());
+        assertEquals(TBookToBookStore_BOOK_ID(), b2sKey.field2());
+
+        // [#1690] Check if modifications to the key() record are reflected in
+        // the original record, and vice versa
+        bKey.setValue(TBook_ID(), 5);
+        assertEquals(5, (int) b.getValue(TBook_ID()));
+
+        b.setValue(TBook_ID(), 6);
+        assertEquals(6, (int) bKey.value1());
+    }
+
     @Test
     public void testUpdatablesPK() throws Exception {
         jOOQAbstractTest.reset = false;

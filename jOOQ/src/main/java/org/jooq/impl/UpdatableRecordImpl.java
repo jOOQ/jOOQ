@@ -81,6 +81,18 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
+    public Record key() {
+        RecordImpl result = new RecordImpl(new FieldList(getMainKey().getFields()));
+
+        for (Field<?> field : result.getFields()) {
+            result.setValue(field, getValue0(field));
+        }
+
+        return result;
+    }
+
+    @Override
     public final UpdatableTable<R> getTable() {
         return (UpdatableTable<R>) super.getTable();
     }
@@ -154,7 +166,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             if (key != null && !key.isEmpty()) {
                 if (insert.getReturnedRecord() != null) {
                     for (Field<?> field : key) {
-                        setValue0(field, new Value<Object>(insert.getReturnedRecord().getValue(field)));
+                        setValue(field, new Value<Object>(insert.getReturnedRecord().getValue(field)));
                     }
                 }
             }
@@ -312,7 +324,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             AbstractRecord record = (AbstractRecord) select.getResult().get(0);
 
             for (Field<?> field : getFields()) {
-                setValue0(field, record.getValue0(field));
+                setValue(field, record.getValue0(field));
             }
         }
         else {
@@ -434,25 +446,17 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     /**
-     * Extracted method to ensure generic type safety.
-     */
-    @SuppressWarnings("unchecked")
-    private final <T> void setValue0(Field<T> field, Value<?> value) {
-        setValue(field, (Value<T>) value);
-    }
-
-    /**
      * Set a generated version and timestamp value onto this record after
      * successfully storing the record.
      */
     private final void setRecordVersionAndTimestamp(BigInteger version, Timestamp timestamp) {
         if (version != null) {
             TableField<R, ?> field = getTable().getRecordVersion();
-            setValue0(field, new Value<Object>(field.getDataType().convert(version)));
+            setValue(field, new Value<Object>(field.getDataType().convert(version)));
         }
         if (timestamp != null) {
             TableField<R, ?> field = getTable().getRecordTimestamp();
-            setValue0(field, new Value<Object>(field.getDataType().convert(timestamp)));
+            setValue(field, new Value<Object>(field.getDataType().convert(timestamp)));
         }
     }
 }

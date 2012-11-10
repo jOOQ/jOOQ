@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_language", schema = "public")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1276554630;
+	private static final long serialVersionUID = 1104221357;
 
 	/**
 	 * Setter for <code>public.t_language.cd</code>. 
@@ -86,6 +86,18 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.ID)))
 			.fetch();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

@@ -585,6 +585,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(1, TAuthor().getKeys().size());
         assertEquals(1, TAuthor().getMainKey().getFields().size());
         assertEquals(TAuthor_ID(), TAuthor().getMainKey().getFields().get(0));
+        assertEquals(Record1.class, TAuthor().getRecordType().getMethod("key").getReturnType());
+        assertTrue(TAuthor().getRecordType().getMethod("key").toGenericString().contains("org.jooq.Record1<java.lang.Integer>"));
+        assertEquals(Record2.class, TBookToBookStore().getRecordType().getMethod("key").getReturnType());
+        assertTrue(TBookToBookStore().getRecordType().getMethod("key").toGenericString().contains("org.jooq.Record2<java.lang.String, java.lang.Integer>"));
 
         if (supportsReferences()) {
 

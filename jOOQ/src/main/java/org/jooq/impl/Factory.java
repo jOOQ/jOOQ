@@ -62,6 +62,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Generated;
+
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
 import org.jooq.Case;
@@ -215,6 +217,7 @@ public class Factory {
         return new SelectImpl<Record>(DEFAULT_CONFIGURATION).select(fields);
     }
 
+// [jooq-tools] START [select]
     /**
      * Create a new DSL subselect statement.
      * <p>
@@ -247,6 +250,7 @@ public class Factory {
      * @see Executor#select(Field...)
      * @see #select(Field...)
      */
+    @Generated("This method was generated using jOOQ-tools")
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1> SelectSelectStep<Record1<T1>> select(Field<T1> field1) {
@@ -285,6 +289,7 @@ public class Factory {
      * @see Executor#select(Field...)
      * @see #select(Field...)
      */
+    @Generated("This method was generated using jOOQ-tools")
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2> SelectSelectStep<Record2<T1, T2>> select(Field<T1> field1, Field<T2> field2) {
@@ -323,6 +328,7 @@ public class Factory {
      * @see Executor#select(Field...)
      * @see #select(Field...)
      */
+    @Generated("This method was generated using jOOQ-tools")
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
@@ -361,6 +367,7 @@ public class Factory {
      * @see Executor#select(Field...)
      * @see #select(Field...)
      */
+    @Generated("This method was generated using jOOQ-tools")
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
@@ -399,6 +406,7 @@ public class Factory {
      * @see Executor#select(Field...)
      * @see #select(Field...)
      */
+    @Generated("This method was generated using jOOQ-tools")
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
@@ -437,6 +445,7 @@ public class Factory {
      * @see Executor#select(Field...)
      * @see #select(Field...)
      */
+    @Generated("This method was generated using jOOQ-tools")
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
@@ -475,6 +484,7 @@ public class Factory {
      * @see Executor#select(Field...)
      * @see #select(Field...)
      */
+    @Generated("This method was generated using jOOQ-tools")
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
@@ -513,11 +523,14 @@ public class Factory {
      * @see Executor#select(Field...)
      * @see #select(Field...)
      */
+    @Generated("This method was generated using jOOQ-tools")
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
+
+// [jooq-tools] END [select]
 
     /**
      * Create a new DSL subselect statement.
@@ -582,6 +595,8 @@ public class Factory {
     public static SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
         return new SelectImpl<Record>(DEFAULT_CONFIGURATION, true).select(fields);
     }
+
+// [jooq-tools] START [selectDistinct]
 
     /**
      * Create a new DSL subselect statement.
@@ -886,6 +901,8 @@ public class Factory {
     public static <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
+
+// [jooq-tools] END [selectDistinct]
 
     /**
      * Create a new DSL subselect statement.
@@ -5719,6 +5736,8 @@ public class Factory {
         return result;
     }
 
+// [jooq-tools] START [row-value]
+
     /**
      * Create a row value expression of degree <code>1</code>
      * <p>
@@ -5815,6 +5834,8 @@ public class Factory {
         return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8));
     }
 
+// [jooq-tools] END [row-value]
+
     /**
      * Create a row value expression of degree <code>N > 8</code>
      * <p>
@@ -5826,6 +5847,8 @@ public class Factory {
     public static RowN row(Object... values) {
         return row(vals(values).toArray(new Field[0]));
     }
+
+// [jooq-tools] START [row-field]
 
     /**
      * Create a row value expression of degree <code>1</code>
@@ -5922,6 +5945,8 @@ public class Factory {
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Row8<T1, T2, T3, T4, T5, T6, T7, T8> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
         return new RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>(t1, t2, t3, t4, t5, t6, t7, t8);
     }
+
+// [jooq-tools] END [row-field]
 
     /**
      * Create a row value expression of degree <code>N > 8</code>

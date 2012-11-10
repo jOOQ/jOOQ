@@ -5,7 +5,8 @@
 <entry key="sid">xe</entry>
 <entry key="displayName">TEST@localhost/xe</entry>
 <entry key="port">1521</entry>
+<entry key="uuid">65250440-f7d9-4bec-95d3-1f7345cd1718</entry>
 <entry key="host">localhost</entry>
 <entry key="userName">TEST</entry>
-<entry key="adapterId">oracle</entry>
+<entry key="adapterId">ORACLE</entry>
 </properties>

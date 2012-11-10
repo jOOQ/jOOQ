@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_725_lob_test", schema = "public")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]> {
 
-	private static final long serialVersionUID = -266533512;
+	private static final long serialVersionUID = 1750534295;
 
 	/**
 	 * Setter for <code>public.t_725_lob_test.id</code>. 
@@ -47,6 +47,18 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	// -------------------------------------------------------------------------
 	// Foreign key navigation methods
 	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation

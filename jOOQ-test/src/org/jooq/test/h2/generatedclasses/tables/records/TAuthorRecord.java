@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 332787292;
+	private static final long serialVersionUID = 359011413;
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
@@ -131,6 +131,18 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID)))
 			.fetch();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

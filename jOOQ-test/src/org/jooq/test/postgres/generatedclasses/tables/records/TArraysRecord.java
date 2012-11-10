@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_arrays", schema = "public")
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> implements org.jooq.Record7<java.lang.Integer, java.lang.String[], java.lang.Integer[], java.sql.Date[], org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[], org.jooq.test.postgres.generatedclasses.enums.UCountry[], java.lang.Integer[]> {
 
-	private static final long serialVersionUID = -452231776;
+	private static final long serialVersionUID = 2118453677;
 
 	/**
 	 * Setter for <code>public.t_arrays.id</code>. 
@@ -122,6 +122,18 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	// -------------------------------------------------------------------------
 	// Foreign key navigation methods
 	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
 
 	// -------------------------------------------------------------------------
 	// Record7 type implementation

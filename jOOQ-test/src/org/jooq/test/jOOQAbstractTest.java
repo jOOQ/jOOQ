@@ -750,7 +750,7 @@ public abstract class jOOQAbstractTest<
         return create(settings);
     }
 
-    protected final SQLDialect getDialect() throws Exception {
+    protected final SQLDialect getDialect() {
         return create().getDialect();
     }
 
@@ -1310,6 +1310,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testUpdatablesCopy() throws Exception {
         new CRUDTests(this).testUpdatablesCopy();
+    }
+
+    @Test
+    public void testUpdatablesKeysMethod() throws Exception {
+        new CRUDTests(this).testUpdatablesKeysMethod();
     }
 
     @Test

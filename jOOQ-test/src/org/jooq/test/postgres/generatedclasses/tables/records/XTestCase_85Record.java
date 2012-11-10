@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_85", schema = "public")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 145478290;
+	private static final long serialVersionUID = 678976415;
 
 	/**
 	 * Setter for <code>public.x_test_case_85.id</code>. 
@@ -72,6 +72,18 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 			.where(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID)))
 			.and(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME)))
 			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

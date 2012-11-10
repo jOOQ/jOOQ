@@ -697,7 +697,7 @@ public abstract class BaseTest<
         return delegate.create();
     }
 
-    protected final SQLDialect getDialect() throws Exception {
+    protected final SQLDialect getDialect() {
         return delegate.getDialect();
     }
 

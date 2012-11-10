@@ -15,7 +15,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 829356013;
+	private static final long serialVersionUID = 5352019;
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.ID</code>. 
@@ -302,6 +302,18 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 			.where(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID_REF)))
 			.and(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME_REF)))
 			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.String> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -829264375;
+	private static final long serialVersionUID = -1285734206;
 
 	/**
 	 * Setter for <code>TEST.T_BOOLEANS.ID</code>. 
@@ -182,6 +182,18 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	// -------------------------------------------------------------------------
 	// Foreign key navigation methods
 	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
 
 	// -------------------------------------------------------------------------
 	// Constructors

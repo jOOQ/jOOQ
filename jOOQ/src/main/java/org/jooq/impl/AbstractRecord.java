@@ -314,11 +314,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         setValue(field, converter.to(value));
     }
 
-    final <T> void setValue(Field<T> field, Value<T> value) {
+    final void setValue(Field<?> field, Value<?> value) {
         setValue(getIndex(field), value);
     }
 
-    final <T> void setValue(int index, Value<T> value) {
+    final void setValue(int index, Value<?> value) {
         getValues()[index] = value;
     }
 

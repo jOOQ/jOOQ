@@ -13,7 +13,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1142206144;
+	private static final long serialVersionUID = 1871502512;
 
 	/**
 	 * Setter for <code>public.t_book_to_book_store.book_store_name</code>. 
@@ -106,6 +106,18 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID)))
 			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record2<java.lang.String, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------

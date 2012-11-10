@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_64_69", schema = "TEST")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 117974615;
+	private static final long serialVersionUID = -509551484;
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_64_69.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_64_69.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -30,7 +30,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
 	public void setUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID, value);
@@ -49,7 +49,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
 	@javax.persistence.Column(name = "UNUSED_ID", precision = 7)
 	public java.lang.Integer getUnusedId() {
@@ -78,6 +78,18 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED)
 			.where(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID)))
 			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

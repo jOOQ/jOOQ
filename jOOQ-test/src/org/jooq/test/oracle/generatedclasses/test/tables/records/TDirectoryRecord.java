@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1952961334;
+	private static final long serialVersionUID = -1991682039;
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.ID</code>. 
@@ -108,6 +108,18 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY)
 			.where(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.PARENT_ID)))
 			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

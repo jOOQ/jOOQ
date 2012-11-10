@@ -68,6 +68,7 @@ import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
+import org.jooq.Record1;
 import org.jooq.RenderContext;
 import org.jooq.Row1;
 import org.jooq.Row2;
@@ -83,6 +84,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings({ "rawtypes", "unchecked" })
 class RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractQueryPart
 implements
 
@@ -160,49 +162,41 @@ implements
         return result;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Field<T1> field1() {
         return (Field<T1>) fields[0];
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Field<T2> field2() {
         return (Field<T2>) fields[1];
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Field<T3> field3() {
         return (Field<T3>) fields[2];
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Field<T4> field4() {
         return (Field<T4>) fields[3];
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Field<T5> field5() {
         return (Field<T5>) fields[4];
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Field<T6> field6() {
         return (Field<T6>) fields[5];
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Field<T7> field7() {
         return (Field<T7>) fields[6];
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Field<T8> field8() {
         return (Field<T8>) fields[7];
@@ -255,6 +249,11 @@ implements
     @Override
     public final Condition equal(RowN row) {
         return new Compare(row, Comparator.EQUALS);
+    }
+
+    @Override
+    public final Condition equal(Record1<T1> record) {
+        return new Compare(record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
@@ -393,6 +392,11 @@ implements
     }
 
     @Override
+    public final Condition eq(Record1<T1> record) {
+        return equal(record);
+    }
+
+    @Override
     public final Condition eq(T1 t1) {
         return equal(t1);
     }
@@ -525,6 +529,11 @@ implements
     @Override
     public final Condition notEqual(RowN row) {
         return new Compare(row, Comparator.NOT_EQUALS);
+    }
+
+    @Override
+    public final Condition notEqual(Record1<T1> record) {
+        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
@@ -663,6 +672,11 @@ implements
     }
 
     @Override
+    public final Condition ne(Record1<T1> record) {
+        return notEqual(record);
+    }
+
+    @Override
     public final Condition ne(T1 t1) {
         return notEqual(t1);
     }
@@ -798,6 +812,17 @@ implements
     }
 
     @Override
+    public final Condition in(Record1<T1>... records) {
+        Row1<T1>[] rows = new Row1[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return in(rows);
+    }
+
+    @Override
     public final Condition notIn(Row1<T1>... rows) {
         return notIn(Arrays.asList(rows));
     }
@@ -842,51 +867,54 @@ implements
         return notIn(Arrays.asList(rows));
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Condition notIn(Record1<T1>... records) {
+        Row1<T1>[] rows = new Row1[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return notIn(rows);
+    }
+
     @Override
     public final Condition in(Collection rows) {
         QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
         return new InRows(list, SubqueryOperator.IN);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition notIn(Collection rows) {
         QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
         return new InRows(list, SubqueryOperator.NOT_IN);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public final Condition equal(Select select) {
         return new Subquery(select, SubqueryOperator.EQUALS);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public final Condition eq(Select select) {
         return equal(select);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public final Condition notEqual(Select select) {
         return new Subquery(select, SubqueryOperator.NOT_EQUALS);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public final Condition ne(Select select) {
         return notEqual(select);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public final Condition in(Select select) {
         return new Subquery(select, SubqueryOperator.IN);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public final Condition notIn(Select select) {
         return new Subquery(select, SubqueryOperator.NOT_IN);
@@ -924,7 +952,6 @@ implements
 
         private final RowImpl<T1, T2, ?, ?, ?, ?, ?, ?> other;
 
-        @SuppressWarnings("unchecked")
         Overlaps(Row2<T1, T2> other) {
             this.other = (RowImpl<T1, T2, ?, ?, ?, ?, ?, ?>) other;
         }
@@ -939,7 +966,6 @@ implements
             delegate(context).bind(context);
         }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
         private final QueryPartInternal delegate(Configuration configuration) {
             DataType<?> type0 = fields[0].getDataType();
             DataType<?> type1 = fields[1].getDataType();
@@ -1014,7 +1040,6 @@ implements
         private final RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> other;
         private final Comparator                                comparator;
 
-        @SuppressWarnings("unchecked")
         Compare(QueryPart other, Comparator comparator) {
             this.other = (RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>) other;
             this.comparator = comparator;
@@ -1030,7 +1055,6 @@ implements
             delegate(context).bind(context);
         }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
         private final QueryPartInternal delegate(Configuration configuration) {
             if (asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
                 List<Condition> conditions = new ArrayList<Condition>();

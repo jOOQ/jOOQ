@@ -81,6 +81,14 @@ public interface Row1<T1> extends Row {
     Condition equal(Row1<T1> row);
 
     /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #equal(Row1)
+     */
+    @Support
+    Condition equal(Record1<T1> record);
+
+    /**
      * Compare this row value expression with another row value expression for
      * equality
      * <p>
@@ -121,6 +129,14 @@ public interface Row1<T1> extends Row {
      */
     @Support
     Condition eq(Row1<T1> row);
+
+    /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #eq(Row1)
+     */
+    @Support
+    Condition eq(Record1<T1> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -165,6 +181,14 @@ public interface Row1<T1> extends Row {
     Condition notEqual(Row1<T1> row);
 
     /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #notEqual(Row1)
+     */
+    @Support
+    Condition notEqual(Record1<T1> record);
+
+    /**
      * Compare this row value expression with another row value expression for
      * non-equality
      * <p>
@@ -205,6 +229,14 @@ public interface Row1<T1> extends Row {
      */
     @Support
     Condition ne(Row1<T1> row);
+
+    /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #ne(Row1)
+     */
+    @Support
+    Condition ne(Record1<T1> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -261,6 +293,14 @@ public interface Row1<T1> extends Row {
     Condition in(Row1<T1>... rows);
 
     /**
+     * Compare this row value expression with a set of records for equality
+     *
+     * @see #in(Row1[])
+     */
+    @Support
+    Condition in(Record1<T1>... record);
+
+    /**
      * Compare this row value expression with a subselect for equality
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
@@ -291,6 +331,14 @@ public interface Row1<T1> extends Row {
      */
     @Support
     Condition notIn(Row1<T1>... rows);
+
+    /**
+     * Compare this row value expression with a set of records for non-equality
+     *
+     * @see #notIn(Row1[])
+     */
+    @Support
+    Condition notIn(Record1<T1>... record);
 
     /**
      * Compare this row value expression with a subselect for non-equality

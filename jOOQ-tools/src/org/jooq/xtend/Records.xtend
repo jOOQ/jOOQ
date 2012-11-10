@@ -45,6 +45,7 @@ class Records extends Generators {
     def static void main(String[] args) {
         val records = new Records();
         records.generateRecordClasses();
+        records.generateRecordImpl();
     }
     
     def generateRecordClasses() {
@@ -107,5 +108,91 @@ class Records extends Generators {
              
             write("org.jooq.Record" + degree, out);
         }
+    }
+    
+    def generateRecordImpl() {
+        val out = new StringBuilder();
+        
+        out.append('''
+        «classHeader»
+        package org.jooq.impl;
+        
+        import static org.jooq.impl.Factory.vals;
+        
+        import java.util.List;
+        
+        import javax.annotation.Generated;
+        
+        import org.jooq.Field;
+        import org.jooq.FieldProvider;
+        import org.jooq.Record;
+        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+        import org.jooq.Record«degree»;
+        «ENDFOR»
+        
+        /**
+         * A general purpose record, typically used for ad-hoc types.
+         * <p>
+         * This type implements both the general-purpose, type-unsafe {@link Record}
+         * interface, as well as the more specific, type-safe {@link Record1},
+         * {@link Record2} through {@link Record«Constants::MAX_ROW_DEGREE»} interfaces
+         *
+         * @author Lukas Eder
+         */
+        «generatedAnnotation»
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        class RecordImpl<«TN(Constants::MAX_ROW_DEGREE)»> extends AbstractRecord
+        implements
+        
+            // This record implementation implements all record types. Type-safety is
+            // being checked through the type-safe API. No need for further checks here
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE) SEPARATOR ','»
+            Record«degree»<«TN(degree)»>«IF degree == Constants::MAX_ROW_DEGREE» {«ENDIF»
+            «ENDFOR»
+        
+            /**
+             * Generated UID
+             */
+            private static final long serialVersionUID = -2201346180421463830L;
+        
+            /**
+             * Create a new general purpos record
+             */
+            public RecordImpl(FieldProvider fields) {
+                super(fields);
+            }
+        
+            // ------------------------------------------------------------------------
+            // XXX: Type-safe Record APIs
+            // ------------------------------------------------------------------------
+        
+            @Override
+            public RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> fieldsRow() {
+                return new RowImpl(getFields());
+            }
+        
+            @Override
+            public final RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> valuesRow() {
+                List<Field<?>> fields = getFields();
+                return new RowImpl(vals(intoArray(), fields.toArray(new Field[fields.size()])));
+            }
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final Field<T«degree»> field«degree»() {
+                return (Field<T«degree»>) getField(«degree - 1»);
+            }
+            «ENDFOR»
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final T«degree» value«degree»() {
+                return (T«degree») getValue(«degree - 1»);
+            }
+            «ENDFOR»
+        }
+        ''');
+        
+        write("org.jooq.impl.RecordImpl", out);
     }
 }

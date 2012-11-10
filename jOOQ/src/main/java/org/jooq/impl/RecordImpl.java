@@ -39,6 +39,8 @@ import static org.jooq.impl.Factory.vals;
 
 import java.util.List;
 
+import javax.annotation.Generated;
+
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
@@ -60,6 +62,7 @@ import org.jooq.Record8;
  *
  * @author Lukas Eder
  */
+@Generated("This class was generated using jOOQ-tools")
 @SuppressWarnings({ "unchecked", "rawtypes" })
 class RecordImpl<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractRecord
 implements

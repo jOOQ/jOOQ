@@ -52,12 +52,15 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.row;
+import static org.jooq.impl.Factory.vals;
 import static org.jooq.impl.SubqueryOperator.NOT_IN;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import javax.annotation.Generated;
 
 import org.jooq.BindContext;
 import org.jooq.Comparator;
@@ -68,8 +71,17 @@ import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
+import org.jooq.Record;
 import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
 import org.jooq.RenderContext;
+import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
 import org.jooq.Row3;
@@ -84,6 +96,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
+@Generated("This class was generated using jOOQ-tools")
 @SuppressWarnings({ "rawtypes", "unchecked" })
 class RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractQueryPart
 implements
@@ -257,6 +270,48 @@ implements
     }
 
     @Override
+    public final Condition equal(Record2<T1, T2> record) {
+        return new Compare(record.valuesRow(), Comparator.EQUALS);
+    }
+
+    @Override
+    public final Condition equal(Record3<T1, T2, T3> record) {
+        return new Compare(record.valuesRow(), Comparator.EQUALS);
+    }
+
+    @Override
+    public final Condition equal(Record4<T1, T2, T3, T4> record) {
+        return new Compare(record.valuesRow(), Comparator.EQUALS);
+    }
+
+    @Override
+    public final Condition equal(Record5<T1, T2, T3, T4, T5> record) {
+        return new Compare(record.valuesRow(), Comparator.EQUALS);
+    }
+
+    @Override
+    public final Condition equal(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return new Compare(record.valuesRow(), Comparator.EQUALS);
+    }
+
+    @Override
+    public final Condition equal(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return new Compare(record.valuesRow(), Comparator.EQUALS);
+    }
+
+    @Override
+    public final Condition equal(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return new Compare(record.valuesRow(), Comparator.EQUALS);
+    }
+
+    @Override
+    public final Condition equal(Record record) {
+        List<Field<?>> f = record.getFields();
+        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        return new Compare(row, Comparator.EQUALS);
+    }
+
+    @Override
     public final Condition equal(T1 t1) {
         return equal(row(t1));
     }
@@ -393,6 +448,46 @@ implements
 
     @Override
     public final Condition eq(Record1<T1> record) {
+        return equal(record);
+    }
+
+    @Override
+    public final Condition eq(Record2<T1, T2> record) {
+        return equal(record);
+    }
+
+    @Override
+    public final Condition eq(Record3<T1, T2, T3> record) {
+        return equal(record);
+    }
+
+    @Override
+    public final Condition eq(Record4<T1, T2, T3, T4> record) {
+        return equal(record);
+    }
+
+    @Override
+    public final Condition eq(Record5<T1, T2, T3, T4, T5> record) {
+        return equal(record);
+    }
+
+    @Override
+    public final Condition eq(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return equal(record);
+    }
+
+    @Override
+    public final Condition eq(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return equal(record);
+    }
+
+    @Override
+    public final Condition eq(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return equal(record);
+    }
+
+    @Override
+    public final Condition eq(Record record) {
         return equal(record);
     }
 
@@ -537,6 +632,48 @@ implements
     }
 
     @Override
+    public final Condition notEqual(Record2<T1, T2> record) {
+        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+    }
+
+    @Override
+    public final Condition notEqual(Record3<T1, T2, T3> record) {
+        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+    }
+
+    @Override
+    public final Condition notEqual(Record4<T1, T2, T3, T4> record) {
+        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+    }
+
+    @Override
+    public final Condition notEqual(Record5<T1, T2, T3, T4, T5> record) {
+        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+    }
+
+    @Override
+    public final Condition notEqual(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+    }
+
+    @Override
+    public final Condition notEqual(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+    }
+
+    @Override
+    public final Condition notEqual(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+    }
+
+    @Override
+    public final Condition notEqual(Record record) {
+        List<Field<?>> f = record.getFields();
+        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        return new Compare(row, Comparator.NOT_EQUALS);
+    }
+
+    @Override
     public final Condition notEqual(T1 t1) {
         return notEqual(row(t1));
     }
@@ -673,6 +810,46 @@ implements
 
     @Override
     public final Condition ne(Record1<T1> record) {
+        return notEqual(record);
+    }
+
+    @Override
+    public final Condition ne(Record2<T1, T2> record) {
+        return notEqual(record);
+    }
+
+    @Override
+    public final Condition ne(Record3<T1, T2, T3> record) {
+        return notEqual(record);
+    }
+
+    @Override
+    public final Condition ne(Record4<T1, T2, T3, T4> record) {
+        return notEqual(record);
+    }
+
+    @Override
+    public final Condition ne(Record5<T1, T2, T3, T4, T5> record) {
+        return notEqual(record);
+    }
+
+    @Override
+    public final Condition ne(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return notEqual(record);
+    }
+
+    @Override
+    public final Condition ne(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return notEqual(record);
+    }
+
+    @Override
+    public final Condition ne(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return notEqual(record);
+    }
+
+    @Override
+    public final Condition ne(Record record) {
         return notEqual(record);
     }
 
@@ -823,6 +1000,95 @@ implements
     }
 
     @Override
+    public final Condition in(Record2<T1, T2>... records) {
+        Row2<T1, T2>[] rows = new Row2[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return in(rows);
+    }
+
+    @Override
+    public final Condition in(Record3<T1, T2, T3>... records) {
+        Row3<T1, T2, T3>[] rows = new Row3[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return in(rows);
+    }
+
+    @Override
+    public final Condition in(Record4<T1, T2, T3, T4>... records) {
+        Row4<T1, T2, T3, T4>[] rows = new Row4[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return in(rows);
+    }
+
+    @Override
+    public final Condition in(Record5<T1, T2, T3, T4, T5>... records) {
+        Row5<T1, T2, T3, T4, T5>[] rows = new Row5[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return in(rows);
+    }
+
+    @Override
+    public final Condition in(Record6<T1, T2, T3, T4, T5, T6>... records) {
+        Row6<T1, T2, T3, T4, T5, T6>[] rows = new Row6[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return in(rows);
+    }
+
+    @Override
+    public final Condition in(Record7<T1, T2, T3, T4, T5, T6, T7>... records) {
+        Row7<T1, T2, T3, T4, T5, T6, T7>[] rows = new Row7[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return in(rows);
+    }
+
+    @Override
+    public final Condition in(Record8<T1, T2, T3, T4, T5, T6, T7, T8>... records) {
+        Row8<T1, T2, T3, T4, T5, T6, T7, T8>[] rows = new Row8[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return in(rows);
+    }
+
+    @Override
+    public final Condition in(Record... records) {
+        RowN[] rows = new RowN[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            List<Field<?>> f = records[i].getFields();
+            rows[i] = new RowImpl(vals(records[i].intoArray(), f.toArray(new Field[f.size()])));
+        }
+
+        return in(rows);
+    }
+
+    @Override
     public final Condition notIn(Row1<T1>... rows) {
         return notIn(Arrays.asList(rows));
     }
@@ -873,6 +1139,95 @@ implements
 
         for (int i = 0; i < records.length; i++) {
             rows[i] = records[i].valuesRow();
+        }
+
+        return notIn(rows);
+    }
+
+    @Override
+    public final Condition notIn(Record2<T1, T2>... records) {
+        Row2<T1, T2>[] rows = new Row2[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return notIn(rows);
+    }
+
+    @Override
+    public final Condition notIn(Record3<T1, T2, T3>... records) {
+        Row3<T1, T2, T3>[] rows = new Row3[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return notIn(rows);
+    }
+
+    @Override
+    public final Condition notIn(Record4<T1, T2, T3, T4>... records) {
+        Row4<T1, T2, T3, T4>[] rows = new Row4[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return notIn(rows);
+    }
+
+    @Override
+    public final Condition notIn(Record5<T1, T2, T3, T4, T5>... records) {
+        Row5<T1, T2, T3, T4, T5>[] rows = new Row5[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return notIn(rows);
+    }
+
+    @Override
+    public final Condition notIn(Record6<T1, T2, T3, T4, T5, T6>... records) {
+        Row6<T1, T2, T3, T4, T5, T6>[] rows = new Row6[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return notIn(rows);
+    }
+
+    @Override
+    public final Condition notIn(Record7<T1, T2, T3, T4, T5, T6, T7>... records) {
+        Row7<T1, T2, T3, T4, T5, T6, T7>[] rows = new Row7[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return notIn(rows);
+    }
+
+    @Override
+    public final Condition notIn(Record8<T1, T2, T3, T4, T5, T6, T7, T8>... records) {
+        Row8<T1, T2, T3, T4, T5, T6, T7, T8>[] rows = new Row8[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = records[i].valuesRow();
+        }
+
+        return notIn(rows);
+    }
+
+    @Override
+    public final Condition notIn(Record... records) {
+        RowN[] rows = new RowN[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            List<Field<?>> f = records[i].getFields();
+            rows[i] = new RowImpl(vals(records[i].intoArray(), f.toArray(new Field[f.size()])));
         }
 
         return notIn(rows);

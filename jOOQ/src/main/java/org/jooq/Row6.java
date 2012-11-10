@@ -44,6 +44,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
+import javax.annotation.Generated;
+
 /**
  * A model type for a row value expression with degree <code>6</code>
  * <p>
@@ -53,6 +55,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@Generated("This class was generated using jOOQ-tools")
 public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
 
     // ------------------------------------------------------------------------
@@ -106,6 +109,14 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
     Condition equal(Row6<T1, T2, T3, T4, T5, T6> row);
 
     /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #equal(Row6)
+     */
+    @Support
+    Condition equal(Record6<T1, T2, T3, T4, T5, T6> record);
+
+    /**
      * Compare this row value expression with another row value expression for
      * equality
      * <p>
@@ -132,7 +143,7 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
     /**
      * Compare this row value expression with a subselect for equality
      */
-    @Support
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition equal(Select<? extends Record6<T1, T2, T3, T4, T5, T6>> select);
 
     /**
@@ -146,6 +157,14 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
      */
     @Support
     Condition eq(Row6<T1, T2, T3, T4, T5, T6> row);
+
+    /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #eq(Row6)
+     */
+    @Support
+    Condition eq(Record6<T1, T2, T3, T4, T5, T6> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -174,7 +193,7 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
     /**
      * Compare this row value expression with a subselect for equality
      */
-    @Support
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition eq(Select<? extends Record6<T1, T2, T3, T4, T5, T6>> select);
 
     /**
@@ -188,6 +207,14 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
      */
     @Support
     Condition notEqual(Row6<T1, T2, T3, T4, T5, T6> row);
+
+    /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #notEqual(Row6)
+     */
+    @Support
+    Condition notEqual(Record6<T1, T2, T3, T4, T5, T6> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -216,7 +243,7 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
     /**
      * Compare this row value expression with a subselect for non-equality
      */
-    @Support
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notEqual(Select<? extends Record6<T1, T2, T3, T4, T5, T6>> select);
 
     /**
@@ -230,6 +257,14 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
      */
     @Support
     Condition ne(Row6<T1, T2, T3, T4, T5, T6> row);
+
+    /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #ne(Row6)
+     */
+    @Support
+    Condition ne(Record6<T1, T2, T3, T4, T5, T6> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -258,7 +293,7 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
     /**
      * Compare this row value expression with a subselect for non-equality
      */
-    @Support
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition ne(Select<? extends Record6<T1, T2, T3, T4, T5, T6>> select);
 
     /**
@@ -284,6 +319,14 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
      */
     @Support
     Condition in(Row6<T1, T2, T3, T4, T5, T6>... rows);
+
+    /**
+     * Compare this row value expression with a set of records for equality
+     *
+     * @see #in(Row6[])
+     */
+    @Support
+    Condition in(Record6<T1, T2, T3, T4, T5, T6>... record);
 
     /**
      * Compare this row value expression with a subselect for equality
@@ -318,8 +361,17 @@ public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
     Condition notIn(Row6<T1, T2, T3, T4, T5, T6>... rows);
 
     /**
+     * Compare this row value expression with a set of records for non-equality
+     *
+     * @see #notIn(Row6[])
+     */
+    @Support
+    Condition notIn(Record6<T1, T2, T3, T4, T5, T6>... record);
+
+    /**
      * Compare this row value expression with a subselect for non-equality
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notIn(Select<? extends Record6<T1, T2, T3, T4, T5, T6>> select);
+
 }

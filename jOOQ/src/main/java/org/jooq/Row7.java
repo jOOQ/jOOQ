@@ -44,6 +44,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
+import javax.annotation.Generated;
+
 /**
  * A model type for a row value expression with degree <code>7</code>
  * <p>
@@ -53,6 +55,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@Generated("This class was generated using jOOQ-tools")
 public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
 
     // ------------------------------------------------------------------------
@@ -111,6 +114,14 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
     Condition equal(Row7<T1, T2, T3, T4, T5, T6, T7> row);
 
     /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #equal(Row7)
+     */
+    @Support
+    Condition equal(Record7<T1, T2, T3, T4, T5, T6, T7> record);
+
+    /**
      * Compare this row value expression with another row value expression for
      * equality
      * <p>
@@ -151,6 +162,14 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
      */
     @Support
     Condition eq(Row7<T1, T2, T3, T4, T5, T6, T7> row);
+
+    /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #eq(Row7)
+     */
+    @Support
+    Condition eq(Record7<T1, T2, T3, T4, T5, T6, T7> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -195,6 +214,14 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
     Condition notEqual(Row7<T1, T2, T3, T4, T5, T6, T7> row);
 
     /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #notEqual(Row7)
+     */
+    @Support
+    Condition notEqual(Record7<T1, T2, T3, T4, T5, T6, T7> record);
+
+    /**
      * Compare this row value expression with another row value expression for
      * non-equality
      * <p>
@@ -219,7 +246,7 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
     Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7);
 
     /**
-     * Compare this row value expression with a subselect for not-equality
+     * Compare this row value expression with a subselect for non-equality
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notEqual(Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select);
@@ -235,6 +262,14 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
      */
     @Support
     Condition ne(Row7<T1, T2, T3, T4, T5, T6, T7> row);
+
+    /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #ne(Row7)
+     */
+    @Support
+    Condition ne(Record7<T1, T2, T3, T4, T5, T6, T7> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -261,7 +296,7 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
     Condition ne(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7);
 
     /**
-     * Compare this row value expression with a subselect for not-equality
+     * Compare this row value expression with a subselect for non-equality
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition ne(Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select);
@@ -289,6 +324,14 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
      */
     @Support
     Condition in(Row7<T1, T2, T3, T4, T5, T6, T7>... rows);
+
+    /**
+     * Compare this row value expression with a set of records for equality
+     *
+     * @see #in(Row7[])
+     */
+    @Support
+    Condition in(Record7<T1, T2, T3, T4, T5, T6, T7>... record);
 
     /**
      * Compare this row value expression with a subselect for equality
@@ -323,8 +366,17 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
     Condition notIn(Row7<T1, T2, T3, T4, T5, T6, T7>... rows);
 
     /**
+     * Compare this row value expression with a set of records for non-equality
+     *
+     * @see #notIn(Row7[])
+     */
+    @Support
+    Condition notIn(Record7<T1, T2, T3, T4, T5, T6, T7>... record);
+
+    /**
      * Compare this row value expression with a subselect for non-equality
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notIn(Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select);
+
 }

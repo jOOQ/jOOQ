@@ -44,6 +44,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
+import javax.annotation.Generated;
+
 /**
  * A model type for a row value expression with degree <code>1</code>
  * <p>
@@ -53,6 +55,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@Generated("This class was generated using jOOQ-tools")
 public interface Row1<T1> extends Row {
 
     // ------------------------------------------------------------------------
@@ -278,7 +281,7 @@ public interface Row1<T1> extends Row {
      * is equivalent to <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
      */
     @Support
-    Condition in(Collection<? extends Row1<T1>> row);
+    Condition in(Collection<? extends Row1<T1>> rows);
 
     /**
      * Compare this row value expression with a set of row value expressions for
@@ -317,7 +320,7 @@ public interface Row1<T1> extends Row {
      * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
      */
     @Support
-    Condition notIn(Collection<? extends Row1<T1>> row);
+    Condition notIn(Collection<? extends Row1<T1>> rows);
 
     /**
      * Compare this row value expression with a set of row value expressions for

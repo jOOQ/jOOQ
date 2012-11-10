@@ -68,6 +68,14 @@ public interface RowN extends Row {
     Condition equal(RowN row);
 
     /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #equal(RowN)
+     */
+    @Support
+    Condition equal(Record record);
+
+    /**
      * Compare this row value expression with another row value expression for
      * equality
      * <p>
@@ -102,6 +110,14 @@ public interface RowN extends Row {
      */
     @Support
     Condition eq(RowN row);
+
+    /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #eq(RowN)
+     */
+    @Support
+    Condition eq(Record record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -140,6 +156,14 @@ public interface RowN extends Row {
     Condition notEqual(RowN row);
 
     /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #notEqual(RowN)
+     */
+    @Support
+    Condition notEqual(Record record);
+
+    /**
      * Compare this row value expression with another row value expression for
      * non-equality
      * <p>
@@ -174,6 +198,14 @@ public interface RowN extends Row {
      */
     @Support
     Condition ne(RowN row);
+
+    /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #ne(RowN)
+     */
+    @Support
+    Condition ne(Record record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -224,6 +256,14 @@ public interface RowN extends Row {
     Condition in(RowN... rows);
 
     /**
+     * Compare this row value expression with a set of records for equality
+     *
+     * @see #in(RowN[])
+     */
+    @Support
+    Condition in(Record... records);
+
+    /**
      * Compare this row value expression with a set of row value expressions for
      * equality
      * <p>
@@ -248,6 +288,14 @@ public interface RowN extends Row {
      */
     @Support
     Condition notIn(RowN... rows);
+
+    /**
+     * Compare this row value expression with a set of records for non-equality
+     *
+     * @see #notIn(RowN[])
+     */
+    @Support
+    Condition notIn(Record... records);
 
     /**
      * Compare this row value expression with a subselect for equality

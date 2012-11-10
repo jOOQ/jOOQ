@@ -44,6 +44,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
+import javax.annotation.Generated;
+
 /**
  * A model type for a row value expression with degree <code>8</code>
  * <p>
@@ -53,6 +55,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@Generated("This class was generated using jOOQ-tools")
 public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
 
     // ------------------------------------------------------------------------
@@ -95,7 +98,7 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
     Field<T7> field7();
 
     /**
-     * Get the eight field
+     * Get the eighth field
      */
     Field<T8> field8();
 
@@ -114,6 +117,14 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      */
     @Support
     Condition equal(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row);
+
+    /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #equal(Row8)
+     */
+    @Support
+    Condition equal(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -137,8 +148,7 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      * <code>A = 1 AND B = 2</code>
      */
     @Support
-    Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7,
-        Field<T8> t8);
+    Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8);
 
     /**
      * Compare this row value expression with a subselect for equality
@@ -157,6 +167,14 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      */
     @Support
     Condition eq(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row);
+
+    /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #eq(Row8)
+     */
+    @Support
+    Condition eq(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -180,8 +198,7 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      * <code>A = 1 AND B = 2</code>
      */
     @Support
-    Condition eq(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7,
-        Field<T8> t8);
+    Condition eq(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8);
 
     /**
      * Compare this row value expression with a subselect for equality
@@ -200,6 +217,14 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      */
     @Support
     Condition notEqual(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row);
+
+    /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #notEqual(Row8)
+     */
+    @Support
+    Condition notEqual(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -223,8 +248,7 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      * <code>NOT(A = 1 AND B = 2)</code>
      */
     @Support
-    Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6,
-        Field<T7> t7, Field<T8> t8);
+    Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8);
 
     /**
      * Compare this row value expression with a subselect for non-equality
@@ -243,6 +267,14 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      */
     @Support
     Condition ne(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row);
+
+    /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #ne(Row8)
+     */
+    @Support
+    Condition ne(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -266,8 +298,7 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      * <code>NOT(A = 1 AND B = 2)</code>
      */
     @Support
-    Condition ne(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7,
-        Field<T8> t8);
+    Condition ne(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8);
 
     /**
      * Compare this row value expression with a subselect for non-equality
@@ -298,6 +329,14 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      */
     @Support
     Condition in(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... rows);
+
+    /**
+     * Compare this row value expression with a set of records for equality
+     *
+     * @see #in(Row8[])
+     */
+    @Support
+    Condition in(Record8<T1, T2, T3, T4, T5, T6, T7, T8>... record);
 
     /**
      * Compare this row value expression with a subselect for equality
@@ -332,8 +371,17 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
     Condition notIn(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... rows);
 
     /**
+     * Compare this row value expression with a set of records for non-equality
+     *
+     * @see #notIn(Row8[])
+     */
+    @Support
+    Condition notIn(Record8<T1, T2, T3, T4, T5, T6, T7, T8>... record);
+
+    /**
      * Compare this row value expression with a subselect for non-equality
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notIn(Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
+
 }

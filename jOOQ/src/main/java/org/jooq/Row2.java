@@ -44,6 +44,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
+import javax.annotation.Generated;
+
 /**
  * A model type for a row value expression with degree <code>2</code>
  * <p>
@@ -53,6 +55,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@Generated("This class was generated using jOOQ-tools")
 public interface Row2<T1, T2> extends Row {
 
     // ------------------------------------------------------------------------
@@ -84,6 +87,14 @@ public interface Row2<T1, T2> extends Row {
      */
     @Support
     Condition equal(Row2<T1, T2> row);
+
+    /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #equal(Row2)
+     */
+    @Support
+    Condition equal(Record2<T1, T2> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -128,6 +139,14 @@ public interface Row2<T1, T2> extends Row {
     Condition eq(Row2<T1, T2> row);
 
     /**
+     * Compare this row value expression with a record for equality
+     *
+     * @see #eq(Row2)
+     */
+    @Support
+    Condition eq(Record2<T1, T2> record);
+
+    /**
      * Compare this row value expression with another row value expression for
      * equality
      * <p>
@@ -170,6 +189,14 @@ public interface Row2<T1, T2> extends Row {
     Condition notEqual(Row2<T1, T2> row);
 
     /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #notEqual(Row2)
+     */
+    @Support
+    Condition notEqual(Record2<T1, T2> record);
+
+    /**
      * Compare this row value expression with another row value expression for
      * non-equality
      * <p>
@@ -210,6 +237,14 @@ public interface Row2<T1, T2> extends Row {
      */
     @Support
     Condition ne(Row2<T1, T2> row);
+
+    /**
+     * Compare this row value expression with a record for non-equality
+     *
+     * @see #ne(Row2)
+     */
+    @Support
+    Condition ne(Record2<T1, T2> record);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -266,6 +301,14 @@ public interface Row2<T1, T2> extends Row {
     Condition in(Row2<T1, T2>... rows);
 
     /**
+     * Compare this row value expression with a set of records for equality
+     *
+     * @see #in(Row2[])
+     */
+    @Support
+    Condition in(Record2<T1, T2>... record);
+
+    /**
      * Compare this row value expression with a subselect for equality
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
@@ -296,6 +339,14 @@ public interface Row2<T1, T2> extends Row {
      */
     @Support
     Condition notIn(Row2<T1, T2>... rows);
+
+    /**
+     * Compare this row value expression with a set of records for non-equality
+     *
+     * @see #notIn(Row2[])
+     */
+    @Support
+    Condition notIn(Record2<T1, T2>... record);
 
     /**
      * Compare this row value expression with a subselect for non-equality
@@ -372,4 +423,5 @@ public interface Row2<T1, T2> extends Row {
      */
     @Support
     Condition overlaps(Row2<T1, T2> row);
+
 }

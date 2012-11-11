@@ -306,6 +306,11 @@ object Conversions {
     case _ => new AnyFieldWrapper(f)
   }
 
+  // --------------------------------------------------------------------------
+  // Conversions from jOOQ Record[N] types to Scala Tuple[N] types
+  // --------------------------------------------------------------------------
+
+// [jooq-tools] START [tuples]
   /**
    * Enrich any {@link org.jooq.Record1} with the {@link Tuple1} case class
    */
@@ -369,4 +374,7 @@ object Conversions {
     case null => null
     case _ => Tuple8(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8)
   }
+
+// [jooq-tools] END [tuples]
+
 }

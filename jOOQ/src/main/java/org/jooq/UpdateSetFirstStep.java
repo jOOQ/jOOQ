@@ -42,11 +42,13 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 
+import javax.annotation.Generated;
+
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Factory create = new Factory();
+ * Executor create = new Executor(connection, dialect);
  *
  * create.update(table)
  *       .set(field1, value1)
@@ -57,6 +59,7 @@ import static org.jooq.SQLDialect.POSTGRES;
  *
  * @author Lukas Eder
  */
+@Generated("This class was generated using jOOQ-tools")
 public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
 
     /**

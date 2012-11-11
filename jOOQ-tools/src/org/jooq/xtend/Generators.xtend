@@ -45,8 +45,17 @@ import java.io.RandomAccessFile
  */
 abstract class Generators {
 	
+	def file(String className) {
+		if (className.contains("scala")) {
+			return new File("./../jOOQ-scala/src/main/scala/" + className.replace(".", "/") + ".scala");
+		}
+		else {
+			return new File("./../jOOQ/src/main/java/" + className.replace(".", "/") + ".java");
+		}
+	}
+	
 	def read(String className) {
-		val file = new File("./../jOOQ/src/main/java/" + className.replace(".", "/") + ".java");
+		val file = file(className)
 		
 		try {
 			val f = new RandomAccessFile(file, "r");
@@ -74,7 +83,7 @@ abstract class Generators {
 	}
 	
     def write(String className, CharSequence contents) {
-        val file = new File("./../jOOQ/src/main/java/" + className.replace(".", "/") + ".java");
+        val file = file(className);
         file.getParentFile().mkdirs();
     
         try {

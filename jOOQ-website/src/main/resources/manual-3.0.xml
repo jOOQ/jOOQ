@@ -7814,36 +7814,7 @@ Finishing                : Total: 4.814ms, +3.375ms
 
 							<h3>Run generation with ant</h3>
 							<p>
-								You can also use an ant task to generate your classes. As a rule of thumb, remove the dots "." and dashes "-" from the .properties file's property names to get the ant task's arguments:
-							</p>
-							
-<xml><![CDATA[<!-- Task definition -->
-<taskdef name="generate-classes" classname="org.jooq.util.GenerationTask">
-  <classpath>
-    <fileset dir="${path.to.jooq.distribution}">
-      <include name="jooq-{jooq-version}.jar"/>
-      <include name="jooq-meta-{jooq-version}.jar"/>
-      <include name="jooq-codegen-{jooq-version}.jar"/>
-    </fileset>
-    <fileset dir="${path.to.mysql.driver}">
-      <include name="${mysql.driver}.jar"/>
-    </fileset>
-  </classpath>
-</taskdef>
-
-<!-- Run the code generation task -->
-<target name="generate-test-classes">
-  <generate-classes
-      jdbcurl="jdbc:mysql://localhost/test"
-      jdbcuser="root"
-      jdbcpassword=""
-      generatordatabaseinputschema="test"
-      generatortargetpackage="org.jooq.test.generatedclasses"
-      generatortargetdirectory="${basedir}/src"/>
-</target>]]></xml>
-
-							<p>
-								Note that when running code generation with ant's &lt;java/&gt; task, you may have to set fork="true":
+								When running code generation with ant's &lt;java/&gt; task, you may have to set fork="true":
 							</p>
 
 <xml><![CDATA[<!-- Run the code generation task -->

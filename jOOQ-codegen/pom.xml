@@ -47,13 +47,6 @@
             <artifactId>jooq-meta</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant</artifactId>
-            <version>1.8.2</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>integration</artifactId>
             <version>1.6.1</version>

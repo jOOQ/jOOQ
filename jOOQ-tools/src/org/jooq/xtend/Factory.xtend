@@ -46,18 +46,21 @@ class Factory extends Generators {
     def static void main(String[] args) {
         val factory = new Factory();
         factory.generateSelect();
+        factory.generateSelectDistinct();
+        factory.generateRowValue();
+        factory.generateRowField();
     }
     
     def generateSelect() {
         val out = new StringBuilder();
         
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
-        	var fieldOrRow = "Row" + degree;
-        	
-        	if (degree == 1) {
-        		fieldOrRow = "Field";
-        	}
-        	
+            var fieldOrRow = "Row" + degree;
+            
+            if (degree == 1) {
+                fieldOrRow = "Field";
+            }
+            
             out.append('''
             
                 /**
@@ -82,7 +85,7 @@ class Factory extends Generators {
                  *
                  * // [...]
                  *
-                 * select(«fieldn(degree)»)
+                 * select(«field1_field2_fieldn(degree)»)
                  *  .from(table1)
                  *  .join(table2).on(field1.equal(field2))
                  *  .where(field1.greaterThan(100))
@@ -93,7 +96,6 @@ class Factory extends Generators {
                  * @see #select(Field...)
                  */
                 «generatedMethod»
-                @SuppressWarnings({ "unchecked", "rawtypes" })
                 @Support
                 public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)») {
                     return (SelectSelectStep) select(new Field[] { «fieldn(degree)» });
@@ -101,7 +103,109 @@ class Factory extends Generators {
             ''');
         }
 
-        out.append("\n");
         insert("org.jooq.impl.Factory", out, "select");
+    }
+    
+    def generateSelectDistinct() {
+        val out = new StringBuilder();
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            var fieldOrRow = "Row" + degree;
+            
+            if (degree == 1) {
+                fieldOrRow = "Field";
+            }
+            
+            out.append('''
+            
+                /**
+                 * Create a new DSL subselect statement.
+                 * <p>
+                 * This is the same as {@link #selectDistinct(Field...)}, except that it
+                 * declares additional record-level typesafety, which is needed by
+                 * {@link «fieldOrRow»#in(Select)}, {@link «fieldOrRow»#equal(Select)} and other predicate
+                 * building methods taking subselect arguments.
+                 * <p>
+                 * Unlike {@link Select} factory methods in the {@link Executor} API, this
+                 * creates an unattached, and thus not directly renderable or executable
+                 * <code>SELECT</code> statement. You can use this statement in two ways:
+                 * <ul>
+                 * <li>As a subselect within another select</li>
+                 * <li>As a statement, after attaching it using
+                 * {@link Select#attach(org.jooq.Configuration)}</li>
+                 * </ul>
+                 * <p>
+                 * Example: <code><pre>
+                 * import static org.jooq.impl.Factory.*;
+                 *
+                 * // [...]
+                 *
+                 * selectDistinct(«field1_field2_fieldn(degree)»)
+                 *  .from(table1)
+                 *  .join(table2).on(field1.equal(field2))
+                 *  .where(field1.greaterThan(100))
+                 *  .orderBy(field2);
+                 * </pre></code>
+                 *
+                 * @see Executor#selectDistinct(Field...)
+                 * @see #selectDistinct(Field...)
+                 */
+                «generatedMethod»
+                @Support
+                public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)») {
+                    return (SelectSelectStep) selectDistinct(new Field[] { «fieldn(degree)» });
+                }
+            ''');
+        }
+
+        insert("org.jooq.impl.Factory", out, "selectDistinct");
+    }
+    
+    def generateRowValue() {
+        val out = new StringBuilder();
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            out.append('''
+            
+                /**
+                 * Create a row value expression of degree <code>«degree»</code>
+                 * <p>
+                 * Note: Not all databases support row value expressions, but many row value
+                 * expression operations can be simulated on all databases. See relevant row
+                 * value expression method Javadocs for details.
+                 */
+                «generatedMethod»
+                @Support
+                public static <«TN(degree)»> Row«degree»<«TN(degree)»> row(«TN_tn(degree)») {
+                    return row(«val_tn(degree)»);
+                }
+            ''');
+        }
+
+        insert("org.jooq.impl.Factory", out, "row-value");
+    }
+    
+    def generateRowField() {
+        val out = new StringBuilder();
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            out.append('''
+            
+                /**
+                 * Create a row value expression of degree <code>«degree»</code>
+                 * <p>
+                 * Note: Not all databases support row value expressions, but many row value
+                 * expression operations can be simulated on all databases. See relevant row
+                 * value expression method Javadocs for details.
+                 */
+                «generatedMethod»
+                @Support
+                public static <«TN(degree)»> Row«degree»<«TN(degree)»> row(«Field_TN_tn(degree)») {
+                    return new RowImpl(«tn(degree)»);
+                }
+            ''');
+        }
+
+        insert("org.jooq.impl.Factory", out, "row-field");
     }
 }

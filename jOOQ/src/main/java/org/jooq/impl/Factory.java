@@ -147,6 +147,7 @@ import org.jooq.types.DayToSecond;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class Factory {
 
     // -------------------------------------------------------------------------
@@ -179,7 +180,6 @@ public class Factory {
      *
      * @see Executor#select(Collection)
      */
-    @SuppressWarnings({ "unchecked" })
     @Support
     public static SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
         return new SelectImpl<Record>(DEFAULT_CONFIGURATION).select(fields);
@@ -211,7 +211,6 @@ public class Factory {
      *
      * @see Executor#select(Field...)
      */
-    @SuppressWarnings({ "unchecked" })
     @Support
     public static SelectSelectStep<Record> select(Field<?>... fields) {
         return new SelectImpl<Record>(DEFAULT_CONFIGURATION).select(fields);
@@ -251,7 +250,6 @@ public class Factory {
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1> SelectSelectStep<Record1<T1>> select(Field<T1> field1) {
         return (SelectSelectStep) select(new Field[] { field1 });
@@ -290,7 +288,6 @@ public class Factory {
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2> SelectSelectStep<Record2<T1, T2>> select(Field<T1> field1, Field<T2> field2) {
         return (SelectSelectStep) select(new Field[] { field1, field2 });
@@ -329,7 +326,6 @@ public class Factory {
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3 });
@@ -368,7 +364,6 @@ public class Factory {
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4 });
@@ -407,7 +402,6 @@ public class Factory {
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5 });
@@ -435,7 +429,7 @@ public class Factory {
      *
      * // [...]
      *
-     * select(field1, field2, field3, field4, field5, field6)
+     * select(field1, field2, field3, .., field5, field6)
      *  .from(table1)
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
@@ -446,7 +440,6 @@ public class Factory {
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6 });
@@ -474,7 +467,7 @@ public class Factory {
      *
      * // [...]
      *
-     * select(field1, field2, field3, field4, field5, field6, field7)
+     * select(field1, field2, field3, .., field6, field7)
      *  .from(table1)
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
@@ -485,7 +478,6 @@ public class Factory {
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
@@ -513,7 +505,7 @@ public class Factory {
      *
      * // [...]
      *
-     * select(field1, field2, field3, field4, field5, field6, field7, field8)
+     * select(field1, field2, field3, .., field7, field8)
      *  .from(table1)
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
@@ -524,7 +516,6 @@ public class Factory {
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
@@ -558,7 +549,6 @@ public class Factory {
      *
      * @see Executor#selectDistinct(Collection)
      */
-    @SuppressWarnings({ "unchecked" })
     @Support
     public static SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
         return new SelectImpl<Record>(DEFAULT_CONFIGURATION, true).select(fields);
@@ -590,14 +580,12 @@ public class Factory {
      *
      * @see Executor#selectDistinct(Field...)
      */
-    @SuppressWarnings({ "unchecked" })
     @Support
     public static SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
         return new SelectImpl<Record>(DEFAULT_CONFIGURATION, true).select(fields);
     }
 
-// [jooq-tools] START [selectDistinct]
-
+// [jooq-tools] START [selectDistinct]
     /**
      * Create a new DSL subselect statement.
      * <p>
@@ -630,7 +618,7 @@ public class Factory {
      * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1> SelectSelectStep<Record1<T1>> selectDistinct(Field<T1> field1) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1 });
@@ -668,7 +656,7 @@ public class Factory {
      * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(Field<T1> field1, Field<T2> field2) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2 });
@@ -706,7 +694,7 @@ public class Factory {
      * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3 });
@@ -744,7 +732,7 @@ public class Factory {
      * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4 });
@@ -782,7 +770,7 @@ public class Factory {
      * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5 });
@@ -810,7 +798,7 @@ public class Factory {
      *
      * // [...]
      *
-     * selectDistinct(field1, field2, field3, field4, field5, field6)
+     * selectDistinct(field1, field2, field3, .., field5, field6)
      *  .from(table1)
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
@@ -820,7 +808,7 @@ public class Factory {
      * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6 });
@@ -848,7 +836,7 @@ public class Factory {
      *
      * // [...]
      *
-     * selectDistinct(field1, field2, field3, field4, field5, field6, field7)
+     * selectDistinct(field1, field2, field3, .., field6, field7)
      *  .from(table1)
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
@@ -858,7 +846,7 @@ public class Factory {
      * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
@@ -886,7 +874,7 @@ public class Factory {
      *
      * // [...]
      *
-     * selectDistinct(field1, field2, field3, field4, field5, field6, field7, field8)
+     * selectDistinct(field1, field2, field3, .., field7, field8)
      *  .from(table1)
      *  .join(table2).on(field1.equal(field2))
      *  .where(field1.greaterThan(100))
@@ -896,7 +884,7 @@ public class Factory {
      * @see Executor#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
@@ -931,7 +919,6 @@ public class Factory {
      * @see Factory#zero()
      * @see Executor#selectZero()
      */
-    @SuppressWarnings({ "unchecked" })
     @Support
     public static SelectSelectStep<Record1<Integer>> selectZero() {
         return new SelectImpl<Record1<Integer>>(DEFAULT_CONFIGURATION).select(zero());
@@ -964,7 +951,6 @@ public class Factory {
      * @see Factory#one()
      * @see Executor#selectOne()
      */
-    @SuppressWarnings({ "unchecked" })
     @Support
     public static SelectSelectStep<Record1<Integer>> selectOne() {
         return new SelectImpl<Record1<Integer>>(DEFAULT_CONFIGURATION).select(one());
@@ -997,7 +983,6 @@ public class Factory {
      * @see Factory#count()
      * @see Executor#selectCount()
      */
-    @SuppressWarnings({ "unchecked" })
     @Support
     public static SelectSelectStep<Record1<Integer>> selectCount() {
         return new SelectImpl<Record1<Integer>>(DEFAULT_CONFIGURATION).select(count());
@@ -2142,7 +2127,6 @@ public class Factory {
      * @param fields The fields to be cast to a uniform type
      * @return The cast fields
      */
-    @SuppressWarnings("unchecked")
     static <T> Field<T>[] castAll(Class<T> type, Field<?>... fields) {
         Field<?>[] castFields = new Field<?>[fields.length];
 
@@ -3377,7 +3361,6 @@ public class Factory {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @SuppressWarnings("unchecked")
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
     public static GroupField groupingSets(Field<?>... fields) {
         List<Field<?>>[] array = new List[fields.length];
@@ -3411,7 +3394,6 @@ public class Factory {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @SuppressWarnings("unchecked")
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
     public static GroupField groupingSets(Field<?>[]... fieldSets) {
         List<Field<?>>[] array = new List[fieldSets.length];
@@ -5486,7 +5468,6 @@ public class Factory {
      *
      * @see #inline(Object)
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Support
     public static Param<String> inline(CharSequence character) {
         return (Param) inline((Object) ((character == null) ? null : ("" + character)));
@@ -5585,7 +5566,6 @@ public class Factory {
      * @param value The constant value
      * @return A field representing the constant value
      */
-    @SuppressWarnings("unchecked")
     @Support
     public static <T> Field<T> val(T value) {
 
@@ -5642,7 +5622,6 @@ public class Factory {
      * @param type The data type to enforce upon the value
      * @return A field representing the constant value
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Support
     public static <T> Field<T> val(Object value, DataType<T> type) {
 
@@ -5736,8 +5715,7 @@ public class Factory {
         return result;
     }
 
-// [jooq-tools] START [row-value]
-
+// [jooq-tools] START [row-value]
     /**
      * Create a row value expression of degree <code>1</code>
      * <p>
@@ -5745,6 +5723,7 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1> Row1<T1> row(T1 t1) {
         return row(val(t1));
@@ -5757,6 +5736,7 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2> Row2<T1, T2> row(T1 t1, T2 t2) {
         return row(val(t1), val(t2));
@@ -5769,6 +5749,7 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3> Row3<T1, T2, T3> row(T1 t1, T2 t2, T3 t3) {
         return row(val(t1), val(t2), val(t3));
@@ -5781,6 +5762,7 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(T1 t1, T2 t2, T3 t3, T4 t4) {
         return row(val(t1), val(t2), val(t3), val(t4));
@@ -5793,6 +5775,7 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5> Row5<T1, T2, T3, T4, T5> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
         return row(val(t1), val(t2), val(t3), val(t4), val(t5));
@@ -5805,6 +5788,7 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6> Row6<T1, T2, T3, T4, T5, T6> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
         return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6));
@@ -5817,6 +5801,7 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Row7<T1, T2, T3, T4, T5, T6, T7> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
         return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7));
@@ -5829,6 +5814,7 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Row8<T1, T2, T3, T4, T5, T6, T7, T8> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
         return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8));
@@ -5848,8 +5834,7 @@ public class Factory {
         return row(vals(values).toArray(new Field[0]));
     }
 
-// [jooq-tools] START [row-field]
-
+// [jooq-tools] START [row-field]
     /**
      * Create a row value expression of degree <code>1</code>
      * <p>
@@ -5857,9 +5842,10 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1> Row1<T1> row(Field<T1> t1) {
-        return new RowImpl<T1, Object, Object, Object, Object, Object, Object, Object>(t1);
+        return new RowImpl(t1);
     }
 
     /**
@@ -5869,9 +5855,10 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2> Row2<T1, T2> row(Field<T1> t1, Field<T2> t2) {
-        return new RowImpl<T1, T2, Object, Object, Object, Object, Object, Object>(t1, t2);
+        return new RowImpl(t1, t2);
     }
 
     /**
@@ -5881,9 +5868,10 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3> Row3<T1, T2, T3> row(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
-        return new RowImpl<T1, T2, T3, Object, Object, Object, Object, Object>(t1, t2, t3);
+        return new RowImpl(t1, t2, t3);
     }
 
     /**
@@ -5893,9 +5881,10 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
-        return new RowImpl<T1, T2, T3, T4, Object, Object, Object, Object>(t1, t2, t3, t4);
+        return new RowImpl(t1, t2, t3, t4);
     }
 
     /**
@@ -5905,9 +5894,10 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5> Row5<T1, T2, T3, T4, T5> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
-        return new RowImpl<T1, T2, T3, T4, T5, Object, Object, Object>(t1, t2, t3, t4, t5);
+        return new RowImpl(t1, t2, t3, t4, t5);
     }
 
     /**
@@ -5917,9 +5907,10 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6> Row6<T1, T2, T3, T4, T5, T6> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
-        return new RowImpl<T1, T2, T3, T4, T5, T6, Object, Object>(t1, t2, t3, t4, t5, t6);
+        return new RowImpl(t1, t2, t3, t4, t5, t6);
     }
 
     /**
@@ -5929,9 +5920,10 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Row7<T1, T2, T3, T4, T5, T6, T7> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
-        return new RowImpl<T1, T2, T3, T4, T5, T6, T7, Object>(t1, t2, t3, t4, t5, t6, t7);
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7);
     }
 
     /**
@@ -5941,9 +5933,10 @@ public class Factory {
      * expression operations can be simulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Row8<T1, T2, T3, T4, T5, T6, T7, T8> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
-        return new RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>(t1, t2, t3, t4, t5, t6, t7, t8);
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8);
     }
 
 // [jooq-tools] END [row-field]
@@ -5956,7 +5949,6 @@ public class Factory {
      * value expression method Javadocs for details.
      */
     @Support
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static RowN row(Field<?>... values) {
         return new RowImpl(values);
     }
@@ -6035,7 +6027,6 @@ public class Factory {
     /**
      * Get a default data type if a field is null
      */
-    @SuppressWarnings("unchecked")
     protected static <T> DataType<T> nullSafeDataType(Field<T> field) {
         return (DataType<T>) (field == null ? SQLDataType.OTHER : field.getDataType());
     }

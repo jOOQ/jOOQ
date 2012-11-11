@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesTerritoryHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTerritoryHistory> implements org.jooq.Record6<java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 449543348;
+	private static final long serialVersionUID = 1900158851;
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.SalesPersonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesTerritoryHistory_SalesPerson_SalesPersonID
-	 * FOREIGN KEY (SalesPersonID)
-	 * REFERENCES Sales.SalesPerson (SalesPersonID)
-	 * </pre></code>
+	 * Setter for <code>Sales.SalesTerritoryHistory.SalesPersonID</code>. 
 	 */
 	public void setSalesPersonID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory.SalesPersonID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.SalesPersonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesTerritoryHistory_SalesPerson_SalesPersonID
-	 * FOREIGN KEY (SalesPersonID)
-	 * REFERENCES Sales.SalesPerson (SalesPersonID)
-	 * </pre></code>
+	 * Getter for <code>Sales.SalesTerritoryHistory.SalesPersonID</code>. 
 	 */
 	@javax.persistence.Column(name = "SalesPersonID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesPersonID() {
@@ -47,30 +31,14 @@ public class SalesTerritoryHistory extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.TerritoryID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesTerritoryHistory_SalesTerritory_TerritoryID
-	 * FOREIGN KEY (TerritoryID)
-	 * REFERENCES Sales.SalesTerritory (TerritoryID)
-	 * </pre></code>
+	 * Setter for <code>Sales.SalesTerritoryHistory.TerritoryID</code>. 
 	 */
 	public void setTerritoryID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory.TerritoryID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.TerritoryID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesTerritoryHistory_SalesTerritory_TerritoryID
-	 * FOREIGN KEY (TerritoryID)
-	 * REFERENCES Sales.SalesTerritory (TerritoryID)
-	 * </pre></code>
+	 * Getter for <code>Sales.SalesTerritoryHistory.TerritoryID</code>. 
 	 */
 	@javax.persistence.Column(name = "TerritoryID", nullable = false, precision = 10)
 	public java.lang.Integer getTerritoryID() {
@@ -78,18 +46,14 @@ public class SalesTerritoryHistory extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.StartDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Sales.SalesTerritoryHistory.StartDate</code>. 
 	 */
 	public void setStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory.StartDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.StartDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Sales.SalesTerritoryHistory.StartDate</code>. 
 	 */
 	@javax.persistence.Column(name = "StartDate", nullable = false)
 	public java.sql.Timestamp getStartDate() {
@@ -97,14 +61,14 @@ public class SalesTerritoryHistory extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.EndDate</code>
+	 * Setter for <code>Sales.SalesTerritoryHistory.EndDate</code>. 
 	 */
 	public void setEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory.EndDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.EndDate</code>
+	 * Getter for <code>Sales.SalesTerritoryHistory.EndDate</code>. 
 	 */
 	@javax.persistence.Column(name = "EndDate")
 	public java.sql.Timestamp getEndDate() {
@@ -112,14 +76,14 @@ public class SalesTerritoryHistory extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.rowguid</code>
+	 * Setter for <code>Sales.SalesTerritoryHistory.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.rowguid</code>
+	 * Getter for <code>Sales.SalesTerritoryHistory.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -127,25 +91,30 @@ public class SalesTerritoryHistory extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.ModifiedDate</code>
+	 * Setter for <code>Sales.SalesTerritoryHistory.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTerritoryHistory.ModifiedDate</code>
+	 * Getter for <code>Sales.SalesTerritoryHistory.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached SalesTerritoryHistory
+	 * {@inheritDoc}
 	 */
-	public SalesTerritoryHistory() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory);
+	@Override
+	public org.jooq.Record3<java.lang.Integer, java.sql.Timestamp, java.lang.Integer> key() {
+		return (org.jooq.Record3) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -262,5 +231,16 @@ public class SalesTerritoryHistory extends org.jooq.impl.UpdatableRecordImpl<org
 	@Override
 	public java.sql.Timestamp value6() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached SalesTerritoryHistory
+	 */
+	public SalesTerritoryHistory() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory);
 	}
 }

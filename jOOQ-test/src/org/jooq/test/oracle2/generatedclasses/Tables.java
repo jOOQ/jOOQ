@@ -17,7 +17,7 @@ public final class Tables {
 	public static final org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976 DATE_AS_TIMESTAMP_T_976 = org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

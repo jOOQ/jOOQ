@@ -9,10 +9,10 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class FilmText extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord> {
 
-	private static final long serialVersionUID = -1112646633;
+	private static final long serialVersionUID = 764480997;
 
 	/**
-	 * The singleton instance of sakila.film_text
+	 * The singleton instance of <code>sakila.film_text</code>
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.FilmText FILM_TEXT = new org.jooq.examples.mysql.sakila.tables.FilmText();
 
@@ -25,41 +25,53 @@ public class FilmText extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	}
 
 	/**
-	 * The table column <code>sakila.film_text.film_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>sakila.film_text.film_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord, java.lang.Short> FILM_ID = createField("film_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>sakila.film_text.title</code>
+	 * The column <code>sakila.film_text.title</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.film_text.description</code>
+	 * The column <code>sakila.film_text.description</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.CLOB, this);
 
+	/**
+	 * Create a <code>sakila.film_text</code> table reference
+	 */
 	public FilmText() {
 		super("film_text", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
+	/**
+	 * Create an aliased <code>sakila.film_text</code> table reference
+	 */
 	public FilmText(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord> getMainKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_FILM_TEXT_PRIMARY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_FILM_TEXT_PRIMARY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.FilmText as(java.lang.String alias) {
 		return new org.jooq.examples.mysql.sakila.tables.FilmText(alias);

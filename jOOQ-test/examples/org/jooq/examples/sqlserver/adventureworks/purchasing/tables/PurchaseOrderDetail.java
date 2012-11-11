@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
 @java.lang.SuppressWarnings("all")
 public class PurchaseOrderDetail extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail> {
 
-	private static final long serialVersionUID = -451608473;
+	private static final long serialVersionUID = 279844150;
 
 	/**
-	 * The singleton instance of Purchasing.PurchaseOrderDetail
+	 * The singleton instance of <code>Purchasing.PurchaseOrderDetail</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail PurchaseOrderDetail = new org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail();
 
@@ -25,106 +25,109 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableTableImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderDetail.PurchaseOrderID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID
-	 * FOREIGN KEY (PurchaseOrderID)
-	 * REFERENCES Purchasing.PurchaseOrderHeader (PurchaseOrderID)
-	 * </pre></code>
+	 * The column <code>Purchasing.PurchaseOrderDetail.PurchaseOrderID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.lang.Integer> PurchaseOrderID = createField("PurchaseOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderDetail.PurchaseOrderDetailID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Purchasing.PurchaseOrderDetail.PurchaseOrderDetailID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.lang.Integer> PurchaseOrderDetailID = createField("PurchaseOrderDetailID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderDetail.DueDate</code>
+	 * The column <code>Purchasing.PurchaseOrderDetail.DueDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.sql.Timestamp> DueDate = createField("DueDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderDetail.OrderQty</code>
+	 * The column <code>Purchasing.PurchaseOrderDetail.OrderQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.lang.Short> OrderQty = createField("OrderQty", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderDetail.ProductID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_PurchaseOrderDetail_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * The column <code>Purchasing.PurchaseOrderDetail.ProductID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderDetail.UnitPrice</code>
+	 * The column <code>Purchasing.PurchaseOrderDetail.UnitPrice</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.math.BigDecimal> UnitPrice = createField("UnitPrice", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderDetail.LineTotal</code>
+	 * The column <code>Purchasing.PurchaseOrderDetail.LineTotal</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.math.BigDecimal> LineTotal = createField("LineTotal", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderDetail.ReceivedQty</code>
+	 * The column <code>Purchasing.PurchaseOrderDetail.ReceivedQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.math.BigDecimal> ReceivedQty = createField("ReceivedQty", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderDetail.RejectedQty</code>
+	 * The column <code>Purchasing.PurchaseOrderDetail.RejectedQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.math.BigDecimal> RejectedQty = createField("RejectedQty", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderDetail.StockedQty</code>
+	 * The column <code>Purchasing.PurchaseOrderDetail.StockedQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.math.BigDecimal> StockedQty = createField("StockedQty", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderDetail.ModifiedDate</code>
+	 * The column <code>Purchasing.PurchaseOrderDetail.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Purchasing.PurchaseOrderDetail</code> table reference
+	 */
 	public PurchaseOrderDetail() {
 		super("PurchaseOrderDetail", org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing);
 	}
 
+	/**
+	 * Create an aliased <code>Purchasing.PurchaseOrderDetail</code> table reference
+	 */
 	public PurchaseOrderDetail(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.IDENTITY_PurchaseOrderDetail;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_PurchaseOrderDetail_PurchaseOrderID_PurchaseOrderDetailID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_PurchaseOrderDetail_PurchaseOrderID_PurchaseOrderDetailID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, ?>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_PurchaseOrderDetail_Product_ProductID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail(alias);

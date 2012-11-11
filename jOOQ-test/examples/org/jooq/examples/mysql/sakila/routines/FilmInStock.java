@@ -9,21 +9,20 @@ package org.jooq.examples.mysql.sakila.routines;
 @java.lang.SuppressWarnings("all")
 public class FilmInStock extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1673341529;
-
+	private static final long serialVersionUID = -430368586;
 
 	/**
-	 * The procedure parameter <code>sakila.film_in_stock.p_film_id</code>
+	 * The parameter <code>sakila.film_in_stock.p_film_id</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_FILM_ID = createParameter("p_film_id", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>sakila.film_in_stock.p_store_id</code>
+	 * The parameter <code>sakila.film_in_stock.p_store_id</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_STORE_ID = createParameter("p_store_id", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>sakila.film_in_stock.p_film_count</code>
+	 * The parameter <code>sakila.film_in_stock.p_film_count</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_FILM_COUNT = createParameter("p_film_count", org.jooq.impl.SQLDataType.INTEGER);
 

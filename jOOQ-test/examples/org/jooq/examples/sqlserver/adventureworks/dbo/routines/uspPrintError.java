@@ -9,8 +9,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
 @java.lang.SuppressWarnings("all")
 public class uspPrintError extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -324375536;
-
+	private static final long serialVersionUID = 291588020;
 
 	/**
 	 * Create a new routine call instance

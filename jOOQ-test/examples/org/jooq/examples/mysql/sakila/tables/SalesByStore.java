@@ -11,10 +11,10 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class SalesByStore extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> {
 
-	private static final long serialVersionUID = 534211736;
+	private static final long serialVersionUID = 1221491828;
 
 	/**
-	 * The singleton instance of sakila.sales_by_store
+	 * The singleton instance of <code>sakila.sales_by_store</code>
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.SalesByStore SALES_BY_STORE = new org.jooq.examples.mysql.sakila.tables.SalesByStore();
 
@@ -27,28 +27,37 @@ public class SalesByStore extends org.jooq.impl.TableImpl<org.jooq.examples.mysq
 	}
 
 	/**
-	 * The table column <code>sakila.sales_by_store.store</code>
+	 * The column <code>sakila.sales_by_store.store</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord, java.lang.String> STORE = createField("store", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.sales_by_store.manager</code>
+	 * The column <code>sakila.sales_by_store.manager</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord, java.lang.String> MANAGER = createField("manager", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.sales_by_store.total_sales</code>
+	 * The column <code>sakila.sales_by_store.total_sales</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord, java.math.BigDecimal> TOTAL_SALES = createField("total_sales", org.jooq.impl.SQLDataType.DECIMAL, this);
 
+	/**
+	 * Create a <code>sakila.sales_by_store</code> table reference
+	 */
 	public SalesByStore() {
 		super("sales_by_store", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
+	/**
+	 * Create an aliased <code>sakila.sales_by_store</code> table reference
+	 */
 	public SalesByStore(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.SalesByStore as(java.lang.String alias) {
 		return new org.jooq.examples.mysql.sakila.tables.SalesByStore(alias);

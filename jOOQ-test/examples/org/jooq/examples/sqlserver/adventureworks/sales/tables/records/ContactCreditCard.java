@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1673819649;
+	private static final long serialVersionUID = 1730453794;
 
 	/**
-	 * The table column <code>Sales.ContactCreditCard.ContactID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ContactCreditCard_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * Setter for <code>Sales.ContactCreditCard.ContactID</code>. 
 	 */
 	public void setContactID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.ContactID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.ContactCreditCard.ContactID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ContactCreditCard_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * Getter for <code>Sales.ContactCreditCard.ContactID</code>. 
 	 */
 	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
@@ -47,30 +31,14 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * The table column <code>Sales.ContactCreditCard.CreditCardID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ContactCreditCard_CreditCard_CreditCardID
-	 * FOREIGN KEY (CreditCardID)
-	 * REFERENCES Sales.CreditCard (CreditCardID)
-	 * </pre></code>
+	 * Setter for <code>Sales.ContactCreditCard.CreditCardID</code>. 
 	 */
 	public void setCreditCardID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.CreditCardID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.ContactCreditCard.CreditCardID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ContactCreditCard_CreditCard_CreditCardID
-	 * FOREIGN KEY (CreditCardID)
-	 * REFERENCES Sales.CreditCard (CreditCardID)
-	 * </pre></code>
+	 * Getter for <code>Sales.ContactCreditCard.CreditCardID</code>. 
 	 */
 	@javax.persistence.Column(name = "CreditCardID", nullable = false, precision = 10)
 	public java.lang.Integer getCreditCardID() {
@@ -78,25 +46,30 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * The table column <code>Sales.ContactCreditCard.ModifiedDate</code>
+	 * Setter for <code>Sales.ContactCreditCard.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.ContactCreditCard.ModifiedDate</code>
+	 * Getter for <code>Sales.ContactCreditCard.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ContactCreditCard
+	 * {@inheritDoc}
 	 */
-	public ContactCreditCard() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -165,5 +138,16 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ContactCreditCard
+	 */
+	public ContactCreditCard() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard);
 	}
 }

@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> implements org.jooq.Record3<java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 579659509;
+	private static final long serialVersionUID = -1715748;
 
 	/**
-	 * The table column <code>Sales.CountryRegionCurrency.CountryRegionCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CountryRegionCurrency_CountryRegion_CountryRegionCode
-	 * FOREIGN KEY (CountryRegionCode)
-	 * REFERENCES Person.CountryRegion (CountryRegionCode)
-	 * </pre></code>
+	 * Setter for <code>Sales.CountryRegionCurrency.CountryRegionCode</code>. 
 	 */
 	public void setCountryRegionCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency.CountryRegionCode, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CountryRegionCurrency.CountryRegionCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CountryRegionCurrency_CountryRegion_CountryRegionCode
-	 * FOREIGN KEY (CountryRegionCode)
-	 * REFERENCES Person.CountryRegion (CountryRegionCode)
-	 * </pre></code>
+	 * Getter for <code>Sales.CountryRegionCurrency.CountryRegionCode</code>. 
 	 */
 	@javax.persistence.Column(name = "CountryRegionCode", nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
@@ -47,30 +31,14 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>Sales.CountryRegionCurrency.CurrencyCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CountryRegionCurrency_Currency_CurrencyCode
-	 * FOREIGN KEY (CurrencyCode)
-	 * REFERENCES Sales.Currency (CurrencyCode)
-	 * </pre></code>
+	 * Setter for <code>Sales.CountryRegionCurrency.CurrencyCode</code>. 
 	 */
 	public void setCurrencyCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency.CurrencyCode, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CountryRegionCurrency.CurrencyCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CountryRegionCurrency_Currency_CurrencyCode
-	 * FOREIGN KEY (CurrencyCode)
-	 * REFERENCES Sales.Currency (CurrencyCode)
-	 * </pre></code>
+	 * Getter for <code>Sales.CountryRegionCurrency.CurrencyCode</code>. 
 	 */
 	@javax.persistence.Column(name = "CurrencyCode", nullable = false, length = 3)
 	public java.lang.String getCurrencyCode() {
@@ -78,25 +46,30 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>Sales.CountryRegionCurrency.ModifiedDate</code>
+	 * Setter for <code>Sales.CountryRegionCurrency.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CountryRegionCurrency.ModifiedDate</code>
+	 * Getter for <code>Sales.CountryRegionCurrency.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached CountryRegionCurrency
+	 * {@inheritDoc}
 	 */
-	public CountryRegionCurrency() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency);
+	@Override
+	public org.jooq.Record2<java.lang.String, java.lang.String> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -165,5 +138,16 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached CountryRegionCurrency
+	 */
+	public CountryRegionCurrency() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency);
 	}
 }

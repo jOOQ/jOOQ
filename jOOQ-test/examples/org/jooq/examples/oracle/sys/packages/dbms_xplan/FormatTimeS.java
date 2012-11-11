@@ -9,16 +9,15 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class FormatTimeS extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 1122540020;
-
+	private static final long serialVersionUID = 1048563112;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.FORMAT_TIME_S.RETURN_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.FORMAT_TIME_S.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.FORMAT_TIME_S.NUM</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.FORMAT_TIME_S.NUM</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> NUM = createParameter("NUM", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -40,9 +39,7 @@ public class FormatTimeS extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	}
 
 	/**
-	 * Set the <code>NUM</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>NUM</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setNum(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(NUM, field);

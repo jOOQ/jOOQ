@@ -9,73 +9,78 @@ package org.jooq.test.oracle2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class DateAsTimestampT_976Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> implements org.jooq.Record4<java.lang.Integer, java.sql.Timestamp, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> {
 
-	private static final long serialVersionUID = -826622687;
+	private static final long serialVersionUID = 221513934;
 
 	/**
-	 * The table column <code>TEST.T_976.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_976.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_976.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_976.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_ID);
 	}
 
 	/**
-	 * The table column <code>TEST.T_976.D</code>
+	 * Setter for <code>TEST.T_976.D</code>. 
 	 */
 	public void setD(java.sql.Timestamp value) {
 		setValue(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_D, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_976.D</code>
+	 * Getter for <code>TEST.T_976.D</code>. 
 	 */
 	public java.sql.Timestamp getD() {
 		return getValue(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_D);
 	}
 
 	/**
-	 * The table column <code>TEST.T_976.T</code>
+	 * Setter for <code>TEST.T_976.T</code>. 
 	 */
 	public void setT(org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord value) {
 		setValue(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_T, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_976.T</code>
+	 * Getter for <code>TEST.T_976.T</code>. 
 	 */
 	public org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord getT() {
 		return getValue(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_T);
 	}
 
 	/**
-	 * The table column <code>TEST.T_976.O</code>
+	 * Setter for <code>TEST.T_976.O</code>. 
 	 */
 	public void setO(org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord value) {
 		setValue(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_O, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_976.O</code>
+	 * Getter for <code>TEST.T_976.O</code>. 
 	 */
 	public org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord getO() {
 		return getValue(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_O);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached DateAsTimestampT_976Record
+	 * {@inheritDoc}
 	 */
-	public DateAsTimestampT_976Record() {
-		super(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -160,5 +165,16 @@ public class DateAsTimestampT_976Record extends org.jooq.impl.UpdatableRecordImp
 	@Override
 	public org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord value4() {
 		return getO();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached DateAsTimestampT_976Record
+	 */
+	public DateAsTimestampT_976Record() {
+		super(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976);
 	}
 }

@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class ProductDocument extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument> {
 
-	private static final long serialVersionUID = 2870243;
+	private static final long serialVersionUID = 1644060413;
 
 	/**
-	 * The singleton instance of Production.ProductDocument
+	 * The singleton instance of <code>Production.ProductDocument</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument ProductDocument = new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument();
 
@@ -25,61 +25,61 @@ public class ProductDocument extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	}
 
 	/**
-	 * The table column <code>Production.ProductDocument.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductDocument_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * The column <code>Production.ProductDocument.ProductID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductDocument.DocumentID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductDocument_Document_DocumentID
-	 * FOREIGN KEY (DocumentID)
-	 * REFERENCES Production.Document (DocumentID)
-	 * </pre></code>
+	 * The column <code>Production.ProductDocument.DocumentID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument, java.lang.Integer> DocumentID = createField("DocumentID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductDocument.ModifiedDate</code>
+	 * The column <code>Production.ProductDocument.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.ProductDocument</code> table reference
+	 */
 	public ProductDocument() {
 		super("ProductDocument", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.ProductDocument</code> table reference
+	 */
 	public ProductDocument(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument.ProductDocument);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductDocument_ProductID_DocumentID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductDocument_ProductID_DocumentID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductDocument_Product_ProductID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductDocument_Document_DocumentID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument(alias);

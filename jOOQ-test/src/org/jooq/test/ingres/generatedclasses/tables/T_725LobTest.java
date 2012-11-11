@@ -9,10 +9,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 2109694149;
+	private static final long serialVersionUID = -544272530;
 
 	/**
-	 * The singleton instance of test.t_725_lob_test
+	 * The singleton instance of <code>test.t_725_lob_test</code>
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = new org.jooq.test.ingres.generatedclasses.tables.T_725LobTest();
 
@@ -25,14 +25,12 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>test.t_725_lob_test.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>test.t_725_lob_test.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_725_LOB_TEST);
 
 	/**
-	 * The table column <code>test.t_725_lob_test.lob</code>
+	 * The column <code>test.t_725_lob_test.lob</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("lob", org.jooq.impl.SQLDataType.LONGVARBINARY, T_725_LOB_TEST);
 
@@ -43,13 +41,18 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 		super("t_725_lob_test", org.jooq.test.ingres.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.T_725LobTestRecord> getMainKey() {
 		return org.jooq.test.ingres.generatedclasses.Keys.PK_T_725_LOB_TEST;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.T_725LobTestRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.T_725LobTestRecord>>asList(org.jooq.test.ingres.generatedclasses.Keys.PK_T_725_LOB_TEST);
 	}

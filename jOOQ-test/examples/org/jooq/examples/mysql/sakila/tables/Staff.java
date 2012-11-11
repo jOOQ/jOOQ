@@ -9,10 +9,10 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Staff extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> {
 
-	private static final long serialVersionUID = 1596576557;
+	private static final long serialVersionUID = -848697643;
 
 	/**
-	 * The singleton instance of sakila.staff
+	 * The singleton instance of <code>sakila.staff</code>
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Staff STAFF = new org.jooq.examples.mysql.sakila.tables.Staff();
 
@@ -25,104 +25,109 @@ public class Staff extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 	}
 
 	/**
-	 * The table column <code>sakila.staff.staff_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>sakila.staff.staff_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.Byte> STAFF_ID = createField("staff_id", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>sakila.staff.first_name</code>
+	 * The column <code>sakila.staff.first_name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.staff.last_name</code>
+	 * The column <code>sakila.staff.last_name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.staff.address_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_staff_address
-	 * FOREIGN KEY (address_id)
-	 * REFERENCES sakila.address (address_id)
-	 * </pre></code>
+	 * The column <code>sakila.staff.address_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.Short> ADDRESS_ID = createField("address_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>sakila.staff.picture</code>
+	 * The column <code>sakila.staff.picture</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, byte[]> PICTURE = createField("picture", org.jooq.impl.SQLDataType.BLOB, this);
 
 	/**
-	 * The table column <code>sakila.staff.email</code>
+	 * The column <code>sakila.staff.email</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.staff.store_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_staff_store
-	 * FOREIGN KEY (store_id)
-	 * REFERENCES sakila.store (store_id)
-	 * </pre></code>
+	 * The column <code>sakila.staff.store_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.Byte> STORE_ID = createField("store_id", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>sakila.staff.active</code>
+	 * The column <code>sakila.staff.active</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.Byte> ACTIVE = createField("active", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>sakila.staff.username</code>
+	 * The column <code>sakila.staff.username</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.staff.password</code>
+	 * The column <code>sakila.staff.password</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.staff.last_update</code>
+	 * The column <code>sakila.staff.last_update</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>sakila.staff</code> table reference
+	 */
 	public Staff() {
 		super("staff", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
+	/**
+	 * Create an aliased <code>sakila.staff</code> table reference
+	 */
 	public Staff(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.Staff.STAFF);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.Byte> getIdentity() {
 		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_STAFF;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> getMainKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_STAFF_PRIMARY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_STAFF_PRIMARY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_STAFF_ADDRESS, org.jooq.examples.mysql.sakila.Keys.FK_STAFF_STORE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.Staff as(java.lang.String alias) {
 		return new org.jooq.examples.mysql.sakila.tables.Staff(alias);

@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class SalesOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader> {
 
-	private static final long serialVersionUID = 1252740469;
+	private static final long serialVersionUID = -1731891444;
 
 	/**
-	 * The singleton instance of Sales.SalesOrderHeader
+	 * The singleton instance of <code>Sales.SalesOrderHeader</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader SalesOrderHeader = new org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader();
 
@@ -25,226 +25,189 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.SalesOrderID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Sales.SalesOrderHeader.SalesOrderID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Integer> SalesOrderID = createField("SalesOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.RevisionNumber</code>
+	 * The column <code>Sales.SalesOrderHeader.RevisionNumber</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Byte> RevisionNumber = createField("RevisionNumber", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.OrderDate</code>
+	 * The column <code>Sales.SalesOrderHeader.OrderDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.sql.Timestamp> OrderDate = createField("OrderDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.DueDate</code>
+	 * The column <code>Sales.SalesOrderHeader.DueDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.sql.Timestamp> DueDate = createField("DueDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.ShipDate</code>
+	 * The column <code>Sales.SalesOrderHeader.ShipDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.sql.Timestamp> ShipDate = createField("ShipDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.Status</code>
+	 * The column <code>Sales.SalesOrderHeader.Status</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Byte> Status = createField("Status", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.OnlineOrderFlag</code>
+	 * The column <code>Sales.SalesOrderHeader.OnlineOrderFlag</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Boolean> OnlineOrderFlag = createField("OnlineOrderFlag", org.jooq.impl.SQLDataType.BIT, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.SalesOrderNumber</code>
+	 * The column <code>Sales.SalesOrderHeader.SalesOrderNumber</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.String> SalesOrderNumber = createField("SalesOrderNumber", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.PurchaseOrderNumber</code>
+	 * The column <code>Sales.SalesOrderHeader.PurchaseOrderNumber</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.String> PurchaseOrderNumber = createField("PurchaseOrderNumber", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.AccountNumber</code>
+	 * The column <code>Sales.SalesOrderHeader.AccountNumber</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.String> AccountNumber = createField("AccountNumber", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.CustomerID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeader_Customer_CustomerID
-	 * FOREIGN KEY (CustomerID)
-	 * REFERENCES Sales.Customer (CustomerID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderHeader.CustomerID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Integer> CustomerID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.ContactID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeader_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderHeader.ContactID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Integer> ContactID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.SalesPersonID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeader_SalesPerson_SalesPersonID
-	 * FOREIGN KEY (SalesPersonID)
-	 * REFERENCES Sales.SalesPerson (SalesPersonID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderHeader.SalesPersonID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Integer> SalesPersonID = createField("SalesPersonID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.TerritoryID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeader_SalesTerritory_TerritoryID
-	 * FOREIGN KEY (TerritoryID)
-	 * REFERENCES Sales.SalesTerritory (TerritoryID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderHeader.TerritoryID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Integer> TerritoryID = createField("TerritoryID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.BillToAddressID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeader_Address_BillToAddressID
-	 * FOREIGN KEY (BillToAddressID)
-	 * REFERENCES Person.Address (AddressID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderHeader.BillToAddressID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Integer> BillToAddressID = createField("BillToAddressID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.ShipToAddressID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeader_Address_ShipToAddressID
-	 * FOREIGN KEY (ShipToAddressID)
-	 * REFERENCES Person.Address (AddressID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderHeader.ShipToAddressID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Integer> ShipToAddressID = createField("ShipToAddressID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.ShipMethodID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeader_ShipMethod_ShipMethodID
-	 * FOREIGN KEY (ShipMethodID)
-	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderHeader.ShipMethodID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Integer> ShipMethodID = createField("ShipMethodID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.CreditCardID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeader_CreditCard_CreditCardID
-	 * FOREIGN KEY (CreditCardID)
-	 * REFERENCES Sales.CreditCard (CreditCardID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderHeader.CreditCardID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Integer> CreditCardID = createField("CreditCardID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.CreditCardApprovalCode</code>
+	 * The column <code>Sales.SalesOrderHeader.CreditCardApprovalCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.String> CreditCardApprovalCode = createField("CreditCardApprovalCode", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.CurrencyRateID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeader_CurrencyRate_CurrencyRateID
-	 * FOREIGN KEY (CurrencyRateID)
-	 * REFERENCES Sales.CurrencyRate (CurrencyRateID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderHeader.CurrencyRateID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Integer> CurrencyRateID = createField("CurrencyRateID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.SubTotal</code>
+	 * The column <code>Sales.SalesOrderHeader.SubTotal</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.math.BigDecimal> SubTotal = createField("SubTotal", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.TaxAmt</code>
+	 * The column <code>Sales.SalesOrderHeader.TaxAmt</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.math.BigDecimal> TaxAmt = createField("TaxAmt", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.Freight</code>
+	 * The column <code>Sales.SalesOrderHeader.Freight</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.math.BigDecimal> Freight = createField("Freight", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.TotalDue</code>
+	 * The column <code>Sales.SalesOrderHeader.TotalDue</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.math.BigDecimal> TotalDue = createField("TotalDue", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.Comment</code>
+	 * The column <code>Sales.SalesOrderHeader.Comment</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.String> Comment = createField("Comment", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.rowguid</code>
+	 * The column <code>Sales.SalesOrderHeader.rowguid</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeader.ModifiedDate</code>
+	 * The column <code>Sales.SalesOrderHeader.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Sales.SalesOrderHeader</code> table reference
+	 */
 	public SalesOrderHeader() {
 		super("SalesOrderHeader", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.SalesOrderHeader</code> table reference
+	 */
 	public SalesOrderHeader(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SalesOrderHeader;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesOrderHeader_SalesOrderID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesOrderHeader_SalesOrderID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_Customer_CustomerID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_Contact_ContactID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_SalesPerson_SalesPersonID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_SalesTerritory_TerritoryID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_Address_BillToAddressID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_Address_ShipToAddressID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_ShipMethod_ShipMethodID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_CreditCard_CreditCardID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_CurrencyRate_CurrencyRateID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader(alias);

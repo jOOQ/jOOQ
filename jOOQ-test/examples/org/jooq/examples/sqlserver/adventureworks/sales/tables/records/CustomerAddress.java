@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerAddress> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -446839879;
+	private static final long serialVersionUID = -1874176344;
 
 	/**
-	 * The table column <code>Sales.CustomerAddress.CustomerID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CustomerAddress_Customer_CustomerID
-	 * FOREIGN KEY (CustomerID)
-	 * REFERENCES Sales.Customer (CustomerID)
-	 * </pre></code>
+	 * Setter for <code>Sales.CustomerAddress.CustomerID</code>. 
 	 */
 	public void setCustomerID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress.CustomerID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CustomerAddress.CustomerID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CustomerAddress_Customer_CustomerID
-	 * FOREIGN KEY (CustomerID)
-	 * REFERENCES Sales.Customer (CustomerID)
-	 * </pre></code>
+	 * Getter for <code>Sales.CustomerAddress.CustomerID</code>. 
 	 */
 	@javax.persistence.Column(name = "CustomerID", nullable = false, precision = 10)
 	public java.lang.Integer getCustomerID() {
@@ -47,30 +31,14 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.CustomerAddress.AddressID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CustomerAddress_Address_AddressID
-	 * FOREIGN KEY (AddressID)
-	 * REFERENCES Person.Address (AddressID)
-	 * </pre></code>
+	 * Setter for <code>Sales.CustomerAddress.AddressID</code>. 
 	 */
 	public void setAddressID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress.AddressID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CustomerAddress.AddressID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CustomerAddress_Address_AddressID
-	 * FOREIGN KEY (AddressID)
-	 * REFERENCES Person.Address (AddressID)
-	 * </pre></code>
+	 * Getter for <code>Sales.CustomerAddress.AddressID</code>. 
 	 */
 	@javax.persistence.Column(name = "AddressID", nullable = false, precision = 10)
 	public java.lang.Integer getAddressID() {
@@ -78,26 +46,14 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.CustomerAddress.AddressTypeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CustomerAddress_AddressType_AddressTypeID
-	 * FOREIGN KEY (AddressTypeID)
-	 * REFERENCES Person.AddressType (AddressTypeID)
-	 * </pre></code>
+	 * Setter for <code>Sales.CustomerAddress.AddressTypeID</code>. 
 	 */
 	public void setAddressTypeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress.AddressTypeID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CustomerAddress.AddressTypeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CustomerAddress_AddressType_AddressTypeID
-	 * FOREIGN KEY (AddressTypeID)
-	 * REFERENCES Person.AddressType (AddressTypeID)
-	 * </pre></code>
+	 * Getter for <code>Sales.CustomerAddress.AddressTypeID</code>. 
 	 */
 	@javax.persistence.Column(name = "AddressTypeID", nullable = false, precision = 10)
 	public java.lang.Integer getAddressTypeID() {
@@ -105,14 +61,14 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.CustomerAddress.rowguid</code>
+	 * Setter for <code>Sales.CustomerAddress.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CustomerAddress.rowguid</code>
+	 * Getter for <code>Sales.CustomerAddress.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -120,25 +76,30 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.CustomerAddress.ModifiedDate</code>
+	 * Setter for <code>Sales.CustomerAddress.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CustomerAddress.ModifiedDate</code>
+	 * Getter for <code>Sales.CustomerAddress.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached CustomerAddress
+	 * {@inheritDoc}
 	 */
-	public CustomerAddress() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -239,5 +200,16 @@ public class CustomerAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.sql.Timestamp value5() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached CustomerAddress
+	 */
+	public CustomerAddress() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress);
 	}
 }

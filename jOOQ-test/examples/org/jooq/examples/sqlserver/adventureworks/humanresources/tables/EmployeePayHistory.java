@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
 @java.lang.SuppressWarnings("all")
 public class EmployeePayHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory> {
 
-	private static final long serialVersionUID = -879013993;
+	private static final long serialVersionUID = 1012120014;
 
 	/**
-	 * The singleton instance of HumanResources.EmployeePayHistory
+	 * The singleton instance of <code>HumanResources.EmployeePayHistory</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory EmployeePayHistory = new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory();
 
@@ -25,65 +25,71 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.EmployeeID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeePayHistory_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * The column <code>HumanResources.EmployeePayHistory.EmployeeID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, java.lang.Integer> EmployeeID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.RateChangeDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>HumanResources.EmployeePayHistory.RateChangeDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, java.sql.Timestamp> RateChangeDate = createField("RateChangeDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.Rate</code>
+	 * The column <code>HumanResources.EmployeePayHistory.Rate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, java.math.BigDecimal> Rate = createField("Rate", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.PayFrequency</code>
+	 * The column <code>HumanResources.EmployeePayHistory.PayFrequency</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, java.lang.Byte> PayFrequency = createField("PayFrequency", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.ModifiedDate</code>
+	 * The column <code>HumanResources.EmployeePayHistory.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>HumanResources.EmployeePayHistory</code> table reference
+	 */
 	public EmployeePayHistory() {
 		super("EmployeePayHistory", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
+	/**
+	 * Create an aliased <code>HumanResources.EmployeePayHistory</code> table reference
+	 */
 	public EmployeePayHistory(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EmployeePayHistory_EmployeeID_RateChangeDate;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EmployeePayHistory_EmployeeID_RateChangeDate);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, ?>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.FK_EmployeePayHistory_Employee_EmployeeID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory(alias);

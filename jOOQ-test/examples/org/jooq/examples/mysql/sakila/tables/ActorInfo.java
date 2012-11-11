@@ -11,10 +11,10 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class ActorInfo extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord> {
 
-	private static final long serialVersionUID = 602084024;
+	private static final long serialVersionUID = -806244724;
 
 	/**
-	 * The singleton instance of sakila.actor_info
+	 * The singleton instance of <code>sakila.actor_info</code>
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.ActorInfo ACTOR_INFO = new org.jooq.examples.mysql.sakila.tables.ActorInfo();
 
@@ -27,33 +27,42 @@ public class ActorInfo extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.s
 	}
 
 	/**
-	 * The table column <code>sakila.actor_info.actor_id</code>
+	 * The column <code>sakila.actor_info.actor_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.Short> ACTOR_ID = createField("actor_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>sakila.actor_info.first_name</code>
+	 * The column <code>sakila.actor_info.first_name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.actor_info.last_name</code>
+	 * The column <code>sakila.actor_info.last_name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.actor_info.film_info</code>
+	 * The column <code>sakila.actor_info.film_info</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> FILM_INFO = createField("film_info", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>sakila.actor_info</code> table reference
+	 */
 	public ActorInfo() {
 		super("actor_info", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
+	/**
+	 * Create an aliased <code>sakila.actor_info</code> table reference
+	 */
 	public ActorInfo(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.ActorInfo as(java.lang.String alias) {
 		return new org.jooq.examples.mysql.sakila.tables.ActorInfo(alias);

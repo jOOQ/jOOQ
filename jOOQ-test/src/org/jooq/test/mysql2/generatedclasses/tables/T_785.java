@@ -9,10 +9,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -1428134094;
+	private static final long serialVersionUID = 609502598;
 
 	/**
-	 * The singleton instance of test2.t_785
+	 * The singleton instance of <code>test2.t_785</code>
 	 */
 	public static final org.jooq.test.mysql2.generatedclasses.tables.T_785 T_785 = new org.jooq.test.mysql2.generatedclasses.tables.T_785();
 
@@ -25,28 +25,37 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generate
 	}
 
 	/**
-	 * The table column <code>test2.t_785.ID</code>
+	 * The column <code>test2.t_785.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.t_785.NAME</code>
+	 * The column <code>test2.t_785.NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>test2.t_785.VALUE</code>
+	 * The column <code>test2.t_785.VALUE</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>test2.t_785</code> table reference
+	 */
 	public T_785() {
 		super("t_785", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
+	/**
+	 * Create an aliased <code>test2.t_785</code> table reference
+	 */
 	public T_785(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.T_785 as(java.lang.String alias) {
 		return new org.jooq.test.mysql2.generatedclasses.tables.T_785(alias);

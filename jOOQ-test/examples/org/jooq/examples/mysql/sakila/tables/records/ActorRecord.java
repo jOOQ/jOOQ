@@ -9,85 +9,88 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class ActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.ActorRecord> implements org.jooq.Record4<java.lang.Short, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -762884934;
+	private static final long serialVersionUID = 1715343387;
 
 	/**
-	 * The table column <code>sakila.actor.actor_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>sakila.actor.actor_id</code>. 
 	 */
 	public void setActorId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.ACTOR_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.actor.actor_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>sakila.actor.actor_id</code>. 
 	 */
 	public java.lang.Short getActorId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.ACTOR_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.actor.actor_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> fetchFilmActorList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR)
-			.where(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR.ACTOR_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.ACTOR_ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>sakila.actor.first_name</code>
+	 * Setter for <code>sakila.actor.first_name</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.FIRST_NAME, value);
 	}
 
 	/**
-	 * The table column <code>sakila.actor.first_name</code>
+	 * Getter for <code>sakila.actor.first_name</code>. 
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.FIRST_NAME);
 	}
 
 	/**
-	 * The table column <code>sakila.actor.last_name</code>
+	 * Setter for <code>sakila.actor.last_name</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.LAST_NAME, value);
 	}
 
 	/**
-	 * The table column <code>sakila.actor.last_name</code>
+	 * Getter for <code>sakila.actor.last_name</code>. 
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.LAST_NAME);
 	}
 
 	/**
-	 * The table column <code>sakila.actor.last_update</code>
+	 * Setter for <code>sakila.actor.last_update</code>. 
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.LAST_UPDATE, value);
 	}
 
 	/**
-	 * The table column <code>sakila.actor.last_update</code>
+	 * Getter for <code>sakila.actor.last_update</code>. 
 	 */
 	public java.sql.Timestamp getLastUpdate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.LAST_UPDATE);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ActorRecord
+	 * Fetch a list of <code>sakila.film_actor</code> referencing this <code>sakila.actor</code>
 	 */
-	public ActorRecord() {
-		super(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR);
+	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> fetchFilmActorList() {
+		return create()
+			.selectFrom(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR)
+			.where(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR.ACTOR_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.ACTOR_ID)))
+			.fetch();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Short> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -172,5 +175,16 @@ public class ActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	@Override
 	public java.sql.Timestamp value4() {
 		return getLastUpdate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ActorRecord
+	 */
+	public ActorRecord() {
+		super(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR);
 	}
 }

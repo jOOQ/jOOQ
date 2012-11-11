@@ -11,10 +11,10 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class CustomerList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord> {
 
-	private static final long serialVersionUID = -1664897712;
+	private static final long serialVersionUID = 841209804;
 
 	/**
-	 * The singleton instance of sakila.customer_list
+	 * The singleton instance of <code>sakila.customer_list</code>
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.CustomerList CUSTOMER_LIST = new org.jooq.examples.mysql.sakila.tables.CustomerList();
 
@@ -27,58 +27,67 @@ public class CustomerList extends org.jooq.impl.TableImpl<org.jooq.examples.mysq
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.ID</code>
+	 * The column <code>sakila.customer_list.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord, java.lang.Short> ID = createField("ID", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>sakila.customer_list.name</code>
+	 * The column <code>sakila.customer_list.name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.customer_list.address</code>
+	 * The column <code>sakila.customer_list.address</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord, java.lang.String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.customer_list.zip code</code>
+	 * The column <code>sakila.customer_list.zip code</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord, java.lang.String> ZIP_CODE = createField("zip code", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.customer_list.phone</code>
+	 * The column <code>sakila.customer_list.phone</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord, java.lang.String> PHONE = createField("phone", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.customer_list.city</code>
+	 * The column <code>sakila.customer_list.city</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord, java.lang.String> CITY = createField("city", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.customer_list.country</code>
+	 * The column <code>sakila.customer_list.country</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord, java.lang.String> COUNTRY = createField("country", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.customer_list.notes</code>
+	 * The column <code>sakila.customer_list.notes</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord, java.lang.String> NOTES = createField("notes", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.customer_list.SID</code>
+	 * The column <code>sakila.customer_list.SID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord, java.lang.Byte> SID = createField("SID", org.jooq.impl.SQLDataType.TINYINT, this);
 
+	/**
+	 * Create a <code>sakila.customer_list</code> table reference
+	 */
 	public CustomerList() {
 		super("customer_list", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
+	/**
+	 * Create an aliased <code>sakila.customer_list</code> table reference
+	 */
 	public CustomerList(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.CustomerList as(java.lang.String alias) {
 		return new org.jooq.examples.mysql.sakila.tables.CustomerList(alias);

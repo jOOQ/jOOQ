@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory> implements org.jooq.Record5<java.lang.Integer, java.sql.Timestamp, java.math.BigDecimal, java.lang.Byte, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1497427625;
+	private static final long serialVersionUID = -1605885782;
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.EmployeeID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeePayHistory_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Setter for <code>HumanResources.EmployeePayHistory.EmployeeID</code>. 
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.EmployeeID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.EmployeeID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeePayHistory_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Getter for <code>HumanResources.EmployeePayHistory.EmployeeID</code>. 
 	 */
 	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
@@ -47,18 +31,14 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.RateChangeDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>HumanResources.EmployeePayHistory.RateChangeDate</code>. 
 	 */
 	public void setRateChangeDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.RateChangeDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.RateChangeDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>HumanResources.EmployeePayHistory.RateChangeDate</code>. 
 	 */
 	@javax.persistence.Column(name = "RateChangeDate", nullable = false)
 	public java.sql.Timestamp getRateChangeDate() {
@@ -66,14 +46,14 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.Rate</code>
+	 * Setter for <code>HumanResources.EmployeePayHistory.Rate</code>. 
 	 */
 	public void setRate(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.Rate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.Rate</code>
+	 * Getter for <code>HumanResources.EmployeePayHistory.Rate</code>. 
 	 */
 	@javax.persistence.Column(name = "Rate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getRate() {
@@ -81,14 +61,14 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.PayFrequency</code>
+	 * Setter for <code>HumanResources.EmployeePayHistory.PayFrequency</code>. 
 	 */
 	public void setPayFrequency(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.PayFrequency, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.PayFrequency</code>
+	 * Getter for <code>HumanResources.EmployeePayHistory.PayFrequency</code>. 
 	 */
 	@javax.persistence.Column(name = "PayFrequency", nullable = false, precision = 3)
 	public java.lang.Byte getPayFrequency() {
@@ -96,25 +76,30 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.ModifiedDate</code>
+	 * Setter for <code>HumanResources.EmployeePayHistory.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeePayHistory.ModifiedDate</code>
+	 * Getter for <code>HumanResources.EmployeePayHistory.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached EmployeePayHistory
+	 * {@inheritDoc}
 	 */
-	public EmployeePayHistory() {
-		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.sql.Timestamp> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -215,5 +200,16 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.sql.Timestamp value5() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached EmployeePayHistory
+	 */
+	public EmployeePayHistory() {
+		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory);
 	}
 }

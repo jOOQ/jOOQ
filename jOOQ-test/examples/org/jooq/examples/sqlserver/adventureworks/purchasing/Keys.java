@@ -12,13 +12,19 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing;
 @java.lang.SuppressWarnings("all")
 public class Keys {
 
+	// -------------------------------------------------------------------------
 	// IDENTITY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.lang.Integer> IDENTITY_PurchaseOrderDetail = Identities0.IDENTITY_PurchaseOrderDetail;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.lang.Integer> IDENTITY_PurchaseOrderHeader = Identities0.IDENTITY_PurchaseOrderHeader;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipMethod, java.lang.Integer> IDENTITY_ShipMethod = Identities0.IDENTITY_ShipMethod;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor, java.lang.Integer> IDENTITY_Vendor = Identities0.IDENTITY_Vendor;
 
+	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor> PK_ProductVendor_ProductID_VendorID = UniqueKeys0.PK_ProductVendor_ProductID_VendorID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail> PK_PurchaseOrderDetail_PurchaseOrderID_PurchaseOrderDetailID = UniqueKeys0.PK_PurchaseOrderDetail_PurchaseOrderID_PurchaseOrderDetailID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> PK_PurchaseOrderHeader_PurchaseOrderID = UniqueKeys0.PK_PurchaseOrderHeader_PurchaseOrderID;
@@ -27,7 +33,10 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorAddress> PK_VendorAddress_VendorID_AddressID = UniqueKeys0.PK_VendorAddress_VendorID_AddressID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact> PK_VendorContact_VendorID_ContactID = UniqueKeys0.PK_VendorContact_VendorID_ContactID;
 
+	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product> FK_ProductVendor_Product_ProductID = ForeignKeys0.FK_ProductVendor_Product_ProductID;
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor> FK_ProductVendor_Vendor_VendorID = ForeignKeys0.FK_ProductVendor_Vendor_VendorID;
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> FK_ProductVendor_UnitMeasure_UnitMeasureCode = ForeignKeys0.FK_ProductVendor_UnitMeasure_UnitMeasureCode;
@@ -44,11 +53,14 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact, org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactType> FK_VendorContact_ContactType_ContactTypeID = ForeignKeys0.FK_VendorContact_ContactType_ContactTypeID;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings("hiding")
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail, java.lang.Integer> IDENTITY_PurchaseOrderDetail = createIdentity(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.PurchaseOrderDetailID);
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.lang.Integer> IDENTITY_PurchaseOrderHeader = createIdentity(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.PurchaseOrderID);
@@ -56,7 +68,6 @@ public class Keys {
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor, java.lang.Integer> IDENTITY_Vendor = createIdentity(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.VendorID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor> PK_ProductVendor_ProductID_VendorID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.ProductID, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.VendorID);
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail> PK_PurchaseOrderDetail_PurchaseOrderID_PurchaseOrderDetailID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.PurchaseOrderID, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.PurchaseOrderDetailID);
@@ -67,7 +78,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact> PK_VendorContact_VendorID_ContactID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact.VendorID, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact.ContactID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product> FK_ProductVendor_Product_ProductID = createForeignKey(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Product_ProductID, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.ProductID);
 		public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor> FK_ProductVendor_Vendor_VendorID = createForeignKey(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_Vendor_VendorID, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.VendorID);

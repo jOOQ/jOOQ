@@ -8,6 +8,7 @@ package org.jooq.examples.mysql.sakila.enums;
  */
 @java.lang.SuppressWarnings("all")
 public enum FilmListRating implements org.jooq.EnumType {
+
 	G("G"),
 
 	PG("PG"),
@@ -26,11 +27,17 @@ public enum FilmListRating implements org.jooq.EnumType {
 		this.literal = literal;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getName() {
 		return "film_list_rating";
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getLiteral() {
 		return literal;

@@ -9,49 +9,45 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 1835687262;
-
+	private static final long serialVersionUID = -1093473898;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.RETURN_VALUE</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED, XMLTYPE) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.TABLE_NAME</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.TABLE_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> TABLE_NAME = createParameter("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.STATEMENT_ID</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.STATEMENT_ID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> STATEMENT_ID = createParameter("STATEMENT_ID", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.PLAN_ID</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.PLAN_ID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> PLAN_ID = createParameter("PLAN_ID", org.jooq.impl.SQLDataType.NUMERIC, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.FORMAT</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.FORMAT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.FILTER_PREDS</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.FILTER_PREDS</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FILTER_PREDS = createParameter("FILTER_PREDS", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.PLAN_TAG</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.PLAN_TAG</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> PLAN_TAG = createParameter("PLAN_TAG", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.REPORT_REF</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.REPORT_REF</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> REPORT_REF = createParameter("REPORT_REF", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -79,9 +75,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>TABLE_NAME</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>TABLE_NAME</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setTableName(org.jooq.Field<java.lang.String> field) {
 		setField(TABLE_NAME, field);
@@ -95,9 +89,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>STATEMENT_ID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>STATEMENT_ID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setStatementId(org.jooq.Field<java.lang.String> field) {
 		setField(STATEMENT_ID, field);
@@ -111,9 +103,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>PLAN_ID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>PLAN_ID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setPlanId(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(PLAN_ID, field);
@@ -127,9 +117,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>FORMAT</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setFormat(org.jooq.Field<java.lang.String> field) {
 		setField(FORMAT, field);
@@ -143,9 +131,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>FILTER_PREDS</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>FILTER_PREDS</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setFilterPreds(org.jooq.Field<java.lang.String> field) {
 		setField(FILTER_PREDS, field);
@@ -159,9 +145,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>PLAN_TAG</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>PLAN_TAG</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setPlanTag(org.jooq.Field<java.lang.String> field) {
 		setField(PLAN_TAG, field);
@@ -175,9 +159,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	}
 
 	/**
-	 * Set the <code>REPORT_REF</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>REPORT_REF</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setReportRef(org.jooq.Field<java.lang.String> field) {
 		setField(REPORT_REF, field);

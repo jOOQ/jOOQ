@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class ProductReview extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview> {
 
-	private static final long serialVersionUID = -945325245;
+	private static final long serialVersionUID = 2124533213;
 
 	/**
-	 * The singleton instance of Production.ProductReview
+	 * The singleton instance of <code>Production.ProductReview</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview ProductReview = new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview();
 
@@ -25,83 +25,94 @@ public class ProductReview extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.ProductReviewID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Production.ProductReview.ProductReviewID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview, java.lang.Integer> ProductReviewID = createField("ProductReviewID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductReview.ProductID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductReview_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * The column <code>Production.ProductReview.ProductID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductReview.ReviewerName</code>
+	 * The column <code>Production.ProductReview.ReviewerName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview, java.lang.String> ReviewerName = createField("ReviewerName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.ProductReview.ReviewDate</code>
+	 * The column <code>Production.ProductReview.ReviewDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview, java.sql.Timestamp> ReviewDate = createField("ReviewDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Production.ProductReview.EmailAddress</code>
+	 * The column <code>Production.ProductReview.EmailAddress</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview, java.lang.String> EmailAddress = createField("EmailAddress", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.ProductReview.Rating</code>
+	 * The column <code>Production.ProductReview.Rating</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview, java.lang.Integer> Rating = createField("Rating", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductReview.Comments</code>
+	 * The column <code>Production.ProductReview.Comments</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview, java.lang.String> Comments = createField("Comments", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.ProductReview.ModifiedDate</code>
+	 * The column <code>Production.ProductReview.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.ProductReview</code> table reference
+	 */
 	public ProductReview() {
 		super("ProductReview", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.ProductReview</code> table reference
+	 */
 	public ProductReview(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_ProductReview;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductReview_ProductReviewID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductReview_ProductReviewID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductReview_Product_ProductID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview(alias);

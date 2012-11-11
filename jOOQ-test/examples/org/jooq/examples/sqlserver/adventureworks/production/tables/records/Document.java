@@ -9,23 +9,19 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "Document", schema = "Production")
-public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document> {
+public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document> implements org.jooq.Record10<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Byte, java.lang.String, byte[], java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -588693503;
+	private static final long serialVersionUID = 61681645;
 
 	/**
-	 * The table column <code>Production.Document.DocumentID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.Document.DocumentID</code>. 
 	 */
 	public void setDocumentID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.DocumentID, value);
 	}
 
 	/**
-	 * The table column <code>Production.Document.DocumentID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.Document.DocumentID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "DocumentID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Document.Title</code>
+	 * Setter for <code>Production.Document.Title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Title, value);
 	}
 
 	/**
-	 * The table column <code>Production.Document.Title</code>
+	 * Getter for <code>Production.Document.Title</code>. 
 	 */
 	@javax.persistence.Column(name = "Title", nullable = false, length = 50)
 	public java.lang.String getTitle() {
@@ -49,14 +45,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Document.FileName</code>
+	 * Setter for <code>Production.Document.FileName</code>. 
 	 */
 	public void setFileName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.FileName, value);
 	}
 
 	/**
-	 * The table column <code>Production.Document.FileName</code>
+	 * Getter for <code>Production.Document.FileName</code>. 
 	 */
 	@javax.persistence.Column(name = "FileName", nullable = false, length = 400)
 	public java.lang.String getFileName() {
@@ -64,14 +60,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Document.FileExtension</code>
+	 * Setter for <code>Production.Document.FileExtension</code>. 
 	 */
 	public void setFileExtension(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.FileExtension, value);
 	}
 
 	/**
-	 * The table column <code>Production.Document.FileExtension</code>
+	 * Getter for <code>Production.Document.FileExtension</code>. 
 	 */
 	@javax.persistence.Column(name = "FileExtension", nullable = false, length = 8)
 	public java.lang.String getFileExtension() {
@@ -79,14 +75,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Document.Revision</code>
+	 * Setter for <code>Production.Document.Revision</code>. 
 	 */
 	public void setRevision(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Revision, value);
 	}
 
 	/**
-	 * The table column <code>Production.Document.Revision</code>
+	 * Getter for <code>Production.Document.Revision</code>. 
 	 */
 	@javax.persistence.Column(name = "Revision", nullable = false, length = 5)
 	public java.lang.String getRevision() {
@@ -94,14 +90,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Document.ChangeNumber</code>
+	 * Setter for <code>Production.Document.ChangeNumber</code>. 
 	 */
 	public void setChangeNumber(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.ChangeNumber, value);
 	}
 
 	/**
-	 * The table column <code>Production.Document.ChangeNumber</code>
+	 * Getter for <code>Production.Document.ChangeNumber</code>. 
 	 */
 	@javax.persistence.Column(name = "ChangeNumber", nullable = false, precision = 10)
 	public java.lang.Integer getChangeNumber() {
@@ -109,14 +105,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Document.Status</code>
+	 * Setter for <code>Production.Document.Status</code>. 
 	 */
 	public void setStatus(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Status, value);
 	}
 
 	/**
-	 * The table column <code>Production.Document.Status</code>
+	 * Getter for <code>Production.Document.Status</code>. 
 	 */
 	@javax.persistence.Column(name = "Status", nullable = false, precision = 3)
 	public java.lang.Byte getStatus() {
@@ -124,14 +120,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Document.DocumentSummary</code>
+	 * Setter for <code>Production.Document.DocumentSummary</code>. 
 	 */
 	public void setDocumentSummary(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.DocumentSummary, value);
 	}
 
 	/**
-	 * The table column <code>Production.Document.DocumentSummary</code>
+	 * Getter for <code>Production.Document.DocumentSummary</code>. 
 	 */
 	@javax.persistence.Column(name = "DocumentSummary")
 	public java.lang.String getDocumentSummary() {
@@ -139,14 +135,14 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Document.Document</code>
+	 * Setter for <code>Production.Document.Document</code>. 
 	 */
 	public void setDocument(byte[] value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Document_, value);
 	}
 
 	/**
-	 * The table column <code>Production.Document.Document</code>
+	 * Getter for <code>Production.Document.Document</code>. 
 	 */
 	@javax.persistence.Column(name = "Document")
 	public byte[] getDocument() {
@@ -154,19 +150,215 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Document.ModifiedDate</code>
+	 * Setter for <code>Production.Document.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.Document.ModifiedDate</code>
+	 * Getter for <code>Production.Document.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.ModifiedDate);
 	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
+
+	// -------------------------------------------------------------------------
+	// Record10 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row10<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Byte, java.lang.String, byte[], java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row10<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Byte, java.lang.String, byte[], java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.DocumentID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Title;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.FileName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.FileExtension;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Revision;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.ChangeNumber;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Byte> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Status;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.DocumentSummary;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<byte[]> field9() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Document_;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field10() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getDocumentID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getFileName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getFileExtension();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getRevision();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value6() {
+		return getChangeNumber();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Byte value7() {
+		return getStatus();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value8() {
+		return getDocumentSummary();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public byte[] value9() {
+		return getDocument();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value10() {
+		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached Document

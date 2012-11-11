@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "Department", schema = "HumanResources")
 public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department> implements org.jooq.Record4<java.lang.Short, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 2077375349;
+	private static final long serialVersionUID = 678626138;
 
 	/**
-	 * The table column <code>HumanResources.Department.DepartmentID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>HumanResources.Department.DepartmentID</code>. 
 	 */
 	public void setDepartmentID(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.DepartmentID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.Department.DepartmentID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>HumanResources.Department.DepartmentID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "DepartmentID", unique = true, nullable = false, precision = 5)
@@ -34,14 +30,14 @@ public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>HumanResources.Department.Name</code>
+	 * Setter for <code>HumanResources.Department.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.Name, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.Department.Name</code>
+	 * Getter for <code>HumanResources.Department.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,14 +45,14 @@ public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>HumanResources.Department.GroupName</code>
+	 * Setter for <code>HumanResources.Department.GroupName</code>. 
 	 */
 	public void setGroupName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.GroupName, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.Department.GroupName</code>
+	 * Getter for <code>HumanResources.Department.GroupName</code>. 
 	 */
 	@javax.persistence.Column(name = "GroupName", nullable = false, length = 50)
 	public java.lang.String getGroupName() {
@@ -64,25 +60,30 @@ public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>HumanResources.Department.ModifiedDate</code>
+	 * Setter for <code>HumanResources.Department.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.Department.ModifiedDate</code>
+	 * Getter for <code>HumanResources.Department.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached Department
+	 * {@inheritDoc}
 	 */
-	public Department() {
-		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department);
+	@Override
+	public org.jooq.Record1<java.lang.Short> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -167,5 +168,16 @@ public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	@Override
 	public java.sql.Timestamp value4() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached Department
+	 */
+	public Department() {
+		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department);
 	}
 }

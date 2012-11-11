@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
 @java.lang.SuppressWarnings("all")
 public class VendorContact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact> {
 
-	private static final long serialVersionUID = 447043686;
+	private static final long serialVersionUID = 656445919;
 
 	/**
-	 * The singleton instance of Purchasing.VendorContact
+	 * The singleton instance of <code>Purchasing.VendorContact</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact VendorContact = new org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact();
 
@@ -25,72 +25,66 @@ public class VendorContact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.VendorID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_VendorContact_Vendor_VendorID
-	 * FOREIGN KEY (VendorID)
-	 * REFERENCES Purchasing.Vendor (VendorID)
-	 * </pre></code>
+	 * The column <code>Purchasing.VendorContact.VendorID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact, java.lang.Integer> VendorID = createField("VendorID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.ContactID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_VendorContact_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * The column <code>Purchasing.VendorContact.ContactID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact, java.lang.Integer> ContactID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.ContactTypeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_VendorContact_ContactType_ContactTypeID
-	 * FOREIGN KEY (ContactTypeID)
-	 * REFERENCES Person.ContactType (ContactTypeID)
-	 * </pre></code>
+	 * The column <code>Purchasing.VendorContact.ContactTypeID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact, java.lang.Integer> ContactTypeID = createField("ContactTypeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.ModifiedDate</code>
+	 * The column <code>Purchasing.VendorContact.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Purchasing.VendorContact</code> table reference
+	 */
 	public VendorContact() {
 		super("VendorContact", org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing);
 	}
 
+	/**
+	 * Create an aliased <code>Purchasing.VendorContact</code> table reference
+	 */
 	public VendorContact(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_VendorContact_VendorID_ContactID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_VendorContact_VendorID_ContactID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact, ?>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_VendorContact_Vendor_VendorID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_VendorContact_Contact_ContactID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_VendorContact_ContactType_ContactTypeID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact(alias);

@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer> {
 
-	private static final long serialVersionUID = -2086580964;
+	private static final long serialVersionUID = 1153442635;
 
 	/**
-	 * The singleton instance of Sales.Customer
+	 * The singleton instance of <code>Sales.Customer</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer Customer = new org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer();
 
@@ -25,73 +25,84 @@ public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.CustomerID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Sales.Customer.CustomerID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.Integer> CustomerID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.Customer.TerritoryID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_Customer_SalesTerritory_TerritoryID
-	 * FOREIGN KEY (TerritoryID)
-	 * REFERENCES Sales.SalesTerritory (TerritoryID)
-	 * </pre></code>
+	 * The column <code>Sales.Customer.TerritoryID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.Integer> TerritoryID = createField("TerritoryID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.Customer.AccountNumber</code>
+	 * The column <code>Sales.Customer.AccountNumber</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.String> AccountNumber = createField("AccountNumber", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.Customer.CustomerType</code>
+	 * The column <code>Sales.Customer.CustomerType</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.String> CustomerType = createField("CustomerType", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * The table column <code>Sales.Customer.rowguid</code>
+	 * The column <code>Sales.Customer.rowguid</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.Customer.ModifiedDate</code>
+	 * The column <code>Sales.Customer.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Sales.Customer</code> table reference
+	 */
 	public Customer() {
 		super("Customer", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.Customer</code> table reference
+	 */
 	public Customer(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_Customer;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Customer_CustomerID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Customer_CustomerID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_Customer_SalesTerritory_TerritoryID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer(alias);

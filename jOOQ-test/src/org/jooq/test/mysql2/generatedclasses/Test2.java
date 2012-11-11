@@ -9,10 +9,10 @@ package org.jooq.test.mysql2.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Test2 extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1453462613;
+	private static final long serialVersionUID = -1853109438;
 
 	/**
-	 * The singleton instance of test2
+	 * The singleton instance of <code>test2</code>
 	 */
 	public static final Test2 TEST2 = new Test2();
 

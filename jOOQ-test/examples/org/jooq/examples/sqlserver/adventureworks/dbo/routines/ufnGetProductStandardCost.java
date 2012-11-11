@@ -9,21 +9,20 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
 @java.lang.SuppressWarnings("all")
 public class ufnGetProductStandardCost extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1643657524;
-
+	private static final long serialVersionUID = -753340429;
 
 	/**
-	 * The procedure parameter <code>dbo.ufnGetProductStandardCost.RETURN_VALUE</code>
+	 * The parameter <code>dbo.ufnGetProductStandardCost.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>dbo.ufnGetProductStandardCost.ProductID</code>
+	 * The parameter <code>dbo.ufnGetProductStandardCost.ProductID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> ProductID = createParameter("ProductID", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>dbo.ufnGetProductStandardCost.OrderDate</code>
+	 * The parameter <code>dbo.ufnGetProductStandardCost.OrderDate</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> OrderDate = createParameter("OrderDate", org.jooq.impl.SQLDataType.TIMESTAMP);
 
@@ -46,9 +45,7 @@ public class ufnGetProductStandardCost extends org.jooq.impl.AbstractRoutine<jav
 	}
 
 	/**
-	 * Set the <code>ProductID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>ProductID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setProductID(org.jooq.Field<java.lang.Integer> field) {
 		setField(ProductID, field);
@@ -62,9 +59,7 @@ public class ufnGetProductStandardCost extends org.jooq.impl.AbstractRoutine<jav
 	}
 
 	/**
-	 * Set the <code>OrderDate</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>OrderDate</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setOrderDate(org.jooq.Field<java.sql.Timestamp> field) {
 		setField(OrderDate, field);

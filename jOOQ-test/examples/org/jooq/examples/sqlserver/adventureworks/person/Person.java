@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.person;
 @java.lang.SuppressWarnings("all")
 public class Person extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -340910663;
+	private static final long serialVersionUID = -572552472;
 
 	/**
-	 * The singleton instance of Person
+	 * The singleton instance of <code>Person</code>
 	 */
 	public static final Person Person = new Person();
 

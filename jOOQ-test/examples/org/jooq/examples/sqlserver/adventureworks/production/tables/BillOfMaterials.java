@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class BillOfMaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials> {
 
-	private static final long serialVersionUID = -2115620362;
+	private static final long serialVersionUID = -33738306;
 
 	/**
-	 * The singleton instance of Production.BillOfMaterials
+	 * The singleton instance of <code>Production.BillOfMaterials</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials BillOfMaterials = new org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials();
 
@@ -25,100 +25,99 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.BillOfMaterialsID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Production.BillOfMaterials.BillOfMaterialsID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.Integer> BillOfMaterialsID = createField("BillOfMaterialsID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.ProductAssemblyID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_BillOfMaterials_Product_ProductAssemblyID
-	 * FOREIGN KEY (ProductAssemblyID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * The column <code>Production.BillOfMaterials.ProductAssemblyID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.Integer> ProductAssemblyID = createField("ProductAssemblyID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.ComponentID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_BillOfMaterials_Product_ComponentID
-	 * FOREIGN KEY (ComponentID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * The column <code>Production.BillOfMaterials.ComponentID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.Integer> ComponentID = createField("ComponentID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.StartDate</code>
+	 * The column <code>Production.BillOfMaterials.StartDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.sql.Timestamp> StartDate = createField("StartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.EndDate</code>
+	 * The column <code>Production.BillOfMaterials.EndDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.sql.Timestamp> EndDate = createField("EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.UnitMeasureCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_BillOfMaterials_UnitMeasure_UnitMeasureCode
-	 * FOREIGN KEY (UnitMeasureCode)
-	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
-	 * </pre></code>
+	 * The column <code>Production.BillOfMaterials.UnitMeasureCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.String> UnitMeasureCode = createField("UnitMeasureCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.BOMLevel</code>
+	 * The column <code>Production.BillOfMaterials.BOMLevel</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.Short> BOMLevel = createField("BOMLevel", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.PerAssemblyQty</code>
+	 * The column <code>Production.BillOfMaterials.PerAssemblyQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.math.BigDecimal> PerAssemblyQty = createField("PerAssemblyQty", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.ModifiedDate</code>
+	 * The column <code>Production.BillOfMaterials.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.BillOfMaterials</code> table reference
+	 */
 	public BillOfMaterials() {
 		super("BillOfMaterials", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.BillOfMaterials</code> table reference
+	 */
 	public BillOfMaterials(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_BillOfMaterials;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_BillOfMaterials_BillOfMaterialsID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_BillOfMaterials_BillOfMaterialsID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_BillOfMaterials_Product_ProductAssemblyID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_BillOfMaterials_Product_ComponentID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_BillOfMaterials_UnitMeasure_UnitMeasureCode);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials(alias);

@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
 @java.lang.SuppressWarnings("all")
 public class vJobCandidateEmployment extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment> {
 
-	private static final long serialVersionUID = -1071232580;
+	private static final long serialVersionUID = -1636051766;
 
 	/**
-	 * The singleton instance of HumanResources.vJobCandidateEmployment
+	 * The singleton instance of <code>HumanResources.vJobCandidateEmployment</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment vJobCandidateEmployment = new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment();
 
@@ -25,73 +25,85 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.JobCandidateID</code>
+	 * The column <code>HumanResources.vJobCandidateEmployment.JobCandidateID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.Integer> JobCandidateID = createField("JobCandidateID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.StartDate</code>
+	 * The column <code>HumanResources.vJobCandidateEmployment.Emp.StartDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.sql.Timestamp> Emp_StartDate = createField("Emp.StartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.EndDate</code>
+	 * The column <code>HumanResources.vJobCandidateEmployment.Emp.EndDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.sql.Timestamp> Emp_EndDate = createField("Emp.EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.OrgName</code>
+	 * The column <code>HumanResources.vJobCandidateEmployment.Emp.OrgName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.String> Emp_OrgName = createField("Emp.OrgName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.JobTitle</code>
+	 * The column <code>HumanResources.vJobCandidateEmployment.Emp.JobTitle</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.String> Emp_JobTitle = createField("Emp.JobTitle", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Responsibility</code>
+	 * The column <code>HumanResources.vJobCandidateEmployment.Emp.Responsibility</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.String> Emp_Responsibility = createField("Emp.Responsibility", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.FunctionCategory</code>
+	 * The column <code>HumanResources.vJobCandidateEmployment.Emp.FunctionCategory</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.String> Emp_FunctionCategory = createField("Emp.FunctionCategory", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.IndustryCategory</code>
+	 * The column <code>HumanResources.vJobCandidateEmployment.Emp.IndustryCategory</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.String> Emp_IndustryCategory = createField("Emp.IndustryCategory", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.CountryRegion</code>
+	 * The column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.CountryRegion</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.String> Emp_Loc_CountryRegion = createField("Emp.Loc.CountryRegion", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.State</code>
+	 * The column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.State</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.String> Emp_Loc_State = createField("Emp.Loc.State", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.City</code>
+	 * The column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.City</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.String> Emp_Loc_City = createField("Emp.Loc.City", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
+	/**
+	 * Create a <code>HumanResources.vJobCandidateEmployment</code> table reference
+	 */
 	public vJobCandidateEmployment() {
 		super("vJobCandidateEmployment", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
+	/**
+	 * Create an aliased <code>HumanResources.vJobCandidateEmployment</code> table reference
+	 */
 	public vJobCandidateEmployment(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.IDENTITY_vJobCandidateEmployment;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment(alias);

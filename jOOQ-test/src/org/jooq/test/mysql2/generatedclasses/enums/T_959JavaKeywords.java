@@ -8,6 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.enums;
  */
 @java.lang.SuppressWarnings("all")
 public enum T_959JavaKeywords implements org.jooq.EnumType {
+
 	abstract_("abstract"),
 
 	assert_("assert"),
@@ -120,11 +121,17 @@ public enum T_959JavaKeywords implements org.jooq.EnumType {
 		this.literal = literal;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getName() {
 		return "t_959_java_keywords";
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getLiteral() {
 		return literal;

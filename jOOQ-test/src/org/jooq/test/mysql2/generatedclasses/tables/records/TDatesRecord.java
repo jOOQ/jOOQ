@@ -11,21 +11,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_dates", schema = "test2")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long> {
 
-	private static final long serialVersionUID = -1976286112;
+	private static final long serialVersionUID = -821324977;
 
 	/**
-	 * The table column <code>test2.t_dates.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>test2.t_dates.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES.ID, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_dates.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>test2.t_dates.id</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * The table column <code>test2.t_dates.d</code>
+	 * Setter for <code>test2.t_dates.d</code>. 
 	 */
 	public void setD(java.sql.Date value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES.D, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_dates.d</code>
+	 * Getter for <code>test2.t_dates.d</code>. 
 	 */
 	@javax.persistence.Column(name = "d")
 	public java.sql.Date getD() {
@@ -49,14 +45,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * The table column <code>test2.t_dates.t</code>
+	 * Setter for <code>test2.t_dates.t</code>. 
 	 */
 	public void setT(java.sql.Time value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES.T, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_dates.t</code>
+	 * Getter for <code>test2.t_dates.t</code>. 
 	 */
 	@javax.persistence.Column(name = "t")
 	public java.sql.Time getT() {
@@ -64,14 +60,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * The table column <code>test2.t_dates.ts</code>
+	 * Setter for <code>test2.t_dates.ts</code>. 
 	 */
 	public void setTs(java.sql.Timestamp value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES.TS, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_dates.ts</code>
+	 * Getter for <code>test2.t_dates.ts</code>. 
 	 */
 	@javax.persistence.Column(name = "ts")
 	public java.sql.Timestamp getTs() {
@@ -79,14 +75,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * The table column <code>test2.t_dates.d_int</code>
+	 * Setter for <code>test2.t_dates.d_int</code>. 
 	 */
 	public void setDInt(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES.D_INT, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_dates.d_int</code>
+	 * Getter for <code>test2.t_dates.d_int</code>. 
 	 */
 	@javax.persistence.Column(name = "d_int", precision = 10)
 	public java.lang.Integer getDInt() {
@@ -94,25 +90,34 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * The table column <code>test2.t_dates.ts_bigint</code>
+	 * Setter for <code>test2.t_dates.ts_bigint</code>. 
 	 */
 	public void setTsBigint(java.lang.Long value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES.TS_BIGINT, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_dates.ts_bigint</code>
+	 * Getter for <code>test2.t_dates.ts_bigint</code>. 
 	 */
 	@javax.persistence.Column(name = "ts_bigint", precision = 19)
 	public java.lang.Long getTsBigint() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES.TS_BIGINT);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TDatesRecord
+	 * {@inheritDoc}
 	 */
-	public TDatesRecord() {
-		super(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -229,5 +234,16 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	@Override
 	public java.lang.Long value6() {
 		return getTsBigint();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TDatesRecord
+	 */
+	public TDatesRecord() {
+		super(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES);
 	}
 }

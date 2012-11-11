@@ -9,10 +9,10 @@ package org.jooq.test.ingres.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 574066373;
+	private static final long serialVersionUID = 742393071;
 
 	/**
-	 * The singleton instance of test
+	 * The singleton instance of <code>test</code>
 	 */
 	public static final Test TEST = new Test();
 
@@ -25,7 +25,8 @@ public class Test extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
-		return java.util.Arrays.<org.jooq.Sequence<?>>asList(org.jooq.test.ingres.generatedclasses.Sequences.S_AUTHOR_ID);
+		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
+			org.jooq.test.ingres.generatedclasses.Sequences.S_AUTHOR_ID);
 	}
 
 	@Override

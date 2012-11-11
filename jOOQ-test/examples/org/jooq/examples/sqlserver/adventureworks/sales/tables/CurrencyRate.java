@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class CurrencyRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate> {
 
-	private static final long serialVersionUID = 850837349;
+	private static final long serialVersionUID = -233849417;
 
 	/**
-	 * The singleton instance of Sales.CurrencyRate
+	 * The singleton instance of <code>Sales.CurrencyRate</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate CurrencyRate = new org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate();
 
@@ -25,84 +25,89 @@ public class CurrencyRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.CurrencyRateID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Sales.CurrencyRate.CurrencyRateID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.lang.Integer> CurrencyRateID = createField("CurrencyRateID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.CurrencyRateDate</code>
+	 * The column <code>Sales.CurrencyRate.CurrencyRateDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.sql.Timestamp> CurrencyRateDate = createField("CurrencyRateDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.FromCurrencyCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CurrencyRate_Currency_FromCurrencyCode
-	 * FOREIGN KEY (FromCurrencyCode)
-	 * REFERENCES Sales.Currency (CurrencyCode)
-	 * </pre></code>
+	 * The column <code>Sales.CurrencyRate.FromCurrencyCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.lang.String> FromCurrencyCode = createField("FromCurrencyCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.ToCurrencyCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CurrencyRate_Currency_ToCurrencyCode
-	 * FOREIGN KEY (ToCurrencyCode)
-	 * REFERENCES Sales.Currency (CurrencyCode)
-	 * </pre></code>
+	 * The column <code>Sales.CurrencyRate.ToCurrencyCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.lang.String> ToCurrencyCode = createField("ToCurrencyCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.AverageRate</code>
+	 * The column <code>Sales.CurrencyRate.AverageRate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.math.BigDecimal> AverageRate = createField("AverageRate", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.EndOfDayRate</code>
+	 * The column <code>Sales.CurrencyRate.EndOfDayRate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.math.BigDecimal> EndOfDayRate = createField("EndOfDayRate", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.ModifiedDate</code>
+	 * The column <code>Sales.CurrencyRate.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Sales.CurrencyRate</code> table reference
+	 */
 	public CurrencyRate() {
 		super("CurrencyRate", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.CurrencyRate</code> table reference
+	 */
 	public CurrencyRate(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_CurrencyRate;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CurrencyRate_CurrencyRateID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CurrencyRate_CurrencyRateID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_CurrencyRate_Currency_FromCurrencyCode, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_CurrencyRate_Currency_ToCurrencyCode);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate(alias);

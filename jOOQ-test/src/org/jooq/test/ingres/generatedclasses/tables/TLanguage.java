@@ -11,10 +11,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -307948284;
+	private static final long serialVersionUID = -734628008;
 
 	/**
-	 * The singleton instance of test.t_language
+	 * The singleton instance of <code>test.t_language</code>
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.TLanguage T_LANGUAGE = new org.jooq.test.ingres.generatedclasses.tables.TLanguage();
 
@@ -27,24 +27,22 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.in
 	}
 
 	/**
-	 * The language ISO code
+	 * The column <code>test.t_language.cd</code>. The language ISO code
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR, T_LANGUAGE);
 
 	/**
-	 * The language description
+	 * The column <code>test.t_language.description</code>. The language description
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
 
 	/**
-	 * The table column <code>test.t_language.description_english</code>
+	 * The column <code>test.t_language.description_english</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
 
 	/**
-	 * The language ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>test.t_language.id</code>. The language ID
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_LANGUAGE);
 
@@ -55,13 +53,18 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.in
 		super("t_language", org.jooq.test.ingres.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord> getMainKey() {
 		return org.jooq.test.ingres.generatedclasses.Keys.PK_T_LANGUAGE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.ingres.generatedclasses.Keys.PK_T_LANGUAGE);
 	}

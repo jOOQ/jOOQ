@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
 @java.lang.SuppressWarnings("all")
 public class ProductVendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor> {
 
-	private static final long serialVersionUID = 2120778017;
+	private static final long serialVersionUID = 811373464;
 
 	/**
-	 * The singleton instance of Purchasing.ProductVendor
+	 * The singleton instance of <code>Purchasing.ProductVendor</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor ProductVendor = new org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor();
 
@@ -25,107 +25,101 @@ public class ProductVendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductVendor_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * The column <code>Purchasing.ProductVendor.ProductID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.VendorID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductVendor_Vendor_VendorID
-	 * FOREIGN KEY (VendorID)
-	 * REFERENCES Purchasing.Vendor (VendorID)
-	 * </pre></code>
+	 * The column <code>Purchasing.ProductVendor.VendorID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, java.lang.Integer> VendorID = createField("VendorID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.AverageLeadTime</code>
+	 * The column <code>Purchasing.ProductVendor.AverageLeadTime</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, java.lang.Integer> AverageLeadTime = createField("AverageLeadTime", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.StandardPrice</code>
+	 * The column <code>Purchasing.ProductVendor.StandardPrice</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, java.math.BigDecimal> StandardPrice = createField("StandardPrice", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.LastReceiptCost</code>
+	 * The column <code>Purchasing.ProductVendor.LastReceiptCost</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, java.math.BigDecimal> LastReceiptCost = createField("LastReceiptCost", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.LastReceiptDate</code>
+	 * The column <code>Purchasing.ProductVendor.LastReceiptDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, java.sql.Timestamp> LastReceiptDate = createField("LastReceiptDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.MinOrderQty</code>
+	 * The column <code>Purchasing.ProductVendor.MinOrderQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, java.lang.Integer> MinOrderQty = createField("MinOrderQty", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.MaxOrderQty</code>
+	 * The column <code>Purchasing.ProductVendor.MaxOrderQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, java.lang.Integer> MaxOrderQty = createField("MaxOrderQty", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.OnOrderQty</code>
+	 * The column <code>Purchasing.ProductVendor.OnOrderQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, java.lang.Integer> OnOrderQty = createField("OnOrderQty", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.UnitMeasureCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductVendor_UnitMeasure_UnitMeasureCode
-	 * FOREIGN KEY (UnitMeasureCode)
-	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
-	 * </pre></code>
+	 * The column <code>Purchasing.ProductVendor.UnitMeasureCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, java.lang.String> UnitMeasureCode = createField("UnitMeasureCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.ModifiedDate</code>
+	 * The column <code>Purchasing.ProductVendor.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Purchasing.ProductVendor</code> table reference
+	 */
 	public ProductVendor() {
 		super("ProductVendor", org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing);
 	}
 
+	/**
+	 * Create an aliased <code>Purchasing.ProductVendor</code> table reference
+	 */
 	public ProductVendor(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_ProductVendor_ProductID_VendorID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_ProductVendor_ProductID_VendorID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor, ?>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_ProductVendor_Product_ProductID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_ProductVendor_Vendor_VendorID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_ProductVendor_UnitMeasure_UnitMeasureCode);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor(alias);

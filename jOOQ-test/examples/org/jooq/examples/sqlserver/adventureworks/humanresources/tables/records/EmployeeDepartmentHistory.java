@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory> implements org.jooq.Record6<java.lang.Integer, java.lang.Short, java.lang.Byte, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 2076905394;
+	private static final long serialVersionUID = 824947033;
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.EmployeeID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeeDepartmentHistory_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Setter for <code>HumanResources.EmployeeDepartmentHistory.EmployeeID</code>. 
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.EmployeeID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.EmployeeID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeeDepartmentHistory_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Getter for <code>HumanResources.EmployeeDepartmentHistory.EmployeeID</code>. 
 	 */
 	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
@@ -47,30 +31,14 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.DepartmentID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeeDepartmentHistory_Department_DepartmentID
-	 * FOREIGN KEY (DepartmentID)
-	 * REFERENCES HumanResources.Department (DepartmentID)
-	 * </pre></code>
+	 * Setter for <code>HumanResources.EmployeeDepartmentHistory.DepartmentID</code>. 
 	 */
 	public void setDepartmentID(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.DepartmentID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.DepartmentID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeeDepartmentHistory_Department_DepartmentID
-	 * FOREIGN KEY (DepartmentID)
-	 * REFERENCES HumanResources.Department (DepartmentID)
-	 * </pre></code>
+	 * Getter for <code>HumanResources.EmployeeDepartmentHistory.DepartmentID</code>. 
 	 */
 	@javax.persistence.Column(name = "DepartmentID", nullable = false, precision = 5)
 	public java.lang.Short getDepartmentID() {
@@ -78,30 +46,14 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.ShiftID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeeDepartmentHistory_Shift_ShiftID
-	 * FOREIGN KEY (ShiftID)
-	 * REFERENCES HumanResources.Shift (ShiftID)
-	 * </pre></code>
+	 * Setter for <code>HumanResources.EmployeeDepartmentHistory.ShiftID</code>. 
 	 */
 	public void setShiftID(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.ShiftID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.ShiftID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeeDepartmentHistory_Shift_ShiftID
-	 * FOREIGN KEY (ShiftID)
-	 * REFERENCES HumanResources.Shift (ShiftID)
-	 * </pre></code>
+	 * Getter for <code>HumanResources.EmployeeDepartmentHistory.ShiftID</code>. 
 	 */
 	@javax.persistence.Column(name = "ShiftID", nullable = false, precision = 3)
 	public java.lang.Byte getShiftID() {
@@ -109,18 +61,14 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.StartDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>HumanResources.EmployeeDepartmentHistory.StartDate</code>. 
 	 */
 	public void setStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.StartDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.StartDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>HumanResources.EmployeeDepartmentHistory.StartDate</code>. 
 	 */
 	@javax.persistence.Column(name = "StartDate", nullable = false)
 	public java.sql.Timestamp getStartDate() {
@@ -128,14 +76,14 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.EndDate</code>
+	 * Setter for <code>HumanResources.EmployeeDepartmentHistory.EndDate</code>. 
 	 */
 	public void setEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.EndDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.EndDate</code>
+	 * Getter for <code>HumanResources.EmployeeDepartmentHistory.EndDate</code>. 
 	 */
 	@javax.persistence.Column(name = "EndDate")
 	public java.sql.Timestamp getEndDate() {
@@ -143,25 +91,30 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.ModifiedDate</code>
+	 * Setter for <code>HumanResources.EmployeeDepartmentHistory.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeDepartmentHistory.ModifiedDate</code>
+	 * Getter for <code>HumanResources.EmployeeDepartmentHistory.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached EmployeeDepartmentHistory
+	 * {@inheritDoc}
 	 */
-	public EmployeeDepartmentHistory() {
-		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory);
+	@Override
+	public org.jooq.Record4<java.lang.Integer, java.sql.Timestamp, java.lang.Short, java.lang.Byte> key() {
+		return (org.jooq.Record4) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -278,5 +231,16 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	@Override
 	public java.sql.Timestamp value6() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached EmployeeDepartmentHistory
+	 */
+	public EmployeeDepartmentHistory() {
+		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory);
 	}
 }

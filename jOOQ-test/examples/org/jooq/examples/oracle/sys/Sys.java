@@ -9,10 +9,10 @@ package org.jooq.examples.oracle.sys;
 @java.lang.SuppressWarnings("all")
 public class Sys extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -13262783;
+	private static final long serialVersionUID = 2044126579;
 
 	/**
-	 * The singleton instance of SYS
+	 * The singleton instance of <code>SYS</code>
 	 */
 	public static final Sys SYS = new Sys();
 
@@ -25,6 +25,7 @@ public class Sys extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.UDT<?>> getUDTs() {
-		return java.util.Arrays.<org.jooq.UDT<?>>asList(org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE);
+		return java.util.Arrays.<org.jooq.UDT<?>>asList(
+			org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE);
 	}
 }

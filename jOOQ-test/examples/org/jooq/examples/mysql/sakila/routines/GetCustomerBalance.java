@@ -9,21 +9,20 @@ package org.jooq.examples.mysql.sakila.routines;
 @java.lang.SuppressWarnings("all")
 public class GetCustomerBalance extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1953813334;
-
+	private static final long serialVersionUID = -204461197;
 
 	/**
-	 * The procedure parameter <code>sakila.get_customer_balance.RETURN_VALUE</code>
+	 * The parameter <code>sakila.get_customer_balance.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.DECIMAL);
 
 	/**
-	 * The procedure parameter <code>sakila.get_customer_balance.p_customer_id</code>
+	 * The parameter <code>sakila.get_customer_balance.p_customer_id</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_CUSTOMER_ID = createParameter("p_customer_id", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>sakila.get_customer_balance.p_effective_date</code>
+	 * The parameter <code>sakila.get_customer_balance.p_effective_date</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> P_EFFECTIVE_DATE = createParameter("p_effective_date", org.jooq.impl.SQLDataType.TIMESTAMP);
 
@@ -46,9 +45,7 @@ public class GetCustomerBalance extends org.jooq.impl.AbstractRoutine<java.math.
 	}
 
 	/**
-	 * Set the <code>p_customer_id</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>p_customer_id</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setPCustomerId(org.jooq.Field<java.lang.Integer> field) {
 		setField(P_CUSTOMER_ID, field);
@@ -62,9 +59,7 @@ public class GetCustomerBalance extends org.jooq.impl.AbstractRoutine<java.math.
 	}
 
 	/**
-	 * Set the <code>p_effective_date</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>p_effective_date</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setPEffectiveDate(org.jooq.Field<java.sql.Timestamp> field) {
 		setField(P_EFFECTIVE_DATE, field);

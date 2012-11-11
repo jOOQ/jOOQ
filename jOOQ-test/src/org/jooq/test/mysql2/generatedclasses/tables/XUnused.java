@@ -11,10 +11,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1328196537;
+	private static final long serialVersionUID = 616232799;
 
 	/**
-	 * The singleton instance of test2.x_unused
+	 * The singleton instance of <code>test2.x_unused</code>
 	 */
 	public static final org.jooq.test.mysql2.generatedclasses.tables.XUnused X_UNUSED = new org.jooq.test.mysql2.generatedclasses.tables.XUnused();
 
@@ -27,116 +27,116 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 	}
 
 	/**
-	 * The table column <code>test2.x_unused.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>test2.x_unused.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.x_unused.NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>test2.x_unused.NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>test2.x_unused.BIG_INTEGER</code>
+	 * The column <code>test2.x_unused.BIG_INTEGER</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, this);
 
 	/**
-	 * The table column <code>test2.x_unused.ID_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_unused_self
-	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES test2.x_unused (ID, NAME)
-	 * </pre></code>
+	 * The column <code>test2.x_unused.ID_REF</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID_REF = createField("ID_REF", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.x_unused.NAME_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_unused_self
-	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES test2.x_unused (ID, NAME)
-	 * </pre></code>
+	 * The column <code>test2.x_unused.NAME_REF</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>test2.x_unused.CLASS</code>
+	 * The column <code>test2.x_unused.CLASS</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> CLASS = createField("CLASS", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.x_unused.FIELDS</code>
+	 * The column <code>test2.x_unused.FIELDS</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> FIELDS = createField("FIELDS", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.x_unused.CONFIGURATION</code>
+	 * The column <code>test2.x_unused.CONFIGURATION</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> CONFIGURATION = createField("CONFIGURATION", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.x_unused.U_D_T</code>
+	 * The column <code>test2.x_unused.U_D_T</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> U_D_T = createField("U_D_T", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.x_unused.META_DATA</code>
+	 * The column <code>test2.x_unused.META_DATA</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> META_DATA = createField("META_DATA", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.x_unused.TYPE0</code>
+	 * The column <code>test2.x_unused.TYPE0</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> TYPE0 = createField("TYPE0", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.x_unused.PRIMARY_KEY</code>
+	 * The column <code>test2.x_unused.PRIMARY_KEY</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> PRIMARY_KEY = createField("PRIMARY_KEY", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.x_unused.PRIMARYKEY</code>
+	 * The column <code>test2.x_unused.PRIMARYKEY</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> PRIMARYKEY = createField("PRIMARYKEY", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.x_unused.FIELD 737</code>
+	 * The column <code>test2.x_unused.FIELD 737</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.DECIMAL, this);
 
+	/**
+	 * Create a <code>test2.x_unused</code> table reference
+	 */
 	public XUnused() {
 		super("x_unused", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
+	/**
+	 * Create an aliased <code>test2.x_unused</code> table reference
+	 */
 	public XUnused(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> getMainKey() {
 		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.mysql2.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY, org.jooq.test.mysql2.generatedclasses.Keys.KEY_X_UNUSED_UK_X_UNUSED_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.mysql2.generatedclasses.Keys.FK_X_UNUSED_SELF);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.XUnused as(java.lang.String alias) {
 		return new org.jooq.test.mysql2.generatedclasses.tables.XUnused(alias);

@@ -9,10 +9,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -574751204;
+	private static final long serialVersionUID = 159760811;
 
 	/**
-	 * The singleton instance of test.t_identity_pk
+	 * The singleton instance of <code>test.t_identity_pk</code>
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = new org.jooq.test.ingres.generatedclasses.tables.TIdentityPk();
 
@@ -25,14 +25,12 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>test.t_identity_pk.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>test.t_identity_pk.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK);
 
 	/**
-	 * The table column <code>test.t_identity_pk.val</code>
+	 * The column <code>test.t_identity_pk.val</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK);
 
@@ -43,18 +41,26 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 		super("t_identity_pk", org.jooq.test.ingres.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.test.ingres.generatedclasses.Keys.IDENTITY_T_IDENTITY_PK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord> getMainKey() {
 		return org.jooq.test.ingres.generatedclasses.Keys.PK_T_IDENTITY_PK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord>>asList(org.jooq.test.ingres.generatedclasses.Keys.PK_T_IDENTITY_PK);
 	}

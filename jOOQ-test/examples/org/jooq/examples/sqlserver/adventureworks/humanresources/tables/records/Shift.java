@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "Shift", schema = "HumanResources")
 public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> implements org.jooq.Record5<java.lang.Byte, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 542225995;
+	private static final long serialVersionUID = -1867668120;
 
 	/**
-	 * The table column <code>HumanResources.Shift.ShiftID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>HumanResources.Shift.ShiftID</code>. 
 	 */
 	public void setShiftID(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.ShiftID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.Shift.ShiftID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>HumanResources.Shift.ShiftID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ShiftID", unique = true, nullable = false, precision = 3)
@@ -34,14 +30,14 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.Shift.Name</code>
+	 * Setter for <code>HumanResources.Shift.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.Name, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.Shift.Name</code>
+	 * Getter for <code>HumanResources.Shift.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,14 +45,14 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.Shift.StartTime</code>
+	 * Setter for <code>HumanResources.Shift.StartTime</code>. 
 	 */
 	public void setStartTime(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.StartTime, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.Shift.StartTime</code>
+	 * Getter for <code>HumanResources.Shift.StartTime</code>. 
 	 */
 	@javax.persistence.Column(name = "StartTime", nullable = false)
 	public java.sql.Timestamp getStartTime() {
@@ -64,14 +60,14 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.Shift.EndTime</code>
+	 * Setter for <code>HumanResources.Shift.EndTime</code>. 
 	 */
 	public void setEndTime(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.EndTime, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.Shift.EndTime</code>
+	 * Getter for <code>HumanResources.Shift.EndTime</code>. 
 	 */
 	@javax.persistence.Column(name = "EndTime", nullable = false)
 	public java.sql.Timestamp getEndTime() {
@@ -79,25 +75,30 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.Shift.ModifiedDate</code>
+	 * Setter for <code>HumanResources.Shift.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.Shift.ModifiedDate</code>
+	 * Getter for <code>HumanResources.Shift.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached Shift
+	 * {@inheritDoc}
 	 */
-	public Shift() {
-		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift);
+	@Override
+	public org.jooq.Record1<java.lang.Byte> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -198,5 +199,16 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	@Override
 	public java.sql.Timestamp value5() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached Shift
+	 */
+	public Shift() {
+		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift);
 	}
 }

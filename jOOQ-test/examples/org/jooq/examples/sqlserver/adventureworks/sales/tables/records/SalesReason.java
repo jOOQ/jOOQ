@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesReason", schema = "Sales")
 public class SalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesReason> implements org.jooq.Record4<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -2028899013;
+	private static final long serialVersionUID = 1632490798;
 
 	/**
-	 * The table column <code>Sales.SalesReason.SalesReasonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Sales.SalesReason.SalesReasonID</code>. 
 	 */
 	public void setSalesReasonID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason.SalesReason.SalesReasonID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesReason.SalesReasonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Sales.SalesReason.SalesReasonID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "SalesReasonID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class SalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SalesReason.Name</code>
+	 * Setter for <code>Sales.SalesReason.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason.SalesReason.Name, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesReason.Name</code>
+	 * Getter for <code>Sales.SalesReason.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,14 +45,14 @@ public class SalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SalesReason.ReasonType</code>
+	 * Setter for <code>Sales.SalesReason.ReasonType</code>. 
 	 */
 	public void setReasonType(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason.SalesReason.ReasonType, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesReason.ReasonType</code>
+	 * Getter for <code>Sales.SalesReason.ReasonType</code>. 
 	 */
 	@javax.persistence.Column(name = "ReasonType", nullable = false, length = 50)
 	public java.lang.String getReasonType() {
@@ -64,25 +60,30 @@ public class SalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SalesReason.ModifiedDate</code>
+	 * Setter for <code>Sales.SalesReason.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason.SalesReason.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesReason.ModifiedDate</code>
+	 * Getter for <code>Sales.SalesReason.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason.SalesReason.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached SalesReason
+	 * {@inheritDoc}
 	 */
-	public SalesReason() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason.SalesReason);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -167,5 +168,16 @@ public class SalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	@Override
 	public java.sql.Timestamp value4() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached SalesReason
+	 */
+	public SalesReason() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason.SalesReason);
 	}
 }

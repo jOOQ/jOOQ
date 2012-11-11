@@ -12,7 +12,10 @@ package org.jooq.examples.sqlserver.adventureworks.production;
 @java.lang.SuppressWarnings("all")
 public class Keys {
 
+	// -------------------------------------------------------------------------
 	// IDENTITY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.Integer> IDENTITY_BillOfMaterials = Identities0.IDENTITY_BillOfMaterials;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document, java.lang.Integer> IDENTITY_Document = Identities0.IDENTITY_Document;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration, java.lang.Integer> IDENTITY_Illustration = Identities0.IDENTITY_Illustration;
@@ -30,7 +33,10 @@ public class Keys {
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelInstructions, java.lang.Integer> IDENTITY_vProductModelInstructions = Identities0.IDENTITY_vProductModelInstructions;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.lang.Integer> IDENTITY_WorkOrder = Identities0.IDENTITY_WorkOrder;
 
+	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials> PK_BillOfMaterials_BillOfMaterialsID = UniqueKeys0.PK_BillOfMaterials_BillOfMaterialsID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture> PK_Culture_CultureID = UniqueKeys0.PK_Culture_CultureID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document> PK_Document_DocumentID = UniqueKeys0.PK_Document_DocumentID;
@@ -57,7 +63,10 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder> PK_WorkOrder_WorkOrderID = UniqueKeys0.PK_WorkOrder_WorkOrderID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting> PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence = UniqueKeys0.PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence;
 
+	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product> FK_BillOfMaterials_Product_ProductAssemblyID = ForeignKeys0.FK_BillOfMaterials_Product_ProductAssemblyID;
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product> FK_BillOfMaterials_Product_ComponentID = ForeignKeys0.FK_BillOfMaterials_Product_ComponentID;
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> FK_BillOfMaterials_UnitMeasure_UnitMeasureCode = ForeignKeys0.FK_BillOfMaterials_UnitMeasure_UnitMeasureCode;
@@ -87,11 +96,14 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, org.jooq.examples.sqlserver.adventureworks.production.tables.records.Location> FK_WorkOrderRouting_Location_LocationID = ForeignKeys0.FK_WorkOrderRouting_Location_LocationID;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings("hiding")
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, java.lang.Integer> IDENTITY_BillOfMaterials = createIdentity(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials, org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.BillOfMaterialsID);
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document, java.lang.Integer> IDENTITY_Document = createIdentity(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document, org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.DocumentID);
@@ -111,7 +123,6 @@ public class Keys {
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.lang.Integer> IDENTITY_WorkOrder = createIdentity(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder, org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.WorkOrderID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials> PK_BillOfMaterials_BillOfMaterialsID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials, org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.BillOfMaterialsID);
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture> PK_Culture_CultureID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture, org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture.CultureID);
@@ -140,7 +151,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting> PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting, org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.WorkOrderID, org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ProductID, org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.OperationSequence);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product> FK_BillOfMaterials_Product_ProductAssemblyID = createForeignKey(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Product_ProductID, org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials, org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ProductAssemblyID);
 		public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials, org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product> FK_BillOfMaterials_Product_ComponentID = createForeignKey(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Product_ProductID, org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials, org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ComponentID);

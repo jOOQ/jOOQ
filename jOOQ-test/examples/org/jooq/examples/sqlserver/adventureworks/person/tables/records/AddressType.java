@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "AddressType", schema = "Person")
 public class AddressType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressType> implements org.jooq.Record4<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -149039238;
+	private static final long serialVersionUID = 273339145;
 
 	/**
-	 * The table column <code>Person.AddressType.AddressTypeID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Person.AddressType.AddressTypeID</code>. 
 	 */
 	public void setAddressTypeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.AddressTypeID, value);
 	}
 
 	/**
-	 * The table column <code>Person.AddressType.AddressTypeID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Person.AddressType.AddressTypeID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "AddressTypeID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class AddressType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Person.AddressType.Name</code>
+	 * Setter for <code>Person.AddressType.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.Name, value);
 	}
 
 	/**
-	 * The table column <code>Person.AddressType.Name</code>
+	 * Getter for <code>Person.AddressType.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,14 +45,14 @@ public class AddressType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Person.AddressType.rowguid</code>
+	 * Setter for <code>Person.AddressType.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Person.AddressType.rowguid</code>
+	 * Getter for <code>Person.AddressType.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -64,25 +60,30 @@ public class AddressType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Person.AddressType.ModifiedDate</code>
+	 * Setter for <code>Person.AddressType.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Person.AddressType.ModifiedDate</code>
+	 * Getter for <code>Person.AddressType.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached AddressType
+	 * {@inheritDoc}
 	 */
-	public AddressType() {
-		super(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -167,5 +168,16 @@ public class AddressType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	@Override
 	public java.sql.Timestamp value4() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached AddressType
+	 */
+	public AddressType() {
+		super(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType);
 	}
 }

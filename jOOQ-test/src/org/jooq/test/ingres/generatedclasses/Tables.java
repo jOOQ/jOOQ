@@ -112,7 +112,7 @@ public final class Tables {
 	public static final org.jooq.test.ingres.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.ingres.generatedclasses.tables.XUnused.X_UNUSED;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

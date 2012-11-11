@@ -9,36 +9,35 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -2096496860;
-
+	private static final long serialVersionUID = 1764291088;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.RETURN_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.SQLSET_NAME</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.SQLSET_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQLSET_NAME = createParameter("SQLSET_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.SQL_ID</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.SQL_ID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQL_ID = createParameter("SQL_ID", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.PLAN_HASH_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.PLAN_HASH_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.FORMAT</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.FORMAT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.SQLSET_OWNER</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.SQLSET_OWNER</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQLSET_OWNER = createParameter("SQLSET_OWNER", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -64,9 +63,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>SQLSET_NAME</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>SQLSET_NAME</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setSqlsetName(org.jooq.Field<java.lang.String> field) {
 		setField(SQLSET_NAME, field);
@@ -80,9 +77,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>SQL_ID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>SQL_ID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setSqlId(org.jooq.Field<java.lang.String> field) {
 		setField(SQL_ID, field);
@@ -96,9 +91,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>PLAN_HASH_VALUE</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>PLAN_HASH_VALUE</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setPlanHashValue(org.jooq.Field<java.math.BigInteger> field) {
 		setField(PLAN_HASH_VALUE, field);
@@ -112,9 +105,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>FORMAT</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setFormat(org.jooq.Field<java.lang.String> field) {
 		setField(FORMAT, field);
@@ -128,9 +119,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>SQLSET_OWNER</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>SQLSET_OWNER</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setSqlsetOwner(org.jooq.Field<java.lang.String> field) {
 		setField(SQLSET_OWNER, field);

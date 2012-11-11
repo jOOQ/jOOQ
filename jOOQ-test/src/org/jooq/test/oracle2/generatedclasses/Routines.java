@@ -12,10 +12,7 @@ package org.jooq.test.oracle2.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Call TEST.F_976
-	 *
-	 * @param dateAsTimestampi
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_976</code>
 	 */
 	public static java.sql.Timestamp f_976(org.jooq.Configuration configuration, java.sql.Timestamp dateAsTimestampi) {
 		org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976 f = new org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976();
@@ -26,9 +23,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_976 as a field
-	 *
-	 * @param dateAsTimestampi
+	 * Get <code>TEST.F_976</code> as a field
 	 */
 	public static org.jooq.Field<java.sql.Timestamp> f_976(java.sql.Timestamp dateAsTimestampi) {
 		org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976 f = new org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976();
@@ -38,9 +33,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_976 as a field
-	 *
-	 * @param dateAsTimestampi
+	 * Get <code>TEST.F_976</code> as a field
 	 */
 	public static org.jooq.Field<java.sql.Timestamp> f_976(org.jooq.Field<java.sql.Timestamp> dateAsTimestampi) {
 		org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976 f = new org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976();
@@ -50,11 +43,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_976
-	 *
-	 * @param dateAsTimestampi IN parameter
-	 * @param dateAsTimestampo OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_976</code>
 	 */
 	public static java.sql.Timestamp p_976(org.jooq.Configuration configuration, java.sql.Timestamp dateAsTimestampi) {
 		org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampP_976 p = new org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampP_976();
@@ -65,7 +54,7 @@ public final class Routines {
 	}
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Routines() {}
 }

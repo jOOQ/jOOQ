@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
 @java.lang.SuppressWarnings("all")
 public class vAdditionalContactInfo extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo> {
 
-	private static final long serialVersionUID = -1154763465;
+	private static final long serialVersionUID = -139681115;
 
 	/**
-	 * The singleton instance of Person.vAdditionalContactInfo
+	 * The singleton instance of <code>Person.vAdditionalContactInfo</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo vAdditionalContactInfo = new org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo();
 
@@ -25,103 +25,115 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.ContactID</code>
+	 * The column <code>Person.vAdditionalContactInfo.ContactID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.Integer> ContactID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.FirstName</code>
+	 * The column <code>Person.vAdditionalContactInfo.FirstName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> FirstName = createField("FirstName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.MiddleName</code>
+	 * The column <code>Person.vAdditionalContactInfo.MiddleName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> MiddleName = createField("MiddleName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.LastName</code>
+	 * The column <code>Person.vAdditionalContactInfo.LastName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> LastName = createField("LastName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.TelephoneNumber</code>
+	 * The column <code>Person.vAdditionalContactInfo.TelephoneNumber</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> TelephoneNumber = createField("TelephoneNumber", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.TelephoneSpecialInstructions</code>
+	 * The column <code>Person.vAdditionalContactInfo.TelephoneSpecialInstructions</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> TelephoneSpecialInstructions = createField("TelephoneSpecialInstructions", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.Street</code>
+	 * The column <code>Person.vAdditionalContactInfo.Street</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> Street = createField("Street", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.City</code>
+	 * The column <code>Person.vAdditionalContactInfo.City</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> City = createField("City", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.StateProvince</code>
+	 * The column <code>Person.vAdditionalContactInfo.StateProvince</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> StateProvince = createField("StateProvince", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.PostalCode</code>
+	 * The column <code>Person.vAdditionalContactInfo.PostalCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> PostalCode = createField("PostalCode", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.CountryRegion</code>
+	 * The column <code>Person.vAdditionalContactInfo.CountryRegion</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> CountryRegion = createField("CountryRegion", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.HomeAddressSpecialInstructions</code>
+	 * The column <code>Person.vAdditionalContactInfo.HomeAddressSpecialInstructions</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> HomeAddressSpecialInstructions = createField("HomeAddressSpecialInstructions", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.EMailAddress</code>
+	 * The column <code>Person.vAdditionalContactInfo.EMailAddress</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> EMailAddress = createField("EMailAddress", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.EMailSpecialInstructions</code>
+	 * The column <code>Person.vAdditionalContactInfo.EMailSpecialInstructions</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> EMailSpecialInstructions = createField("EMailSpecialInstructions", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.EMailTelephoneNumber</code>
+	 * The column <code>Person.vAdditionalContactInfo.EMailTelephoneNumber</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> EMailTelephoneNumber = createField("EMailTelephoneNumber", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.rowguid</code>
+	 * The column <code>Person.vAdditionalContactInfo.rowguid</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Person.vAdditionalContactInfo.ModifiedDate</code>
+	 * The column <code>Person.vAdditionalContactInfo.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Person.vAdditionalContactInfo</code> table reference
+	 */
 	public vAdditionalContactInfo() {
 		super("vAdditionalContactInfo", org.jooq.examples.sqlserver.adventureworks.person.Person.Person);
 	}
 
+	/**
+	 * Create an aliased <code>Person.vAdditionalContactInfo</code> table reference
+	 */
 	public vAdditionalContactInfo(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.person.Person.Person, org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_vAdditionalContactInfo;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo(alias);

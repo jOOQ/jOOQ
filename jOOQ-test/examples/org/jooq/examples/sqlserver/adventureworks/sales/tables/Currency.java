@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class Currency extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency> {
 
-	private static final long serialVersionUID = 1517330637;
+	private static final long serialVersionUID = -1278548701;
 
 	/**
-	 * The singleton instance of Sales.Currency
+	 * The singleton instance of <code>Sales.Currency</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency Currency = new org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency();
 
@@ -25,41 +25,53 @@ public class Currency extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	}
 
 	/**
-	 * The table column <code>Sales.Currency.CurrencyCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Sales.Currency.CurrencyCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency, java.lang.String> CurrencyCode = createField("CurrencyCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * The table column <code>Sales.Currency.Name</code>
+	 * The column <code>Sales.Currency.Name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.Currency.ModifiedDate</code>
+	 * The column <code>Sales.Currency.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Sales.Currency</code> table reference
+	 */
 	public Currency() {
 		super("Currency", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.Currency</code> table reference
+	 */
 	public Currency(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Currency_CurrencyCode;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Currency_CurrencyCode);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency(alias);

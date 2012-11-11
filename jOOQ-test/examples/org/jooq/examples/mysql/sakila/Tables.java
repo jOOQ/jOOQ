@@ -127,7 +127,7 @@ public final class Tables {
 	public static final org.jooq.examples.mysql.sakila.tables.Store STORE = org.jooq.examples.mysql.sakila.tables.Store.STORE;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

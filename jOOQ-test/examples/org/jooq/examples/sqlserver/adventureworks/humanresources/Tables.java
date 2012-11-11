@@ -77,7 +77,7 @@ public final class Tables {
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment vJobCandidateEmployment = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

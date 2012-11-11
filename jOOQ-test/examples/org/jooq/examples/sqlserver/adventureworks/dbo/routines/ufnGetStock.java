@@ -9,16 +9,15 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
 @java.lang.SuppressWarnings("all")
 public class ufnGetStock extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -290448963;
-
+	private static final long serialVersionUID = 2059498097;
 
 	/**
-	 * The procedure parameter <code>dbo.ufnGetStock.RETURN_VALUE</code>
+	 * The parameter <code>dbo.ufnGetStock.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>dbo.ufnGetStock.ProductID</code>
+	 * The parameter <code>dbo.ufnGetStock.ProductID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> ProductID = createParameter("ProductID", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -40,9 +39,7 @@ public class ufnGetStock extends org.jooq.impl.AbstractRoutine<java.lang.Integer
 	}
 
 	/**
-	 * Set the <code>ProductID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>ProductID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setProductID(org.jooq.Field<java.lang.Integer> field) {
 		setField(ProductID, field);

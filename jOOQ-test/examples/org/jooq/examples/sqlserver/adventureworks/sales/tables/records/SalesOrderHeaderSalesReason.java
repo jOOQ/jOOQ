@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeaderSalesReason> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1971991773;
+	private static final long serialVersionUID = -1793111816;
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeaderSalesReason.SalesOrderID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID
-	 * FOREIGN KEY (SalesOrderID)
-	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
-	 * </pre></code>
+	 * Setter for <code>Sales.SalesOrderHeaderSalesReason.SalesOrderID</code>. 
 	 */
 	public void setSalesOrderID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeaderSalesReason.SalesOrderHeaderSalesReason.SalesOrderID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeaderSalesReason.SalesOrderID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID
-	 * FOREIGN KEY (SalesOrderID)
-	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
-	 * </pre></code>
+	 * Getter for <code>Sales.SalesOrderHeaderSalesReason.SalesOrderID</code>. 
 	 */
 	@javax.persistence.Column(name = "SalesOrderID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesOrderID() {
@@ -47,30 +31,14 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeaderSalesReason.SalesReasonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID
-	 * FOREIGN KEY (SalesReasonID)
-	 * REFERENCES Sales.SalesReason (SalesReasonID)
-	 * </pre></code>
+	 * Setter for <code>Sales.SalesOrderHeaderSalesReason.SalesReasonID</code>. 
 	 */
 	public void setSalesReasonID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeaderSalesReason.SalesOrderHeaderSalesReason.SalesReasonID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeaderSalesReason.SalesReasonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID
-	 * FOREIGN KEY (SalesReasonID)
-	 * REFERENCES Sales.SalesReason (SalesReasonID)
-	 * </pre></code>
+	 * Getter for <code>Sales.SalesOrderHeaderSalesReason.SalesReasonID</code>. 
 	 */
 	@javax.persistence.Column(name = "SalesReasonID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesReasonID() {
@@ -78,25 +46,30 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeaderSalesReason.ModifiedDate</code>
+	 * Setter for <code>Sales.SalesOrderHeaderSalesReason.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeaderSalesReason.SalesOrderHeaderSalesReason.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesOrderHeaderSalesReason.ModifiedDate</code>
+	 * Getter for <code>Sales.SalesOrderHeaderSalesReason.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeaderSalesReason.SalesOrderHeaderSalesReason.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached SalesOrderHeaderSalesReason
+	 * {@inheritDoc}
 	 */
-	public SalesOrderHeaderSalesReason() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeaderSalesReason.SalesOrderHeaderSalesReason);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -165,5 +138,16 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordIm
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached SalesOrderHeaderSalesReason
+	 */
+	public SalesOrderHeaderSalesReason() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeaderSalesReason.SalesOrderHeaderSalesReason);
 	}
 }

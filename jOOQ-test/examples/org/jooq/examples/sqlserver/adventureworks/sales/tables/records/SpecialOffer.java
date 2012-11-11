@@ -9,23 +9,19 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "SpecialOffer", schema = "Sales")
-public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer> {
+public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer> implements org.jooq.Record11<java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.String, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 925012278;
+	private static final long serialVersionUID = -208203405;
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.SpecialOfferID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Sales.SpecialOffer.SpecialOfferID</code>. 
 	 */
 	public void setSpecialOfferID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.SpecialOfferID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.SpecialOfferID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Sales.SpecialOffer.SpecialOfferID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "SpecialOfferID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.Description</code>
+	 * Setter for <code>Sales.SpecialOffer.Description</code>. 
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.Description, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.Description</code>
+	 * Getter for <code>Sales.SpecialOffer.Description</code>. 
 	 */
 	@javax.persistence.Column(name = "Description", nullable = false, length = 255)
 	public java.lang.String getDescription() {
@@ -49,14 +45,14 @@ public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.DiscountPct</code>
+	 * Setter for <code>Sales.SpecialOffer.DiscountPct</code>. 
 	 */
 	public void setDiscountPct(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.DiscountPct, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.DiscountPct</code>
+	 * Getter for <code>Sales.SpecialOffer.DiscountPct</code>. 
 	 */
 	@javax.persistence.Column(name = "DiscountPct", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getDiscountPct() {
@@ -64,14 +60,14 @@ public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.Type</code>
+	 * Setter for <code>Sales.SpecialOffer.Type</code>. 
 	 */
 	public void setType(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.Type, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.Type</code>
+	 * Getter for <code>Sales.SpecialOffer.Type</code>. 
 	 */
 	@javax.persistence.Column(name = "Type", nullable = false, length = 50)
 	public java.lang.String getType() {
@@ -79,14 +75,14 @@ public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.Category</code>
+	 * Setter for <code>Sales.SpecialOffer.Category</code>. 
 	 */
 	public void setCategory(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.Category, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.Category</code>
+	 * Getter for <code>Sales.SpecialOffer.Category</code>. 
 	 */
 	@javax.persistence.Column(name = "Category", nullable = false, length = 50)
 	public java.lang.String getCategory() {
@@ -94,14 +90,14 @@ public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.StartDate</code>
+	 * Setter for <code>Sales.SpecialOffer.StartDate</code>. 
 	 */
 	public void setStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.StartDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.StartDate</code>
+	 * Getter for <code>Sales.SpecialOffer.StartDate</code>. 
 	 */
 	@javax.persistence.Column(name = "StartDate", nullable = false)
 	public java.sql.Timestamp getStartDate() {
@@ -109,14 +105,14 @@ public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.EndDate</code>
+	 * Setter for <code>Sales.SpecialOffer.EndDate</code>. 
 	 */
 	public void setEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.EndDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.EndDate</code>
+	 * Getter for <code>Sales.SpecialOffer.EndDate</code>. 
 	 */
 	@javax.persistence.Column(name = "EndDate", nullable = false)
 	public java.sql.Timestamp getEndDate() {
@@ -124,14 +120,14 @@ public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.MinQty</code>
+	 * Setter for <code>Sales.SpecialOffer.MinQty</code>. 
 	 */
 	public void setMinQty(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.MinQty, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.MinQty</code>
+	 * Getter for <code>Sales.SpecialOffer.MinQty</code>. 
 	 */
 	@javax.persistence.Column(name = "MinQty", nullable = false, precision = 10)
 	public java.lang.Integer getMinQty() {
@@ -139,14 +135,14 @@ public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.MaxQty</code>
+	 * Setter for <code>Sales.SpecialOffer.MaxQty</code>. 
 	 */
 	public void setMaxQty(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.MaxQty, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.MaxQty</code>
+	 * Getter for <code>Sales.SpecialOffer.MaxQty</code>. 
 	 */
 	@javax.persistence.Column(name = "MaxQty", precision = 10)
 	public java.lang.Integer getMaxQty() {
@@ -154,14 +150,14 @@ public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.rowguid</code>
+	 * Setter for <code>Sales.SpecialOffer.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.rowguid</code>
+	 * Getter for <code>Sales.SpecialOffer.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -169,19 +165,231 @@ public class SpecialOffer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.ModifiedDate</code>
+	 * Setter for <code>Sales.SpecialOffer.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.ModifiedDate</code>
+	 * Getter for <code>Sales.SpecialOffer.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.ModifiedDate);
 	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
+
+	// -------------------------------------------------------------------------
+	// Record11 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row11<java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.String, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row11<java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.String, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.SpecialOfferID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.Description;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.DiscountPct;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.Type;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.Category;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.StartDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.EndDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.MinQty;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field9() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.MaxQty;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field10() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.rowguid;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field11() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getSpecialOfferID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getDescription();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value3() {
+		return getDiscountPct();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getType();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getCategory();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value6() {
+		return getStartDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value7() {
+		return getEndDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value8() {
+		return getMinQty();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value9() {
+		return getMaxQty();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value10() {
+		return getrowguid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value11() {
+		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached SpecialOffer

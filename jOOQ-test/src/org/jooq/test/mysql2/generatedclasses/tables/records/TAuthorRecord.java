@@ -13,21 +13,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_author", schema = "test2")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1084733643;
+	private static final long serialVersionUID = -1132075942;
 
 	/**
-	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>test2.t_author.ID</code>. The author ID
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID, value);
 	}
 
 	/**
-	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>test2.t_author.ID</code>. The author ID
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
@@ -36,38 +32,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The author's first name
+	 * Setter for <code>test2.t_author.FIRST_NAME</code>. The author's first name
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME, value);
 	}
 
 	/**
-	 * The author's first name
+	 * Getter for <code>test2.t_author.FIRST_NAME</code>. The author's first name
 	 */
 	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	public java.lang.String getFirstName() {
@@ -75,14 +47,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The author's last name
+	 * Setter for <code>test2.t_author.LAST_NAME</code>. The author's last name
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME, value);
 	}
 
 	/**
-	 * The author's last name
+	 * Getter for <code>test2.t_author.LAST_NAME</code>. The author's last name
 	 */
 	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	public java.lang.String getLastName() {
@@ -90,14 +62,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The author's date of birth
+	 * Setter for <code>test2.t_author.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH, value);
 	}
 
 	/**
-	 * The author's date of birth
+	 * Getter for <code>test2.t_author.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	@javax.persistence.Column(name = "DATE_OF_BIRTH")
 	public java.sql.Date getDateOfBirth() {
@@ -105,14 +77,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The author's year of birth
+	 * Setter for <code>test2.t_author.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH, value);
 	}
 
 	/**
-	 * The author's year of birth
+	 * Getter for <code>test2.t_author.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 10)
 	public java.lang.Integer getYearOfBirth() {
@@ -120,25 +92,54 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The author's address
+	 * Setter for <code>test2.t_author.ADDRESS</code>. The author's address
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS, value);
 	}
 
 	/**
-	 * The author's address
+	 * Getter for <code>test2.t_author.ADDRESS</code>. The author's address
 	 */
 	@javax.persistence.Column(name = "ADDRESS", length = 200)
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TAuthorRecord
+	 * Fetch a list of <code>test2.t_book</code> referencing this <code>test2.t_author</code>
 	 */
-	public TAuthorRecord() {
-		super(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR);
+	public org.jooq.Result<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK)
+			.where(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a list of <code>test2.t_book</code> referencing this <code>test2.t_author</code>
+	 */
+	public org.jooq.Result<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK)
+			.where(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
+			.fetch();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -255,5 +256,16 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.String value6() {
 		return getAddress();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TAuthorRecord
+	 */
+	public TAuthorRecord() {
+		super(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 }

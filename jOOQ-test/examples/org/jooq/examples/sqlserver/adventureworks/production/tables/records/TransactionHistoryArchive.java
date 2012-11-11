@@ -9,23 +9,19 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "TransactionHistoryArchive", schema = "Production")
-public class TransactionHistoryArchive extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive> {
+public class TransactionHistoryArchive extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.Integer, java.math.BigDecimal, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -906047125;
+	private static final long serialVersionUID = -931934050;
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.TransactionID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.TransactionHistoryArchive.TransactionID</code>. 
 	 */
 	public void setTransactionID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.TransactionID, value);
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.TransactionID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.TransactionHistoryArchive.TransactionID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "TransactionID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class TransactionHistoryArchive extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ProductID</code>
+	 * Setter for <code>Production.TransactionHistoryArchive.ProductID</code>. 
 	 */
 	public void setProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.ProductID, value);
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ProductID</code>
+	 * Getter for <code>Production.TransactionHistoryArchive.ProductID</code>. 
 	 */
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
@@ -49,14 +45,14 @@ public class TransactionHistoryArchive extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ReferenceOrderID</code>
+	 * Setter for <code>Production.TransactionHistoryArchive.ReferenceOrderID</code>. 
 	 */
 	public void setReferenceOrderID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.ReferenceOrderID, value);
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ReferenceOrderID</code>
+	 * Getter for <code>Production.TransactionHistoryArchive.ReferenceOrderID</code>. 
 	 */
 	@javax.persistence.Column(name = "ReferenceOrderID", nullable = false, precision = 10)
 	public java.lang.Integer getReferenceOrderID() {
@@ -64,14 +60,14 @@ public class TransactionHistoryArchive extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ReferenceOrderLineID</code>
+	 * Setter for <code>Production.TransactionHistoryArchive.ReferenceOrderLineID</code>. 
 	 */
 	public void setReferenceOrderLineID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.ReferenceOrderLineID, value);
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ReferenceOrderLineID</code>
+	 * Getter for <code>Production.TransactionHistoryArchive.ReferenceOrderLineID</code>. 
 	 */
 	@javax.persistence.Column(name = "ReferenceOrderLineID", nullable = false, precision = 10)
 	public java.lang.Integer getReferenceOrderLineID() {
@@ -79,14 +75,14 @@ public class TransactionHistoryArchive extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.TransactionDate</code>
+	 * Setter for <code>Production.TransactionHistoryArchive.TransactionDate</code>. 
 	 */
 	public void setTransactionDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.TransactionDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.TransactionDate</code>
+	 * Getter for <code>Production.TransactionHistoryArchive.TransactionDate</code>. 
 	 */
 	@javax.persistence.Column(name = "TransactionDate", nullable = false)
 	public java.sql.Timestamp getTransactionDate() {
@@ -94,14 +90,14 @@ public class TransactionHistoryArchive extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.TransactionType</code>
+	 * Setter for <code>Production.TransactionHistoryArchive.TransactionType</code>. 
 	 */
 	public void setTransactionType(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.TransactionType, value);
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.TransactionType</code>
+	 * Getter for <code>Production.TransactionHistoryArchive.TransactionType</code>. 
 	 */
 	@javax.persistence.Column(name = "TransactionType", nullable = false, length = 1)
 	public java.lang.String getTransactionType() {
@@ -109,14 +105,14 @@ public class TransactionHistoryArchive extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.Quantity</code>
+	 * Setter for <code>Production.TransactionHistoryArchive.Quantity</code>. 
 	 */
 	public void setQuantity(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.Quantity, value);
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.Quantity</code>
+	 * Getter for <code>Production.TransactionHistoryArchive.Quantity</code>. 
 	 */
 	@javax.persistence.Column(name = "Quantity", nullable = false, precision = 10)
 	public java.lang.Integer getQuantity() {
@@ -124,14 +120,14 @@ public class TransactionHistoryArchive extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ActualCost</code>
+	 * Setter for <code>Production.TransactionHistoryArchive.ActualCost</code>. 
 	 */
 	public void setActualCost(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.ActualCost, value);
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ActualCost</code>
+	 * Getter for <code>Production.TransactionHistoryArchive.ActualCost</code>. 
 	 */
 	@javax.persistence.Column(name = "ActualCost", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getActualCost() {
@@ -139,19 +135,199 @@ public class TransactionHistoryArchive extends org.jooq.impl.UpdatableRecordImpl
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ModifiedDate</code>
+	 * Setter for <code>Production.TransactionHistoryArchive.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ModifiedDate</code>
+	 * Getter for <code>Production.TransactionHistoryArchive.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.ModifiedDate);
 	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
+
+	// -------------------------------------------------------------------------
+	// Record9 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.Integer, java.math.BigDecimal, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.Integer, java.math.BigDecimal, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.TransactionID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.ProductID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.ReferenceOrderID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.ReferenceOrderLineID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.TransactionDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.TransactionType;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.Quantity;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.ActualCost;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field9() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getTransactionID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getProductID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value3() {
+		return getReferenceOrderID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value4() {
+		return getReferenceOrderLineID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value5() {
+		return getTransactionDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getTransactionType();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value7() {
+		return getQuantity();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value8() {
+		return getActualCost();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value9() {
+		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached TransactionHistoryArchive

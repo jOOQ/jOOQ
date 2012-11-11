@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -395412929;
+	private static final long serialVersionUID = -530158536;
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.VendorID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_VendorContact_Vendor_VendorID
-	 * FOREIGN KEY (VendorID)
-	 * REFERENCES Purchasing.Vendor (VendorID)
-	 * </pre></code>
+	 * Setter for <code>Purchasing.VendorContact.VendorID</code>. 
 	 */
 	public void setVendorID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact.VendorID, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.VendorID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_VendorContact_Vendor_VendorID
-	 * FOREIGN KEY (VendorID)
-	 * REFERENCES Purchasing.Vendor (VendorID)
-	 * </pre></code>
+	 * Getter for <code>Purchasing.VendorContact.VendorID</code>. 
 	 */
 	@javax.persistence.Column(name = "VendorID", nullable = false, precision = 10)
 	public java.lang.Integer getVendorID() {
@@ -47,30 +31,14 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.ContactID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_VendorContact_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * Setter for <code>Purchasing.VendorContact.ContactID</code>. 
 	 */
 	public void setContactID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact.ContactID, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.ContactID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_VendorContact_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * Getter for <code>Purchasing.VendorContact.ContactID</code>. 
 	 */
 	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
@@ -78,26 +46,14 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.ContactTypeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_VendorContact_ContactType_ContactTypeID
-	 * FOREIGN KEY (ContactTypeID)
-	 * REFERENCES Person.ContactType (ContactTypeID)
-	 * </pre></code>
+	 * Setter for <code>Purchasing.VendorContact.ContactTypeID</code>. 
 	 */
 	public void setContactTypeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact.ContactTypeID, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.ContactTypeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_VendorContact_ContactType_ContactTypeID
-	 * FOREIGN KEY (ContactTypeID)
-	 * REFERENCES Person.ContactType (ContactTypeID)
-	 * </pre></code>
+	 * Getter for <code>Purchasing.VendorContact.ContactTypeID</code>. 
 	 */
 	@javax.persistence.Column(name = "ContactTypeID", nullable = false, precision = 10)
 	public java.lang.Integer getContactTypeID() {
@@ -105,25 +61,30 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.ModifiedDate</code>
+	 * Setter for <code>Purchasing.VendorContact.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.VendorContact.ModifiedDate</code>
+	 * Getter for <code>Purchasing.VendorContact.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached VendorContact
+	 * {@inheritDoc}
 	 */
-	public VendorContact() {
-		super(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -208,5 +169,16 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@Override
 	public java.sql.Timestamp value4() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached VendorContact
+	 */
+	public VendorContact() {
+		super(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact);
 	}
 }

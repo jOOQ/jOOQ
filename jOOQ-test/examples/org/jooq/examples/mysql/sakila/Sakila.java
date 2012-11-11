@@ -9,10 +9,10 @@ package org.jooq.examples.mysql.sakila;
 @java.lang.SuppressWarnings("all")
 public class Sakila extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -869478001;
+	private static final long serialVersionUID = 675089096;
 
 	/**
-	 * The singleton instance of sakila
+	 * The singleton instance of <code>sakila</code>
 	 */
 	public static final Sakila SAKILA = new Sakila();
 

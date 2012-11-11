@@ -9,31 +9,30 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -662652513;
-
+	private static final long serialVersionUID = -851853194;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY.RETURN_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY.TABLE_NAME</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY.TABLE_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> TABLE_NAME = createParameter("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY.STATEMENT_ID</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY.STATEMENT_ID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> STATEMENT_ID = createParameter("STATEMENT_ID", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY.FORMAT</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY.FORMAT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY.FILTER_PREDS</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY.FILTER_PREDS</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FILTER_PREDS = createParameter("FILTER_PREDS", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -58,9 +57,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	}
 
 	/**
-	 * Set the <code>TABLE_NAME</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>TABLE_NAME</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setTableName(org.jooq.Field<java.lang.String> field) {
 		setField(TABLE_NAME, field);
@@ -74,9 +71,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	}
 
 	/**
-	 * Set the <code>STATEMENT_ID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>STATEMENT_ID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setStatementId(org.jooq.Field<java.lang.String> field) {
 		setField(STATEMENT_ID, field);
@@ -90,9 +85,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>FORMAT</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setFormat(org.jooq.Field<java.lang.String> field) {
 		setField(FORMAT, field);
@@ -106,9 +99,7 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	}
 
 	/**
-	 * Set the <code>FILTER_PREDS</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>FILTER_PREDS</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setFilterPreds(org.jooq.Field<java.lang.String> field) {
 		setField(FILTER_PREDS, field);

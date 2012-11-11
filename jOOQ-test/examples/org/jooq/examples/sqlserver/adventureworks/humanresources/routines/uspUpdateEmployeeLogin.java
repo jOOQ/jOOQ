@@ -9,36 +9,35 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.routines;
 @java.lang.SuppressWarnings("all")
 public class uspUpdateEmployeeLogin extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 117427958;
-
+	private static final long serialVersionUID = -2105840274;
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.EmployeeID</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeLogin.EmployeeID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> EmployeeID = createParameter("EmployeeID", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.ManagerID</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeLogin.ManagerID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> ManagerID = createParameter("ManagerID", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.LoginID</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeLogin.LoginID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> LoginID = createParameter("LoginID", org.jooq.impl.SQLDataType.NVARCHAR);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.Title</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeLogin.Title</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> Title = createParameter("Title", org.jooq.impl.SQLDataType.NVARCHAR);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.HireDate</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeLogin.HireDate</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> HireDate = createParameter("HireDate", org.jooq.impl.SQLDataType.TIMESTAMP);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeLogin.CurrentFlag</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeLogin.CurrentFlag</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Boolean> CurrentFlag = createParameter("CurrentFlag", org.jooq.impl.SQLDataType.BIT);
 

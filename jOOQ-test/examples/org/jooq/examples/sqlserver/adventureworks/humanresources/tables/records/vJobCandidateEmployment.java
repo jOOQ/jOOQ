@@ -9,19 +9,19 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "vJobCandidateEmployment", schema = "HumanResources")
-public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment> {
+public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment> implements org.jooq.Record11<java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 2115999726;
+	private static final long serialVersionUID = -1973625977;
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.JobCandidateID</code>
+	 * Setter for <code>HumanResources.vJobCandidateEmployment.JobCandidateID</code>. 
 	 */
 	public void setJobCandidateID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.JobCandidateID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.JobCandidateID</code>
+	 * Getter for <code>HumanResources.vJobCandidateEmployment.JobCandidateID</code>. 
 	 */
 	@javax.persistence.Column(name = "JobCandidateID", nullable = false, precision = 10)
 	public java.lang.Integer getJobCandidateID() {
@@ -29,14 +29,14 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.StartDate</code>
+	 * Setter for <code>HumanResources.vJobCandidateEmployment.Emp.StartDate</code>. 
 	 */
 	public void setEmp_StartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_StartDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.StartDate</code>
+	 * Getter for <code>HumanResources.vJobCandidateEmployment.Emp.StartDate</code>. 
 	 */
 	@javax.persistence.Column(name = "Emp.StartDate")
 	public java.sql.Timestamp getEmp_StartDate() {
@@ -44,14 +44,14 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.EndDate</code>
+	 * Setter for <code>HumanResources.vJobCandidateEmployment.Emp.EndDate</code>. 
 	 */
 	public void setEmp_EndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_EndDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.EndDate</code>
+	 * Getter for <code>HumanResources.vJobCandidateEmployment.Emp.EndDate</code>. 
 	 */
 	@javax.persistence.Column(name = "Emp.EndDate")
 	public java.sql.Timestamp getEmp_EndDate() {
@@ -59,14 +59,14 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.OrgName</code>
+	 * Setter for <code>HumanResources.vJobCandidateEmployment.Emp.OrgName</code>. 
 	 */
 	public void setEmp_OrgName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_OrgName, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.OrgName</code>
+	 * Getter for <code>HumanResources.vJobCandidateEmployment.Emp.OrgName</code>. 
 	 */
 	@javax.persistence.Column(name = "Emp.OrgName", length = 100)
 	public java.lang.String getEmp_OrgName() {
@@ -74,14 +74,14 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.JobTitle</code>
+	 * Setter for <code>HumanResources.vJobCandidateEmployment.Emp.JobTitle</code>. 
 	 */
 	public void setEmp_JobTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_JobTitle, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.JobTitle</code>
+	 * Getter for <code>HumanResources.vJobCandidateEmployment.Emp.JobTitle</code>. 
 	 */
 	@javax.persistence.Column(name = "Emp.JobTitle", length = 100)
 	public java.lang.String getEmp_JobTitle() {
@@ -89,14 +89,14 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Responsibility</code>
+	 * Setter for <code>HumanResources.vJobCandidateEmployment.Emp.Responsibility</code>. 
 	 */
 	public void setEmp_Responsibility(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_Responsibility, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Responsibility</code>
+	 * Getter for <code>HumanResources.vJobCandidateEmployment.Emp.Responsibility</code>. 
 	 */
 	@javax.persistence.Column(name = "Emp.Responsibility")
 	public java.lang.String getEmp_Responsibility() {
@@ -104,14 +104,14 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.FunctionCategory</code>
+	 * Setter for <code>HumanResources.vJobCandidateEmployment.Emp.FunctionCategory</code>. 
 	 */
 	public void setEmp_FunctionCategory(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_FunctionCategory, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.FunctionCategory</code>
+	 * Getter for <code>HumanResources.vJobCandidateEmployment.Emp.FunctionCategory</code>. 
 	 */
 	@javax.persistence.Column(name = "Emp.FunctionCategory")
 	public java.lang.String getEmp_FunctionCategory() {
@@ -119,14 +119,14 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.IndustryCategory</code>
+	 * Setter for <code>HumanResources.vJobCandidateEmployment.Emp.IndustryCategory</code>. 
 	 */
 	public void setEmp_IndustryCategory(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_IndustryCategory, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.IndustryCategory</code>
+	 * Getter for <code>HumanResources.vJobCandidateEmployment.Emp.IndustryCategory</code>. 
 	 */
 	@javax.persistence.Column(name = "Emp.IndustryCategory")
 	public java.lang.String getEmp_IndustryCategory() {
@@ -134,14 +134,14 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.CountryRegion</code>
+	 * Setter for <code>HumanResources.vJobCandidateEmployment.Emp.Loc.CountryRegion</code>. 
 	 */
 	public void setEmp_Loc_CountryRegion(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_Loc_CountryRegion, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.CountryRegion</code>
+	 * Getter for <code>HumanResources.vJobCandidateEmployment.Emp.Loc.CountryRegion</code>. 
 	 */
 	@javax.persistence.Column(name = "Emp.Loc.CountryRegion")
 	public java.lang.String getEmp_Loc_CountryRegion() {
@@ -149,14 +149,14 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.State</code>
+	 * Setter for <code>HumanResources.vJobCandidateEmployment.Emp.Loc.State</code>. 
 	 */
 	public void setEmp_Loc_State(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_Loc_State, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.State</code>
+	 * Getter for <code>HumanResources.vJobCandidateEmployment.Emp.Loc.State</code>. 
 	 */
 	@javax.persistence.Column(name = "Emp.Loc.State")
 	public java.lang.String getEmp_Loc_State() {
@@ -164,19 +164,219 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.City</code>
+	 * Setter for <code>HumanResources.vJobCandidateEmployment.Emp.Loc.City</code>. 
 	 */
 	public void setEmp_Loc_City(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_Loc_City, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEmployment.Emp.Loc.City</code>
+	 * Getter for <code>HumanResources.vJobCandidateEmployment.Emp.Loc.City</code>. 
 	 */
 	@javax.persistence.Column(name = "Emp.Loc.City")
 	public java.lang.String getEmp_Loc_City() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_Loc_City);
 	}
+
+	// -------------------------------------------------------------------------
+	// Record11 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row11<java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row11<java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.JobCandidateID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_StartDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_EndDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_OrgName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_JobTitle;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_Responsibility;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_FunctionCategory;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_IndustryCategory;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field9() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_Loc_CountryRegion;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field10() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_Loc_State;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field11() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_Loc_City;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getJobCandidateID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value2() {
+		return getEmp_StartDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value3() {
+		return getEmp_EndDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getEmp_OrgName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getEmp_JobTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getEmp_Responsibility();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value7() {
+		return getEmp_FunctionCategory();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value8() {
+		return getEmp_IndustryCategory();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value9() {
+		return getEmp_Loc_CountryRegion();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value10() {
+		return getEmp_Loc_State();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value11() {
+		return getEmp_Loc_City();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached vJobCandidateEmployment

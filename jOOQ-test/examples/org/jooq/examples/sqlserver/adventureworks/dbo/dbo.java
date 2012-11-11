@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.dbo;
 @java.lang.SuppressWarnings("all")
 public class dbo extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1103871989;
+	private static final long serialVersionUID = -1928755854;
 
 	/**
-	 * The singleton instance of dbo
+	 * The singleton instance of <code>dbo</code>
 	 */
 	public static final dbo dbo = new dbo();
 

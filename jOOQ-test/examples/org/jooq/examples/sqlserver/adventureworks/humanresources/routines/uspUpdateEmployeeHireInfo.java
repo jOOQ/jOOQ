@@ -9,41 +9,40 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.routines;
 @java.lang.SuppressWarnings("all")
 public class uspUpdateEmployeeHireInfo extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1463636292;
-
+	private static final long serialVersionUID = -43264653;
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.EmployeeID</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeHireInfo.EmployeeID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> EmployeeID = createParameter("EmployeeID", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.Title</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeHireInfo.Title</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> Title = createParameter("Title", org.jooq.impl.SQLDataType.NVARCHAR);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.HireDate</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeHireInfo.HireDate</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> HireDate = createParameter("HireDate", org.jooq.impl.SQLDataType.TIMESTAMP);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.RateChangeDate</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeHireInfo.RateChangeDate</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> RateChangeDate = createParameter("RateChangeDate", org.jooq.impl.SQLDataType.TIMESTAMP);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.Rate</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeHireInfo.Rate</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> Rate = createParameter("Rate", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.PayFrequency</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeHireInfo.PayFrequency</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Byte> PayFrequency = createParameter("PayFrequency", org.jooq.impl.SQLDataType.TINYINT);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeeHireInfo.CurrentFlag</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeeHireInfo.CurrentFlag</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Boolean> CurrentFlag = createParameter("CurrentFlag", org.jooq.impl.SQLDataType.BIT);
 

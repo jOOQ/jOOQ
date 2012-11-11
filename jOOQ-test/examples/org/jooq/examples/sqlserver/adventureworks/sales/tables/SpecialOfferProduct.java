@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class SpecialOfferProduct extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct> {
 
-	private static final long serialVersionUID = -337328740;
+	private static final long serialVersionUID = -1669368927;
 
 	/**
-	 * The singleton instance of Sales.SpecialOfferProduct
+	 * The singleton instance of <code>Sales.SpecialOfferProduct</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct SpecialOfferProduct = new org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct();
 
@@ -25,66 +25,66 @@ public class SpecialOfferProduct extends org.jooq.impl.UpdatableTableImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.SpecialOfferID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID
-	 * FOREIGN KEY (SpecialOfferID)
-	 * REFERENCES Sales.SpecialOffer (SpecialOfferID)
-	 * </pre></code>
+	 * The column <code>Sales.SpecialOfferProduct.SpecialOfferID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct, java.lang.Integer> SpecialOfferID = createField("SpecialOfferID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SpecialOfferProduct_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * The column <code>Sales.SpecialOfferProduct.ProductID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.rowguid</code>
+	 * The column <code>Sales.SpecialOfferProduct.rowguid</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.ModifiedDate</code>
+	 * The column <code>Sales.SpecialOfferProduct.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Sales.SpecialOfferProduct</code> table reference
+	 */
 	public SpecialOfferProduct() {
 		super("SpecialOfferProduct", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.SpecialOfferProduct</code> table reference
+	 */
 	public SpecialOfferProduct(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SpecialOfferProduct_SpecialOfferID_ProductID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SpecialOfferProduct_SpecialOfferID_ProductID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SpecialOfferProduct_Product_ProductID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct(alias);

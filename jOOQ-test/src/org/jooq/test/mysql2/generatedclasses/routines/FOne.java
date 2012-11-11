@@ -11,11 +11,10 @@ package org.jooq.test.mysql2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FOne extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1857705161;
-
+	private static final long serialVersionUID = -1702530984;
 
 	/**
-	 * The procedure parameter <code>test2.f_one.RETURN_VALUE</code>
+	 * The parameter <code>test2.f_one.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 

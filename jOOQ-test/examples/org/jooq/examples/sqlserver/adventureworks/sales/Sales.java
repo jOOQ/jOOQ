@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales;
 @java.lang.SuppressWarnings("all")
 public class Sales extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -402991482;
+	private static final long serialVersionUID = 2130371695;
 
 	/**
-	 * The singleton instance of Sales
+	 * The singleton instance of <code>Sales</code>
 	 */
 	public static final Sales Sales = new Sales();
 

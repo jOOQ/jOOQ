@@ -152,7 +152,7 @@ public final class Tables {
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting WorkOrderRouting = org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

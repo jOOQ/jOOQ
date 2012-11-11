@@ -9,17 +9,26 @@ package org.jooq.examples.oracle.sys.udt.records;
 @java.lang.SuppressWarnings("all")
 public class DbmsXplanTypeTableRecord extends org.jooq.impl.ArrayRecordImpl<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord> {
 
-	private static final long serialVersionUID = -1624424420;
+	private static final long serialVersionUID = -1752031069;
 
+	/**
+	 * Create a new <code>SYS.DBMS_XPLAN_TYPE_TABLE</code> record
+	 */
 	public DbmsXplanTypeTableRecord(org.jooq.Configuration configuration) {
 		super(org.jooq.examples.oracle.sys.Sys.SYS, "DBMS_XPLAN_TYPE_TABLE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType(), configuration);
 	}
 
+	/**
+	 * Create a new <code>SYS.DBMS_XPLAN_TYPE_TABLE</code> record
+	 */
 	public DbmsXplanTypeTableRecord(org.jooq.Configuration configuration, org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord... array) {
 		this(configuration);
 		set(array);
 	}
 
+	/**
+	 * Create a new <code>SYS.DBMS_XPLAN_TYPE_TABLE</code> record
+	 */
 	public DbmsXplanTypeTableRecord(org.jooq.Configuration configuration, java.util.List<? extends org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord> list) {
 		this(configuration);
 		setList(list);

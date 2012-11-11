@@ -9,16 +9,15 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
 @java.lang.SuppressWarnings("all")
 public class ufnGetPurchaseOrderStatusText extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -1190755642;
-
+	private static final long serialVersionUID = -1680890104;
 
 	/**
-	 * The procedure parameter <code>dbo.ufnGetPurchaseOrderStatusText.RETURN_VALUE</code>
+	 * The parameter <code>dbo.ufnGetPurchaseOrderStatusText.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NVARCHAR);
 
 	/**
-	 * The procedure parameter <code>dbo.ufnGetPurchaseOrderStatusText.Status</code>
+	 * The parameter <code>dbo.ufnGetPurchaseOrderStatusText.Status</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Byte> Status = createParameter("Status", org.jooq.impl.SQLDataType.TINYINT);
 
@@ -40,9 +39,7 @@ public class ufnGetPurchaseOrderStatusText extends org.jooq.impl.AbstractRoutine
 	}
 
 	/**
-	 * Set the <code>Status</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>Status</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setStatus(org.jooq.Field<java.lang.Byte> field) {
 		setField(Status, field);

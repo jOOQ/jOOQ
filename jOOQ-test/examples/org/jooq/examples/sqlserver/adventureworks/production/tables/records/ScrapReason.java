@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ScrapReason", schema = "Production")
 public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> implements org.jooq.Record3<java.lang.Short, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 664595107;
+	private static final long serialVersionUID = 1004365072;
 
 	/**
-	 * The table column <code>Production.ScrapReason.ScrapReasonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.ScrapReason.ScrapReasonID</code>. 
 	 */
 	public void setScrapReasonID(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.ScrapReasonID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ScrapReason.ScrapReasonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.ScrapReason.ScrapReasonID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ScrapReasonID", unique = true, nullable = false, precision = 5)
@@ -34,14 +30,14 @@ public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Production.ScrapReason.Name</code>
+	 * Setter for <code>Production.ScrapReason.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.Name, value);
 	}
 
 	/**
-	 * The table column <code>Production.ScrapReason.Name</code>
+	 * Getter for <code>Production.ScrapReason.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,25 +45,30 @@ public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Production.ScrapReason.ModifiedDate</code>
+	 * Setter for <code>Production.ScrapReason.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ScrapReason.ModifiedDate</code>
+	 * Getter for <code>Production.ScrapReason.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ScrapReason
+	 * {@inheritDoc}
 	 */
-	public ScrapReason() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason);
+	@Override
+	public org.jooq.Record1<java.lang.Short> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -136,5 +137,16 @@ public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ScrapReason
+	 */
+	public ScrapReason() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason);
 	}
 }

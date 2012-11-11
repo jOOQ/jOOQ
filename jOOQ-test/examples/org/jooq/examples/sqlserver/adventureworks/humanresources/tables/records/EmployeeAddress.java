@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeAddress> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1203641618;
+	private static final long serialVersionUID = -825653099;
 
 	/**
-	 * The table column <code>HumanResources.EmployeeAddress.EmployeeID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeeAddress_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Setter for <code>HumanResources.EmployeeAddress.EmployeeID</code>. 
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress.EmployeeID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeAddress.EmployeeID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeeAddress_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Getter for <code>HumanResources.EmployeeAddress.EmployeeID</code>. 
 	 */
 	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
@@ -47,30 +31,14 @@ public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeAddress.AddressID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeeAddress_Address_AddressID
-	 * FOREIGN KEY (AddressID)
-	 * REFERENCES Person.Address (AddressID)
-	 * </pre></code>
+	 * Setter for <code>HumanResources.EmployeeAddress.AddressID</code>. 
 	 */
 	public void setAddressID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress.AddressID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeAddress.AddressID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_EmployeeAddress_Address_AddressID
-	 * FOREIGN KEY (AddressID)
-	 * REFERENCES Person.Address (AddressID)
-	 * </pre></code>
+	 * Getter for <code>HumanResources.EmployeeAddress.AddressID</code>. 
 	 */
 	@javax.persistence.Column(name = "AddressID", nullable = false, precision = 10)
 	public java.lang.Integer getAddressID() {
@@ -78,14 +46,14 @@ public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeAddress.rowguid</code>
+	 * Setter for <code>HumanResources.EmployeeAddress.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeAddress.rowguid</code>
+	 * Getter for <code>HumanResources.EmployeeAddress.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -93,25 +61,30 @@ public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeAddress.ModifiedDate</code>
+	 * Setter for <code>HumanResources.EmployeeAddress.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.EmployeeAddress.ModifiedDate</code>
+	 * Getter for <code>HumanResources.EmployeeAddress.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached EmployeeAddress
+	 * {@inheritDoc}
 	 */
-	public EmployeeAddress() {
-		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -196,5 +169,16 @@ public class EmployeeAddress extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.sql.Timestamp value4() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached EmployeeAddress
+	 */
+	public EmployeeAddress() {
+		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress);
 	}
 }

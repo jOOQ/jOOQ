@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "ContactType", schema = "Person")
 public class ContactType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactType> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 173806421;
+	private static final long serialVersionUID = -234979192;
 
 	/**
-	 * The table column <code>Person.ContactType.ContactTypeID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Person.ContactType.ContactTypeID</code>. 
 	 */
 	public void setContactTypeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType.ContactType.ContactTypeID, value);
 	}
 
 	/**
-	 * The table column <code>Person.ContactType.ContactTypeID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Person.ContactType.ContactTypeID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ContactTypeID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class ContactType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Person.ContactType.Name</code>
+	 * Setter for <code>Person.ContactType.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType.ContactType.Name, value);
 	}
 
 	/**
-	 * The table column <code>Person.ContactType.Name</code>
+	 * Getter for <code>Person.ContactType.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,25 +45,30 @@ public class ContactType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Person.ContactType.ModifiedDate</code>
+	 * Setter for <code>Person.ContactType.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType.ContactType.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Person.ContactType.ModifiedDate</code>
+	 * Getter for <code>Person.ContactType.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType.ContactType.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ContactType
+	 * {@inheritDoc}
 	 */
-	public ContactType() {
-		super(org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType.ContactType);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -136,5 +137,16 @@ public class ContactType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ContactType
+	 */
+	public ContactType() {
+		super(org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType.ContactType);
 	}
 }

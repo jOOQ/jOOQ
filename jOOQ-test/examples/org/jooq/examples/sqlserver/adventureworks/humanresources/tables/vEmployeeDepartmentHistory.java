@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
 @java.lang.SuppressWarnings("all")
 public class vEmployeeDepartmentHistory extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory> {
 
-	private static final long serialVersionUID = 462299165;
+	private static final long serialVersionUID = -931472431;
 
 	/**
-	 * The singleton instance of HumanResources.vEmployeeDepartmentHistory
+	 * The singleton instance of <code>HumanResources.vEmployeeDepartmentHistory</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory vEmployeeDepartmentHistory = new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory();
 
@@ -25,68 +25,77 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableImpl<org.jooq
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.EmployeeID</code>
+	 * The column <code>HumanResources.vEmployeeDepartmentHistory.EmployeeID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.Integer> EmployeeID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.Title</code>
+	 * The column <code>HumanResources.vEmployeeDepartmentHistory.Title</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> Title = createField("Title", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.FirstName</code>
+	 * The column <code>HumanResources.vEmployeeDepartmentHistory.FirstName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> FirstName = createField("FirstName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.MiddleName</code>
+	 * The column <code>HumanResources.vEmployeeDepartmentHistory.MiddleName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> MiddleName = createField("MiddleName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.LastName</code>
+	 * The column <code>HumanResources.vEmployeeDepartmentHistory.LastName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> LastName = createField("LastName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.Suffix</code>
+	 * The column <code>HumanResources.vEmployeeDepartmentHistory.Suffix</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> Suffix = createField("Suffix", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.Shift</code>
+	 * The column <code>HumanResources.vEmployeeDepartmentHistory.Shift</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> Shift = createField("Shift", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.Department</code>
+	 * The column <code>HumanResources.vEmployeeDepartmentHistory.Department</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> Department = createField("Department", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.GroupName</code>
+	 * The column <code>HumanResources.vEmployeeDepartmentHistory.GroupName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.lang.String> GroupName = createField("GroupName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.StartDate</code>
+	 * The column <code>HumanResources.vEmployeeDepartmentHistory.StartDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.sql.Timestamp> StartDate = createField("StartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartmentHistory.EndDate</code>
+	 * The column <code>HumanResources.vEmployeeDepartmentHistory.EndDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.sql.Timestamp> EndDate = createField("EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>HumanResources.vEmployeeDepartmentHistory</code> table reference
+	 */
 	public vEmployeeDepartmentHistory() {
 		super("vEmployeeDepartmentHistory", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
+	/**
+	 * Create an aliased <code>HumanResources.vEmployeeDepartmentHistory</code> table reference
+	 */
 	public vEmployeeDepartmentHistory(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory(alias);

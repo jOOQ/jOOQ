@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class SalesOrderDetail extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail> {
 
-	private static final long serialVersionUID = -737361942;
+	private static final long serialVersionUID = 1041036764;
 
 	/**
-	 * The singleton instance of Sales.SalesOrderDetail
+	 * The singleton instance of <code>Sales.SalesOrderDetail</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail SalesOrderDetail = new org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail();
 
@@ -25,112 +25,109 @@ public class SalesOrderDetail extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.SalesOrderDetail.SalesOrderID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID
-	 * FOREIGN KEY (SalesOrderID)
-	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderDetail.SalesOrderID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.lang.Integer> SalesOrderID = createField("SalesOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderDetail.SalesOrderDetailID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Sales.SalesOrderDetail.SalesOrderDetailID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.lang.Integer> SalesOrderDetailID = createField("SalesOrderDetailID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderDetail.CarrierTrackingNumber</code>
+	 * The column <code>Sales.SalesOrderDetail.CarrierTrackingNumber</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.lang.String> CarrierTrackingNumber = createField("CarrierTrackingNumber", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderDetail.OrderQty</code>
+	 * The column <code>Sales.SalesOrderDetail.OrderQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.lang.Short> OrderQty = createField("OrderQty", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderDetail.ProductID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID
-	 * FOREIGN KEY (SpecialOfferID, ProductID)
-	 * REFERENCES Sales.SpecialOfferProduct (SpecialOfferID, ProductID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderDetail.ProductID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderDetail.SpecialOfferID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID
-	 * FOREIGN KEY (SpecialOfferID, ProductID)
-	 * REFERENCES Sales.SpecialOfferProduct (SpecialOfferID, ProductID)
-	 * </pre></code>
+	 * The column <code>Sales.SalesOrderDetail.SpecialOfferID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.lang.Integer> SpecialOfferID = createField("SpecialOfferID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderDetail.UnitPrice</code>
+	 * The column <code>Sales.SalesOrderDetail.UnitPrice</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.math.BigDecimal> UnitPrice = createField("UnitPrice", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderDetail.UnitPriceDiscount</code>
+	 * The column <code>Sales.SalesOrderDetail.UnitPriceDiscount</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.math.BigDecimal> UnitPriceDiscount = createField("UnitPriceDiscount", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderDetail.LineTotal</code>
+	 * The column <code>Sales.SalesOrderDetail.LineTotal</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.math.BigDecimal> LineTotal = createField("LineTotal", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderDetail.rowguid</code>
+	 * The column <code>Sales.SalesOrderDetail.rowguid</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SalesOrderDetail.ModifiedDate</code>
+	 * The column <code>Sales.SalesOrderDetail.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Sales.SalesOrderDetail</code> table reference
+	 */
 	public SalesOrderDetail() {
 		super("SalesOrderDetail", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.SalesOrderDetail</code> table reference
+	 */
 	public SalesOrderDetail(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail.SalesOrderDetail);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SalesOrderDetail;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail(alias);

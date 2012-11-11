@@ -11,56 +11,53 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class SalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -254248720;
+	private static final long serialVersionUID = -1584583132;
 
 	/**
-	 * The table column <code>sakila.sales_by_store.store</code>
+	 * Setter for <code>sakila.sales_by_store.store</code>. 
 	 */
 	public void setStore(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.STORE, value);
 	}
 
 	/**
-	 * The table column <code>sakila.sales_by_store.store</code>
+	 * Getter for <code>sakila.sales_by_store.store</code>. 
 	 */
 	public java.lang.String getStore() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.STORE);
 	}
 
 	/**
-	 * The table column <code>sakila.sales_by_store.manager</code>
+	 * Setter for <code>sakila.sales_by_store.manager</code>. 
 	 */
 	public void setManager(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.MANAGER, value);
 	}
 
 	/**
-	 * The table column <code>sakila.sales_by_store.manager</code>
+	 * Getter for <code>sakila.sales_by_store.manager</code>. 
 	 */
 	public java.lang.String getManager() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.MANAGER);
 	}
 
 	/**
-	 * The table column <code>sakila.sales_by_store.total_sales</code>
+	 * Setter for <code>sakila.sales_by_store.total_sales</code>. 
 	 */
 	public void setTotalSales(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.TOTAL_SALES, value);
 	}
 
 	/**
-	 * The table column <code>sakila.sales_by_store.total_sales</code>
+	 * Getter for <code>sakila.sales_by_store.total_sales</code>. 
 	 */
 	public java.math.BigDecimal getTotalSales() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.TOTAL_SALES);
 	}
 
-	/**
-	 * Create a detached SalesByStoreRecord
-	 */
-	public SalesByStoreRecord() {
-		super(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record3 type implementation
@@ -128,5 +125,16 @@ public class SalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.e
 	@Override
 	public java.math.BigDecimal value3() {
 		return getTotalSales();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached SalesByStoreRecord
+	 */
+	public SalesByStoreRecord() {
+		super(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE);
 	}
 }

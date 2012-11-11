@@ -9,19 +9,19 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "vEmployee", schema = "HumanResources")
-public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployee> {
+public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployee> implements org.jooq.Record17<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> {
 
-	private static final long serialVersionUID = -2002935355;
+	private static final long serialVersionUID = 2135210197;
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.EmployeeID</code>
+	 * Setter for <code>HumanResources.vEmployee.EmployeeID</code>. 
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.EmployeeID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.EmployeeID</code>
+	 * Getter for <code>HumanResources.vEmployee.EmployeeID</code>. 
 	 */
 	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
@@ -29,14 +29,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.Title</code>
+	 * Setter for <code>HumanResources.vEmployee.Title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.Title, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.Title</code>
+	 * Getter for <code>HumanResources.vEmployee.Title</code>. 
 	 */
 	@javax.persistence.Column(name = "Title", length = 8)
 	public java.lang.String getTitle() {
@@ -44,14 +44,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.FirstName</code>
+	 * Setter for <code>HumanResources.vEmployee.FirstName</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.FirstName, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.FirstName</code>
+	 * Getter for <code>HumanResources.vEmployee.FirstName</code>. 
 	 */
 	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
@@ -59,14 +59,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.MiddleName</code>
+	 * Setter for <code>HumanResources.vEmployee.MiddleName</code>. 
 	 */
 	public void setMiddleName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.MiddleName, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.MiddleName</code>
+	 * Getter for <code>HumanResources.vEmployee.MiddleName</code>. 
 	 */
 	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
@@ -74,14 +74,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.LastName</code>
+	 * Setter for <code>HumanResources.vEmployee.LastName</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.LastName, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.LastName</code>
+	 * Getter for <code>HumanResources.vEmployee.LastName</code>. 
 	 */
 	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
@@ -89,14 +89,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.Suffix</code>
+	 * Setter for <code>HumanResources.vEmployee.Suffix</code>. 
 	 */
 	public void setSuffix(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.Suffix, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.Suffix</code>
+	 * Getter for <code>HumanResources.vEmployee.Suffix</code>. 
 	 */
 	@javax.persistence.Column(name = "Suffix", length = 10)
 	public java.lang.String getSuffix() {
@@ -104,14 +104,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.JobTitle</code>
+	 * Setter for <code>HumanResources.vEmployee.JobTitle</code>. 
 	 */
 	public void setJobTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.JobTitle, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.JobTitle</code>
+	 * Getter for <code>HumanResources.vEmployee.JobTitle</code>. 
 	 */
 	@javax.persistence.Column(name = "JobTitle", nullable = false, length = 50)
 	public java.lang.String getJobTitle() {
@@ -119,14 +119,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.Phone</code>
+	 * Setter for <code>HumanResources.vEmployee.Phone</code>. 
 	 */
 	public void setPhone(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.Phone, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.Phone</code>
+	 * Getter for <code>HumanResources.vEmployee.Phone</code>. 
 	 */
 	@javax.persistence.Column(name = "Phone", length = 25)
 	public java.lang.String getPhone() {
@@ -134,14 +134,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.EmailAddress</code>
+	 * Setter for <code>HumanResources.vEmployee.EmailAddress</code>. 
 	 */
 	public void setEmailAddress(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.EmailAddress, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.EmailAddress</code>
+	 * Getter for <code>HumanResources.vEmployee.EmailAddress</code>. 
 	 */
 	@javax.persistence.Column(name = "EmailAddress", length = 50)
 	public java.lang.String getEmailAddress() {
@@ -149,14 +149,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.EmailPromotion</code>
+	 * Setter for <code>HumanResources.vEmployee.EmailPromotion</code>. 
 	 */
 	public void setEmailPromotion(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.EmailPromotion, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.EmailPromotion</code>
+	 * Getter for <code>HumanResources.vEmployee.EmailPromotion</code>. 
 	 */
 	@javax.persistence.Column(name = "EmailPromotion", nullable = false, precision = 10)
 	public java.lang.Integer getEmailPromotion() {
@@ -164,14 +164,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.AddressLine1</code>
+	 * Setter for <code>HumanResources.vEmployee.AddressLine1</code>. 
 	 */
 	public void setAddressLine1(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.AddressLine1, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.AddressLine1</code>
+	 * Getter for <code>HumanResources.vEmployee.AddressLine1</code>. 
 	 */
 	@javax.persistence.Column(name = "AddressLine1", nullable = false, length = 60)
 	public java.lang.String getAddressLine1() {
@@ -179,14 +179,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.AddressLine2</code>
+	 * Setter for <code>HumanResources.vEmployee.AddressLine2</code>. 
 	 */
 	public void setAddressLine2(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.AddressLine2, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.AddressLine2</code>
+	 * Getter for <code>HumanResources.vEmployee.AddressLine2</code>. 
 	 */
 	@javax.persistence.Column(name = "AddressLine2", length = 60)
 	public java.lang.String getAddressLine2() {
@@ -194,14 +194,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.City</code>
+	 * Setter for <code>HumanResources.vEmployee.City</code>. 
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.City, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.City</code>
+	 * Getter for <code>HumanResources.vEmployee.City</code>. 
 	 */
 	@javax.persistence.Column(name = "City", nullable = false, length = 30)
 	public java.lang.String getCity() {
@@ -209,14 +209,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.StateProvinceName</code>
+	 * Setter for <code>HumanResources.vEmployee.StateProvinceName</code>. 
 	 */
 	public void setStateProvinceName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.StateProvinceName, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.StateProvinceName</code>
+	 * Getter for <code>HumanResources.vEmployee.StateProvinceName</code>. 
 	 */
 	@javax.persistence.Column(name = "StateProvinceName", nullable = false, length = 50)
 	public java.lang.String getStateProvinceName() {
@@ -224,14 +224,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.PostalCode</code>
+	 * Setter for <code>HumanResources.vEmployee.PostalCode</code>. 
 	 */
 	public void setPostalCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.PostalCode, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.PostalCode</code>
+	 * Getter for <code>HumanResources.vEmployee.PostalCode</code>. 
 	 */
 	@javax.persistence.Column(name = "PostalCode", nullable = false, length = 15)
 	public java.lang.String getPostalCode() {
@@ -239,14 +239,14 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.CountryRegionName</code>
+	 * Setter for <code>HumanResources.vEmployee.CountryRegionName</code>. 
 	 */
 	public void setCountryRegionName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.CountryRegionName, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.CountryRegionName</code>
+	 * Getter for <code>HumanResources.vEmployee.CountryRegionName</code>. 
 	 */
 	@javax.persistence.Column(name = "CountryRegionName", nullable = false, length = 50)
 	public java.lang.String getCountryRegionName() {
@@ -254,25 +254,315 @@ public class vEmployee extends org.jooq.impl.TableRecordImpl<org.jooq.examples.s
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.AdditionalContactInfo</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>HumanResources.vEmployee.AdditionalContactInfo</code>. 
 	 */
 	public void setAdditionalContactInfo(java.lang.Object value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.AdditionalContactInfo, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployee.AdditionalContactInfo</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>HumanResources.vEmployee.AdditionalContactInfo</code>. 
 	 */
 	@javax.persistence.Column(name = "AdditionalContactInfo")
 	public java.lang.Object getAdditionalContactInfo() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.AdditionalContactInfo);
 	}
+
+	// -------------------------------------------------------------------------
+	// Record17 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row17<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13(), field14(), field15(), field16(), field17());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row17<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13(), value14(), value15(), value16(), value17());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.EmployeeID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.Title;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.FirstName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.MiddleName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.LastName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.Suffix;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.JobTitle;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.Phone;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field9() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.EmailAddress;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field10() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.EmailPromotion;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field11() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.AddressLine1;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field12() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.AddressLine2;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field13() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.City;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field14() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.StateProvinceName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field15() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.PostalCode;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field16() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.CountryRegionName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Object> field17() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee.AdditionalContactInfo;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getEmployeeID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getFirstName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getMiddleName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getLastName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getSuffix();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value7() {
+		return getJobTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value8() {
+		return getPhone();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value9() {
+		return getEmailAddress();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value10() {
+		return getEmailPromotion();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value11() {
+		return getAddressLine1();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value12() {
+		return getAddressLine2();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value13() {
+		return getCity();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value14() {
+		return getStateProvinceName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value15() {
+		return getPostalCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value16() {
+		return getCountryRegionName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Object value17() {
+		return getAdditionalContactInfo();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached vEmployee

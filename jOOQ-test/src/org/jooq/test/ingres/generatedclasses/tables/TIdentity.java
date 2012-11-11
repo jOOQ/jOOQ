@@ -9,10 +9,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 1793335939;
+	private static final long serialVersionUID = -1372032234;
 
 	/**
-	 * The singleton instance of test.t_identity
+	 * The singleton instance of <code>test.t_identity</code>
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.TIdentity T_IDENTITY = new org.jooq.test.ingres.generatedclasses.tables.TIdentity();
 
@@ -25,12 +25,12 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.ingres.gene
 	}
 
 	/**
-	 * The table column <code>test.t_identity.id</code>
+	 * The column <code>test.t_identity.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 
 	/**
-	 * The table column <code>test.t_identity.val</code>
+	 * The column <code>test.t_identity.val</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 
@@ -41,6 +41,9 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.ingres.gene
 		super("t_identity", org.jooq.test.ingres.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.test.ingres.generatedclasses.Keys.IDENTITY_T_IDENTITY;

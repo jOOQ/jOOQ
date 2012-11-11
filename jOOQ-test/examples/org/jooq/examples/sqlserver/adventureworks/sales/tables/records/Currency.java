@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "Currency", schema = "Sales")
 public class Currency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency> implements org.jooq.Record3<java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1733976233;
+	private static final long serialVersionUID = -1108311941;
 
 	/**
-	 * The table column <code>Sales.Currency.CurrencyCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Sales.Currency.CurrencyCode</code>. 
 	 */
 	public void setCurrencyCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency.CurrencyCode, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Currency.CurrencyCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Sales.Currency.CurrencyCode</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "CurrencyCode", unique = true, nullable = false, length = 3)
@@ -34,14 +30,14 @@ public class Currency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Sales.Currency.Name</code>
+	 * Setter for <code>Sales.Currency.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency.Name, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Currency.Name</code>
+	 * Getter for <code>Sales.Currency.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,25 +45,30 @@ public class Currency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Sales.Currency.ModifiedDate</code>
+	 * Setter for <code>Sales.Currency.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Currency.ModifiedDate</code>
+	 * Getter for <code>Sales.Currency.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached Currency
+	 * {@inheritDoc}
 	 */
-	public Currency() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency);
+	@Override
+	public org.jooq.Record1<java.lang.String> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -136,5 +137,16 @@ public class Currency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached Currency
+	 */
+	public Currency() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency);
 	}
 }

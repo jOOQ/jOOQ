@@ -11,8 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PCreateAuthor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 505259018;
-
+	private static final long serialVersionUID = -1429284446;
 
 	/**
 	 * Create a new routine call instance

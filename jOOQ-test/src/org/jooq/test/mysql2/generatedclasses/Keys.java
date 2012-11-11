@@ -12,11 +12,17 @@ package org.jooq.test.mysql2.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Keys {
 
+	// -------------------------------------------------------------------------
 	// IDENTITY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.Identity<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;
 	public static final org.jooq.Identity<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
 
+	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.T_639NumbersTableRecord> KEY_T_639_NUMBERS_TABLE_PRIMARY = UniqueKeys0.KEY_T_639_NUMBERS_TABLE_PRIMARY;
 	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.T_725LobTestRecord> KEY_T_725_LOB_TEST_PRIMARY = UniqueKeys0.KEY_T_725_LOB_TEST_PRIMARY;
 	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> KEY_T_AUTHOR_PRIMARY = UniqueKeys0.KEY_T_AUTHOR_PRIMARY;
@@ -34,7 +40,10 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> KEY_X_UNUSED_PRIMARY = UniqueKeys0.KEY_X_UNUSED_PRIMARY;
 	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> KEY_X_UNUSED_UK_X_UNUSED_ID = UniqueKeys0.KEY_X_UNUSED_UK_X_UNUSED_ID;
 
+	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_AUTHOR_ID;
 	public static final org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_CO_AUTHOR_ID;
 	public static final org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord> FK_T_BOOK_LANGUAGE_ID = ForeignKeys0.FK_T_BOOK_LANGUAGE_ID;
@@ -46,17 +55,19 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> FK_X_UNUSED_SELF = ForeignKeys0.FK_X_UNUSED_SELF;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings("hiding")
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = createIdentity(org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
 		public static org.jooq.Identity<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = createIdentity(org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.T_639NumbersTableRecord> KEY_T_639_NUMBERS_TABLE_PRIMARY = createUniqueKey(org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.T_725LobTestRecord> KEY_T_725_LOB_TEST_PRIMARY = createUniqueKey(org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);
@@ -76,7 +87,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> KEY_X_UNUSED_UK_X_UNUSED_ID = createUniqueKey(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.ID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_AUTHOR_ID = createForeignKey(org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_AUTHOR_PRIMARY, org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID);
 		public static final org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_AUTHOR_PRIMARY, org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID);

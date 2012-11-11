@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @javax.persistence.Table(name = "Vendor", schema = "Purchasing")
 public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor> implements org.jooq.Record8<java.lang.Integer, java.lang.String, java.lang.String, java.lang.Byte, java.lang.Boolean, java.lang.Boolean, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -456373939;
+	private static final long serialVersionUID = -1179101220;
 
 	/**
-	 * The table column <code>Purchasing.Vendor.VendorID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Purchasing.Vendor.VendorID</code>. 
 	 */
 	public void setVendorID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.VendorID, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.VendorID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Purchasing.Vendor.VendorID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "VendorID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.AccountNumber</code>
+	 * Setter for <code>Purchasing.Vendor.AccountNumber</code>. 
 	 */
 	public void setAccountNumber(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.AccountNumber, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.AccountNumber</code>
+	 * Getter for <code>Purchasing.Vendor.AccountNumber</code>. 
 	 */
 	@javax.persistence.Column(name = "AccountNumber", nullable = false, length = 15)
 	public java.lang.String getAccountNumber() {
@@ -49,14 +45,14 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.Name</code>
+	 * Setter for <code>Purchasing.Vendor.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.Name, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.Name</code>
+	 * Getter for <code>Purchasing.Vendor.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -64,14 +60,14 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.CreditRating</code>
+	 * Setter for <code>Purchasing.Vendor.CreditRating</code>. 
 	 */
 	public void setCreditRating(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.CreditRating, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.CreditRating</code>
+	 * Getter for <code>Purchasing.Vendor.CreditRating</code>. 
 	 */
 	@javax.persistence.Column(name = "CreditRating", nullable = false, precision = 3)
 	public java.lang.Byte getCreditRating() {
@@ -79,14 +75,14 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.PreferredVendorStatus</code>
+	 * Setter for <code>Purchasing.Vendor.PreferredVendorStatus</code>. 
 	 */
 	public void setPreferredVendorStatus(java.lang.Boolean value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.PreferredVendorStatus, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.PreferredVendorStatus</code>
+	 * Getter for <code>Purchasing.Vendor.PreferredVendorStatus</code>. 
 	 */
 	@javax.persistence.Column(name = "PreferredVendorStatus", nullable = false)
 	public java.lang.Boolean getPreferredVendorStatus() {
@@ -94,14 +90,14 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.ActiveFlag</code>
+	 * Setter for <code>Purchasing.Vendor.ActiveFlag</code>. 
 	 */
 	public void setActiveFlag(java.lang.Boolean value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.ActiveFlag, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.ActiveFlag</code>
+	 * Getter for <code>Purchasing.Vendor.ActiveFlag</code>. 
 	 */
 	@javax.persistence.Column(name = "ActiveFlag", nullable = false)
 	public java.lang.Boolean getActiveFlag() {
@@ -109,14 +105,14 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.PurchasingWebServiceURL</code>
+	 * Setter for <code>Purchasing.Vendor.PurchasingWebServiceURL</code>. 
 	 */
 	public void setPurchasingWebServiceURL(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.PurchasingWebServiceURL, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.PurchasingWebServiceURL</code>
+	 * Getter for <code>Purchasing.Vendor.PurchasingWebServiceURL</code>. 
 	 */
 	@javax.persistence.Column(name = "PurchasingWebServiceURL", length = 1024)
 	public java.lang.String getPurchasingWebServiceURL() {
@@ -124,25 +120,30 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.ModifiedDate</code>
+	 * Setter for <code>Purchasing.Vendor.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.Vendor.ModifiedDate</code>
+	 * Getter for <code>Purchasing.Vendor.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached Vendor
+	 * {@inheritDoc}
 	 */
-	public Vendor() {
-		super(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -291,5 +292,16 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	@Override
 	public java.sql.Timestamp value8() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached Vendor
+	 */
+	public Vendor() {
+		super(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor);
 	}
 }

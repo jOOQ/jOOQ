@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductReview", schema = "Production")
 public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview> implements org.jooq.Record8<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp, java.lang.String, java.lang.Integer, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1237731340;
+	private static final long serialVersionUID = 338029559;
 
 	/**
-	 * The table column <code>Production.ProductReview.ProductReviewID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.ProductReview.ProductReviewID</code>. 
 	 */
 	public void setProductReviewID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.ProductReviewID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.ProductReviewID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.ProductReview.ProductReviewID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ProductReviewID", unique = true, nullable = false, precision = 10)
@@ -34,26 +30,14 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.ProductID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductReview_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Setter for <code>Production.ProductReview.ProductID</code>. 
 	 */
 	public void setProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.ProductID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.ProductID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductReview_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Getter for <code>Production.ProductReview.ProductID</code>. 
 	 */
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
@@ -61,14 +45,14 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.ReviewerName</code>
+	 * Setter for <code>Production.ProductReview.ReviewerName</code>. 
 	 */
 	public void setReviewerName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.ReviewerName, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.ReviewerName</code>
+	 * Getter for <code>Production.ProductReview.ReviewerName</code>. 
 	 */
 	@javax.persistence.Column(name = "ReviewerName", nullable = false, length = 50)
 	public java.lang.String getReviewerName() {
@@ -76,14 +60,14 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.ReviewDate</code>
+	 * Setter for <code>Production.ProductReview.ReviewDate</code>. 
 	 */
 	public void setReviewDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.ReviewDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.ReviewDate</code>
+	 * Getter for <code>Production.ProductReview.ReviewDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ReviewDate", nullable = false)
 	public java.sql.Timestamp getReviewDate() {
@@ -91,14 +75,14 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.EmailAddress</code>
+	 * Setter for <code>Production.ProductReview.EmailAddress</code>. 
 	 */
 	public void setEmailAddress(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.EmailAddress, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.EmailAddress</code>
+	 * Getter for <code>Production.ProductReview.EmailAddress</code>. 
 	 */
 	@javax.persistence.Column(name = "EmailAddress", nullable = false, length = 50)
 	public java.lang.String getEmailAddress() {
@@ -106,14 +90,14 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.Rating</code>
+	 * Setter for <code>Production.ProductReview.Rating</code>. 
 	 */
 	public void setRating(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.Rating, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.Rating</code>
+	 * Getter for <code>Production.ProductReview.Rating</code>. 
 	 */
 	@javax.persistence.Column(name = "Rating", nullable = false, precision = 10)
 	public java.lang.Integer getRating() {
@@ -121,14 +105,14 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.Comments</code>
+	 * Setter for <code>Production.ProductReview.Comments</code>. 
 	 */
 	public void setComments(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.Comments, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.Comments</code>
+	 * Getter for <code>Production.ProductReview.Comments</code>. 
 	 */
 	@javax.persistence.Column(name = "Comments", length = 3850)
 	public java.lang.String getComments() {
@@ -136,25 +120,30 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.ModifiedDate</code>
+	 * Setter for <code>Production.ProductReview.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductReview.ModifiedDate</code>
+	 * Getter for <code>Production.ProductReview.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ProductReview
+	 * {@inheritDoc}
 	 */
-	public ProductReview() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -303,5 +292,16 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@Override
 	public java.sql.Timestamp value8() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ProductReview
+	 */
+	public ProductReview() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview);
 	}
 }

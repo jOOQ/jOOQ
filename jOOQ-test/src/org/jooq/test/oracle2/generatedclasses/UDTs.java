@@ -12,12 +12,12 @@ package org.jooq.test.oracle2.generatedclasses;
 public final class UDTs {
 
 	/**
-	 * The type TEST.T_976_OBJECT_TYPE
+	 * The type <code>TEST.T_976_OBJECT_TYPE</code>
 	 */
 	public static org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE = org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private UDTs() {}
 }

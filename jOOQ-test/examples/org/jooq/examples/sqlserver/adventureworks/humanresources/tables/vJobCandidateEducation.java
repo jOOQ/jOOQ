@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
 @java.lang.SuppressWarnings("all")
 public class vJobCandidateEducation extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation> {
 
-	private static final long serialVersionUID = 840628804;
+	private static final long serialVersionUID = -1427969878;
 
 	/**
-	 * The singleton instance of HumanResources.vJobCandidateEducation
+	 * The singleton instance of <code>HumanResources.vJobCandidateEducation</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation vJobCandidateEducation = new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation();
 
@@ -25,83 +25,95 @@ public class vJobCandidateEducation extends org.jooq.impl.TableImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.JobCandidateID</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.JobCandidateID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.Integer> JobCandidateID = createField("JobCandidateID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.Level</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.Level</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.String> Edu_Level = createField("Edu.Level", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.StartDate</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.StartDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.sql.Timestamp> Edu_StartDate = createField("Edu.StartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.EndDate</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.EndDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.sql.Timestamp> Edu_EndDate = createField("Edu.EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.Degree</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.Degree</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.String> Edu_Degree = createField("Edu.Degree", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.Major</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.Major</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.String> Edu_Major = createField("Edu.Major", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.Minor</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.Minor</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.String> Edu_Minor = createField("Edu.Minor", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.GPA</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.GPA</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.String> Edu_GPA = createField("Edu.GPA", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.GPAScale</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.GPAScale</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.String> Edu_GPAScale = createField("Edu.GPAScale", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.School</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.School</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.String> Edu_School = createField("Edu.School", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.Loc.CountryRegion</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.Loc.CountryRegion</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.String> Edu_Loc_CountryRegion = createField("Edu.Loc.CountryRegion", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.Loc.State</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.Loc.State</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.String> Edu_Loc_State = createField("Edu.Loc.State", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidateEducation.Edu.Loc.City</code>
+	 * The column <code>HumanResources.vJobCandidateEducation.Edu.Loc.City</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.String> Edu_Loc_City = createField("Edu.Loc.City", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
+	/**
+	 * Create a <code>HumanResources.vJobCandidateEducation</code> table reference
+	 */
 	public vJobCandidateEducation() {
 		super("vJobCandidateEducation", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
+	/**
+	 * Create an aliased <code>HumanResources.vJobCandidateEducation</code> table reference
+	 */
 	public vJobCandidateEducation(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.IDENTITY_vJobCandidateEducation;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation(alias);

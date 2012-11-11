@@ -11,33 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "Individual", schema = "Sales")
 public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Object, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1918452074;
+	private static final long serialVersionUID = -1595520493;
 
 	/**
-	 * The table column <code>Sales.Individual.CustomerID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_Individual_Customer_CustomerID
-	 * FOREIGN KEY (CustomerID)
-	 * REFERENCES Sales.Customer (CustomerID)
-	 * </pre></code>
+	 * Setter for <code>Sales.Individual.CustomerID</code>. 
 	 */
 	public void setCustomerID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.CustomerID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Individual.CustomerID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_Individual_Customer_CustomerID
-	 * FOREIGN KEY (CustomerID)
-	 * REFERENCES Sales.Customer (CustomerID)
-	 * </pre></code>
+	 * Getter for <code>Sales.Individual.CustomerID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "CustomerID", unique = true, nullable = false, precision = 10)
@@ -46,26 +30,14 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>Sales.Individual.ContactID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_Individual_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * Setter for <code>Sales.Individual.ContactID</code>. 
 	 */
 	public void setContactID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.ContactID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Individual.ContactID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_Individual_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * Getter for <code>Sales.Individual.ContactID</code>. 
 	 */
 	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
@@ -73,20 +45,14 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>Sales.Individual.Demographics</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>Sales.Individual.Demographics</code>. 
 	 */
 	public void setDemographics(java.lang.Object value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.Demographics, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Individual.Demographics</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>Sales.Individual.Demographics</code>. 
 	 */
 	@javax.persistence.Column(name = "Demographics")
 	public java.lang.Object getDemographics() {
@@ -94,25 +60,30 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>Sales.Individual.ModifiedDate</code>
+	 * Setter for <code>Sales.Individual.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Individual.ModifiedDate</code>
+	 * Getter for <code>Sales.Individual.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached Individual
+	 * {@inheritDoc}
 	 */
-	public Individual() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -197,5 +168,16 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	@Override
 	public java.sql.Timestamp value4() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached Individual
+	 */
+	public Individual() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual);
 	}
 }

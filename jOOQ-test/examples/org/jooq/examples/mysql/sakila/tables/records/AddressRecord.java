@@ -9,133 +9,73 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> implements org.jooq.Record8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.Short, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1810675665;
+	private static final long serialVersionUID = 896363111;
 
 	/**
-	 * The table column <code>sakila.address.address_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>sakila.address.address_id</code>. 
 	 */
 	public void setAddressId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.address.address_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>sakila.address.address_id</code>. 
 	 */
 	public java.lang.Short getAddressId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.address.address_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> fetchCustomerList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER)
-			.where(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.ADDRESS_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>sakila.address.address_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> fetchStaffList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Staff.STAFF)
-			.where(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.ADDRESS_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>sakila.address.address_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> fetchStoreList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Store.STORE)
-			.where(org.jooq.examples.mysql.sakila.tables.Store.STORE.ADDRESS_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>sakila.address.address</code>
+	 * Setter for <code>sakila.address.address</code>. 
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_, value);
 	}
 
 	/**
-	 * The table column <code>sakila.address.address</code>
+	 * Getter for <code>sakila.address.address</code>. 
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_);
 	}
 
 	/**
-	 * The table column <code>sakila.address.address2</code>
+	 * Setter for <code>sakila.address.address2</code>. 
 	 */
 	public void setAddress2(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS2, value);
 	}
 
 	/**
-	 * The table column <code>sakila.address.address2</code>
+	 * Getter for <code>sakila.address.address2</code>. 
 	 */
 	public java.lang.String getAddress2() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS2);
 	}
 
 	/**
-	 * The table column <code>sakila.address.district</code>
+	 * Setter for <code>sakila.address.district</code>. 
 	 */
 	public void setDistrict(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.DISTRICT, value);
 	}
 
 	/**
-	 * The table column <code>sakila.address.district</code>
+	 * Getter for <code>sakila.address.district</code>. 
 	 */
 	public java.lang.String getDistrict() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.DISTRICT);
 	}
 
 	/**
-	 * The table column <code>sakila.address.city_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_address_city
-	 * FOREIGN KEY (city_id)
-	 * REFERENCES sakila.city (city_id)
-	 * </pre></code>
+	 * Setter for <code>sakila.address.city_id</code>. 
 	 */
 	public void setCityId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.CITY_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.address.city_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_address_city
-	 * FOREIGN KEY (city_id)
-	 * REFERENCES sakila.city (city_id)
-	 * </pre></code>
-	 */
-	public java.lang.Short getCityId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.CITY_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CityRecord 
-	 * CityRecord}
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CityRecord}
 	 */
 	public void setCityId(org.jooq.examples.mysql.sakila.tables.records.CityRecord value) {
 		if (value == null) {
@@ -147,13 +87,90 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>sakila.address.city_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_address_city
-	 * FOREIGN KEY (city_id)
-	 * REFERENCES sakila.city (city_id)
-	 * </pre></code>
+	 * Getter for <code>sakila.address.city_id</code>. 
+	 */
+	public java.lang.Short getCityId() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.CITY_ID);
+	}
+
+	/**
+	 * Setter for <code>sakila.address.postal_code</code>. 
+	 */
+	public void setPostalCode(java.lang.String value) {
+		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.POSTAL_CODE, value);
+	}
+
+	/**
+	 * Getter for <code>sakila.address.postal_code</code>. 
+	 */
+	public java.lang.String getPostalCode() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.POSTAL_CODE);
+	}
+
+	/**
+	 * Setter for <code>sakila.address.phone</code>. 
+	 */
+	public void setPhone(java.lang.String value) {
+		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.PHONE, value);
+	}
+
+	/**
+	 * Getter for <code>sakila.address.phone</code>. 
+	 */
+	public java.lang.String getPhone() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.PHONE);
+	}
+
+	/**
+	 * Setter for <code>sakila.address.last_update</code>. 
+	 */
+	public void setLastUpdate(java.sql.Timestamp value) {
+		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.LAST_UPDATE, value);
+	}
+
+	/**
+	 * Getter for <code>sakila.address.last_update</code>. 
+	 */
+	public java.sql.Timestamp getLastUpdate() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.LAST_UPDATE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>sakila.customer</code> referencing this <code>sakila.address</code>
+	 */
+	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> fetchCustomerList() {
+		return create()
+			.selectFrom(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER)
+			.where(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.ADDRESS_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a list of <code>sakila.staff</code> referencing this <code>sakila.address</code>
+	 */
+	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> fetchStaffList() {
+		return create()
+			.selectFrom(org.jooq.examples.mysql.sakila.tables.Staff.STAFF)
+			.where(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.ADDRESS_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a list of <code>sakila.store</code> referencing this <code>sakila.address</code>
+	 */
+	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> fetchStoreList() {
+		return create()
+			.selectFrom(org.jooq.examples.mysql.sakila.tables.Store.STORE)
+			.where(org.jooq.examples.mysql.sakila.tables.Store.STORE.ADDRESS_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a <code>sakila.city</code> referenced by this <code>sakila.address</code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.CityRecord fetchCity() {
 		return create()
@@ -162,53 +179,16 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 			.fetchOne();
 	}
 
-	/**
-	 * The table column <code>sakila.address.postal_code</code>
-	 */
-	public void setPostalCode(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.POSTAL_CODE, value);
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The table column <code>sakila.address.postal_code</code>
+	 * {@inheritDoc}
 	 */
-	public java.lang.String getPostalCode() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.POSTAL_CODE);
-	}
-
-	/**
-	 * The table column <code>sakila.address.phone</code>
-	 */
-	public void setPhone(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.PHONE, value);
-	}
-
-	/**
-	 * The table column <code>sakila.address.phone</code>
-	 */
-	public java.lang.String getPhone() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.PHONE);
-	}
-
-	/**
-	 * The table column <code>sakila.address.last_update</code>
-	 */
-	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.LAST_UPDATE, value);
-	}
-
-	/**
-	 * The table column <code>sakila.address.last_update</code>
-	 */
-	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.LAST_UPDATE);
-	}
-
-	/**
-	 * Create a detached AddressRecord
-	 */
-	public AddressRecord() {
-		super(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS);
+	@Override
+	public org.jooq.Record1<java.lang.Short> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -357,5 +337,16 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@Override
 	public java.sql.Timestamp value8() {
 		return getLastUpdate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached AddressRecord
+	 */
+	public AddressRecord() {
+		super(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS);
 	}
 }

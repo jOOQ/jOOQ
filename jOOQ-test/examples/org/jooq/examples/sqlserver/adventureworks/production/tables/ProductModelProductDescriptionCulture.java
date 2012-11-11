@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class ProductModelProductDescriptionCulture extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture> {
 
-	private static final long serialVersionUID = 552662766;
+	private static final long serialVersionUID = -645057072;
 
 	/**
-	 * The singleton instance of Production.ProductModelProductDescriptionCulture
+	 * The singleton instance of <code>Production.ProductModelProductDescriptionCulture</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelProductDescriptionCulture ProductModelProductDescriptionCulture = new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelProductDescriptionCulture();
 
@@ -25,74 +25,66 @@ public class ProductModelProductDescriptionCulture extends org.jooq.impl.Updatab
 	}
 
 	/**
-	 * The table column <code>Production.ProductModelProductDescriptionCulture.ProductModelID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID
-	 * FOREIGN KEY (ProductModelID)
-	 * REFERENCES Production.ProductModel (ProductModelID)
-	 * </pre></code>
+	 * The column <code>Production.ProductModelProductDescriptionCulture.ProductModelID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture, java.lang.Integer> ProductModelID = createField("ProductModelID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductModelProductDescriptionCulture.ProductDescriptionID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID
-	 * FOREIGN KEY (ProductDescriptionID)
-	 * REFERENCES Production.ProductDescription (ProductDescriptionID)
-	 * </pre></code>
+	 * The column <code>Production.ProductModelProductDescriptionCulture.ProductDescriptionID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture, java.lang.Integer> ProductDescriptionID = createField("ProductDescriptionID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductModelProductDescriptionCulture.CultureID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_Culture_CultureID
-	 * FOREIGN KEY (CultureID)
-	 * REFERENCES Production.Culture (CultureID)
-	 * </pre></code>
+	 * The column <code>Production.ProductModelProductDescriptionCulture.CultureID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture, java.lang.String> CultureID = createField("CultureID", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * The table column <code>Production.ProductModelProductDescriptionCulture.ModifiedDate</code>
+	 * The column <code>Production.ProductModelProductDescriptionCulture.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.ProductModelProductDescriptionCulture</code> table reference
+	 */
 	public ProductModelProductDescriptionCulture() {
 		super("ProductModelProductDescriptionCulture", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.ProductModelProductDescriptionCulture</code> table reference
+	 */
 	public ProductModelProductDescriptionCulture(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelProductDescriptionCulture.ProductModelProductDescriptionCulture);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductModelProductDescriptionCulture_Culture_CultureID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelProductDescriptionCulture as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelProductDescriptionCulture(alias);

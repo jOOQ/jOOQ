@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class Individual extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual> {
 
-	private static final long serialVersionUID = 194023385;
+	private static final long serialVersionUID = -170745494;
 
 	/**
-	 * The singleton instance of Sales.Individual
+	 * The singleton instance of <code>Sales.Individual</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual Individual = new org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual();
 
@@ -25,67 +25,66 @@ public class Individual extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	}
 
 	/**
-	 * The table column <code>Sales.Individual.CustomerID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_Individual_Customer_CustomerID
-	 * FOREIGN KEY (CustomerID)
-	 * REFERENCES Sales.Customer (CustomerID)
-	 * </pre></code>
+	 * The column <code>Sales.Individual.CustomerID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.lang.Integer> CustomerID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.Individual.ContactID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_Individual_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * The column <code>Sales.Individual.ContactID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.lang.Integer> ContactID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.Individual.Demographics</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>Sales.Individual.Demographics</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.lang.Object> Demographics = createField("Demographics", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
 
 	/**
-	 * The table column <code>Sales.Individual.ModifiedDate</code>
+	 * The column <code>Sales.Individual.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Sales.Individual</code> table reference
+	 */
 	public Individual() {
 		super("Individual", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.Individual</code> table reference
+	 */
 	public Individual(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Individual_CustomerID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Individual_CustomerID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_Individual_Customer_CustomerID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_Individual_Contact_ContactID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual(alias);

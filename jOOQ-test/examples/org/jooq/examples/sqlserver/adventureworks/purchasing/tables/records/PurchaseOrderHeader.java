@@ -9,23 +9,19 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "PurchaseOrderHeader", schema = "Purchasing")
-public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> {
+public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> implements org.jooq.Record13<java.lang.Integer, java.lang.Byte, java.lang.Byte, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -658046937;
+	private static final long serialVersionUID = -52069409;
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.PurchaseOrderID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.PurchaseOrderID</code>. 
 	 */
 	public void setPurchaseOrderID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.PurchaseOrderID, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.PurchaseOrderID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.PurchaseOrderID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "PurchaseOrderID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.RevisionNumber</code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.RevisionNumber</code>. 
 	 */
 	public void setRevisionNumber(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.RevisionNumber, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.RevisionNumber</code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.RevisionNumber</code>. 
 	 */
 	@javax.persistence.Column(name = "RevisionNumber", nullable = false, precision = 3)
 	public java.lang.Byte getRevisionNumber() {
@@ -49,14 +45,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.Status</code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.Status</code>. 
 	 */
 	public void setStatus(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.Status, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.Status</code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.Status</code>. 
 	 */
 	@javax.persistence.Column(name = "Status", nullable = false, precision = 3)
 	public java.lang.Byte getStatus() {
@@ -64,26 +60,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.EmployeeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_PurchaseOrderHeader_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.EmployeeID</code>. 
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.EmployeeID, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.EmployeeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_PurchaseOrderHeader_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.EmployeeID</code>. 
 	 */
 	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
@@ -91,26 +75,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.VendorID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_PurchaseOrderHeader_Vendor_VendorID
-	 * FOREIGN KEY (VendorID)
-	 * REFERENCES Purchasing.Vendor (VendorID)
-	 * </pre></code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.VendorID</code>. 
 	 */
 	public void setVendorID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.VendorID, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.VendorID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_PurchaseOrderHeader_Vendor_VendorID
-	 * FOREIGN KEY (VendorID)
-	 * REFERENCES Purchasing.Vendor (VendorID)
-	 * </pre></code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.VendorID</code>. 
 	 */
 	@javax.persistence.Column(name = "VendorID", nullable = false, precision = 10)
 	public java.lang.Integer getVendorID() {
@@ -118,26 +90,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.ShipMethodID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_PurchaseOrderHeader_ShipMethod_ShipMethodID
-	 * FOREIGN KEY (ShipMethodID)
-	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
-	 * </pre></code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.ShipMethodID</code>. 
 	 */
 	public void setShipMethodID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.ShipMethodID, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.ShipMethodID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_PurchaseOrderHeader_ShipMethod_ShipMethodID
-	 * FOREIGN KEY (ShipMethodID)
-	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
-	 * </pre></code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.ShipMethodID</code>. 
 	 */
 	@javax.persistence.Column(name = "ShipMethodID", nullable = false, precision = 10)
 	public java.lang.Integer getShipMethodID() {
@@ -145,14 +105,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.OrderDate</code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.OrderDate</code>. 
 	 */
 	public void setOrderDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.OrderDate, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.OrderDate</code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.OrderDate</code>. 
 	 */
 	@javax.persistence.Column(name = "OrderDate", nullable = false)
 	public java.sql.Timestamp getOrderDate() {
@@ -160,14 +120,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.ShipDate</code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.ShipDate</code>. 
 	 */
 	public void setShipDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.ShipDate, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.ShipDate</code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.ShipDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ShipDate")
 	public java.sql.Timestamp getShipDate() {
@@ -175,14 +135,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.SubTotal</code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.SubTotal</code>. 
 	 */
 	public void setSubTotal(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.SubTotal, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.SubTotal</code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.SubTotal</code>. 
 	 */
 	@javax.persistence.Column(name = "SubTotal", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSubTotal() {
@@ -190,14 +150,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.TaxAmt</code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.TaxAmt</code>. 
 	 */
 	public void setTaxAmt(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.TaxAmt, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.TaxAmt</code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.TaxAmt</code>. 
 	 */
 	@javax.persistence.Column(name = "TaxAmt", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTaxAmt() {
@@ -205,14 +165,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.Freight</code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.Freight</code>. 
 	 */
 	public void setFreight(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.Freight, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.Freight</code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.Freight</code>. 
 	 */
 	@javax.persistence.Column(name = "Freight", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getFreight() {
@@ -220,14 +180,14 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.TotalDue</code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.TotalDue</code>. 
 	 */
 	public void setTotalDue(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.TotalDue, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.TotalDue</code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.TotalDue</code>. 
 	 */
 	@javax.persistence.Column(name = "TotalDue", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTotalDue() {
@@ -235,19 +195,263 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.ModifiedDate</code>
+	 * Setter for <code>Purchasing.PurchaseOrderHeader.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.PurchaseOrderHeader.ModifiedDate</code>
+	 * Getter for <code>Purchasing.PurchaseOrderHeader.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.ModifiedDate);
 	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
+
+	// -------------------------------------------------------------------------
+	// Record13 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row13<java.lang.Integer, java.lang.Byte, java.lang.Byte, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row13<java.lang.Integer, java.lang.Byte, java.lang.Byte, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.PurchaseOrderID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Byte> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.RevisionNumber;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Byte> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.Status;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.EmployeeID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.VendorID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.ShipMethodID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.OrderDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.ShipDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field9() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.SubTotal;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field10() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.TaxAmt;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field11() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.Freight;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field12() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.TotalDue;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field13() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getPurchaseOrderID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Byte value2() {
+		return getRevisionNumber();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Byte value3() {
+		return getStatus();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value4() {
+		return getEmployeeID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value5() {
+		return getVendorID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value6() {
+		return getShipMethodID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value7() {
+		return getOrderDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value8() {
+		return getShipDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value9() {
+		return getSubTotal();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value10() {
+		return getTaxAmt();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value11() {
+		return getFreight();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value12() {
+		return getTotalDue();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value13() {
+		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached PurchaseOrderHeader

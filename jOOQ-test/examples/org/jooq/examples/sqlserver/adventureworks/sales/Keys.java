@@ -12,7 +12,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales;
 @java.lang.SuppressWarnings("all")
 public class Keys {
 
+	// -------------------------------------------------------------------------
 	// IDENTITY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard, java.lang.Integer> IDENTITY_CreditCard = Identities0.IDENTITY_CreditCard;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.lang.Integer> IDENTITY_CurrencyRate = Identities0.IDENTITY_CurrencyRate;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer, java.lang.Integer> IDENTITY_Customer = Identities0.IDENTITY_Customer;
@@ -24,7 +27,10 @@ public class Keys {
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem, java.lang.Integer> IDENTITY_ShoppingCartItem = Identities0.IDENTITY_ShoppingCartItem;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.lang.Integer> IDENTITY_SpecialOffer = Identities0.IDENTITY_SpecialOffer;
 
+	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> PK_ContactCreditCard_ContactID_CreditCardID = UniqueKeys0.PK_ContactCreditCard_ContactID_CreditCardID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> PK_CountryRegionCurrency_CountryRegionCode_CurrencyCode = UniqueKeys0.PK_CountryRegionCurrency_CountryRegionCode_CurrencyCode;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard> PK_CreditCard_CreditCardID = UniqueKeys0.PK_CreditCard_CreditCardID;
@@ -48,7 +54,10 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Store> PK_Store_CustomerID = UniqueKeys0.PK_Store_CustomerID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact> PK_StoreContact_CustomerID_ContactID = UniqueKeys0.PK_StoreContact_CustomerID_ContactID;
 
+	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact> FK_ContactCreditCard_Contact_ContactID = ForeignKeys0.FK_ContactCreditCard_Contact_ContactID;
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard> FK_ContactCreditCard_CreditCard_CreditCardID = ForeignKeys0.FK_ContactCreditCard_CreditCard_CreditCardID;
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency, org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> FK_CountryRegionCurrency_CountryRegion_CountryRegionCode = ForeignKeys0.FK_CountryRegionCurrency_CountryRegion_CountryRegionCode;
@@ -90,11 +99,14 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactType> FK_StoreContact_ContactType_ContactTypeID = ForeignKeys0.FK_StoreContact_ContactType_ContactTypeID;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings("hiding")
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard, java.lang.Integer> IDENTITY_CreditCard = createIdentity(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard, org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.CreditCardID);
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.lang.Integer> IDENTITY_CurrencyRate = createIdentity(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate, org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.CurrencyRateID);
@@ -108,7 +120,6 @@ public class Keys {
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.lang.Integer> IDENTITY_SpecialOffer = createIdentity(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer, org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer.SpecialOfferID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> PK_ContactCreditCard_ContactID_CreditCardID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard, org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.ContactID, org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.CreditCardID);
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> PK_CountryRegionCurrency_CountryRegionCode_CurrencyCode = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency, org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency.CountryRegionCode, org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency.CurrencyCode);
@@ -134,7 +145,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact> PK_StoreContact_CustomerID_ContactID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact, org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.CustomerID, org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.ContactID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact> FK_ContactCreditCard_Contact_ContactID = createForeignKey(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_Contact_ContactID, org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard, org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.ContactID);
 		public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard> FK_ContactCreditCard_CreditCard_CreditCardID = createForeignKey(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CreditCard_CreditCardID, org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard, org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.CreditCardID);

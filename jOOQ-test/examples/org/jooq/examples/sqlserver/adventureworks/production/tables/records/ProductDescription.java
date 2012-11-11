@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductDescription", schema = "Production")
 public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDescription> implements org.jooq.Record4<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -28854624;
+	private static final long serialVersionUID = -376722721;
 
 	/**
-	 * The table column <code>Production.ProductDescription.ProductDescriptionID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.ProductDescription.ProductDescriptionID</code>. 
 	 */
 	public void setProductDescriptionID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription.ProductDescriptionID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductDescription.ProductDescriptionID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.ProductDescription.ProductDescriptionID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ProductDescriptionID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Production.ProductDescription.Description</code>
+	 * Setter for <code>Production.ProductDescription.Description</code>. 
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription.Description, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductDescription.Description</code>
+	 * Getter for <code>Production.ProductDescription.Description</code>. 
 	 */
 	@javax.persistence.Column(name = "Description", nullable = false, length = 400)
 	public java.lang.String getDescription() {
@@ -49,14 +45,14 @@ public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Production.ProductDescription.rowguid</code>
+	 * Setter for <code>Production.ProductDescription.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductDescription.rowguid</code>
+	 * Getter for <code>Production.ProductDescription.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -64,25 +60,30 @@ public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Production.ProductDescription.ModifiedDate</code>
+	 * Setter for <code>Production.ProductDescription.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductDescription.ModifiedDate</code>
+	 * Getter for <code>Production.ProductDescription.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ProductDescription
+	 * {@inheritDoc}
 	 */
-	public ProductDescription() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -167,5 +168,16 @@ public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.sql.Timestamp value4() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ProductDescription
+	 */
+	public ProductDescription() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription);
 	}
 }

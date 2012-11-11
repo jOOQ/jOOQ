@@ -375,6 +375,118 @@ object Conversions {
     case _ => Tuple8(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8)
   }
 
+  /**
+   * Enrich any {@link org.jooq.Record9} with the {@link Tuple9} case class
+   */
+  implicit def asTuple9[T1, T2, T3, T4, T5, T6, T7, T8, T9](r : Record9[T1, T2, T3, T4, T5, T6, T7, T8, T9]): Tuple9[T1, T2, T3, T4, T5, T6, T7, T8, T9] = r match {
+    case null => null
+    case _ => Tuple9(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record10} with the {@link Tuple10} case class
+   */
+  implicit def asTuple10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](r : Record10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]): Tuple10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10] = r match {
+    case null => null
+    case _ => Tuple10(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record11} with the {@link Tuple11} case class
+   */
+  implicit def asTuple11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](r : Record11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]): Tuple11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11] = r match {
+    case null => null
+    case _ => Tuple11(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record12} with the {@link Tuple12} case class
+   */
+  implicit def asTuple12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](r : Record12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]): Tuple12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12] = r match {
+    case null => null
+    case _ => Tuple12(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record13} with the {@link Tuple13} case class
+   */
+  implicit def asTuple13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](r : Record13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]): Tuple13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13] = r match {
+    case null => null
+    case _ => Tuple13(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record14} with the {@link Tuple14} case class
+   */
+  implicit def asTuple14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14](r : Record14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]): Tuple14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14] = r match {
+    case null => null
+    case _ => Tuple14(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record15} with the {@link Tuple15} case class
+   */
+  implicit def asTuple15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15](r : Record15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15]): Tuple15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15] = r match {
+    case null => null
+    case _ => Tuple15(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record16} with the {@link Tuple16} case class
+   */
+  implicit def asTuple16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16](r : Record16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16]): Tuple16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16] = r match {
+    case null => null
+    case _ => Tuple16(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record17} with the {@link Tuple17} case class
+   */
+  implicit def asTuple17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17](r : Record17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17]): Tuple17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17] = r match {
+    case null => null
+    case _ => Tuple17(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record18} with the {@link Tuple18} case class
+   */
+  implicit def asTuple18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18](r : Record18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18]): Tuple18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18] = r match {
+    case null => null
+    case _ => Tuple18(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record19} with the {@link Tuple19} case class
+   */
+  implicit def asTuple19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19](r : Record19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19]): Tuple19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19] = r match {
+    case null => null
+    case _ => Tuple19(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record20} with the {@link Tuple20} case class
+   */
+  implicit def asTuple20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20](r : Record20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20]): Tuple20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20] = r match {
+    case null => null
+    case _ => Tuple20(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19, r.value20)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record21} with the {@link Tuple21} case class
+   */
+  implicit def asTuple21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21](r : Record21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21]): Tuple21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21] = r match {
+    case null => null
+    case _ => Tuple21(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19, r.value20, r.value21)
+  }
+
+  /**
+   * Enrich any {@link org.jooq.Record22} with the {@link Tuple22} case class
+   */
+  implicit def asTuple22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22](r : Record22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22]): Tuple22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22] = r match {
+    case null => null
+    case _ => Tuple22(r.value1, r.value2, r.value3, r.value4, r.value5, r.value6, r.value7, r.value8, r.value9, r.value10, r.value11, r.value12, r.value13, r.value14, r.value15, r.value16, r.value17, r.value18, r.value19, r.value20, r.value21, r.value22)
+  }
+
 // [jooq-tools] END [tuples]
 
 }

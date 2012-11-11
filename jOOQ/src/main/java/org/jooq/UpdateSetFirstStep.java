@@ -136,6 +136,132 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9> UpdateWhereStep<R> set(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> UpdateWhereStep<R> set(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> UpdateWhereStep<R> set(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> UpdateWhereStep<R> set(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> UpdateWhereStep<R> set(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> UpdateWhereStep<R> set(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> UpdateWhereStep<R> set(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> UpdateWhereStep<R> set(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> UpdateWhereStep<R> set(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> UpdateWhereStep<R> set(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> UpdateWhereStep<R> set(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> UpdateWhereStep<R> set(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> UpdateWhereStep<R> set(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is simulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateWhereStep<R> set(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
     <T1> UpdateWhereStep<R> set(Row1<T1> row, Select<? extends Record1<T1>> select);
@@ -181,5 +307,89 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
     <T1, T2, T3, T4, T5, T6, T7, T8> UpdateWhereStep<R> set(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9> UpdateWhereStep<R> set(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row, Select<? extends Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> UpdateWhereStep<R> set(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row, Select<? extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> UpdateWhereStep<R> set(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row, Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> UpdateWhereStep<R> set(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row, Select<? extends Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> UpdateWhereStep<R> set(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row, Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> UpdateWhereStep<R> set(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row, Select<? extends Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> UpdateWhereStep<R> set(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row, Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> UpdateWhereStep<R> set(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row, Select<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> UpdateWhereStep<R> set(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row, Select<? extends Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> UpdateWhereStep<R> set(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row, Select<? extends Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> UpdateWhereStep<R> set(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row, Select<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> UpdateWhereStep<R> set(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row, Select<? extends Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> UpdateWhereStep<R> set(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row, Select<? extends Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateWhereStep<R> set(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Select<? extends Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select);
 
 }

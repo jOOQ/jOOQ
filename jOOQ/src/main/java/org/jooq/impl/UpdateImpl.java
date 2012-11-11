@@ -51,21 +51,49 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
+import org.jooq.Record10;
+import org.jooq.Record11;
+import org.jooq.Record12;
+import org.jooq.Record13;
+import org.jooq.Record14;
+import org.jooq.Record15;
+import org.jooq.Record16;
+import org.jooq.Record17;
+import org.jooq.Record18;
+import org.jooq.Record19;
 import org.jooq.Record2;
+import org.jooq.Record20;
+import org.jooq.Record21;
+import org.jooq.Record22;
 import org.jooq.Record3;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
+import org.jooq.Record9;
 import org.jooq.Row1;
+import org.jooq.Row10;
+import org.jooq.Row11;
+import org.jooq.Row12;
+import org.jooq.Row13;
+import org.jooq.Row14;
+import org.jooq.Row15;
+import org.jooq.Row16;
+import org.jooq.Row17;
+import org.jooq.Row18;
+import org.jooq.Row19;
 import org.jooq.Row2;
+import org.jooq.Row20;
+import org.jooq.Row21;
+import org.jooq.Row22;
 import org.jooq.Row3;
 import org.jooq.Row4;
 import org.jooq.Row5;
 import org.jooq.Row6;
 import org.jooq.Row7;
 import org.jooq.Row8;
+import org.jooq.Row9;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.UpdateConditionStep;
@@ -174,6 +202,104 @@ final class UpdateImpl<R extends Record>
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9> UpdateWhereStep<R> set(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> UpdateWhereStep<R> set(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> UpdateWhereStep<R> set(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> UpdateWhereStep<R> set(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> UpdateWhereStep<R> set(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> UpdateWhereStep<R> set(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> UpdateWhereStep<R> set(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> UpdateWhereStep<R> set(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> UpdateWhereStep<R> set(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> UpdateWhereStep<R> set(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> UpdateWhereStep<R> set(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> UpdateWhereStep<R> set(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> UpdateWhereStep<R> set(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateWhereStep<R> set(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
     public final <T1> UpdateWhereStep<R> set(Row1<T1> row, Select<? extends Record1<T1>> select) {
         getDelegate().addValues(row, select);
         return this;
@@ -224,6 +350,104 @@ final class UpdateImpl<R extends Record>
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final <T1, T2, T3, T4, T5, T6, T7, T8> UpdateWhereStep<R> set(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9> UpdateWhereStep<R> set(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row, Select<? extends Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> UpdateWhereStep<R> set(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row, Select<? extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> UpdateWhereStep<R> set(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row, Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> UpdateWhereStep<R> set(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row, Select<? extends Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> UpdateWhereStep<R> set(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row, Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> UpdateWhereStep<R> set(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row, Select<? extends Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> UpdateWhereStep<R> set(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row, Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> UpdateWhereStep<R> set(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row, Select<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> UpdateWhereStep<R> set(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row, Select<? extends Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> UpdateWhereStep<R> set(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row, Select<? extends Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> UpdateWhereStep<R> set(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row, Select<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> UpdateWhereStep<R> set(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row, Select<? extends Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> UpdateWhereStep<R> set(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row, Select<? extends Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateWhereStep<R> set(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Select<? extends Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select) {
         getDelegate().addValues(row, select);
         return this;
     }

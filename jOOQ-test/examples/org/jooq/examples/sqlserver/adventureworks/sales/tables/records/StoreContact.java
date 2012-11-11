@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class StoreContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 324947528;
+	private static final long serialVersionUID = -1809138201;
 
 	/**
-	 * The table column <code>Sales.StoreContact.CustomerID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_StoreContact_Store_CustomerID
-	 * FOREIGN KEY (CustomerID)
-	 * REFERENCES Sales.Store (CustomerID)
-	 * </pre></code>
+	 * Setter for <code>Sales.StoreContact.CustomerID</code>. 
 	 */
 	public void setCustomerID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.CustomerID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.StoreContact.CustomerID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_StoreContact_Store_CustomerID
-	 * FOREIGN KEY (CustomerID)
-	 * REFERENCES Sales.Store (CustomerID)
-	 * </pre></code>
+	 * Getter for <code>Sales.StoreContact.CustomerID</code>. 
 	 */
 	@javax.persistence.Column(name = "CustomerID", nullable = false, precision = 10)
 	public java.lang.Integer getCustomerID() {
@@ -47,30 +31,14 @@ public class StoreContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.StoreContact.ContactID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_StoreContact_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * Setter for <code>Sales.StoreContact.ContactID</code>. 
 	 */
 	public void setContactID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.ContactID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.StoreContact.ContactID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_StoreContact_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * Getter for <code>Sales.StoreContact.ContactID</code>. 
 	 */
 	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
@@ -78,26 +46,14 @@ public class StoreContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.StoreContact.ContactTypeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_StoreContact_ContactType_ContactTypeID
-	 * FOREIGN KEY (ContactTypeID)
-	 * REFERENCES Person.ContactType (ContactTypeID)
-	 * </pre></code>
+	 * Setter for <code>Sales.StoreContact.ContactTypeID</code>. 
 	 */
 	public void setContactTypeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.ContactTypeID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.StoreContact.ContactTypeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_StoreContact_ContactType_ContactTypeID
-	 * FOREIGN KEY (ContactTypeID)
-	 * REFERENCES Person.ContactType (ContactTypeID)
-	 * </pre></code>
+	 * Getter for <code>Sales.StoreContact.ContactTypeID</code>. 
 	 */
 	@javax.persistence.Column(name = "ContactTypeID", nullable = false, precision = 10)
 	public java.lang.Integer getContactTypeID() {
@@ -105,14 +61,14 @@ public class StoreContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.StoreContact.rowguid</code>
+	 * Setter for <code>Sales.StoreContact.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Sales.StoreContact.rowguid</code>
+	 * Getter for <code>Sales.StoreContact.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -120,25 +76,30 @@ public class StoreContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.StoreContact.ModifiedDate</code>
+	 * Setter for <code>Sales.StoreContact.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.StoreContact.ModifiedDate</code>
+	 * Getter for <code>Sales.StoreContact.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached StoreContact
+	 * {@inheritDoc}
 	 */
-	public StoreContact() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -239,5 +200,16 @@ public class StoreContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	@Override
 	public java.sql.Timestamp value5() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached StoreContact
+	 */
+	public StoreContact() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact);
 	}
 }

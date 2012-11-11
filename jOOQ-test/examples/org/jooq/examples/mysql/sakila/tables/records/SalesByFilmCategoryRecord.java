@@ -11,42 +11,39 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class SalesByFilmCategoryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord> implements org.jooq.Record2<java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1366113248;
+	private static final long serialVersionUID = -1582040782;
 
 	/**
-	 * The table column <code>sakila.sales_by_film_category.category</code>
+	 * Setter for <code>sakila.sales_by_film_category.category</code>. 
 	 */
 	public void setCategory(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.CATEGORY, value);
 	}
 
 	/**
-	 * The table column <code>sakila.sales_by_film_category.category</code>
+	 * Getter for <code>sakila.sales_by_film_category.category</code>. 
 	 */
 	public java.lang.String getCategory() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.CATEGORY);
 	}
 
 	/**
-	 * The table column <code>sakila.sales_by_film_category.total_sales</code>
+	 * Setter for <code>sakila.sales_by_film_category.total_sales</code>. 
 	 */
 	public void setTotalSales(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.TOTAL_SALES, value);
 	}
 
 	/**
-	 * The table column <code>sakila.sales_by_film_category.total_sales</code>
+	 * Getter for <code>sakila.sales_by_film_category.total_sales</code>. 
 	 */
 	public java.math.BigDecimal getTotalSales() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.TOTAL_SALES);
 	}
 
-	/**
-	 * Create a detached SalesByFilmCategoryRecord
-	 */
-	public SalesByFilmCategoryRecord() {
-		super(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -98,5 +95,16 @@ public class SalesByFilmCategoryRecord extends org.jooq.impl.TableRecordImpl<org
 	@Override
 	public java.math.BigDecimal value2() {
 		return getTotalSales();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached SalesByFilmCategoryRecord
+	 */
+	public SalesByFilmCategoryRecord() {
+		super(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY);
 	}
 }

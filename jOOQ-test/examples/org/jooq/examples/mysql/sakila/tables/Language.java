@@ -9,10 +9,10 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Language extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> {
 
-	private static final long serialVersionUID = -1140320220;
+	private static final long serialVersionUID = 2010301386;
 
 	/**
-	 * The singleton instance of sakila.language
+	 * The singleton instance of <code>sakila.language</code>
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Language LANGUAGE = new org.jooq.examples.mysql.sakila.tables.Language();
 
@@ -25,46 +25,61 @@ public class Language extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	}
 
 	/**
-	 * The table column <code>sakila.language.language_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>sakila.language.language_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord, java.lang.Byte> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>sakila.language.name</code>
+	 * The column <code>sakila.language.name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.CHAR, this);
 
 	/**
-	 * The table column <code>sakila.language.last_update</code>
+	 * The column <code>sakila.language.last_update</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>sakila.language</code> table reference
+	 */
 	public Language() {
 		super("language", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
+	/**
+	 * Create an aliased <code>sakila.language</code> table reference
+	 */
 	public Language(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord, java.lang.Byte> getIdentity() {
 		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_LANGUAGE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> getMainKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_LANGUAGE_PRIMARY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_LANGUAGE_PRIMARY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.Language as(java.lang.String alias) {
 		return new org.jooq.examples.mysql.sakila.tables.Language(alias);

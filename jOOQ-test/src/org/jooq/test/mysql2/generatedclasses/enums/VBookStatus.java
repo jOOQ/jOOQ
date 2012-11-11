@@ -10,6 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.enums;
  */
 @java.lang.SuppressWarnings("all")
 public enum VBookStatus implements org.jooq.EnumType {
+
 	SOLD_OUT("SOLD OUT"),
 
 	ORDERED("ORDERED"),
@@ -24,11 +25,17 @@ public enum VBookStatus implements org.jooq.EnumType {
 		this.literal = literal;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getName() {
 		return "v_book_STATUS";
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getLiteral() {
 		return literal;

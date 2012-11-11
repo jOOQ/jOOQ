@@ -9,135 +9,307 @@ package org.jooq.examples.mysql.sakila.tables.records;
  * VIEW
  */
 @java.lang.SuppressWarnings("all")
-public class CustomerListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord> {
+public class CustomerListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord> implements org.jooq.Record9<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> {
 
-	private static final long serialVersionUID = 1826029516;
+	private static final long serialVersionUID = -726979520;
 
 	/**
-	 * The table column <code>sakila.customer_list.ID</code>
+	 * Setter for <code>sakila.customer_list.ID</code>. 
 	 */
 	public void setId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.ID</code>
+	 * Getter for <code>sakila.customer_list.ID</code>. 
 	 */
 	public java.lang.Short getId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ID);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.name</code>
+	 * Setter for <code>sakila.customer_list.name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NAME, value);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.name</code>
+	 * Getter for <code>sakila.customer_list.name</code>. 
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NAME);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.address</code>
+	 * Setter for <code>sakila.customer_list.address</code>. 
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ADDRESS, value);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.address</code>
+	 * Getter for <code>sakila.customer_list.address</code>. 
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ADDRESS);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.zip code</code>
+	 * Setter for <code>sakila.customer_list.zip code</code>. 
 	 */
 	public void setZipCode(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ZIP_CODE, value);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.zip code</code>
+	 * Getter for <code>sakila.customer_list.zip code</code>. 
 	 */
 	public java.lang.String getZipCode() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ZIP_CODE);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.phone</code>
+	 * Setter for <code>sakila.customer_list.phone</code>. 
 	 */
 	public void setPhone(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.PHONE, value);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.phone</code>
+	 * Getter for <code>sakila.customer_list.phone</code>. 
 	 */
 	public java.lang.String getPhone() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.PHONE);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.city</code>
+	 * Setter for <code>sakila.customer_list.city</code>. 
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.CITY, value);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.city</code>
+	 * Getter for <code>sakila.customer_list.city</code>. 
 	 */
 	public java.lang.String getCity() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.CITY);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.country</code>
+	 * Setter for <code>sakila.customer_list.country</code>. 
 	 */
 	public void setCountry(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.COUNTRY, value);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.country</code>
+	 * Getter for <code>sakila.customer_list.country</code>. 
 	 */
 	public java.lang.String getCountry() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.COUNTRY);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.notes</code>
+	 * Setter for <code>sakila.customer_list.notes</code>. 
 	 */
 	public void setNotes(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NOTES, value);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.notes</code>
+	 * Getter for <code>sakila.customer_list.notes</code>. 
 	 */
 	public java.lang.String getNotes() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NOTES);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.SID</code>
+	 * Setter for <code>sakila.customer_list.SID</code>. 
 	 */
 	public void setSid(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.SID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.customer_list.SID</code>
+	 * Getter for <code>sakila.customer_list.SID</code>. 
 	 */
 	public java.lang.Byte getSid() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.SID);
 	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Record9 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row9<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row9<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Short> field1() {
+		return org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ADDRESS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ZIP_CODE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.PHONE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.CITY;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field7() {
+		return org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.COUNTRY;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field8() {
+		return org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NOTES;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Byte> field9() {
+		return org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.SID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Short value1() {
+		return getId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getAddress();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getZipCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getPhone();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getCity();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value7() {
+		return getCountry();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value8() {
+		return getNotes();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Byte value9() {
+		return getSid();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached CustomerListRecord

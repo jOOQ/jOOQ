@@ -11,35 +11,19 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @javax.persistence.Table(name = "ProductVendor", schema = "Purchasing", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"ProductID", "VendorID"})
 })
-public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor> {
+public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 783375276;
+	private static final long serialVersionUID = 396693275;
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductVendor_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Setter for <code>Purchasing.ProductVendor.ProductID</code>. 
 	 */
 	public void setProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.ProductID, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductVendor_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Getter for <code>Purchasing.ProductVendor.ProductID</code>. 
 	 */
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
@@ -47,30 +31,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.VendorID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductVendor_Vendor_VendorID
-	 * FOREIGN KEY (VendorID)
-	 * REFERENCES Purchasing.Vendor (VendorID)
-	 * </pre></code>
+	 * Setter for <code>Purchasing.ProductVendor.VendorID</code>. 
 	 */
 	public void setVendorID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.VendorID, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.VendorID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductVendor_Vendor_VendorID
-	 * FOREIGN KEY (VendorID)
-	 * REFERENCES Purchasing.Vendor (VendorID)
-	 * </pre></code>
+	 * Getter for <code>Purchasing.ProductVendor.VendorID</code>. 
 	 */
 	@javax.persistence.Column(name = "VendorID", nullable = false, precision = 10)
 	public java.lang.Integer getVendorID() {
@@ -78,14 +46,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.AverageLeadTime</code>
+	 * Setter for <code>Purchasing.ProductVendor.AverageLeadTime</code>. 
 	 */
 	public void setAverageLeadTime(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.AverageLeadTime, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.AverageLeadTime</code>
+	 * Getter for <code>Purchasing.ProductVendor.AverageLeadTime</code>. 
 	 */
 	@javax.persistence.Column(name = "AverageLeadTime", nullable = false, precision = 10)
 	public java.lang.Integer getAverageLeadTime() {
@@ -93,14 +61,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.StandardPrice</code>
+	 * Setter for <code>Purchasing.ProductVendor.StandardPrice</code>. 
 	 */
 	public void setStandardPrice(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.StandardPrice, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.StandardPrice</code>
+	 * Getter for <code>Purchasing.ProductVendor.StandardPrice</code>. 
 	 */
 	@javax.persistence.Column(name = "StandardPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getStandardPrice() {
@@ -108,14 +76,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.LastReceiptCost</code>
+	 * Setter for <code>Purchasing.ProductVendor.LastReceiptCost</code>. 
 	 */
 	public void setLastReceiptCost(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.LastReceiptCost, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.LastReceiptCost</code>
+	 * Getter for <code>Purchasing.ProductVendor.LastReceiptCost</code>. 
 	 */
 	@javax.persistence.Column(name = "LastReceiptCost", precision = 19, scale = 4)
 	public java.math.BigDecimal getLastReceiptCost() {
@@ -123,14 +91,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.LastReceiptDate</code>
+	 * Setter for <code>Purchasing.ProductVendor.LastReceiptDate</code>. 
 	 */
 	public void setLastReceiptDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.LastReceiptDate, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.LastReceiptDate</code>
+	 * Getter for <code>Purchasing.ProductVendor.LastReceiptDate</code>. 
 	 */
 	@javax.persistence.Column(name = "LastReceiptDate")
 	public java.sql.Timestamp getLastReceiptDate() {
@@ -138,14 +106,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.MinOrderQty</code>
+	 * Setter for <code>Purchasing.ProductVendor.MinOrderQty</code>. 
 	 */
 	public void setMinOrderQty(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.MinOrderQty, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.MinOrderQty</code>
+	 * Getter for <code>Purchasing.ProductVendor.MinOrderQty</code>. 
 	 */
 	@javax.persistence.Column(name = "MinOrderQty", nullable = false, precision = 10)
 	public java.lang.Integer getMinOrderQty() {
@@ -153,14 +121,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.MaxOrderQty</code>
+	 * Setter for <code>Purchasing.ProductVendor.MaxOrderQty</code>. 
 	 */
 	public void setMaxOrderQty(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.MaxOrderQty, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.MaxOrderQty</code>
+	 * Getter for <code>Purchasing.ProductVendor.MaxOrderQty</code>. 
 	 */
 	@javax.persistence.Column(name = "MaxOrderQty", nullable = false, precision = 10)
 	public java.lang.Integer getMaxOrderQty() {
@@ -168,14 +136,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.OnOrderQty</code>
+	 * Setter for <code>Purchasing.ProductVendor.OnOrderQty</code>. 
 	 */
 	public void setOnOrderQty(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.OnOrderQty, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.OnOrderQty</code>
+	 * Getter for <code>Purchasing.ProductVendor.OnOrderQty</code>. 
 	 */
 	@javax.persistence.Column(name = "OnOrderQty", precision = 10)
 	public java.lang.Integer getOnOrderQty() {
@@ -183,26 +151,14 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.UnitMeasureCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductVendor_UnitMeasure_UnitMeasureCode
-	 * FOREIGN KEY (UnitMeasureCode)
-	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
-	 * </pre></code>
+	 * Setter for <code>Purchasing.ProductVendor.UnitMeasureCode</code>. 
 	 */
 	public void setUnitMeasureCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.UnitMeasureCode, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.UnitMeasureCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductVendor_UnitMeasure_UnitMeasureCode
-	 * FOREIGN KEY (UnitMeasureCode)
-	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
-	 * </pre></code>
+	 * Getter for <code>Purchasing.ProductVendor.UnitMeasureCode</code>. 
 	 */
 	@javax.persistence.Column(name = "UnitMeasureCode", nullable = false, length = 3)
 	public java.lang.String getUnitMeasureCode() {
@@ -210,19 +166,231 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.ModifiedDate</code>
+	 * Setter for <code>Purchasing.ProductVendor.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Purchasing.ProductVendor.ModifiedDate</code>
+	 * Getter for <code>Purchasing.ProductVendor.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.ModifiedDate);
 	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
+	}
+
+	// -------------------------------------------------------------------------
+	// Record11 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.ProductID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.VendorID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.AverageLeadTime;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.StandardPrice;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.LastReceiptCost;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.LastReceiptDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.MinOrderQty;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.MaxOrderQty;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field9() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.OnOrderQty;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field10() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.UnitMeasureCode;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field11() {
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getProductID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getVendorID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value3() {
+		return getAverageLeadTime();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value4() {
+		return getStandardPrice();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value5() {
+		return getLastReceiptCost();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value6() {
+		return getLastReceiptDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value7() {
+		return getMinOrderQty();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value8() {
+		return getMaxOrderQty();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value9() {
+		return getOnOrderQty();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value10() {
+		return getUnitMeasureCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value11() {
+		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached ProductVendor

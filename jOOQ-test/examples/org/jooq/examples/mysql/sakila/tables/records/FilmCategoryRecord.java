@@ -9,41 +9,17 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord> implements org.jooq.Record3<java.lang.Short, java.lang.Byte, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 2020625402;
+	private static final long serialVersionUID = 160156381;
 
 	/**
-	 * The table column <code>sakila.film_category.film_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_film_category_film
-	 * FOREIGN KEY (film_id)
-	 * REFERENCES sakila.film (film_id)
-	 * </pre></code>
+	 * Setter for <code>sakila.film_category.film_id</code>. 
 	 */
 	public void setFilmId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.FILM_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.film_category.film_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_film_category_film
-	 * FOREIGN KEY (film_id)
-	 * REFERENCES sakila.film (film_id)
-	 * </pre></code>
-	 */
-	public java.lang.Short getFilmId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.FILM_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.FilmRecord 
-	 * FilmRecord}
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.FilmRecord}
 	 */
 	public void setFilmId(org.jooq.examples.mysql.sakila.tables.records.FilmRecord value) {
 		if (value == null) {
@@ -55,56 +31,21 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>sakila.film_category.film_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_film_category_film
-	 * FOREIGN KEY (film_id)
-	 * REFERENCES sakila.film (film_id)
-	 * </pre></code>
+	 * Getter for <code>sakila.film_category.film_id</code>. 
 	 */
-	public org.jooq.examples.mysql.sakila.tables.records.FilmRecord fetchFilm() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Film.FILM)
-			.where(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.FILM_ID)))
-			.fetchOne();
+	public java.lang.Short getFilmId() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.FILM_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.film_category.category_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_film_category_category
-	 * FOREIGN KEY (category_id)
-	 * REFERENCES sakila.category (category_id)
-	 * </pre></code>
+	 * Setter for <code>sakila.film_category.category_id</code>. 
 	 */
 	public void setCategoryId(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.CATEGORY_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.film_category.category_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_film_category_category
-	 * FOREIGN KEY (category_id)
-	 * REFERENCES sakila.category (category_id)
-	 * </pre></code>
-	 */
-	public java.lang.Byte getCategoryId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.CATEGORY_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CategoryRecord 
-	 * CategoryRecord}
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CategoryRecord}
 	 */
 	public void setCategoryId(org.jooq.examples.mysql.sakila.tables.records.CategoryRecord value) {
 		if (value == null) {
@@ -116,15 +57,42 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>sakila.film_category.category_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_film_category_category
-	 * FOREIGN KEY (category_id)
-	 * REFERENCES sakila.category (category_id)
-	 * </pre></code>
+	 * Getter for <code>sakila.film_category.category_id</code>. 
+	 */
+	public java.lang.Byte getCategoryId() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.CATEGORY_ID);
+	}
+
+	/**
+	 * Setter for <code>sakila.film_category.last_update</code>. 
+	 */
+	public void setLastUpdate(java.sql.Timestamp value) {
+		setValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.LAST_UPDATE, value);
+	}
+
+	/**
+	 * Getter for <code>sakila.film_category.last_update</code>. 
+	 */
+	public java.sql.Timestamp getLastUpdate() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.LAST_UPDATE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a <code>sakila.film</code> referenced by this <code>sakila.film_category</code>
+	 */
+	public org.jooq.examples.mysql.sakila.tables.records.FilmRecord fetchFilm() {
+		return create()
+			.selectFrom(org.jooq.examples.mysql.sakila.tables.Film.FILM)
+			.where(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.FILM_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>sakila.category</code> referenced by this <code>sakila.film_category</code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.CategoryRecord fetchCategory() {
 		return create()
@@ -133,25 +101,16 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 			.fetchOne();
 	}
 
-	/**
-	 * The table column <code>sakila.film_category.last_update</code>
-	 */
-	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.LAST_UPDATE, value);
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The table column <code>sakila.film_category.last_update</code>
+	 * {@inheritDoc}
 	 */
-	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.LAST_UPDATE);
-	}
-
-	/**
-	 * Create a detached FilmCategoryRecord
-	 */
-	public FilmCategoryRecord() {
-		super(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY);
+	@Override
+	public org.jooq.Record2<java.lang.Short, java.lang.Byte> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -220,5 +179,16 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.sql.Timestamp value3() {
 		return getLastUpdate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached FilmCategoryRecord
+	 */
+	public FilmCategoryRecord() {
+		super(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY);
 	}
 }

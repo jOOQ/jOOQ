@@ -9,16 +9,15 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
 @java.lang.SuppressWarnings("all")
 public class ufnLeadingZeros extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -1479627117;
-
+	private static final long serialVersionUID = 1883177749;
 
 	/**
-	 * The procedure parameter <code>dbo.ufnLeadingZeros.RETURN_VALUE</code>
+	 * The parameter <code>dbo.ufnLeadingZeros.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>dbo.ufnLeadingZeros.Value</code>
+	 * The parameter <code>dbo.ufnLeadingZeros.Value</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> Value = createParameter("Value", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -40,9 +39,7 @@ public class ufnLeadingZeros extends org.jooq.impl.AbstractRoutine<java.lang.Str
 	}
 
 	/**
-	 * Set the <code>Value</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>Value</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setValue(org.jooq.Field<java.lang.Integer> field) {
 		setField(Value, field);

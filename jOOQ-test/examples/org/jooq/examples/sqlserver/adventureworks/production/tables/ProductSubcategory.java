@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class ProductSubcategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory> {
 
-	private static final long serialVersionUID = -1293812962;
+	private static final long serialVersionUID = -93913866;
 
 	/**
-	 * The singleton instance of Production.ProductSubcategory
+	 * The singleton instance of <code>Production.ProductSubcategory</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory ProductSubcategory = new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory();
 
@@ -25,68 +25,79 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	}
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.ProductSubcategoryID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Production.ProductSubcategory.ProductSubcategoryID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory, java.lang.Integer> ProductSubcategoryID = createField("ProductSubcategoryID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.ProductCategoryID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductSubcategory_ProductCategory_ProductCategoryID
-	 * FOREIGN KEY (ProductCategoryID)
-	 * REFERENCES Production.ProductCategory (ProductCategoryID)
-	 * </pre></code>
+	 * The column <code>Production.ProductSubcategory.ProductCategoryID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory, java.lang.Integer> ProductCategoryID = createField("ProductCategoryID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.Name</code>
+	 * The column <code>Production.ProductSubcategory.Name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.rowguid</code>
+	 * The column <code>Production.ProductSubcategory.rowguid</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.ModifiedDate</code>
+	 * The column <code>Production.ProductSubcategory.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.ProductSubcategory</code> table reference
+	 */
 	public ProductSubcategory() {
 		super("ProductSubcategory", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.ProductSubcategory</code> table reference
+	 */
 	public ProductSubcategory(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_ProductSubcategory;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductSubcategory_ProductSubcategoryID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductSubcategory_ProductSubcategoryID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductSubcategory_ProductCategory_ProductCategoryID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory(alias);

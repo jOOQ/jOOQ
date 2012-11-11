@@ -9,21 +9,20 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class PrepareRecords extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -448468772;
-
+	private static final long serialVersionUID = -1755260035;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.PREPARE_RECORDS.RETURN_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.PREPARE_RECORDS.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.PREPARE_RECORDS.PLAN_CUR</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.PREPARE_RECORDS.PLAN_CUR</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> PLAN_CUR = createParameter("PLAN_CUR", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.PREPARE_RECORDS.I_FORMAT_FLAGS</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.PREPARE_RECORDS.I_FORMAT_FLAGS</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> I_FORMAT_FLAGS = createParameter("I_FORMAT_FLAGS", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -46,9 +45,7 @@ public class PrepareRecords extends org.jooq.impl.AbstractRoutine<org.jooq.examp
 	}
 
 	/**
-	 * Set the <code>PLAN_CUR</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>PLAN_CUR</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setPlanCur(org.jooq.Field<org.jooq.Result<org.jooq.Record>> field) {
 		setField(PLAN_CUR, field);
@@ -62,9 +59,7 @@ public class PrepareRecords extends org.jooq.impl.AbstractRoutine<org.jooq.examp
 	}
 
 	/**
-	 * Set the <code>I_FORMAT_FLAGS</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>I_FORMAT_FLAGS</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setIFormatFlags(org.jooq.Field<java.lang.Integer> field) {
 		setField(I_FORMAT_FLAGS, field);

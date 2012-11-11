@@ -9,16 +9,15 @@ package org.jooq.examples.mysql.sakila.routines;
 @java.lang.SuppressWarnings("all")
 public class InventoryHeldByCustomer extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1180543685;
-
+	private static final long serialVersionUID = -1174927047;
 
 	/**
-	 * The procedure parameter <code>sakila.inventory_held_by_customer.RETURN_VALUE</code>
+	 * The parameter <code>sakila.inventory_held_by_customer.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>sakila.inventory_held_by_customer.p_inventory_id</code>
+	 * The parameter <code>sakila.inventory_held_by_customer.p_inventory_id</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_INVENTORY_ID = createParameter("p_inventory_id", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -40,9 +39,7 @@ public class InventoryHeldByCustomer extends org.jooq.impl.AbstractRoutine<java.
 	}
 
 	/**
-	 * Set the <code>p_inventory_id</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>p_inventory_id</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setPInventoryId(org.jooq.Field<java.lang.Integer> field) {
 		setField(P_INVENTORY_ID, field);

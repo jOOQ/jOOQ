@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "ShoppingCartItem", schema = "Sales")
 public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1481487303;
+	private static final long serialVersionUID = 1202847352;
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.ShoppingCartItemID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Sales.ShoppingCartItem.ShoppingCartItemID</code>. 
 	 */
 	public void setShoppingCartItemID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.ShoppingCartItemID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.ShoppingCartItemID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Sales.ShoppingCartItem.ShoppingCartItemID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ShoppingCartItemID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.ShoppingCartID</code>
+	 * Setter for <code>Sales.ShoppingCartItem.ShoppingCartID</code>. 
 	 */
 	public void setShoppingCartID(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.ShoppingCartID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.ShoppingCartID</code>
+	 * Getter for <code>Sales.ShoppingCartItem.ShoppingCartID</code>. 
 	 */
 	@javax.persistence.Column(name = "ShoppingCartID", nullable = false, length = 50)
 	public java.lang.String getShoppingCartID() {
@@ -49,14 +45,14 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.Quantity</code>
+	 * Setter for <code>Sales.ShoppingCartItem.Quantity</code>. 
 	 */
 	public void setQuantity(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.Quantity, value);
 	}
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.Quantity</code>
+	 * Getter for <code>Sales.ShoppingCartItem.Quantity</code>. 
 	 */
 	@javax.persistence.Column(name = "Quantity", nullable = false, precision = 10)
 	public java.lang.Integer getQuantity() {
@@ -64,26 +60,14 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.ProductID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ShoppingCartItem_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Setter for <code>Sales.ShoppingCartItem.ProductID</code>. 
 	 */
 	public void setProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.ProductID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.ProductID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ShoppingCartItem_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Getter for <code>Sales.ShoppingCartItem.ProductID</code>. 
 	 */
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
@@ -91,14 +75,14 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.DateCreated</code>
+	 * Setter for <code>Sales.ShoppingCartItem.DateCreated</code>. 
 	 */
 	public void setDateCreated(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.DateCreated, value);
 	}
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.DateCreated</code>
+	 * Getter for <code>Sales.ShoppingCartItem.DateCreated</code>. 
 	 */
 	@javax.persistence.Column(name = "DateCreated", nullable = false)
 	public java.sql.Timestamp getDateCreated() {
@@ -106,25 +90,30 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.ModifiedDate</code>
+	 * Setter for <code>Sales.ShoppingCartItem.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.ShoppingCartItem.ModifiedDate</code>
+	 * Getter for <code>Sales.ShoppingCartItem.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ShoppingCartItem
+	 * {@inheritDoc}
 	 */
-	public ShoppingCartItem() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -241,5 +230,16 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.sql.Timestamp value6() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ShoppingCartItem
+	 */
+	public ShoppingCartItem() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem);
 	}
 }

@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductCostHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCostHistory> implements org.jooq.Record5<java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.math.BigDecimal, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 253475682;
+	private static final long serialVersionUID = -435513731;
 
 	/**
-	 * The table column <code>Production.ProductCostHistory.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductCostHistory_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Setter for <code>Production.ProductCostHistory.ProductID</code>. 
 	 */
 	public void setProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCostHistory.ProductCostHistory.ProductID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductCostHistory.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductCostHistory_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Getter for <code>Production.ProductCostHistory.ProductID</code>. 
 	 */
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
@@ -47,18 +31,14 @@ public class ProductCostHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Production.ProductCostHistory.StartDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.ProductCostHistory.StartDate</code>. 
 	 */
 	public void setStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCostHistory.ProductCostHistory.StartDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductCostHistory.StartDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.ProductCostHistory.StartDate</code>. 
 	 */
 	@javax.persistence.Column(name = "StartDate", nullable = false)
 	public java.sql.Timestamp getStartDate() {
@@ -66,14 +46,14 @@ public class ProductCostHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Production.ProductCostHistory.EndDate</code>
+	 * Setter for <code>Production.ProductCostHistory.EndDate</code>. 
 	 */
 	public void setEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCostHistory.ProductCostHistory.EndDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductCostHistory.EndDate</code>
+	 * Getter for <code>Production.ProductCostHistory.EndDate</code>. 
 	 */
 	@javax.persistence.Column(name = "EndDate")
 	public java.sql.Timestamp getEndDate() {
@@ -81,14 +61,14 @@ public class ProductCostHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Production.ProductCostHistory.StandardCost</code>
+	 * Setter for <code>Production.ProductCostHistory.StandardCost</code>. 
 	 */
 	public void setStandardCost(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCostHistory.ProductCostHistory.StandardCost, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductCostHistory.StandardCost</code>
+	 * Getter for <code>Production.ProductCostHistory.StandardCost</code>. 
 	 */
 	@javax.persistence.Column(name = "StandardCost", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getStandardCost() {
@@ -96,25 +76,30 @@ public class ProductCostHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Production.ProductCostHistory.ModifiedDate</code>
+	 * Setter for <code>Production.ProductCostHistory.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCostHistory.ProductCostHistory.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductCostHistory.ModifiedDate</code>
+	 * Getter for <code>Production.ProductCostHistory.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCostHistory.ProductCostHistory.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ProductCostHistory
+	 * {@inheritDoc}
 	 */
-	public ProductCostHistory() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCostHistory.ProductCostHistory);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.sql.Timestamp> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -215,5 +200,16 @@ public class ProductCostHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.sql.Timestamp value5() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ProductCostHistory
+	 */
+	public ProductCostHistory() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCostHistory.ProductCostHistory);
 	}
 }

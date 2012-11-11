@@ -13,21 +13,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_64_69", schema = "test2")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -31130972;
+	private static final long serialVersionUID = 12569876;
 
 	/**
-	 * The table column <code>test2.x_test_case_64_69.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>test2.x_test_case_64_69.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, value);
 	}
 
 	/**
-	 * The table column <code>test2.x_test_case_64_69.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>test2.x_test_case_64_69.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
@@ -36,49 +32,56 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>test2.x_test_case_64_69.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>test2.x_test_case_64_69.UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_64_69a
-	 * FOREIGN KEY (UNUSED_ID)
-	 * REFERENCES test2.x_unused (ID, NAME)
-	 * </pre></code>
+	 * Setter for <code>test2.x_test_case_64_69.UNUSED_ID</code>. 
 	 */
 	public void setUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID, value);
 	}
 
 	/**
-	 * The table column <code>test2.x_test_case_64_69.UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_64_69a
-	 * FOREIGN KEY (UNUSED_ID)
-	 * REFERENCES test2.x_unused (ID, NAME)
-	 * </pre></code>
+	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord}
+	 */
+	public void setUnusedId(org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord value) {
+		if (value == null) {
+			setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID, null);
+		}
+		else {
+			setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID, value.getValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.ID));
+		}
+	}
+
+	/**
+	 * Getter for <code>test2.x_test_case_64_69.UNUSED_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "UNUSED_ID", precision = 10)
 	public java.lang.Integer getUnusedId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached XTestCase_64_69Record
+	 * Fetch a list of <code>test2.x_test_case_71</code> referencing this <code>test2.x_test_case_64_69</code>
 	 */
-	public XTestCase_64_69Record() {
-		super(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
+	public org.jooq.Result<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
+		return create()
+			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
+			.where(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID)))
+			.fetch();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -131,5 +134,16 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	@Override
 	public java.lang.Integer value2() {
 		return getUnusedId();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_64_69Record
+	 */
+	public XTestCase_64_69Record() {
+		super(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
 	}
 }

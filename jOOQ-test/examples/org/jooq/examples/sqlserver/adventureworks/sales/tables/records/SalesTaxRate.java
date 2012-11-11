@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesTaxRate", schema = "Sales")
 public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTaxRate> implements org.jooq.Record7<java.lang.Integer, java.lang.Integer, java.lang.Byte, java.math.BigDecimal, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 699896622;
+	private static final long serialVersionUID = -335288519;
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.SalesTaxRateID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Sales.SalesTaxRate.SalesTaxRateID</code>. 
 	 */
 	public void setSalesTaxRateID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.SalesTaxRateID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.SalesTaxRateID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Sales.SalesTaxRate.SalesTaxRateID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "SalesTaxRateID", unique = true, nullable = false, precision = 10)
@@ -34,26 +30,14 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.StateProvinceID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesTaxRate_StateProvince_StateProvinceID
-	 * FOREIGN KEY (StateProvinceID)
-	 * REFERENCES Person.StateProvince (StateProvinceID)
-	 * </pre></code>
+	 * Setter for <code>Sales.SalesTaxRate.StateProvinceID</code>. 
 	 */
 	public void setStateProvinceID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.StateProvinceID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.StateProvinceID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesTaxRate_StateProvince_StateProvinceID
-	 * FOREIGN KEY (StateProvinceID)
-	 * REFERENCES Person.StateProvince (StateProvinceID)
-	 * </pre></code>
+	 * Getter for <code>Sales.SalesTaxRate.StateProvinceID</code>. 
 	 */
 	@javax.persistence.Column(name = "StateProvinceID", nullable = false, precision = 10)
 	public java.lang.Integer getStateProvinceID() {
@@ -61,14 +45,14 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.TaxType</code>
+	 * Setter for <code>Sales.SalesTaxRate.TaxType</code>. 
 	 */
 	public void setTaxType(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.TaxType, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.TaxType</code>
+	 * Getter for <code>Sales.SalesTaxRate.TaxType</code>. 
 	 */
 	@javax.persistence.Column(name = "TaxType", nullable = false, precision = 3)
 	public java.lang.Byte getTaxType() {
@@ -76,14 +60,14 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.TaxRate</code>
+	 * Setter for <code>Sales.SalesTaxRate.TaxRate</code>. 
 	 */
 	public void setTaxRate(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.TaxRate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.TaxRate</code>
+	 * Getter for <code>Sales.SalesTaxRate.TaxRate</code>. 
 	 */
 	@javax.persistence.Column(name = "TaxRate", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getTaxRate() {
@@ -91,14 +75,14 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.Name</code>
+	 * Setter for <code>Sales.SalesTaxRate.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.Name, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.Name</code>
+	 * Getter for <code>Sales.SalesTaxRate.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -106,14 +90,14 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.rowguid</code>
+	 * Setter for <code>Sales.SalesTaxRate.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.rowguid</code>
+	 * Getter for <code>Sales.SalesTaxRate.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -121,25 +105,30 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.ModifiedDate</code>
+	 * Setter for <code>Sales.SalesTaxRate.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesTaxRate.ModifiedDate</code>
+	 * Getter for <code>Sales.SalesTaxRate.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached SalesTaxRate
+	 * {@inheritDoc}
 	 */
-	public SalesTaxRate() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -272,5 +261,16 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	@Override
 	public java.sql.Timestamp value7() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached SalesTaxRate
+	 */
+	public SalesTaxRate() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate);
 	}
 }

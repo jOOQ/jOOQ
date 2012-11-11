@@ -9,19 +9,15 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
 @java.lang.SuppressWarnings("all")
 public class ufnGetContactInformation extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = -1066240214;
-
+	private static final long serialVersionUID = -1935374029;
 
 	/**
-	 * The procedure parameter <code>dbo.ufnGetContactInformation.RETURN_VALUE</code>
-	 * <p>
-	 * The SQL type of this item (TABLE) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The parameter <code>dbo.ufnGetContactInformation.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("TABLE"));
 
 	/**
-	 * The procedure parameter <code>dbo.ufnGetContactInformation.ContactID</code>
+	 * The parameter <code>dbo.ufnGetContactInformation.ContactID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> ContactID = createParameter("ContactID", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -43,9 +39,7 @@ public class ufnGetContactInformation extends org.jooq.impl.AbstractRoutine<java
 	}
 
 	/**
-	 * Set the <code>ContactID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>ContactID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setContactID(org.jooq.Field<java.lang.Integer> field) {
 		setField(ContactID, field);

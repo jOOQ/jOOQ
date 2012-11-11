@@ -11,126 +11,123 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class NicerButSlowerFilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord> implements org.jooq.Record8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.NicerButSlowerFilmListRating, java.lang.String> {
 
-	private static final long serialVersionUID = 489196445;
+	private static final long serialVersionUID = -1291353025;
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.FID</code>
+	 * Setter for <code>sakila.nicer_but_slower_film_list.FID</code>. 
 	 */
 	public void setFid(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.FID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.FID</code>
+	 * Getter for <code>sakila.nicer_but_slower_film_list.FID</code>. 
 	 */
 	public java.lang.Short getFid() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.FID);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.title</code>
+	 * Setter for <code>sakila.nicer_but_slower_film_list.title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.TITLE, value);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.title</code>
+	 * Getter for <code>sakila.nicer_but_slower_film_list.title</code>. 
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.TITLE);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.description</code>
+	 * Setter for <code>sakila.nicer_but_slower_film_list.description</code>. 
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.DESCRIPTION, value);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.description</code>
+	 * Getter for <code>sakila.nicer_but_slower_film_list.description</code>. 
 	 */
 	public java.lang.String getDescription() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.DESCRIPTION);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.category</code>
+	 * Setter for <code>sakila.nicer_but_slower_film_list.category</code>. 
 	 */
 	public void setCategory(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.CATEGORY, value);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.category</code>
+	 * Getter for <code>sakila.nicer_but_slower_film_list.category</code>. 
 	 */
 	public java.lang.String getCategory() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.CATEGORY);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.price</code>
+	 * Setter for <code>sakila.nicer_but_slower_film_list.price</code>. 
 	 */
 	public void setPrice(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.PRICE, value);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.price</code>
+	 * Getter for <code>sakila.nicer_but_slower_film_list.price</code>. 
 	 */
 	public java.math.BigDecimal getPrice() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.PRICE);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.length</code>
+	 * Setter for <code>sakila.nicer_but_slower_film_list.length</code>. 
 	 */
 	public void setLength(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.LENGTH, value);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.length</code>
+	 * Getter for <code>sakila.nicer_but_slower_film_list.length</code>. 
 	 */
 	public java.lang.Short getLength() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.LENGTH);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.rating</code>
+	 * Setter for <code>sakila.nicer_but_slower_film_list.rating</code>. 
 	 */
 	public void setRating(org.jooq.examples.mysql.sakila.enums.NicerButSlowerFilmListRating value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.RATING, value);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.rating</code>
+	 * Getter for <code>sakila.nicer_but_slower_film_list.rating</code>. 
 	 */
 	public org.jooq.examples.mysql.sakila.enums.NicerButSlowerFilmListRating getRating() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.RATING);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.actors</code>
+	 * Setter for <code>sakila.nicer_but_slower_film_list.actors</code>. 
 	 */
 	public void setActors(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.ACTORS, value);
 	}
 
 	/**
-	 * The table column <code>sakila.nicer_but_slower_film_list.actors</code>
+	 * Getter for <code>sakila.nicer_but_slower_film_list.actors</code>. 
 	 */
 	public java.lang.String getActors() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST.ACTORS);
 	}
 
-	/**
-	 * Create a detached NicerButSlowerFilmListRecord
-	 */
-	public NicerButSlowerFilmListRecord() {
-		super(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record8 type implementation
@@ -278,5 +275,16 @@ public class NicerButSlowerFilmListRecord extends org.jooq.impl.TableRecordImpl<
 	@Override
 	public java.lang.String value8() {
 		return getActors();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached NicerButSlowerFilmListRecord
+	 */
+	public NicerButSlowerFilmListRecord() {
+		super(org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST);
 	}
 }

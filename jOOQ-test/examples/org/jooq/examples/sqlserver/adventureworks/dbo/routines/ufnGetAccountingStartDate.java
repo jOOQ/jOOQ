@@ -9,11 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
 @java.lang.SuppressWarnings("all")
 public class ufnGetAccountingStartDate extends org.jooq.impl.AbstractRoutine<java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 853596616;
-
+	private static final long serialVersionUID = -882478619;
 
 	/**
-	 * The procedure parameter <code>dbo.ufnGetAccountingStartDate.RETURN_VALUE</code>
+	 * The parameter <code>dbo.ufnGetAccountingStartDate.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.TIMESTAMP);
 

@@ -9,35 +9,19 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "SalesPerson", schema = "Sales")
-public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson> {
+public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1185640245;
+	private static final long serialVersionUID = -1868805463;
 
 	/**
-	 * The table column <code>Sales.SalesPerson.SalesPersonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesPerson_Employee_SalesPersonID
-	 * FOREIGN KEY (SalesPersonID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Setter for <code>Sales.SalesPerson.SalesPersonID</code>. 
 	 */
 	public void setSalesPersonID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesPersonID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.SalesPersonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesPerson_Employee_SalesPersonID
-	 * FOREIGN KEY (SalesPersonID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Getter for <code>Sales.SalesPerson.SalesPersonID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "SalesPersonID", unique = true, nullable = false, precision = 10)
@@ -46,26 +30,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.TerritoryID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesPerson_SalesTerritory_TerritoryID
-	 * FOREIGN KEY (TerritoryID)
-	 * REFERENCES Sales.SalesTerritory (TerritoryID)
-	 * </pre></code>
+	 * Setter for <code>Sales.SalesPerson.TerritoryID</code>. 
 	 */
 	public void setTerritoryID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.TerritoryID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.TerritoryID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesPerson_SalesTerritory_TerritoryID
-	 * FOREIGN KEY (TerritoryID)
-	 * REFERENCES Sales.SalesTerritory (TerritoryID)
-	 * </pre></code>
+	 * Getter for <code>Sales.SalesPerson.TerritoryID</code>. 
 	 */
 	@javax.persistence.Column(name = "TerritoryID", precision = 10)
 	public java.lang.Integer getTerritoryID() {
@@ -73,14 +45,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.SalesQuota</code>
+	 * Setter for <code>Sales.SalesPerson.SalesQuota</code>. 
 	 */
 	public void setSalesQuota(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesQuota, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.SalesQuota</code>
+	 * Getter for <code>Sales.SalesPerson.SalesQuota</code>. 
 	 */
 	@javax.persistence.Column(name = "SalesQuota", precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesQuota() {
@@ -88,14 +60,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.Bonus</code>
+	 * Setter for <code>Sales.SalesPerson.Bonus</code>. 
 	 */
 	public void setBonus(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.Bonus, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.Bonus</code>
+	 * Getter for <code>Sales.SalesPerson.Bonus</code>. 
 	 */
 	@javax.persistence.Column(name = "Bonus", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getBonus() {
@@ -103,14 +75,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.CommissionPct</code>
+	 * Setter for <code>Sales.SalesPerson.CommissionPct</code>. 
 	 */
 	public void setCommissionPct(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.CommissionPct, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.CommissionPct</code>
+	 * Getter for <code>Sales.SalesPerson.CommissionPct</code>. 
 	 */
 	@javax.persistence.Column(name = "CommissionPct", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getCommissionPct() {
@@ -118,14 +90,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.SalesYTD</code>
+	 * Setter for <code>Sales.SalesPerson.SalesYTD</code>. 
 	 */
 	public void setSalesYTD(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesYTD, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.SalesYTD</code>
+	 * Getter for <code>Sales.SalesPerson.SalesYTD</code>. 
 	 */
 	@javax.persistence.Column(name = "SalesYTD", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesYTD() {
@@ -133,14 +105,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.SalesLastYear</code>
+	 * Setter for <code>Sales.SalesPerson.SalesLastYear</code>. 
 	 */
 	public void setSalesLastYear(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesLastYear, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.SalesLastYear</code>
+	 * Getter for <code>Sales.SalesPerson.SalesLastYear</code>. 
 	 */
 	@javax.persistence.Column(name = "SalesLastYear", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesLastYear() {
@@ -148,14 +120,14 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.rowguid</code>
+	 * Setter for <code>Sales.SalesPerson.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.rowguid</code>
+	 * Getter for <code>Sales.SalesPerson.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -163,19 +135,199 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.ModifiedDate</code>
+	 * Setter for <code>Sales.SalesPerson.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPerson.ModifiedDate</code>
+	 * Getter for <code>Sales.SalesPerson.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.ModifiedDate);
 	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
+
+	// -------------------------------------------------------------------------
+	// Record9 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesPersonID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.TerritoryID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesQuota;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.Bonus;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.CommissionPct;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesYTD;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesLastYear;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.rowguid;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field9() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getSalesPersonID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getTerritoryID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value3() {
+		return getSalesQuota();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value4() {
+		return getBonus();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value5() {
+		return getCommissionPct();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value6() {
+		return getSalesYTD();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value7() {
+		return getSalesLastYear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value8() {
+		return getrowguid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value9() {
+		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached SalesPerson

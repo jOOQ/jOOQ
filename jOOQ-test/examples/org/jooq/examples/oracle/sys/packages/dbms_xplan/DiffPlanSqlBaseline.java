@@ -9,21 +9,20 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class DiffPlanSqlBaseline extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -883116795;
-
+	private static final long serialVersionUID = -870288302;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE.RETURN_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE.BASELINE_PLAN_NAME1</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE.BASELINE_PLAN_NAME1</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> BASELINE_PLAN_NAME1 = createParameter("BASELINE_PLAN_NAME1", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE.BASELINE_PLAN_NAME2</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE.BASELINE_PLAN_NAME2</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> BASELINE_PLAN_NAME2 = createParameter("BASELINE_PLAN_NAME2", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -46,9 +45,7 @@ public class DiffPlanSqlBaseline extends org.jooq.impl.AbstractRoutine<java.lang
 	}
 
 	/**
-	 * Set the <code>BASELINE_PLAN_NAME1</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>BASELINE_PLAN_NAME1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setBaselinePlanName1(org.jooq.Field<java.lang.String> field) {
 		setField(BASELINE_PLAN_NAME1, field);
@@ -62,9 +59,7 @@ public class DiffPlanSqlBaseline extends org.jooq.impl.AbstractRoutine<java.lang
 	}
 
 	/**
-	 * Set the <code>BASELINE_PLAN_NAME2</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>BASELINE_PLAN_NAME2</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setBaselinePlanName2(org.jooq.Field<java.lang.String> field) {
 		setField(BASELINE_PLAN_NAME2, field);

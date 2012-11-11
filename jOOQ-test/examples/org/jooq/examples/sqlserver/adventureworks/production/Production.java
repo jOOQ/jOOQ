@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production;
 @java.lang.SuppressWarnings("all")
 public class Production extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 568573033;
+	private static final long serialVersionUID = 1837908048;
 
 	/**
-	 * The singleton instance of Production
+	 * The singleton instance of <code>Production</code>
 	 */
 	public static final Production Production = new Production();
 

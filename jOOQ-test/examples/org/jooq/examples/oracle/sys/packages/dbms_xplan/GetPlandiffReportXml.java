@@ -9,29 +9,25 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 203449247;
-
+	private static final long serialVersionUID = 114609547;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.RETURN_VALUE</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED, XMLTYPE) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.REPORT_REF</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.REPORT_REF</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> REPORT_REF = createParameter("REPORT_REF", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.TID</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.TID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> TID = createParameter("TID", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.METHOD</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.METHOD</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> METHOD = createParameter("METHOD", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -55,9 +51,7 @@ public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lan
 	}
 
 	/**
-	 * Set the <code>REPORT_REF</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>REPORT_REF</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setReportRef(org.jooq.Field<java.lang.String> field) {
 		setField(REPORT_REF, field);
@@ -71,9 +65,7 @@ public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lan
 	}
 
 	/**
-	 * Set the <code>TID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>TID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setTid(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(TID, field);
@@ -87,9 +79,7 @@ public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lan
 	}
 
 	/**
-	 * Set the <code>METHOD</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>METHOD</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setMethod(org.jooq.Field<java.lang.String> field) {
 		setField(METHOD, field);

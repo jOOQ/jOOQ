@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
 @java.lang.SuppressWarnings("all")
 public class vJobCandidate extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate> {
 
-	private static final long serialVersionUID = -189037628;
+	private static final long serialVersionUID = -827972434;
 
 	/**
-	 * The singleton instance of HumanResources.vJobCandidate
+	 * The singleton instance of <code>HumanResources.vJobCandidate</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate vJobCandidate = new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate();
 
@@ -25,98 +25,110 @@ public class vJobCandidate extends org.jooq.impl.TableImpl<org.jooq.examples.sql
 	}
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.JobCandidateID</code>
+	 * The column <code>HumanResources.vJobCandidate.JobCandidateID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.Integer> JobCandidateID = createField("JobCandidateID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.EmployeeID</code>
+	 * The column <code>HumanResources.vJobCandidate.EmployeeID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.Integer> EmployeeID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.Name.Prefix</code>
+	 * The column <code>HumanResources.vJobCandidate.Name.Prefix</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> Name_Prefix = createField("Name.Prefix", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.Name.First</code>
+	 * The column <code>HumanResources.vJobCandidate.Name.First</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> Name_First = createField("Name.First", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.Name.Middle</code>
+	 * The column <code>HumanResources.vJobCandidate.Name.Middle</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> Name_Middle = createField("Name.Middle", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.Name.Last</code>
+	 * The column <code>HumanResources.vJobCandidate.Name.Last</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> Name_Last = createField("Name.Last", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.Name.Suffix</code>
+	 * The column <code>HumanResources.vJobCandidate.Name.Suffix</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> Name_Suffix = createField("Name.Suffix", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.Skills</code>
+	 * The column <code>HumanResources.vJobCandidate.Skills</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> Skills = createField("Skills", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.Addr.Type</code>
+	 * The column <code>HumanResources.vJobCandidate.Addr.Type</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> Addr_Type = createField("Addr.Type", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.Addr.Loc.CountryRegion</code>
+	 * The column <code>HumanResources.vJobCandidate.Addr.Loc.CountryRegion</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> Addr_Loc_CountryRegion = createField("Addr.Loc.CountryRegion", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.Addr.Loc.State</code>
+	 * The column <code>HumanResources.vJobCandidate.Addr.Loc.State</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> Addr_Loc_State = createField("Addr.Loc.State", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.Addr.Loc.City</code>
+	 * The column <code>HumanResources.vJobCandidate.Addr.Loc.City</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> Addr_Loc_City = createField("Addr.Loc.City", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.Addr.PostalCode</code>
+	 * The column <code>HumanResources.vJobCandidate.Addr.PostalCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> Addr_PostalCode = createField("Addr.PostalCode", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.EMail</code>
+	 * The column <code>HumanResources.vJobCandidate.EMail</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> EMail = createField("EMail", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.WebSite</code>
+	 * The column <code>HumanResources.vJobCandidate.WebSite</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.String> WebSite = createField("WebSite", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.vJobCandidate.ModifiedDate</code>
+	 * The column <code>HumanResources.vJobCandidate.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>HumanResources.vJobCandidate</code> table reference
+	 */
 	public vJobCandidate() {
 		super("vJobCandidate", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
+	/**
+	 * Create an aliased <code>HumanResources.vJobCandidate</code> table reference
+	 */
 	public vJobCandidate(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.IDENTITY_vJobCandidate;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate(alias);

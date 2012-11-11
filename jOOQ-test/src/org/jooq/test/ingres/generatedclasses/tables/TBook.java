@@ -11,10 +11,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -646139050;
+	private static final long serialVersionUID = -1169979217;
 
 	/**
-	 * The singleton instance of test.t_book
+	 * The singleton instance of <code>test.t_book</code>
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.TBook T_BOOK = new org.jooq.test.ingres.generatedclasses.tables.TBook();
 
@@ -27,67 +27,47 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres
 	}
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>test.t_book.id</code>. The book ID
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The author ID in entity 'author'
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_author_id
-	 * FOREIGN KEY (author_id)
-	 * REFERENCES test.t_author (id)
-	 * </pre></code>
+	 * The column <code>test.t_book.author_id</code>. The author ID in entity 'author'
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The table column <code>test.t_book.co_author_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_co_author_id
-	 * FOREIGN KEY (co_author_id)
-	 * REFERENCES test.t_author (id)
-	 * </pre></code>
+	 * The column <code>test.t_book.co_author_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The table column <code>test.t_book.details_id</code>
+	 * The column <code>test.t_book.details_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("details_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The book's title
+	 * The column <code>test.t_book.title</code>. The book's title
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK);
 
 	/**
-	 * The year the book was published in
+	 * The column <code>test.t_book.published_in</code>. The year the book was published in
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("published_in", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The language of the book
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_language_id
-	 * FOREIGN KEY (language_id)
-	 * REFERENCES test.t_language (id)
-	 * </pre></code>
+	 * The column <code>test.t_book.language_id</code>. The language of the book
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * Some textual content of the book
+	 * The column <code>test.t_book.content_text</code>. Some textual content of the book
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.LONGVARCHAR, T_BOOK);
 
 	/**
-	 * Some binary content of the book
+	 * The column <code>test.t_book.content_pdf</code>. Some binary content of the book
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.LONGVARBINARY, T_BOOK);
 
@@ -98,19 +78,26 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres
 		super("t_book", org.jooq.test.ingres.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> getMainKey() {
 		return org.jooq.test.ingres.generatedclasses.Keys.PK_T_BOOK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.ingres.generatedclasses.Keys.PK_T_BOOK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.ingres.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.ingres.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.ingres.generatedclasses.Keys.FK_T_BOOK_LANGUAGE_ID);
 	}

@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "CreditCard", schema = "Sales")
 public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.lang.Byte, java.lang.Short, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1506126036;
+	private static final long serialVersionUID = 587691915;
 
 	/**
-	 * The table column <code>Sales.CreditCard.CreditCardID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Sales.CreditCard.CreditCardID</code>. 
 	 */
 	public void setCreditCardID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.CreditCardID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CreditCard.CreditCardID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Sales.CreditCard.CreditCardID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "CreditCardID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>Sales.CreditCard.CardType</code>
+	 * Setter for <code>Sales.CreditCard.CardType</code>. 
 	 */
 	public void setCardType(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.CardType, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CreditCard.CardType</code>
+	 * Getter for <code>Sales.CreditCard.CardType</code>. 
 	 */
 	@javax.persistence.Column(name = "CardType", nullable = false, length = 50)
 	public java.lang.String getCardType() {
@@ -49,14 +45,14 @@ public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>Sales.CreditCard.CardNumber</code>
+	 * Setter for <code>Sales.CreditCard.CardNumber</code>. 
 	 */
 	public void setCardNumber(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.CardNumber, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CreditCard.CardNumber</code>
+	 * Getter for <code>Sales.CreditCard.CardNumber</code>. 
 	 */
 	@javax.persistence.Column(name = "CardNumber", nullable = false, length = 25)
 	public java.lang.String getCardNumber() {
@@ -64,14 +60,14 @@ public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>Sales.CreditCard.ExpMonth</code>
+	 * Setter for <code>Sales.CreditCard.ExpMonth</code>. 
 	 */
 	public void setExpMonth(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.ExpMonth, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CreditCard.ExpMonth</code>
+	 * Getter for <code>Sales.CreditCard.ExpMonth</code>. 
 	 */
 	@javax.persistence.Column(name = "ExpMonth", nullable = false, precision = 3)
 	public java.lang.Byte getExpMonth() {
@@ -79,14 +75,14 @@ public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>Sales.CreditCard.ExpYear</code>
+	 * Setter for <code>Sales.CreditCard.ExpYear</code>. 
 	 */
 	public void setExpYear(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.ExpYear, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CreditCard.ExpYear</code>
+	 * Getter for <code>Sales.CreditCard.ExpYear</code>. 
 	 */
 	@javax.persistence.Column(name = "ExpYear", nullable = false, precision = 5)
 	public java.lang.Short getExpYear() {
@@ -94,25 +90,30 @@ public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>Sales.CreditCard.ModifiedDate</code>
+	 * Setter for <code>Sales.CreditCard.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CreditCard.ModifiedDate</code>
+	 * Getter for <code>Sales.CreditCard.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached CreditCard
+	 * {@inheritDoc}
 	 */
-	public CreditCard() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -229,5 +230,16 @@ public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	@Override
 	public java.sql.Timestamp value6() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached CreditCard
+	 */
+	public CreditCard() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard);
 	}
 }

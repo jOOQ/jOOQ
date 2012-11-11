@@ -52,7 +52,7 @@ public final class Tables {
 	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion vStateProvinceCountryRegion = org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

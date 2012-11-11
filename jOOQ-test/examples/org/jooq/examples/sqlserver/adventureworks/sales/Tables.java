@@ -147,7 +147,7 @@ public final class Tables {
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithDemographics vStoreWithDemographics = org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithDemographics.vStoreWithDemographics;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

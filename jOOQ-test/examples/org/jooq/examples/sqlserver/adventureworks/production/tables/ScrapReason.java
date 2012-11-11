@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class ScrapReason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> {
 
-	private static final long serialVersionUID = 1081297534;
+	private static final long serialVersionUID = 1377018892;
 
 	/**
-	 * The singleton instance of Production.ScrapReason
+	 * The singleton instance of <code>Production.ScrapReason</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason ScrapReason = new org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason();
 
@@ -25,46 +25,61 @@ public class ScrapReason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>Production.ScrapReason.ScrapReasonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Production.ScrapReason.ScrapReasonID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason, java.lang.Short> ScrapReasonID = createField("ScrapReasonID", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>Production.ScrapReason.Name</code>
+	 * The column <code>Production.ScrapReason.Name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.ScrapReason.ModifiedDate</code>
+	 * The column <code>Production.ScrapReason.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.ScrapReason</code> table reference
+	 */
 	public ScrapReason() {
 		super("ScrapReason", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.ScrapReason</code> table reference
+	 */
 	public ScrapReason(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason, java.lang.Short> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_ScrapReason;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ScrapReason_ScrapReasonID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ScrapReason_ScrapReasonID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason(alias);

@@ -9,16 +9,15 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
 @java.lang.SuppressWarnings("all")
 public class uspGetWhereUsedProductID extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -881259143;
-
+	private static final long serialVersionUID = 17103561;
 
 	/**
-	 * The procedure parameter <code>dbo.uspGetWhereUsedProductID.StartProductID</code>
+	 * The parameter <code>dbo.uspGetWhereUsedProductID.StartProductID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> StartProductID = createParameter("StartProductID", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>dbo.uspGetWhereUsedProductID.CheckDate</code>
+	 * The parameter <code>dbo.uspGetWhereUsedProductID.CheckDate</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> CheckDate = createParameter("CheckDate", org.jooq.impl.SQLDataType.TIMESTAMP);
 

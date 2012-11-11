@@ -9,55 +9,31 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -998385380;
+	private static final long serialVersionUID = 627159531;
 
 	/**
-	 * The table column <code>test.x_test_case_71.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>test.x_test_case_71.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.XTestCase_71.ID, value);
 	}
 
 	/**
-	 * The table column <code>test.x_test_case_71.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>test.x_test_case_71.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.ingres.generatedclasses.tables.XTestCase_71.ID);
 	}
 
 	/**
-	 * The table column <code>test.x_test_case_71.test_case_64_69_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_71
-	 * FOREIGN KEY (test_case_64_69_id)
-	 * REFERENCES test.x_test_case_64_69 (id)
-	 * </pre></code>
+	 * Setter for <code>test.x_test_case_71.test_case_64_69_id</code>. 
 	 */
 	public void setTestCase_64_69Id(java.lang.Integer value) {
 		setValue(org.jooq.test.ingres.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, value);
 	}
 
 	/**
-	 * The table column <code>test.x_test_case_71.test_case_64_69_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_71
-	 * FOREIGN KEY (test_case_64_69_id)
-	 * REFERENCES test.x_test_case_64_69 (id)
-	 * </pre></code>
-	 */
-	public java.lang.Integer getTestCase_64_69Id() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_64_69Record 
-	 * XTestCase_64_69Record}
+	 * Link this record to a given {@link org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_64_69Record}
 	 */
 	public void setTestCase_64_69Id(org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_64_69Record value) {
 		if (value == null) {
@@ -69,13 +45,18 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>test.x_test_case_71.test_case_64_69_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_71
-	 * FOREIGN KEY (test_case_64_69_id)
-	 * REFERENCES test.x_test_case_64_69 (id)
-	 * </pre></code>
+	 * Getter for <code>test.x_test_case_71.test_case_64_69_id</code>. 
+	 */
+	public java.lang.Integer getTestCase_64_69Id() {
+		return getValue(org.jooq.test.ingres.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a <code>test.x_test_case_64_69</code> referenced by this <code>test.x_test_case_71</code>
 	 */
 	public org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {
 		return create()
@@ -84,11 +65,16 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 			.fetchOne();
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached XTestCase_71Record
+	 * {@inheritDoc}
 	 */
-	public XTestCase_71Record() {
-		super(org.jooq.test.ingres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -141,5 +127,16 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.Integer value2() {
 		return getTestCase_64_69Id();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_71Record
+	 */
+	public XTestCase_71Record() {
+		super(org.jooq.test.ingres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
 	}
 }

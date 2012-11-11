@@ -13,17 +13,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_library", schema = "test2")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 912582210;
+	private static final long serialVersionUID = 1534814726;
 
 	/**
-	 * The table column <code>test2.v_library.AUTHOR</code>
+	 * Setter for <code>test2.v_library.AUTHOR</code>. 
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY.AUTHOR, value);
 	}
 
 	/**
-	 * The table column <code>test2.v_library.AUTHOR</code>
+	 * Getter for <code>test2.v_library.AUTHOR</code>. 
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	public java.lang.String getAuthor() {
@@ -31,26 +31,23 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * The book's title
+	 * Setter for <code>test2.v_library.TITLE</code>. The book's title
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY.TITLE, value);
 	}
 
 	/**
-	 * The book's title
+	 * Getter for <code>test2.v_library.TITLE</code>. The book's title
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 65535)
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY.TITLE);
 	}
 
-	/**
-	 * Create a detached VLibraryRecord
-	 */
-	public VLibraryRecord() {
-		super(org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -102,5 +99,16 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.String value2() {
 		return getTitle();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached VLibraryRecord
+	 */
+	public VLibraryRecord() {
+		super(org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 }

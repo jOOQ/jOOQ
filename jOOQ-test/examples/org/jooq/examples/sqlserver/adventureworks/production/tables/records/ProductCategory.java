@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductCategory", schema = "Production")
 public class ProductCategory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCategory> implements org.jooq.Record4<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1988616058;
+	private static final long serialVersionUID = -2092585343;
 
 	/**
-	 * The table column <code>Production.ProductCategory.ProductCategoryID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.ProductCategory.ProductCategoryID</code>. 
 	 */
 	public void setProductCategoryID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCategory.ProductCategory.ProductCategoryID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductCategory.ProductCategoryID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.ProductCategory.ProductCategoryID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ProductCategoryID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class ProductCategory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.ProductCategory.Name</code>
+	 * Setter for <code>Production.ProductCategory.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCategory.ProductCategory.Name, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductCategory.Name</code>
+	 * Getter for <code>Production.ProductCategory.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,14 +45,14 @@ public class ProductCategory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.ProductCategory.rowguid</code>
+	 * Setter for <code>Production.ProductCategory.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCategory.ProductCategory.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductCategory.rowguid</code>
+	 * Getter for <code>Production.ProductCategory.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -64,25 +60,30 @@ public class ProductCategory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.ProductCategory.ModifiedDate</code>
+	 * Setter for <code>Production.ProductCategory.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCategory.ProductCategory.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductCategory.ModifiedDate</code>
+	 * Getter for <code>Production.ProductCategory.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCategory.ProductCategory.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ProductCategory
+	 * {@inheritDoc}
 	 */
-	public ProductCategory() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCategory.ProductCategory);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -167,5 +168,16 @@ public class ProductCategory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.sql.Timestamp value4() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ProductCategory
+	 */
+	public ProductCategory() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCategory.ProductCategory);
 	}
 }

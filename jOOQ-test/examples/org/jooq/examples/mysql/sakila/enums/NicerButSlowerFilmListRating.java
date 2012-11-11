@@ -8,6 +8,7 @@ package org.jooq.examples.mysql.sakila.enums;
  */
 @java.lang.SuppressWarnings("all")
 public enum NicerButSlowerFilmListRating implements org.jooq.EnumType {
+
 	G("G"),
 
 	PG("PG"),
@@ -26,11 +27,17 @@ public enum NicerButSlowerFilmListRating implements org.jooq.EnumType {
 		this.literal = literal;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getName() {
 		return "nicer_but_slower_film_list_rating";
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public java.lang.String getLiteral() {
 		return literal;

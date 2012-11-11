@@ -9,31 +9,30 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class DiffPlanOutline extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 210470578;
-
+	private static final long serialVersionUID = 495431091;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.RETURN_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.SQL_TEXT</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.SQL_TEXT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQL_TEXT = createParameter("SQL_TEXT", org.jooq.impl.SQLDataType.CLOB);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.OUTLINE1</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.OUTLINE1</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> OUTLINE1 = createParameter("OUTLINE1", org.jooq.impl.SQLDataType.CLOB);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.OUTLINE2</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.OUTLINE2</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> OUTLINE2 = createParameter("OUTLINE2", org.jooq.impl.SQLDataType.CLOB);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.USER_NAME</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE.USER_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> USER_NAME = createParameter("USER_NAME", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -58,9 +57,7 @@ public class DiffPlanOutline extends org.jooq.impl.AbstractRoutine<java.lang.Str
 	}
 
 	/**
-	 * Set the <code>SQL_TEXT</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>SQL_TEXT</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setSqlText(org.jooq.Field<java.lang.String> field) {
 		setField(SQL_TEXT, field);
@@ -74,9 +71,7 @@ public class DiffPlanOutline extends org.jooq.impl.AbstractRoutine<java.lang.Str
 	}
 
 	/**
-	 * Set the <code>OUTLINE1</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>OUTLINE1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setOutline1(org.jooq.Field<java.lang.String> field) {
 		setField(OUTLINE1, field);
@@ -90,9 +85,7 @@ public class DiffPlanOutline extends org.jooq.impl.AbstractRoutine<java.lang.Str
 	}
 
 	/**
-	 * Set the <code>OUTLINE2</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>OUTLINE2</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setOutline2(org.jooq.Field<java.lang.String> field) {
 		setField(OUTLINE2, field);
@@ -106,9 +99,7 @@ public class DiffPlanOutline extends org.jooq.impl.AbstractRoutine<java.lang.Str
 	}
 
 	/**
-	 * Set the <code>USER_NAME</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>USER_NAME</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setUserName(org.jooq.Field<java.lang.String> field) {
 		setField(USER_NAME, field);

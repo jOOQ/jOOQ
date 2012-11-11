@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "JobCandidate", schema = "HumanResources")
 public class JobCandidate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Object, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -394018175;
+	private static final long serialVersionUID = 2114621224;
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.JobCandidateID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>HumanResources.JobCandidate.JobCandidateID</code>. 
 	 */
 	public void setJobCandidateID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate.JobCandidate.JobCandidateID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.JobCandidateID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>HumanResources.JobCandidate.JobCandidateID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "JobCandidateID", unique = true, nullable = false, precision = 10)
@@ -34,26 +30,14 @@ public class JobCandidate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.EmployeeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_JobCandidate_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Setter for <code>HumanResources.JobCandidate.EmployeeID</code>. 
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate.JobCandidate.EmployeeID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.EmployeeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_JobCandidate_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * Getter for <code>HumanResources.JobCandidate.EmployeeID</code>. 
 	 */
 	@javax.persistence.Column(name = "EmployeeID", precision = 10)
 	public java.lang.Integer getEmployeeID() {
@@ -61,20 +45,14 @@ public class JobCandidate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.Resume</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>HumanResources.JobCandidate.Resume</code>. 
 	 */
 	public void setResume(java.lang.Object value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate.JobCandidate.Resume, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.Resume</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>HumanResources.JobCandidate.Resume</code>. 
 	 */
 	@javax.persistence.Column(name = "Resume")
 	public java.lang.Object getResume() {
@@ -82,25 +60,30 @@ public class JobCandidate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.ModifiedDate</code>
+	 * Setter for <code>HumanResources.JobCandidate.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate.JobCandidate.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.ModifiedDate</code>
+	 * Getter for <code>HumanResources.JobCandidate.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate.JobCandidate.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached JobCandidate
+	 * {@inheritDoc}
 	 */
-	public JobCandidate() {
-		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate.JobCandidate);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -185,5 +168,16 @@ public class JobCandidate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	@Override
 	public java.sql.Timestamp value4() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached JobCandidate
+	 */
+	public JobCandidate() {
+		super(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate.JobCandidate);
 	}
 }

@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class Culture extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture> {
 
-	private static final long serialVersionUID = -286382079;
+	private static final long serialVersionUID = -1068528097;
 
 	/**
-	 * The singleton instance of Production.Culture
+	 * The singleton instance of <code>Production.Culture</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.Culture Culture = new org.jooq.examples.sqlserver.adventureworks.production.tables.Culture();
 
@@ -25,41 +25,53 @@ public class Culture extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	}
 
 	/**
-	 * The table column <code>Production.Culture.CultureID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Production.Culture.CultureID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture, java.lang.String> CultureID = createField("CultureID", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * The table column <code>Production.Culture.Name</code>
+	 * The column <code>Production.Culture.Name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.Culture.ModifiedDate</code>
+	 * The column <code>Production.Culture.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.Culture</code> table reference
+	 */
 	public Culture() {
 		super("Culture", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.Culture</code> table reference
+	 */
 	public Culture(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Culture_CultureID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Culture_CultureID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.Culture as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.Culture(alias);

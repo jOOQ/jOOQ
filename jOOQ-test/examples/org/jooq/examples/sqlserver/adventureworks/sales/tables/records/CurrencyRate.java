@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "CurrencyRate", schema = "Sales")
 public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate> implements org.jooq.Record7<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1783429197;
+	private static final long serialVersionUID = 150138238;
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.CurrencyRateID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Sales.CurrencyRate.CurrencyRateID</code>. 
 	 */
 	public void setCurrencyRateID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.CurrencyRateID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.CurrencyRateID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Sales.CurrencyRate.CurrencyRateID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "CurrencyRateID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.CurrencyRateDate</code>
+	 * Setter for <code>Sales.CurrencyRate.CurrencyRateDate</code>. 
 	 */
 	public void setCurrencyRateDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.CurrencyRateDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.CurrencyRateDate</code>
+	 * Getter for <code>Sales.CurrencyRate.CurrencyRateDate</code>. 
 	 */
 	@javax.persistence.Column(name = "CurrencyRateDate", nullable = false)
 	public java.sql.Timestamp getCurrencyRateDate() {
@@ -49,26 +45,14 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.FromCurrencyCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CurrencyRate_Currency_FromCurrencyCode
-	 * FOREIGN KEY (FromCurrencyCode)
-	 * REFERENCES Sales.Currency (CurrencyCode)
-	 * </pre></code>
+	 * Setter for <code>Sales.CurrencyRate.FromCurrencyCode</code>. 
 	 */
 	public void setFromCurrencyCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.FromCurrencyCode, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.FromCurrencyCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CurrencyRate_Currency_FromCurrencyCode
-	 * FOREIGN KEY (FromCurrencyCode)
-	 * REFERENCES Sales.Currency (CurrencyCode)
-	 * </pre></code>
+	 * Getter for <code>Sales.CurrencyRate.FromCurrencyCode</code>. 
 	 */
 	@javax.persistence.Column(name = "FromCurrencyCode", nullable = false, length = 3)
 	public java.lang.String getFromCurrencyCode() {
@@ -76,26 +60,14 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.ToCurrencyCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CurrencyRate_Currency_ToCurrencyCode
-	 * FOREIGN KEY (ToCurrencyCode)
-	 * REFERENCES Sales.Currency (CurrencyCode)
-	 * </pre></code>
+	 * Setter for <code>Sales.CurrencyRate.ToCurrencyCode</code>. 
 	 */
 	public void setToCurrencyCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.ToCurrencyCode, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.ToCurrencyCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_CurrencyRate_Currency_ToCurrencyCode
-	 * FOREIGN KEY (ToCurrencyCode)
-	 * REFERENCES Sales.Currency (CurrencyCode)
-	 * </pre></code>
+	 * Getter for <code>Sales.CurrencyRate.ToCurrencyCode</code>. 
 	 */
 	@javax.persistence.Column(name = "ToCurrencyCode", nullable = false, length = 3)
 	public java.lang.String getToCurrencyCode() {
@@ -103,14 +75,14 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.AverageRate</code>
+	 * Setter for <code>Sales.CurrencyRate.AverageRate</code>. 
 	 */
 	public void setAverageRate(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.AverageRate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.AverageRate</code>
+	 * Getter for <code>Sales.CurrencyRate.AverageRate</code>. 
 	 */
 	@javax.persistence.Column(name = "AverageRate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getAverageRate() {
@@ -118,14 +90,14 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.EndOfDayRate</code>
+	 * Setter for <code>Sales.CurrencyRate.EndOfDayRate</code>. 
 	 */
 	public void setEndOfDayRate(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.EndOfDayRate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.EndOfDayRate</code>
+	 * Getter for <code>Sales.CurrencyRate.EndOfDayRate</code>. 
 	 */
 	@javax.persistence.Column(name = "EndOfDayRate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getEndOfDayRate() {
@@ -133,25 +105,30 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.ModifiedDate</code>
+	 * Setter for <code>Sales.CurrencyRate.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.CurrencyRate.ModifiedDate</code>
+	 * Getter for <code>Sales.CurrencyRate.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached CurrencyRate
+	 * {@inheritDoc}
 	 */
-	public CurrencyRate() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -284,5 +261,16 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	@Override
 	public java.sql.Timestamp value7() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached CurrencyRate
+	 */
+	public CurrencyRate() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate);
 	}
 }

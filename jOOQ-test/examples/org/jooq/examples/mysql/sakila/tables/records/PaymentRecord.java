@@ -9,55 +9,31 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> implements org.jooq.Record7<java.lang.Short, java.lang.Short, java.lang.Byte, java.lang.Integer, java.math.BigDecimal, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1623573231;
+	private static final long serialVersionUID = 1886442086;
 
 	/**
-	 * The table column <code>sakila.payment.payment_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>sakila.payment.payment_id</code>. 
 	 */
 	public void setPaymentId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.payment.payment_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>sakila.payment.payment_id</code>. 
 	 */
 	public java.lang.Short getPaymentId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.payment.customer_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_payment_customer
-	 * FOREIGN KEY (customer_id)
-	 * REFERENCES sakila.customer (customer_id)
-	 * </pre></code>
+	 * Setter for <code>sakila.payment.customer_id</code>. 
 	 */
 	public void setCustomerId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.payment.customer_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_payment_customer
-	 * FOREIGN KEY (customer_id)
-	 * REFERENCES sakila.customer (customer_id)
-	 * </pre></code>
-	 */
-	public java.lang.Short getCustomerId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CustomerRecord 
-	 * CustomerRecord}
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CustomerRecord}
 	 */
 	public void setCustomerId(org.jooq.examples.mysql.sakila.tables.records.CustomerRecord value) {
 		if (value == null) {
@@ -69,50 +45,21 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>sakila.payment.customer_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_payment_customer
-	 * FOREIGN KEY (customer_id)
-	 * REFERENCES sakila.customer (customer_id)
-	 * </pre></code>
+	 * Getter for <code>sakila.payment.customer_id</code>. 
 	 */
-	public org.jooq.examples.mysql.sakila.tables.records.CustomerRecord fetchCustomer() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER)
-			.where(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CUSTOMER_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID)))
-			.fetchOne();
+	public java.lang.Short getCustomerId() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.payment.staff_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_payment_staff
-	 * FOREIGN KEY (staff_id)
-	 * REFERENCES sakila.staff (staff_id)
-	 * </pre></code>
+	 * Setter for <code>sakila.payment.staff_id</code>. 
 	 */
 	public void setStaffId(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.payment.staff_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_payment_staff
-	 * FOREIGN KEY (staff_id)
-	 * REFERENCES sakila.staff (staff_id)
-	 * </pre></code>
-	 */
-	public java.lang.Byte getStaffId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StaffRecord 
-	 * StaffRecord}
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StaffRecord}
 	 */
 	public void setStaffId(org.jooq.examples.mysql.sakila.tables.records.StaffRecord value) {
 		if (value == null) {
@@ -124,50 +71,21 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>sakila.payment.staff_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_payment_staff
-	 * FOREIGN KEY (staff_id)
-	 * REFERENCES sakila.staff (staff_id)
-	 * </pre></code>
+	 * Getter for <code>sakila.payment.staff_id</code>. 
 	 */
-	public org.jooq.examples.mysql.sakila.tables.records.StaffRecord fetchStaff() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Staff.STAFF)
-			.where(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID)))
-			.fetchOne();
+	public java.lang.Byte getStaffId() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.payment.rental_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_payment_rental
-	 * FOREIGN KEY (rental_id)
-	 * REFERENCES sakila.rental (rental_id)
-	 * </pre></code>
+	 * Setter for <code>sakila.payment.rental_id</code>. 
 	 */
 	public void setRentalId(java.lang.Integer value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.payment.rental_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_payment_rental
-	 * FOREIGN KEY (rental_id)
-	 * REFERENCES sakila.rental (rental_id)
-	 * </pre></code>
-	 */
-	public java.lang.Integer getRentalId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.RentalRecord 
-	 * RentalRecord}
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.RentalRecord}
 	 */
 	public void setRentalId(org.jooq.examples.mysql.sakila.tables.records.RentalRecord value) {
 		if (value == null) {
@@ -179,13 +97,80 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>sakila.payment.rental_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_payment_rental
-	 * FOREIGN KEY (rental_id)
-	 * REFERENCES sakila.rental (rental_id)
-	 * </pre></code>
+	 * Getter for <code>sakila.payment.rental_id</code>. 
+	 */
+	public java.lang.Integer getRentalId() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID);
+	}
+
+	/**
+	 * Setter for <code>sakila.payment.amount</code>. 
+	 */
+	public void setAmount(java.math.BigDecimal value) {
+		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.AMOUNT, value);
+	}
+
+	/**
+	 * Getter for <code>sakila.payment.amount</code>. 
+	 */
+	public java.math.BigDecimal getAmount() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.AMOUNT);
+	}
+
+	/**
+	 * Setter for <code>sakila.payment.payment_date</code>. 
+	 */
+	public void setPaymentDate(java.sql.Timestamp value) {
+		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_DATE, value);
+	}
+
+	/**
+	 * Getter for <code>sakila.payment.payment_date</code>. 
+	 */
+	public java.sql.Timestamp getPaymentDate() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_DATE);
+	}
+
+	/**
+	 * Setter for <code>sakila.payment.last_update</code>. 
+	 */
+	public void setLastUpdate(java.sql.Timestamp value) {
+		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.LAST_UPDATE, value);
+	}
+
+	/**
+	 * Getter for <code>sakila.payment.last_update</code>. 
+	 */
+	public java.sql.Timestamp getLastUpdate() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.LAST_UPDATE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a <code>sakila.customer</code> referenced by this <code>sakila.payment</code>
+	 */
+	public org.jooq.examples.mysql.sakila.tables.records.CustomerRecord fetchCustomer() {
+		return create()
+			.selectFrom(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER)
+			.where(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CUSTOMER_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>sakila.staff</code> referenced by this <code>sakila.payment</code>
+	 */
+	public org.jooq.examples.mysql.sakila.tables.records.StaffRecord fetchStaff() {
+		return create()
+			.selectFrom(org.jooq.examples.mysql.sakila.tables.Staff.STAFF)
+			.where(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>sakila.rental</code> referenced by this <code>sakila.payment</code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.RentalRecord fetchRental() {
 		return create()
@@ -194,53 +179,16 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 			.fetchOne();
 	}
 
-	/**
-	 * The table column <code>sakila.payment.amount</code>
-	 */
-	public void setAmount(java.math.BigDecimal value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.AMOUNT, value);
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The table column <code>sakila.payment.amount</code>
+	 * {@inheritDoc}
 	 */
-	public java.math.BigDecimal getAmount() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.AMOUNT);
-	}
-
-	/**
-	 * The table column <code>sakila.payment.payment_date</code>
-	 */
-	public void setPaymentDate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_DATE, value);
-	}
-
-	/**
-	 * The table column <code>sakila.payment.payment_date</code>
-	 */
-	public java.sql.Timestamp getPaymentDate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_DATE);
-	}
-
-	/**
-	 * The table column <code>sakila.payment.last_update</code>
-	 */
-	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.LAST_UPDATE, value);
-	}
-
-	/**
-	 * The table column <code>sakila.payment.last_update</code>
-	 */
-	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.LAST_UPDATE);
-	}
-
-	/**
-	 * Create a detached PaymentRecord
-	 */
-	public PaymentRecord() {
-		super(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT);
+	@Override
+	public org.jooq.Record1<java.lang.Short> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -373,5 +321,16 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@Override
 	public java.sql.Timestamp value7() {
 		return getLastUpdate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached PaymentRecord
+	 */
+	public PaymentRecord() {
+		super(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT);
 	}
 }

@@ -12,7 +12,10 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources;
 @java.lang.SuppressWarnings("all")
 public class Keys {
 
+	// -------------------------------------------------------------------------
 	// IDENTITY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department, java.lang.Short> IDENTITY_Department = Identities0.IDENTITY_Department;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee, java.lang.Integer> IDENTITY_Employee = Identities0.IDENTITY_Employee;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.lang.Integer> IDENTITY_JobCandidate = Identities0.IDENTITY_JobCandidate;
@@ -21,7 +24,10 @@ public class Keys {
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation, java.lang.Integer> IDENTITY_vJobCandidateEducation = Identities0.IDENTITY_vJobCandidateEducation;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.Integer> IDENTITY_vJobCandidateEmployment = Identities0.IDENTITY_vJobCandidateEmployment;
 
+	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department> PK_Department_DepartmentID = UniqueKeys0.PK_Department_DepartmentID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> PK_Employee_EmployeeID = UniqueKeys0.PK_Employee_EmployeeID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeAddress> PK_EmployeeAddress_EmployeeID_AddressID = UniqueKeys0.PK_EmployeeAddress_EmployeeID_AddressID;
@@ -30,7 +36,10 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate> PK_JobCandidate_JobCandidateID = UniqueKeys0.PK_JobCandidate_JobCandidateID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> PK_Shift_ShiftID = UniqueKeys0.PK_Shift_ShiftID;
 
+	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee, org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact> FK_Employee_Contact_ContactID = ForeignKeys0.FK_Employee_Contact_ContactID;
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> FK_Employee_Employee_ManagerID = ForeignKeys0.FK_Employee_Employee_ManagerID;
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeAddress, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> FK_EmployeeAddress_Employee_EmployeeID = ForeignKeys0.FK_EmployeeAddress_Employee_EmployeeID;
@@ -42,11 +51,14 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> FK_JobCandidate_Employee_EmployeeID = ForeignKeys0.FK_JobCandidate_Employee_EmployeeID;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings("hiding")
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department, java.lang.Short> IDENTITY_Department = createIdentity(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.DepartmentID);
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee, java.lang.Integer> IDENTITY_Employee = createIdentity(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.EmployeeID);
@@ -57,7 +69,6 @@ public class Keys {
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.Integer> IDENTITY_vJobCandidateEmployment = createIdentity(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.JobCandidateID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department> PK_Department_DepartmentID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.DepartmentID);
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> PK_Employee_EmployeeID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.EmployeeID);
@@ -68,7 +79,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> PK_Shift_ShiftID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.ShiftID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee, org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact> FK_Employee_Contact_ContactID = createForeignKey(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_Contact_ContactID, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.ContactID);
 		public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> FK_Employee_Employee_ManagerID = createForeignKey(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_Employee_EmployeeID, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.ManagerID);

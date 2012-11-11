@@ -9,10 +9,10 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> {
 
-	private static final long serialVersionUID = 1448450513;
+	private static final long serialVersionUID = 1964900407;
 
 	/**
-	 * The singleton instance of sakila.store
+	 * The singleton instance of <code>sakila.store</code>
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Store STORE = new org.jooq.examples.mysql.sakila.tables.Store();
 
@@ -25,69 +25,74 @@ public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 	}
 
 	/**
-	 * The table column <code>sakila.store.store_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>sakila.store.store_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, java.lang.Byte> STORE_ID = createField("store_id", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>sakila.store.manager_staff_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_store_staff
-	 * FOREIGN KEY (manager_staff_id)
-	 * REFERENCES sakila.staff (staff_id)
-	 * </pre></code>
+	 * The column <code>sakila.store.manager_staff_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, java.lang.Byte> MANAGER_STAFF_ID = createField("manager_staff_id", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>sakila.store.address_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_store_address
-	 * FOREIGN KEY (address_id)
-	 * REFERENCES sakila.address (address_id)
-	 * </pre></code>
+	 * The column <code>sakila.store.address_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, java.lang.Short> ADDRESS_ID = createField("address_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>sakila.store.last_update</code>
+	 * The column <code>sakila.store.last_update</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>sakila.store</code> table reference
+	 */
 	public Store() {
 		super("store", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
+	/**
+	 * Create an aliased <code>sakila.store</code> table reference
+	 */
 	public Store(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.Store.STORE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, java.lang.Byte> getIdentity() {
 		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_STORE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> getMainKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_STORE_PRIMARY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_STORE_PRIMARY, org.jooq.examples.mysql.sakila.Keys.KEY_STORE_IDX_UNIQUE_MANAGER);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_STORE_STAFF, org.jooq.examples.mysql.sakila.Keys.FK_STORE_ADDRESS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.Store as(java.lang.String alias) {
 		return new org.jooq.examples.mysql.sakila.tables.Store(alias);

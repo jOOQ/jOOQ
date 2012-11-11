@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "CountryRegion", schema = "Person")
 public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> implements org.jooq.Record3<java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1622519562;
+	private static final long serialVersionUID = 361920862;
 
 	/**
-	 * The table column <code>Person.CountryRegion.CountryRegionCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Person.CountryRegion.CountryRegionCode</code>. 
 	 */
 	public void setCountryRegionCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.CountryRegionCode, value);
 	}
 
 	/**
-	 * The table column <code>Person.CountryRegion.CountryRegionCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Person.CountryRegion.CountryRegionCode</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "CountryRegionCode", unique = true, nullable = false, length = 3)
@@ -34,14 +30,14 @@ public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Person.CountryRegion.Name</code>
+	 * Setter for <code>Person.CountryRegion.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.Name, value);
 	}
 
 	/**
-	 * The table column <code>Person.CountryRegion.Name</code>
+	 * Getter for <code>Person.CountryRegion.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,25 +45,30 @@ public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Person.CountryRegion.ModifiedDate</code>
+	 * Setter for <code>Person.CountryRegion.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Person.CountryRegion.ModifiedDate</code>
+	 * Getter for <code>Person.CountryRegion.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached CountryRegion
+	 * {@inheritDoc}
 	 */
-	public CountryRegion() {
-		super(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion);
+	@Override
+	public org.jooq.Record1<java.lang.String> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -136,5 +137,16 @@ public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached CountryRegion
+	 */
+	public CountryRegion() {
+		super(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion);
 	}
 }

@@ -9,36 +9,35 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -418502504;
-
+	private static final long serialVersionUID = 603649908;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.RETURN_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.CLOB);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.TABLE_NAME</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.TABLE_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> TABLE_NAME = createParameter("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.STATEMENT_ID</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.STATEMENT_ID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> STATEMENT_ID = createParameter("STATEMENT_ID", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.FORMAT</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.FORMAT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.FILTER_PREDS</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.FILTER_PREDS</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FILTER_PREDS = createParameter("FILTER_PREDS", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.TYPE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_PLAN.TYPE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> TYPE = createParameter("TYPE", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -64,9 +63,7 @@ public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	}
 
 	/**
-	 * Set the <code>TABLE_NAME</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>TABLE_NAME</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setTableName(org.jooq.Field<java.lang.String> field) {
 		setField(TABLE_NAME, field);
@@ -80,9 +77,7 @@ public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	}
 
 	/**
-	 * Set the <code>STATEMENT_ID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>STATEMENT_ID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setStatementId(org.jooq.Field<java.lang.String> field) {
 		setField(STATEMENT_ID, field);
@@ -96,9 +91,7 @@ public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>FORMAT</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setFormat(org.jooq.Field<java.lang.String> field) {
 		setField(FORMAT, field);
@@ -112,9 +105,7 @@ public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	}
 
 	/**
-	 * Set the <code>FILTER_PREDS</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>FILTER_PREDS</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setFilterPreds(org.jooq.Field<java.lang.String> field) {
 		setField(FILTER_PREDS, field);
@@ -128,9 +119,7 @@ public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	}
 
 	/**
-	 * Set the <code>TYPE</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>TYPE</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setType(org.jooq.Field<java.lang.String> field) {
 		setField(TYPE, field);

@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class WorkOrder extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder> {
 
-	private static final long serialVersionUID = 852864874;
+	private static final long serialVersionUID = 424014186;
 
 	/**
-	 * The singleton instance of Production.WorkOrder
+	 * The singleton instance of <code>Production.WorkOrder</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder WorkOrder = new org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder();
 
@@ -25,99 +25,104 @@ public class WorkOrder extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.WorkOrder.WorkOrderID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Production.WorkOrder.WorkOrderID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.lang.Integer> WorkOrderID = createField("WorkOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.WorkOrder.ProductID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_WorkOrder_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * The column <code>Production.WorkOrder.ProductID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.WorkOrder.OrderQty</code>
+	 * The column <code>Production.WorkOrder.OrderQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.lang.Integer> OrderQty = createField("OrderQty", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.WorkOrder.StockedQty</code>
+	 * The column <code>Production.WorkOrder.StockedQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.lang.Integer> StockedQty = createField("StockedQty", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.WorkOrder.ScrappedQty</code>
+	 * The column <code>Production.WorkOrder.ScrappedQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.lang.Short> ScrappedQty = createField("ScrappedQty", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>Production.WorkOrder.StartDate</code>
+	 * The column <code>Production.WorkOrder.StartDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.sql.Timestamp> StartDate = createField("StartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Production.WorkOrder.EndDate</code>
+	 * The column <code>Production.WorkOrder.EndDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.sql.Timestamp> EndDate = createField("EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Production.WorkOrder.DueDate</code>
+	 * The column <code>Production.WorkOrder.DueDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.sql.Timestamp> DueDate = createField("DueDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Production.WorkOrder.ScrapReasonID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_WorkOrder_ScrapReason_ScrapReasonID
-	 * FOREIGN KEY (ScrapReasonID)
-	 * REFERENCES Production.ScrapReason (ScrapReasonID)
-	 * </pre></code>
+	 * The column <code>Production.WorkOrder.ScrapReasonID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.lang.Short> ScrapReasonID = createField("ScrapReasonID", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>Production.WorkOrder.ModifiedDate</code>
+	 * The column <code>Production.WorkOrder.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.WorkOrder</code> table reference
+	 */
 	public WorkOrder() {
 		super("WorkOrder", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.WorkOrder</code> table reference
+	 */
 	public WorkOrder(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_WorkOrder;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_WorkOrder_WorkOrderID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_WorkOrder_WorkOrderID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_WorkOrder_Product_ProductID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_WorkOrder_ScrapReason_ScrapReasonID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder(alias);

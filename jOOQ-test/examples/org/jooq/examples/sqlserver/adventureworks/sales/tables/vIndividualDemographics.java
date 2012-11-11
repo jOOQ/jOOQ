@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class vIndividualDemographics extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics> {
 
-	private static final long serialVersionUID = 34661208;
+	private static final long serialVersionUID = 753000930;
 
 	/**
-	 * The singleton instance of Sales.vIndividualDemographics
+	 * The singleton instance of <code>Sales.vIndividualDemographics</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics vIndividualDemographics = new org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics();
 
@@ -25,78 +25,87 @@ public class vIndividualDemographics extends org.jooq.impl.TableImpl<org.jooq.ex
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.CustomerID</code>
+	 * The column <code>Sales.vIndividualDemographics.CustomerID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.lang.Integer> CustomerID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.TotalPurchaseYTD</code>
+	 * The column <code>Sales.vIndividualDemographics.TotalPurchaseYTD</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.math.BigDecimal> TotalPurchaseYTD = createField("TotalPurchaseYTD", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.DateFirstPurchase</code>
+	 * The column <code>Sales.vIndividualDemographics.DateFirstPurchase</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.sql.Timestamp> DateFirstPurchase = createField("DateFirstPurchase", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.BirthDate</code>
+	 * The column <code>Sales.vIndividualDemographics.BirthDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.sql.Timestamp> BirthDate = createField("BirthDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.MaritalStatus</code>
+	 * The column <code>Sales.vIndividualDemographics.MaritalStatus</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.lang.String> MaritalStatus = createField("MaritalStatus", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.YearlyIncome</code>
+	 * The column <code>Sales.vIndividualDemographics.YearlyIncome</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.lang.String> YearlyIncome = createField("YearlyIncome", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.Gender</code>
+	 * The column <code>Sales.vIndividualDemographics.Gender</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.lang.String> Gender = createField("Gender", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.TotalChildren</code>
+	 * The column <code>Sales.vIndividualDemographics.TotalChildren</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.lang.Integer> TotalChildren = createField("TotalChildren", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.NumberChildrenAtHome</code>
+	 * The column <code>Sales.vIndividualDemographics.NumberChildrenAtHome</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.lang.Integer> NumberChildrenAtHome = createField("NumberChildrenAtHome", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.Education</code>
+	 * The column <code>Sales.vIndividualDemographics.Education</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.lang.String> Education = createField("Education", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.Occupation</code>
+	 * The column <code>Sales.vIndividualDemographics.Occupation</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.lang.String> Occupation = createField("Occupation", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.HomeOwnerFlag</code>
+	 * The column <code>Sales.vIndividualDemographics.HomeOwnerFlag</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.lang.Boolean> HomeOwnerFlag = createField("HomeOwnerFlag", org.jooq.impl.SQLDataType.BIT, this);
 
 	/**
-	 * The table column <code>Sales.vIndividualDemographics.NumberCarsOwned</code>
+	 * The column <code>Sales.vIndividualDemographics.NumberCarsOwned</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics, java.lang.Integer> NumberCarsOwned = createField("NumberCarsOwned", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>Sales.vIndividualDemographics</code> table reference
+	 */
 	public vIndividualDemographics() {
 		super("vIndividualDemographics", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.vIndividualDemographics</code> table reference
+	 */
 	public vIndividualDemographics(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics(alias);

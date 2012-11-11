@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class TransactionHistoryArchive extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive> {
 
-	private static final long serialVersionUID = -236926562;
+	private static final long serialVersionUID = 48895836;
 
 	/**
-	 * The singleton instance of Production.TransactionHistoryArchive
+	 * The singleton instance of <code>Production.TransactionHistoryArchive</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive TransactionHistoryArchive = new org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive();
 
@@ -25,71 +25,83 @@ public class TransactionHistoryArchive extends org.jooq.impl.UpdatableTableImpl<
 	}
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.TransactionID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Production.TransactionHistoryArchive.TransactionID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive, java.lang.Integer> TransactionID = createField("TransactionID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ProductID</code>
+	 * The column <code>Production.TransactionHistoryArchive.ProductID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ReferenceOrderID</code>
+	 * The column <code>Production.TransactionHistoryArchive.ReferenceOrderID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive, java.lang.Integer> ReferenceOrderID = createField("ReferenceOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ReferenceOrderLineID</code>
+	 * The column <code>Production.TransactionHistoryArchive.ReferenceOrderLineID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive, java.lang.Integer> ReferenceOrderLineID = createField("ReferenceOrderLineID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.TransactionDate</code>
+	 * The column <code>Production.TransactionHistoryArchive.TransactionDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive, java.sql.Timestamp> TransactionDate = createField("TransactionDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.TransactionType</code>
+	 * The column <code>Production.TransactionHistoryArchive.TransactionType</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive, java.lang.String> TransactionType = createField("TransactionType", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.Quantity</code>
+	 * The column <code>Production.TransactionHistoryArchive.Quantity</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive, java.lang.Integer> Quantity = createField("Quantity", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ActualCost</code>
+	 * The column <code>Production.TransactionHistoryArchive.ActualCost</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive, java.math.BigDecimal> ActualCost = createField("ActualCost", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Production.TransactionHistoryArchive.ModifiedDate</code>
+	 * The column <code>Production.TransactionHistoryArchive.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.TransactionHistoryArchive</code> table reference
+	 */
 	public TransactionHistoryArchive() {
 		super("TransactionHistoryArchive", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.TransactionHistoryArchive</code> table reference
+	 */
 	public TransactionHistoryArchive(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_TransactionHistoryArchive_TransactionID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_TransactionHistoryArchive_TransactionID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive(alias);

@@ -11,18 +11,15 @@ package org.jooq.test.oracle2.generatedclasses.packages;
 @java.lang.SuppressWarnings("all")
 public final class DateAsTimestampPkg_976 extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -1651705062;
+	private static final long serialVersionUID = 2031523763;
 
 	/**
-	 * The singleton instance of TEST.PKG_976
+	 * The singleton instance of <code>TEST.PKG_976</code>
 	 */
 	public static final org.jooq.test.oracle2.generatedclasses.packages.DateAsTimestampPkg_976 DATE_AS_TIMESTAMP_PKG_976 = new org.jooq.test.oracle2.generatedclasses.packages.DateAsTimestampPkg_976();
 
 	/**
-	 * Call TEST.PKG_976.F_976
-	 *
-	 * @param dateAsTimestampi
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.PKG_976.F_976</code>
 	 */
 	public static java.sql.Timestamp f_976(org.jooq.Configuration configuration, java.sql.Timestamp dateAsTimestampi) {
 		org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampF_976 f = new org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampF_976();
@@ -33,9 +30,7 @@ public final class DateAsTimestampPkg_976 extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get TEST.PKG_976.F_976 as a field
-	 *
-	 * @param dateAsTimestampi
+	 * Get <code>TEST.PKG_976.F_976</code> as a field
 	 */
 	public static org.jooq.Field<java.sql.Timestamp> f_976(java.sql.Timestamp dateAsTimestampi) {
 		org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampF_976 f = new org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampF_976();
@@ -45,9 +40,7 @@ public final class DateAsTimestampPkg_976 extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get TEST.PKG_976.F_976 as a field
-	 *
-	 * @param dateAsTimestampi
+	 * Get <code>TEST.PKG_976.F_976</code> as a field
 	 */
 	public static org.jooq.Field<java.sql.Timestamp> f_976(org.jooq.Field<java.sql.Timestamp> dateAsTimestampi) {
 		org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampF_976 f = new org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampF_976();
@@ -57,11 +50,7 @@ public final class DateAsTimestampPkg_976 extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Call TEST.PKG_976.P_976
-	 *
-	 * @param dateAsTimestampi IN parameter
-	 * @param dateAsTimestampo OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.PKG_976.P_976</code>
 	 */
 	public static java.sql.Timestamp p_976(org.jooq.Configuration configuration, java.sql.Timestamp dateAsTimestampi) {
 		org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampP_976 p = new org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_976.DateAsTimestampP_976();

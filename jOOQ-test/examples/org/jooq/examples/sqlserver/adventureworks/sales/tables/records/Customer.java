@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "Customer", schema = "Sales")
 public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer> implements org.jooq.Record6<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 734920606;
+	private static final long serialVersionUID = 2134429543;
 
 	/**
-	 * The table column <code>Sales.Customer.CustomerID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Sales.Customer.CustomerID</code>. 
 	 */
 	public void setCustomerID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer.CustomerID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.CustomerID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Sales.Customer.CustomerID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "CustomerID", unique = true, nullable = false, precision = 10)
@@ -34,26 +30,14 @@ public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.TerritoryID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_Customer_SalesTerritory_TerritoryID
-	 * FOREIGN KEY (TerritoryID)
-	 * REFERENCES Sales.SalesTerritory (TerritoryID)
-	 * </pre></code>
+	 * Setter for <code>Sales.Customer.TerritoryID</code>. 
 	 */
 	public void setTerritoryID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer.TerritoryID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.TerritoryID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_Customer_SalesTerritory_TerritoryID
-	 * FOREIGN KEY (TerritoryID)
-	 * REFERENCES Sales.SalesTerritory (TerritoryID)
-	 * </pre></code>
+	 * Getter for <code>Sales.Customer.TerritoryID</code>. 
 	 */
 	@javax.persistence.Column(name = "TerritoryID", precision = 10)
 	public java.lang.Integer getTerritoryID() {
@@ -61,14 +45,14 @@ public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.AccountNumber</code>
+	 * Setter for <code>Sales.Customer.AccountNumber</code>. 
 	 */
 	public void setAccountNumber(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer.AccountNumber, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.AccountNumber</code>
+	 * Getter for <code>Sales.Customer.AccountNumber</code>. 
 	 */
 	@javax.persistence.Column(name = "AccountNumber", nullable = false, length = 10)
 	public java.lang.String getAccountNumber() {
@@ -76,14 +60,14 @@ public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.CustomerType</code>
+	 * Setter for <code>Sales.Customer.CustomerType</code>. 
 	 */
 	public void setCustomerType(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer.CustomerType, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.CustomerType</code>
+	 * Getter for <code>Sales.Customer.CustomerType</code>. 
 	 */
 	@javax.persistence.Column(name = "CustomerType", nullable = false, length = 1)
 	public java.lang.String getCustomerType() {
@@ -91,14 +75,14 @@ public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.rowguid</code>
+	 * Setter for <code>Sales.Customer.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.rowguid</code>
+	 * Getter for <code>Sales.Customer.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -106,25 +90,30 @@ public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.ModifiedDate</code>
+	 * Setter for <code>Sales.Customer.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.Customer.ModifiedDate</code>
+	 * Getter for <code>Sales.Customer.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached Customer
+	 * {@inheritDoc}
 	 */
-	public Customer() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -241,5 +230,16 @@ public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	@Override
 	public java.sql.Timestamp value6() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached Customer
+	 */
+	public Customer() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer);
 	}
 }

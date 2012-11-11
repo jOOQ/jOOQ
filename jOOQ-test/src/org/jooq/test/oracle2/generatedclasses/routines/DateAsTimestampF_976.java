@@ -9,16 +9,15 @@ package org.jooq.test.oracle2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class DateAsTimestampF_976 extends org.jooq.impl.AbstractRoutine<java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1541977938;
-
+	private static final long serialVersionUID = -741665258;
 
 	/**
-	 * The procedure parameter <code>TEST.F_976.RETURN_VALUE</code>
+	 * The parameter <code>TEST.F_976.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.TIMESTAMP);
 
 	/**
-	 * The procedure parameter <code>TEST.F_976.I</code>
+	 * The parameter <code>TEST.F_976.I</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_I = createParameter("I", org.jooq.impl.SQLDataType.TIMESTAMP);
 
@@ -40,9 +39,7 @@ public class DateAsTimestampF_976 extends org.jooq.impl.AbstractRoutine<java.sql
 	}
 
 	/**
-	 * Set the <code>I</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>I</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setI(org.jooq.Field<java.sql.Timestamp> field) {
 		setField(DATE_AS_TIMESTAMP_I, field);

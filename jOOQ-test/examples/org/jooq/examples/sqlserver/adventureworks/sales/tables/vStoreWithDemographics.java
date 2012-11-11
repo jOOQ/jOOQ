@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class vStoreWithDemographics extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics> {
 
-	private static final long serialVersionUID = 567638131;
+	private static final long serialVersionUID = -556063949;
 
 	/**
-	 * The singleton instance of Sales.vStoreWithDemographics
+	 * The singleton instance of <code>Sales.vStoreWithDemographics</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithDemographics vStoreWithDemographics = new org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithDemographics();
 
@@ -25,153 +25,162 @@ public class vStoreWithDemographics extends org.jooq.impl.TableImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.CustomerID</code>
+	 * The column <code>Sales.vStoreWithDemographics.CustomerID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.Integer> CustomerID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.Name</code>
+	 * The column <code>Sales.vStoreWithDemographics.Name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.ContactType</code>
+	 * The column <code>Sales.vStoreWithDemographics.ContactType</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> ContactType = createField("ContactType", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.Title</code>
+	 * The column <code>Sales.vStoreWithDemographics.Title</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> Title = createField("Title", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.FirstName</code>
+	 * The column <code>Sales.vStoreWithDemographics.FirstName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> FirstName = createField("FirstName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.MiddleName</code>
+	 * The column <code>Sales.vStoreWithDemographics.MiddleName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> MiddleName = createField("MiddleName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.LastName</code>
+	 * The column <code>Sales.vStoreWithDemographics.LastName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> LastName = createField("LastName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.Suffix</code>
+	 * The column <code>Sales.vStoreWithDemographics.Suffix</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> Suffix = createField("Suffix", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.Phone</code>
+	 * The column <code>Sales.vStoreWithDemographics.Phone</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> Phone = createField("Phone", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.EmailAddress</code>
+	 * The column <code>Sales.vStoreWithDemographics.EmailAddress</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> EmailAddress = createField("EmailAddress", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.EmailPromotion</code>
+	 * The column <code>Sales.vStoreWithDemographics.EmailPromotion</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.Integer> EmailPromotion = createField("EmailPromotion", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.AddressType</code>
+	 * The column <code>Sales.vStoreWithDemographics.AddressType</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> AddressType = createField("AddressType", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.AddressLine1</code>
+	 * The column <code>Sales.vStoreWithDemographics.AddressLine1</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> AddressLine1 = createField("AddressLine1", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.AddressLine2</code>
+	 * The column <code>Sales.vStoreWithDemographics.AddressLine2</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> AddressLine2 = createField("AddressLine2", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.City</code>
+	 * The column <code>Sales.vStoreWithDemographics.City</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> City = createField("City", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.StateProvinceName</code>
+	 * The column <code>Sales.vStoreWithDemographics.StateProvinceName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> StateProvinceName = createField("StateProvinceName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.PostalCode</code>
+	 * The column <code>Sales.vStoreWithDemographics.PostalCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> PostalCode = createField("PostalCode", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.CountryRegionName</code>
+	 * The column <code>Sales.vStoreWithDemographics.CountryRegionName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> CountryRegionName = createField("CountryRegionName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.AnnualSales</code>
+	 * The column <code>Sales.vStoreWithDemographics.AnnualSales</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.math.BigDecimal> AnnualSales = createField("AnnualSales", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.AnnualRevenue</code>
+	 * The column <code>Sales.vStoreWithDemographics.AnnualRevenue</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.math.BigDecimal> AnnualRevenue = createField("AnnualRevenue", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.BankName</code>
+	 * The column <code>Sales.vStoreWithDemographics.BankName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> BankName = createField("BankName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.BusinessType</code>
+	 * The column <code>Sales.vStoreWithDemographics.BusinessType</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> BusinessType = createField("BusinessType", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.YearOpened</code>
+	 * The column <code>Sales.vStoreWithDemographics.YearOpened</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.Integer> YearOpened = createField("YearOpened", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.Specialty</code>
+	 * The column <code>Sales.vStoreWithDemographics.Specialty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> Specialty = createField("Specialty", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.SquareFeet</code>
+	 * The column <code>Sales.vStoreWithDemographics.SquareFeet</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.Integer> SquareFeet = createField("SquareFeet", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.Brands</code>
+	 * The column <code>Sales.vStoreWithDemographics.Brands</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> Brands = createField("Brands", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.Internet</code>
+	 * The column <code>Sales.vStoreWithDemographics.Internet</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.String> Internet = createField("Internet", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.vStoreWithDemographics.NumberEmployees</code>
+	 * The column <code>Sales.vStoreWithDemographics.NumberEmployees</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vStoreWithDemographics, java.lang.Integer> NumberEmployees = createField("NumberEmployees", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>Sales.vStoreWithDemographics</code> table reference
+	 */
 	public vStoreWithDemographics() {
 		super("vStoreWithDemographics", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.vStoreWithDemographics</code> table reference
+	 */
 	public vStoreWithDemographics(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithDemographics.vStoreWithDemographics);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithDemographics as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithDemographics(alias);

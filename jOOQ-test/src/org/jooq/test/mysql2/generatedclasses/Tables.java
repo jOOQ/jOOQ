@@ -117,7 +117,7 @@ public final class Tables {
 	public static final org.jooq.test.mysql2.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

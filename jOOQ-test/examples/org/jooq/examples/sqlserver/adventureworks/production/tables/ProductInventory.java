@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class ProductInventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory> {
 
-	private static final long serialVersionUID = -1272082115;
+	private static final long serialVersionUID = 417150621;
 
 	/**
-	 * The singleton instance of Production.ProductInventory
+	 * The singleton instance of <code>Production.ProductInventory</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory ProductInventory = new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory();
 
@@ -25,81 +25,81 @@ public class ProductInventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.ProductInventory.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductInventory_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * The column <code>Production.ProductInventory.ProductID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductInventory.LocationID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductInventory_Location_LocationID
-	 * FOREIGN KEY (LocationID)
-	 * REFERENCES Production.Location (LocationID)
-	 * </pre></code>
+	 * The column <code>Production.ProductInventory.LocationID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory, java.lang.Short> LocationID = createField("LocationID", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>Production.ProductInventory.Shelf</code>
+	 * The column <code>Production.ProductInventory.Shelf</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory, java.lang.String> Shelf = createField("Shelf", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.ProductInventory.Bin</code>
+	 * The column <code>Production.ProductInventory.Bin</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory, java.lang.Byte> Bin = createField("Bin", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>Production.ProductInventory.Quantity</code>
+	 * The column <code>Production.ProductInventory.Quantity</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory, java.lang.Short> Quantity = createField("Quantity", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>Production.ProductInventory.rowguid</code>
+	 * The column <code>Production.ProductInventory.rowguid</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Production.ProductInventory.ModifiedDate</code>
+	 * The column <code>Production.ProductInventory.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.ProductInventory</code> table reference
+	 */
 	public ProductInventory() {
 		super("ProductInventory", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.ProductInventory</code> table reference
+	 */
 	public ProductInventory(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductInventory_ProductID_LocationID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductInventory_ProductID_LocationID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductInventory_Product_ProductID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductInventory_Location_LocationID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory(alias);

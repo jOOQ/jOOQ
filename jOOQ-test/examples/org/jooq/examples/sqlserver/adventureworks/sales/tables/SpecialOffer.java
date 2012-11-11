@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class SpecialOffer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer> {
 
-	private static final long serialVersionUID = 1076027600;
+	private static final long serialVersionUID = 1470760412;
 
 	/**
-	 * The singleton instance of Sales.SpecialOffer
+	 * The singleton instance of <code>Sales.SpecialOffer</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer SpecialOffer = new org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer();
 
@@ -25,86 +25,101 @@ public class SpecialOffer extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.SpecialOfferID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Sales.SpecialOffer.SpecialOfferID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.lang.Integer> SpecialOfferID = createField("SpecialOfferID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.Description</code>
+	 * The column <code>Sales.SpecialOffer.Description</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.lang.String> Description = createField("Description", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.DiscountPct</code>
+	 * The column <code>Sales.SpecialOffer.DiscountPct</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.math.BigDecimal> DiscountPct = createField("DiscountPct", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.Type</code>
+	 * The column <code>Sales.SpecialOffer.Type</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.lang.String> Type = createField("Type", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.Category</code>
+	 * The column <code>Sales.SpecialOffer.Category</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.lang.String> Category = createField("Category", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.StartDate</code>
+	 * The column <code>Sales.SpecialOffer.StartDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.sql.Timestamp> StartDate = createField("StartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.EndDate</code>
+	 * The column <code>Sales.SpecialOffer.EndDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.sql.Timestamp> EndDate = createField("EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.MinQty</code>
+	 * The column <code>Sales.SpecialOffer.MinQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.lang.Integer> MinQty = createField("MinQty", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.MaxQty</code>
+	 * The column <code>Sales.SpecialOffer.MaxQty</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.lang.Integer> MaxQty = createField("MaxQty", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.rowguid</code>
+	 * The column <code>Sales.SpecialOffer.rowguid</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.SpecialOffer.ModifiedDate</code>
+	 * The column <code>Sales.SpecialOffer.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Sales.SpecialOffer</code> table reference
+	 */
 	public SpecialOffer() {
 		super("SpecialOffer", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.SpecialOffer</code> table reference
+	 */
 	public SpecialOffer(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SpecialOffer;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SpecialOffer_SpecialOfferID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOffer>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SpecialOffer_SpecialOfferID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer(alias);

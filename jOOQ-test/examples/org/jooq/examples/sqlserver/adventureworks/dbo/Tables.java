@@ -27,7 +27,7 @@ public final class Tables {
 	public static final org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog ErrorLog = org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class ProductModelIllustration extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration> {
 
-	private static final long serialVersionUID = -270193911;
+	private static final long serialVersionUID = -1225297075;
 
 	/**
-	 * The singleton instance of Production.ProductModelIllustration
+	 * The singleton instance of <code>Production.ProductModelIllustration</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration ProductModelIllustration = new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration();
 
@@ -25,61 +25,61 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableTableImpl<o
 	}
 
 	/**
-	 * The table column <code>Production.ProductModelIllustration.ProductModelID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductModelIllustration_ProductModel_ProductModelID
-	 * FOREIGN KEY (ProductModelID)
-	 * REFERENCES Production.ProductModel (ProductModelID)
-	 * </pre></code>
+	 * The column <code>Production.ProductModelIllustration.ProductModelID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration, java.lang.Integer> ProductModelID = createField("ProductModelID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductModelIllustration.IllustrationID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductModelIllustration_Illustration_IllustrationID
-	 * FOREIGN KEY (IllustrationID)
-	 * REFERENCES Production.Illustration (IllustrationID)
-	 * </pre></code>
+	 * The column <code>Production.ProductModelIllustration.IllustrationID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration, java.lang.Integer> IllustrationID = createField("IllustrationID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductModelIllustration.ModifiedDate</code>
+	 * The column <code>Production.ProductModelIllustration.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.ProductModelIllustration</code> table reference
+	 */
 	public ProductModelIllustration() {
 		super("ProductModelIllustration", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.ProductModelIllustration</code> table reference
+	 */
 	public ProductModelIllustration(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration.ProductModelIllustration);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductModelIllustration_ProductModelID_IllustrationID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductModelIllustration_ProductModelID_IllustrationID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductModelIllustration_ProductModel_ProductModelID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductModelIllustration_Illustration_IllustrationID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration(alias);

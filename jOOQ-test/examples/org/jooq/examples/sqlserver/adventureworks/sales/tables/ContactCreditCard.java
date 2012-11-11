@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class ContactCreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> {
 
-	private static final long serialVersionUID = -157857311;
+	private static final long serialVersionUID = 553674463;
 
 	/**
-	 * The singleton instance of Sales.ContactCreditCard
+	 * The singleton instance of <code>Sales.ContactCreditCard</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard ContactCreditCard = new org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard();
 
@@ -25,61 +25,61 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	}
 
 	/**
-	 * The table column <code>Sales.ContactCreditCard.ContactID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ContactCreditCard_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * The column <code>Sales.ContactCreditCard.ContactID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, java.lang.Integer> ContactID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.ContactCreditCard.CreditCardID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ContactCreditCard_CreditCard_CreditCardID
-	 * FOREIGN KEY (CreditCardID)
-	 * REFERENCES Sales.CreditCard (CreditCardID)
-	 * </pre></code>
+	 * The column <code>Sales.ContactCreditCard.CreditCardID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, java.lang.Integer> CreditCardID = createField("CreditCardID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.ContactCreditCard.ModifiedDate</code>
+	 * The column <code>Sales.ContactCreditCard.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Sales.ContactCreditCard</code> table reference
+	 */
 	public ContactCreditCard() {
 		super("ContactCreditCard", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.ContactCreditCard</code> table reference
+	 */
 	public ContactCreditCard(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_ContactCreditCard_ContactID_CreditCardID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_ContactCreditCard_ContactID_CreditCardID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_ContactCreditCard_Contact_ContactID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_ContactCreditCard_CreditCard_CreditCardID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard(alias);

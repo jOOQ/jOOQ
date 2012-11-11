@@ -9,16 +9,15 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class PreparePlanXmlQuery extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 1494218732;
-
+	private static final long serialVersionUID = -921434250;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.PREPARE_PLAN_XML_QUERY.RETURN_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.PREPARE_PLAN_XML_QUERY.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.PREPARE_PLAN_XML_QUERY.PLAN_QUERY</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.PREPARE_PLAN_XML_QUERY.PLAN_QUERY</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> PLAN_QUERY = createParameter("PLAN_QUERY", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -40,9 +39,7 @@ public class PreparePlanXmlQuery extends org.jooq.impl.AbstractRoutine<java.lang
 	}
 
 	/**
-	 * Set the <code>PLAN_QUERY</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>PLAN_QUERY</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setPlanQuery(org.jooq.Field<java.lang.String> field) {
 		setField(PLAN_QUERY, field);

@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
 @java.lang.SuppressWarnings("all")
 public class JobCandidate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate> {
 
-	private static final long serialVersionUID = -1974360883;
+	private static final long serialVersionUID = -625291346;
 
 	/**
-	 * The singleton instance of HumanResources.JobCandidate
+	 * The singleton instance of <code>HumanResources.JobCandidate</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate JobCandidate = new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate();
 
@@ -25,66 +25,74 @@ public class JobCandidate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.JobCandidateID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>HumanResources.JobCandidate.JobCandidateID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.lang.Integer> JobCandidateID = createField("JobCandidateID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.EmployeeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_JobCandidate_Employee_EmployeeID
-	 * FOREIGN KEY (EmployeeID)
-	 * REFERENCES HumanResources.Employee (EmployeeID)
-	 * </pre></code>
+	 * The column <code>HumanResources.JobCandidate.EmployeeID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.lang.Integer> EmployeeID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.Resume</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>HumanResources.JobCandidate.Resume</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.lang.Object> Resume = createField("Resume", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
 
 	/**
-	 * The table column <code>HumanResources.JobCandidate.ModifiedDate</code>
+	 * The column <code>HumanResources.JobCandidate.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>HumanResources.JobCandidate</code> table reference
+	 */
 	public JobCandidate() {
 		super("JobCandidate", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
+	/**
+	 * Create an aliased <code>HumanResources.JobCandidate</code> table reference
+	 */
 	public JobCandidate(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate.JobCandidate);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.IDENTITY_JobCandidate;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_JobCandidate_JobCandidateID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_JobCandidate_JobCandidateID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, ?>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.FK_JobCandidate_Employee_EmployeeID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate(alias);

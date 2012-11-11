@@ -9,23 +9,19 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "BillOfMaterials", schema = "Production")
-public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials> {
+public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.lang.String, java.lang.Short, java.math.BigDecimal, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1214710616;
+	private static final long serialVersionUID = 1537752875;
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.BillOfMaterialsID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.BillOfMaterials.BillOfMaterialsID</code>. 
 	 */
 	public void setBillOfMaterialsID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.BillOfMaterialsID, value);
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.BillOfMaterialsID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.BillOfMaterials.BillOfMaterialsID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "BillOfMaterialsID", unique = true, nullable = false, precision = 10)
@@ -34,26 +30,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.ProductAssemblyID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_BillOfMaterials_Product_ProductAssemblyID
-	 * FOREIGN KEY (ProductAssemblyID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Setter for <code>Production.BillOfMaterials.ProductAssemblyID</code>. 
 	 */
 	public void setProductAssemblyID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ProductAssemblyID, value);
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.ProductAssemblyID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_BillOfMaterials_Product_ProductAssemblyID
-	 * FOREIGN KEY (ProductAssemblyID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Getter for <code>Production.BillOfMaterials.ProductAssemblyID</code>. 
 	 */
 	@javax.persistence.Column(name = "ProductAssemblyID", precision = 10)
 	public java.lang.Integer getProductAssemblyID() {
@@ -61,26 +45,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.ComponentID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_BillOfMaterials_Product_ComponentID
-	 * FOREIGN KEY (ComponentID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Setter for <code>Production.BillOfMaterials.ComponentID</code>. 
 	 */
 	public void setComponentID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ComponentID, value);
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.ComponentID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_BillOfMaterials_Product_ComponentID
-	 * FOREIGN KEY (ComponentID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Getter for <code>Production.BillOfMaterials.ComponentID</code>. 
 	 */
 	@javax.persistence.Column(name = "ComponentID", nullable = false, precision = 10)
 	public java.lang.Integer getComponentID() {
@@ -88,14 +60,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.StartDate</code>
+	 * Setter for <code>Production.BillOfMaterials.StartDate</code>. 
 	 */
 	public void setStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.StartDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.StartDate</code>
+	 * Getter for <code>Production.BillOfMaterials.StartDate</code>. 
 	 */
 	@javax.persistence.Column(name = "StartDate", nullable = false)
 	public java.sql.Timestamp getStartDate() {
@@ -103,14 +75,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.EndDate</code>
+	 * Setter for <code>Production.BillOfMaterials.EndDate</code>. 
 	 */
 	public void setEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.EndDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.EndDate</code>
+	 * Getter for <code>Production.BillOfMaterials.EndDate</code>. 
 	 */
 	@javax.persistence.Column(name = "EndDate")
 	public java.sql.Timestamp getEndDate() {
@@ -118,26 +90,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.UnitMeasureCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_BillOfMaterials_UnitMeasure_UnitMeasureCode
-	 * FOREIGN KEY (UnitMeasureCode)
-	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
-	 * </pre></code>
+	 * Setter for <code>Production.BillOfMaterials.UnitMeasureCode</code>. 
 	 */
 	public void setUnitMeasureCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.UnitMeasureCode, value);
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.UnitMeasureCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_BillOfMaterials_UnitMeasure_UnitMeasureCode
-	 * FOREIGN KEY (UnitMeasureCode)
-	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
-	 * </pre></code>
+	 * Getter for <code>Production.BillOfMaterials.UnitMeasureCode</code>. 
 	 */
 	@javax.persistence.Column(name = "UnitMeasureCode", nullable = false, length = 3)
 	public java.lang.String getUnitMeasureCode() {
@@ -145,14 +105,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.BOMLevel</code>
+	 * Setter for <code>Production.BillOfMaterials.BOMLevel</code>. 
 	 */
 	public void setBOMLevel(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.BOMLevel, value);
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.BOMLevel</code>
+	 * Getter for <code>Production.BillOfMaterials.BOMLevel</code>. 
 	 */
 	@javax.persistence.Column(name = "BOMLevel", nullable = false, precision = 5)
 	public java.lang.Short getBOMLevel() {
@@ -160,14 +120,14 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.PerAssemblyQty</code>
+	 * Setter for <code>Production.BillOfMaterials.PerAssemblyQty</code>. 
 	 */
 	public void setPerAssemblyQty(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.PerAssemblyQty, value);
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.PerAssemblyQty</code>
+	 * Getter for <code>Production.BillOfMaterials.PerAssemblyQty</code>. 
 	 */
 	@javax.persistence.Column(name = "PerAssemblyQty", nullable = false, precision = 8, scale = 2)
 	public java.math.BigDecimal getPerAssemblyQty() {
@@ -175,19 +135,199 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.ModifiedDate</code>
+	 * Setter for <code>Production.BillOfMaterials.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.BillOfMaterials.ModifiedDate</code>
+	 * Getter for <code>Production.BillOfMaterials.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ModifiedDate);
 	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
+
+	// -------------------------------------------------------------------------
+	// Record9 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.lang.String, java.lang.Short, java.math.BigDecimal, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.lang.String, java.lang.Short, java.math.BigDecimal, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.BillOfMaterialsID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ProductAssemblyID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ComponentID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.StartDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.EndDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.UnitMeasureCode;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Short> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.BOMLevel;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigDecimal> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.PerAssemblyQty;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field9() {
+		return org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ModifiedDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getBillOfMaterialsID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getProductAssemblyID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value3() {
+		return getComponentID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value4() {
+		return getStartDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value5() {
+		return getEndDate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getUnitMeasureCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Short value7() {
+		return getBOMLevel();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value8() {
+		return getPerAssemblyQty();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value9() {
+		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached BillOfMaterials

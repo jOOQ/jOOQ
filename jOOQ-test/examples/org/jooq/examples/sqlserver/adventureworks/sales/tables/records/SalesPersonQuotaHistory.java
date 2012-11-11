@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPersonQuotaHistory> implements org.jooq.Record5<java.lang.Integer, java.sql.Timestamp, java.math.BigDecimal, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -979253808;
+	private static final long serialVersionUID = -1775074757;
 
 	/**
-	 * The table column <code>Sales.SalesPersonQuotaHistory.SalesPersonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesPersonQuotaHistory_SalesPerson_SalesPersonID
-	 * FOREIGN KEY (SalesPersonID)
-	 * REFERENCES Sales.SalesPerson (SalesPersonID)
-	 * </pre></code>
+	 * Setter for <code>Sales.SalesPersonQuotaHistory.SalesPersonID</code>. 
 	 */
 	public void setSalesPersonID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory.SalesPersonID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPersonQuotaHistory.SalesPersonID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SalesPersonQuotaHistory_SalesPerson_SalesPersonID
-	 * FOREIGN KEY (SalesPersonID)
-	 * REFERENCES Sales.SalesPerson (SalesPersonID)
-	 * </pre></code>
+	 * Getter for <code>Sales.SalesPersonQuotaHistory.SalesPersonID</code>. 
 	 */
 	@javax.persistence.Column(name = "SalesPersonID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesPersonID() {
@@ -47,18 +31,14 @@ public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPersonQuotaHistory.QuotaDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Sales.SalesPersonQuotaHistory.QuotaDate</code>. 
 	 */
 	public void setQuotaDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory.QuotaDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPersonQuotaHistory.QuotaDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Sales.SalesPersonQuotaHistory.QuotaDate</code>. 
 	 */
 	@javax.persistence.Column(name = "QuotaDate", nullable = false)
 	public java.sql.Timestamp getQuotaDate() {
@@ -66,14 +46,14 @@ public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPersonQuotaHistory.SalesQuota</code>
+	 * Setter for <code>Sales.SalesPersonQuotaHistory.SalesQuota</code>. 
 	 */
 	public void setSalesQuota(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory.SalesQuota, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPersonQuotaHistory.SalesQuota</code>
+	 * Getter for <code>Sales.SalesPersonQuotaHistory.SalesQuota</code>. 
 	 */
 	@javax.persistence.Column(name = "SalesQuota", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesQuota() {
@@ -81,14 +61,14 @@ public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPersonQuotaHistory.rowguid</code>
+	 * Setter for <code>Sales.SalesPersonQuotaHistory.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPersonQuotaHistory.rowguid</code>
+	 * Getter for <code>Sales.SalesPersonQuotaHistory.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -96,25 +76,30 @@ public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPersonQuotaHistory.ModifiedDate</code>
+	 * Setter for <code>Sales.SalesPersonQuotaHistory.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SalesPersonQuotaHistory.ModifiedDate</code>
+	 * Getter for <code>Sales.SalesPersonQuotaHistory.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached SalesPersonQuotaHistory
+	 * {@inheritDoc}
 	 */
-	public SalesPersonQuotaHistory() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.sql.Timestamp> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -215,5 +200,16 @@ public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	@Override
 	public java.sql.Timestamp value5() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached SalesPersonQuotaHistory
+	 */
+	public SalesPersonQuotaHistory() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory);
 	}
 }

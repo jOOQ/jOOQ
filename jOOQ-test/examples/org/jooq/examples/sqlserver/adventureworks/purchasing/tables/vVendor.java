@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
 @java.lang.SuppressWarnings("all")
 public class vVendor extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor> {
 
-	private static final long serialVersionUID = -1635222341;
+	private static final long serialVersionUID = 1508824449;
 
 	/**
-	 * The singleton instance of Purchasing.vVendor
+	 * The singleton instance of <code>Purchasing.vVendor</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor vVendor = new org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor();
 
@@ -25,98 +25,107 @@ public class vVendor extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver
 	}
 
 	/**
-	 * The table column <code>Purchasing.vVendor.VendorID</code>
+	 * The column <code>Purchasing.vVendor.VendorID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.Integer> VendorID = createField("VendorID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.Name</code>
+	 * The column <code>Purchasing.vVendor.Name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.ContactType</code>
+	 * The column <code>Purchasing.vVendor.ContactType</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> ContactType = createField("ContactType", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.Title</code>
+	 * The column <code>Purchasing.vVendor.Title</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> Title = createField("Title", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.FirstName</code>
+	 * The column <code>Purchasing.vVendor.FirstName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> FirstName = createField("FirstName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.MiddleName</code>
+	 * The column <code>Purchasing.vVendor.MiddleName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> MiddleName = createField("MiddleName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.LastName</code>
+	 * The column <code>Purchasing.vVendor.LastName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> LastName = createField("LastName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.Suffix</code>
+	 * The column <code>Purchasing.vVendor.Suffix</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> Suffix = createField("Suffix", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.Phone</code>
+	 * The column <code>Purchasing.vVendor.Phone</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> Phone = createField("Phone", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.EmailAddress</code>
+	 * The column <code>Purchasing.vVendor.EmailAddress</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> EmailAddress = createField("EmailAddress", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.EmailPromotion</code>
+	 * The column <code>Purchasing.vVendor.EmailPromotion</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.Integer> EmailPromotion = createField("EmailPromotion", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.AddressLine1</code>
+	 * The column <code>Purchasing.vVendor.AddressLine1</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> AddressLine1 = createField("AddressLine1", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.AddressLine2</code>
+	 * The column <code>Purchasing.vVendor.AddressLine2</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> AddressLine2 = createField("AddressLine2", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.City</code>
+	 * The column <code>Purchasing.vVendor.City</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> City = createField("City", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.StateProvinceName</code>
+	 * The column <code>Purchasing.vVendor.StateProvinceName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> StateProvinceName = createField("StateProvinceName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.PostalCode</code>
+	 * The column <code>Purchasing.vVendor.PostalCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> PostalCode = createField("PostalCode", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Purchasing.vVendor.CountryRegionName</code>
+	 * The column <code>Purchasing.vVendor.CountryRegionName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> CountryRegionName = createField("CountryRegionName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
+	/**
+	 * Create a <code>Purchasing.vVendor</code> table reference
+	 */
 	public vVendor() {
 		super("vVendor", org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing);
 	}
 
+	/**
+	 * Create an aliased <code>Purchasing.vVendor</code> table reference
+	 */
 	public vVendor(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor(alias);

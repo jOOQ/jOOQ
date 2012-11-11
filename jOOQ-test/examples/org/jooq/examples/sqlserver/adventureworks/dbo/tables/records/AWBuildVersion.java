@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.records;
 @javax.persistence.Table(name = "AWBuildVersion", schema = "dbo")
 public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion> implements org.jooq.Record4<java.lang.Byte, java.lang.String, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -967696847;
+	private static final long serialVersionUID = 585935070;
 
 	/**
-	 * The table column <code>dbo.AWBuildVersion.SystemInformationID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>dbo.AWBuildVersion.SystemInformationID</code>. 
 	 */
 	public void setSystemInformationID(java.lang.Byte value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.SystemInformationID, value);
 	}
 
 	/**
-	 * The table column <code>dbo.AWBuildVersion.SystemInformationID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>dbo.AWBuildVersion.SystemInformationID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "SystemInformationID", unique = true, nullable = false, precision = 3)
@@ -34,14 +30,14 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * The table column <code>dbo.AWBuildVersion.Database Version</code>
+	 * Setter for <code>dbo.AWBuildVersion.Database Version</code>. 
 	 */
 	public void setDatabase_Version(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.Database_Version, value);
 	}
 
 	/**
-	 * The table column <code>dbo.AWBuildVersion.Database Version</code>
+	 * Getter for <code>dbo.AWBuildVersion.Database Version</code>. 
 	 */
 	@javax.persistence.Column(name = "Database Version", nullable = false, length = 25)
 	public java.lang.String getDatabase_Version() {
@@ -49,14 +45,14 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * The table column <code>dbo.AWBuildVersion.VersionDate</code>
+	 * Setter for <code>dbo.AWBuildVersion.VersionDate</code>. 
 	 */
 	public void setVersionDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.VersionDate, value);
 	}
 
 	/**
-	 * The table column <code>dbo.AWBuildVersion.VersionDate</code>
+	 * Getter for <code>dbo.AWBuildVersion.VersionDate</code>. 
 	 */
 	@javax.persistence.Column(name = "VersionDate", nullable = false)
 	public java.sql.Timestamp getVersionDate() {
@@ -64,25 +60,30 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * The table column <code>dbo.AWBuildVersion.ModifiedDate</code>
+	 * Setter for <code>dbo.AWBuildVersion.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>dbo.AWBuildVersion.ModifiedDate</code>
+	 * Getter for <code>dbo.AWBuildVersion.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached AWBuildVersion
+	 * {@inheritDoc}
 	 */
-	public AWBuildVersion() {
-		super(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion);
+	@Override
+	public org.jooq.Record1<java.lang.Byte> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -167,5 +168,16 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	@Override
 	public java.sql.Timestamp value4() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached AWBuildVersion
+	 */
+	public AWBuildVersion() {
+		super(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion);
 	}
 }

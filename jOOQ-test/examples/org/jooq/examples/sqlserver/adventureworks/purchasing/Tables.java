@@ -52,7 +52,7 @@ public final class Tables {
 	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor vVendor = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

@@ -9,81 +9,45 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> implements org.jooq.Record7<java.lang.Integer, java.sql.Timestamp, java.lang.Integer, java.lang.Short, java.sql.Timestamp, java.lang.Byte, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 573835702;
+	private static final long serialVersionUID = 206497574;
 
 	/**
-	 * The table column <code>sakila.rental.rental_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>sakila.rental.rental_id</code>. 
 	 */
 	public void setRentalId(java.lang.Integer value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.rental.rental_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>sakila.rental.rental_id</code>. 
 	 */
 	public java.lang.Integer getRentalId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.rental.rental_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> fetchPaymentList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT)
-			.where(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>sakila.rental.rental_date</code>
+	 * Setter for <code>sakila.rental.rental_date</code>. 
 	 */
 	public void setRentalDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_DATE, value);
 	}
 
 	/**
-	 * The table column <code>sakila.rental.rental_date</code>
+	 * Getter for <code>sakila.rental.rental_date</code>. 
 	 */
 	public java.sql.Timestamp getRentalDate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_DATE);
 	}
 
 	/**
-	 * The table column <code>sakila.rental.inventory_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_inventory
-	 * FOREIGN KEY (inventory_id)
-	 * REFERENCES sakila.inventory (inventory_id)
-	 * </pre></code>
+	 * Setter for <code>sakila.rental.inventory_id</code>. 
 	 */
 	public void setInventoryId(java.lang.Integer value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.INVENTORY_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.rental.inventory_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_inventory
-	 * FOREIGN KEY (inventory_id)
-	 * REFERENCES sakila.inventory (inventory_id)
-	 * </pre></code>
-	 */
-	public java.lang.Integer getInventoryId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.INVENTORY_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.InventoryRecord 
-	 * InventoryRecord}
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.InventoryRecord}
 	 */
 	public void setInventoryId(org.jooq.examples.mysql.sakila.tables.records.InventoryRecord value) {
 		if (value == null) {
@@ -95,50 +59,21 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>sakila.rental.inventory_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_inventory
-	 * FOREIGN KEY (inventory_id)
-	 * REFERENCES sakila.inventory (inventory_id)
-	 * </pre></code>
+	 * Getter for <code>sakila.rental.inventory_id</code>. 
 	 */
-	public org.jooq.examples.mysql.sakila.tables.records.InventoryRecord fetchInventory() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY)
-			.where(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.INVENTORY_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.INVENTORY_ID)))
-			.fetchOne();
+	public java.lang.Integer getInventoryId() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.INVENTORY_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.rental.customer_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_customer
-	 * FOREIGN KEY (customer_id)
-	 * REFERENCES sakila.customer (customer_id)
-	 * </pre></code>
+	 * Setter for <code>sakila.rental.customer_id</code>. 
 	 */
 	public void setCustomerId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.CUSTOMER_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.rental.customer_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_customer
-	 * FOREIGN KEY (customer_id)
-	 * REFERENCES sakila.customer (customer_id)
-	 * </pre></code>
-	 */
-	public java.lang.Short getCustomerId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.CUSTOMER_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CustomerRecord 
-	 * CustomerRecord}
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CustomerRecord}
 	 */
 	public void setCustomerId(org.jooq.examples.mysql.sakila.tables.records.CustomerRecord value) {
 		if (value == null) {
@@ -150,64 +85,35 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>sakila.rental.customer_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_customer
-	 * FOREIGN KEY (customer_id)
-	 * REFERENCES sakila.customer (customer_id)
-	 * </pre></code>
+	 * Getter for <code>sakila.rental.customer_id</code>. 
 	 */
-	public org.jooq.examples.mysql.sakila.tables.records.CustomerRecord fetchCustomer() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER)
-			.where(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CUSTOMER_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.CUSTOMER_ID)))
-			.fetchOne();
+	public java.lang.Short getCustomerId() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.CUSTOMER_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.rental.return_date</code>
+	 * Setter for <code>sakila.rental.return_date</code>. 
 	 */
 	public void setReturnDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RETURN_DATE, value);
 	}
 
 	/**
-	 * The table column <code>sakila.rental.return_date</code>
+	 * Getter for <code>sakila.rental.return_date</code>. 
 	 */
 	public java.sql.Timestamp getReturnDate() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RETURN_DATE);
 	}
 
 	/**
-	 * The table column <code>sakila.rental.staff_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_staff
-	 * FOREIGN KEY (staff_id)
-	 * REFERENCES sakila.staff (staff_id)
-	 * </pre></code>
+	 * Setter for <code>sakila.rental.staff_id</code>. 
 	 */
 	public void setStaffId(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.STAFF_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.rental.staff_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_staff
-	 * FOREIGN KEY (staff_id)
-	 * REFERENCES sakila.staff (staff_id)
-	 * </pre></code>
-	 */
-	public java.lang.Byte getStaffId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.STAFF_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StaffRecord 
-	 * StaffRecord}
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StaffRecord}
 	 */
 	public void setStaffId(org.jooq.examples.mysql.sakila.tables.records.StaffRecord value) {
 		if (value == null) {
@@ -219,13 +125,62 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>sakila.rental.staff_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_staff
-	 * FOREIGN KEY (staff_id)
-	 * REFERENCES sakila.staff (staff_id)
-	 * </pre></code>
+	 * Getter for <code>sakila.rental.staff_id</code>. 
+	 */
+	public java.lang.Byte getStaffId() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.STAFF_ID);
+	}
+
+	/**
+	 * Setter for <code>sakila.rental.last_update</code>. 
+	 */
+	public void setLastUpdate(java.sql.Timestamp value) {
+		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.LAST_UPDATE, value);
+	}
+
+	/**
+	 * Getter for <code>sakila.rental.last_update</code>. 
+	 */
+	public java.sql.Timestamp getLastUpdate() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.LAST_UPDATE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>sakila.payment</code> referencing this <code>sakila.rental</code>
+	 */
+	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> fetchPaymentList() {
+		return create()
+			.selectFrom(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT)
+			.where(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a <code>sakila.inventory</code> referenced by this <code>sakila.rental</code>
+	 */
+	public org.jooq.examples.mysql.sakila.tables.records.InventoryRecord fetchInventory() {
+		return create()
+			.selectFrom(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY)
+			.where(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.INVENTORY_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.INVENTORY_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>sakila.customer</code> referenced by this <code>sakila.rental</code>
+	 */
+	public org.jooq.examples.mysql.sakila.tables.records.CustomerRecord fetchCustomer() {
+		return create()
+			.selectFrom(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER)
+			.where(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CUSTOMER_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.CUSTOMER_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>sakila.staff</code> referenced by this <code>sakila.rental</code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.StaffRecord fetchStaff() {
 		return create()
@@ -234,25 +189,16 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 			.fetchOne();
 	}
 
-	/**
-	 * The table column <code>sakila.rental.last_update</code>
-	 */
-	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.LAST_UPDATE, value);
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The table column <code>sakila.rental.last_update</code>
+	 * {@inheritDoc}
 	 */
-	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.LAST_UPDATE);
-	}
-
-	/**
-	 * Create a detached RentalRecord
-	 */
-	public RentalRecord() {
-		super(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -385,5 +331,16 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	@Override
 	public java.sql.Timestamp value7() {
 		return getLastUpdate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached RentalRecord
+	 */
+	public RentalRecord() {
+		super(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL);
 	}
 }

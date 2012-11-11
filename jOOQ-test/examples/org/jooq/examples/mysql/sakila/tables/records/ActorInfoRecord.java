@@ -11,70 +11,67 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class ActorInfoRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord> implements org.jooq.Record4<java.lang.Short, java.lang.String, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1133446558;
+	private static final long serialVersionUID = -644561516;
 
 	/**
-	 * The table column <code>sakila.actor_info.actor_id</code>
+	 * Setter for <code>sakila.actor_info.actor_id</code>. 
 	 */
 	public void setActorId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.ACTOR_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.actor_info.actor_id</code>
+	 * Getter for <code>sakila.actor_info.actor_id</code>. 
 	 */
 	public java.lang.Short getActorId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.ACTOR_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.actor_info.first_name</code>
+	 * Setter for <code>sakila.actor_info.first_name</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.FIRST_NAME, value);
 	}
 
 	/**
-	 * The table column <code>sakila.actor_info.first_name</code>
+	 * Getter for <code>sakila.actor_info.first_name</code>. 
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.FIRST_NAME);
 	}
 
 	/**
-	 * The table column <code>sakila.actor_info.last_name</code>
+	 * Setter for <code>sakila.actor_info.last_name</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.LAST_NAME, value);
 	}
 
 	/**
-	 * The table column <code>sakila.actor_info.last_name</code>
+	 * Getter for <code>sakila.actor_info.last_name</code>. 
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.LAST_NAME);
 	}
 
 	/**
-	 * The table column <code>sakila.actor_info.film_info</code>
+	 * Setter for <code>sakila.actor_info.film_info</code>. 
 	 */
 	public void setFilmInfo(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.FILM_INFO, value);
 	}
 
 	/**
-	 * The table column <code>sakila.actor_info.film_info</code>
+	 * Getter for <code>sakila.actor_info.film_info</code>. 
 	 */
 	public java.lang.String getFilmInfo() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO.FILM_INFO);
 	}
 
-	/**
-	 * Create a detached ActorInfoRecord
-	 */
-	public ActorInfoRecord() {
-		super(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record4 type implementation
@@ -158,5 +155,16 @@ public class ActorInfoRecord extends org.jooq.impl.TableRecordImpl<org.jooq.exam
 	@Override
 	public java.lang.String value4() {
 		return getFilmInfo();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ActorInfoRecord
+	 */
+	public ActorInfoRecord() {
+		super(org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO);
 	}
 }

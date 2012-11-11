@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class ProductListPriceHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory> {
 
-	private static final long serialVersionUID = -661343353;
+	private static final long serialVersionUID = 2110568350;
 
 	/**
-	 * The singleton instance of Production.ProductListPriceHistory
+	 * The singleton instance of <code>Production.ProductListPriceHistory</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory ProductListPriceHistory = new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory();
 
@@ -25,65 +25,71 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableTableImpl<or
 	}
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductListPriceHistory_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * The column <code>Production.ProductListPriceHistory.ProductID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory, java.lang.Integer> ProductID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.StartDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Production.ProductListPriceHistory.StartDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory, java.sql.Timestamp> StartDate = createField("StartDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.EndDate</code>
+	 * The column <code>Production.ProductListPriceHistory.EndDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory, java.sql.Timestamp> EndDate = createField("EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.ListPrice</code>
+	 * The column <code>Production.ProductListPriceHistory.ListPrice</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory, java.math.BigDecimal> ListPrice = createField("ListPrice", org.jooq.impl.SQLDataType.NUMERIC, this);
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.ModifiedDate</code>
+	 * The column <code>Production.ProductListPriceHistory.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.ProductListPriceHistory</code> table reference
+	 */
 	public ProductListPriceHistory() {
 		super("ProductListPriceHistory", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.ProductListPriceHistory</code> table reference
+	 */
 	public ProductListPriceHistory(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductListPriceHistory_ProductID_StartDate;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductListPriceHistory_ProductID_StartDate);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductListPriceHistory_Product_ProductID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory(alias);

@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources;
 @java.lang.SuppressWarnings("all")
 public class HumanResources extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 350390846;
+	private static final long serialVersionUID = -1705212779;
 
 	/**
-	 * The singleton instance of HumanResources
+	 * The singleton instance of <code>HumanResources</code>
 	 */
 	public static final HumanResources HumanResources = new HumanResources();
 

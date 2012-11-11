@@ -9,10 +9,10 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> {
 
-	private static final long serialVersionUID = 585651332;
+	private static final long serialVersionUID = -377279028;
 
 	/**
-	 * The singleton instance of sakila.rental
+	 * The singleton instance of <code>sakila.rental</code>
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Rental RENTAL = new org.jooq.examples.mysql.sakila.tables.Rental();
 
@@ -25,90 +25,89 @@ public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.m
 	}
 
 	/**
-	 * The table column <code>sakila.rental.rental_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>sakila.rental.rental_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Integer> RENTAL_ID = createField("rental_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>sakila.rental.rental_date</code>
+	 * The column <code>sakila.rental.rental_date</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.sql.Timestamp> RENTAL_DATE = createField("rental_date", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>sakila.rental.inventory_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_inventory
-	 * FOREIGN KEY (inventory_id)
-	 * REFERENCES sakila.inventory (inventory_id)
-	 * </pre></code>
+	 * The column <code>sakila.rental.inventory_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Integer> INVENTORY_ID = createField("inventory_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>sakila.rental.customer_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_customer
-	 * FOREIGN KEY (customer_id)
-	 * REFERENCES sakila.customer (customer_id)
-	 * </pre></code>
+	 * The column <code>sakila.rental.customer_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Short> CUSTOMER_ID = createField("customer_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>sakila.rental.return_date</code>
+	 * The column <code>sakila.rental.return_date</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.sql.Timestamp> RETURN_DATE = createField("return_date", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The table column <code>sakila.rental.staff_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_rental_staff
-	 * FOREIGN KEY (staff_id)
-	 * REFERENCES sakila.staff (staff_id)
-	 * </pre></code>
+	 * The column <code>sakila.rental.staff_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Byte> STAFF_ID = createField("staff_id", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>sakila.rental.last_update</code>
+	 * The column <code>sakila.rental.last_update</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>sakila.rental</code> table reference
+	 */
 	public Rental() {
 		super("rental", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
+	/**
+	 * Create an aliased <code>sakila.rental</code> table reference
+	 */
 	public Rental(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.Rental.RENTAL);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_RENTAL;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> getMainKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_RENTAL_PRIMARY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_RENTAL_PRIMARY, org.jooq.examples.mysql.sakila.Keys.KEY_RENTAL_RENTAL_DATE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_RENTAL_INVENTORY, org.jooq.examples.mysql.sakila.Keys.FK_RENTAL_CUSTOMER, org.jooq.examples.mysql.sakila.Keys.FK_RENTAL_STAFF);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.Rental as(java.lang.String alias) {
 		return new org.jooq.examples.mysql.sakila.tables.Rental(alias);

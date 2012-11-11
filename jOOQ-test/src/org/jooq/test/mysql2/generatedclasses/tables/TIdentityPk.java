@@ -9,10 +9,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -528446944;
+	private static final long serialVersionUID = -1777902072;
 
 	/**
-	 * The singleton instance of test2.t_identity_pk
+	 * The singleton instance of <code>test2.t_identity_pk</code>
 	 */
 	public static final org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = new org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk();
 
@@ -25,41 +25,56 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>test2.t_identity_pk.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>test2.t_identity_pk.id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>test2.t_identity_pk.val</code>
+	 * The column <code>test2.t_identity_pk.val</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>test2.t_identity_pk</code> table reference
+	 */
 	public TIdentityPk() {
 		super("t_identity_pk", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
+	/**
+	 * Create an aliased <code>test2.t_identity_pk</code> table reference
+	 */
 	public TIdentityPk(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.test.mysql2.generatedclasses.Keys.IDENTITY_T_IDENTITY_PK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord> getMainKey() {
 		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_IDENTITY_PK_PRIMARY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord>>asList(org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_IDENTITY_PK_PRIMARY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk as(java.lang.String alias) {
 		return new org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk(alias);

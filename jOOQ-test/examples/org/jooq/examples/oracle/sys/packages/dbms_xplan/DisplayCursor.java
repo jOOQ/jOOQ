@@ -9,26 +9,25 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 1232124592;
-
+	private static final long serialVersionUID = -1407713580;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.RETURN_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.SQL_ID</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.SQL_ID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQL_ID = createParameter("SQL_ID", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.CURSOR_CHILD_NO</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.CURSOR_CHILD_NO</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigInteger> CURSOR_CHILD_NO = createParameter("CURSOR_CHILD_NO", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.FORMAT</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.FORMAT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -52,9 +51,7 @@ public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>SQL_ID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>SQL_ID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setSqlId(org.jooq.Field<java.lang.String> field) {
 		setField(SQL_ID, field);
@@ -68,9 +65,7 @@ public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>CURSOR_CHILD_NO</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>CURSOR_CHILD_NO</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setCursorChildNo(org.jooq.Field<java.math.BigInteger> field) {
 		setField(CURSOR_CHILD_NO, field);
@@ -84,9 +79,7 @@ public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>FORMAT</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setFormat(org.jooq.Field<java.lang.String> field) {
 		setField(FORMAT, field);

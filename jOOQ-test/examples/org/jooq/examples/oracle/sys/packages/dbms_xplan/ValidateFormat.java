@@ -9,32 +9,25 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class ValidateFormat extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = -1552463546;
-
+	private static final long serialVersionUID = 1780223570;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.RETURN_VALUE</code>
-	 * <p>
-	 * The SQL type of this item (PL/SQL BOOLEAN, null) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.oracle.OracleDataType.getDefaultDataType("PL/SQL BOOLEAN"));
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.HASPLANSTATS</code>
-	 * <p>
-	 * The SQL type of this item (PL/SQL BOOLEAN, null) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.HASPLANSTATS</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> HASPLANSTATS = createParameter("HASPLANSTATS", org.jooq.util.oracle.OracleDataType.getDefaultDataType("PL/SQL BOOLEAN"));
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.FORMAT</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.FORMAT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.FORMAT_FLAGS</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.VALIDATE_FORMAT.FORMAT_FLAGS</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> FORMAT_FLAGS = createParameter("FORMAT_FLAGS", org.jooq.impl.SQLDataType.INTEGER);
 

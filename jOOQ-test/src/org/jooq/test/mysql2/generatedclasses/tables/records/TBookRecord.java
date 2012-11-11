@@ -11,23 +11,19 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "t_book", schema = "test2")
-public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> {
+public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql2.generatedclasses.enums.TBookStatus> {
 
-	private static final long serialVersionUID = -1071715845;
+	private static final long serialVersionUID = -1749211720;
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>test2.t_book.ID</code>. The book ID
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.ID, value);
 	}
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>test2.t_book.ID</code>. The book ID
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
@@ -36,47 +32,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The author ID in entity 'author'
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_author_id
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES test2.t_author (ID)
-	 * </pre></code>
+	 * Setter for <code>test2.t_book.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, value);
 	}
 
 	/**
-	 * The author ID in entity 'author'
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_author_id
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES test2.t_author (ID)
-	 * </pre></code>
-	 */
-	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 10)
-	public java.lang.Integer getAuthorId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord 
-	 * TAuthorRecord}
+	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord}
 	 */
 	public void setAuthorId(org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord value) {
 		if (value == null) {
@@ -88,51 +51,22 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The author ID in entity 'author'
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_author_id
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES test2.t_author (ID)
-	 * </pre></code>
+	 * Getter for <code>test2.t_book.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	public org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID)))
-			.fetchOne();
+	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 10)
+	public java.lang.Integer getAuthorId() {
+		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID);
 	}
 
 	/**
-	 * The table column <code>test2.t_book.co_author_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_co_author_id
-	 * FOREIGN KEY (co_author_id)
-	 * REFERENCES test2.t_author (ID)
-	 * </pre></code>
+	 * Setter for <code>test2.t_book.co_author_id</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_book.co_author_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_co_author_id
-	 * FOREIGN KEY (co_author_id)
-	 * REFERENCES test2.t_author (ID)
-	 * </pre></code>
-	 */
-	@javax.persistence.Column(name = "co_author_id", precision = 10)
-	public java.lang.Integer getCoAuthorId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord 
-	 * TAuthorRecord}
+	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord}
 	 */
 	public void setCoAuthorId(org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord value) {
 		if (value == null) {
@@ -144,30 +78,22 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>test2.t_book.co_author_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_co_author_id
-	 * FOREIGN KEY (co_author_id)
-	 * REFERENCES test2.t_author (ID)
-	 * </pre></code>
+	 * Getter for <code>test2.t_book.co_author_id</code>. 
 	 */
-	public org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID)))
-			.fetchOne();
+	@javax.persistence.Column(name = "co_author_id", precision = 10)
+	public java.lang.Integer getCoAuthorId() {
+		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID);
 	}
 
 	/**
-	 * Some more details about the book
+	 * Setter for <code>test2.t_book.DETAILS_ID</code>. Some more details about the book
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.DETAILS_ID, value);
 	}
 
 	/**
-	 * Some more details about the book
+	 * Getter for <code>test2.t_book.DETAILS_ID</code>. Some more details about the book
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", precision = 10)
 	public java.lang.Integer getDetailsId() {
@@ -175,14 +101,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The book's title
+	 * Setter for <code>test2.t_book.TITLE</code>. The book's title
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.TITLE, value);
 	}
 
 	/**
-	 * The book's title
+	 * Getter for <code>test2.t_book.TITLE</code>. The book's title
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 65535)
 	public java.lang.String getTitle() {
@@ -190,14 +116,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The year the book was published in
+	 * Setter for <code>test2.t_book.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN, value);
 	}
 
 	/**
-	 * The year the book was published in
+	 * Getter for <code>test2.t_book.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 10)
 	public java.lang.Integer getPublishedIn() {
@@ -205,35 +131,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The language of the book
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_language_id
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES test2.t_language (ID)
-	 * </pre></code>
+	 * Setter for <code>test2.t_book.LANGUAGE_ID</code>. The language of the book
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value);
 	}
 
 	/**
-	 * The language of the book
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_language_id
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES test2.t_language (ID)
-	 * </pre></code>
-	 */
-	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 10)
-	public java.lang.Integer getLanguageId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord 
-	 * TLanguageRecord}
+	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord}
 	 */
 	public void setLanguageId(org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord value) {
 		if (value == null) {
@@ -245,13 +150,94 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The language of the book
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_language_id
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES test2.t_language (ID)
-	 * </pre></code>
+	 * Getter for <code>test2.t_book.LANGUAGE_ID</code>. The language of the book
+	 */
+	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 10)
+	public java.lang.Integer getLanguageId() {
+		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID);
+	}
+
+	/**
+	 * Setter for <code>test2.t_book.CONTENT_TEXT</code>. Some textual content of the book
+	 */
+	public void setContentText(java.lang.String value) {
+		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT, value);
+	}
+
+	/**
+	 * Getter for <code>test2.t_book.CONTENT_TEXT</code>. Some textual content of the book
+	 */
+	@javax.persistence.Column(name = "CONTENT_TEXT")
+	public java.lang.String getContentText() {
+		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT);
+	}
+
+	/**
+	 * Setter for <code>test2.t_book.CONTENT_PDF</code>. Some binary content of the book
+	 */
+	public void setContentPdf(byte[] value) {
+		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF, value);
+	}
+
+	/**
+	 * Getter for <code>test2.t_book.CONTENT_PDF</code>. Some binary content of the book
+	 */
+	@javax.persistence.Column(name = "CONTENT_PDF")
+	public byte[] getContentPdf() {
+		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF);
+	}
+
+	/**
+	 * Setter for <code>test2.t_book.STATUS</code>. The book's stock status
+	 */
+	public void setStatus(org.jooq.test.mysql2.generatedclasses.enums.TBookStatus value) {
+		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.STATUS, value);
+	}
+
+	/**
+	 * Getter for <code>test2.t_book.STATUS</code>. The book's stock status
+	 */
+	@javax.persistence.Column(name = "STATUS", length = 8)
+	public org.jooq.test.mysql2.generatedclasses.enums.TBookStatus getStatus() {
+		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.STATUS);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>test2.t_book_to_book_store</code> referencing this <code>test2.t_book</code>
+	 */
+	public org.jooq.Result<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
+		return create()
+			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
+			.where(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a <code>test2.t_author</code> referenced by this <code>test2.t_book</code>
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR)
+			.where(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>test2.t_author</code> referenced by this <code>test2.t_book</code>
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR)
+			.where(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>test2.t_language</code> referenced by this <code>test2.t_book</code>
 	 */
 	public org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
 		return create()
@@ -260,50 +246,201 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 			.fetchOne();
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Some textual content of the book
+	 * {@inheritDoc}
 	 */
-	public void setContentText(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT, value);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
+
+	// -------------------------------------------------------------------------
+	// Record10 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql2.generatedclasses.enums.TBookStatus> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10());
 	}
 
 	/**
-	 * Some textual content of the book
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "CONTENT_TEXT")
-	public java.lang.String getContentText() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT);
+	@Override
+	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql2.generatedclasses.enums.TBookStatus> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10());
 	}
 
 	/**
-	 * Some binary content of the book
+	 * {@inheritDoc}
 	 */
-	public void setContentPdf(byte[] value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF, value);
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.ID;
 	}
 
 	/**
-	 * Some binary content of the book
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "CONTENT_PDF")
-	public byte[] getContentPdf() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF);
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID;
 	}
 
 	/**
-	 * The book's stock status
+	 * {@inheritDoc}
 	 */
-	public void setStatus(org.jooq.test.mysql2.generatedclasses.enums.TBookStatus value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.STATUS, value);
+	@Override
+	public org.jooq.Field<java.lang.Integer> field3() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID;
 	}
 
 	/**
-	 * The book's stock status
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "STATUS", length = 8)
-	public org.jooq.test.mysql2.generatedclasses.enums.TBookStatus getStatus() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.STATUS);
+	@Override
+	public org.jooq.Field<java.lang.Integer> field4() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.DETAILS_ID;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.TITLE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field6() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field7() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field8() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<byte[]> field9() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<org.jooq.test.mysql2.generatedclasses.enums.TBookStatus> field10() {
+		return org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.STATUS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getAuthorId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value3() {
+		return getCoAuthorId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value4() {
+		return getDetailsId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value6() {
+		return getPublishedIn();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value7() {
+		return getLanguageId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value8() {
+		return getContentText();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public byte[] value9() {
+		return getContentPdf();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.mysql2.generatedclasses.enums.TBookStatus value10() {
+		return getStatus();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached TBookRecord

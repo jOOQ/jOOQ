@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
 @java.lang.SuppressWarnings("all")
 public class StoreContact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact> {
 
-	private static final long serialVersionUID = -68001414;
+	private static final long serialVersionUID = 1888523428;
 
 	/**
-	 * The singleton instance of Sales.StoreContact
+	 * The singleton instance of <code>Sales.StoreContact</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact StoreContact = new org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact();
 
@@ -25,77 +25,71 @@ public class StoreContact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Sales.StoreContact.CustomerID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_StoreContact_Store_CustomerID
-	 * FOREIGN KEY (CustomerID)
-	 * REFERENCES Sales.Store (CustomerID)
-	 * </pre></code>
+	 * The column <code>Sales.StoreContact.CustomerID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, java.lang.Integer> CustomerID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.StoreContact.ContactID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_StoreContact_Contact_ContactID
-	 * FOREIGN KEY (ContactID)
-	 * REFERENCES Person.Contact (ContactID)
-	 * </pre></code>
+	 * The column <code>Sales.StoreContact.ContactID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, java.lang.Integer> ContactID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.StoreContact.ContactTypeID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_StoreContact_ContactType_ContactTypeID
-	 * FOREIGN KEY (ContactTypeID)
-	 * REFERENCES Person.ContactType (ContactTypeID)
-	 * </pre></code>
+	 * The column <code>Sales.StoreContact.ContactTypeID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, java.lang.Integer> ContactTypeID = createField("ContactTypeID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Sales.StoreContact.rowguid</code>
+	 * The column <code>Sales.StoreContact.rowguid</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Sales.StoreContact.ModifiedDate</code>
+	 * The column <code>Sales.StoreContact.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Sales.StoreContact</code> table reference
+	 */
 	public StoreContact() {
 		super("StoreContact", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
+	/**
+	 * Create an aliased <code>Sales.StoreContact</code> table reference
+	 */
 	public StoreContact(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_StoreContact_CustomerID_ContactID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_StoreContact_CustomerID_ContactID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreContact, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_StoreContact_Store_CustomerID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_StoreContact_Contact_ContactID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_StoreContact_ContactType_ContactTypeID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact(alias);

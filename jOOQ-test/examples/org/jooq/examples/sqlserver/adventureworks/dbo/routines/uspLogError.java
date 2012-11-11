@@ -9,11 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
 @java.lang.SuppressWarnings("all")
 public class uspLogError extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1517263906;
-
+	private static final long serialVersionUID = 1170250127;
 
 	/**
-	 * The procedure parameter <code>dbo.uspLogError.ErrorLogID</code>
+	 * The parameter <code>dbo.uspLogError.ErrorLogID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> ErrorLogID = createParameter("ErrorLogID", org.jooq.impl.SQLDataType.INTEGER);
 

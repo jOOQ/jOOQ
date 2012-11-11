@@ -13,21 +13,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_85", schema = "test2")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 657487475;
+	private static final long serialVersionUID = -964068052;
 
 	/**
-	 * The table column <code>test2.x_test_case_85.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>test2.x_test_case_85.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID, value);
 	}
 
 	/**
-	 * The table column <code>test2.x_test_case_85.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>test2.x_test_case_85.id</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 10)
@@ -36,26 +32,14 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>test2.x_test_case_85.x_unused_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES test2.x_unused (ID, NAME)
-	 * </pre></code>
+	 * Setter for <code>test2.x_test_case_85.x_unused_id</code>. 
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, value);
 	}
 
 	/**
-	 * The table column <code>test2.x_test_case_85.x_unused_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES test2.x_unused (ID, NAME)
-	 * </pre></code>
+	 * Getter for <code>test2.x_test_case_85.x_unused_id</code>. 
 	 */
 	@javax.persistence.Column(name = "x_unused_id", precision = 10)
 	public java.lang.Integer getXUnusedId() {
@@ -63,13 +47,26 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>test2.x_test_case_85.x_unused_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES test2.x_unused (ID, NAME)
-	 * </pre></code>
+	 * Setter for <code>test2.x_test_case_85.x_unused_name</code>. 
+	 */
+	public void setXUnusedName(java.lang.String value) {
+		setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME, value);
+	}
+
+	/**
+	 * Getter for <code>test2.x_test_case_85.x_unused_name</code>. 
+	 */
+	@javax.persistence.Column(name = "x_unused_name", length = 10)
+	public java.lang.String getXUnusedName() {
+		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a <code>test2.x_unused</code> referenced by this <code>test2.x_test_case_85</code>
 	 */
 	public org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()
@@ -79,38 +76,16 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 			.fetchOne();
 	}
 
-	/**
-	 * The table column <code>test2.x_test_case_85.x_unused_name</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES test2.x_unused (ID, NAME)
-	 * </pre></code>
-	 */
-	public void setXUnusedName(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME, value);
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The table column <code>test2.x_test_case_85.x_unused_name</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES test2.x_unused (ID, NAME)
-	 * </pre></code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "x_unused_name", length = 10)
-	public java.lang.String getXUnusedName() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
-	}
-
-	/**
-	 * Create a detached XTestCase_85Record
-	 */
-	public XTestCase_85Record() {
-		super(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -179,5 +154,16 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.String value3() {
 		return getXUnusedName();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_85Record
+	 */
+	public XTestCase_85Record() {
+		super(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 }

@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "UnitMeasure", schema = "Production")
 public class UnitMeasure extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> implements org.jooq.Record3<java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1810431286;
+	private static final long serialVersionUID = -228740870;
 
 	/**
-	 * The table column <code>Production.UnitMeasure.UnitMeasureCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.UnitMeasure.UnitMeasureCode</code>. 
 	 */
 	public void setUnitMeasureCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure.UnitMeasureCode, value);
 	}
 
 	/**
-	 * The table column <code>Production.UnitMeasure.UnitMeasureCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.UnitMeasure.UnitMeasureCode</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "UnitMeasureCode", unique = true, nullable = false, length = 3)
@@ -34,14 +30,14 @@ public class UnitMeasure extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Production.UnitMeasure.Name</code>
+	 * Setter for <code>Production.UnitMeasure.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure.Name, value);
 	}
 
 	/**
-	 * The table column <code>Production.UnitMeasure.Name</code>
+	 * Getter for <code>Production.UnitMeasure.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,25 +45,30 @@ public class UnitMeasure extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>Production.UnitMeasure.ModifiedDate</code>
+	 * Setter for <code>Production.UnitMeasure.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.UnitMeasure.ModifiedDate</code>
+	 * Getter for <code>Production.UnitMeasure.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached UnitMeasure
+	 * {@inheritDoc}
 	 */
-	public UnitMeasure() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure);
+	@Override
+	public org.jooq.Record1<java.lang.String> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -136,5 +137,16 @@ public class UnitMeasure extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached UnitMeasure
+	 */
+	public UnitMeasure() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure);
 	}
 }

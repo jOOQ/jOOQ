@@ -9,11 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
 @java.lang.SuppressWarnings("all")
 public class uspGetEmployeeManagers extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 840907646;
-
+	private static final long serialVersionUID = -1912748183;
 
 	/**
-	 * The procedure parameter <code>dbo.uspGetEmployeeManagers.EmployeeID</code>
+	 * The parameter <code>dbo.uspGetEmployeeManagers.EmployeeID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> EmployeeID = createParameter("EmployeeID", org.jooq.impl.SQLDataType.INTEGER);
 

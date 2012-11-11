@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Location", schema = "Production")
 public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Location> implements org.jooq.Record5<java.lang.Short, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 539180122;
+	private static final long serialVersionUID = -1497909951;
 
 	/**
-	 * The table column <code>Production.Location.LocationID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.Location.LocationID</code>. 
 	 */
 	public void setLocationID(java.lang.Short value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.LocationID, value);
 	}
 
 	/**
-	 * The table column <code>Production.Location.LocationID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.Location.LocationID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "LocationID", unique = true, nullable = false, precision = 5)
@@ -34,14 +30,14 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Location.Name</code>
+	 * Setter for <code>Production.Location.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.Name, value);
 	}
 
 	/**
-	 * The table column <code>Production.Location.Name</code>
+	 * Getter for <code>Production.Location.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,14 +45,14 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Location.CostRate</code>
+	 * Setter for <code>Production.Location.CostRate</code>. 
 	 */
 	public void setCostRate(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.CostRate, value);
 	}
 
 	/**
-	 * The table column <code>Production.Location.CostRate</code>
+	 * Getter for <code>Production.Location.CostRate</code>. 
 	 */
 	@javax.persistence.Column(name = "CostRate", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getCostRate() {
@@ -64,14 +60,14 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Location.Availability</code>
+	 * Setter for <code>Production.Location.Availability</code>. 
 	 */
 	public void setAvailability(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.Availability, value);
 	}
 
 	/**
-	 * The table column <code>Production.Location.Availability</code>
+	 * Getter for <code>Production.Location.Availability</code>. 
 	 */
 	@javax.persistence.Column(name = "Availability", nullable = false, precision = 8, scale = 2)
 	public java.math.BigDecimal getAvailability() {
@@ -79,25 +75,30 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	}
 
 	/**
-	 * The table column <code>Production.Location.ModifiedDate</code>
+	 * Setter for <code>Production.Location.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.Location.ModifiedDate</code>
+	 * Getter for <code>Production.Location.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached Location
+	 * {@inheritDoc}
 	 */
-	public Location() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location);
+	@Override
+	public org.jooq.Record1<java.lang.Short> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -198,5 +199,16 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	@Override
 	public java.sql.Timestamp value5() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached Location
+	 */
+	public Location() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location);
 	}
 }

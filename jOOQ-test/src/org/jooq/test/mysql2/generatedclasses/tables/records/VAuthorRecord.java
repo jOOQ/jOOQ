@@ -13,17 +13,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_author", schema = "test2")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1233516826;
+	private static final long serialVersionUID = -300838348;
 
 	/**
-	 * The author ID
+	 * Setter for <code>test2.v_author.ID</code>. The author ID
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR.ID, value);
 	}
 
 	/**
-	 * The author ID
+	 * Getter for <code>test2.v_author.ID</code>. The author ID
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 10)
 	public java.lang.Integer getId() {
@@ -31,14 +31,14 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	}
 
 	/**
-	 * The author's first name
+	 * Setter for <code>test2.v_author.FIRST_NAME</code>. The author's first name
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR.FIRST_NAME, value);
 	}
 
 	/**
-	 * The author's first name
+	 * Getter for <code>test2.v_author.FIRST_NAME</code>. The author's first name
 	 */
 	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	public java.lang.String getFirstName() {
@@ -46,14 +46,14 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	}
 
 	/**
-	 * The author's last name
+	 * Setter for <code>test2.v_author.LAST_NAME</code>. The author's last name
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR.LAST_NAME, value);
 	}
 
 	/**
-	 * The author's last name
+	 * Getter for <code>test2.v_author.LAST_NAME</code>. The author's last name
 	 */
 	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	public java.lang.String getLastName() {
@@ -61,14 +61,14 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	}
 
 	/**
-	 * The author's date of birth
+	 * Setter for <code>test2.v_author.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR.DATE_OF_BIRTH, value);
 	}
 
 	/**
-	 * The author's date of birth
+	 * Getter for <code>test2.v_author.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	@javax.persistence.Column(name = "DATE_OF_BIRTH")
 	public java.sql.Date getDateOfBirth() {
@@ -76,14 +76,14 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	}
 
 	/**
-	 * The author's year of birth
+	 * Setter for <code>test2.v_author.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR.YEAR_OF_BIRTH, value);
 	}
 
 	/**
-	 * The author's year of birth
+	 * Getter for <code>test2.v_author.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 10)
 	public java.lang.Integer getYearOfBirth() {
@@ -91,26 +91,23 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	}
 
 	/**
-	 * The author's address
+	 * Setter for <code>test2.v_author.ADDRESS</code>. The author's address
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS, value);
 	}
 
 	/**
-	 * The author's address
+	 * Getter for <code>test2.v_author.ADDRESS</code>. The author's address
 	 */
 	@javax.persistence.Column(name = "ADDRESS", length = 200)
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS);
 	}
 
-	/**
-	 * Create a detached VAuthorRecord
-	 */
-	public VAuthorRecord() {
-		super(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record6 type implementation
@@ -226,5 +223,16 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	@Override
 	public java.lang.String value6() {
 		return getAddress();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached VAuthorRecord
+	 */
+	public VAuthorRecord() {
+		super(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 }

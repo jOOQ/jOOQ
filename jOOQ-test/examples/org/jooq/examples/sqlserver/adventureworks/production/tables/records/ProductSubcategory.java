@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductSubcategory", schema = "Production")
 public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1236283981;
+	private static final long serialVersionUID = 1122297256;
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.ProductSubcategoryID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.ProductSubcategory.ProductSubcategoryID</code>. 
 	 */
 	public void setProductSubcategoryID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.ProductSubcategoryID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.ProductSubcategoryID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.ProductSubcategory.ProductSubcategoryID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ProductSubcategoryID", unique = true, nullable = false, precision = 10)
@@ -34,26 +30,14 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.ProductCategoryID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductSubcategory_ProductCategory_ProductCategoryID
-	 * FOREIGN KEY (ProductCategoryID)
-	 * REFERENCES Production.ProductCategory (ProductCategoryID)
-	 * </pre></code>
+	 * Setter for <code>Production.ProductSubcategory.ProductCategoryID</code>. 
 	 */
 	public void setProductCategoryID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.ProductCategoryID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.ProductCategoryID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductSubcategory_ProductCategory_ProductCategoryID
-	 * FOREIGN KEY (ProductCategoryID)
-	 * REFERENCES Production.ProductCategory (ProductCategoryID)
-	 * </pre></code>
+	 * Getter for <code>Production.ProductSubcategory.ProductCategoryID</code>. 
 	 */
 	@javax.persistence.Column(name = "ProductCategoryID", nullable = false, precision = 10)
 	public java.lang.Integer getProductCategoryID() {
@@ -61,14 +45,14 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.Name</code>
+	 * Setter for <code>Production.ProductSubcategory.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.Name, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.Name</code>
+	 * Getter for <code>Production.ProductSubcategory.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -76,14 +60,14 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.rowguid</code>
+	 * Setter for <code>Production.ProductSubcategory.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.rowguid</code>
+	 * Getter for <code>Production.ProductSubcategory.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -91,25 +75,30 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.ModifiedDate</code>
+	 * Setter for <code>Production.ProductSubcategory.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductSubcategory.ModifiedDate</code>
+	 * Getter for <code>Production.ProductSubcategory.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ProductSubcategory
+	 * {@inheritDoc}
 	 */
-	public ProductSubcategory() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -210,5 +199,16 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.sql.Timestamp value5() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ProductSubcategory
+	 */
+	public ProductSubcategory() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory);
 	}
 }

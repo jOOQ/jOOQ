@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Illustration", schema = "Production")
 public class Illustration extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration> implements org.jooq.Record3<java.lang.Integer, java.lang.Object, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -538501060;
+	private static final long serialVersionUID = -1503921209;
 
 	/**
-	 * The table column <code>Production.Illustration.IllustrationID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.Illustration.IllustrationID</code>. 
 	 */
 	public void setIllustrationID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.Illustration.IllustrationID, value);
 	}
 
 	/**
-	 * The table column <code>Production.Illustration.IllustrationID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.Illustration.IllustrationID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "IllustrationID", unique = true, nullable = false, precision = 10)
@@ -34,20 +30,14 @@ public class Illustration extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Production.Illustration.Diagram</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>Production.Illustration.Diagram</code>. 
 	 */
 	public void setDiagram(java.lang.Object value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.Illustration.Diagram, value);
 	}
 
 	/**
-	 * The table column <code>Production.Illustration.Diagram</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>Production.Illustration.Diagram</code>. 
 	 */
 	@javax.persistence.Column(name = "Diagram")
 	public java.lang.Object getDiagram() {
@@ -55,25 +45,30 @@ public class Illustration extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Production.Illustration.ModifiedDate</code>
+	 * Setter for <code>Production.Illustration.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.Illustration.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.Illustration.ModifiedDate</code>
+	 * Getter for <code>Production.Illustration.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.Illustration.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached Illustration
+	 * {@inheritDoc}
 	 */
-	public Illustration() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.Illustration);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -142,5 +137,16 @@ public class Illustration extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached Illustration
+	 */
+	public Illustration() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.Illustration);
 	}
 }

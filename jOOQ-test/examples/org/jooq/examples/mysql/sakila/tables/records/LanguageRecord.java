@@ -9,32 +9,58 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class LanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> implements org.jooq.Record3<java.lang.Byte, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1295751983;
+	private static final long serialVersionUID = -1937264368;
 
 	/**
-	 * The table column <code>sakila.language.language_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>sakila.language.language_id</code>. 
 	 */
 	public void setLanguageId(java.lang.Byte value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.language.language_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>sakila.language.language_id</code>. 
 	 */
 	public java.lang.Byte getLanguageId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.language.language_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>sakila.language.name</code>. 
 	 */
-	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> fetchFilmListByLanguageId() {
+	public void setName(java.lang.String value) {
+		setValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.NAME, value);
+	}
+
+	/**
+	 * Getter for <code>sakila.language.name</code>. 
+	 */
+	public java.lang.String getName() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.NAME);
+	}
+
+	/**
+	 * Setter for <code>sakila.language.last_update</code>. 
+	 */
+	public void setLastUpdate(java.sql.Timestamp value) {
+		setValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LAST_UPDATE, value);
+	}
+
+	/**
+	 * Getter for <code>sakila.language.last_update</code>. 
+	 */
+	public java.sql.Timestamp getLastUpdate() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LAST_UPDATE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>sakila.film</code> referencing this <code>sakila.language</code>
+	 */
+	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> fetchFilmListByLanguageId() {
 		return create()
 			.selectFrom(org.jooq.examples.mysql.sakila.tables.Film.FILM)
 			.where(org.jooq.examples.mysql.sakila.tables.Film.FILM.LANGUAGE_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID)))
@@ -42,50 +68,25 @@ public class LanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	}
 
 	/**
-	 * The table column <code>sakila.language.language_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Fetch a list of <code>sakila.film</code> referencing this <code>sakila.language</code>
 	 */
-	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> fetchFilmListByOriginalLanguageId() {
+	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> fetchFilmListByOriginalLanguageId() {
 		return create()
 			.selectFrom(org.jooq.examples.mysql.sakila.tables.Film.FILM)
 			.where(org.jooq.examples.mysql.sakila.tables.Film.FILM.ORIGINAL_LANGUAGE_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID)))
 			.fetch();
 	}
 
-	/**
-	 * The table column <code>sakila.language.name</code>
-	 */
-	public void setName(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.NAME, value);
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The table column <code>sakila.language.name</code>
+	 * {@inheritDoc}
 	 */
-	public java.lang.String getName() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.NAME);
-	}
-
-	/**
-	 * The table column <code>sakila.language.last_update</code>
-	 */
-	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LAST_UPDATE, value);
-	}
-
-	/**
-	 * The table column <code>sakila.language.last_update</code>
-	 */
-	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LAST_UPDATE);
-	}
-
-	/**
-	 * Create a detached LanguageRecord
-	 */
-	public LanguageRecord() {
-		super(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE);
+	@Override
+	public org.jooq.Record1<java.lang.Byte> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -154,5 +155,16 @@ public class LanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	@Override
 	public java.sql.Timestamp value3() {
 		return getLastUpdate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached LanguageRecord
+	 */
+	public LanguageRecord() {
+		super(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE);
 	}
 }

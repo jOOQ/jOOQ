@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SpecialOfferProduct extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1843753060;
+	private static final long serialVersionUID = -2093905651;
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.SpecialOfferID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID
-	 * FOREIGN KEY (SpecialOfferID)
-	 * REFERENCES Sales.SpecialOffer (SpecialOfferID)
-	 * </pre></code>
+	 * Setter for <code>Sales.SpecialOfferProduct.SpecialOfferID</code>. 
 	 */
 	public void setSpecialOfferID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct.SpecialOfferID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.SpecialOfferID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID
-	 * FOREIGN KEY (SpecialOfferID)
-	 * REFERENCES Sales.SpecialOffer (SpecialOfferID)
-	 * </pre></code>
+	 * Getter for <code>Sales.SpecialOfferProduct.SpecialOfferID</code>. 
 	 */
 	@javax.persistence.Column(name = "SpecialOfferID", nullable = false, precision = 10)
 	public java.lang.Integer getSpecialOfferID() {
@@ -47,30 +31,14 @@ public class SpecialOfferProduct extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SpecialOfferProduct_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Setter for <code>Sales.SpecialOfferProduct.ProductID</code>. 
 	 */
 	public void setProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct.ProductID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_SpecialOfferProduct_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Getter for <code>Sales.SpecialOfferProduct.ProductID</code>. 
 	 */
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
@@ -78,14 +46,14 @@ public class SpecialOfferProduct extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.rowguid</code>
+	 * Setter for <code>Sales.SpecialOfferProduct.rowguid</code>. 
 	 */
 	public void setrowguid(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct.rowguid, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.rowguid</code>
+	 * Getter for <code>Sales.SpecialOfferProduct.rowguid</code>. 
 	 */
 	@javax.persistence.Column(name = "rowguid", nullable = false)
 	public java.lang.String getrowguid() {
@@ -93,25 +61,30 @@ public class SpecialOfferProduct extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.ModifiedDate</code>
+	 * Setter for <code>Sales.SpecialOfferProduct.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Sales.SpecialOfferProduct.ModifiedDate</code>
+	 * Getter for <code>Sales.SpecialOfferProduct.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached SpecialOfferProduct
+	 * {@inheritDoc}
 	 */
-	public SpecialOfferProduct() {
-		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -196,5 +169,16 @@ public class SpecialOfferProduct extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@Override
 	public java.sql.Timestamp value4() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached SpecialOfferProduct
+	 */
+	public SpecialOfferProduct() {
+		super(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct);
 	}
 }

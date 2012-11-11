@@ -9,19 +9,19 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "vIndividualCustomer", schema = "Sales")
-public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualCustomer> {
+public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualCustomer> implements org.jooq.Record17<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> {
 
-	private static final long serialVersionUID = -1196294156;
+	private static final long serialVersionUID = 1879499288;
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.CustomerID</code>
+	 * Setter for <code>Sales.vIndividualCustomer.CustomerID</code>. 
 	 */
 	public void setCustomerID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.CustomerID, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.CustomerID</code>
+	 * Getter for <code>Sales.vIndividualCustomer.CustomerID</code>. 
 	 */
 	@javax.persistence.Column(name = "CustomerID", nullable = false, precision = 10)
 	public java.lang.Integer getCustomerID() {
@@ -29,14 +29,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.Title</code>
+	 * Setter for <code>Sales.vIndividualCustomer.Title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.Title, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.Title</code>
+	 * Getter for <code>Sales.vIndividualCustomer.Title</code>. 
 	 */
 	@javax.persistence.Column(name = "Title", length = 8)
 	public java.lang.String getTitle() {
@@ -44,14 +44,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.FirstName</code>
+	 * Setter for <code>Sales.vIndividualCustomer.FirstName</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.FirstName, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.FirstName</code>
+	 * Getter for <code>Sales.vIndividualCustomer.FirstName</code>. 
 	 */
 	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
@@ -59,14 +59,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.MiddleName</code>
+	 * Setter for <code>Sales.vIndividualCustomer.MiddleName</code>. 
 	 */
 	public void setMiddleName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.MiddleName, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.MiddleName</code>
+	 * Getter for <code>Sales.vIndividualCustomer.MiddleName</code>. 
 	 */
 	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
@@ -74,14 +74,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.LastName</code>
+	 * Setter for <code>Sales.vIndividualCustomer.LastName</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.LastName, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.LastName</code>
+	 * Getter for <code>Sales.vIndividualCustomer.LastName</code>. 
 	 */
 	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
@@ -89,14 +89,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.Suffix</code>
+	 * Setter for <code>Sales.vIndividualCustomer.Suffix</code>. 
 	 */
 	public void setSuffix(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.Suffix, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.Suffix</code>
+	 * Getter for <code>Sales.vIndividualCustomer.Suffix</code>. 
 	 */
 	@javax.persistence.Column(name = "Suffix", length = 10)
 	public java.lang.String getSuffix() {
@@ -104,14 +104,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.Phone</code>
+	 * Setter for <code>Sales.vIndividualCustomer.Phone</code>. 
 	 */
 	public void setPhone(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.Phone, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.Phone</code>
+	 * Getter for <code>Sales.vIndividualCustomer.Phone</code>. 
 	 */
 	@javax.persistence.Column(name = "Phone", length = 25)
 	public java.lang.String getPhone() {
@@ -119,14 +119,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.EmailAddress</code>
+	 * Setter for <code>Sales.vIndividualCustomer.EmailAddress</code>. 
 	 */
 	public void setEmailAddress(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.EmailAddress, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.EmailAddress</code>
+	 * Getter for <code>Sales.vIndividualCustomer.EmailAddress</code>. 
 	 */
 	@javax.persistence.Column(name = "EmailAddress", length = 50)
 	public java.lang.String getEmailAddress() {
@@ -134,14 +134,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.EmailPromotion</code>
+	 * Setter for <code>Sales.vIndividualCustomer.EmailPromotion</code>. 
 	 */
 	public void setEmailPromotion(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.EmailPromotion, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.EmailPromotion</code>
+	 * Getter for <code>Sales.vIndividualCustomer.EmailPromotion</code>. 
 	 */
 	@javax.persistence.Column(name = "EmailPromotion", nullable = false, precision = 10)
 	public java.lang.Integer getEmailPromotion() {
@@ -149,14 +149,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.AddressType</code>
+	 * Setter for <code>Sales.vIndividualCustomer.AddressType</code>. 
 	 */
 	public void setAddressType(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.AddressType, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.AddressType</code>
+	 * Getter for <code>Sales.vIndividualCustomer.AddressType</code>. 
 	 */
 	@javax.persistence.Column(name = "AddressType", nullable = false, length = 50)
 	public java.lang.String getAddressType() {
@@ -164,14 +164,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.AddressLine1</code>
+	 * Setter for <code>Sales.vIndividualCustomer.AddressLine1</code>. 
 	 */
 	public void setAddressLine1(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.AddressLine1, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.AddressLine1</code>
+	 * Getter for <code>Sales.vIndividualCustomer.AddressLine1</code>. 
 	 */
 	@javax.persistence.Column(name = "AddressLine1", nullable = false, length = 60)
 	public java.lang.String getAddressLine1() {
@@ -179,14 +179,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.AddressLine2</code>
+	 * Setter for <code>Sales.vIndividualCustomer.AddressLine2</code>. 
 	 */
 	public void setAddressLine2(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.AddressLine2, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.AddressLine2</code>
+	 * Getter for <code>Sales.vIndividualCustomer.AddressLine2</code>. 
 	 */
 	@javax.persistence.Column(name = "AddressLine2", length = 60)
 	public java.lang.String getAddressLine2() {
@@ -194,14 +194,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.City</code>
+	 * Setter for <code>Sales.vIndividualCustomer.City</code>. 
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.City, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.City</code>
+	 * Getter for <code>Sales.vIndividualCustomer.City</code>. 
 	 */
 	@javax.persistence.Column(name = "City", nullable = false, length = 30)
 	public java.lang.String getCity() {
@@ -209,14 +209,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.StateProvinceName</code>
+	 * Setter for <code>Sales.vIndividualCustomer.StateProvinceName</code>. 
 	 */
 	public void setStateProvinceName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.StateProvinceName, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.StateProvinceName</code>
+	 * Getter for <code>Sales.vIndividualCustomer.StateProvinceName</code>. 
 	 */
 	@javax.persistence.Column(name = "StateProvinceName", nullable = false, length = 50)
 	public java.lang.String getStateProvinceName() {
@@ -224,14 +224,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.PostalCode</code>
+	 * Setter for <code>Sales.vIndividualCustomer.PostalCode</code>. 
 	 */
 	public void setPostalCode(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.PostalCode, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.PostalCode</code>
+	 * Getter for <code>Sales.vIndividualCustomer.PostalCode</code>. 
 	 */
 	@javax.persistence.Column(name = "PostalCode", nullable = false, length = 15)
 	public java.lang.String getPostalCode() {
@@ -239,14 +239,14 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.CountryRegionName</code>
+	 * Setter for <code>Sales.vIndividualCustomer.CountryRegionName</code>. 
 	 */
 	public void setCountryRegionName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.CountryRegionName, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.CountryRegionName</code>
+	 * Getter for <code>Sales.vIndividualCustomer.CountryRegionName</code>. 
 	 */
 	@javax.persistence.Column(name = "CountryRegionName", nullable = false, length = 50)
 	public java.lang.String getCountryRegionName() {
@@ -254,25 +254,315 @@ public class vIndividualCustomer extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.Demographics</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>Sales.vIndividualCustomer.Demographics</code>. 
 	 */
 	public void setDemographics(java.lang.Object value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.Demographics, value);
 	}
 
 	/**
-	 * The table column <code>Sales.vIndividualCustomer.Demographics</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>Sales.vIndividualCustomer.Demographics</code>. 
 	 */
 	@javax.persistence.Column(name = "Demographics")
 	public java.lang.Object getDemographics() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.Demographics);
 	}
+
+	// -------------------------------------------------------------------------
+	// Record17 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row17<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13(), field14(), field15(), field16(), field17());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row17<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13(), value14(), value15(), value16(), value17());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.CustomerID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.Title;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.FirstName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.MiddleName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.LastName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.Suffix;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.Phone;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.EmailAddress;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field9() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.EmailPromotion;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field10() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.AddressType;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field11() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.AddressLine1;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field12() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.AddressLine2;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field13() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.City;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field14() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.StateProvinceName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field15() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.PostalCode;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field16() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.CountryRegionName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Object> field17() {
+		return org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer.Demographics;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getCustomerID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getFirstName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getMiddleName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getLastName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getSuffix();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value7() {
+		return getPhone();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value8() {
+		return getEmailAddress();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value9() {
+		return getEmailPromotion();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value10() {
+		return getAddressType();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value11() {
+		return getAddressLine1();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value12() {
+		return getAddressLine2();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value13() {
+		return getCity();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value14() {
+		return getStateProvinceName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value15() {
+		return getPostalCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value16() {
+		return getCountryRegionName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Object value17() {
+		return getDemographics();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached vIndividualCustomer

@@ -9,31 +9,30 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.routines;
 @java.lang.SuppressWarnings("all")
 public class uspUpdateEmployeePersonalInfo extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1478701724;
-
+	private static final long serialVersionUID = 2056351903;
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeePersonalInfo.EmployeeID</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeePersonalInfo.EmployeeID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> EmployeeID = createParameter("EmployeeID", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeePersonalInfo.NationalIDNumber</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeePersonalInfo.NationalIDNumber</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> NationalIDNumber = createParameter("NationalIDNumber", org.jooq.impl.SQLDataType.NVARCHAR);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeePersonalInfo.BirthDate</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeePersonalInfo.BirthDate</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> BirthDate = createParameter("BirthDate", org.jooq.impl.SQLDataType.TIMESTAMP);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeePersonalInfo.MaritalStatus</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeePersonalInfo.MaritalStatus</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> MaritalStatus = createParameter("MaritalStatus", org.jooq.impl.SQLDataType.NCHAR);
 
 	/**
-	 * The procedure parameter <code>HumanResources.uspUpdateEmployeePersonalInfo.Gender</code>
+	 * The parameter <code>HumanResources.uspUpdateEmployeePersonalInfo.Gender</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> Gender = createParameter("Gender", org.jooq.impl.SQLDataType.NCHAR);
 

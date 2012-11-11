@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
 @java.lang.SuppressWarnings("all")
 public class CountryRegion extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> {
 
-	private static final long serialVersionUID = 1137906898;
+	private static final long serialVersionUID = -2139612584;
 
 	/**
-	 * The singleton instance of Person.CountryRegion
+	 * The singleton instance of <code>Person.CountryRegion</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion CountryRegion = new org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion();
 
@@ -25,41 +25,53 @@ public class CountryRegion extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Person.CountryRegion.CountryRegionCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Person.CountryRegion.CountryRegionCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion, java.lang.String> CountryRegionCode = createField("CountryRegionCode", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.CountryRegion.Name</code>
+	 * The column <code>Person.CountryRegion.Name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.CountryRegion.ModifiedDate</code>
+	 * The column <code>Person.CountryRegion.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Person.CountryRegion</code> table reference
+	 */
 	public CountryRegion() {
 		super("CountryRegion", org.jooq.examples.sqlserver.adventureworks.person.Person.Person);
 	}
 
+	/**
+	 * Create an aliased <code>Person.CountryRegion</code> table reference
+	 */
 	public CountryRegion(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.person.Person.Person, org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_CountryRegion_CountryRegionCode;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_CountryRegion_CountryRegionCode);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion(alias);

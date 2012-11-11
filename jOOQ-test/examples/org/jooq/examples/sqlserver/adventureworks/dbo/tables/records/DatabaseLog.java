@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.records;
 @javax.persistence.Table(name = "DatabaseLog", schema = "dbo")
 public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog> implements org.jooq.Record8<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> {
 
-	private static final long serialVersionUID = 1882495303;
+	private static final long serialVersionUID = 1082094022;
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.DatabaseLogID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>dbo.DatabaseLog.DatabaseLogID</code>. 
 	 */
 	public void setDatabaseLogID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.DatabaseLogID, value);
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.DatabaseLogID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>dbo.DatabaseLog.DatabaseLogID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "DatabaseLogID", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.PostTime</code>
+	 * Setter for <code>dbo.DatabaseLog.PostTime</code>. 
 	 */
 	public void setPostTime(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.PostTime, value);
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.PostTime</code>
+	 * Getter for <code>dbo.DatabaseLog.PostTime</code>. 
 	 */
 	@javax.persistence.Column(name = "PostTime", nullable = false)
 	public java.sql.Timestamp getPostTime() {
@@ -49,14 +45,14 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.DatabaseUser</code>
+	 * Setter for <code>dbo.DatabaseLog.DatabaseUser</code>. 
 	 */
 	public void setDatabaseUser(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.DatabaseUser, value);
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.DatabaseUser</code>
+	 * Getter for <code>dbo.DatabaseLog.DatabaseUser</code>. 
 	 */
 	@javax.persistence.Column(name = "DatabaseUser", nullable = false, length = 128)
 	public java.lang.String getDatabaseUser() {
@@ -64,14 +60,14 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.Event</code>
+	 * Setter for <code>dbo.DatabaseLog.Event</code>. 
 	 */
 	public void setEvent(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.Event, value);
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.Event</code>
+	 * Getter for <code>dbo.DatabaseLog.Event</code>. 
 	 */
 	@javax.persistence.Column(name = "Event", nullable = false, length = 128)
 	public java.lang.String getEvent() {
@@ -79,14 +75,14 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.Schema</code>
+	 * Setter for <code>dbo.DatabaseLog.Schema</code>. 
 	 */
 	public void setSchema(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.Schema, value);
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.Schema</code>
+	 * Getter for <code>dbo.DatabaseLog.Schema</code>. 
 	 */
 	@javax.persistence.Column(name = "Schema", length = 128)
 	public java.lang.String getSchema() {
@@ -94,14 +90,14 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.Object</code>
+	 * Setter for <code>dbo.DatabaseLog.Object</code>. 
 	 */
 	public void setObject(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.Object, value);
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.Object</code>
+	 * Getter for <code>dbo.DatabaseLog.Object</code>. 
 	 */
 	@javax.persistence.Column(name = "Object", length = 128)
 	public java.lang.String getObject() {
@@ -109,14 +105,14 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.TSQL</code>
+	 * Setter for <code>dbo.DatabaseLog.TSQL</code>. 
 	 */
 	public void setTSQL(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.TSQL, value);
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.TSQL</code>
+	 * Getter for <code>dbo.DatabaseLog.TSQL</code>. 
 	 */
 	@javax.persistence.Column(name = "TSQL", nullable = false)
 	public java.lang.String getTSQL() {
@@ -124,31 +120,30 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.XmlEvent</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>dbo.DatabaseLog.XmlEvent</code>. 
 	 */
 	public void setXmlEvent(java.lang.Object value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.XmlEvent, value);
 	}
 
 	/**
-	 * The table column <code>dbo.DatabaseLog.XmlEvent</code>
-	 * <p>
-	 * The SQL type of this item (xml, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>dbo.DatabaseLog.XmlEvent</code>. 
 	 */
 	@javax.persistence.Column(name = "XmlEvent", nullable = false)
 	public java.lang.Object getXmlEvent() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.XmlEvent);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached DatabaseLog
+	 * {@inheritDoc}
 	 */
-	public DatabaseLog() {
-		super(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -297,5 +292,16 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	@Override
 	public java.lang.Object value8() {
 		return getXmlEvent();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached DatabaseLog
+	 */
+	public DatabaseLog() {
+		super(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog);
 	}
 }

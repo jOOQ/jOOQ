@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory> implements org.jooq.Record5<java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.math.BigDecimal, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -527399911;
+	private static final long serialVersionUID = 924159330;
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductListPriceHistory_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Setter for <code>Production.ProductListPriceHistory.ProductID</code>. 
 	 */
 	public void setProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.ProductID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductListPriceHistory_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Getter for <code>Production.ProductListPriceHistory.ProductID</code>. 
 	 */
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
@@ -47,18 +31,14 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.StartDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.ProductListPriceHistory.StartDate</code>. 
 	 */
 	public void setStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.StartDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.StartDate</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.ProductListPriceHistory.StartDate</code>. 
 	 */
 	@javax.persistence.Column(name = "StartDate", nullable = false)
 	public java.sql.Timestamp getStartDate() {
@@ -66,14 +46,14 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.EndDate</code>
+	 * Setter for <code>Production.ProductListPriceHistory.EndDate</code>. 
 	 */
 	public void setEndDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.EndDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.EndDate</code>
+	 * Getter for <code>Production.ProductListPriceHistory.EndDate</code>. 
 	 */
 	@javax.persistence.Column(name = "EndDate")
 	public java.sql.Timestamp getEndDate() {
@@ -81,14 +61,14 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.ListPrice</code>
+	 * Setter for <code>Production.ProductListPriceHistory.ListPrice</code>. 
 	 */
 	public void setListPrice(java.math.BigDecimal value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.ListPrice, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.ListPrice</code>
+	 * Getter for <code>Production.ProductListPriceHistory.ListPrice</code>. 
 	 */
 	@javax.persistence.Column(name = "ListPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getListPrice() {
@@ -96,25 +76,30 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.ModifiedDate</code>
+	 * Setter for <code>Production.ProductListPriceHistory.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductListPriceHistory.ModifiedDate</code>
+	 * Getter for <code>Production.ProductListPriceHistory.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ProductListPriceHistory
+	 * {@inheritDoc}
 	 */
-	public ProductListPriceHistory() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.sql.Timestamp> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -215,5 +200,16 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	@Override
 	public java.sql.Timestamp value5() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ProductListPriceHistory
+	 */
+	public ProductListPriceHistory() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory);
 	}
 }

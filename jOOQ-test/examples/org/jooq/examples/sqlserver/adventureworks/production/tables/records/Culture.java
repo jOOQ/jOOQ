@@ -11,21 +11,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Culture", schema = "Production")
 public class Culture extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture> implements org.jooq.Record3<java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -429665563;
+	private static final long serialVersionUID = -2127729331;
 
 	/**
-	 * The table column <code>Production.Culture.CultureID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>Production.Culture.CultureID</code>. 
 	 */
 	public void setCultureID(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture.CultureID, value);
 	}
 
 	/**
-	 * The table column <code>Production.Culture.CultureID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>Production.Culture.CultureID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "CultureID", unique = true, nullable = false, length = 6)
@@ -34,14 +30,14 @@ public class Culture extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * The table column <code>Production.Culture.Name</code>
+	 * Setter for <code>Production.Culture.Name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture.Name, value);
 	}
 
 	/**
-	 * The table column <code>Production.Culture.Name</code>
+	 * Getter for <code>Production.Culture.Name</code>. 
 	 */
 	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
@@ -49,25 +45,30 @@ public class Culture extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	}
 
 	/**
-	 * The table column <code>Production.Culture.ModifiedDate</code>
+	 * Setter for <code>Production.Culture.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.Culture.ModifiedDate</code>
+	 * Getter for <code>Production.Culture.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached Culture
+	 * {@inheritDoc}
 	 */
-	public Culture() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture);
+	@Override
+	public org.jooq.Record1<java.lang.String> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -136,5 +137,16 @@ public class Culture extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached Culture
+	 */
+	public Culture() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture);
 	}
 }

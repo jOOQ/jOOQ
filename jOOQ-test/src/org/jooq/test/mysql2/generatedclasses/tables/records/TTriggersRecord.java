@@ -11,21 +11,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_triggers", schema = "test2")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1090537085;
+	private static final long serialVersionUID = -1682332788;
 
 	/**
-	 * The table column <code>test2.t_triggers.id_generated</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>test2.t_triggers.id_generated</code>. 
 	 */
 	public void setIdGenerated(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_triggers.id_generated</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>test2.t_triggers.id_generated</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id_generated", unique = true, nullable = false, precision = 10)
@@ -34,14 +30,14 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>test2.t_triggers.id</code>
+	 * Setter for <code>test2.t_triggers.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS.ID, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_triggers.id</code>
+	 * Getter for <code>test2.t_triggers.id</code>. 
 	 */
 	@javax.persistence.Column(name = "id", precision = 10)
 	public java.lang.Integer getId() {
@@ -49,25 +45,34 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>test2.t_triggers.counter</code>
+	 * Setter for <code>test2.t_triggers.counter</code>. 
 	 */
 	public void setCounter(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_triggers.counter</code>
+	 * Getter for <code>test2.t_triggers.counter</code>. 
 	 */
 	@javax.persistence.Column(name = "counter", precision = 10)
 	public java.lang.Integer getCounter() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TTriggersRecord
+	 * {@inheritDoc}
 	 */
-	public TTriggersRecord() {
-		super(org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -136,5 +141,16 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.lang.Integer value3() {
 		return getCounter();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TTriggersRecord
+	 */
+	public TTriggersRecord() {
+		super(org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 }

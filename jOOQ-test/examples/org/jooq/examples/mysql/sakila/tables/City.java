@@ -9,10 +9,10 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CityRecord> {
 
-	private static final long serialVersionUID = 1889779053;
+	private static final long serialVersionUID = 708273240;
 
 	/**
-	 * The singleton instance of sakila.city
+	 * The singleton instance of <code>sakila.city</code>
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.City CITY = new org.jooq.examples.mysql.sakila.tables.City();
 
@@ -25,63 +25,74 @@ public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	}
 
 	/**
-	 * The table column <code>sakila.city.city_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>sakila.city.city_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CityRecord, java.lang.Short> CITY_ID = createField("city_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>sakila.city.city</code>
+	 * The column <code>sakila.city.city</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CityRecord, java.lang.String> CITY_ = createField("city", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>sakila.city.country_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_city_country
-	 * FOREIGN KEY (country_id)
-	 * REFERENCES sakila.country (country_id)
-	 * </pre></code>
+	 * The column <code>sakila.city.country_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CityRecord, java.lang.Short> COUNTRY_ID = createField("country_id", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>sakila.city.last_update</code>
+	 * The column <code>sakila.city.last_update</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CityRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>sakila.city</code> table reference
+	 */
 	public City() {
 		super("city", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
+	/**
+	 * Create an aliased <code>sakila.city</code> table reference
+	 */
 	public City(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.City.CITY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.CityRecord, java.lang.Short> getIdentity() {
 		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_CITY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord> getMainKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_CITY_PRIMARY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_CITY_PRIMARY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_CITY_COUNTRY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.City as(java.lang.String alias) {
 		return new org.jooq.examples.mysql.sakila.tables.City(alias);

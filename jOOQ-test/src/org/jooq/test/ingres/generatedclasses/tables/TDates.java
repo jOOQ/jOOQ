@@ -9,10 +9,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 401245895;
+	private static final long serialVersionUID = 670207076;
 
 	/**
-	 * The singleton instance of test.t_dates
+	 * The singleton instance of <code>test.t_dates</code>
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.TDates T_DATES = new org.jooq.test.ingres.generatedclasses.tables.TDates();
 
@@ -25,34 +25,32 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingre
 	}
 
 	/**
-	 * The table column <code>test.t_dates.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>test.t_dates.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
 
 	/**
-	 * The table column <code>test.t_dates.d</code>
+	 * The column <code>test.t_dates.d</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("d", org.jooq.impl.SQLDataType.DATE, T_DATES);
 
 	/**
-	 * The table column <code>test.t_dates.t</code>
+	 * The column <code>test.t_dates.t</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("t", org.jooq.impl.SQLDataType.TIME, T_DATES);
 
 	/**
-	 * The table column <code>test.t_dates.ts</code>
+	 * The column <code>test.t_dates.ts</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
 
 	/**
-	 * The table column <code>test.t_dates.d_int</code>
+	 * The column <code>test.t_dates.d_int</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
 
 	/**
-	 * The table column <code>test.t_dates.ts_bigint</code>
+	 * The column <code>test.t_dates.ts_bigint</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, T_DATES);
 
@@ -63,13 +61,18 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingre
 		super("t_dates", org.jooq.test.ingres.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord> getMainKey() {
 		return org.jooq.test.ingres.generatedclasses.Keys.PK_T_DATES;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.ingres.generatedclasses.Keys.PK_T_DATES);
 	}

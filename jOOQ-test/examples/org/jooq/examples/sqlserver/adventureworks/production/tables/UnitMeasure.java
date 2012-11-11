@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class UnitMeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> {
 
-	private static final long serialVersionUID = -943649281;
+	private static final long serialVersionUID = -418160627;
 
 	/**
-	 * The singleton instance of Production.UnitMeasure
+	 * The singleton instance of <code>Production.UnitMeasure</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure UnitMeasure = new org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure();
 
@@ -25,41 +25,53 @@ public class UnitMeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>Production.UnitMeasure.UnitMeasureCode</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Production.UnitMeasure.UnitMeasureCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure, java.lang.String> UnitMeasureCode = createField("UnitMeasureCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * The table column <code>Production.UnitMeasure.Name</code>
+	 * The column <code>Production.UnitMeasure.Name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.UnitMeasure.ModifiedDate</code>
+	 * The column <code>Production.UnitMeasure.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.UnitMeasure</code> table reference
+	 */
 	public UnitMeasure() {
 		super("UnitMeasure", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.UnitMeasure</code> table reference
+	 */
 	public UnitMeasure(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_UnitMeasure_UnitMeasureCode;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_UnitMeasure_UnitMeasureCode);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure(alias);

@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
 @java.lang.SuppressWarnings("all")
 public class Department extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department> {
 
-	private static final long serialVersionUID = -2027230600;
+	private static final long serialVersionUID = -225403538;
 
 	/**
-	 * The singleton instance of HumanResources.Department
+	 * The singleton instance of <code>HumanResources.Department</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department Department = new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department();
 
@@ -25,51 +25,66 @@ public class Department extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	}
 
 	/**
-	 * The table column <code>HumanResources.Department.DepartmentID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>HumanResources.Department.DepartmentID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department, java.lang.Short> DepartmentID = createField("DepartmentID", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>HumanResources.Department.Name</code>
+	 * The column <code>HumanResources.Department.Name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.Department.GroupName</code>
+	 * The column <code>HumanResources.Department.GroupName</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department, java.lang.String> GroupName = createField("GroupName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>HumanResources.Department.ModifiedDate</code>
+	 * The column <code>HumanResources.Department.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>HumanResources.Department</code> table reference
+	 */
 	public Department() {
 		super("Department", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
+	/**
+	 * Create an aliased <code>HumanResources.Department</code> table reference
+	 */
 	public Department(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department, java.lang.Short> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.IDENTITY_Department;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_Department_DepartmentID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_Department_DepartmentID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department(alias);

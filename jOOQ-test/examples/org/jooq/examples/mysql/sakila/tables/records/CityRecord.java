@@ -9,81 +9,45 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CityRecord> implements org.jooq.Record4<java.lang.Short, java.lang.String, java.lang.Short, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -519355180;
+	private static final long serialVersionUID = -692128664;
 
 	/**
-	 * The table column <code>sakila.city.city_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>sakila.city.city_id</code>. 
 	 */
 	public void setCityId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.City.CITY.CITY_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.city.city_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>sakila.city.city_id</code>. 
 	 */
 	public java.lang.Short getCityId() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.CITY_ID);
 	}
 
 	/**
-	 * The table column <code>sakila.city.city_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> fetchAddressList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS)
-			.where(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.CITY_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.CITY_ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>sakila.city.city</code>
+	 * Setter for <code>sakila.city.city</code>. 
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.City.CITY.CITY_, value);
 	}
 
 	/**
-	 * The table column <code>sakila.city.city</code>
+	 * Getter for <code>sakila.city.city</code>. 
 	 */
 	public java.lang.String getCity() {
 		return getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.CITY_);
 	}
 
 	/**
-	 * The table column <code>sakila.city.country_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_city_country
-	 * FOREIGN KEY (country_id)
-	 * REFERENCES sakila.country (country_id)
-	 * </pre></code>
+	 * Setter for <code>sakila.city.country_id</code>. 
 	 */
 	public void setCountryId(java.lang.Short value) {
 		setValue(org.jooq.examples.mysql.sakila.tables.City.CITY.COUNTRY_ID, value);
 	}
 
 	/**
-	 * The table column <code>sakila.city.country_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_city_country
-	 * FOREIGN KEY (country_id)
-	 * REFERENCES sakila.country (country_id)
-	 * </pre></code>
-	 */
-	public java.lang.Short getCountryId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.COUNTRY_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CountryRecord 
-	 * CountryRecord}
+	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CountryRecord}
 	 */
 	public void setCountryId(org.jooq.examples.mysql.sakila.tables.records.CountryRecord value) {
 		if (value == null) {
@@ -95,13 +59,42 @@ public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	}
 
 	/**
-	 * The table column <code>sakila.city.country_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_city_country
-	 * FOREIGN KEY (country_id)
-	 * REFERENCES sakila.country (country_id)
-	 * </pre></code>
+	 * Getter for <code>sakila.city.country_id</code>. 
+	 */
+	public java.lang.Short getCountryId() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.COUNTRY_ID);
+	}
+
+	/**
+	 * Setter for <code>sakila.city.last_update</code>. 
+	 */
+	public void setLastUpdate(java.sql.Timestamp value) {
+		setValue(org.jooq.examples.mysql.sakila.tables.City.CITY.LAST_UPDATE, value);
+	}
+
+	/**
+	 * Getter for <code>sakila.city.last_update</code>. 
+	 */
+	public java.sql.Timestamp getLastUpdate() {
+		return getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.LAST_UPDATE);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>sakila.address</code> referencing this <code>sakila.city</code>
+	 */
+	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> fetchAddressList() {
+		return create()
+			.selectFrom(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS)
+			.where(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.CITY_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.CITY_ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a <code>sakila.country</code> referenced by this <code>sakila.city</code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.CountryRecord fetchCountry() {
 		return create()
@@ -110,25 +103,16 @@ public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 			.fetchOne();
 	}
 
-	/**
-	 * The table column <code>sakila.city.last_update</code>
-	 */
-	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.City.CITY.LAST_UPDATE, value);
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The table column <code>sakila.city.last_update</code>
+	 * {@inheritDoc}
 	 */
-	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.City.CITY.LAST_UPDATE);
-	}
-
-	/**
-	 * Create a detached CityRecord
-	 */
-	public CityRecord() {
-		super(org.jooq.examples.mysql.sakila.tables.City.CITY);
+	@Override
+	public org.jooq.Record1<java.lang.Short> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -213,5 +197,16 @@ public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	@Override
 	public java.sql.Timestamp value4() {
 		return getLastUpdate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached CityRecord
+	 */
+	public CityRecord() {
+		super(org.jooq.examples.mysql.sakila.tables.City.CITY);
 	}
 }

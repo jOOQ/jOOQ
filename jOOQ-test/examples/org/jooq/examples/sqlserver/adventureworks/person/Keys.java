@@ -12,7 +12,10 @@ package org.jooq.examples.sqlserver.adventureworks.person;
 @java.lang.SuppressWarnings("all")
 public class Keys {
 
+	// -------------------------------------------------------------------------
 	// IDENTITY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Address, java.lang.Integer> IDENTITY_Address = Identities0.IDENTITY_Address;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressType, java.lang.Integer> IDENTITY_AddressType = Identities0.IDENTITY_AddressType;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.Integer> IDENTITY_Contact = Identities0.IDENTITY_Contact;
@@ -20,7 +23,10 @@ public class Keys {
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.Integer> IDENTITY_StateProvince = Identities0.IDENTITY_StateProvince;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.Integer> IDENTITY_vAdditionalContactInfo = Identities0.IDENTITY_vAdditionalContactInfo;
 
+	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Address> PK_Address_AddressID = UniqueKeys0.PK_Address_AddressID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressType> PK_AddressType_AddressTypeID = UniqueKeys0.PK_AddressType_AddressTypeID;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact> PK_Contact_ContactID = UniqueKeys0.PK_Contact_ContactID;
@@ -28,17 +34,23 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> PK_CountryRegion_CountryRegionCode = UniqueKeys0.PK_CountryRegion_CountryRegionCode;
 	public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> PK_StateProvince_StateProvinceID = UniqueKeys0.PK_StateProvince_StateProvinceID;
 
+	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Address, org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> FK_Address_StateProvince_StateProvinceID = ForeignKeys0.FK_Address_StateProvince_StateProvinceID;
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> FK_StateProvince_CountryRegion_CountryRegionCode = ForeignKeys0.FK_StateProvince_CountryRegion_CountryRegionCode;
 	public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTerritory> FK_StateProvince_SalesTerritory_TerritoryID = ForeignKeys0.FK_StateProvince_SalesTerritory_TerritoryID;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings("hiding")
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Address, java.lang.Integer> IDENTITY_Address = createIdentity(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address, org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.AddressID);
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressType, java.lang.Integer> IDENTITY_AddressType = createIdentity(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType, org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.AddressTypeID);
@@ -48,7 +60,6 @@ public class Keys {
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.lang.Integer> IDENTITY_vAdditionalContactInfo = createIdentity(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo, org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.ContactID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Address> PK_Address_AddressID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address, org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.AddressID);
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressType> PK_AddressType_AddressTypeID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType, org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.AddressTypeID);
@@ -58,7 +69,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> PK_StateProvince_StateProvinceID = createUniqueKey(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince, org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.StateProvinceID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Address, org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> FK_Address_StateProvince_StateProvinceID = createForeignKey(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_StateProvince_StateProvinceID, org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address, org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.StateProvinceID);
 		public static final org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> FK_StateProvince_CountryRegion_CountryRegionCode = createForeignKey(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_CountryRegion_CountryRegionCode, org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince, org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.CountryRegionCode);

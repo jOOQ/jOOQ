@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductDocument extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDocument> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 33463323;
+	private static final long serialVersionUID = 1672296158;
 
 	/**
-	 * The table column <code>Production.ProductDocument.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductDocument_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Setter for <code>Production.ProductDocument.ProductID</code>. 
 	 */
 	public void setProductID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument.ProductDocument.ProductID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductDocument.ProductID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductDocument_Product_ProductID
-	 * FOREIGN KEY (ProductID)
-	 * REFERENCES Production.Product (ProductID)
-	 * </pre></code>
+	 * Getter for <code>Production.ProductDocument.ProductID</code>. 
 	 */
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
@@ -47,30 +31,14 @@ public class ProductDocument extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.ProductDocument.DocumentID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductDocument_Document_DocumentID
-	 * FOREIGN KEY (DocumentID)
-	 * REFERENCES Production.Document (DocumentID)
-	 * </pre></code>
+	 * Setter for <code>Production.ProductDocument.DocumentID</code>. 
 	 */
 	public void setDocumentID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument.ProductDocument.DocumentID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductDocument.DocumentID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductDocument_Document_DocumentID
-	 * FOREIGN KEY (DocumentID)
-	 * REFERENCES Production.Document (DocumentID)
-	 * </pre></code>
+	 * Getter for <code>Production.ProductDocument.DocumentID</code>. 
 	 */
 	@javax.persistence.Column(name = "DocumentID", nullable = false, precision = 10)
 	public java.lang.Integer getDocumentID() {
@@ -78,25 +46,30 @@ public class ProductDocument extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>Production.ProductDocument.ModifiedDate</code>
+	 * Setter for <code>Production.ProductDocument.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument.ProductDocument.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductDocument.ModifiedDate</code>
+	 * Getter for <code>Production.ProductDocument.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument.ProductDocument.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ProductDocument
+	 * {@inheritDoc}
 	 */
-	public ProductDocument() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument.ProductDocument);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -165,5 +138,16 @@ public class ProductDocument extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ProductDocument
+	 */
+	public ProductDocument() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument.ProductDocument);
 	}
 }

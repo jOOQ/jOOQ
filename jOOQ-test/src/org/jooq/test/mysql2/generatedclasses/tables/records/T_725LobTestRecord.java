@@ -11,21 +11,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_725_lob_test", schema = "test2")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]> {
 
-	private static final long serialVersionUID = 798216868;
+	private static final long serialVersionUID = -615095267;
 
 	/**
-	 * The table column <code>test2.t_725_lob_test.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>test2.t_725_lob_test.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_725_lob_test.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>test2.t_725_lob_test.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
@@ -34,25 +30,34 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>test2.t_725_lob_test.LOB</code>
+	 * Setter for <code>test2.t_725_lob_test.LOB</code>. 
 	 */
 	public void setLob(byte[] value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB, value);
 	}
 
 	/**
-	 * The table column <code>test2.t_725_lob_test.LOB</code>
+	 * Getter for <code>test2.t_725_lob_test.LOB</code>. 
 	 */
 	@javax.persistence.Column(name = "LOB")
 	public byte[] getLob() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached T_725LobTestRecord
+	 * {@inheritDoc}
 	 */
-	public T_725LobTestRecord() {
-		super(org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -105,5 +110,16 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public byte[] value2() {
 		return getLob();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_725LobTestRecord
+	 */
+	public T_725LobTestRecord() {
+		super(org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
 	}
 }

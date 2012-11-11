@@ -9,19 +9,19 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "vEmployeeDepartment", schema = "HumanResources")
-public class vEmployeeDepartment extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartment> {
+public class vEmployeeDepartment extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartment> implements org.jooq.Record10<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -116690559;
+	private static final long serialVersionUID = -1190047564;
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.EmployeeID</code>
+	 * Setter for <code>HumanResources.vEmployeeDepartment.EmployeeID</code>. 
 	 */
 	public void setEmployeeID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.EmployeeID, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.EmployeeID</code>
+	 * Getter for <code>HumanResources.vEmployeeDepartment.EmployeeID</code>. 
 	 */
 	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
@@ -29,14 +29,14 @@ public class vEmployeeDepartment extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.Title</code>
+	 * Setter for <code>HumanResources.vEmployeeDepartment.Title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.Title, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.Title</code>
+	 * Getter for <code>HumanResources.vEmployeeDepartment.Title</code>. 
 	 */
 	@javax.persistence.Column(name = "Title", length = 8)
 	public java.lang.String getTitle() {
@@ -44,14 +44,14 @@ public class vEmployeeDepartment extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.FirstName</code>
+	 * Setter for <code>HumanResources.vEmployeeDepartment.FirstName</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.FirstName, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.FirstName</code>
+	 * Getter for <code>HumanResources.vEmployeeDepartment.FirstName</code>. 
 	 */
 	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
@@ -59,14 +59,14 @@ public class vEmployeeDepartment extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.MiddleName</code>
+	 * Setter for <code>HumanResources.vEmployeeDepartment.MiddleName</code>. 
 	 */
 	public void setMiddleName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.MiddleName, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.MiddleName</code>
+	 * Getter for <code>HumanResources.vEmployeeDepartment.MiddleName</code>. 
 	 */
 	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
@@ -74,14 +74,14 @@ public class vEmployeeDepartment extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.LastName</code>
+	 * Setter for <code>HumanResources.vEmployeeDepartment.LastName</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.LastName, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.LastName</code>
+	 * Getter for <code>HumanResources.vEmployeeDepartment.LastName</code>. 
 	 */
 	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
@@ -89,14 +89,14 @@ public class vEmployeeDepartment extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.Suffix</code>
+	 * Setter for <code>HumanResources.vEmployeeDepartment.Suffix</code>. 
 	 */
 	public void setSuffix(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.Suffix, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.Suffix</code>
+	 * Getter for <code>HumanResources.vEmployeeDepartment.Suffix</code>. 
 	 */
 	@javax.persistence.Column(name = "Suffix", length = 10)
 	public java.lang.String getSuffix() {
@@ -104,14 +104,14 @@ public class vEmployeeDepartment extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.JobTitle</code>
+	 * Setter for <code>HumanResources.vEmployeeDepartment.JobTitle</code>. 
 	 */
 	public void setJobTitle(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.JobTitle, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.JobTitle</code>
+	 * Getter for <code>HumanResources.vEmployeeDepartment.JobTitle</code>. 
 	 */
 	@javax.persistence.Column(name = "JobTitle", nullable = false, length = 50)
 	public java.lang.String getJobTitle() {
@@ -119,14 +119,14 @@ public class vEmployeeDepartment extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.Department</code>
+	 * Setter for <code>HumanResources.vEmployeeDepartment.Department</code>. 
 	 */
 	public void setDepartment(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.Department, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.Department</code>
+	 * Getter for <code>HumanResources.vEmployeeDepartment.Department</code>. 
 	 */
 	@javax.persistence.Column(name = "Department", nullable = false, length = 50)
 	public java.lang.String getDepartment() {
@@ -134,14 +134,14 @@ public class vEmployeeDepartment extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.GroupName</code>
+	 * Setter for <code>HumanResources.vEmployeeDepartment.GroupName</code>. 
 	 */
 	public void setGroupName(java.lang.String value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.GroupName, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.GroupName</code>
+	 * Getter for <code>HumanResources.vEmployeeDepartment.GroupName</code>. 
 	 */
 	@javax.persistence.Column(name = "GroupName", nullable = false, length = 50)
 	public java.lang.String getGroupName() {
@@ -149,19 +149,203 @@ public class vEmployeeDepartment extends org.jooq.impl.TableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.StartDate</code>
+	 * Setter for <code>HumanResources.vEmployeeDepartment.StartDate</code>. 
 	 */
 	public void setStartDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.StartDate, value);
 	}
 
 	/**
-	 * The table column <code>HumanResources.vEmployeeDepartment.StartDate</code>
+	 * Getter for <code>HumanResources.vEmployeeDepartment.StartDate</code>. 
 	 */
 	@javax.persistence.Column(name = "StartDate", nullable = false)
 	public java.sql.Timestamp getStartDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.StartDate);
 	}
+
+	// -------------------------------------------------------------------------
+	// Record10 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row10<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.sql.Timestamp> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row10<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.sql.Timestamp> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.EmployeeID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.Title;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field3() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.FirstName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field4() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.MiddleName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.LastName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field6() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.Suffix;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field7() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.JobTitle;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field8() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.Department;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field9() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.GroupName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field10() {
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment.StartDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getEmployeeID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value2() {
+		return getTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value3() {
+		return getFirstName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value4() {
+		return getMiddleName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getLastName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value6() {
+		return getSuffix();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value7() {
+		return getJobTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value8() {
+		return getDepartment();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value9() {
+		return getGroupName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value10() {
+		return getStartDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached vEmployeeDepartment

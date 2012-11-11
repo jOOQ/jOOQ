@@ -9,31 +9,30 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 141324091;
-
+	private static final long serialVersionUID = 1206857650;
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.RETURN_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.SQL_ID</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.SQL_ID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> SQL_ID = createParameter("SQL_ID", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.PLAN_HASH_VALUE</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.PLAN_HASH_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.DB_ID</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.DB_ID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigInteger> DB_ID = createParameter("DB_ID", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
 
 	/**
-	 * The procedure parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.FORMAT</code>
+	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.FORMAT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
@@ -58,9 +57,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	}
 
 	/**
-	 * Set the <code>SQL_ID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>SQL_ID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setSqlId(org.jooq.Field<java.lang.String> field) {
 		setField(SQL_ID, field);
@@ -74,9 +71,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	}
 
 	/**
-	 * Set the <code>PLAN_HASH_VALUE</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>PLAN_HASH_VALUE</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setPlanHashValue(org.jooq.Field<java.math.BigInteger> field) {
 		setField(PLAN_HASH_VALUE, field);
@@ -90,9 +85,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	}
 
 	/**
-	 * Set the <code>DB_ID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>DB_ID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setDbId(org.jooq.Field<java.math.BigInteger> field) {
 		setField(DB_ID, field);
@@ -106,9 +99,7 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	}
 
 	/**
-	 * Set the <code>FORMAT</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>FORMAT</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setFormat(org.jooq.Field<java.lang.String> field) {
 		setField(FORMAT, field);

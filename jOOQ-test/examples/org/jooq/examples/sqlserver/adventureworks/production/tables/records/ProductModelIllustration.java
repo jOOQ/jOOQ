@@ -13,33 +13,17 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1762307165;
+	private static final long serialVersionUID = 496540546;
 
 	/**
-	 * The table column <code>Production.ProductModelIllustration.ProductModelID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductModelIllustration_ProductModel_ProductModelID
-	 * FOREIGN KEY (ProductModelID)
-	 * REFERENCES Production.ProductModel (ProductModelID)
-	 * </pre></code>
+	 * Setter for <code>Production.ProductModelIllustration.ProductModelID</code>. 
 	 */
 	public void setProductModelID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration.ProductModelIllustration.ProductModelID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductModelIllustration.ProductModelID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductModelIllustration_ProductModel_ProductModelID
-	 * FOREIGN KEY (ProductModelID)
-	 * REFERENCES Production.ProductModel (ProductModelID)
-	 * </pre></code>
+	 * Getter for <code>Production.ProductModelIllustration.ProductModelID</code>. 
 	 */
 	@javax.persistence.Column(name = "ProductModelID", nullable = false, precision = 10)
 	public java.lang.Integer getProductModelID() {
@@ -47,30 +31,14 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<
 	}
 
 	/**
-	 * The table column <code>Production.ProductModelIllustration.IllustrationID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductModelIllustration_Illustration_IllustrationID
-	 * FOREIGN KEY (IllustrationID)
-	 * REFERENCES Production.Illustration (IllustrationID)
-	 * </pre></code>
+	 * Setter for <code>Production.ProductModelIllustration.IllustrationID</code>. 
 	 */
 	public void setIllustrationID(java.lang.Integer value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration.ProductModelIllustration.IllustrationID, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductModelIllustration.IllustrationID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_ProductModelIllustration_Illustration_IllustrationID
-	 * FOREIGN KEY (IllustrationID)
-	 * REFERENCES Production.Illustration (IllustrationID)
-	 * </pre></code>
+	 * Getter for <code>Production.ProductModelIllustration.IllustrationID</code>. 
 	 */
 	@javax.persistence.Column(name = "IllustrationID", nullable = false, precision = 10)
 	public java.lang.Integer getIllustrationID() {
@@ -78,25 +46,30 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<
 	}
 
 	/**
-	 * The table column <code>Production.ProductModelIllustration.ModifiedDate</code>
+	 * Setter for <code>Production.ProductModelIllustration.ModifiedDate</code>. 
 	 */
 	public void setModifiedDate(java.sql.Timestamp value) {
 		setValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration.ProductModelIllustration.ModifiedDate, value);
 	}
 
 	/**
-	 * The table column <code>Production.ProductModelIllustration.ModifiedDate</code>
+	 * Getter for <code>Production.ProductModelIllustration.ModifiedDate</code>. 
 	 */
 	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
 	public java.sql.Timestamp getModifiedDate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration.ProductModelIllustration.ModifiedDate);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached ProductModelIllustration
+	 * {@inheritDoc}
 	 */
-	public ProductModelIllustration() {
-		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration.ProductModelIllustration);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -165,5 +138,16 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<
 	@Override
 	public java.sql.Timestamp value3() {
 		return getModifiedDate();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ProductModelIllustration
+	 */
+	public ProductModelIllustration() {
+		super(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration.ProductModelIllustration);
 	}
 }

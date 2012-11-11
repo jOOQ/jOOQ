@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
 @java.lang.SuppressWarnings("all")
 public class StateProvince extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> {
 
-	private static final long serialVersionUID = -971535182;
+	private static final long serialVersionUID = -251054755;
 
 	/**
-	 * The singleton instance of Person.StateProvince
+	 * The singleton instance of <code>Person.StateProvince</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince StateProvince = new org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince();
 
@@ -25,89 +25,94 @@ public class StateProvince extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	}
 
 	/**
-	 * The table column <code>Person.StateProvince.StateProvinceID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>Person.StateProvince.StateProvinceID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.Integer> StateProvinceID = createField("StateProvinceID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Person.StateProvince.StateProvinceCode</code>
+	 * The column <code>Person.StateProvince.StateProvinceCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.String> StateProvinceCode = createField("StateProvinceCode", org.jooq.impl.SQLDataType.NCHAR, this);
 
 	/**
-	 * The table column <code>Person.StateProvince.CountryRegionCode</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_StateProvince_CountryRegion_CountryRegionCode
-	 * FOREIGN KEY (CountryRegionCode)
-	 * REFERENCES Person.CountryRegion (CountryRegionCode)
-	 * </pre></code>
+	 * The column <code>Person.StateProvince.CountryRegionCode</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.String> CountryRegionCode = createField("CountryRegionCode", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.StateProvince.IsOnlyStateProvinceFlag</code>
+	 * The column <code>Person.StateProvince.IsOnlyStateProvinceFlag</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.Boolean> IsOnlyStateProvinceFlag = createField("IsOnlyStateProvinceFlag", org.jooq.impl.SQLDataType.BIT, this);
 
 	/**
-	 * The table column <code>Person.StateProvince.Name</code>
+	 * The column <code>Person.StateProvince.Name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Person.StateProvince.TerritoryID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_StateProvince_SalesTerritory_TerritoryID
-	 * FOREIGN KEY (TerritoryID)
-	 * REFERENCES Sales.SalesTerritory (TerritoryID)
-	 * </pre></code>
+	 * The column <code>Person.StateProvince.TerritoryID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.Integer> TerritoryID = createField("TerritoryID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Person.StateProvince.rowguid</code>
+	 * The column <code>Person.StateProvince.rowguid</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Person.StateProvince.ModifiedDate</code>
+	 * The column <code>Person.StateProvince.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Person.StateProvince</code> table reference
+	 */
 	public StateProvince() {
 		super("StateProvince", org.jooq.examples.sqlserver.adventureworks.person.Person.Person);
 	}
 
+	/**
+	 * Create an aliased <code>Person.StateProvince</code> table reference
+	 */
 	public StateProvince(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.person.Person.Person, org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_StateProvince;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> getMainKey() {
 		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_StateProvince_StateProvinceID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_StateProvince_StateProvinceID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, ?>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.FK_StateProvince_CountryRegion_CountryRegionCode, org.jooq.examples.sqlserver.adventureworks.person.Keys.FK_StateProvince_SalesTerritory_TerritoryID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince(alias);

@@ -9,10 +9,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
 @java.lang.SuppressWarnings("all")
 public class vProductModelCatalogDescription extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription> {
 
-	private static final long serialVersionUID = -1429612303;
+	private static final long serialVersionUID = 1089701253;
 
 	/**
-	 * The singleton instance of Production.vProductModelCatalogDescription
+	 * The singleton instance of <code>Production.vProductModelCatalogDescription</code>
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription vProductModelCatalogDescription = new org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription();
 
@@ -25,143 +25,155 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableImpl<org
 	}
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.ProductModelID</code>
+	 * The column <code>Production.vProductModelCatalogDescription.ProductModelID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.Integer> ProductModelID = createField("ProductModelID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.Name</code>
+	 * The column <code>Production.vProductModelCatalogDescription.Name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> Name = createField("Name", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.Summary</code>
+	 * The column <code>Production.vProductModelCatalogDescription.Summary</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> Summary = createField("Summary", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.Manufacturer</code>
+	 * The column <code>Production.vProductModelCatalogDescription.Manufacturer</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> Manufacturer = createField("Manufacturer", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.Copyright</code>
+	 * The column <code>Production.vProductModelCatalogDescription.Copyright</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> Copyright = createField("Copyright", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.ProductURL</code>
+	 * The column <code>Production.vProductModelCatalogDescription.ProductURL</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> ProductURL = createField("ProductURL", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.WarrantyPeriod</code>
+	 * The column <code>Production.vProductModelCatalogDescription.WarrantyPeriod</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> WarrantyPeriod = createField("WarrantyPeriod", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.WarrantyDescription</code>
+	 * The column <code>Production.vProductModelCatalogDescription.WarrantyDescription</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> WarrantyDescription = createField("WarrantyDescription", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.NoOfYears</code>
+	 * The column <code>Production.vProductModelCatalogDescription.NoOfYears</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> NoOfYears = createField("NoOfYears", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.MaintenanceDescription</code>
+	 * The column <code>Production.vProductModelCatalogDescription.MaintenanceDescription</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> MaintenanceDescription = createField("MaintenanceDescription", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.Wheel</code>
+	 * The column <code>Production.vProductModelCatalogDescription.Wheel</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> Wheel = createField("Wheel", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.Saddle</code>
+	 * The column <code>Production.vProductModelCatalogDescription.Saddle</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> Saddle = createField("Saddle", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.Pedal</code>
+	 * The column <code>Production.vProductModelCatalogDescription.Pedal</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> Pedal = createField("Pedal", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.BikeFrame</code>
+	 * The column <code>Production.vProductModelCatalogDescription.BikeFrame</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> BikeFrame = createField("BikeFrame", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.Crankset</code>
+	 * The column <code>Production.vProductModelCatalogDescription.Crankset</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> Crankset = createField("Crankset", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.PictureAngle</code>
+	 * The column <code>Production.vProductModelCatalogDescription.PictureAngle</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> PictureAngle = createField("PictureAngle", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.PictureSize</code>
+	 * The column <code>Production.vProductModelCatalogDescription.PictureSize</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> PictureSize = createField("PictureSize", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.ProductPhotoID</code>
+	 * The column <code>Production.vProductModelCatalogDescription.ProductPhotoID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> ProductPhotoID = createField("ProductPhotoID", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.Material</code>
+	 * The column <code>Production.vProductModelCatalogDescription.Material</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> Material = createField("Material", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.Color</code>
+	 * The column <code>Production.vProductModelCatalogDescription.Color</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> Color = createField("Color", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.ProductLine</code>
+	 * The column <code>Production.vProductModelCatalogDescription.ProductLine</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> ProductLine = createField("ProductLine", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.Style</code>
+	 * The column <code>Production.vProductModelCatalogDescription.Style</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> Style = createField("Style", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.RiderExperience</code>
+	 * The column <code>Production.vProductModelCatalogDescription.RiderExperience</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> RiderExperience = createField("RiderExperience", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.rowguid</code>
+	 * The column <code>Production.vProductModelCatalogDescription.rowguid</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.String> rowguid = createField("rowguid", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>Production.vProductModelCatalogDescription.ModifiedDate</code>
+	 * The column <code>Production.vProductModelCatalogDescription.ModifiedDate</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>Production.vProductModelCatalogDescription</code> table reference
+	 */
 	public vProductModelCatalogDescription() {
 		super("vProductModelCatalogDescription", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
+	/**
+	 * Create an aliased <code>Production.vProductModelCatalogDescription</code> table reference
+	 */
 	public vProductModelCatalogDescription(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription, java.lang.Integer> getIdentity() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_vProductModelCatalogDescription;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription as(java.lang.String alias) {
 		return new org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription(alias);

@@ -12,7 +12,10 @@ package org.jooq.examples.mysql.sakila;
 @java.lang.SuppressWarnings("all")
 public class Keys {
 
+	// -------------------------------------------------------------------------
 	// IDENTITY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.ActorRecord, java.lang.Short> IDENTITY_ACTOR = Identities0.IDENTITY_ACTOR;
 	public static final org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.AddressRecord, java.lang.Short> IDENTITY_ADDRESS = Identities0.IDENTITY_ADDRESS;
 	public static final org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord, java.lang.Byte> IDENTITY_CATEGORY = Identities0.IDENTITY_CATEGORY;
@@ -27,7 +30,10 @@ public class Keys {
 	public static final org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.Byte> IDENTITY_STAFF = Identities0.IDENTITY_STAFF;
 	public static final org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, java.lang.Byte> IDENTITY_STORE = Identities0.IDENTITY_STORE;
 
+	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.ActorRecord> KEY_ACTOR_PRIMARY = UniqueKeys0.KEY_ACTOR_PRIMARY;
 	public static final org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> KEY_ADDRESS_PRIMARY = UniqueKeys0.KEY_ADDRESS_PRIMARY;
 	public static final org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> KEY_CATEGORY_PRIMARY = UniqueKeys0.KEY_CATEGORY_PRIMARY;
@@ -47,7 +53,10 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> KEY_STORE_PRIMARY = UniqueKeys0.KEY_STORE_PRIMARY;
 	public static final org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> KEY_STORE_IDX_UNIQUE_MANAGER = UniqueKeys0.KEY_STORE_IDX_UNIQUE_MANAGER;
 
+	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord, org.jooq.examples.mysql.sakila.tables.records.CityRecord> FK_ADDRESS_CITY = ForeignKeys0.FK_ADDRESS_CITY;
 	public static final org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord, org.jooq.examples.mysql.sakila.tables.records.CountryRecord> FK_CITY_COUNTRY = ForeignKeys0.FK_CITY_COUNTRY;
 	public static final org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord, org.jooq.examples.mysql.sakila.tables.records.StoreRecord> FK_CUSTOMER_STORE = ForeignKeys0.FK_CUSTOMER_STORE;
@@ -72,11 +81,14 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, org.jooq.examples.mysql.sakila.tables.records.AddressRecord> FK_STORE_ADDRESS = ForeignKeys0.FK_STORE_ADDRESS;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings("hiding")
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.ActorRecord, java.lang.Short> IDENTITY_ACTOR = createIdentity(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR, org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.ACTOR_ID);
 		public static org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.AddressRecord, java.lang.Short> IDENTITY_ADDRESS = createIdentity(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS, org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID);
@@ -93,7 +105,6 @@ public class Keys {
 		public static org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, java.lang.Byte> IDENTITY_STORE = createIdentity(org.jooq.examples.mysql.sakila.tables.Store.STORE, org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.ActorRecord> KEY_ACTOR_PRIMARY = createUniqueKey(org.jooq.examples.mysql.sakila.tables.Actor.ACTOR, org.jooq.examples.mysql.sakila.tables.Actor.ACTOR.ACTOR_ID);
 		public static final org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> KEY_ADDRESS_PRIMARY = createUniqueKey(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS, org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID);
@@ -115,7 +126,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> KEY_STORE_IDX_UNIQUE_MANAGER = createUniqueKey(org.jooq.examples.mysql.sakila.tables.Store.STORE, org.jooq.examples.mysql.sakila.tables.Store.STORE.MANAGER_STAFF_ID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord, org.jooq.examples.mysql.sakila.tables.records.CityRecord> FK_ADDRESS_CITY = createForeignKey(org.jooq.examples.mysql.sakila.Keys.KEY_CITY_PRIMARY, org.jooq.examples.mysql.sakila.tables.Address.ADDRESS, org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.CITY_ID);
 		public static final org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord, org.jooq.examples.mysql.sakila.tables.records.CountryRecord> FK_CITY_COUNTRY = createForeignKey(org.jooq.examples.mysql.sakila.Keys.KEY_COUNTRY_PRIMARY, org.jooq.examples.mysql.sakila.tables.City.CITY, org.jooq.examples.mysql.sakila.tables.City.CITY.COUNTRY_ID);

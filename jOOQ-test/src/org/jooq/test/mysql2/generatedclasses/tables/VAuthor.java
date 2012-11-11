@@ -11,10 +11,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1534198412;
+	private static final long serialVersionUID = 156757380;
 
 	/**
-	 * The singleton instance of test2.v_author
+	 * The singleton instance of <code>test2.v_author</code>
 	 */
 	public static final org.jooq.test.mysql2.generatedclasses.tables.VAuthor V_AUTHOR = new org.jooq.test.mysql2.generatedclasses.tables.VAuthor();
 
@@ -27,43 +27,52 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 	}
 
 	/**
-	 * The author ID
+	 * The column <code>test2.v_author.ID</code>. The author ID
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The author's first name
+	 * The column <code>test2.v_author.FIRST_NAME</code>. The author's first name
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The author's last name
+	 * The column <code>test2.v_author.LAST_NAME</code>. The author's last name
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The author's date of birth
+	 * The column <code>test2.v_author.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
-	 * The author's year of birth
+	 * The column <code>test2.v_author.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The author's address
+	 * The column <code>test2.v_author.ADDRESS</code>. The author's address
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>test2.v_author</code> table reference
+	 */
 	public VAuthor() {
 		super("v_author", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
+	/**
+	 * Create an aliased <code>test2.v_author</code> table reference
+	 */
 	public VAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.VAuthor as(java.lang.String alias) {
 		return new org.jooq.test.mysql2.generatedclasses.tables.VAuthor(alias);

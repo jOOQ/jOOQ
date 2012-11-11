@@ -81,22 +81,50 @@ import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
+import org.jooq.Record10;
+import org.jooq.Record11;
+import org.jooq.Record12;
+import org.jooq.Record13;
+import org.jooq.Record14;
+import org.jooq.Record15;
+import org.jooq.Record16;
+import org.jooq.Record17;
+import org.jooq.Record18;
+import org.jooq.Record19;
 import org.jooq.Record2;
+import org.jooq.Record20;
+import org.jooq.Record21;
+import org.jooq.Record22;
 import org.jooq.Record3;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
+import org.jooq.Record9;
 import org.jooq.Result;
 import org.jooq.Row1;
+import org.jooq.Row10;
+import org.jooq.Row11;
+import org.jooq.Row12;
+import org.jooq.Row13;
+import org.jooq.Row14;
+import org.jooq.Row15;
+import org.jooq.Row16;
+import org.jooq.Row17;
+import org.jooq.Row18;
+import org.jooq.Row19;
 import org.jooq.Row2;
+import org.jooq.Row20;
+import org.jooq.Row21;
+import org.jooq.Row22;
 import org.jooq.Row3;
 import org.jooq.Row4;
 import org.jooq.Row5;
 import org.jooq.Row6;
 import org.jooq.Row7;
 import org.jooq.Row8;
+import org.jooq.Row9;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -521,6 +549,538 @@ public class Factory {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
 
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field8, field9)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field9, field10)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field10, field11)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field11, field12)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field12, field13)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field13, field14)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field14, field15)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field15, field16)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field16, field17)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field17, field18)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field18, field19)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field19, field20)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field20, field21)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
+     * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * select(field1, field2, field3, .., field21, field22)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#select(Field...)
+     * @see #select(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+    }
+
 // [jooq-tools] END [select]
 
     /**
@@ -888,6 +1448,538 @@ public class Factory {
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field8, field9)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field9, field10)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field10, field11)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field11, field12)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field12, field13)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field13, field14)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field14, field15)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field15, field16)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field16, field17)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field17, field18)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field18, field19)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field19, field20)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field20, field21)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    }
+
+    /**
+     * Create a new DSL subselect statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.Factory.*;
+     *
+     * // [...]
+     *
+     * selectDistinct(field1, field2, field3, .., field21, field22)
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Executor#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
 // [jooq-tools] END [selectDistinct]
@@ -5820,6 +6912,188 @@ public class Factory {
         return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8));
     }
 
+    /**
+     * Create a row value expression of degree <code>9</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9));
+    }
+
+    /**
+     * Create a row value expression of degree <code>10</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10));
+    }
+
+    /**
+     * Create a row value expression of degree <code>11</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11));
+    }
+
+    /**
+     * Create a row value expression of degree <code>12</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12));
+    }
+
+    /**
+     * Create a row value expression of degree <code>13</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13));
+    }
+
+    /**
+     * Create a row value expression of degree <code>14</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14));
+    }
+
+    /**
+     * Create a row value expression of degree <code>15</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15));
+    }
+
+    /**
+     * Create a row value expression of degree <code>16</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16));
+    }
+
+    /**
+     * Create a row value expression of degree <code>17</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17));
+    }
+
+    /**
+     * Create a row value expression of degree <code>18</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18));
+    }
+
+    /**
+     * Create a row value expression of degree <code>19</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19));
+    }
+
+    /**
+     * Create a row value expression of degree <code>20</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20));
+    }
+
+    /**
+     * Create a row value expression of degree <code>21</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20), val(t21));
+    }
+
+    /**
+     * Create a row value expression of degree <code>22</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20), val(t21), val(t22));
+    }
+
 // [jooq-tools] END [row-value]
 
     /**
@@ -5937,6 +7211,188 @@ public class Factory {
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Row8<T1, T2, T3, T4, T5, T6, T7, T8> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8);
+    }
+
+    /**
+     * Create a row value expression of degree <code>9</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+    }
+
+    /**
+     * Create a row value expression of degree <code>10</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+    }
+
+    /**
+     * Create a row value expression of degree <code>11</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+    }
+
+    /**
+     * Create a row value expression of degree <code>12</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+    }
+
+    /**
+     * Create a row value expression of degree <code>13</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+    }
+
+    /**
+     * Create a row value expression of degree <code>14</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+    }
+
+    /**
+     * Create a row value expression of degree <code>15</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+    }
+
+    /**
+     * Create a row value expression of degree <code>16</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
+    }
+
+    /**
+     * Create a row value expression of degree <code>17</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+    }
+
+    /**
+     * Create a row value expression of degree <code>18</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
+    }
+
+    /**
+     * Create a row value expression of degree <code>19</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
+    }
+
+    /**
+     * Create a row value expression of degree <code>20</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
+    }
+
+    /**
+     * Create a row value expression of degree <code>21</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
+    }
+
+    /**
+     * Create a row value expression of degree <code>22</code>
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
     }
 
 // [jooq-tools] END [row-field]

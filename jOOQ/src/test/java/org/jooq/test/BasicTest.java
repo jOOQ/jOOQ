@@ -620,7 +620,7 @@ public class BasicTest {
         Row6<Integer, String, Integer, String, Integer, String> t6 = row(1, "2", 3, "4", 5, "6");
         Row7<Integer, String, Integer, String, Integer, String, Integer> t7 = row(1, "2", 3, "4", 5, "6", 7);
         Row8<Integer, String, Integer, String, Integer, String, Integer, String> t8 = row(1, "2", 3, "4", 5, "6", 7, "8");
-        RowN t9 = row(1, "2", 3, "4", 5, "6", 7, "8", 9);
+        RowN t23 = row(1, "2", 3, "4", 5, "6", 7, "8", 9, "10", 11, "12", 13, "14", 15, "16", 17, "18", 19, "20", 21, "22", 23);
 
         // General info
         assertEquals(1, t1.getDegree());
@@ -631,7 +631,7 @@ public class BasicTest {
         assertEquals(6, t6.getDegree());
         assertEquals(7, t7.getDegree());
         assertEquals(8, t8.getDegree());
-        assertEquals(9, t9.getDegree());
+        assertEquals(23, t23.getDegree());
 
         // Accessors
         assertEquals(val(1), t1.field1());
@@ -695,24 +695,19 @@ public class BasicTest {
         assertEquals("(1, '2', 3, '4', 5, '6', 7)", r_refI().render(t7));
         assertEquals("(?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(t8));
         assertEquals("(1, '2', 3, '4', 5, '6', 7, '8')", r_refI().render(t8));
-        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(t9));
-        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8', 9)", r_refI().render(t9));
+        assertEquals("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", r_ref().render(t23));
+        assertEquals("(1, '2', 3, '4', 5, '6', 7, '8', 9, '10', 11, '12', 13, '14', 15, '16', 17, '18', 19, '20', 21, '22', 23)", r_refI().render(t23));
 
         context.checking(new Expectations() {{
-            int i = 0;
+            for (int i = 1; i < 22; i += 2) {
+                oneOf(statement).setInt(i, i);
+                oneOf(statement).setString(i + 1, "" + (i + 1));
+            }
 
-            oneOf(statement).setInt(++i, i);
-            oneOf(statement).setString(++i, "" + i);
-            oneOf(statement).setInt(++i, i);
-            oneOf(statement).setString(++i, "" + i);
-            oneOf(statement).setInt(++i, i);
-            oneOf(statement).setString(++i, "" + i);
-            oneOf(statement).setInt(++i, i);
-            oneOf(statement).setString(++i, "" + i);
-            oneOf(statement).setInt(++i, i);
+            oneOf(statement).setInt(23, 23);
         }});
 
-        assertEquals(10, b_ref().bind(t9).peekIndex());
+        assertEquals(24, b_ref().bind(t23).peekIndex());
         context.assertIsSatisfied();
     }
 

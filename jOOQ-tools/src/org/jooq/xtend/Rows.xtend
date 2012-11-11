@@ -36,6 +36,7 @@
 package org.jooq.xtend
 
 import org.jooq.Constants
+import java.util.Collections
 
 /**
  * @author Lukas Eder
@@ -866,13 +867,13 @@ class Rows extends Generators {
 
             @Override
             public final Condition in(Collection rows) {
-                QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
+                QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>> list = new QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>>(rows);
                 return new InRows(list, SubqueryOperator.IN);
             }
         
             @Override
             public final Condition notIn(Collection rows) {
-                QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> list = new QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
+                QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>> list = new QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>>(rows);
                 return new InRows(list, SubqueryOperator.NOT_IN);
             }
         
@@ -936,10 +937,10 @@ class Rows extends Generators {
                  */
                 private static final long    serialVersionUID = 85887551884667824L;
         
-                private final RowImpl<T1, T2, ?, ?, ?, ?, ?, ?> other;
+                private final RowImpl<T1, T2, «Collections::nCopies(Constants::MAX_ROW_DEGREE - 2, "?").join(", ")»> other;
         
                 Overlaps(Row2<T1, T2> other) {
-                    this.other = (RowImpl<T1, T2, ?, ?, ?, ?, ?, ?>) other;
+                    this.other = (RowImpl<T1, T2, «Collections::nCopies(Constants::MAX_ROW_DEGREE - 2, "?").join(", ")»>) other;
                 }
         
                 @Override
@@ -1021,13 +1022,13 @@ class Rows extends Generators {
                 /**
                  * Generated UID
                  */
-                private static final long                               serialVersionUID = -1806139685201770706L;
+                private static final long serialVersionUID = -1806139685201770706L;
         
-                private final RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> other;
-                private final Comparator                                comparator;
+                private final RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> other;
+                private final Comparator comparator;
         
                 Compare(QueryPart other, Comparator comparator) {
-                    this.other = (RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>) other;
+                    this.other = (RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>) other;
                     this.comparator = comparator;
                 }
         
@@ -1106,12 +1107,12 @@ class Rows extends Generators {
                 /**
                  * Generated UID
                  */
-                private static final long                                            serialVersionUID = -1806139685201770706L;
+                private static final long serialVersionUID = -1806139685201770706L;
         
-                private final QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> other;
-                private final SubqueryOperator                                       operator;
+                private final QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>> other;
+                private final SubqueryOperator operator;
         
-                InRows(QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8>> other, SubqueryOperator operator) {
+                InRows(QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>> other, SubqueryOperator operator) {
                     this.other = other;
                     this.operator = operator;
                 }
@@ -1130,7 +1131,7 @@ class Rows extends Generators {
                     if (asList(ASE, DB2, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
                         List<Condition> conditions = new ArrayList<Condition>();
         
-                        for (RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> row : other) {
+                        for (RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> row : other) {
                             conditions.add(new Compare(row, EQUALS));
                         }
         

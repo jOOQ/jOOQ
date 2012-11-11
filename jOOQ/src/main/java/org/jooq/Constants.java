@@ -50,7 +50,7 @@ public final class Constants {
     /**
      * The maximum degree of {@link Row} and {@link Record} subtypes
      */
-    public static final int MAX_ROW_DEGREE = 8;
+    public static final int MAX_ROW_DEGREE = 22;
 
     /**
      * No further instances

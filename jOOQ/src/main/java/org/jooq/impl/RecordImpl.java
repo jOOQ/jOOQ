@@ -52,19 +52,33 @@ import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
+import org.jooq.Record9;
+import org.jooq.Record10;
+import org.jooq.Record11;
+import org.jooq.Record12;
+import org.jooq.Record13;
+import org.jooq.Record14;
+import org.jooq.Record15;
+import org.jooq.Record16;
+import org.jooq.Record17;
+import org.jooq.Record18;
+import org.jooq.Record19;
+import org.jooq.Record20;
+import org.jooq.Record21;
+import org.jooq.Record22;
 
 /**
  * A general purpose record, typically used for ad-hoc types.
  * <p>
  * This type implements both the general-purpose, type-unsafe {@link Record}
  * interface, as well as the more specific, type-safe {@link Record1},
- * {@link Record2} through {@link Record8} interfaces
+ * {@link Record2} through {@link Record22} interfaces
  *
  * @author Lukas Eder
  */
 @Generated("This class was generated using jOOQ-tools")
 @SuppressWarnings({ "unchecked", "rawtypes" })
-class RecordImpl<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractRecord
+class RecordImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> extends AbstractRecord
 implements
 
     // This record implementation implements all record types. Type-safety is
@@ -76,7 +90,21 @@ implements
     Record5<T1, T2, T3, T4, T5>,
     Record6<T1, T2, T3, T4, T5, T6>,
     Record7<T1, T2, T3, T4, T5, T6, T7>,
-    Record8<T1, T2, T3, T4, T5, T6, T7, T8> {
+    Record8<T1, T2, T3, T4, T5, T6, T7, T8>,
+    Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>,
+    Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>,
+    Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>,
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>,
+    Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>,
+    Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>,
+    Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>,
+    Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>,
+    Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>,
+    Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>,
+    Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>,
+    Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>,
+    Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
+    Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> {
 
     /**
      * Generated UID
@@ -95,12 +123,12 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> fieldsRow() {
+    public RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> fieldsRow() {
         return new RowImpl(getFields());
     }
 
     @Override
-    public final RowImpl<T1, T2, T3, T4, T5, T6, T7, T8> valuesRow() {
+    public final RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> valuesRow() {
         List<Field<?>> fields = getFields();
         return new RowImpl(vals(intoArray(), fields.toArray(new Field[fields.size()])));
     }
@@ -146,6 +174,76 @@ implements
     }
 
     @Override
+    public final Field<T9> field9() {
+        return (Field<T9>) getField(8);
+    }
+
+    @Override
+    public final Field<T10> field10() {
+        return (Field<T10>) getField(9);
+    }
+
+    @Override
+    public final Field<T11> field11() {
+        return (Field<T11>) getField(10);
+    }
+
+    @Override
+    public final Field<T12> field12() {
+        return (Field<T12>) getField(11);
+    }
+
+    @Override
+    public final Field<T13> field13() {
+        return (Field<T13>) getField(12);
+    }
+
+    @Override
+    public final Field<T14> field14() {
+        return (Field<T14>) getField(13);
+    }
+
+    @Override
+    public final Field<T15> field15() {
+        return (Field<T15>) getField(14);
+    }
+
+    @Override
+    public final Field<T16> field16() {
+        return (Field<T16>) getField(15);
+    }
+
+    @Override
+    public final Field<T17> field17() {
+        return (Field<T17>) getField(16);
+    }
+
+    @Override
+    public final Field<T18> field18() {
+        return (Field<T18>) getField(17);
+    }
+
+    @Override
+    public final Field<T19> field19() {
+        return (Field<T19>) getField(18);
+    }
+
+    @Override
+    public final Field<T20> field20() {
+        return (Field<T20>) getField(19);
+    }
+
+    @Override
+    public final Field<T21> field21() {
+        return (Field<T21>) getField(20);
+    }
+
+    @Override
+    public final Field<T22> field22() {
+        return (Field<T22>) getField(21);
+    }
+
+    @Override
     public final T1 value1() {
         return (T1) getValue(0);
     }
@@ -183,5 +281,75 @@ implements
     @Override
     public final T8 value8() {
         return (T8) getValue(7);
+    }
+
+    @Override
+    public final T9 value9() {
+        return (T9) getValue(8);
+    }
+
+    @Override
+    public final T10 value10() {
+        return (T10) getValue(9);
+    }
+
+    @Override
+    public final T11 value11() {
+        return (T11) getValue(10);
+    }
+
+    @Override
+    public final T12 value12() {
+        return (T12) getValue(11);
+    }
+
+    @Override
+    public final T13 value13() {
+        return (T13) getValue(12);
+    }
+
+    @Override
+    public final T14 value14() {
+        return (T14) getValue(13);
+    }
+
+    @Override
+    public final T15 value15() {
+        return (T15) getValue(14);
+    }
+
+    @Override
+    public final T16 value16() {
+        return (T16) getValue(15);
+    }
+
+    @Override
+    public final T17 value17() {
+        return (T17) getValue(16);
+    }
+
+    @Override
+    public final T18 value18() {
+        return (T18) getValue(17);
+    }
+
+    @Override
+    public final T19 value19() {
+        return (T19) getValue(18);
+    }
+
+    @Override
+    public final T20 value20() {
+        return (T20) getValue(19);
+    }
+
+    @Override
+    public final T21 value21() {
+        return (T21) getValue(20);
+    }
+
+    @Override
+    public final T22 value22() {
+        return (T22) getValue(21);
     }
 }

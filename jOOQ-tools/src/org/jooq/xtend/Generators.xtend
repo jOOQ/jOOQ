@@ -67,6 +67,7 @@ abstract class Generators {
 		
 		result.append(original.substring(0, original.indexOf(start) + start.length + 1))
 		result.append(contents);
+		result.append("\n");
 		result.append(original.substring(original.indexOf(end)));
 		
 		write(className, result);
@@ -171,33 +172,84 @@ abstract class Generators {
         '''
     }
     
+    /**
+     * A comma-separated list of types
+     * <p>
+     * <code>T1, T2, .., T[N]</code>
+     */
     def TN(int degree) {
-        // A comma-separated list of types T1, T2, .., TN
         (1..degree).join(", ", [e | "T" + e])
     }
     
+    /**
+     * A comma-separated list of identifier references
+     * <p>
+     * <code>t1, t2, .., t[N]</code>
+     */
     def tn(int degree) {
-        // A comma-separated list of types T1, T2, .., TN
         (1..degree).join(", ", [e | "t" + e])
     }
     
-    def fieldn(int degree) {
-        // A comma-separated list of types T1, T2, .., TN
-        (1..degree).join(", ", [e | "field" + e])
-    }
-    
+    /** 
+     * A comma-separated list of identifier declarations
+     * <p>
+     * <code>T1 t1, T2 t2, .., T[N] t[N]</code>
+     */
     def TN_tn(int degree) {
-        // A comma-separated list of arguments T1 t1, T2 t2, .., TN tn
         (1..degree).join(", ", [e | "T" + e + " t" + e])
     }
     
+    /**
+     * A comma-separated list of field declarations
+     * <p>
+     * <code>Field&lt;T1> t1, Field&lt;T2> t2, .., Field&ltT[N]> t[N]</code>
+     */
     def Field_TN_tn(int degree) {
         (1..degree).join(", ", [e | "Field<T" + e + "> t" + e])
     }
     
+    /**
+     * A comma-separated list of field declarations
+     * <p>
+     * <code>Field&lt;T1> field1, Field&lt;T2> field2, .., Field&ltT[N]> field[N]</code>
+     */
     def Field_TN_fieldn(int degree) {
         (1..degree).join(", ", [e | "Field<T" + e + "> field" + e])
     }
     
-	
+    /**
+     * A comma-separated list of field references
+     * <p>
+     * <code>field1, field2, .., field[N]</code>
+     */
+    def fieldn(int degree) {
+        (1..degree).join(", ", [e | "field" + e])
+    }
+    
+    /**
+     * A comma-separated list of field references
+     * <p>
+     * Unlike {@link #fieldn(int)}, this will return at most 5 fields
+     * <p>
+     * <code>field1, field2, .., field[N]</code>
+     */
+    def field1_field2_fieldn(int degree) {
+    	if (degree <= 5) {
+    		return fieldn(degree);
+    	}
+    	else {
+    		return (1..3).join(", ", [e | "field" + e]) +
+    		                   ", .., " +
+    		       (degree - 1..degree).join(", ", [e | "field" + e])
+    	}
+    }
+    
+    /**
+     * A comma-separated list of value constructor references
+     * <p>
+     * <code>val(t1), val(t2), .., val(t[N])</code>
+     */
+    def val_tn(int degree) {
+        (1..degree).join(", ", [e | "val(t" + e + ")"])
+    }
 }

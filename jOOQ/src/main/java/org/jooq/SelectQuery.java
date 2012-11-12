@@ -259,11 +259,24 @@ public interface SelectQuery extends SimpleSelectQuery<Record> {
      *       .execute();
      * </pre></code>
      * <p>
+     * You can also use this clause for any other database, that accepts hints
+     * or options at the same syntactic location, e.g. for MySQL's
+     * <code>SQL_CALC_FOUND_ROWS</code> option: <code><pre>
+     * create.select(field1, field2)
+     *       .hint("SQL_CALC_FOUND_ROWS")
+     *       .from(table1)
+     *       .fetch();
+     * </pre></code>
+     * <p>
+     * The outcome of such a query is this: <code><pre>
+     * SELECT [hint] field1, field2 FROM table1
+     * </pre></code>
+     * <p>
      * For SQL Server style table hints, see {@link Table#with(String)}
      *
      * @see Table#with(String)
      */
-    @Support({ CUBRID, ORACLE })
+    @Support
     void addHint(String hint);
 
     /**

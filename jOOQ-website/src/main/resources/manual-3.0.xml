@@ -2340,8 +2340,17 @@ create.selectFrom(AUTHOR)
       .from(AUTHOR);</java>
 
 											<p>
-												Note that you can pass any string in the .hint() clause. If you use that clause, the passed string will always be put in between the SELECT [DISTINCT] keywords and the actual projection list
+												Note that you can pass any string in the .hint() clause. If you use that clause, the passed string will always be put in between the SELECT [DISTINCT] keywords and the actual projection list. This can be useful in other databases too, such as MySQL, for instance:
 											</p>
+											
+<code-pair>
+<sql><![CDATA[SELECT SQL_CALC_FOUND_ROWS field1, field2
+FROM table1
+]]></sql>
+<java><![CDATA[create.select(field1, field2)
+       .hint("SQL_CALC_FOUND_ROWS")
+       .from(table1)]]></java>
+</code-pair>
 										</content>
 									</section>
 								</sections>

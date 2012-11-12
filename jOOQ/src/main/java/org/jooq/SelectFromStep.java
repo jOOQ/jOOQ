@@ -35,9 +35,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.ORACLE;
-
 import java.util.Collection;
 
 import org.jooq.impl.Factory;
@@ -146,13 +143,27 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * create.select(field1, field2)
      *       .hint("/*+ALL_ROWS&#42;/")
      *       .from(table1)
-     *       .execute();
+     *       .fetch();
+     * </pre></code>
+     * <p>
+     * You can also use this clause for any other database, that accepts hints
+     * or options at the same syntactic location, e.g. for MySQL's
+     * <code>SQL_CALC_FOUND_ROWS</code> option: <code><pre>
+     * create.select(field1, field2)
+     *       .hint("SQL_CALC_FOUND_ROWS")
+     *       .from(table1)
+     *       .fetch();
+     * </pre></code>
+     * <p>
+     * The outcome of such a query is this: <code><pre>
+     * SELECT [hint] field1, field2 FROM table1
      * </pre></code>
      * <p>
      * For SQL Server style table hints, see {@link Table#with(String)}
      *
      * @see Table#with(String)
+     * @see SelectQuery#addHint(String)
      */
-    @Support({ CUBRID, ORACLE })
+    @Support
     SelectFromStep<R> hint(String hint);
 }

@@ -4010,7 +4010,9 @@ public class Factory {
      * </tr>
      * <tr>
      * <td>Oracle</td>
-     * <td><code>LOWER(RAWTOHEX(SYS.DBMS_OBFUSCATION_TOOLKIT.MD5(INPUT_STRING => ...))</code></td>
+     * <td>
+     * <code>LOWER(RAWTOHEX(SYS.DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW( ... ), SYS.DBMS_CRYPTO.HASH_MD5)))</code>
+     * </td>
      * </tr>
      * </table>
      */
@@ -4035,7 +4037,9 @@ public class Factory {
      * </tr>
      * <tr>
      * <td>Oracle</td>
-     * <td><code>LOWER(RAWTOHEX(SYS.DBMS_OBFUSCATION_TOOLKIT.MD5(INPUT_STRING => ...))</code></td>
+     * <td>
+     * <code>LOWER(RAWTOHEX(SYS.DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW( ... ), SYS.DBMS_CRYPTO.HASH_MD5)))</code>
+     * </td>
      * </tr>
      * </table>
      */

@@ -115,8 +115,13 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
     }
 
     @Override
-    public final int getIndex(Field<?> field) throws IllegalArgumentException {
+    public final int getIndex(Field<?> field) {
         return asTable().getIndex(field);
+    }
+
+    @Override
+    public int getIndex(String fieldName) {
+        return asTable().getIndex(fieldName);
     }
 
     @Override

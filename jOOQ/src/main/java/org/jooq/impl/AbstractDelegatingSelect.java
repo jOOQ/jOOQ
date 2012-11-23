@@ -408,4 +408,9 @@ abstract class AbstractDelegatingSelect<R extends Record>
     public final int getIndex(Field<?> field) {
         return getDelegate().asTable().getIndex(field);
     }
+
+    @Override
+    public final int getIndex(String fieldName) {
+        return getDelegate().asTable().getIndex(fieldName);
+    }
 }

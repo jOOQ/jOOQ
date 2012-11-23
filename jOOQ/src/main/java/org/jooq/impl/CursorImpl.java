@@ -120,8 +120,13 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final int getIndex(Field<?> field) throws IllegalArgumentException {
+    public final int getIndex(Field<?> field) {
         return fields.getIndex(field);
+    }
+
+    @Override
+    public final int getIndex(String fieldName) {
+        return fields.getIndex(fieldName);
     }
 
     @Override

@@ -840,6 +840,54 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     <T extends Comparable<? super T>> Result<R> sortDesc(Field<T> field) throws IllegalArgumentException;
 
     /**
+     * Sort this result by one of its contained fields.
+     * <p>
+     * <code>nulls</code> are sorted last by this method.
+     *
+     * @param fieldIndex The sort field index
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    Result<R> sortAsc(int fieldIndex) throws IllegalArgumentException;
+
+    /**
+     * Reverse-sort this result by one of its contained fields.
+     * <p>
+     * <code>nulls</code> are sorted last by this method.
+     *
+     * @param fieldIndex The sort field index
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    Result<R> sortDesc(int fieldIndex) throws IllegalArgumentException;
+
+    /**
+     * Sort this result by one of its contained fields.
+     * <p>
+     * <code>nulls</code> are sorted last by this method.
+     *
+     * @param fieldName The sort field name
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    Result<R> sortAsc(String fieldName) throws IllegalArgumentException;
+
+    /**
+     * Reverse-sort this result by one of its contained fields.
+     * <p>
+     * <code>nulls</code> are sorted last by this method.
+     *
+     * @param fieldName The sort field name
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    Result<R> sortDesc(String fieldName) throws IllegalArgumentException;
+
+    /**
      * Sort this result by one of its contained fields using a comparator.
      * <p>
      * <code>null</code> sorting must be handled by the supplied
@@ -867,6 +915,64 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *             in {@link #getFields()}
      */
     <T> Result<R> sortDesc(Field<T> field, java.util.Comparator<? super T> comparator) throws IllegalArgumentException;
+
+    /**
+     * Sort this result by one of its contained fields using a comparator.
+     * <p>
+     * <code>null</code> sorting must be handled by the supplied
+     * <code>comparator</code>.
+     *
+     * @param fieldIndex The sort field index
+     * @param comparator The comparator used to sort this result.
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    Result<R> sortAsc(int fieldIndex, java.util.Comparator<?> comparator) throws IllegalArgumentException;
+
+    /**
+     * Reverse-sort this result by one of its contained fields using a
+     * comparator.
+     * <p>
+     * <code>null</code> sorting must be handled by the supplied
+     * <code>comparator</code>.
+     *
+     * @param fieldIndex The sort field index
+     * @param comparator The comparator used to sort this result.
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    Result<R> sortDesc(int fieldIndex, java.util.Comparator<?> comparator) throws IllegalArgumentException;
+
+    /**
+     * Sort this result by one of its contained fields using a comparator.
+     * <p>
+     * <code>null</code> sorting must be handled by the supplied
+     * <code>comparator</code>.
+     *
+     * @param fieldName The sort field name
+     * @param comparator The comparator used to sort this result.
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    Result<R> sortAsc(String fieldName, java.util.Comparator<?> comparator) throws IllegalArgumentException;
+
+    /**
+     * Reverse-sort this result by one of its contained fields using a
+     * comparator.
+     * <p>
+     * <code>null</code> sorting must be handled by the supplied
+     * <code>comparator</code>.
+     *
+     * @param fieldName The sort field name
+     * @param comparator The comparator used to sort this result.
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    Result<R> sortDesc(String fieldName, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 
     /**
      * Sort this result using a comparator that can compare records.

@@ -216,20 +216,6 @@ public class MySQLFactory extends Factory {
     }
 
     /**
-     * Get the MySQL-specific <code>MD5()</code> function
-     */
-    public static Field<String> md5(String string) {
-        return md5(val(string));
-    }
-
-    /**
-     * Get the MySQL-specific <code>MD5()</code> function
-     */
-    public static Field<String> md5(Field<String> string) {
-        return function("md5", String.class, string);
-    }
-
-    /**
      * Get the MySQL-specific <code>SHA1()</code> function
      */
     public static Field<String> sha1(String string) {

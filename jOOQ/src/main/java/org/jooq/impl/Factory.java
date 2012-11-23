@@ -3991,6 +3991,30 @@ public class Factory {
     }
 
     // ------------------------------------------------------------------------
+    // XXX Hash function factory
+    // ------------------------------------------------------------------------
+
+    /**
+     * Get the MySQL-specific <code>MD5()</code> function
+     * <p>
+     * Other databases may simulate this, where available
+     */
+    @Support({ MYSQL })
+    public static Field<String> md5(String string) {
+        return md5(val(string));
+    }
+
+    /**
+     * Get the MySQL-specific <code>MD5()</code> function
+     * <p>
+     * Other databases may simulate this, where available
+     */
+    @Support({ MYSQL })
+    public static Field<String> md5(Field<String> string) {
+        return new MD5(nullSafe(string));
+    }
+
+    // ------------------------------------------------------------------------
     // XXX Date and time functions
     // ------------------------------------------------------------------------
 

@@ -1589,6 +1589,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFunctionsOnStrings_HashFunctions() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_HashFunctions();
+    }
+
+    @Test
     public void testFunctionPosition() throws Exception {
         new FunctionTests(this).testFunctionPosition();
     }

@@ -89,6 +89,7 @@ import static org.jooq.impl.Factory.log;
 import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.lpad;
 import static org.jooq.impl.Factory.ltrim;
+import static org.jooq.impl.Factory.md5;
 import static org.jooq.impl.Factory.minute;
 import static org.jooq.impl.Factory.month;
 import static org.jooq.impl.Factory.nullif;
@@ -587,6 +588,34 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 assertEquals('-', (int) record.getValue(2, Integer.class));
                 assertEquals(' ', (int) record.getValue(3, Integer.class));
 
+                break;
+        }
+    }
+
+    @Test
+    public void testFunctionsOnStrings_HashFunctions() throws Exception {
+
+        // MD5
+        switch (getDialect()) {
+            case ASE:
+            case CUBRID:
+            case DB2:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case POSTGRES:
+            case SQLITE:
+            case SQLSERVER:
+            case SYBASE:
+                log.info("SKIPPING", "MD5 function test");
+                break;
+
+            case MYSQL:
+            case ORACLE:
+            default:
+                assertEquals("900150983cd24fb0d6963f7d28e17f72", create().select(md5("abc")).fetchOne(0));
                 break;
         }
     }

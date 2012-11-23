@@ -1046,9 +1046,32 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return sortAsc(field, new NaturalComparator<T>());
     }
 
+    @SuppressWarnings("rawtypes")
+    @Override
+    public final Result<R> sortAsc(int fieldIndex) {
+        return sortAsc(fieldIndex, new NaturalComparator());
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public final Result<R> sortAsc(String fieldName) {
+        return sortAsc(fieldName, new NaturalComparator());
+    }
+
     @Override
     public final <T> Result<R> sortAsc(Field<T> field, Comparator<? super T> comparator) {
-        return sortAsc(new RecordComparator<T, R>(getIndex(field), comparator));
+        return sortAsc(getIndex(field), comparator);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Override
+    public final Result<R> sortAsc(int fieldIndex, Comparator<?> comparator) {
+        return sortAsc(new RecordComparator(fieldIndex, comparator));
+    }
+
+    @Override
+    public final Result<R> sortAsc(String fieldName, Comparator<?> comparator) {
+        return sortAsc(getIndex(getField(fieldName)), comparator);
     }
 
     @Override
@@ -1062,9 +1085,31 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return sortAsc(field, Collections.reverseOrder(new NaturalComparator<T>()));
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Override
+    public final Result<R> sortDesc(int fieldIndex) {
+        return sortAsc(fieldIndex, Collections.reverseOrder(new NaturalComparator()));
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Override
+    public final Result<R> sortDesc(String fieldName) {
+        return sortAsc(fieldName, Collections.reverseOrder(new NaturalComparator()));
+    }
+
     @Override
     public final <T> Result<R> sortDesc(Field<T> field, Comparator<? super T> comparator) {
         return sortAsc(field, Collections.reverseOrder(comparator));
+    }
+
+    @Override
+    public final Result<R> sortDesc(int fieldIndex, Comparator<?> comparator) {
+        return sortAsc(fieldIndex, Collections.reverseOrder(comparator));
+    }
+
+    @Override
+    public final Result<R> sortDesc(String fieldName, Comparator<?> comparator) {
+        return sortAsc(fieldName, Collections.reverseOrder(comparator));
     }
 
     @Override

@@ -39,7 +39,7 @@ package org.jooq;
 import java.util.List;
 
 /**
- * An entity representing a database schema
+ * An object representing a database schema
  *
  * @author Lukas Eder
  */

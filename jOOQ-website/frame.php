@@ -13,6 +13,8 @@
 		  print getH1();
 		}
 		?></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
 		<meta property="og:title" content="jOOQ" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="http://www.jooq.org" />

@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.jooq.Catalog;
 import org.jooq.ForeignKey;
 import org.jooq.Meta;
 import org.jooq.Record;
@@ -79,13 +80,13 @@ class MetaImpl implements Meta {
     }
 
     @Override
-    public final List<Schema> getSchemas() {
+    public final List<Catalog> getCatalogs() {
         try {
-            List<Schema> result = new ArrayList<Schema>();
-            Result<Record> schemas = executor.fetch(meta().getSchemas());
+            List<Catalog> result = new ArrayList<Catalog>();
+            Result<Record> schemas = executor.fetch(meta().getCatalogs());
 
             for (String name : schemas.getValues(0, String.class)) {
-                result.add(new MetaSchema(name));
+                result.add(new MetaCatalog(name));
             }
 
             return result;
@@ -93,6 +94,17 @@ class MetaImpl implements Meta {
         catch (SQLException e) {
             throw new DataAccessException("Error while accessing DatabaseMetaData", e);
         }
+    }
+
+    @Override
+    public final List<Schema> getSchemas() {
+        List<Schema> result = new ArrayList<Schema>();
+
+        for (Catalog catalog : getCatalogs()) {
+            result.addAll(catalog.getSchemas());
+        }
+
+        return result;
     }
 
     @Override
@@ -104,6 +116,35 @@ class MetaImpl implements Meta {
         }
 
         return result;
+    }
+
+    private class MetaCatalog extends CatalogImpl {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -2821093577201327275L;
+
+        MetaCatalog(String name) {
+            super(name);
+        }
+
+        @Override
+        public final List<Schema> getSchemas() {
+            try {
+                List<Schema> result = new ArrayList<Schema>();
+                Result<Record> schemas = executor.fetch(meta().getSchemas());
+
+                for (String name : schemas.getValues(0, String.class)) {
+                    result.add(new MetaSchema(name));
+                }
+
+                return result;
+            }
+            catch (SQLException e) {
+                throw new DataAccessException("Error while accessing DatabaseMetaData", e);
+            }
+        }
     }
 
     private class MetaSchema extends SchemaImpl {

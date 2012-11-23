@@ -54,10 +54,12 @@ import static org.jooq.SQLDialect.SYBASE;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.jooq.Catalog;
 import org.jooq.Field;
 import org.jooq.Meta;
 import org.jooq.Record1;
@@ -393,10 +395,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         if (schema() != null) {
 
+            // Catalog checks
+            List<Catalog> metaCatalogs = meta.getCatalogs();
+            List<Schema> metaSchemasFromCatalogs = new ArrayList<Schema>();
+
+            for (Catalog metaCatalog : metaCatalogs) {
+                metaSchemasFromCatalogs.addAll(metaCatalog.getSchemas());
+            }
+
+            assertTrue(metaSchemasFromCatalogs.contains(schema()));
+
             // The schema returned from meta should be equal to the
             // generated test schema
             List<Schema> metaSchemas = meta.getSchemas();
             assertTrue(metaSchemas.contains(schema()));
+            assertEquals(metaSchemasFromCatalogs, metaSchemas);
 
             Schema metaSchema = metaSchemas.get(metaSchemas.indexOf(schema()));
             assertEquals(schema(), metaSchema);

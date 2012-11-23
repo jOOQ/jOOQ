@@ -33,44 +33,68 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
-import org.jooq.exception.DataAccessException;
-import org.jooq.impl.Executor;
+import org.jooq.BindContext;
+import org.jooq.Catalog;
+import org.jooq.RenderContext;
+import org.jooq.Schema;
 
 /**
- * A wrapping object for {@link DatabaseMetaData}
+ * A common base class for database catalogs
  * <p>
- * This object can be obtained through {@link Executor#meta()} in order to
- * provide convenient access to your database meta data. This abstraction has
- * two purposes:
- * <p>
- * <ol>
- * <li>To increase API convenience, as no checked {@link SQLException} is
- * thrown, only the unchecked {@link DataAccessException}</li>
- * <li>To increase API convenience, as the returned objects are always jOOQ
- * objects, not JDBC {@link ResultSet} objects with hard-to-remember API
- * constraints</li>
- * </ol>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
  */
-public interface Meta {
-
-    List<Catalog> getCatalogs();
+public class CatalogImpl extends AbstractQueryPart implements Catalog {
 
     /**
-     * Get all schema objects from the underlying {@link DatabaseMetaData}
+     * Generated UID
      */
-    List<Schema> getSchemas();
+    private static final long serialVersionUID = -3650318934053960244L;
+    private final String      catalogName;
+
+    public CatalogImpl(String name) {
+        super();
+
+        this.catalogName = name;
+    }
+
+    @Override
+    public final String getName() {
+        return catalogName;
+    }
+
+    @Override
+    public final void bind(BindContext context) {}
+
+    @Override
+    public final void toSQL(RenderContext context) {
+        context.literal(getName());
+    }
+
+    @Override
+    public final Schema getSchema(String name) {
+        for (Schema schema : getSchemas()) {
+            if (schema.getName().equals(name)) {
+                return schema;
+            }
+        }
+
+        return null;
+    }
 
     /**
-     * Get all table objects from the underlying {@link DatabaseMetaData}
+     * {@inheritDoc}
+     * <p>
+     * Subclasses should override this method
      */
-    List<Table<?>> getTables();
+    @Override
+    public List<Schema> getSchemas() {
+        return Collections.emptyList();
+    }
 }

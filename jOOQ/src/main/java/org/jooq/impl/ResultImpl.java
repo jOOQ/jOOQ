@@ -149,6 +149,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final int getIndex(String fieldName) {
+        return fields.getIndex(fieldName);
+    }
+
+    @Override
     public final boolean isEmpty() {
         return records.isEmpty();
     }
@@ -1071,7 +1076,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Result<R> sortAsc(String fieldName, Comparator<?> comparator) {
-        return sortAsc(getIndex(getField(fieldName)), comparator);
+        return sortAsc(getIndex(fieldName), comparator);
     }
 
     @Override

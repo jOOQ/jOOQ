@@ -80,7 +80,7 @@ public interface FieldProvider {
     List<Field<?>> getFields();
 
     /**
-     * Get a fields index from this field provider
+     * Get a field's index from this field provider
      *
      * @param field The field to look for
      * @return The field's index
@@ -88,4 +88,14 @@ public interface FieldProvider {
      *             provider.
      */
     int getIndex(Field<?> field) throws IllegalArgumentException;
+
+    /**
+     * Get a field's index from this field provider
+     *
+     * @param fieldName The field name to look for
+     * @return The field's index
+     * @throws IllegalArgumentException if the field is not contained in this
+     *             provider.
+     */
+    int getIndex(String fieldName) throws IllegalArgumentException;
 }

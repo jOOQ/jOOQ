@@ -120,7 +120,7 @@ class FieldList extends QueryPartList<Field<?>> implements FieldProvider {
     }
 
     @Override
-    public final int getIndex(Field<?> field) throws IllegalArgumentException {
+    public final int getIndex(Field<?> field) {
         if (indexes == null) {
             indexes = new LinkedHashMap<Field<?>, Integer>();
 
@@ -140,5 +140,10 @@ class FieldList extends QueryPartList<Field<?>> implements FieldProvider {
         }
 
         throw new IllegalArgumentException("Field " + field + " is not contained in list");
+    }
+
+    @Override
+    public final int getIndex(String fieldName) {
+        return getIndex(getField(fieldName));
     }
 }

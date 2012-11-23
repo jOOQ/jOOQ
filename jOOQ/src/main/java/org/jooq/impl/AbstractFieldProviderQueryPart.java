@@ -77,8 +77,13 @@ abstract class AbstractFieldProviderQueryPart<R extends Record> extends Abstract
     }
 
     @Override
-    public final int getIndex(Field<?> field) throws IllegalArgumentException {
+    public final int getIndex(Field<?> field) {
         return getFieldList().getIndex(field);
+    }
+
+    @Override
+    public final int getIndex(String fieldName) {
+        return getFieldList().getIndex(fieldName);
     }
 
     /**

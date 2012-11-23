@@ -95,6 +95,7 @@ import org.jooq.InsertValuesStep;
 import org.jooq.LoaderOptionsStep;
 import org.jooq.MergeKeyStep;
 import org.jooq.MergeUsingStep;
+import org.jooq.Meta;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -502,6 +503,10 @@ public class Executor implements Configuration {
     // -------------------------------------------------------------------------
     // XXX Convenience methods accessing the underlying Connection
     // -------------------------------------------------------------------------
+
+    public final Meta meta() {
+        return new MetaImpl(this);
+    }
 
     /**
      * Convenience method to access {@link Connection#commit()}
@@ -1561,6 +1566,21 @@ public class Executor implements Configuration {
     @Support
     public final Result<Record> fetch(ResultSet rs) throws DataAccessException {
         return fetchLazy(rs).fetch();
+    }
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Record}. This will internally fetch all records and throw an
+     * exception if there was more than one resulting record.
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @return The resulting jOOQ record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    @Support
+    public final Record fetchOne(ResultSet rs) throws DataAccessException, InvalidResultException {
+        return filterOne(fetchLazy(rs).fetch());
     }
 
     /**
@@ -2680,7 +2700,7 @@ public class Executor implements Configuration {
 
     /**
      * Execute a {@link ResultQuery} in the context of this executor and return
-     * a cursor.
+     * a record.
      *
      * @param query The query to execute
      * @return The record
@@ -2900,7 +2920,7 @@ public class Executor implements Configuration {
     // XXX Internals
     // -------------------------------------------------------------------------
 
-    private static <R extends Record> R filterOne(List<R> list) {
+    private static <R extends Record> R filterOne(List<R> list) throws InvalidResultException {
         int size = list.size();
 
         if (size == 1) {

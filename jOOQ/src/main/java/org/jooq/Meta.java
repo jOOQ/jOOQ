@@ -62,15 +62,24 @@ import org.jooq.impl.Executor;
  */
 public interface Meta {
 
-    List<Catalog> getCatalogs();
+    /**
+     * Get all catalog objects from the underlying {@link DatabaseMetaData}
+     *
+     * @throws DataAccessException If something went wrong fetching the meta objects
+     */
+    List<Catalog> getCatalogs() throws DataAccessException;
 
     /**
      * Get all schema objects from the underlying {@link DatabaseMetaData}
+     *
+     * @throws DataAccessException If something went wrong fetching the meta objects
      */
-    List<Schema> getSchemas();
+    List<Schema> getSchemas() throws DataAccessException;
 
     /**
      * Get all table objects from the underlying {@link DatabaseMetaData}
+     *
+     * @throws DataAccessException If something went wrong fetching the meta objects
      */
-    List<Table<?>> getTables();
+    List<Table<?>> getTables() throws DataAccessException;
 }

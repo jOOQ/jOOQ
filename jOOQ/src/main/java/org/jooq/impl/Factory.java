@@ -3997,9 +3997,24 @@ public class Factory {
     /**
      * Get the MySQL-specific <code>MD5()</code> function
      * <p>
-     * Other databases may simulate this, where available
+     * These are the implementations for various databases:
+     * <p>
+     * <table border="1">
+     * <tr>
+     * <th>Database</th>
+     * <th>Implementation</th>
+     * </tr>
+     * <tr>
+     * <td>MySQL</td>
+     * <td><code>MD5( ... )</code></td>
+     * </tr>
+     * <tr>
+     * <td>Oracle</td>
+     * <td><code>LOWER(RAWTOHEX(SYS.DBMS_OBFUSCATION_TOOLKIT.MD5(INPUT_STRING => ...))</code></td>
+     * </tr>
+     * </table>
      */
-    @Support({ MYSQL })
+    @Support({ MYSQL, ORACLE })
     public static Field<String> md5(String string) {
         return md5(val(string));
     }
@@ -4007,9 +4022,24 @@ public class Factory {
     /**
      * Get the MySQL-specific <code>MD5()</code> function
      * <p>
-     * Other databases may simulate this, where available
+     * These are the implementations for various databases:
+     * <p>
+     * <table border="1">
+     * <tr>
+     * <th>Database</th>
+     * <th>Implementation</th>
+     * </tr>
+     * <tr>
+     * <td>MySQL</td>
+     * <td><code>MD5( ... )</code></td>
+     * </tr>
+     * <tr>
+     * <td>Oracle</td>
+     * <td><code>LOWER(RAWTOHEX(SYS.DBMS_OBFUSCATION_TOOLKIT.MD5(INPUT_STRING => ...))</code></td>
+     * </tr>
+     * </table>
      */
-    @Support({ MYSQL })
+    @Support({ MYSQL, ORACLE })
     public static Field<String> md5(Field<String> string) {
         return new MD5(nullSafe(string));
     }

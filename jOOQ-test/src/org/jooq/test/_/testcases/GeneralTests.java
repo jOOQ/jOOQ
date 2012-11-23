@@ -40,18 +40,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
-import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.deg;
@@ -68,8 +57,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.Arrays;
@@ -82,22 +69,16 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
-import org.jooq.SQLDialect;
-import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.Sequence;
-import org.jooq.Table;
 import org.jooq.TableRecord;
-import org.jooq.UDT;
 import org.jooq.UpdatableRecord;
-import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.Executor;
-import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -437,290 +418,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         assertFalse(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetch().equals(
                     create().select(TBook_TITLE(), TBook_ID()).from(TBook()).fetch()));
-    }
-
-    @Test
-    public void testMetaModel() throws Exception {
-
-        // Test correct source code generation for the meta model
-        Schema schema = TAuthor().getSchema();
-        if (schema != null) {
-            int sequences = 0;
-
-            if (cSequences() != null) {
-                sequences++;
-
-                // DB2 has an additional sequence for the T_TRIGGERS table
-                if (getDialect() == DB2 ||
-                    getDialect() == H2) {
-
-                    sequences++;
-                }
-
-                // CUBRID generates sequences for AUTO_INCREMENT columns
-                else if (getDialect() == CUBRID) {
-                    sequences += 3;
-                }
-
-                // Oracle has additional sequences for [#961]
-                else if (getDialect() == ORACLE) {
-                    sequences += 5;
-                }
-            }
-
-            assertEquals(sequences, schema.getSequences().size());
-            for (Table<?> table : schema.getTables()) {
-                assertEquals(table, schema.getTable(table.getName()));
-            }
-            for (UDT<?> udt : schema.getUDTs()) {
-                assertEquals(udt, schema.getUDT(udt.getName()));
-            }
-            for (Sequence<?> sequence : schema.getSequences()) {
-                assertEquals(sequence, schema.getSequence(sequence.getName()));
-            }
-
-            int tables = 17;
-
-            // The additional T_DIRECTORY table for recursive queries
-            if (supportsRecursiveQueries()) {
-                tables++;
-            }
-
-            // The additional T_TRIGGERS table for INSERT .. RETURNING
-            if (TTriggers() != null) {
-                tables++;
-            }
-
-            // The additional T_UNSIGNED table
-            if (TUnsigned() != null) {
-                tables++;
-            }
-
-            // The additional T_IDENTITY table
-            if (TIdentity() != null) {
-                tables++;
-            }
-
-            // The additional T_IDENTITY_PK table
-            if (TIdentityPK() != null) {
-                tables++;
-            }
-
-            // [#959] The T_959 table for enum collisions with Java keywords
-            if (getDialect() == MYSQL ||
-                getDialect() == POSTGRES) {
-                tables++;
-            }
-
-            // [#986] Some foreign key name collision checks
-            if (getDialect() == ASE ||
-                getDialect() == CUBRID ||
-                getDialect() == DB2 ||
-                getDialect() == POSTGRES ||
-                getDialect() == SQLITE ||
-                getDialect() == SYBASE) {
-
-                tables += 2;
-            }
-
-            if (TArrays() == null) {
-                assertEquals(tables, schema.getTables().size());
-            }
-
-            // [#877] The T_877 table is only available in H2
-            else if (getDialect() == H2) {
-                assertEquals(tables + 2, schema.getTables().size());
-            }
-
-            // [#624] The V_INCOMPLETE view is only available in Oracle
-            else if (getDialect() == ORACLE) {
-                assertEquals(tables + 3, schema.getTables().size());
-            }
-
-            // [#610] Collision-prone entities are only available in HSQLDB
-            else if (getDialect() == HSQLDB) {
-                assertEquals(tables + 11, schema.getTables().size());
-            }
-
-            else {
-                assertEquals(tables + 1, schema.getTables().size());
-            }
-
-            if (cUAddressType() == null) {
-                assertEquals(0, schema.getUDTs().size());
-            }
-            // [#643] The U_INVALID types are only available in Oracle
-            // [#799] The member procedure UDT's too
-            else if (getDialect() == ORACLE) {
-                assertEquals(7, schema.getUDTs().size());
-            }
-            else {
-                assertEquals(2, schema.getUDTs().size());
-            }
-        }
-
-        // Test correct source code generation for identity columns
-        assertNull(TAuthor().getIdentity());
-        assertNull(TBook().getIdentity());
-
-        if (TIdentity() != null || TIdentityPK() != null) {
-            if (TIdentity() != null) {
-                assertEquals(TIdentity(), TIdentity().getIdentity().getTable());
-                assertEquals(TIdentity_ID(), TIdentity().getIdentity().getField());
-            }
-
-            if (TIdentityPK() != null) {
-                assertEquals(TIdentityPK(), TIdentityPK().getIdentity().getTable());
-                assertEquals(TIdentityPK_ID(), TIdentityPK().getIdentity().getField());
-            }
-        }
-        else {
-            log.info("SKIPPING", "Identity tests");
-        }
-
-        // Test correct source code generation for relations
-        assertNotNull(TAuthor().getMainKey());
-        assertNotNull(TAuthor().getKeys());
-        assertTrue(TAuthor().getKeys().contains(TAuthor().getMainKey()));
-        assertEquals(1, TAuthor().getKeys().size());
-        assertEquals(1, TAuthor().getMainKey().getFields().size());
-        assertEquals(TAuthor_ID(), TAuthor().getMainKey().getFields().get(0));
-        assertEquals(Record1.class, TAuthor().getRecordType().getMethod("key").getReturnType());
-        assertTrue(TAuthor().getRecordType().getMethod("key").toGenericString().contains("org.jooq.Record1<java.lang.Integer>"));
-        assertEquals(Record2.class, TBookToBookStore().getRecordType().getMethod("key").getReturnType());
-        assertTrue(TBookToBookStore().getRecordType().getMethod("key").toGenericString().contains("org.jooq.Record2<java.lang.String, java.lang.Integer>"));
-
-        if (supportsReferences()) {
-
-            // Without aliasing
-            assertEquals(0, TAuthor().getReferences().size());
-            assertEquals(2, TAuthor().getMainKey().getReferences().size());
-            assertEquals(TBook(), TAuthor().getMainKey().getReferences().get(0).getTable());
-            assertEquals(TBook(), TAuthor().getMainKey().getReferences().get(1).getTable());
-            assertEquals(Arrays.asList(), TAuthor().getReferencesTo(TBook()));
-            assertTrue(TBook().getReferences().containsAll(TAuthor().getReferencesFrom(TBook())));
-            assertTrue(TBook().getReferences().containsAll(TBook().getReferencesFrom(TAuthor())));
-            assertEquals(TBook().getReferencesTo(TAuthor()), TAuthor().getReferencesFrom(TBook()));
-
-            // [#1460] With aliasing
-            Table<A> a = TAuthor().as("a");
-            Table<B> b = TBook().as("b");
-
-            assertEquals(0, a.getReferences().size());
-            assertEquals(Arrays.asList(), a.getReferencesTo(b));
-
-            // This should work with both types of meta-models (static, non-static)
-            assertEquals(TBook().getReferencesTo(TAuthor()), TBook().getReferencesTo(a));
-            assertEquals(TBook().getReferencesTo(TAuthor()), b.getReferencesTo(a));
-            assertEquals(TBook().getReferencesTo(TAuthor()), b.getReferencesTo(TAuthor()));
-
-            // Only with a non-static meta model
-            if (a instanceof UpdatableTable && b instanceof UpdatableTable) {
-                UpdatableTable<A> ua = (UpdatableTable<A>) a;
-                UpdatableTable<B> ub = (UpdatableTable<B>) b;
-
-                assertEquals(2, ua.getMainKey().getReferences().size());
-                assertEquals(TBook(), ua.getMainKey().getReferences().get(0).getTable());
-                assertEquals(TBook(), ua.getMainKey().getReferences().get(1).getTable());
-                assertTrue(b.getReferences().containsAll(ua.getReferencesFrom(b)));
-                assertTrue(b.getReferences().containsAll(ub.getReferencesFrom(a)));
-                assertEquals(b.getReferencesTo(a), ua.getReferencesFrom(b));
-                assertEquals(TBook().getReferencesTo(a), ua.getReferencesFrom(b));
-                assertEquals(b.getReferencesTo(a), TAuthor().getReferencesFrom(b));
-            }
-        }
-        else {
-            log.info("SKIPPING", "References tests");
-        }
-
-        for (Field<?> field : T639().getFields()) {
-            if ("BYTE".equalsIgnoreCase(field.getName())) {
-                assertEquals(Byte.class, field.getType());
-                assertEquals(SQLDataType.TINYINT, field.getDataType());
-            }
-            else if ("SHORT".equalsIgnoreCase(field.getName())) {
-                assertEquals(Short.class, field.getType());
-                assertEquals(SQLDataType.SMALLINT, field.getDataType());
-            }
-            else if ("INTEGER".equalsIgnoreCase(field.getName())) {
-                assertEquals(Integer.class, field.getType());
-                assertEquals(SQLDataType.INTEGER, field.getDataType());
-            }
-            else if ("LONG".equalsIgnoreCase(field.getName())) {
-                assertEquals(Long.class, field.getType());
-                assertEquals(SQLDataType.BIGINT, field.getDataType());
-            }
-            else if ("BYTE_DECIMAL".equalsIgnoreCase(field.getName())) {
-                assertEquals(Byte.class, field.getType());
-                assertEquals(SQLDataType.TINYINT, field.getDataType());
-            }
-            else if ("SHORT_DECIMAL".equalsIgnoreCase(field.getName())) {
-                assertEquals(Short.class, field.getType());
-                assertEquals(SQLDataType.SMALLINT, field.getDataType());
-            }
-            else if ("INTEGER_DECIMAL".equalsIgnoreCase(field.getName())) {
-                assertEquals(Integer.class, field.getType());
-                assertEquals(SQLDataType.INTEGER, field.getDataType());
-            }
-            else if ("LONG_DECIMAL".equalsIgnoreCase(field.getName())) {
-                assertEquals(Long.class, field.getType());
-                assertEquals(SQLDataType.BIGINT, field.getDataType());
-            }
-            else if ("BIG_INTEGER".equalsIgnoreCase(field.getName())) {
-                assertEquals(BigInteger.class, field.getType());
-                assertEquals(SQLDataType.DECIMAL_INTEGER, field.getDataType());
-            }
-
-            // [#745] TODO: Unify distinction between NUMERIC and DECIMAL
-            else if ("BIG_DECIMAL".equalsIgnoreCase(field.getName())
-                    && getDialect() != SQLDialect.ORACLE
-                    && getDialect() != SQLDialect.POSTGRES
-                    && getDialect() != SQLDialect.SQLITE
-                    && getDialect() != SQLDialect.SQLSERVER) {
-
-                assertEquals(BigDecimal.class, field.getType());
-                assertEquals(SQLDataType.DECIMAL, field.getDataType());
-            }
-            else if ("BIG_DECIMAL".equalsIgnoreCase(field.getName())) {
-                assertEquals(BigDecimal.class, field.getType());
-                assertEquals(SQLDataType.NUMERIC, field.getDataType());
-            }
-
-            // [#746] TODO: Interestingly, HSQLDB and MySQL match REAL with DOUBLE.
-            // There is no matching type for java.lang.Float...
-            else if ("FLOAT".equalsIgnoreCase(field.getName())
-                    && getDialect() != SQLDialect.HSQLDB
-                    && getDialect() != SQLDialect.MYSQL
-                    && getDialect() != SQLDialect.SYBASE) {
-
-                assertEquals(Float.class, field.getType());
-                assertEquals(SQLDataType.REAL, field.getDataType());
-            }
-            else if ("FLOAT".equalsIgnoreCase(field.getName())
-                    && getDialect() != SQLDialect.MYSQL
-                    && getDialect() != SQLDialect.SYBASE) {
-
-                assertEquals(Double.class, field.getType());
-                assertEquals(SQLDataType.DOUBLE, field.getDataType());
-            }
-            else if ("FLOAT".equalsIgnoreCase(field.getName())) {
-                assertEquals(Double.class, field.getType());
-                assertEquals(SQLDataType.FLOAT, field.getDataType());
-            }
-
-            // [#746] TODO: Fix this, too
-            else if ("DOUBLE".equalsIgnoreCase(field.getName())
-                    && getDialect() != SQLDialect.SQLSERVER
-                    && getDialect() != SQLDialect.ASE) {
-
-                assertEquals(Double.class, field.getType());
-                assertEquals(SQLDataType.DOUBLE, field.getDataType());
-            }
-            else if ("DOUBLE".equalsIgnoreCase(field.getName())) {
-                assertEquals(Double.class, field.getType());
-                assertEquals(SQLDataType.FLOAT, field.getDataType());
-            }
-        }
     }
 
     @Test

@@ -110,6 +110,7 @@ import org.jooq.test._.testcases.GroupByTests;
 import org.jooq.test._.testcases.InsertUpdateTests;
 import org.jooq.test._.testcases.JoinTests;
 import org.jooq.test._.testcases.LoaderTests;
+import org.jooq.test._.testcases.MetaDataTests;
 import org.jooq.test._.testcases.OrderByTests;
 import org.jooq.test._.testcases.PlainSQLTests;
 import org.jooq.test._.testcases.PredicateTests;
@@ -869,7 +870,12 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testMetaModel() throws Exception {
-        new GeneralTests(this).testMetaModel();
+        new MetaDataTests(this).testMetaModel();
+    }
+
+    @Test
+    public void testMetaData() throws Exception {
+        new MetaDataTests(this).testMetaData();
     }
 
     @Test

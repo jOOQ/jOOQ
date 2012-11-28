@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.conf.Settings;
+
 /**
  * An object that can behave like a table (a table-like object)
  *
@@ -56,6 +58,10 @@ public interface TableLike<R extends Record> extends QueryPart {
      * <p>
      * This method is useful for things like
      * <code>SELECT * FROM (SELECT * FROM x WHERE x.a = '1') [alias] WHERE ... </code>
+     * <p>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
+     * quoted, and thus case-sensitive!
      */
     Table<R> asTable(String alias);
 }

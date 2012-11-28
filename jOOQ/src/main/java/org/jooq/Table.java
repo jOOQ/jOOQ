@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.SYBASE;
 import java.util.Collection;
 import java.util.List;
 
+import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 
 /**
@@ -80,6 +81,10 @@ public interface Table<R extends Record> extends FieldProvider, TableLike<R> {
 
     /**
      * Create an alias for this table
+     * <p>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
+     * quoted, and thus case-sensitive!
      *
      * @param alias The alias name
      * @return The table alias

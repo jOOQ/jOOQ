@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.conf.Settings;
+
 /**
  * An object that can behave like a field (a field-like object)
  *
@@ -57,6 +59,10 @@ public interface FieldLike {
      * <p>
      * This method is useful for things like
      * <code>SELECT y.*, (SELECT a FROM x) [alias] FROM y</code>
+     * <p>
+     * Note that the case-sensitivity of the returned field depends on
+     * {@link Settings#getRenderNameStyle()}. By default, field aliases are
+     * quoted, and thus case-sensitive!
      *
      * @return This result provider as a Field&lt;?&gt; object
      */

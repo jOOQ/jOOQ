@@ -55,6 +55,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jooq.conf.Settings;
 import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.types.Interval;
@@ -106,6 +107,10 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create an alias for this field
+     * <p>
+     * Note that the case-sensitivity of the returned field depends on
+     * {@link Settings#getRenderNameStyle()}. By default, field aliases are
+     * quoted, and thus case-sensitive!
      *
      * @param alias The alias name
      * @return The field alias

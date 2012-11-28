@@ -147,11 +147,18 @@ create.select(FIRST_NAME, LAST_NAME, count())
 <h3>Planned (Contributions and suggestions are very welcome!)</h3>
     <ul>
     <li>Access</li>
+    <li>EXASOL</li>
     <li>Informix</li>
     <li>Interbase</li>
+    <li>Mondrian</li>
+    <li>Netezza</li>
     <li>SQL Azure</li>
+    <li>SQLFire</li>
     <li>Sybase SQL Anywhere OnDemand</li>
     <li>Teradata</li>
+    <li>Vectorwise</li>
+    <li>Vertica</li>
+    <li>VoltDB</li>
     </ul>
 
 <h2 id="Other-requirements"><a href="#Other-requirements" name="Other-requirements">#</a> Other requirements</h2>

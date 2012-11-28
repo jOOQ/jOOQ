@@ -291,7 +291,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
-    <T> T fetchOne(Field<T> field) throws DataAccessException;
+    <T> T fetchOne(Field<T> field) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -305,7 +305,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
-    <T> T fetchOne(Field<?> field, Class<? extends T> type) throws DataAccessException;
+    <T> T fetchOne(Field<?> field, Class<? extends T> type) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -319,7 +319,8 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
-    <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
+    <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) throws DataAccessException,
+        InvalidResultException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -333,7 +334,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
-    Object fetchOne(int fieldIndex) throws DataAccessException;
+    Object fetchOne(int fieldIndex) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -347,7 +348,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
-    <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws DataAccessException;
+    <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -361,7 +362,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
-    <U> U fetchOne(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
+    <U> U fetchOne(int fieldIndex, Converter<?, U> converter) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -375,7 +376,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
-    Object fetchOne(String fieldName) throws DataAccessException;
+    Object fetchOne(String fieldName) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -389,7 +390,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
-    <T> T fetchOne(String fieldName, Class<? extends T> type) throws DataAccessException;
+    <T> T fetchOne(String fieldName, Class<? extends T> type) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -403,7 +404,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
-    <U> U fetchOne(String fieldName, Converter<?, U> converter) throws DataAccessException;
+    <U> U fetchOne(String fieldName, Converter<?, U> converter) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return at most one resulting record.
@@ -417,7 +418,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
-    R fetchOne() throws DataAccessException;
+    R fetchOne() throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return at most one resulting record.
@@ -456,7 +457,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Result#intoMaps()
      * @see Record#intoMap()
      */
-    Map<String, Object> fetchOneMap() throws DataAccessException;
+    Map<String, Object> fetchOneMap() throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
@@ -786,7 +787,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
-    Object[] fetchOneArray() throws DataAccessException;
+    Object[] fetchOneArray() throws DataAccessException, InvalidResultException;
 
     /**
      * Map resulting records onto a custom type.
@@ -805,6 +806,30 @@ public interface ResultQuery<R extends Record> extends Query {
     <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
+     * Map resulting records onto a custom type.
+     * <p>
+     * This is the same as calling <code><pre>
+     * E result = null;
+     * Record r = q.fetchOne();
+     *
+     * if (r != null)
+     *     result = r.into(type);
+     * </pre></code>. See {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @return The resulting record or <code>null</code> if the query returns no
+     *         records.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException, InvalidResultException;
+
+    /**
      * Map resulting records onto a custom record.
      * <p>
      * This is the same as calling <code>fetch().into(table)</code>. See
@@ -821,6 +846,32 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      */
     <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException;
+
+    /**
+     * Map resulting records onto a custom record.
+     * <p>
+     * This is the same as calling <code><pre>
+     * Z result = null;
+     * Record r = q.fetchOne();
+     *
+     * if (r != null)
+     *     result = r.into(table);
+     * </pre></code>. See {@link Record#into(Table)} for more details
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @param <Z> The generic table record type.
+     * @param table The table type.
+     * @return The resulting record or <code>null</code> if the query returns no
+     *         records.
+     * @see Record#into(Table)
+     * @see Result#into(Table)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, InvalidResultException;
 
     /**
      * Fetch results into a custom handler callback

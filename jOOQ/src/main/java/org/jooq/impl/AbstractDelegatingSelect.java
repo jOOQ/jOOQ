@@ -335,6 +335,16 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final <E> E fetchOneInto(Class<? extends E> type) {
+        return getDelegate().fetchOneInto(type);
+    }
+
+    @Override
+    public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
+        return getDelegate().fetchOneInto(table);
+    }
+
+    @Override
     public final <Z extends Record> Result<Z> fetchInto(Table<Z> table) {
         return getDelegate().fetchInto(table);
     }

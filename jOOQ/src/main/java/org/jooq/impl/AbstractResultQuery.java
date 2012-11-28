@@ -560,8 +560,20 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <E> E fetchOneInto(Class<? extends E> type) {
+        R record = fetchOne();
+        return record == null ? null : record.into(type);
+    }
+
+    @Override
     public final <Z extends Record> Result<Z> fetchInto(Table<Z> table) {
         return fetch().into(table);
+    }
+
+    @Override
+    public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
+        R record = fetchOne();
+        return record == null ? null : record.into(table);
     }
 
     @Override

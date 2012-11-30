@@ -140,22 +140,23 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     private final void init() {
 
         // Dialect-specific data types
-        if (dialect != null) {
-            if (typesByTypeName[dialect.ordinal()].get(FieldTypeHelper.normalise(typeName)) == null) {
-                typesByTypeName[dialect.ordinal()].put(FieldTypeHelper.normalise(typeName), this);
-            }
+        int ordinal = dialect == null ? SQLDialect.SQL99.ordinal() : dialect.ordinal();
+        String normalised = FieldTypeHelper.normalise(typeName);
 
-            if (typesByType[dialect.ordinal()].get(type) == null) {
-                typesByType[dialect.ordinal()].put(type, this);
-            }
+        if (typesByTypeName[ordinal].get(normalised) == null) {
+            typesByTypeName[ordinal].put(normalised, this);
+        }
 
-            if (typesBySQLDataType[dialect.ordinal()].get(sqlDataType) == null) {
-                typesBySQLDataType[dialect.ordinal()].put(sqlDataType, this);
-            }
+        if (typesByType[ordinal].get(type) == null) {
+            typesByType[ordinal].put(type, this);
+        }
+
+        if (typesBySQLDataType[ordinal].get(sqlDataType) == null) {
+            typesBySQLDataType[ordinal].put(sqlDataType, this);
         }
 
         // Global data types
-        else {
+        if (dialect == null) {
             if (sqlDataTypesByType.get(type) == null) {
                 sqlDataTypesByType.put(type, this);
             }
@@ -410,15 +411,16 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     protected static DataType<?> getDataType(SQLDialect dialect, String typeName) {
-        DataType<?> result = typesByTypeName[dialect.ordinal()].get(FieldTypeHelper.normalise(typeName));
+        String normalised = FieldTypeHelper.normalise(typeName);
+        DataType<?> result = typesByTypeName[dialect.ordinal()].get(normalised);
 
         // UDT data types and others are registered using SQL99
         if (result == null) {
-            result = typesByTypeName[SQLDialect.SQL99.ordinal()].get(FieldTypeHelper.normalise(typeName));
+            result = typesByTypeName[SQLDialect.SQL99.ordinal()].get(normalised);
         }
 
         if (result == null) {
-            // #366 Don't log a warning here. The warning is logged when
+            // [#366] Don't log a warning here. The warning is logged when
             // catching the exception in jOOQ-codegen
             throw new SQLDialectNotSupportedException("Type " + typeName + " is not supported in dialect " + dialect, false);
         }

@@ -146,7 +146,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public int getIndex(String fieldName) {
+    public final int getIndex(String fieldName) {
         return fields.getIndex(fieldName);
     }
 

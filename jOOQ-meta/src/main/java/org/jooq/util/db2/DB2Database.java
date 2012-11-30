@@ -250,7 +250,7 @@ public class DB2Database extends AbstractDatabase {
         q.addSelect(Tables.TABSCHEMA.trim());
         q.addSelect(Tables.TABNAME);
         q.addConditions(Tables.TABSCHEMA.in(getInputSchemata()));
-        q.addConditions(Tables.TYPE.in("T", "V")); // tables and views
+        q.addConditions(Tables.TYPE.in("T", "V", "G", "S")); // tables, views, CGTT and MQT
         q.addOrderBy(Tables.TABNAME);
         q.execute();
 

@@ -72,9 +72,9 @@ public class JDBCTableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 field.getDataType().getTypeName(),
-                0,
-                0,
-                0,
+                0, // [#456] TODO: Add precision / scale information, once available
+                0, // [#456] TODO: Add precision / scale information, once available
+                0, // [#456] TODO: Add precision / scale information, once available
                 null);
 
 			ColumnDefinition column = new DefaultColumnDefinition(

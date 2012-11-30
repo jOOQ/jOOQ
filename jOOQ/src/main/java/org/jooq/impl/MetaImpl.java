@@ -43,16 +43,19 @@ import java.util.Date;
 import java.util.List;
 
 import org.jooq.Catalog;
+import org.jooq.DataType;
 import org.jooq.ForeignKey;
 import org.jooq.Meta;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableTable;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
@@ -201,12 +204,25 @@ class MetaImpl implements Meta {
             init();
         }
 
+        @SuppressWarnings("deprecation")
         private final void init() {
             try {
                 Result<Record> columns = executor.fetch(meta().getColumns(null, getSchema().getName(), getName(), "%"));
 
                 for (Record column : columns) {
-                    createField(column.getValue("COLUMN_NAME", String.class), SQLDataType.OTHER, this);
+                    String columnName = column.getValue("COLUMN_NAME", String.class);
+                    String typeName = column.getValue("TYPE_NAME", String.class);
+
+                    // TODO: Exception handling should be moved inside SQLDataType
+                    DataType<?> type = null;
+                    try {
+                        type = SQLDataType.getDataType(SQLDialect.SQL99, typeName);
+                    }
+                    catch (SQLDialectNotSupportedException e) {
+                        type = SQLDataType.OTHER;
+                    }
+
+                    createField(columnName, type, this);
                 }
             }
             catch (SQLException e) {

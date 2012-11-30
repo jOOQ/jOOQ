@@ -212,11 +212,13 @@ class MetaImpl implements Meta {
                 for (Record column : columns) {
                     String columnName = column.getValue("COLUMN_NAME", String.class);
                     String typeName = column.getValue("TYPE_NAME", String.class);
+                    int precision = column.getValue("COLUMN_SIZE", int.class);
+                    int scale = column.getValue("DECIMAL_DIGITS", int.class);
 
                     // TODO: Exception handling should be moved inside SQLDataType
                     DataType<?> type = null;
                     try {
-                        type = SQLDataType.getDataType(SQLDialect.SQL99, typeName);
+                        type = FieldTypeHelper.getDialectDataType(SQLDialect.SQL99, typeName, precision, scale);
                     }
                     catch (SQLDialectNotSupportedException e) {
                         type = SQLDataType.OTHER;

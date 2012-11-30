@@ -184,6 +184,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         // ----------
         B book = create().selectFrom(TBook()).where(TBook_ID().equal(1)).fetchOne();
         Map<String, Object> map4 = create().selectFrom(TBook()).where(TBook_ID().equal(1)).fetchOneMap();
+        B book2 = create().newRecord(TBook());
+        book2.fromMap(map4);
+
+        assertEquals(book, book2);
 
         for (Field<?> field : books.getFields()) {
             assertEquals(book.getValue(field), map4.get(field.getName()));

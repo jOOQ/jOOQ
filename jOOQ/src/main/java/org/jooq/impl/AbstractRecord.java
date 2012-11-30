@@ -723,6 +723,22 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
     }
 
+    @Override
+    public final void fromMap(Map<String, ?> map) {
+        List<Field<?>> f = getFields();
+        int size = f.size();
+
+        for (int i = 0; i < size; i++) {
+            Field<?> field = f.get(i);
+            String name = field.getName();
+
+            // Set only those values contained in the map
+            if (map.containsKey(name)) {
+                Utils.setValue(this, field, map.get(name));
+            }
+        }
+    }
+
     /**
      * This method was implemented with [#799]. It may be useful to make it
      * public for broader use...?

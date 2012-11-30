@@ -398,8 +398,11 @@ public interface Record extends FieldProvider, Attachable {
 
     /**
      * Return this record as a name/value map.
+     * <p>
+     * This is the inverse operation to {@link #fromMap(Map)}
      *
      * @return This record as a map
+     * @see #fromMap(Map)
      */
     Map<String, Object> intoMap();
 
@@ -564,8 +567,8 @@ public interface Record extends FieldProvider, Attachable {
      * or {@link ResultSet#previous()}, etc.</li>
      * </ul>
      * <p>
-     * You may use {@link Executor#fetch(ResultSet)} to unwind this
-     * wrapper again.
+     * You may use {@link Executor#fetch(ResultSet)} to unwind this wrapper
+     * again.
      * <p>
      * This is the same as creating a new {@link Result} with this
      * <code>Record</code> only, and then calling {@link Result#intoResultSet()}
@@ -636,5 +639,19 @@ public interface Record extends FieldProvider, Attachable {
      * @see #into(Class)
      */
     void from(Object source) throws MappingException;
+
+    /**
+     * Load data from a map into this record
+     * <p>
+     * The argument map is expected to hold field-name / value pairs where
+     * field-names correspond to actual field names as provided by
+     * {@link #getField(String)}. Missing fields will be left untouched. Excess
+     * fields will be ignored.
+     * <p>
+     * This is the inverse operation to {@link #intoMap()}
+     *
+     * @see #intoMap()
+     */
+    void fromMap(Map<String, ?> map);
 
 }

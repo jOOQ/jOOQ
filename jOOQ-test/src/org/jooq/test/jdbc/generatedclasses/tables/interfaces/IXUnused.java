@@ -32,12 +32,12 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.BIG_INTEGER</code>. 
 	 */
-	public void setBigInteger(java.math.BigDecimal value);
+	public void setBigInteger(java.math.BigInteger value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.BIG_INTEGER</code>. 
 	 */
-	public java.math.BigDecimal getBigInteger();
+	public java.math.BigInteger getBigInteger();
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.ID_REF</code>. 

@@ -9,18 +9,18 @@ package org.jooq.test.jdbc.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTable implements org.jooq.test.jdbc.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = 1843181115;
+	private static final long serialVersionUID = 571478354;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
 	private java.lang.Short      short_;
 	private java.lang.Integer    integer;
 	private java.lang.Long       long_;
-	private java.math.BigDecimal byteDecimal;
-	private java.math.BigDecimal shortDecimal;
-	private java.math.BigDecimal integerDecimal;
-	private java.math.BigDecimal longDecimal;
-	private java.math.BigDecimal bigInteger;
+	private java.lang.Byte       byteDecimal;
+	private java.lang.Short      shortDecimal;
+	private java.lang.Integer    integerDecimal;
+	private java.lang.Long       longDecimal;
+	private java.math.BigInteger bigInteger;
 	private java.math.BigDecimal bigDecimal;
 	private java.lang.Float      float_;
 	private java.lang.Double     double_;
@@ -76,52 +76,52 @@ public class T_639NumbersTable implements org.jooq.test.jdbc.generatedclasses.ta
 	}
 
 	@Override
-	public java.math.BigDecimal getByteDecimal() {
+	public java.lang.Byte getByteDecimal() {
 		return this.byteDecimal;
 	}
 
 	@Override
-	public void setByteDecimal(java.math.BigDecimal byteDecimal) {
+	public void setByteDecimal(java.lang.Byte byteDecimal) {
 		this.byteDecimal = byteDecimal;
 	}
 
 	@Override
-	public java.math.BigDecimal getShortDecimal() {
+	public java.lang.Short getShortDecimal() {
 		return this.shortDecimal;
 	}
 
 	@Override
-	public void setShortDecimal(java.math.BigDecimal shortDecimal) {
+	public void setShortDecimal(java.lang.Short shortDecimal) {
 		this.shortDecimal = shortDecimal;
 	}
 
 	@Override
-	public java.math.BigDecimal getIntegerDecimal() {
+	public java.lang.Integer getIntegerDecimal() {
 		return this.integerDecimal;
 	}
 
 	@Override
-	public void setIntegerDecimal(java.math.BigDecimal integerDecimal) {
+	public void setIntegerDecimal(java.lang.Integer integerDecimal) {
 		this.integerDecimal = integerDecimal;
 	}
 
 	@Override
-	public java.math.BigDecimal getLongDecimal() {
+	public java.lang.Long getLongDecimal() {
 		return this.longDecimal;
 	}
 
 	@Override
-	public void setLongDecimal(java.math.BigDecimal longDecimal) {
+	public void setLongDecimal(java.lang.Long longDecimal) {
 		this.longDecimal = longDecimal;
 	}
 
 	@Override
-	public java.math.BigDecimal getBigInteger() {
+	public java.math.BigInteger getBigInteger() {
 		return this.bigInteger;
 	}
 
 	@Override
-	public void setBigInteger(java.math.BigDecimal bigInteger) {
+	public void setBigInteger(java.math.BigInteger bigInteger) {
 		this.bigInteger = bigInteger;
 	}
 

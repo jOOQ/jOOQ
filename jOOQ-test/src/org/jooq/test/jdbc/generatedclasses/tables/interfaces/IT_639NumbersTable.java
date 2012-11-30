@@ -62,52 +62,52 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
-	public void setByteDecimal(java.math.BigDecimal value);
+	public void setByteDecimal(java.lang.Byte value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
-	public java.math.BigDecimal getByteDecimal();
+	public java.lang.Byte getByteDecimal();
 
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
-	public void setShortDecimal(java.math.BigDecimal value);
+	public void setShortDecimal(java.lang.Short value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
-	public java.math.BigDecimal getShortDecimal();
+	public java.lang.Short getShortDecimal();
 
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
-	public void setIntegerDecimal(java.math.BigDecimal value);
+	public void setIntegerDecimal(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
-	public java.math.BigDecimal getIntegerDecimal();
+	public java.lang.Integer getIntegerDecimal();
 
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
-	public void setLongDecimal(java.math.BigDecimal value);
+	public void setLongDecimal(java.lang.Long value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
-	public java.math.BigDecimal getLongDecimal();
+	public java.lang.Long getLongDecimal();
 
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
-	public void setBigInteger(java.math.BigDecimal value);
+	public void setBigInteger(java.math.BigInteger value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
-	public java.math.BigDecimal getBigInteger();
+	public java.math.BigInteger getBigInteger();
 
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 

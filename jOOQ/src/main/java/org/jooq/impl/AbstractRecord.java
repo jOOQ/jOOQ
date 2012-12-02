@@ -724,6 +724,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             fromMap((Map<String, ?>) source);
         }
 
+        // Arrays are loaded through index mapping
+        else if (source instanceof Object[]) {
+            fromArray((Object[]) source);
+        }
+
         // All other types are expected to be POJOs
         else {
             Class<?> type = source.getClass();

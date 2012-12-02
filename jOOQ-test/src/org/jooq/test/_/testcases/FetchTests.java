@@ -331,8 +331,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             Object[] array = bookJ.intoArray();
 
             B book2 = create().newRecord(TBook());
+            B book3 = create().newRecord(TBook());
             book2.fromArray(array);
+            book3.from(array);
             assertEquals(bookJ, book2);
+            assertEquals(bookJ, book3);
 
             for (int i = 0; i < TBook().getFields().size(); i++) {
                 assertEquals(books.getValue(j, i), booksArray[j][i]);

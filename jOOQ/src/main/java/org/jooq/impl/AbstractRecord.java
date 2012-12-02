@@ -780,6 +780,16 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
     }
 
+    @Override
+    public final void fromArray(Object... array) {
+        List<Field<?>> f = getFields();
+        int size = f.size();
+
+        for (int i = 0; i < size && i < array.length; i++) {
+            Utils.setValue(this, f.get(i), array[i]);
+        }
+    }
+
     /**
      * This method was implemented with [#799]. It may be useful to make it
      * public for broader use...?

@@ -358,6 +358,22 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> T original(Field<T> field) {
+        return (T) original(getIndex(field));
+    }
+
+    @Override
+    public final Object original(int fieldIndex) {
+        return getValues()[fieldIndex].getOriginal();
+    }
+
+    @Override
+    public final Object original(String fieldName) {
+        return original(getIndex(fieldName));
+    }
+
     @Override
     public final boolean changed() {
         for (Value<?> value : getValues()) {

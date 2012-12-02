@@ -588,6 +588,8 @@ public interface Record extends FieldProvider, Attachable {
 
     /**
      * Load data into this record from a source. The mapping algorithm is this:
+     * <h3>If <code>source</code> is a {@link Map}</h3>
+     * Loading of data is delegated to {@link #fromMap(Map)}
      * <h3>If any JPA {@link Column} annotations are found on the {@link Class}
      * of the provided <code>source</code>, only those are used. Matching
      * candidates are:</h3>

@@ -682,44 +682,54 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return mapper.map(this);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final void from(Object source) {
         if (source == null) return;
 
-        Class<?> type = source.getClass();
-
-        try {
-            boolean useAnnotations = hasColumnAnnotations(type);
-
-            for (Field<?> field : getFields()) {
-                List<java.lang.reflect.Field> members;
-                Method method;
-
-                // Annotations are available and present
-                if (useAnnotations) {
-                    members = getAnnotatedMembers(type, field.getName());
-                    method = getAnnotatedGetter(type, field.getName());
-                }
-
-                // No annotations are present
-                else {
-                    members = getMatchingMembers(type, field.getName());
-                    method = getMatchingGetter(type, field.getName());
-                }
-
-                // Use only the first applicable method or member
-                if (method != null) {
-                    Utils.setValue(this, field, method.invoke(source));
-                }
-                else if (members.size() > 0) {
-                    from(source, members.get(0), field);
-                }
-            }
+        // [#1987] Distinguish between various types to load data from
+        // Maps are loaded using a {field-name -> value} convention
+        if (source instanceof Map) {
+            fromMap((Map<String, ?>) source);
         }
 
-        // All reflection exceptions are intercepted
-        catch (Exception e) {
-            throw new MappingException("An error ocurred when mapping record from " + type, e);
+        // All other types are expected to be POJOs
+        else {
+            Class<?> type = source.getClass();
+
+            try {
+                boolean useAnnotations = hasColumnAnnotations(type);
+
+                for (Field<?> field : getFields()) {
+                    List<java.lang.reflect.Field> members;
+                    Method method;
+
+                    // Annotations are available and present
+                    if (useAnnotations) {
+                        members = getAnnotatedMembers(type, field.getName());
+                        method = getAnnotatedGetter(type, field.getName());
+                    }
+
+                    // No annotations are present
+                    else {
+                        members = getMatchingMembers(type, field.getName());
+                        method = getMatchingGetter(type, field.getName());
+                    }
+
+                    // Use only the first applicable method or member
+                    if (method != null) {
+                        Utils.setValue(this, field, method.invoke(source));
+                    }
+                    else if (members.size() > 0) {
+                        from(source, members.get(0), field);
+                    }
+                }
+            }
+
+            // All reflection exceptions are intercepted
+            catch (Exception e) {
+                throw new MappingException("An error ocurred when mapping record from " + type, e);
+            }
         }
     }
 

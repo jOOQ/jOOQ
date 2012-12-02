@@ -282,7 +282,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 // Collect all decimal places for the column values
                 String value;
                 for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
-                    value = format0(getValue(i, index));
+                    value = format0(getValue(i, index), get(i).changed(index));
                     decimalPlacesList.add(getDecimalPlaces(value));
                 }
 
@@ -310,7 +310,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             // Add column values width
             String value;
             for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
-                value = format0(getValue(i, index));
+                value = format0(getValue(i, index), get(i).changed(index));
                 // Align number values before width is calculated
                 if (isNumCol) {
                     value = alignNumberValue(decimalPlaces[index], value);
@@ -364,7 +364,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
             for (int index = 0; index < size; index++) {
                 Field<?> f = getField(index);
-                String value = format0(getValue(i, index)).replace("\n", "{lf}").replace("\r", "{cr}");
+                String value = format0(getValue(i, index), get(i).changed(index)).replace("\n", "{lf}").replace("\r", "{cr}");
 
                 String padded;
                 if (Number.class.isAssignableFrom(f.getType())) {
@@ -457,7 +457,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
             for (int index = 0; index < size; index++) {
                 sb.append("<td>");
-                sb.append(format0(record.getValue(index)));
+                sb.append(format0(record.getValue(index), false));
                 sb.append("</td>");
             }
 
@@ -524,7 +524,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             }
         }
 
-        String result = format0(value);
+        String result = format0(value, false);
 
         if (StringUtils.containsAny(result, ',', ';', '\t', '"', '\n', '\r', '\'', '\\')) {
             return "\"" + result.replace("\\", "\\\\").replace("\"", "\"\"") + "\"";
@@ -534,23 +534,23 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
     }
 
-    private static final String format0(Object value) {
-        String formatted;
+    private static final String format0(Object value, boolean changed) {
+        String formatted = changed ? "*" : "";
 
         if (value == null) {
-            formatted = "{null}";
+            formatted += "{null}";
         }
         else if (value.getClass() == byte[].class) {
-            formatted = Arrays.toString((byte[]) value);
+            formatted += Arrays.toString((byte[]) value);
         }
         else if (value.getClass().isArray()) {
-            formatted = Arrays.toString((Object[]) value);
+            formatted += Arrays.toString((Object[]) value);
         }
         else if (value instanceof EnumType) {
-            formatted = ((EnumType) value).getLiteral();
+            formatted += ((EnumType) value).getLiteral();
         }
         else {
-            formatted = value.toString();
+            formatted += value.toString();
         }
 
         return formatted;
@@ -627,7 +627,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 }
                 else {
                     sb.append(">");
-                    sb.append(escapeXML(format0(value)));
+                    sb.append(escapeXML(format0(value, false)));
                     sb.append("</value>");
                 }
             }
@@ -680,7 +680,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                     eRecord.appendChild(eValue);
 
                     if (value != null) {
-                        eValue.setTextContent(format0(value));
+                        eValue.setTextContent(format0(value, false));
                     }
                 }
             }

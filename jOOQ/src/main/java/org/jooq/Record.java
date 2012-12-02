@@ -656,10 +656,15 @@ public interface Record extends FieldProvider, Attachable {
 
     /**
      * Load data into this record from a source. The mapping algorithm is this:
-     * <h3>If <code>source</code> is a {@link Map}</h3> Loading of data is
-     * delegated to {@link #fromMap(Map)} <h3>If any JPA {@link Column}
-     * annotations are found on the {@link Class} of the provided
-     * <code>source</code>, only those are used. Matching candidates are:</h3>
+     * <h3>If <code>source</code> is an <code>array</code></h3>
+     * <p>
+     * Loading of data is delegated to {@link #fromArray(Object...)}
+     * <h3>If <code>source</code> is a {@link Map}</h3>
+     * <p>
+     * Loading of data is delegated to {@link #fromMap(Map)}
+     * <h3>If any JPA {@link Column} annotations are found on the {@link Class}
+     * of the provided <code>source</code>, only those are used. Matching
+     * candidates are:</h3>
      * <ul>
      * <li>Public no-argument instance methods annotated with
      * <code>Column</code></li>

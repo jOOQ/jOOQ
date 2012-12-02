@@ -106,7 +106,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         B book = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
 
         assertFalse(book.changed());
+        assertFalse(book.changed(TBook_TITLE()));
+        assertFalse(book.changed(TBook_TITLE().getName()));
         book.setValue(TBook_TITLE(), "abc");
         assertTrue(book.changed());
+        assertTrue(book.changed(TBook_TITLE()));
+        assertTrue(book.changed(TBook_TITLE().getName()));
     }
 }

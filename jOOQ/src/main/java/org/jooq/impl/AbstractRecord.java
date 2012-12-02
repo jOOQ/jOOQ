@@ -370,6 +370,21 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    public final boolean changed(Field<?> field) {
+        return changed(getIndex(field));
+    }
+
+    @Override
+    public final boolean changed(int fieldIndex) {
+        return getValue0(fieldIndex).isChanged();
+    }
+
+    @Override
+    public final boolean changed(String fieldName) {
+        return changed(getIndex(fieldName));
+    }
+
+    @Override
     public final Object[] intoArray() {
         return into(Object[].class);
     }

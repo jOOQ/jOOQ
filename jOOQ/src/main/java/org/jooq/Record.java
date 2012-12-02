@@ -365,8 +365,45 @@ public interface Record extends FieldProvider, Attachable {
      * Record values can be freely modified after having fetched a record from
      * the database. Every record also references the originally fetched values.
      * This method returns a new record containing those original values.
+     *
+     * @see #original(Field)
+     * @see #original(int)
+     * @see #original(String)
      */
     Record original();
+
+    /**
+     * Get an original value from this record as fetched from the database.
+     * <p>
+     * Record values can be freely modified after having fetched a record from
+     * the database. Every record also references the originally fetched values.
+     * This method returns such an original value for a field.
+     *
+     * @see #original()
+     */
+    <T> T original(Field<T> field);
+
+    /**
+     * Get an original value from this record as fetched from the database.
+     * <p>
+     * Record values can be freely modified after having fetched a record from
+     * the database. Every record also references the originally fetched values.
+     * This method returns such an original value for a field.
+     *
+     * @see #original()
+     */
+    Object original(int fieldIndex);
+
+    /**
+     * Get an original value from this record as fetched from the database.
+     * <p>
+     * Record values can be freely modified after having fetched a record from
+     * the database. Every record also references the originally fetched values.
+     * This method returns such an original value for a field.
+     *
+     * @see #original()
+     */
+    Object original(String fieldName);
 
     /**
      * Check if this record has been changed from its original as fetched from
@@ -376,24 +413,36 @@ public interface Record extends FieldProvider, Attachable {
      * <code>record.equals(record.original())</code> is true.
      *
      * @see #original()
+     * @see #changed(Field)
+     * @see #changed(int)
+     * @see #changed(String)
      */
     boolean changed();
 
     /**
      * Check if a field's value has been changed from its original as fetched
      * from the database.
+     *
+     * @see #changed()
+     * @see #original(Field)
      */
     boolean changed(Field<?> field);
 
     /**
      * Check if a field's value has been changed from its original as fetched
      * from the database.
+     *
+     * @see #changed()
+     * @see #original(int)
      */
     boolean changed(int fieldIndex);
 
     /**
      * Check if a field's value has been changed from its original as fetched
      * from the database.
+     *
+     * @see #changed()
+     * @see #original(String)
      */
     boolean changed(String fieldName);
 
@@ -606,11 +655,10 @@ public interface Record extends FieldProvider, Attachable {
 
     /**
      * Load data into this record from a source. The mapping algorithm is this:
-     * <h3>If <code>source</code> is a {@link Map}</h3>
-     * Loading of data is delegated to {@link #fromMap(Map)}
-     * <h3>If any JPA {@link Column} annotations are found on the {@link Class}
-     * of the provided <code>source</code>, only those are used. Matching
-     * candidates are:</h3>
+     * <h3>If <code>source</code> is a {@link Map}</h3> Loading of data is
+     * delegated to {@link #fromMap(Map)} <h3>If any JPA {@link Column}
+     * annotations are found on the {@link Class} of the provided
+     * <code>source</code>, only those are used. Matching candidates are:</h3>
      * <ul>
      * <li>Public no-argument instance methods annotated with
      * <code>Column</code></li>

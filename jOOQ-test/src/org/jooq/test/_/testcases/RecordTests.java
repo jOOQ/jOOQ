@@ -41,6 +41,7 @@ import static junit.framework.Assert.assertTrue;
 
 import java.sql.Date;
 
+import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -85,12 +86,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(book, orig);
         assertEquals(book.getValue(TBook_ID()), orig.getValue(TBook_ID()));
         assertEquals(book.getValue(TBook_TITLE()), orig.getValue(TBook_TITLE()));
+        testOriginalMethods(book, orig);
 
         book.setValue(TBook_TITLE(), "abc");
         assertFalse(book.equals(orig));
         assertFalse(book.equals(book.original()));
         assertEquals("abc", book.getValue(TBook_TITLE()));
         assertEquals(BOOK_TITLES.get(0), orig.getValue(TBook_TITLE()));
+        testOriginalMethods(book, orig);
 
         book = orig;
         orig = orig.original();
@@ -99,6 +102,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertFalse(book.equals(book.original()));
         assertEquals("abc", book.getValue(TBook_TITLE()));
         assertEquals(BOOK_TITLES.get(0), orig.getValue(TBook_TITLE()));
+        testOriginalMethods(book, orig);
+    }
+
+    private void testOriginalMethods(B changed, B original) {
+        for (Field<?> field : changed.getFields()) {
+            assertEquals(changed.original(field), original.getValue(field));
+        }
     }
 
     @Test

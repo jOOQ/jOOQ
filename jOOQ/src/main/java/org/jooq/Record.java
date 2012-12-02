@@ -460,6 +460,7 @@ public interface Record extends FieldProvider, Attachable {
      * This is the same as calling <code>into(Object[].class)</code>
      *
      * @return This record as an array
+     * @see #fromArray(Object...)
      */
     Object[] intoArray();
 
@@ -721,5 +722,16 @@ public interface Record extends FieldProvider, Attachable {
      * @see #intoMap()
      */
     void fromMap(Map<String, ?> map);
+
+    /**
+     * Load data from an array into this record
+     * <p>
+     * The argument array is expected to hold values for this record's field
+     * indexes. Missing values will be left untouched. Excess values will be
+     * ignored.
+     * <p>
+     * This is the inverse operation to {@link #intoArray()}
+     */
+    void fromArray(Object... array);
 
 }

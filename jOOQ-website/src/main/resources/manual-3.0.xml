@@ -8712,12 +8712,12 @@ create.selectFrom(AUTHOR)
 							</ul>
 
 							<p>
-								Both modes will require that you set the <reference class="org.jooq.debug.DebugListener"/> in the Factory's settings. When using XML settings:
+								Both modes will require that you set the <reference class="org.jooq.debug.impl.DebugListener"/> in the Factory's settings. When using XML settings:
 							</p>
 
 <xml><![CDATA[<settings>
   <executeListeners>
-    <executeListener>org.jooq.debug.DebugListener</executeListener>
+    <executeListener>org.jooq.debug.impl.DebugListener</executeListener>
   </executeListeners>
 </settings>]]></xml>
 
@@ -8726,7 +8726,7 @@ create.selectFrom(AUTHOR)
 							</p>
 							
 <java><![CDATA[Settings settings = new Settings()
-    .getExecuteListeners().add("org.jooq.debug.DebugListener");
+    .getExecuteListeners().add("org.jooq.debug.impl.DebugListener");
 Factory factory = new Factory(connection, dialect, settings);]]></java>
 
 							<h3>In-process mode</h3>

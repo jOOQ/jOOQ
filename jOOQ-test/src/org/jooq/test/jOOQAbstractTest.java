@@ -273,6 +273,11 @@ public abstract class jOOQAbstractTest<
                     continue;
                 }
 
+                // There is no DROP MATERIALIZED VIEW IF EXISTS statement in Oracle
+                else if (e.getMessage().contains("ORA-12003")) {
+                    continue;
+                }
+
                 // There is no DROP SEQUENCE IF EXISTS statement in Oracle
                 else if (e.getMessage().contains("ORA-02289")) {
                     continue;

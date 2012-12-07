@@ -57,7 +57,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -1012420583600561579L;
+    private static final long serialVersionUID      = -1012420583600561579L;
 
     public UpdatableRecordImpl(UpdatableTable<R> table) {
         super(table);

@@ -93,8 +93,8 @@ class BatchStore implements Batch {
         Settings orig = SettingsTools.clone(work);
 
         try {
-            // [#1537] Communicate with TableRecordImpl
-            create.setData(TableRecordImpl.OMIT_RETURNING_CLAUSE, true);
+            // [#1537] Communicate with UpdatableRecordImpl
+            create.setData(Utils.DATA_OMIT_RETURNING_CLAUSE, true);
 
             // Add the QueryCollector to intercept query execution after rendering
             work.setExecuteListeners(Arrays.asList(QueryCollector.class.getName()));
@@ -133,7 +133,7 @@ class BatchStore implements Batch {
 
         // Restore the original factory
         finally {
-            create.getData().remove(TableRecordImpl.OMIT_RETURNING_CLAUSE);
+            create.getData().remove(Utils.DATA_OMIT_RETURNING_CLAUSE);
 
             work.setExecuteListeners(orig.getExecuteListeners());
             work.setExecuteLogging(orig.isExecuteLogging());

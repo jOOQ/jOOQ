@@ -75,10 +75,12 @@ import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
+import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
@@ -94,22 +96,37 @@ import org.jooq.tools.reflect.Reflect;
  */
 final class Utils {
 
+    // ------------------------------------------------------------------------
+    // Some constants for use with Configuration.setData()
+    // ------------------------------------------------------------------------
+
+    /**
+     * [#1537] This constant is used internally by jOOQ to omit the RETURNING
+     * clause in {@link Executor#batchStore(UpdatableRecord...)} calls for
+     * {@link SQLDialect#POSTGRES}
+     */
+    static final String          DATA_OMIT_RETURNING_CLAUSE = "org.jooq.configuration.omit-returning-clause";
+
+    // ------------------------------------------------------------------------
+    // Other constants
+    // ------------------------------------------------------------------------
+
     /**
      * The default escape character for <code>[a] LIKE [b] ESCAPE [...]</code>
      * clauses.
      */
-    static final char                          ESCAPE            = '!';
+    static final char            ESCAPE                     = '!';
 
     /**
      * Indicating whether JPA (<code>javax.persistence</code>) is on the
      * classpath.
      */
-    private static Boolean                     isJPAAvailable;
+    private static Boolean       isJPAAvailable;
 
     /**
      * A pattern for the JDBC escape syntax
      */
-    private static final Pattern               JDBC_ESCAPE_PATTERN = Pattern.compile("\\{(fn|d|t|ts)\\b.*");
+    private static final Pattern JDBC_ESCAPE_PATTERN        = Pattern.compile("\\{(fn|d|t|ts)\\b.*");
 
     /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}

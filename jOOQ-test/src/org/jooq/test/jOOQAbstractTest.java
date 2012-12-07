@@ -137,6 +137,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.postgresql.util.PSQLException;
 
@@ -759,10 +760,14 @@ public abstract class jOOQAbstractTest<
         return "";
     }
 
-    @Test
-    public void testStart() {
-        // An initial test case to clean up the test database
+    @BeforeClass
+    public static void testStart() {
         log.info("STARTING");
+    }
+
+    @AfterClass
+    public static void testFinish() {
+        log.info("FINISHING");
     }
 
     // IMPORTANT! Make this the first test, to prevent side-effects
@@ -1846,11 +1851,5 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testCancelStatement() throws Exception {
         new StatementTests(this).testCancelStatement();
-    }
-
-    @Test
-    public void testFinish() {
-        // A final test case to clean up the test database
-        log.info("FINISHING");
     }
 }

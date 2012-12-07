@@ -1674,6 +1674,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
         // [#1938] This is a much more efficient hashCode() implementation
         // compared to that of standard QueryParts
-        return name.hashCode();
+        return getName().hashCode();
     }
 }

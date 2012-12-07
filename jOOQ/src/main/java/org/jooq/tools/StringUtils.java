@@ -1167,8 +1167,18 @@ public final class StringUtils {
      * Convert a string to camel case starting with a lower case letter
      */
     public static String toCamelCaseLC(String string) {
-        String cc = toCamelCase(string);
-        return cc.substring(0, 1).toLowerCase() + cc.substring(1);
+        return toLC(toCamelCase(string));
+    }
+
+    /**
+     * Change a string's first letter to lower case
+     */
+    public static String toLC(String string) {
+        if (string == null || string.isEmpty()) {
+            return string;
+        }
+
+        return Character.toLowerCase(string.charAt(0)) + string.substring(1);
     }
 
     /**

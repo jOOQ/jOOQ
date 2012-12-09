@@ -46,7 +46,7 @@ class Value<T> implements Serializable {
      * Generated UID
      */
     private static final long serialVersionUID = -9065797545428164533L;
-    private final T           original;
+    private T                 original;
     private T                 value;
     private boolean           isChanged;
 
@@ -106,6 +106,12 @@ class Value<T> implements Serializable {
 
     final void setChanged(boolean isChanged) {
         this.isChanged = isChanged;
+
+        // [#1995] If a value is meant to be "unchanged", the "original" should
+        // match the supposedly "unchanged" value.
+        if (!isChanged) {
+            original = value;
+        }
     }
 
     // ------------------------------------------------------------------------

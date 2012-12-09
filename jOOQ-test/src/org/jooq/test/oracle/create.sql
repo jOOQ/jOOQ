@@ -32,6 +32,13 @@ DROP TABLE x_test_case_85/
 DROP TABLE x_unused/
 DROP TABLE x_many_fields/
 DROP TABLE t_639_numbers_table/
+DROP TABLE t_658_ref/
+DROP TABLE t_658_11/
+DROP TABLE t_658_21/
+DROP TABLE t_658_31/
+DROP TABLE t_658_12/
+DROP TABLE t_658_22/
+DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
 DROP TABLE t_booleans/

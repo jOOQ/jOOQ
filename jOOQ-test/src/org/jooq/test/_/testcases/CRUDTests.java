@@ -39,6 +39,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.count;
@@ -375,9 +376,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(0, book1.store());
 
         // Modify and store the original record
+        // [#1995] Check for correct changed() and original() values, too
         Integer id = book1.getValue(TBook_ID());
         book1.setValue(TBook_TITLE(), "1985");
+        assertEquals("1984", book1.original().getValue(TBook_TITLE()));
+        assertEquals("1984", book1.original(TBook_TITLE()));
+        assertTrue(book1.changed());
+        assertTrue(book1.changed(TBook_TITLE()));
         assertEquals(1, book1.store());
+        assertEquals("1985", book1.original().getValue(TBook_TITLE()));
+        assertEquals("1985", book1.original(TBook_TITLE()));
+        assertFalse(book1.changed());
+        assertFalse(book1.changed(TBook_TITLE()));
 
         // Fetch the modified record
         book1 = create().fetchOne(TBook(), TBook_ID().equal(id));

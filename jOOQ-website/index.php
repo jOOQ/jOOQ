@@ -124,7 +124,7 @@ create.select(FIRST_NAME, LAST_NAME, count())
     as well as some 180 integration tests with an overall of around 1200 queries for any
     of these databases:</p>
 <ul>
-    <li>CUBRID 8.4.1</li>
+    <li>CUBRID 8.4.1 and 9.0.0</li>
     <li>DB2 9.7</li>
     <li>Derby 10.8</li>
     <li>Firebird 2.5.1</li>
@@ -135,7 +135,7 @@ create.select(FIRST_NAME, LAST_NAME, count())
     <li>Oracle XE 10.2.0.1.0 and 11g</li>
     <li>PostgreSQL 9.0</li>
     <li>SQLite with inofficial JDBC driver v056</li>
-    <li>SQL Server 2008 R8</li>
+    <li>SQL Server 2008 R8 and 2012</li>
     <li>Sybase Adaptive Server Enterprise 15.5</li>
     <li>Sybase SQL Anywhere 12</li>
 </ul>

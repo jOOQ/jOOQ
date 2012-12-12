@@ -28,6 +28,10 @@ DROP FUNCTION f378/
 
 DROP TRIGGER t_triggers_trigger/
 
+DROP TABLE multi_schema.t_book_sale/
+DROP TABLE multi_schema.t_book/
+DROP TABLE multi_schema.t_author/
+
 DROP TABLE t_dates/
 DROP TABLE t_triggers/
 DROP TABLE t_arrays/
@@ -263,6 +267,18 @@ CREATE TABLE t_book_to_book_store (
   CONSTRAINT fk_b2bs_b_id    FOREIGN KEY (book_id)
                              REFERENCES t_book (id)
                              ON DELETE CASCADE
+)
+/
+
+CREATE TABLE MULTI_SCHEMA.t_author (
+  ID int NOT NULL,
+  FIRST_NAME VARCHAR(50),
+  LAST_NAME VARCHAR(50) NOT NULL,
+  DATE_OF_BIRTH DATE,
+  YEAR_OF_BIRTH int,
+  ADDRESS VARCHAR(50),
+
+  CONSTRAINT pk_t_author PRIMARY KEY (ID)
 )
 /
 

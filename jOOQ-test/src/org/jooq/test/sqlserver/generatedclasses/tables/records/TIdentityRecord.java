@@ -9,42 +9,39 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1743766416;
+	private static final long serialVersionUID = 642867234;
 
 	/**
-	 * The table column <code>dbo.t_identity.id</code>
+	 * Setter for <code>dbo.t_identity.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY.ID, value);
 	}
 
 	/**
-	 * The table column <code>dbo.t_identity.id</code>
+	 * Getter for <code>dbo.t_identity.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY.ID);
 	}
 
 	/**
-	 * The table column <code>dbo.t_identity.val</code>
+	 * Setter for <code>dbo.t_identity.val</code>. 
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY.VAL, value);
 	}
 
 	/**
-	 * The table column <code>dbo.t_identity.val</code>
+	 * Getter for <code>dbo.t_identity.val</code>. 
 	 */
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY.VAL);
 	}
 
-	/**
-	 * Create a detached TIdentityRecord
-	 */
-	public TIdentityRecord() {
-		super(org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -96,5 +93,16 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	@Override
 	public java.lang.Integer value2() {
 		return getVal();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TIdentityRecord
+	 */
+	public TIdentityRecord() {
+		super(org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY);
 	}
 }

@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = 581454423;
+	private static final long serialVersionUID = 272158577;
 
 	/**
-	 * The singleton instance of dbo.t_identity_pk
+	 * The singleton instance of <code>dbo.t_identity_pk</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = new org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk();
 
@@ -25,41 +25,56 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>dbo.t_identity_pk.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>dbo.t_identity_pk.id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>dbo.t_identity_pk.val</code>
+	 * The column <code>dbo.t_identity_pk.val</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>dbo.t_identity_pk</code> table reference
+	 */
 	public TIdentityPk() {
 		super("t_identity_pk", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 	}
 
+	/**
+	 * Create an aliased <code>dbo.t_identity_pk</code> table reference
+	 */
 	public TIdentityPk(java.lang.String alias) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.test.sqlserver.generatedclasses.Keys.IDENTITY_T_IDENTITY_PK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord> getMainKey() {
 		return org.jooq.test.sqlserver.generatedclasses.Keys.PK_T_IDENTITY_PK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord>>asList(org.jooq.test.sqlserver.generatedclasses.Keys.PK_T_IDENTITY_PK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk as(java.lang.String alias) {
 		return new org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk(alias);

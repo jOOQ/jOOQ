@@ -9,37 +9,46 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = -128467086;
+	private static final long serialVersionUID = -551043348;
 
 	/**
-	 * The table column <code>dbo.t_book_store.NAME</code>
+	 * Setter for <code>dbo.t_book_store.NAME</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME, value);
 	}
 
 	/**
-	 * The table column <code>dbo.t_book_store.NAME</code>
+	 * Getter for <code>dbo.t_book_store.NAME</code>. 
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
 	/**
-	 * The table column <code>dbo.t_book_store.NAME</code>
+	 * Fetch a list of <code>dbo.t_book_to_book_store</code> referencing this <code>dbo.t_book_store</code>
 	 */
-	public java.util.List<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
+	public org.jooq.Result<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
 			.where(org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME.equal(getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME)))
 			.fetch();
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TBookStoreRecord
+	 * {@inheritDoc}
 	 */
-	public TBookStoreRecord() {
-		super(org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+	@Override
+	public org.jooq.Record1<java.lang.String> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -76,5 +85,16 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value1() {
 		return getName();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TBookStoreRecord
+	 */
+	public TBookStoreRecord() {
+		super(org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 }

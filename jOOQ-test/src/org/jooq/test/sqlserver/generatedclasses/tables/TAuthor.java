@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -867155997;
+	private static final long serialVersionUID = -415014491;
 
 	/**
-	 * The singleton instance of dbo.t_author
+	 * The singleton instance of <code>dbo.t_author</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TAuthor T_AUTHOR = new org.jooq.test.sqlserver.generatedclasses.tables.TAuthor();
 
@@ -25,56 +25,68 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqls
 	}
 
 	/**
-	 * The table column <code>dbo.t_author.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>dbo.t_author.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>dbo.t_author.FIRST_NAME</code>
+	 * The column <code>dbo.t_author.FIRST_NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>dbo.t_author.LAST_NAME</code>
+	 * The column <code>dbo.t_author.LAST_NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>dbo.t_author.DATE_OF_BIRTH</code>
+	 * The column <code>dbo.t_author.DATE_OF_BIRTH</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
-	 * The table column <code>dbo.t_author.YEAR_OF_BIRTH</code>
+	 * The column <code>dbo.t_author.YEAR_OF_BIRTH</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>dbo.t_author.ADDRESS</code>
+	 * The column <code>dbo.t_author.ADDRESS</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>dbo.t_author</code> table reference
+	 */
 	public TAuthor() {
 		super("t_author", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 	}
 
+	/**
+	 * Create an aliased <code>dbo.t_author</code> table reference
+	 */
 	public TAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
 		return org.jooq.test.sqlserver.generatedclasses.Keys.PK_T_AUTHOR;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.sqlserver.generatedclasses.Keys.PK_T_AUTHOR);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.TAuthor as(java.lang.String alias) {
 		return new org.jooq.test.sqlserver.generatedclasses.tables.TAuthor(alias);

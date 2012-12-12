@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 1152085756;
+	private static final long serialVersionUID = -314983396;
 
 	/**
-	 * The singleton instance of dbo.t_785
+	 * The singleton instance of <code>dbo.t_785</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_785 T_785 = new org.jooq.test.sqlserver.generatedclasses.tables.T_785();
 
@@ -25,28 +25,37 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gener
 	}
 
 	/**
-	 * The table column <code>dbo.t_785.ID</code>
+	 * The column <code>dbo.t_785.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>dbo.t_785.NAME</code>
+	 * The column <code>dbo.t_785.NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>dbo.t_785.VALUE</code>
+	 * The column <code>dbo.t_785.VALUE</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>dbo.t_785</code> table reference
+	 */
 	public T_785() {
 		super("t_785", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 	}
 
+	/**
+	 * Create an aliased <code>dbo.t_785</code> table reference
+	 */
 	public T_785(java.lang.String alias) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.T_785.T_785);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.T_785 as(java.lang.String alias) {
 		return new org.jooq.test.sqlserver.generatedclasses.tables.T_785(alias);

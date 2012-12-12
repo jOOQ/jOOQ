@@ -9,8 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PCreateAuthor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1461673102;
-
+	private static final long serialVersionUID = 1643126356;
 
 	/**
 	 * Create a new routine call instance

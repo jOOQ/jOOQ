@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Dbo extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1114819479;
+	private static final long serialVersionUID = 1732679870;
 
 	/**
-	 * The singleton instance of dbo
+	 * The singleton instance of <code>dbo</code>
 	 */
 	public static final Dbo DBO = new Dbo();
 

@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -610512192;
+	private static final long serialVersionUID = -1188576776;
 
 	/**
-	 * The singleton instance of dbo.t_book_store
+	 * The singleton instance of <code>dbo.t_book_store</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TBookStore T_BOOK_STORE = new org.jooq.test.sqlserver.generatedclasses.tables.TBookStore();
 
@@ -25,29 +25,43 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.s
 	}
 
 	/**
-	 * The table column <code>dbo.t_book_store.NAME</code>
+	 * The column <code>dbo.t_book_store.NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>dbo.t_book_store</code> table reference
+	 */
 	public TBookStore() {
 		super("t_book_store", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 	}
 
+	/**
+	 * Create an aliased <code>dbo.t_book_store</code> table reference
+	 */
 	public TBookStore(java.lang.String alias) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> getMainKey() {
 		return org.jooq.test.sqlserver.generatedclasses.Keys.UK_T_BOOK_STORE_NAME;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.sqlserver.generatedclasses.Keys.UK_T_BOOK_STORE_NAME);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.TBookStore as(java.lang.String alias) {
 		return new org.jooq.test.sqlserver.generatedclasses.tables.TBookStore(alias);

@@ -9,11 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1110388907;
-
+	private static final long serialVersionUID = 1839323404;
 
 	/**
-	 * The procedure parameter <code>dbo.p1490.value</code>
+	 * The parameter <code>dbo.p1490.value</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> VALUE = createParameter("value", org.jooq.impl.SQLDataType.INTEGER);
 

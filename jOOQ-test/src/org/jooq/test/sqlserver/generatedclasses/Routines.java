@@ -12,10 +12,7 @@ package org.jooq.test.sqlserver.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Call dbo.f_author_exists
-	 *
-	 * @param authorName
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>dbo.f_author_exists</code>
 	 */
 	public static java.lang.Integer fAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {
 		org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists f = new org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists();
@@ -26,9 +23,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get dbo.f_author_exists as a field
-	 *
-	 * @param authorName
+	 * Get <code>dbo.f_author_exists</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fAuthorExists(java.lang.String authorName) {
 		org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists f = new org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists();
@@ -38,9 +33,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get dbo.f_author_exists as a field
-	 *
-	 * @param authorName
+	 * Get <code>dbo.f_author_exists</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fAuthorExists(org.jooq.Field<java.lang.String> authorName) {
 		org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists f = new org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists();
@@ -50,10 +43,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call dbo.f_number
-	 *
-	 * @param n
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>dbo.f_number</code>
 	 */
 	public static java.lang.Integer fNumber(org.jooq.Configuration configuration, java.lang.Integer n) {
 		org.jooq.test.sqlserver.generatedclasses.routines.FNumber f = new org.jooq.test.sqlserver.generatedclasses.routines.FNumber();
@@ -64,9 +54,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get dbo.f_number as a field
-	 *
-	 * @param n
+	 * Get <code>dbo.f_number</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fNumber(java.lang.Integer n) {
 		org.jooq.test.sqlserver.generatedclasses.routines.FNumber f = new org.jooq.test.sqlserver.generatedclasses.routines.FNumber();
@@ -76,9 +64,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get dbo.f_number as a field
-	 *
-	 * @param n
+	 * Get <code>dbo.f_number</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fNumber(org.jooq.Field<java.lang.Integer> n) {
 		org.jooq.test.sqlserver.generatedclasses.routines.FNumber f = new org.jooq.test.sqlserver.generatedclasses.routines.FNumber();
@@ -88,9 +74,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call dbo.f_one
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>dbo.f_one</code>
 	 */
 	public static java.lang.Integer fOne(org.jooq.Configuration configuration) {
 		org.jooq.test.sqlserver.generatedclasses.routines.FOne f = new org.jooq.test.sqlserver.generatedclasses.routines.FOne();
@@ -100,8 +84,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get dbo.f_one as a field
-	 *
+	 * Get <code>dbo.f_one</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fOne() {
 		org.jooq.test.sqlserver.generatedclasses.routines.FOne f = new org.jooq.test.sqlserver.generatedclasses.routines.FOne();
@@ -110,13 +93,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call dbo.f317
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>dbo.f317</code>
 	 */
 	public static java.lang.Integer f317(org.jooq.Configuration configuration, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
 		org.jooq.test.sqlserver.generatedclasses.routines.F317 f = new org.jooq.test.sqlserver.generatedclasses.routines.F317();
@@ -130,12 +107,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get dbo.f317 as a field
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
+	 * Get <code>dbo.f317</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> f317(java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
 		org.jooq.test.sqlserver.generatedclasses.routines.F317 f = new org.jooq.test.sqlserver.generatedclasses.routines.F317();
@@ -148,12 +120,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get dbo.f317 as a field
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
+	 * Get <code>dbo.f317</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> f317(org.jooq.Field<java.lang.Integer> p1, org.jooq.Field<java.lang.Integer> p2, org.jooq.Field<java.lang.Integer> p3, org.jooq.Field<java.lang.Integer> p4) {
 		org.jooq.test.sqlserver.generatedclasses.routines.F317 f = new org.jooq.test.sqlserver.generatedclasses.routines.F317();
@@ -166,11 +133,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call dbo.p_author_exists
-	 *
-	 * @param authorName IN parameter
-	 * @param result IN OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>dbo.p_author_exists</code>
 	 */
 	public static java.lang.Integer pAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName, java.lang.Integer result) {
 		org.jooq.test.sqlserver.generatedclasses.routines.PAuthorExists p = new org.jooq.test.sqlserver.generatedclasses.routines.PAuthorExists();
@@ -182,9 +145,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call dbo.p_create_author
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>dbo.p_create_author</code>
 	 */
 	public static void pCreateAuthor(org.jooq.Configuration configuration) {
 		org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthor p = new org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthor();
@@ -193,11 +154,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call dbo.p_create_author_by_name
-	 *
-	 * @param firstName IN parameter
-	 * @param lastName IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>dbo.p_create_author_by_name</code>
 	 */
 	public static void pCreateAuthorByName(org.jooq.Configuration configuration, java.lang.String firstName, java.lang.String lastName) {
 		org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthorByName p = new org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthorByName();
@@ -208,15 +165,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call dbo.p_default
-	 *
-	 * @param pInNumber IN parameter
-	 * @param pOutNumber IN OUT parameter
-	 * @param pInVarchar IN parameter
-	 * @param pOutVarchar IN OUT parameter
-	 * @param pInDate IN parameter
-	 * @param pOutDate IN OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>dbo.p_default</code>
 	 */
 	public static org.jooq.test.sqlserver.generatedclasses.routines.PDefault pDefault(org.jooq.Configuration configuration, java.lang.Integer pInNumber, java.lang.Integer pOutNumber, java.lang.String pInVarchar, java.lang.String pOutVarchar, java.sql.Date pInDate, java.sql.Date pOutDate) {
 		org.jooq.test.sqlserver.generatedclasses.routines.PDefault p = new org.jooq.test.sqlserver.generatedclasses.routines.PDefault();
@@ -232,12 +181,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call dbo.p_unused
-	 *
-	 * @param in1 IN parameter
-	 * @param out1 IN OUT parameter
-	 * @param out2 IN OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>dbo.p_unused</code>
 	 */
 	public static org.jooq.test.sqlserver.generatedclasses.routines.PUnused pUnused(org.jooq.Configuration configuration, java.lang.String in1, java.lang.Integer out1, java.lang.Integer out2) {
 		org.jooq.test.sqlserver.generatedclasses.routines.PUnused p = new org.jooq.test.sqlserver.generatedclasses.routines.PUnused();
@@ -250,10 +194,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call dbo.p1490
-	 *
-	 * @param value IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>dbo.p1490</code>
 	 */
 	public static void p1490(org.jooq.Configuration configuration, java.lang.Integer value) {
 		org.jooq.test.sqlserver.generatedclasses.routines.P1490 p = new org.jooq.test.sqlserver.generatedclasses.routines.P1490();
@@ -263,15 +204,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call dbo.p391
-	 *
-	 * @param i1 IN parameter
-	 * @param io1 IN OUT parameter
-	 * @param o1 IN OUT parameter
-	 * @param o2 IN OUT parameter
-	 * @param io2 IN OUT parameter
-	 * @param i2 IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>dbo.p391</code>
 	 */
 	public static org.jooq.test.sqlserver.generatedclasses.routines.P391 p391(org.jooq.Configuration configuration, java.lang.Integer i1, java.lang.Integer io1, java.lang.Integer o1, java.lang.Integer o2, java.lang.Integer io2, java.lang.Integer i2) {
 		org.jooq.test.sqlserver.generatedclasses.routines.P391 p = new org.jooq.test.sqlserver.generatedclasses.routines.P391();
@@ -287,7 +220,7 @@ public final class Routines {
 	}
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Routines() {}
 }

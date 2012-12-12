@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -1197103337;
+	private static final long serialVersionUID = -1751134139;
 
 	/**
-	 * The singleton instance of dbo.t_identity
+	 * The singleton instance of <code>dbo.t_identity</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TIdentity T_IDENTITY = new org.jooq.test.sqlserver.generatedclasses.tables.TIdentity();
 
@@ -25,28 +25,40 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.g
 	}
 
 	/**
-	 * The table column <code>dbo.t_identity.id</code>
+	 * The column <code>dbo.t_identity.id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>dbo.t_identity.val</code>
+	 * The column <code>dbo.t_identity.val</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>dbo.t_identity</code> table reference
+	 */
 	public TIdentity() {
 		super("t_identity", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 	}
 
+	/**
+	 * Create an aliased <code>dbo.t_identity</code> table reference
+	 */
 	public TIdentity(java.lang.String alias) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.test.sqlserver.generatedclasses.Keys.IDENTITY_T_IDENTITY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.TIdentity as(java.lang.String alias) {
 		return new org.jooq.test.sqlserver.generatedclasses.tables.TIdentity(alias);

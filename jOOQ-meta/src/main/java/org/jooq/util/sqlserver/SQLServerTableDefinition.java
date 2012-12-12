@@ -66,7 +66,8 @@ public class SQLServerTableDefinition extends AbstractTableDefinition {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
         Field<Integer> identity = field("c.is_identity", Integer.class);
 
-        for (Record record : create().select(
+        for (Record record : create()
+            .select(
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
                 COLUMNS.DATA_TYPE,
@@ -76,14 +77,18 @@ public class SQLServerTableDefinition extends AbstractTableDefinition {
                 COLUMNS.NUMERIC_SCALE,
                 identity)
             .from(COLUMNS)
-            .join("sys.objects o")
-            .on("o.type in ('U', 'V')")
-            .and(COLUMNS.TABLE_NAME.equal(field("o.name", String.class)))
-            .join("sys.columns c")
-            .on("c.object_id = o.object_id")
-            .and(COLUMNS.COLUMN_NAME.equal(field("c.name", String.class)))
+                .join("sys.schemas s")
+                .on(COLUMNS.TABLE_SCHEMA.equal(field("s.name", String.class)))
+                // sys.objects is used rather than sys.tables, to include tables AND views
+                .join("sys.objects t")
+                .on("t.type in ('U', 'V')")
+                .and("t.schema_id = s.schema_id")
+                .and(COLUMNS.TABLE_NAME.equal(field("t.name", String.class)))
+                .join("sys.columns c")
+                .on("c.object_id = t.object_id")
+                .and(COLUMNS.COLUMN_NAME.equal(field("c.name", String.class)))
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
-            .and(COLUMNS.TABLE_NAME.equal(getName()))
+                .and(COLUMNS.TABLE_NAME.equal(getName()))
             .orderBy(COLUMNS.ORDINAL_POSITION)
             .fetch()) {
 

@@ -8803,10 +8803,10 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 								Now start your application along with the debugger server and launch the console with this command:
 							</p>
 
-<config>java -jar jooq-console-2.1.0.jar [host] [port]</config>
+<config>java -jar jooq-console-{jooq-version}.jar [host] [port]</config>
 
 							<p>
-								Depending on your distribution, you may have to manually add rsyntaxtextarea-1.5.0.jar and jOOQ artefacts on your classpath.
+								Depending on your distribution, you may have to manually add rsyntaxtextarea-2.0.2.jar and jOOQ artefacts on your classpath.
 							</p>
 						</content>
 					</section>

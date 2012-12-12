@@ -145,4 +145,30 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals("abc", book.original().getValue(TBook_TITLE()));
         assertEquals("abc", book.original(TBook_TITLE()));
     }
+
+    @Test
+    public void testRecordReset() throws Exception {
+        B book = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
+
+        book.setValue(TBook_TITLE(), "abc");
+        book.reset();
+        assertFalse(book.changed());
+        assertFalse(book.changed(TBook_TITLE()));
+        assertFalse(book.changed(TBook_TITLE().getName()));
+        assertEquals("1984", book.getValue(TBook_TITLE()));
+
+        book.setValue(TBook_TITLE(), "abc");
+        book.reset(TBook_TITLE());
+        assertFalse(book.changed());
+        assertFalse(book.changed(TBook_TITLE()));
+        assertFalse(book.changed(TBook_TITLE().getName()));
+        assertEquals("1984", book.getValue(TBook_TITLE()));
+
+        book.setValue(TBook_TITLE(), "abc");
+        book.reset(TBook_TITLE().getName());
+        assertFalse(book.changed());
+        assertFalse(book.changed(TBook_TITLE()));
+        assertFalse(book.changed(TBook_TITLE().getName()));
+        assertEquals("1984", book.getValue(TBook_TITLE()));
+    }
 }

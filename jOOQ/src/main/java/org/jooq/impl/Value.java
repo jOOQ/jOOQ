@@ -114,6 +114,11 @@ class Value<T> implements Serializable {
         }
     }
 
+    final void reset() {
+        isChanged = false;
+        value = original;
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Object API
     // ------------------------------------------------------------------------

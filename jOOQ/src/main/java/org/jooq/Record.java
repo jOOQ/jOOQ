@@ -447,6 +447,59 @@ public interface Record extends FieldProvider, Attachable {
     boolean changed(String fieldName);
 
     /**
+     * Set all of this record's internal changed flags to the supplied value
+     * <p>
+     * If the <code>changed</code> argument is <code>false</code>, the
+     * {@link #original()} values will be reset to the corresponding "current"
+     * values as well
+     *
+     * @see #changed()
+     * @see #changed(boolean, Field)
+     * @see #changed(boolean, int)
+     * @see #changed(boolean, String)
+     */
+    void changed(boolean changed);
+
+    /**
+     * Set this record's internal changed flag to the supplied value for a given
+     * field.
+     * <p>
+     * If the <code>changed</code> argument is <code>false</code>, the
+     * {@link #original(Field)} value will be reset to the corresponding
+     * "current" value as well
+     *
+     * @see #changed()
+     * @see #changed(Field)
+     */
+    void changed(boolean changed, Field<?> field);
+
+    /**
+     * Set this record's internal changed flag to the supplied value for a given
+     * field.
+     * <p>
+     * If the <code>changed</code> argument is <code>false</code>, the
+     * {@link #original(int)} value will be reset to the corresponding "current"
+     * value as well
+     *
+     * @see #changed()
+     * @see #changed(int)
+     */
+    void changed(boolean changed, int fieldIndex);
+
+    /**
+     * Set this record's internal changed flag to the supplied value for a given
+     * field.
+     * <p>
+     * If the <code>changed</code> argument is <code>false</code>, the
+     * {@link #original(String)} value will be reset to the corresponding
+     * "current" value as well
+     *
+     * @see #changed()
+     * @see #changed(String)
+     */
+    void changed(boolean changed, String fieldName);
+
+    /**
      * Convert this record into an array.
      * <p>
      * The resulting array has the same number of elements as this record has

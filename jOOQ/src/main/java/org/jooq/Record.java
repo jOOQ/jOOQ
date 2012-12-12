@@ -500,6 +500,30 @@ public interface Record extends FieldProvider, Attachable {
     void changed(boolean changed, String fieldName);
 
     /**
+     * Reset all values to their {@link #original()} values and all
+     * {@link #changed()} flags to <code>false</code>.
+     */
+    void reset();
+
+    /**
+     * Reset a given value to its {@link #original(Field)} value and its
+     * {@link #changed(Field)} flag to <code>false</code>.
+     */
+    void reset(Field<?> field);
+
+    /**
+     * Reset a given value to its {@link #original(int)} value and its
+     * {@link #changed(int)} flag to <code>false</code>.
+     */
+    void reset(int fieldIndex);
+
+    /**
+     * Reset a given value to its {@link #original(String)} value and its
+     * {@link #changed(String)} flag to <code>false</code>.
+     */
+    void reset(String fieldName);
+
+    /**
      * Convert this record into an array.
      * <p>
      * The resulting array has the same number of elements as this record has

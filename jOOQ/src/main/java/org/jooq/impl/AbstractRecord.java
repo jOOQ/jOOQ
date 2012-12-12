@@ -423,6 +423,28 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    public final void reset() {
+        for (Value<?> value : getValues()) {
+            value.reset();
+        }
+    }
+
+    @Override
+    public final void reset(Field<?> field) {
+        reset(getIndex(field));
+    }
+
+    @Override
+    public final void reset(int fieldIndex) {
+        getValue0(fieldIndex).reset();
+    }
+
+    @Override
+    public final void reset(String fieldName) {
+        reset(getIndex(fieldName));
+    }
+
+    @Override
     public final Object[] intoArray() {
         return into(Object[].class);
     }

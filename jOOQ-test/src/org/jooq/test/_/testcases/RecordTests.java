@@ -122,5 +122,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertTrue(book.changed());
         assertTrue(book.changed(TBook_TITLE()));
         assertTrue(book.changed(TBook_TITLE().getName()));
+
+        book.changed(false);
+        assertFalse(book.changed());
+        assertFalse(book.changed(TBook_TITLE()));
+        assertFalse(book.changed(TBook_TITLE().getName()));
+        assertEquals("abc", book.original().getValue(TBook_TITLE()));
+        assertEquals("abc", book.original(TBook_TITLE()));
+
+        book.changed(true);
+        assertTrue(book.changed());
+        assertTrue(book.changed(TBook_TITLE()));
+        assertTrue(book.changed(TBook_TITLE().getName()));
+        assertEquals("abc", book.original().getValue(TBook_TITLE()));
+        assertEquals("abc", book.original(TBook_TITLE()));
+
+        book.changed(false);
+        book.changed(true, TBook_TITLE());
+        assertTrue(book.changed());
+        assertTrue(book.changed(TBook_TITLE()));
+        assertTrue(book.changed(TBook_TITLE().getName()));
+        assertEquals("abc", book.original().getValue(TBook_TITLE()));
+        assertEquals("abc", book.original(TBook_TITLE()));
     }
 }

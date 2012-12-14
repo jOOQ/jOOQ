@@ -263,7 +263,7 @@ public class PostgresUtils {
     public static List<String> toPGObject(String input) {
         List<String> values = new ArrayList<String>();
         int i = 0;
-        int state = 0;
+        int state = PG_OBJECT_INIT;
         StringBuilder sb = null;
 
         while (i < input.length()) {

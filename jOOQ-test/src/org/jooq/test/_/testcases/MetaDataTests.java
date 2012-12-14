@@ -173,7 +173,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             }
 
             // [#959] The T_959 table for enum collisions with Java keywords
-            if (getDialect() == MYSQL ||
+            if (getDialect() == CUBRID ||
+                getDialect() == MYSQL ||
                 getDialect() == POSTGRES) {
                 tables++;
             }

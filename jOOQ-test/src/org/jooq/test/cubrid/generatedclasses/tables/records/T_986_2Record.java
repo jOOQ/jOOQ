@@ -9,31 +9,36 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_2Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1441909142;
+	private static final long serialVersionUID = -501253935;
 
 	/**
-	 * The table column <code>DBA.t_986_2.ref</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>DBA.t_986_2.ref</code>. 
 	 */
 	public void setRef(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.T_986_2.REF, value);
 	}
 
 	/**
-	 * The table column <code>DBA.t_986_2.ref</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>DBA.t_986_2.ref</code>. 
 	 */
 	public java.lang.Integer getRef() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.T_986_2.REF);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached T_986_2Record
+	 * {@inheritDoc}
 	 */
-	public T_986_2Record() {
-		super(org.jooq.test.cubrid.generatedclasses.tables.T_986_2.T_986_2);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -70,5 +75,16 @@ public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.Integer value1() {
 		return getRef();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_986_2Record
+	 */
+	public T_986_2Record() {
+		super(org.jooq.test.cubrid.generatedclasses.tables.T_986_2.T_986_2);
 	}
 }

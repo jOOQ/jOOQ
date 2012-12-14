@@ -29,6 +29,7 @@ DROP TABLE t_658_22/
 DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
+DROP TABLE t_959/
 DROP TABLE t_booleans/
 DROP TABLE t_identity/
 DROP TABLE t_identity_pk/
@@ -64,8 +65,8 @@ CREATE TABLE t_booleans (
   one_zero int null,
   true_false_lc varchar(5) null,
   true_false_uc varchar(5) null,
-  yes_no_lc varchar(3) null,
-  yes_no_uc varchar(3) null,
+  yes_no_lc enum('yes', 'no'),
+  yes_no_uc enum('YES', 'NO'),
   y_n_lc char(1) null,
   y_n_uc char(1) null,
   vc_boolean varchar(1) null,
@@ -73,6 +74,18 @@ CREATE TABLE t_booleans (
   n_boolean int null,
 
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_959 (
+  java_keywords enum('abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch',
+	                 'char', 'class', 'const', 'continue', 'default', 'double', 'do',
+	                 'else', 'enum', 'extends', 'false', 'final', 'finally', 'float',
+	                 'for', 'goto', 'if', 'implements', 'import', 'instanceof',
+	                 'interface', 'int', 'long', 'native', 'new', 'package', 'private',
+	                 'protected', 'public', 'return', 'short', 'static', 'strictfp',
+	                 'super', 'switch', 'synchronized', 'this', 'throw', 'throws',
+	                 'transient', 'true', 'try', 'void', 'volatile', 'while')
 )
 /
 
@@ -142,6 +155,7 @@ CREATE TABLE t_author (
 
 CREATE TABLE t_book_details (
   id INT NOT NULL,
+  E enum('A', 'B', 'C'),
 
   CONSTRAINT pk_t_book_details PRIMARY KEY (id)
 )
@@ -157,6 +171,7 @@ CREATE TABLE t_book (
   LANGUAGE_ID INT NOT NULL,
   CONTENT_TEXT CLOB NULL,
   CONTENT_PDF BLOB NULL,
+  STATUS enum('SOLD OUT','ORDERED','ON STOCK'),
 
   CONSTRAINT pk_t_book PRIMARY KEY (ID),
   CONSTRAINT fk_t_book_author_id FOREIGN KEY (AUTHOR_ID) REFERENCES t_author(id) ON DELETE CASCADE,

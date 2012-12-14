@@ -38,6 +38,7 @@ package org.jooq.util.cubrid;
 
 import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.util.cubrid.dba.Tables.DB_CLASS;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX;
@@ -60,6 +61,7 @@ import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
+import org.jooq.util.DefaultEnumDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
@@ -228,6 +230,31 @@ public class CUBRIDDatabase extends AbstractDatabase {
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+
+        for (SchemaDefinition schemaDefinition : getSchemata()) {
+            for (TableDefinition tableDefinition : getTables(schemaDefinition)) {
+                for (Record record : create().fetch("SHOW COLUMNS FROM {0} WHERE TYPE LIKE 'ENUM(%)'", fieldByName(tableDefinition.getInputName()))) {
+                    String table = tableDefinition.getInputName();
+                    String column = record.getValue("Field", String.class);
+                    String columnType = record.getValue("Type", String.class);
+                    String name = table + "_" + column;
+
+                    ColumnDefinition columnDefinition = tableDefinition.getColumn(column);
+
+                    // [#1137] Avoid generating enum classes for enum types that
+                    // are explicitly forced to another type
+                    if (getConfiguredForcedType(columnDefinition) == null) {
+                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schemaDefinition, name, "");
+                        for (String string : columnType.replaceAll("ENUM\\(|\\)", "").split(",")) {
+                            definition.addLiteral(string.trim().replaceAll("'", ""));
+                        }
+
+                        result.add(definition);
+                    }
+                }
+            }
+        }
+
         return result;
     }
 

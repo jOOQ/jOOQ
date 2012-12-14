@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1264240133;
+	private static final long serialVersionUID = -785373190;
 
 	/**
-	 * The singleton instance of DBA.t_language
+	 * The singleton instance of <code>DBA.t_language</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TLanguage T_LANGUAGE = new org.jooq.test.cubrid.generatedclasses.tables.TLanguage();
 
@@ -25,24 +25,22 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cu
 	}
 
 	/**
-	 * The table column <code>DBA.t_language.cd</code>
+	 * The column <code>DBA.t_language.cd</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR, T_LANGUAGE);
 
 	/**
-	 * The table column <code>DBA.t_language.description</code>
+	 * The column <code>DBA.t_language.description</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
 
 	/**
-	 * The table column <code>DBA.t_language.description_english</code>
+	 * The column <code>DBA.t_language.description_english</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
 
 	/**
-	 * The table column <code>DBA.t_language.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>DBA.t_language.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_LANGUAGE);
 
@@ -53,13 +51,18 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cu
 		super("t_language", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord> getMainKey() {
 		return org.jooq.test.cubrid.generatedclasses.Keys.T_LANGUAGE__PK_T_LANGUAGE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.cubrid.generatedclasses.Keys.T_LANGUAGE__PK_T_LANGUAGE);
 	}

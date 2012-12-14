@@ -329,8 +329,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             QueryPartInternal internal = (QueryPartInternal) part;
 
             // If this is supposed to be a declaration section and the part
-            // isn't
-            // able to declare anything, then disable declaration temporarily
+            // isn't able to declare anything, then disable declaration temporarily
 
             // We're declaring fields, but "part" does not declare fields
             if (declareFields() && !internal.declaresFields()) {

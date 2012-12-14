@@ -39,7 +39,7 @@
                     <schemaDirectory>src/main/resources/xsd</schemaDirectory>
                     <bindingDirectory>src/main/resources/xjb</bindingDirectory>
                     <schemaIncludes>
-                        <include>jooq-runtime-2.6.0.xsd</include>
+                        <include>jooq-runtime-3.0.0.xsd</include>
                     </schemaIncludes>
                     <generatePackage>org.jooq.conf</generatePackage>
                     <args>

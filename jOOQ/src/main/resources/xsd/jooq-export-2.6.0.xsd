@@ -2,7 +2,8 @@
 <schema
     xmlns="http://www.w3.org/2001/XMLSchema"
     xmlns:jooq-export="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd"
-    targetNamespace="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">
+    targetNamespace="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd"
+    elementFormDefault="qualified">
 
     <element name="result" type="jooq-export:Result"/>
 

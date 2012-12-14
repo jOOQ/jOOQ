@@ -60,6 +60,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
      */
     private static final long    serialVersionUID   = -8358225526567622252L;
     private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
+    private static final Pattern NEWLINE            = Pattern.compile("[\\n\\r]");
 
     private final StringBuilder  sql;
     private boolean              inline;
@@ -136,7 +137,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext sql(String s) {
         if (s != null && cachedRenderFormatted) {
-            sql.append(s.replaceAll("[\\n\\r]", "$0" + indentation()));
+            sql.append(NEWLINE.matcher(s).replaceAll("$0" + indentation()));
         }
         else {
             sql.append(s);

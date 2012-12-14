@@ -408,6 +408,11 @@ public abstract class jOOQAbstractTest<
         connection.setAutoCommit(autocommit);
     }
 
+    @BeforeClass
+    public static void testStart() {
+        log.info("STARTING");
+    }
+
     @AfterClass
     public static void quit() throws Exception {
         log.info("QUITTING");
@@ -763,16 +768,6 @@ public abstract class jOOQAbstractTest<
 
     protected String getSchemaSuffix() {
         return "";
-    }
-
-    @BeforeClass
-    public static void testStart() {
-        log.info("STARTING");
-    }
-
-    @AfterClass
-    public static void testFinish() {
-        log.info("FINISHING");
     }
 
     // IMPORTANT! Make this the first test, to prevent side-effects

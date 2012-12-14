@@ -288,7 +288,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
                 // MySQL supports backticks and double quotes
                 case MYSQL:
-                    sql("`").sql(literal.replace("`", "``")).sql("`");
+                    sql("`").sql(StringUtils.replace(literal, "`", "``")).sql("`");
                     break;
 
                 // SQLite is supposed to support all sorts of delimiters, but it
@@ -301,7 +301,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 case ASE:
                 case SQLSERVER:
                 case SYBASE:
-                    sql("[").sql(literal.replace("]", "]]")).sql("]");
+                    sql("[").sql(StringUtils.replace(literal, "]", "]]")).sql("]");
                     break;
 
                 // Most dialects implement the SQL standard, using double quotes
@@ -315,7 +315,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 case ORACLE:
                 case POSTGRES:
                 default:
-                    sql('"').sql(literal.replace("\"", "\"\"")).sql('"');
+                    sql('"').sql(StringUtils.replace(literal, "\"", "\"\"")).sql('"');
                     break;
             }
         }

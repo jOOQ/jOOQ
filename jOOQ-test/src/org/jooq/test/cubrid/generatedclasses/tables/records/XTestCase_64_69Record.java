@@ -9,57 +9,60 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1254771484;
+	private static final long serialVersionUID = -218450312;
 
 	/**
-	 * The table column <code>DBA.x_test_case_64_69.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>DBA.x_test_case_64_69.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_64_69.ID, value);
 	}
 
 	/**
-	 * The table column <code>DBA.x_test_case_64_69.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>DBA.x_test_case_64_69.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_64_69.ID);
 	}
 
 	/**
-	 * The table column <code>DBA.x_test_case_64_69.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_64_69.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>DBA.x_test_case_64_69.unused_id</code>
+	 * Setter for <code>DBA.x_test_case_64_69.unused_id</code>. 
 	 */
 	public void setUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, value);
 	}
 
 	/**
-	 * The table column <code>DBA.x_test_case_64_69.unused_id</code>
+	 * Getter for <code>DBA.x_test_case_64_69.unused_id</code>. 
 	 */
 	public java.lang.Integer getUnusedId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached XTestCase_64_69Record
+	 * Fetch a list of <code>DBA.x_test_case_71</code> referencing this <code>DBA.x_test_case_64_69</code>
 	 */
-	public XTestCase_64_69Record() {
-		super(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
+	public org.jooq.Result<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
+		return create()
+			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
+			.where(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_64_69.ID)))
+			.fetch();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -112,5 +115,16 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	@Override
 	public java.lang.Integer value2() {
 		return getUnusedId();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_64_69Record
+	 */
+	public XTestCase_64_69Record() {
+		super(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
 	}
 }

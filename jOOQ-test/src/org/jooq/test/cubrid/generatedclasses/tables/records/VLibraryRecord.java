@@ -9,42 +9,39 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -217772572;
+	private static final long serialVersionUID = 1847073504;
 
 	/**
-	 * The table column <code>DBA.v_library.author</code>
+	 * Setter for <code>DBA.v_library.author</code>. 
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VLibrary.AUTHOR, value);
 	}
 
 	/**
-	 * The table column <code>DBA.v_library.author</code>
+	 * Getter for <code>DBA.v_library.author</code>. 
 	 */
 	public java.lang.String getAuthor() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VLibrary.AUTHOR);
 	}
 
 	/**
-	 * The table column <code>DBA.v_library.title</code>
+	 * Setter for <code>DBA.v_library.title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VLibrary.TITLE, value);
 	}
 
 	/**
-	 * The table column <code>DBA.v_library.title</code>
+	 * Getter for <code>DBA.v_library.title</code>. 
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VLibrary.TITLE);
 	}
 
-	/**
-	 * Create a detached VLibraryRecord
-	 */
-	public VLibraryRecord() {
-		super(org.jooq.test.cubrid.generatedclasses.tables.VLibrary.V_LIBRARY);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -96,5 +93,16 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.String value2() {
 		return getTitle();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached VLibraryRecord
+	 */
+	public VLibraryRecord() {
+		super(org.jooq.test.cubrid.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 }

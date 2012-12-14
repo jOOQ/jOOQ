@@ -90,7 +90,7 @@ public class CUBRIDTableDefinition extends AbstractTableDefinition {
                 record.getValue(DB_ATTRIBUTE.PREC),
                 record.getValue(DB_ATTRIBUTE.PREC),
                 record.getValue(DB_ATTRIBUTE.SCALE),
-                dataType);
+                getName() + "_" + record.getValue(DB_ATTRIBUTE.ATTR_NAME));
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),

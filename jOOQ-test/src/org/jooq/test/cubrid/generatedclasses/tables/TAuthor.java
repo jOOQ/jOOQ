@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 1983245104;
+	private static final long serialVersionUID = -61536631;
 
 	/**
-	 * The singleton instance of DBA.t_author
+	 * The singleton instance of <code>DBA.t_author</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TAuthor T_AUTHOR = new org.jooq.test.cubrid.generatedclasses.tables.TAuthor();
 
@@ -25,34 +25,32 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubr
 	}
 
 	/**
-	 * The table column <code>DBA.t_author.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>DBA.t_author.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_AUTHOR);
 
 	/**
-	 * The table column <code>DBA.t_author.first_name</code>
+	 * The column <code>DBA.t_author.first_name</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR, T_AUTHOR);
 
 	/**
-	 * The table column <code>DBA.t_author.last_name</code>
+	 * The column <code>DBA.t_author.last_name</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR, T_AUTHOR);
 
 	/**
-	 * The table column <code>DBA.t_author.date_of_birth</code>
+	 * The column <code>DBA.t_author.date_of_birth</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("date_of_birth", org.jooq.impl.SQLDataType.DATE, T_AUTHOR);
 
 	/**
-	 * The table column <code>DBA.t_author.year_of_birth</code>
+	 * The column <code>DBA.t_author.year_of_birth</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("year_of_birth", org.jooq.impl.SQLDataType.INTEGER, T_AUTHOR);
 
 	/**
-	 * The table column <code>DBA.t_author.address</code>
+	 * The column <code>DBA.t_author.address</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR, T_AUTHOR);
 
@@ -63,13 +61,18 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubr
 		super("t_author", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
 		return org.jooq.test.cubrid.generatedclasses.Keys.T_AUTHOR__PK_T_AUTHOR;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.cubrid.generatedclasses.Keys.T_AUTHOR__PK_T_AUTHOR);
 	}

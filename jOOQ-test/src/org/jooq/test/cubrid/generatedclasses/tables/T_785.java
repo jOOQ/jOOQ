@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 817255855;
+	private static final long serialVersionUID = 1065889376;
 
 	/**
-	 * The singleton instance of DBA.t_785
+	 * The singleton instance of <code>DBA.t_785</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.T_785 T_785 = new org.jooq.test.cubrid.generatedclasses.tables.T_785();
 
@@ -25,17 +25,17 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generate
 	}
 
 	/**
-	 * The table column <code>DBA.t_785.id</code>
+	 * The column <code>DBA.t_785.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_785);
 
 	/**
-	 * The table column <code>DBA.t_785.name</code>
+	 * The column <code>DBA.t_785.name</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, T_785);
 
 	/**
-	 * The table column <code>DBA.t_785.value</code>
+	 * The column <code>DBA.t_785.value</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("value", org.jooq.impl.SQLDataType.VARCHAR, T_785);
 

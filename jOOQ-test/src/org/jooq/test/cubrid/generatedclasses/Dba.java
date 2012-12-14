@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Dba extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 974700682;
+	private static final long serialVersionUID = -1650160958;
 
 	/**
-	 * The singleton instance of DBA
+	 * The singleton instance of <code>DBA</code>
 	 */
 	public static final Dba DBA = new Dba();
 
@@ -38,6 +38,7 @@ public class Dba extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.cubrid.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.cubrid.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.cubrid.generatedclasses.tables.T_785.T_785,
+			org.jooq.test.cubrid.generatedclasses.tables.T_959.T_959,
 			org.jooq.test.cubrid.generatedclasses.tables.T_986_1.T_986_1,
 			org.jooq.test.cubrid.generatedclasses.tables.T_986_2.T_986_2,
 			org.jooq.test.cubrid.generatedclasses.tables.TAuthor.T_AUTHOR,

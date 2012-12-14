@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = -620591494;
+	private static final long serialVersionUID = 1460867912;
 
 	/**
-	 * The singleton instance of DBA.t_directory
+	 * The singleton instance of <code>DBA.t_directory</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TDirectory T_DIRECTORY = new org.jooq.test.cubrid.generatedclasses.tables.TDirectory();
 
@@ -25,30 +25,22 @@ public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.c
 	}
 
 	/**
-	 * The table column <code>DBA.t_directory.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>DBA.t_directory.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_DIRECTORY);
 
 	/**
-	 * The table column <code>DBA.t_directory.parent_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_directory__pk_t_directory_self
-	 * FOREIGN KEY (parent_id)
-	 * REFERENCES DBA.t_directory (id)
-	 * </pre></code>
+	 * The column <code>DBA.t_directory.parent_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> PARENT_ID = createField("parent_id", org.jooq.impl.SQLDataType.INTEGER, T_DIRECTORY);
 
 	/**
-	 * The table column <code>DBA.t_directory.is_directory</code>
+	 * The column <code>DBA.t_directory.is_directory</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> IS_DIRECTORY = createField("is_directory", org.jooq.impl.SQLDataType.INTEGER, T_DIRECTORY);
 
 	/**
-	 * The table column <code>DBA.t_directory.name</code>
+	 * The column <code>DBA.t_directory.name</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, T_DIRECTORY);
 
@@ -59,19 +51,26 @@ public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.c
 		super("t_directory", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord> getMainKey() {
 		return org.jooq.test.cubrid.generatedclasses.Keys.T_DIRECTORY__PK_T_DIRECTORY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord>>asList(org.jooq.test.cubrid.generatedclasses.Keys.T_DIRECTORY__PK_T_DIRECTORY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, ?>>asList(org.jooq.test.cubrid.generatedclasses.Keys.T_DIRECTORY__PK_T_DIRECTORY_SELF);
 	}

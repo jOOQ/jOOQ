@@ -27,6 +27,11 @@ public final class Tables {
 	public static final org.jooq.test.cubrid.generatedclasses.tables.T_785 T_785 = org.jooq.test.cubrid.generatedclasses.tables.T_785.T_785;
 
 	/**
+	 * The table DBA.t_959
+	 */
+	public static final org.jooq.test.cubrid.generatedclasses.tables.T_959 T_959 = org.jooq.test.cubrid.generatedclasses.tables.T_959.T_959;
+
+	/**
 	 * The table DBA.t_986_1
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.T_986_1 T_986_1 = org.jooq.test.cubrid.generatedclasses.tables.T_986_1.T_986_1;
@@ -127,7 +132,7 @@ public final class Tables {
 	public static final org.jooq.test.cubrid.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.cubrid.generatedclasses.tables.XUnused.X_UNUSED;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

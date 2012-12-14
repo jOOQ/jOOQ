@@ -329,22 +329,19 @@ public class CUBRIDTest extends jOOQAbstractTest<
         return TBooleans.YES_NO_UC;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_VC() {
-        return (TableField) TBooleans.VC_BOOLEAN;
+        return TBooleans.VC_BOOLEAN;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_C() {
-        return (TableField) TBooleans.C_BOOLEAN;
+        return TBooleans.C_BOOLEAN;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_N() {
-        return (TableField) TBooleans.N_BOOLEAN;
+        return TBooleans.N_BOOLEAN;
     }
 
     @Override
@@ -484,7 +481,7 @@ public class CUBRIDTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBookRecord, ? extends Enum<?>> TBook_STATUS() {
-        return null;
+        return TBook.STATUS;
     }
 
     @Override

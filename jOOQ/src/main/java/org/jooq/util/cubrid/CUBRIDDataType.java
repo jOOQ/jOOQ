@@ -124,6 +124,7 @@ public class CUBRIDDataType<T> extends AbstractDataType<T> {
     // -------------------------------------------------------------------------
 
     public static final CUBRIDDataType<Double> MONETARY             = new CUBRIDDataType<Double>(SQLDataType.DOUBLE, "monetary");
+    public static final CUBRIDDataType<String> ENUM                 = new CUBRIDDataType<String>(SQLDataType.VARCHAR, "enum", "varchar");
 
     // These types are not yet formally supported
     public static final CUBRIDDataType<Object> OBJECT               = new CUBRIDDataType<Object>(SQLDataType.OTHER, "object");

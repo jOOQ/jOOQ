@@ -39,6 +39,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.EventListener;
 
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
@@ -257,7 +258,7 @@ import org.jooq.tools.StopWatchListener;
  *
  * @author Lukas Eder
  */
-public interface ExecuteListener {
+public interface ExecuteListener extends EventListener {
 
     /**
      * Called to initialise an <code>ExecuteListener</code>

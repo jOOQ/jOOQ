@@ -307,9 +307,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             val.setValue(value, true);
 
             if (val.isChanged()) {
-                for (Value<?> other : getValues()) {
-                    other.setChanged(true);
-                }
+                setAllChanged(true);
             }
         }
     }

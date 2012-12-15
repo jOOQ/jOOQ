@@ -85,7 +85,8 @@ CREATE TABLE t_959 (
 	                 'interface', 'int', 'long', 'native', 'new', 'package', 'private',
 	                 'protected', 'public', 'return', 'short', 'static', 'strictfp',
 	                 'super', 'switch', 'synchronized', 'this', 'throw', 'throws',
-	                 'transient', 'true', 'try', 'void', 'volatile', 'while')
+	                 'transient', 'true', 'try', 'void', 'volatile', 'while'),
+  special_characters enum('enum(', '(', ')', ',', '''', ')enum')
 )
 /
 

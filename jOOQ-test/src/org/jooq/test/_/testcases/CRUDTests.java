@@ -394,11 +394,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         // Modify the record
         book1.setValue(TBook_TITLE(), "1999");
+        book1.setValue(TBook_AUTHOR_ID(), 3);
         assertEquals("1999", book1.getValue(TBook_TITLE()));
 
         // And refresh it again
-        book1.refresh();
+        book1.refresh(TBook_TITLE());
         assertEquals("1985", book1.getValue(TBook_TITLE()));
+        assertEquals(3, (int) book1.getValue(TBook_AUTHOR_ID()));
+
+        book1.refresh();
+        assertEquals(1, (int) book1.getValue(TBook_AUTHOR_ID()));
         assertEquals(0, book1.store());
 
         // Refresh the other copy of the original record

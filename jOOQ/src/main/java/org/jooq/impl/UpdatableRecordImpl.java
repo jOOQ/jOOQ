@@ -51,6 +51,7 @@ import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.SelectQuery;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.StoreQuery;
 import org.jooq.TableField;
@@ -317,13 +318,20 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final void refresh() {
-        SimpleSelectQuery<R> select = create().selectQuery(getTable());
+        refresh(getFields().toArray(new Field[0]));
+    }
+
+    @Override
+    public final void refresh(Field<?>... fields) {
+        SelectQuery select = create().selectQuery();
+        select.addSelect(fields);
+        select.addFrom(getTable());
         Utils.addConditions(select, this, getMainKey().getFieldsArray());
 
         if (select.execute() == 1) {
             AbstractRecord record = (AbstractRecord) select.getResult().get(0);
 
-            for (Field<?> field : getFields()) {
+            for (Field<?> field : fields) {
                 setValue(field, record.getValue0(field));
             }
         }

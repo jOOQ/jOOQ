@@ -276,7 +276,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * key or main unique key.
      * <p>
      * This is in fact the same as calling
-     * <code>refresh(getTable().getMainKey().getFieldsArray())</code>
+     * <code>refresh(getFields().toArray(new Field[0])</code>
      * <p>
      * The executed statement is <code><pre>
      * SELECT * FROM [table]
@@ -289,6 +289,22 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      *             </ul>
      */
     void refresh() throws DataAccessException;
+
+    /**
+     * Refresh this record from the database, based on the value of the primary
+     * key or main unique key.
+     * <p>
+     * The executed statement is <code><pre>
+     * SELECT [fields] FROM [table]
+     * WHERE [main key fields = main key values]</pre></code>
+     *
+     * @throws DataAccessException This exception is thrown if
+     *             <ul>
+     *             <li>something went wrong executing the query</li> <li>the
+     *             record does not exist anymore in the database</li>
+     *             </ul>
+     */
+    void refresh(Field<?>... fields);
 
     /**
      * Duplicate this record (in memory) and reset all fields from the primary

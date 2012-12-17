@@ -541,11 +541,6 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         }
     }
 
-    @Override
-    public final boolean isNullLiteral() {
-        return getValue() == null;
-    }
-
     // ------------------------------------------------------------------------
     // XXX: Param API
     // ------------------------------------------------------------------------

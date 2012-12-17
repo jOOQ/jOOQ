@@ -72,11 +72,6 @@ abstract class AbstractFunction<T> extends AbstractField<T> {
         context.bind(getFunction(context));
     }
 
-    @Override
-    public final boolean isNullLiteral() {
-        return false;
-    }
-
     final QueryPart getFunction(Configuration configuration) {
         return getFunction0(configuration);
     }

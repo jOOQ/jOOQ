@@ -438,11 +438,6 @@ class Function<T> extends AbstractField<T> implements
         }
     }
 
-    @Override
-    public final boolean isNullLiteral() {
-        return false;
-    }
-
     // -------------------------------------------------------------------------
     // XXX aggregate and window function fluent API methods
     // -------------------------------------------------------------------------

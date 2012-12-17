@@ -139,9 +139,4 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
         context.keyword("end")
                .formatIndentLockEnd();
     }
-
-    @Override
-    public final boolean isNullLiteral() {
-        return false;
-    }
 }

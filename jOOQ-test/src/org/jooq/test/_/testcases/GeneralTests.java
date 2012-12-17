@@ -364,9 +364,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         for (Field<Integer> n : asList(n1, n2)) {
             assertEquals(null, create().select(n).fetchOne(n));
             assertEquals(Integer.valueOf(1), create().select(c).from(TAuthor()).where(TAuthor_ID().equal(1)).and(n.isNull()).fetchOne(c));
-            assertEquals(Integer.valueOf(1), create().select(c).from(TAuthor()).where(TAuthor_ID().equal(1)).and(n.equal(n)).fetchOne(c));
             assertEquals(null, create().selectOne().from(TAuthor()).where(n.isNotNull()).fetchAny());
-            assertEquals(null, create().selectOne().from(TAuthor()).where(n.notEqual(n)).fetchAny());
         }
 
         UpdateQuery<A> u = create().updateQuery(TAuthor());

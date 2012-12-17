@@ -80,9 +80,4 @@ class ArrayConstant<T> extends AbstractField<T> {
     public final void bind(BindContext context) {
         context.bindValues(array);
     }
-
-    @Override
-    public final boolean isNullLiteral() {
-        return array == null;
-    }
 }

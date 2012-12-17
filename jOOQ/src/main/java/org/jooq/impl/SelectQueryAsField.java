@@ -101,9 +101,4 @@ class SelectQueryAsField<T> extends AbstractField<T> {
                    .sql(")");
         }
     }
-
-    @Override
-    public final boolean isNullLiteral() {
-        return false;
-    }
 }

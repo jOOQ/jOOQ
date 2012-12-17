@@ -106,9 +106,6 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public abstract void bind(BindContext context);
 
-    @Override
-    public abstract boolean isNullLiteral();
-
     // ------------------------------------------------------------------------
     // XXX: API
     // ------------------------------------------------------------------------
@@ -313,12 +310,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition isNull() {
-        return equal((T) null);
+        return new IsNull(this, true);
     }
 
     @Override
     public final Condition isNotNull() {
-        return notEqual((T) null);
+        return new IsNull(this, false);
     }
 
     @Override

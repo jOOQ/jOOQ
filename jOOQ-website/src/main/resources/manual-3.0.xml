@@ -9164,6 +9164,7 @@ for (Record record : create().select(
 							<h3>GroupField</h3>
 							<h3>? extends T has been relaxed, e.g. for casting, Field.getType(), etc.</h3>
 							<h3>Ant task removed</h3>
+							<h3>#2001 eq/equal(null) and ne/notEqual(null) now work as in SQL</h3>
 							
 							<h3>Object renames</h3>
 							<ul>

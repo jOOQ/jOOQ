@@ -37,44 +37,31 @@
 package org.jooq.impl;
 
 import org.jooq.BindContext;
-import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.RenderContext;
-import org.jooq.UDT;
-import org.jooq.UDTField;
-import org.jooq.UDTRecord;
 
 /**
- * A common base type for UDT attributes / fields
- *
  * @author Lukas Eder
  */
-class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implements UDTField<R, T> {
+class IsNull extends AbstractCondition {
 
-    private static final long serialVersionUID = -2211214195583539735L;
+    private static final long serialVersionUID = -747240442279619486L;
 
-    private final UDT<R>      udt;
+    private final Field<?>    field;
+    private final boolean     isNull;
 
-    UDTFieldImpl(String name, DataType<T> type, UDT<R> udt) {
-        super(name, type);
-
-        this.udt = udt;
-
-        // [#1199] The public API of UDT returns immutable field lists
-        if (udt instanceof UDTImpl) {
-            ((UDTImpl<?>) udt).getFieldList().add(this);
-        }
+    IsNull(Field<?> field, boolean isNull) {
+        this.field = field;
+        this.isNull = isNull;
     }
 
     @Override
-    public final UDT<R> getUDT() {
-        return udt;
+    public final void bind(BindContext context) {
+        context.bind(field);
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.literal(getName());
+        context.sql(field).keyword(isNull ? " is null" : " is not null");
     }
-
-    @Override
-    public final void bind(BindContext context) {}
 }

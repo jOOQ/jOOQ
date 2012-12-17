@@ -198,9 +198,4 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         context.keyword("end")
                .formatIndentLockEnd();
     }
-
-    @Override
-    public final boolean isNullLiteral() {
-        return false;
-    }
 }

@@ -91,16 +91,6 @@ public abstract class CustomField<T> extends AbstractField<T> {
     // Further overrides allowed
     // -------------------------------------------------------------------------
 
-    /**
-     * Subclasses may further override this method
-     * <hr/>
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNullLiteral() {
-        return false;
-    }
-
     // -------------------------------------------------------------------------
     // No further overrides allowed
     // -------------------------------------------------------------------------

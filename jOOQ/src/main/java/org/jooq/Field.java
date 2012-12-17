@@ -124,17 +124,6 @@ public interface Field<T> extends GroupField {
     @Override
     boolean equals(Object other);
 
-    /**
-     * Whether this field represents a <code>null</code> literal.
-     * <p>
-     * This method is for JOOQ INTERNAL USE only!
-     * <p>
-     * This method was added to be able to recognise <code>null</code> literals
-     * within jOOQ and handle them specially, as some SQL dialects have a rather
-     * un-intuitive way of handling <code>null</code> values.
-     */
-    boolean isNullLiteral();
-
     // ------------------------------------------------------------------------
     // Type casts
     // ------------------------------------------------------------------------
@@ -1284,10 +1273,6 @@ public interface Field<T> extends GroupField {
 
     /**
      * <code>this = value</code>
-     * <p>
-     * If <code>value == null</code>, then this will return a condition
-     * equivalent to {@link #isNull()} for convenience. SQL's ternary
-     * <code>NULL</code> logic is rarely of use for Java programmers.
      */
     @Support
     Condition equal(T value);
@@ -1319,10 +1304,6 @@ public interface Field<T> extends GroupField {
 
     /**
      * <code>this = value</code>
-     * <p>
-     * If <code>value == null</code>, then this will return a condition
-     * equivalent to {@link #isNull()} for convenience. SQL's ternary
-     * <code>NULL</code> logic is rarely of use for Java programmers.
      *
      * @see #equal(Object)
      */
@@ -1360,10 +1341,6 @@ public interface Field<T> extends GroupField {
 
     /**
      * <code>this != value</code>
-     * <p>
-     * If <code>value == null</code>, then this will return a condition
-     * equivalent to {@link #isNotNull()} for convenience. SQL's ternary
-     * <code>NULL</code> logic is rarely of use for Java programmers.
      */
     @Support
     Condition notEqual(T value);
@@ -1395,10 +1372,6 @@ public interface Field<T> extends GroupField {
 
     /**
      * <code>this != value</code>
-     * <p>
-     * If <code>value == null</code>, then this will return a condition
-     * equivalent to {@link #isNotNull()} for convenience. SQL's ternary
-     * <code>NULL</code> logic is rarely of use for Java programmers.
      *
      * @see #notEqual(Object)
      */

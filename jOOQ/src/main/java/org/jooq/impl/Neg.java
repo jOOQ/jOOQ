@@ -100,9 +100,4 @@ class Neg<T> extends AbstractField<T> {
     public final void bind(BindContext context) {
         context.bind(field);
     }
-
-    @Override
-    public final boolean isNullLiteral() {
-        return false;
-    }
 }

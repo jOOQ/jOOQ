@@ -536,10 +536,5 @@ class Expression<T> extends AbstractFunction<T> {
         public final void bind(BindContext context) {
             context.bind(lhs).bind((QueryPart) rhs);
         }
-
-        @Override
-        public final boolean isNullLiteral() {
-            return false;
-        }
     }
 }

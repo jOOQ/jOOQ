@@ -3113,15 +3113,19 @@ public class Factory {
      * Returns the dialect's equivalent to DECODE:
      * <ul>
      * <li>Oracle <a
-     * href="http://www.techonthenet.com/oracle/functions/decode.php">DECODE</a></li>
+     * href="http://www.techonthenet.com/oracle/functions/decode.php">DECODE</a>
+     * </li>
      * </ul>
      * <p>
      * Other dialects: <code><pre>
-     * CASE WHEN [this = search] THEN [result],
-     *     [WHEN more...         THEN more...]
+     * CASE WHEN [this IS NOT DISTINCT FROM search] THEN [result],
+     *     [WHEN more...                            THEN more...]
      *     [ELSE more...]
      * END
      * </pre></code>
+     * <p>
+     * Note the use of the <code>DISTINCT</code> predicate to produce the same,
+     * conveniently <code>NULL</code>-agnostic behaviour as Oracle.
      *
      * @param value The value to decode
      * @param search the mandatory first search parameter
@@ -3129,7 +3133,7 @@ public class Factory {
      * @param more the optional parameters. If <code>more.length</code> is even,
      *            then it is assumed that it contains more search/result pairs.
      *            If <code>more.length</code> is odd, then it is assumed that it
-     *            contains more search/result pairs plus a default at the end.     *
+     *            contains more search/result pairs plus a default at the end.
      */
     @Support
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result, Field<?>... more) {

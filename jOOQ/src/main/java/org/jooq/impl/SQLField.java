@@ -72,9 +72,4 @@ class SQLField<T> extends AbstractField<T> {
     public final void bind(BindContext context) {
         Utils.renderAndBind(null, context, sql, substitutes);
     }
-
-    @Override
-    public final boolean isNullLiteral() {
-        return "null".equalsIgnoreCase(("" + sql).trim());
-    }
 }

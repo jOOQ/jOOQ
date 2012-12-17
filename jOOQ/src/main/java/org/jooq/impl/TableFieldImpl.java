@@ -82,9 +82,4 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
     @Override
     public final void bind(BindContext context) {}
-
-    @Override
-    public final boolean isNullLiteral() {
-        return false;
-    }
 }

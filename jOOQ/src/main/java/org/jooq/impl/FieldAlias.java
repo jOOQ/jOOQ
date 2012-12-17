@@ -71,11 +71,6 @@ class FieldAlias<T> extends AbstractField<T> {
     }
 
     @Override
-    public final boolean isNullLiteral() {
-        return alias.wrapped().isNullLiteral();
-    }
-
-    @Override
     public final boolean declaresFields() {
         return true;
     }

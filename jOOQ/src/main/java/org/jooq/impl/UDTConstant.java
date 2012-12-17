@@ -175,9 +175,4 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
                 throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.getDialect());
         }
     }
-
-    @Override
-    public final boolean isNullLiteral() {
-        return record == null;
-    }
 }

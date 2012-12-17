@@ -37,10 +37,8 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.LIKE;
 import static org.jooq.Comparator.LIKE_IGNORE_CASE;
-import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.Comparator.NOT_LIKE;
 import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
 import static org.jooq.SQLDialect.ASE;
@@ -79,12 +77,7 @@ class CompareCondition extends AbstractCondition {
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(field1);
-
-        // [#1084] Bind field2 only if it is actually rendered
-        if (!field2.isNullLiteral() || !asList(EQUALS, NOT_EQUALS).contains(comparator)) {
-            context.bind(field2);
-        }
+        context.bind(field1).bind(field2);
     }
 
     @Override
@@ -116,18 +109,6 @@ class CompareCondition extends AbstractCondition {
 
         context.sql(lhs)
                .sql(" ");
-
-        if (rhs.isNullLiteral()) {
-            switch (op) {
-                case EQUALS:
-                    context.keyword("is null");
-                    return;
-
-                case NOT_EQUALS:
-                    context.keyword("is not null");
-                    return;
-            }
-        }
 
         // [#1131] Some weird DB2 issue stops "LIKE" from working with a
         // concatenated search expression, if the expression is more than 4000

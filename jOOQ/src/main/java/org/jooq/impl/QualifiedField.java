@@ -78,9 +78,4 @@ class QualifiedField<T> extends AbstractField<T> {
 
     @Override
     public final void bind(BindContext context) {}
-
-    @Override
-    public final boolean isNullLiteral() {
-        return false;
-    }
 }

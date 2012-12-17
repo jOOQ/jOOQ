@@ -187,9 +187,4 @@ class Cast<T> extends AbstractField<T> {
 
         context.bind(field);
     }
-
-    @Override
-    public final boolean isNullLiteral() {
-        return field.isNullLiteral();
-    }
 }

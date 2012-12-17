@@ -79,13 +79,13 @@ class Decode<T, Z> extends AbstractFunction<Z> {
             default: {
                 CaseConditionStep<Z> when = Factory
                     .decode()
-                    .when(field.equal(search), result);
+                    .when(field.isNotDistinctFrom(search), result);
 
                 for (int i = 0; i < more.length; i += 2) {
 
                     // search/result pair
                     if (i + 1 < more.length) {
-                        when = when.when(field.equal((Field<T>) more[i]), (Field<Z>) more[i + 1]);
+                        when = when.when(field.isNotDistinctFrom((Field<T>) more[i]), (Field<Z>) more[i + 1]);
                     }
 
                     // trailing default value

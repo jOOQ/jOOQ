@@ -96,6 +96,7 @@ import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test._.testcases.AggregateWindowFunctionTests;
+import org.jooq.test._.testcases.BatchTests;
 import org.jooq.test._.testcases.BenchmarkTests;
 import org.jooq.test._.testcases.CRUDTests;
 import org.jooq.test._.testcases.DaoTests;
@@ -1726,17 +1727,22 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testBatchSingle() throws Exception {
-        new GeneralTests(this).testBatchSingle();
+        new BatchTests(this).testBatchSingle();
     }
 
     @Test
     public void testBatchMultiple() throws Exception {
-        new GeneralTests(this).testBatchMultiple();
+        new BatchTests(this).testBatchMultiple();
     }
 
     @Test
     public void testBatchStore() throws Exception {
-        new GeneralTests(this).testBatchStore();
+        new BatchTests(this).testBatchStore();
+    }
+
+    @Test
+    public void testBatchDelete() throws Exception {
+        new BatchTests(this).testBatchDelete();
     }
 
     @Test

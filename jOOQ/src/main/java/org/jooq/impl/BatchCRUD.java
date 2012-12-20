@@ -58,7 +58,7 @@ import org.jooq.exception.DataAccessException;
 /**
  * @author Lukas Eder
  */
-class BatchStore implements Batch {
+class BatchCRUD implements Batch {
 
     /**
      * Generated UID
@@ -67,9 +67,11 @@ class BatchStore implements Batch {
 
     private final Executor             create;
     private final UpdatableRecord<?>[] records;
+    private final Action               action;
 
-    BatchStore(Executor create, UpdatableRecord<?>[] records) {
+    BatchCRUD(Executor create, Action action, UpdatableRecord<?>[] records) {
         this.create = create;
+        this.action = action;
         this.records = records;
     }
 
@@ -112,7 +114,7 @@ class BatchStore implements Batch {
 
                 try {
                     records[i].attach(create);
-                    records[i].store();
+                    executeAction(i);
                 }
                 catch (QueryCollectorException e) {
                     Query query = e.getQuery();
@@ -166,7 +168,7 @@ class BatchStore implements Batch {
             array[i] = result.get(i);
         }
 
-        setAllUnchanged();
+        updateChangedFlag();
         return array;
     }
 
@@ -184,7 +186,7 @@ class BatchStore implements Batch {
 
                 try {
                     records[i].attach(create);
-                    records[i].store();
+                    executeAction(i);
                 }
                 catch (QueryCollectorException e) {
                     Query query = e.getQuery();
@@ -206,16 +208,45 @@ class BatchStore implements Batch {
 
         // Resulting statements can be batch executed in their requested order
         int[] result = create.batch(queries).execute();
-        setAllUnchanged();
+        updateChangedFlag();
         return result;
     }
 
-    private final void setAllUnchanged() {
+    private void executeAction(int i) {
+        if (action == Action.STORE) {
+            records[i].store();
+        }
+        else if (action == Action.DELETE) {
+            records[i].delete();
+        }
+    }
+
+    private final void updateChangedFlag() {
+        // 1. Deleted records should be marked as changed, such that subsequent
+        //    calls to store() will insert them again
+        // 2. Stored records should be marked as unchanged
+
         for (UpdatableRecord<?> record : records) {
             if (record instanceof AbstractRecord) {
-                ((AbstractRecord) record).setAllChanged(false);
+                ((AbstractRecord) record).setAllChanged(action == Action.DELETE);
             }
         }
+    }
+
+    /**
+     * The action to be performed by this operation
+     */
+    enum Action {
+
+        /**
+         * Corresponds to {@link UpdatableRecord#store()}
+         */
+        STORE,
+
+        /**
+         * Corresponds to {@link UpdatableRecord#delete()}
+         */
+        DELETE
     }
 
     /**
@@ -245,7 +276,7 @@ class BatchStore implements Batch {
          * Generated UID
          */
         private static final long serialVersionUID = -9047250761846931903L;
-        private final String  sql;
+        private final String      sql;
         private final Query       query;
 
         QueryCollectorException(String sql, Query query) {

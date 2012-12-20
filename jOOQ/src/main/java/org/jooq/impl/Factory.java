@@ -3053,6 +3053,14 @@ public class Factory {
         return condition.not();
     }
 
+    /**
+     * Transform a condition into a boolean field
+     */
+    @Support
+    public static Field<Boolean> field(Condition condition) {
+        return new ConditionAsField(condition);
+    }
+
     // -------------------------------------------------------------------------
     // XXX Global Field and Function factory
     // -------------------------------------------------------------------------

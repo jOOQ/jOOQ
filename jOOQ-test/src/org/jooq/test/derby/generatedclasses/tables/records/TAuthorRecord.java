@@ -9,32 +9,100 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 180132199;
+	private static final long serialVersionUID = 596605148;
 
 	/**
-	 * The table column <code>TEST.T_AUTHOR.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_AUTHOR.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_AUTHOR.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_AUTHOR.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.ID);
 	}
 
 	/**
-	 * The table column <code>TEST.T_AUTHOR.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_AUTHOR.FIRST_NAME</code>. 
 	 */
-	public java.util.List<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
+	public void setFirstName(java.lang.String value) {
+		setValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.FIRST_NAME, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_AUTHOR.FIRST_NAME</code>. 
+	 */
+	public java.lang.String getFirstName() {
+		return getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.FIRST_NAME);
+	}
+
+	/**
+	 * Setter for <code>TEST.T_AUTHOR.LAST_NAME</code>. 
+	 */
+	public void setLastName(java.lang.String value) {
+		setValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.LAST_NAME, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_AUTHOR.LAST_NAME</code>. 
+	 */
+	public java.lang.String getLastName() {
+		return getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.LAST_NAME);
+	}
+
+	/**
+	 * Setter for <code>TEST.T_AUTHOR.DATE_OF_BIRTH</code>. 
+	 */
+	public void setDateOfBirth(java.sql.Date value) {
+		setValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.DATE_OF_BIRTH, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_AUTHOR.DATE_OF_BIRTH</code>. 
+	 */
+	public java.sql.Date getDateOfBirth() {
+		return getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.DATE_OF_BIRTH);
+	}
+
+	/**
+	 * Setter for <code>TEST.T_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 */
+	public void setYearOfBirth(java.lang.Integer value) {
+		setValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 */
+	public java.lang.Integer getYearOfBirth() {
+		return getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH);
+	}
+
+	/**
+	 * Setter for <code>TEST.T_AUTHOR.ADDRESS</code>. 
+	 */
+	public void setAddress(java.lang.String value) {
+		setValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.ADDRESS, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_AUTHOR.ADDRESS</code>. 
+	 */
+	public java.lang.String getAddress() {
+		return getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.ADDRESS);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>TEST.T_BOOK</code> referencing this <code>TEST.T_AUTHOR</code>
+	 */
+	public org.jooq.Result<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.derby.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.derby.generatedclasses.tables.TBook.AUTHOR_ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.ID)))
@@ -42,92 +110,25 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>TEST.T_AUTHOR.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Fetch a list of <code>TEST.T_BOOK</code> referencing this <code>TEST.T_AUTHOR</code>
 	 */
-	public java.util.List<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
+	public org.jooq.Result<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.derby.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.derby.generatedclasses.tables.TBook.CO_AUTHOR_ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.ID)))
 			.fetch();
 	}
 
-	/**
-	 * The table column <code>TEST.T_AUTHOR.FIRST_NAME</code>
-	 */
-	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.FIRST_NAME, value);
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The table column <code>TEST.T_AUTHOR.FIRST_NAME</code>
+	 * {@inheritDoc}
 	 */
-	public java.lang.String getFirstName() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.FIRST_NAME);
-	}
-
-	/**
-	 * The table column <code>TEST.T_AUTHOR.LAST_NAME</code>
-	 */
-	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.LAST_NAME, value);
-	}
-
-	/**
-	 * The table column <code>TEST.T_AUTHOR.LAST_NAME</code>
-	 */
-	public java.lang.String getLastName() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.LAST_NAME);
-	}
-
-	/**
-	 * The table column <code>TEST.T_AUTHOR.DATE_OF_BIRTH</code>
-	 */
-	public void setDateOfBirth(java.sql.Date value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.DATE_OF_BIRTH, value);
-	}
-
-	/**
-	 * The table column <code>TEST.T_AUTHOR.DATE_OF_BIRTH</code>
-	 */
-	public java.sql.Date getDateOfBirth() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.DATE_OF_BIRTH);
-	}
-
-	/**
-	 * The table column <code>TEST.T_AUTHOR.YEAR_OF_BIRTH</code>
-	 */
-	public void setYearOfBirth(java.lang.Integer value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH, value);
-	}
-
-	/**
-	 * The table column <code>TEST.T_AUTHOR.YEAR_OF_BIRTH</code>
-	 */
-	public java.lang.Integer getYearOfBirth() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH);
-	}
-
-	/**
-	 * The table column <code>TEST.T_AUTHOR.ADDRESS</code>
-	 */
-	public void setAddress(java.lang.String value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.ADDRESS, value);
-	}
-
-	/**
-	 * The table column <code>TEST.T_AUTHOR.ADDRESS</code>
-	 */
-	public java.lang.String getAddress() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.ADDRESS);
-	}
-
-	/**
-	 * Create a detached TAuthorRecord
-	 */
-	public TAuthorRecord() {
-		super(org.jooq.test.derby.generatedclasses.tables.TAuthor.T_AUTHOR);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -244,5 +245,16 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.String value6() {
 		return getAddress();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TAuthorRecord
+	 */
+	public TAuthorRecord() {
+		super(org.jooq.test.derby.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 }

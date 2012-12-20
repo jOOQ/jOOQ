@@ -9,10 +9,10 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -1840877078;
+	private static final long serialVersionUID = 1363780086;
 
 	/**
-	 * The singleton instance of TEST.X_TEST_CASE_71
+	 * The singleton instance of <code>TEST.X_TEST_CASE_71</code>
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.XTestCase_71 X_TEST_CASE_71 = new org.jooq.test.derby.generatedclasses.tables.XTestCase_71();
 
@@ -25,20 +25,12 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>TEST.X_TEST_CASE_71.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_71);
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)
-	 * </pre></code>
+	 * The column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_71);
 
@@ -49,19 +41,26 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 		super("X_TEST_CASE_71", org.jooq.test.derby.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_71Record> getMainKey() {
 		return org.jooq.test.derby.generatedclasses.Keys.PK_X_TEST_CASE_71;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_71Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_71Record>>asList(org.jooq.test.derby.generatedclasses.Keys.PK_X_TEST_CASE_71);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_71Record, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.derby.generatedclasses.Keys.FK_X_TEST_CASE_71);
 	}

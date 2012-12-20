@@ -9,10 +9,10 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 1949505895;
+	private static final long serialVersionUID = -1450749848;
 
 	/**
-	 * The singleton instance of TEST.T_IDENTITY
+	 * The singleton instance of <code>TEST.T_IDENTITY</code>
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.TIdentity T_IDENTITY = new org.jooq.test.derby.generatedclasses.tables.TIdentity();
 
@@ -25,12 +25,12 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.derby.gener
 	}
 
 	/**
-	 * The table column <code>TEST.T_IDENTITY.ID</code>
+	 * The column <code>TEST.T_IDENTITY.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 
 	/**
-	 * The table column <code>TEST.T_IDENTITY.VAL</code>
+	 * The column <code>TEST.T_IDENTITY.VAL</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 
@@ -41,6 +41,9 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.derby.gener
 		super("T_IDENTITY", org.jooq.test.derby.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.derby.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.test.derby.generatedclasses.Keys.IDENTITY_T_IDENTITY;

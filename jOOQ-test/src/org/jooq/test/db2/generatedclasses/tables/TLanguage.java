@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -490524265;
+	private static final long serialVersionUID = -1887196077;
 
 	/**
-	 * The singleton instance of <code>LUKAS.T_LANGUAGE</code>
+	 * The singleton instance of <code>TEST.T_LANGUAGE</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.TLanguage T_LANGUAGE = new org.jooq.test.db2.generatedclasses.tables.TLanguage();
 
@@ -25,22 +25,22 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db
 	}
 
 	/**
-	 * The column <code>LUKAS.T_LANGUAGE.CD</code>. 
+	 * The column <code>TEST.T_LANGUAGE.CD</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR, T_LANGUAGE);
 
 	/**
-	 * The column <code>LUKAS.T_LANGUAGE.DESCRIPTION</code>. 
+	 * The column <code>TEST.T_LANGUAGE.DESCRIPTION</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
 
 	/**
-	 * The column <code>LUKAS.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * The column <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
 
 	/**
-	 * The column <code>LUKAS.T_LANGUAGE.ID</code>. 
+	 * The column <code>TEST.T_LANGUAGE.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_LANGUAGE);
 
@@ -48,7 +48,7 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db
 	 * No further instances allowed
 	 */
 	private TLanguage() {
-		super("T_LANGUAGE", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
+		super("T_LANGUAGE", org.jooq.test.db2.generatedclasses.Test.TEST);
 	}
 
 	/**

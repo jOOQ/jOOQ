@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -899015225;
+	private static final long serialVersionUID = -1658402397;
 
 	/**
-	 * The singleton instance of <code>LUKAS.V_AUTHOR</code>
+	 * The singleton instance of <code>TEST.V_AUTHOR</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.VAuthor V_AUTHOR = new org.jooq.test.db2.generatedclasses.tables.VAuthor();
 
@@ -25,32 +25,32 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.db2.generated
 	}
 
 	/**
-	 * The column <code>LUKAS.V_AUTHOR.ID</code>. 
+	 * The column <code>TEST.V_AUTHOR.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
-	 * The column <code>LUKAS.V_AUTHOR.FIRST_NAME</code>. 
+	 * The column <code>TEST.V_AUTHOR.FIRST_NAME</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 
 	/**
-	 * The column <code>LUKAS.V_AUTHOR.LAST_NAME</code>. 
+	 * The column <code>TEST.V_AUTHOR.LAST_NAME</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 
 	/**
-	 * The column <code>LUKAS.V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * The column <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, V_AUTHOR);
 
 	/**
-	 * The column <code>LUKAS.V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * The column <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
-	 * The column <code>LUKAS.V_AUTHOR.ADDRESS</code>. 
+	 * The column <code>TEST.V_AUTHOR.ADDRESS</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 
@@ -58,6 +58,6 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.db2.generated
 	 * No further instances allowed
 	 */
 	private VAuthor() {
-		super("V_AUTHOR", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
+		super("V_AUTHOR", org.jooq.test.db2.generatedclasses.Test.TEST);
 	}
 }

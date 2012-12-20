@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 2026321332;
+	private static final long serialVersionUID = 123950932;
 
 	/**
-	 * The singleton instance of <code>LUKAS.X_TEST_CASE_85</code>
+	 * The singleton instance of <code>TEST.X_TEST_CASE_85</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = new org.jooq.test.db2.generatedclasses.tables.XTestCase_85();
 
@@ -25,17 +25,17 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The column <code>LUKAS.X_TEST_CASE_85.ID</code>. 
+	 * The column <code>TEST.X_TEST_CASE_85.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
 
 	/**
-	 * The column <code>LUKAS.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * The column <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("X_UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
 
 	/**
-	 * The column <code>LUKAS.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * The column <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("X_UNUSED_NAME", org.jooq.impl.SQLDataType.VARCHAR, X_TEST_CASE_85);
 
@@ -43,7 +43,7 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * No further instances allowed
 	 */
 	private XTestCase_85() {
-		super("X_TEST_CASE_85", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
+		super("X_TEST_CASE_85", org.jooq.test.db2.generatedclasses.Test.TEST);
 	}
 
 	/**

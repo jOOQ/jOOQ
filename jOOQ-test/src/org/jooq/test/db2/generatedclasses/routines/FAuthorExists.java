@@ -9,15 +9,15 @@ package org.jooq.test.db2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -166356035;
+	private static final long serialVersionUID = 824651393;
 
 	/**
-	 * The parameter <code>LUKAS.F_AUTHOR_EXISTS.RETURN_VALUE</code>. 
+	 * The parameter <code>TEST.F_AUTHOR_EXISTS.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>LUKAS.F_AUTHOR_EXISTS.AUTHOR_NAME</code>. 
+	 * The parameter <code>TEST.F_AUTHOR_EXISTS.AUTHOR_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -25,7 +25,7 @@ public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integ
 	 * Create a new routine call instance
 	 */
 	public FAuthorExists() {
-		super("F_AUTHOR_EXISTS", org.jooq.test.db2.generatedclasses.Lukas.LUKAS, org.jooq.impl.SQLDataType.INTEGER);
+		super("F_AUTHOR_EXISTS", org.jooq.test.db2.generatedclasses.Test.TEST, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(AUTHOR_NAME);

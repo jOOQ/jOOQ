@@ -9,129 +9,129 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> {
 
-	private static final long serialVersionUID = -1105201003;
+	private static final long serialVersionUID = 56610517;
 
 	/**
-	 * Setter for <code>LUKAS.V_BOOK.ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VBook.ID, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.V_BOOK.ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VBook.ID);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.V_BOOK.AUTHOR_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.AUTHOR_ID</code>. 
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VBook.AUTHOR_ID, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.V_BOOK.AUTHOR_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.AUTHOR_ID</code>. 
 	 */
 	public java.lang.Integer getAuthorId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VBook.AUTHOR_ID);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VBook.CO_AUTHOR_ID, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VBook.CO_AUTHOR_ID);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.V_BOOK.DETAILS_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.DETAILS_ID</code>. 
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VBook.DETAILS_ID, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.V_BOOK.DETAILS_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.DETAILS_ID</code>. 
 	 */
 	public java.lang.Integer getDetailsId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VBook.DETAILS_ID);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.V_BOOK.TITLE</code>. 
+	 * Setter for <code>TEST.V_BOOK.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VBook.TITLE, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.V_BOOK.TITLE</code>. 
+	 * Getter for <code>TEST.V_BOOK.TITLE</code>. 
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VBook.TITLE);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.V_BOOK.PUBLISHED_IN</code>. 
+	 * Setter for <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VBook.PUBLISHED_IN, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.V_BOOK.PUBLISHED_IN</code>. 
+	 * Getter for <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
 	 */
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VBook.PUBLISHED_IN);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.V_BOOK.LANGUAGE_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VBook.LANGUAGE_ID, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.V_BOOK.LANGUAGE_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VBook.LANGUAGE_ID);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.V_BOOK.CONTENT_TEXT</code>. 
+	 * Setter for <code>TEST.V_BOOK.CONTENT_TEXT</code>. 
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VBook.CONTENT_TEXT, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.V_BOOK.CONTENT_TEXT</code>. 
+	 * Getter for <code>TEST.V_BOOK.CONTENT_TEXT</code>. 
 	 */
 	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VBook.CONTENT_TEXT);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.V_BOOK.CONTENT_PDF</code>. 
+	 * Setter for <code>TEST.V_BOOK.CONTENT_PDF</code>. 
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VBook.CONTENT_PDF, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.V_BOOK.CONTENT_PDF</code>. 
+	 * Getter for <code>TEST.V_BOOK.CONTENT_PDF</code>. 
 	 */
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VBook.CONTENT_PDF);

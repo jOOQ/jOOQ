@@ -9,59 +9,59 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 655035792;
+	private static final long serialVersionUID = 623933860;
 
 	/**
-	 * Setter for <code>LUKAS.T_LANGUAGE.CD</code>. 
+	 * Setter for <code>TEST.T_LANGUAGE.CD</code>. 
 	 */
 	public void setCd(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TLanguage.CD, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_LANGUAGE.CD</code>. 
+	 * Getter for <code>TEST.T_LANGUAGE.CD</code>. 
 	 */
 	public java.lang.String getCd() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TLanguage.CD);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.T_LANGUAGE.DESCRIPTION</code>. 
+	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. 
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TLanguage.DESCRIPTION, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_LANGUAGE.DESCRIPTION</code>. 
+	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. 
 	 */
 	public java.lang.String getDescription() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TLanguage.DESCRIPTION);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public java.lang.String getDescriptionEnglish() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.T_LANGUAGE.ID</code>. 
+	 * Setter for <code>TEST.T_LANGUAGE.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TLanguage.ID, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_LANGUAGE.ID</code>. 
+	 * Getter for <code>TEST.T_LANGUAGE.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TLanguage.ID);
@@ -72,7 +72,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Fetch a list of <code>LUKAS.T_BOOK</code> referencing this <code>LUKAS.T_LANGUAGE</code>
+	 * Fetch a list of <code>TEST.T_BOOK</code> referencing this <code>TEST.T_LANGUAGE</code>
 	 */
 	public org.jooq.Result<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord> fetchTBookList() {
 		return create()

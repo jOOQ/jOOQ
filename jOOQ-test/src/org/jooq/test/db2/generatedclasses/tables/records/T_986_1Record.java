@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1898171471;
+	private static final long serialVersionUID = -2092293869;
 
 	/**
-	 * Setter for <code>LUKAS.T_986_1.REF</code>. 
+	 * Setter for <code>TEST.T_986_1.REF</code>. 
 	 */
 	public void setRef(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_986_1.REF, value);
@@ -31,7 +31,7 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_986_1.REF</code>. 
+	 * Getter for <code>TEST.T_986_1.REF</code>. 
 	 */
 	public java.lang.Integer getRef() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_986_1.REF);
@@ -42,7 +42,7 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Fetch a <code>LUKAS.X_UNUSED</code> referenced by this <code>LUKAS.T_986_1</code>
+	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.T_986_1</code>
 	 */
 	public org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()

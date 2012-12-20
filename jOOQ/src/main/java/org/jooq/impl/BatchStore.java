@@ -65,12 +65,17 @@ class BatchStore implements Batch {
      */
     private static final long          serialVersionUID = -2935544935267715011L;
 
-    private final Executor              create;
+    private final Executor             create;
     private final UpdatableRecord<?>[] records;
 
     BatchStore(Executor create, UpdatableRecord<?>[] records) {
         this.create = create;
         this.records = records;
+    }
+
+    @Override
+    public final int size() {
+        return records.length;
     }
 
     @Override

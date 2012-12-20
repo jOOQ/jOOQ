@@ -70,4 +70,9 @@ public interface Batch extends Serializable {
      * @throws DataAccessException if something went wrong executing the query
      */
     int[] execute() throws DataAccessException;
+
+    /**
+     * Get the number of executed queries in this batch operation
+     */
+    int size();
 }

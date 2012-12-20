@@ -75,6 +75,11 @@ class BatchSingle implements BatchBindStep {
     }
 
     @Override
+    public final int size() {
+        return allBindValues.size();
+    }
+
+    @Override
     public final int[] execute() {
 
         // [#1180] Run batch queries with BatchMultiple, if no bind variables

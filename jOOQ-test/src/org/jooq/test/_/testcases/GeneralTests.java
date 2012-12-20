@@ -61,6 +61,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.util.Arrays;
 
+import org.jooq.Batch;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -425,14 +426,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         // [#1749] TODO Firebird renders CAST(? as VARCHAR(...)) bind values with sizes
         // pre-calculated. Hence the param needs to have some min length...
-        int[] result = create().batch(create().insertInto(TAuthor())
-                                              .set(TAuthor_ID(), 8)
-                                              .set(TAuthor_LAST_NAME(), "           "))
-                               .bind(8, "Gamma")
-                               .bind(9, "Helm")
-                               .bind(10, "Johnson")
-                               .execute();
+        Batch batch = create().batch(create().insertInto(TAuthor())
+                                             .set(TAuthor_ID(), 8)
+                                             .set(TAuthor_LAST_NAME(), "           "))
+                              .bind(8, "Gamma")
+                              .bind(9, "Helm")
+                              .bind(10, "Johnson");
 
+        assertEquals(3, batch.size());
+
+        int[] result = batch.execute();
         assertEquals(3, result.length);
         testBatchAuthors("Gamma", "Helm", "Johnson");
     }
@@ -441,7 +444,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     public void testBatchMultiple() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        int[] result = create().batch(
+        Batch batch = create().batch(
             create().insertInto(TAuthor())
                     .set(TAuthor_ID(), 8)
                     .set(TAuthor_LAST_NAME(), "Gamma"),
@@ -460,8 +463,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
             create().insertInto(TAuthor())
                     .set(TAuthor_ID(), 10)
-                    .set(TAuthor_LAST_NAME(), "Johnson")).execute();
+                    .set(TAuthor_LAST_NAME(), "Johnson"));
 
+        assertEquals(4, batch.size());
+
+        int[] result = batch.execute();
         assertEquals(4, result.length);
         assertEquals(5, create().fetch(TBook()).size());
         assertEquals(1, create().fetch(TBook(), TBook_AUTHOR_ID().equal(8)).size());
@@ -489,7 +495,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         b1.setValue(TBook_PUBLISHED_IN(), 2000);
         b1.setValue(TBook_LANGUAGE_ID(), 1);
 
-        int[] result1 = create().batchStore(a1, b1, a2).execute();
+        Batch batch = create().batchStore(a1, b1, a2);
+        assertEquals(3, batch.size());
+
+        int[] result1 = batch.execute();
         assertEquals(3, result1.length);
         testBatchAuthors("XX", "YY");
         assertEquals("XX 1", create()

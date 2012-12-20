@@ -53,16 +53,16 @@ import org.jooq.Select;
  */
 class Union<R extends Record> extends AbstractSelect<R> {
 
-    private static final long     serialVersionUID = 7491446471677986172L;
+    private static final long               serialVersionUID = 7491446471677986172L;
 
-    private final List<Select<R>> queries;
-    private final CombineOperator operator;
+    private final List<Select<? extends R>> queries;
+    private final CombineOperator           operator;
 
-    Union(Configuration configuration, Select<R> query1, Select<R> query2, CombineOperator operator) {
+    Union(Configuration configuration, Select<R> query1, Select<? extends R> query2, CombineOperator operator) {
         super(configuration);
 
         this.operator = operator;
-        this.queries = new ArrayList<Select<R>>();
+        this.queries = new ArrayList<Select<? extends R>>();
         this.queries.add(query1);
         this.queries.add(query2);
     }

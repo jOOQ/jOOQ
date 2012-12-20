@@ -378,22 +378,22 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingSelect<R>
     }
 
     @Override
-    public final Select<R> union(Select<R> select) {
+    public final Select<R> union(Select<? extends R> select) {
         return new SimpleSelectImpl<R>(getQuery().union(select));
     }
 
     @Override
-    public final Select<R> unionAll(Select<R> select) {
+    public final Select<R> unionAll(Select<? extends R> select) {
         return new SimpleSelectImpl<R>(getQuery().unionAll(select));
     }
 
     @Override
-    public final Select<R> except(Select<R> select) {
+    public final Select<R> except(Select<? extends R> select) {
         return new SimpleSelectImpl<R>(getQuery().except(select));
     }
 
     @Override
-    public final Select<R> intersect(Select<R> select) {
+    public final Select<R> intersect(Select<? extends R> select) {
         return new SimpleSelectImpl<R>(getQuery().intersect(select));
     }
 }

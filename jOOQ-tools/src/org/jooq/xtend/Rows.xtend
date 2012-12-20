@@ -142,7 +142,7 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for equality
                  */
-                @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition equal(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -192,7 +192,7 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for equality
                  */
-                @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition eq(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -242,7 +242,7 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for non-equality
                  */
-                @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition notEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -292,7 +292,7 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for non-equality
                  */
-                @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition ne(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**

@@ -39,6 +39,7 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -149,13 +150,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         else {
 
             // TODO: Create more systematic tests
-            assertEquals(1, (int)
-            create().selectOne()
-                    .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
-                    .and(row(1, 2, 3).notIn(select(val(3), val(2), val(1))))
-                    .and(row(1, 2, "3").equal(select(val(1), val(2), val("3"))))
-                    .and(row(1, "2", 3).notEqual(select(val(1), val("4"), val(3))))
-                    .fetchOne(0, Integer.class));
+            // DB2 cannot deal with row value expression comparison predicates
+            if (!asList(DB2).contains(getDialect())) {
+                assertEquals(1, (int)
+                create().selectOne()
+                        .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
+                        .and(row(1, 2, 3).notIn(select(val(3), val(2), val(1))))
+                        .and(row(1, 2, "3").equal(select(val(1), val(2), val("3"))))
+                        .and(row(1, "2", 3).notEqual(select(val(1), val("4"), val(3))))
+                        .fetchOne(0, Integer.class));
+            }
 
             // CUBRID has a bug here http://jira.cubrid.org/browse/ENGINE-61
             if (!asList(CUBRID).contains(getDialect())) {

@@ -579,22 +579,22 @@ class SelectImpl<R extends Record> extends AbstractDelegatingSelect<R> implement
     }
 
     @Override
-    public final SelectImpl<R> union(Select<R> select) {
+    public final SelectImpl<R> union(Select<? extends R> select) {
         return new SelectImpl<R>(getDelegate().union(select));
     }
 
     @Override
-    public final SelectImpl<R> unionAll(Select<R> select) {
+    public final SelectImpl<R> unionAll(Select<? extends R> select) {
         return new SelectImpl<R>(getDelegate().unionAll(select));
     }
 
     @Override
-    public final SelectImpl<R> except(Select<R> select) {
+    public final SelectImpl<R> except(Select<? extends R> select) {
         return new SelectImpl<R>(getDelegate().except(select));
     }
 
     @Override
-    public final SelectImpl<R> intersect(Select<R> select) {
+    public final SelectImpl<R> intersect(Select<? extends R> select) {
         return new SelectImpl<R>(getDelegate().intersect(select));
     }
 

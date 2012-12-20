@@ -10,26 +10,36 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITIdentityPk extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY_PK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>PUBLIC.T_IDENTITY_PK.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY_PK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>PUBLIC.T_IDENTITY_PK.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY_PK.VAL</code>
+	 * Setter for <code>PUBLIC.T_IDENTITY_PK.VAL</code>. 
 	 */
 	public void setVal(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY_PK.VAL</code>
+	 * Getter for <code>PUBLIC.T_IDENTITY_PK.VAL</code>. 
 	 */
 	public java.lang.Integer getVal();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITIdentityPk
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITIdentityPk from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITIdentityPk
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITIdentityPk> E into(E into);
 }

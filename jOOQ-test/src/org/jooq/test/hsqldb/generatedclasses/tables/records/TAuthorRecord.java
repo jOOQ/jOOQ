@@ -9,12 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 811098454;
+	private static final long serialVersionUID = 206809684;
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,9 +20,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>PUBLIC.T_AUTHOR.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -32,31 +28,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>
+	 * Setter for <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. 
 	 */
 	@Override
 	public void setFirstName(java.lang.String value) {
@@ -64,7 +36,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>
+	 * Getter for <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. 
 	 */
 	@Override
 	public java.lang.String getFirstName() {
@@ -72,7 +44,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.LAST_NAME</code>
+	 * Setter for <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. 
 	 */
 	@Override
 	public void setLastName(java.lang.String value) {
@@ -80,7 +52,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.LAST_NAME</code>
+	 * Getter for <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. 
 	 */
 	@Override
 	public java.lang.String getLastName() {
@@ -88,7 +60,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>
+	 * Setter for <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	@Override
 	public void setDateOfBirth(java.sql.Date value) {
@@ -96,7 +68,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>
+	 * Getter for <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	@Override
 	public java.sql.Date getDateOfBirth() {
@@ -104,7 +76,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>
+	 * Setter for <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	@Override
 	public void setYearOfBirth(java.lang.Integer value) {
@@ -112,7 +84,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>
+	 * Getter for <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	@Override
 	public java.lang.Integer getYearOfBirth() {
@@ -120,7 +92,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.ADDRESS</code>
+	 * Setter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. 
 	 */
 	@Override
 	public void setAddress(java.lang.String value) {
@@ -128,18 +100,47 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_AUTHOR.ADDRESS</code>
+	 * Getter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. 
 	 */
 	@Override
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TAuthorRecord
+	 * Fetch a list of <code>PUBLIC.T_BOOK</code> referencing this <code>PUBLIC.T_AUTHOR</code>
 	 */
-	public TAuthorRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR);
+	public org.jooq.Result<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK)
+			.where(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a list of <code>PUBLIC.T_BOOK</code> referencing this <code>PUBLIC.T_AUTHOR</code>
+	 */
+	public org.jooq.Result<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK)
+			.where(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
+			.fetch();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -256,5 +257,42 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.String value6() {
 		return getAddress();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITAuthor from) {
+		setId(from.getId());
+		setFirstName(from.getFirstName());
+		setLastName(from.getLastName());
+		setDateOfBirth(from.getDateOfBirth());
+		setYearOfBirth(from.getYearOfBirth());
+		setAddress(from.getAddress());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITAuthor> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TAuthorRecord
+	 */
+	public TAuthorRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 }

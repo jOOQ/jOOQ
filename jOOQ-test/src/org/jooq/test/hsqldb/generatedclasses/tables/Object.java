@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class Object extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> {
 
-	private static final long serialVersionUID = 239228140;
+	private static final long serialVersionUID = 73294892;
 
 	/**
-	 * The singleton instance of PUBLIC.OBJECT
+	 * The singleton instance of <code>PUBLIC.OBJECT</code>
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.Object OBJECT = new org.jooq.test.hsqldb.generatedclasses.tables.Object();
 
@@ -25,26 +25,32 @@ public class Object extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generat
 	}
 
 	/**
-	 * The table column <code>PUBLIC.OBJECT.ID</code>
+	 * The column <code>PUBLIC.OBJECT.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.OBJECT.OTHER</code>
-	 * <p>
-	 * The SQL type of this item (OTHER, null) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>PUBLIC.OBJECT.OTHER</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord, java.lang.Object> OTHER = createField("OTHER", org.jooq.impl.SQLDataType.OTHER, this);
 
+	/**
+	 * Create a <code>PUBLIC.OBJECT</code> table reference
+	 */
 	public Object() {
 		super("OBJECT", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>PUBLIC.OBJECT</code> table reference
+	 */
 	public Object(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.Object as(java.lang.String alias) {
 		return new org.jooq.test.hsqldb.generatedclasses.tables.Object(alias);

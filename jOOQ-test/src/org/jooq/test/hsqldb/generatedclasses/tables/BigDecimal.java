@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class BigDecimal extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord> {
 
-	private static final long serialVersionUID = -570745769;
+	private static final long serialVersionUID = 1394041099;
 
 	/**
-	 * The singleton instance of PUBLIC.BIG_DECIMAL
+	 * The singleton instance of <code>PUBLIC.BIG_DECIMAL</code>
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal BIG_DECIMAL = new org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal();
 
@@ -25,23 +25,32 @@ public class BigDecimal extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gen
 	}
 
 	/**
-	 * The table column <code>PUBLIC.BIG_DECIMAL.ID</code>
+	 * The column <code>PUBLIC.BIG_DECIMAL.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.BIG_DECIMAL.OTHER</code>
+	 * The column <code>PUBLIC.BIG_DECIMAL.OTHER</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord, java.math.BigInteger> OTHER = createField("OTHER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, this);
 
+	/**
+	 * Create a <code>PUBLIC.BIG_DECIMAL</code> table reference
+	 */
 	public BigDecimal() {
 		super("BIG_DECIMAL", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>PUBLIC.BIG_DECIMAL</code> table reference
+	 */
 	public BigDecimal(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal.BIG_DECIMAL);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal as(java.lang.String alias) {
 		return new org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal(alias);

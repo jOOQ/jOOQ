@@ -10,152 +10,126 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITBook extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>PUBLIC.T_BOOK.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES PUBLIC.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Setter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. 
 	 */
 	public void setAuthorId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES PUBLIC.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Getter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. 
 	 */
 	public java.lang.Integer getAuthorId();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES PUBLIC.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Setter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES PUBLIC.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Getter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public java.lang.Integer getCoAuthorId();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
+	 * Setter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>. 
 	 */
 	public void setDetailsId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.DETAILS_ID</code>
+	 * Getter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>. 
 	 */
 	public java.lang.Integer getDetailsId();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.TITLE</code>
+	 * Setter for <code>PUBLIC.T_BOOK.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.TITLE</code>
+	 * Getter for <code>PUBLIC.T_BOOK.TITLE</code>. 
 	 */
 	public java.lang.String getTitle();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>
+	 * Setter for <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. 
 	 */
 	public void setPublishedIn(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>
+	 * Getter for <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. 
 	 */
 	public java.lang.Integer getPublishedIn();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
-	 * </pre></code>
+	 * Setter for <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public void setLanguageId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
-	 * </pre></code>
+	 * Getter for <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public java.lang.Integer getLanguageId();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>
+	 * Setter for <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. 
 	 */
 	public void setContentText(java.lang.String value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>
+	 * Getter for <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. 
 	 */
 	public java.lang.String getContentText();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.CONTENT_PDF</code>
+	 * Setter for <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. 
 	 */
 	public void setContentPdf(byte[] value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.CONTENT_PDF</code>
+	 * Getter for <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. 
 	 */
 	public byte[] getContentPdf();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
+	 * Setter for <code>PUBLIC.T_BOOK.REC_VERSION</code>. 
 	 */
 	public void setRecVersion(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_VERSION</code>
+	 * Getter for <code>PUBLIC.T_BOOK.REC_VERSION</code>. 
 	 */
 	public java.lang.Integer getRecVersion();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
+	 * Setter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
 	 */
 	public void setRecTimestamp(java.sql.Timestamp value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>
+	 * Getter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
 	 */
 	public java.sql.Timestamp getRecTimestamp();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITBook
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBook from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITBook
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBook> E into(E into);
 }

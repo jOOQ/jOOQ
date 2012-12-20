@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class String extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord> {
 
-	private static final long serialVersionUID = -1166693325;
+	private static final long serialVersionUID = -1127812447;
 
 	/**
-	 * The singleton instance of PUBLIC.STRING
+	 * The singleton instance of <code>PUBLIC.STRING</code>
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.String STRING = new org.jooq.test.hsqldb.generatedclasses.tables.String();
 
@@ -25,23 +25,32 @@ public class String extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generat
 	}
 
 	/**
-	 * The table column <code>PUBLIC.STRING.ID</code>
+	 * The column <code>PUBLIC.STRING.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.STRING.OTHER</code>
+	 * The column <code>PUBLIC.STRING.OTHER</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord, java.lang.String> OTHER = createField("OTHER", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>PUBLIC.STRING</code> table reference
+	 */
 	public String() {
 		super("STRING", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>PUBLIC.STRING</code> table reference
+	 */
 	public String(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.String.STRING);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.String as(java.lang.String alias) {
 		return new org.jooq.test.hsqldb.generatedclasses.tables.String(alias);

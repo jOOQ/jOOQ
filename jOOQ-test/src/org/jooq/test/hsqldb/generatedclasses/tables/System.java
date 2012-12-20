@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class System extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.SystemRecord> {
 
-	private static final long serialVersionUID = -1680364658;
+	private static final long serialVersionUID = 201738012;
 
 	/**
-	 * The singleton instance of PUBLIC.SYSTEM
+	 * The singleton instance of <code>PUBLIC.SYSTEM</code>
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.System SYSTEM = new org.jooq.test.hsqldb.generatedclasses.tables.System();
 
@@ -25,18 +25,27 @@ public class System extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generat
 	}
 
 	/**
-	 * The table column <code>PUBLIC.SYSTEM.ID</code>
+	 * The column <code>PUBLIC.SYSTEM.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.SystemRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>PUBLIC.SYSTEM</code> table reference
+	 */
 	public System() {
 		super("SYSTEM", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>PUBLIC.SYSTEM</code> table reference
+	 */
 	public System(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.System.SYSTEM);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.System as(java.lang.String alias) {
 		return new org.jooq.test.hsqldb.generatedclasses.tables.System(alias);

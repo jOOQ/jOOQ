@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -451092419;
+	private static final long serialVersionUID = -867604537;
 
 	/**
-	 * The singleton instance of PUBLIC.T_TRIGGERS
+	 * The singleton instance of <code>PUBLIC.T_TRIGGERS</code>
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.TTriggers T_TRIGGERS = new org.jooq.test.hsqldb.generatedclasses.tables.TTriggers();
 
@@ -25,41 +25,53 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID</code>
+	 * The column <code>PUBLIC.T_TRIGGERS.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.COUNTER</code>
+	 * The column <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>PUBLIC.T_TRIGGERS</code> table reference
+	 */
 	public TTriggers() {
 		super("T_TRIGGERS", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>PUBLIC.T_TRIGGERS</code> table reference
+	 */
 	public TTriggers(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord> getMainKey() {
 		return org.jooq.test.hsqldb.generatedclasses.Keys.PK_T_TRIGGERS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.hsqldb.generatedclasses.Keys.PK_T_TRIGGERS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.TTriggers as(java.lang.String alias) {
 		return new org.jooq.test.hsqldb.generatedclasses.tables.TTriggers(alias);

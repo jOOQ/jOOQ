@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -478835801;
+	private static final long serialVersionUID = -1463851697;
 
 	/**
-	 * The singleton instance of PUBLIC.T_639_NUMBERS_TABLE
+	 * The singleton instance of <code>PUBLIC.T_639_NUMBERS_TABLE</code>
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = new org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable();
 
@@ -25,91 +25,103 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Byte> BYTE = createField("BYTE", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT = createField("SHORT", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER = createField("INTEGER", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG = createField("LONG", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Byte> BYTE_DECIMAL = createField("BYTE_DECIMAL", org.jooq.impl.SQLDataType.TINYINT, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT_DECIMAL = createField("SHORT_DECIMAL", org.jooq.impl.SQLDataType.SMALLINT, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER_DECIMAL = createField("INTEGER_DECIMAL", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG_DECIMAL = createField("LONG_DECIMAL", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigDecimal> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.DECIMAL, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.FLOAT</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.FLOAT</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Double> FLOAT = createField("FLOAT", org.jooq.impl.SQLDataType.DOUBLE, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_639_NUMBERS_TABLE.DOUBLE</code>
+	 * The column <code>PUBLIC.T_639_NUMBERS_TABLE.DOUBLE</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Double> DOUBLE = createField("DOUBLE", org.jooq.impl.SQLDataType.DOUBLE, this);
 
+	/**
+	 * Create a <code>PUBLIC.T_639_NUMBERS_TABLE</code> table reference
+	 */
 	public T_639NumbersTable() {
 		super("T_639_NUMBERS_TABLE", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>PUBLIC.T_639_NUMBERS_TABLE</code> table reference
+	 */
 	public T_639NumbersTable(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord> getMainKey() {
 		return org.jooq.test.hsqldb.generatedclasses.Keys.PK_T_639_NUMBERS_TABLE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.hsqldb.generatedclasses.Keys.PK_T_639_NUMBERS_TABLE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable as(java.lang.String alias) {
 		return new org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable(alias);

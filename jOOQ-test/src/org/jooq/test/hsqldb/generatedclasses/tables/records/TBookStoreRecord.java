@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = 27255836;
+	private static final long serialVersionUID = 1583566040;
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_STORE.NAME</code>
+	 * Setter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. 
 	 */
 	@Override
 	public void setName(java.lang.String value) {
@@ -20,28 +20,37 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_STORE.NAME</code>
+	 * Getter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. 
 	 */
 	@Override
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_STORE.NAME</code>
+	 * Fetch a list of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> referencing this <code>PUBLIC.T_BOOK_STORE</code>
 	 */
-	public java.util.List<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
+	public org.jooq.Result<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()
 			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
 			.where(org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME)))
 			.fetch();
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TBookStoreRecord
+	 * {@inheritDoc}
 	 */
-	public TBookStoreRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+	@Override
+	public org.jooq.Record1<java.lang.String> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -78,5 +87,37 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value1() {
 		return getName();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBookStore from) {
+		setName(from.getName());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBookStore> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TBookStoreRecord
+	 */
+	public TBookStoreRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 }

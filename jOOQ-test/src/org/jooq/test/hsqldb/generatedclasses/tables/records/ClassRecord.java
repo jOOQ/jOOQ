@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class ClassRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ClassRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IClass {
 
-	private static final long serialVersionUID = -2091281613;
+	private static final long serialVersionUID = 145826731;
 
 	/**
-	 * The table column <code>PUBLIC.CLASS.CLASS</code>
+	 * Setter for <code>PUBLIC.CLASS.CLASS</code>. 
 	 */
 	@Override
 	public void setClass_(java.lang.Integer value) {
@@ -20,19 +20,16 @@ public class ClassRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	}
 
 	/**
-	 * The table column <code>PUBLIC.CLASS.CLASS</code>
+	 * Getter for <code>PUBLIC.CLASS.CLASS</code>. 
 	 */
 	@Override
 	public java.lang.Integer getClass_() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.Class.CLASS.CLASS_);
 	}
 
-	/**
-	 * Create a detached ClassRecord
-	 */
-	public ClassRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.Class.CLASS);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record1 type implementation
@@ -68,5 +65,37 @@ public class ClassRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	@Override
 	public java.lang.Integer value1() {
 		return getClass_();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IClass from) {
+		setClass_(from.getClass_());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IClass> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ClassRecord
+	 */
+	public ClassRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.Class.CLASS);
 	}
 }

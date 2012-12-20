@@ -9,12 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.String[], java.lang.Integer[], java.sql.Date[]>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = -1751661877;
+	private static final long serialVersionUID = -1735442941;
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,9 +20,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -32,7 +28,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
+	 * Setter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	@Override
 	public void setStringArray(java.lang.String[] value) {
@@ -40,7 +36,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
+	 * Getter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	@Override
 	public java.lang.String[] getStringArray() {
@@ -48,7 +44,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
+	 * Setter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	@Override
 	public void setNumberArray(java.lang.Integer[] value) {
@@ -56,7 +52,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
+	 * Getter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	@Override
 	public java.lang.Integer[] getNumberArray() {
@@ -64,7 +60,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
+	 * Setter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	@Override
 	public void setDateArray(java.sql.Date[] value) {
@@ -72,18 +68,27 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
+	 * Getter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	@Override
 	public java.sql.Date[] getDateArray() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS.DATE_ARRAY);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TArraysRecord
+	 * {@inheritDoc}
 	 */
-	public TArraysRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -168,5 +173,40 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.sql.Date[] value4() {
 		return getDateArray();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITArrays from) {
+		setId(from.getId());
+		setStringArray(from.getStringArray());
+		setNumberArray(from.getNumberArray());
+		setDateArray(from.getDateArray());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITArrays> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TArraysRecord
+	 */
+	public TArraysRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS);
 	}
 }

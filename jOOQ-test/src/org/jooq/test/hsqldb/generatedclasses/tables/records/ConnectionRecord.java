@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class ConnectionRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ConnectionRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IConnection {
 
-	private static final long serialVersionUID = -406377313;
+	private static final long serialVersionUID = 31709511;
 
 	/**
-	 * The table column <code>PUBLIC.CONNECTION.ID</code>
+	 * Setter for <code>PUBLIC.CONNECTION.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,19 +20,16 @@ public class ConnectionRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * The table column <code>PUBLIC.CONNECTION.ID</code>
+	 * Getter for <code>PUBLIC.CONNECTION.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.Connection.CONNECTION.ID);
 	}
 
-	/**
-	 * Create a detached ConnectionRecord
-	 */
-	public ConnectionRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.Connection.CONNECTION);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record1 type implementation
@@ -68,5 +65,37 @@ public class ConnectionRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	@Override
 	public java.lang.Integer value1() {
 		return getId();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IConnection from) {
+		setId(from.getId());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IConnection> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ConnectionRecord
+	 */
+	public ConnectionRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.Connection.CONNECTION);
 	}
 }

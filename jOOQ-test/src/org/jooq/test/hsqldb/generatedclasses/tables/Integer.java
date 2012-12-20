@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class Integer extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.IntegerRecord> {
 
-	private static final long serialVersionUID = 1770737965;
+	private static final long serialVersionUID = 238890717;
 
 	/**
-	 * The singleton instance of PUBLIC.INTEGER
+	 * The singleton instance of <code>PUBLIC.INTEGER</code>
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.Integer INTEGER = new org.jooq.test.hsqldb.generatedclasses.tables.Integer();
 
@@ -25,18 +25,27 @@ public class Integer extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.genera
 	}
 
 	/**
-	 * The table column <code>PUBLIC.INTEGER.ID</code>
+	 * The column <code>PUBLIC.INTEGER.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.IntegerRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>PUBLIC.INTEGER</code> table reference
+	 */
 	public Integer() {
 		super("INTEGER", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>PUBLIC.INTEGER</code> table reference
+	 */
 	public Integer(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.Integer.INTEGER);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.Integer as(java.lang.String alias) {
 		return new org.jooq.test.hsqldb.generatedclasses.tables.Integer(alias);

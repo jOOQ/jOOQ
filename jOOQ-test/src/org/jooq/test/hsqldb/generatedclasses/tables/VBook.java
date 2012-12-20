@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 1537689775;
+	private static final long serialVersionUID = -10951677;
 
 	/**
-	 * The singleton instance of PUBLIC.V_BOOK
+	 * The singleton instance of <code>PUBLIC.V_BOOK</code>
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.VBook V_BOOK = new org.jooq.test.hsqldb.generatedclasses.tables.VBook();
 
@@ -25,68 +25,77 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generate
 	}
 
 	/**
-	 * The table column <code>PUBLIC.V_BOOK.ID</code>
+	 * The column <code>PUBLIC.V_BOOK.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_BOOK.AUTHOR_ID</code>
+	 * The column <code>PUBLIC.V_BOOK.AUTHOR_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>
+	 * The column <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_BOOK.DETAILS_ID</code>
+	 * The column <code>PUBLIC.V_BOOK.DETAILS_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_BOOK.TITLE</code>
+	 * The column <code>PUBLIC.V_BOOK.TITLE</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>
+	 * The column <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>
+	 * The column <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>
+	 * The column <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_BOOK.CONTENT_PDF</code>
+	 * The column <code>PUBLIC.V_BOOK.CONTENT_PDF</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.VARBINARY, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_BOOK.REC_VERSION</code>
+	 * The column <code>PUBLIC.V_BOOK.REC_VERSION</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.lang.Integer> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>
+	 * The column <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
+	/**
+	 * Create a <code>PUBLIC.V_BOOK</code> table reference
+	 */
 	public VBook() {
 		super("V_BOOK", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>PUBLIC.V_BOOK</code> table reference
+	 */
 	public VBook(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.VBook as(java.lang.String alias) {
 		return new org.jooq.test.hsqldb.generatedclasses.tables.VBook(alias);

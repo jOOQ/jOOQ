@@ -10,36 +10,46 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITTriggers extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	public void setIdGenerated(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	public java.lang.Integer getIdGenerated();
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID</code>
+	 * Setter for <code>PUBLIC.T_TRIGGERS.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID</code>
+	 * Getter for <code>PUBLIC.T_TRIGGERS.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.COUNTER</code>
+	 * Setter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
 	 */
 	public void setCounter(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.COUNTER</code>
+	 * Getter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
 	 */
 	public java.lang.Integer getCounter();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITTriggers
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITTriggers from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITTriggers
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITTriggers> E into(E into);
 }

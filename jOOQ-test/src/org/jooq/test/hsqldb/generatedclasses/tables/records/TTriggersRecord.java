@@ -9,12 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITTriggers {
 
-	private static final long serialVersionUID = 366643763;
+	private static final long serialVersionUID = 961927870;
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	@Override
 	public void setIdGenerated(java.lang.Integer value) {
@@ -22,9 +20,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	@Override
 	public java.lang.Integer getIdGenerated() {
@@ -32,7 +28,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID</code>
+	 * Setter for <code>PUBLIC.T_TRIGGERS.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -40,7 +36,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.ID</code>
+	 * Getter for <code>PUBLIC.T_TRIGGERS.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -48,7 +44,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.COUNTER</code>
+	 * Setter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
 	 */
 	@Override
 	public void setCounter(java.lang.Integer value) {
@@ -56,18 +52,27 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_TRIGGERS.COUNTER</code>
+	 * Getter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
 	 */
 	@Override
 	public java.lang.Integer getCounter() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TTriggersRecord
+	 * {@inheritDoc}
 	 */
-	public TTriggersRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -136,5 +141,39 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.lang.Integer value3() {
 		return getCounter();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITTriggers from) {
+		setIdGenerated(from.getIdGenerated());
+		setId(from.getId());
+		setCounter(from.getCounter());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITTriggers> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TTriggersRecord
+	 */
+	public TTriggersRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 }

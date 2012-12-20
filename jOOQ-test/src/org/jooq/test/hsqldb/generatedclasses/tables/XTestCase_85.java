@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -1040391800;
+	private static final long serialVersionUID = -1326782430;
 
 	/**
-	 * The singleton instance of PUBLIC.X_TEST_CASE_85
+	 * The singleton instance of <code>PUBLIC.X_TEST_CASE_85</code>
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = new org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_85();
 
@@ -25,59 +25,61 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_85.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>PUBLIC.X_TEST_CASE_85.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * The column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("X_UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * The column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("X_UNUSED_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>PUBLIC.X_TEST_CASE_85</code> table reference
+	 */
 	public XTestCase_85() {
 		super("X_TEST_CASE_85", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>PUBLIC.X_TEST_CASE_85</code> table reference
+	 */
 	public XTestCase_85(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record> getMainKey() {
 		return org.jooq.test.hsqldb.generatedclasses.Keys.PK_X_TEST_CASE_85;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record>>asList(org.jooq.test.hsqldb.generatedclasses.Keys.PK_X_TEST_CASE_85);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record, ?>>asList(org.jooq.test.hsqldb.generatedclasses.Keys.FK_X_TEST_CASE_85);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_85 as(java.lang.String alias) {
 		return new org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_85(alias);

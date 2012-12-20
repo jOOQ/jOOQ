@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = 615324814;
+	private static final long serialVersionUID = -959071627;
 
 	/**
-	 * The table column <code>PUBLIC.V_LIBRARY.AUTHOR</code>
+	 * Setter for <code>PUBLIC.V_LIBRARY.AUTHOR</code>. 
 	 */
 	@Override
 	public void setAuthor(java.lang.String value) {
@@ -20,7 +20,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.V_LIBRARY.AUTHOR</code>
+	 * Getter for <code>PUBLIC.V_LIBRARY.AUTHOR</code>. 
 	 */
 	@Override
 	public java.lang.String getAuthor() {
@@ -28,7 +28,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.V_LIBRARY.TITLE</code>
+	 * Setter for <code>PUBLIC.V_LIBRARY.TITLE</code>. 
 	 */
 	@Override
 	public void setTitle(java.lang.String value) {
@@ -36,19 +36,16 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.V_LIBRARY.TITLE</code>
+	 * Getter for <code>PUBLIC.V_LIBRARY.TITLE</code>. 
 	 */
 	@Override
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VLibrary.V_LIBRARY.TITLE);
 	}
 
-	/**
-	 * Create a detached VLibraryRecord
-	 */
-	public VLibraryRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.VLibrary.V_LIBRARY);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -100,5 +97,38 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.String value2() {
 		return getTitle();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IVLibrary from) {
+		setAuthor(from.getAuthor());
+		setTitle(from.getTitle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IVLibrary> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached VLibraryRecord
+	 */
+	public VLibraryRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 }

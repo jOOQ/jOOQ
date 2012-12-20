@@ -9,31 +9,30 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -645884516;
-
+	private static final long serialVersionUID = -337823673;
 
 	/**
-	 * The procedure parameter <code>PUBLIC.F317.RETURN_VALUE</code>
+	 * The parameter <code>PUBLIC.F317.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>PUBLIC.F317.P1</code>
+	 * The parameter <code>PUBLIC.F317.P1</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P1 = createParameter("P1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>PUBLIC.F317.P2</code>
+	 * The parameter <code>PUBLIC.F317.P2</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P2 = createParameter("P2", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>PUBLIC.F317.P3</code>
+	 * The parameter <code>PUBLIC.F317.P3</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P3 = createParameter("P3", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>PUBLIC.F317.P4</code>
+	 * The parameter <code>PUBLIC.F317.P4</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P4 = createParameter("P4", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -58,9 +57,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>P1</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>P1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP1(org.jooq.Field<java.lang.Integer> field) {
 		setField(P1, field);
@@ -74,9 +71,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>P2</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>P2</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP2(org.jooq.Field<java.lang.Integer> field) {
 		setField(P2, field);
@@ -90,9 +85,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>P3</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>P3</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP3(org.jooq.Field<java.lang.Integer> field) {
 		setField(P3, field);
@@ -106,9 +99,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	}
 
 	/**
-	 * Set the <code>P4</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>P4</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP4(org.jooq.Field<java.lang.Integer> field) {
 		setField(P4, field);

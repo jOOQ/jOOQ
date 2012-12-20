@@ -9,12 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_725LobTest {
 
-	private static final long serialVersionUID = 2100635532;
+	private static final long serialVersionUID = -2023317368;
 
 	/**
-	 * The table column <code>PUBLIC.T_725_LOB_TEST.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>PUBLIC.T_725_LOB_TEST.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,9 +20,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_725_LOB_TEST.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>PUBLIC.T_725_LOB_TEST.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -32,7 +28,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_725_LOB_TEST.LOB</code>
+	 * Setter for <code>PUBLIC.T_725_LOB_TEST.LOB</code>. 
 	 */
 	@Override
 	public void setLob(byte[] value) {
@@ -40,18 +36,27 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_725_LOB_TEST.LOB</code>
+	 * Getter for <code>PUBLIC.T_725_LOB_TEST.LOB</code>. 
 	 */
 	@Override
 	public byte[] getLob() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached T_725LobTestRecord
+	 * {@inheritDoc}
 	 */
-	public T_725LobTestRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -104,5 +109,38 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public byte[] value2() {
 		return getLob();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_725LobTest from) {
+		setId(from.getId());
+		setLob(from.getLob());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_725LobTest> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_725LobTestRecord
+	 */
+	public T_725LobTestRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
 	}
 }

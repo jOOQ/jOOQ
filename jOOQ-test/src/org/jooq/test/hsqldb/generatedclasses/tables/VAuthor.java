@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -2084798232;
+	private static final long serialVersionUID = 1449826506;
 
 	/**
-	 * The singleton instance of PUBLIC.V_AUTHOR
+	 * The singleton instance of <code>PUBLIC.V_AUTHOR</code>
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.VAuthor V_AUTHOR = new org.jooq.test.hsqldb.generatedclasses.tables.VAuthor();
 
@@ -25,43 +25,52 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.genera
 	}
 
 	/**
-	 * The table column <code>PUBLIC.V_AUTHOR.ID</code>
+	 * The column <code>PUBLIC.V_AUTHOR.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>
+	 * The column <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_AUTHOR.LAST_NAME</code>
+	 * The column <code>PUBLIC.V_AUTHOR.LAST_NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>
+	 * The column <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>
+	 * The column <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.V_AUTHOR.ADDRESS</code>
+	 * The column <code>PUBLIC.V_AUTHOR.ADDRESS</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>PUBLIC.V_AUTHOR</code> table reference
+	 */
 	public VAuthor() {
 		super("V_AUTHOR", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>PUBLIC.V_AUTHOR</code> table reference
+	 */
 	public VAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.VAuthor as(java.lang.String alias) {
 		return new org.jooq.test.hsqldb.generatedclasses.tables.VAuthor(alias);

@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class LongRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.LongRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Long>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ILong {
 
-	private static final long serialVersionUID = 1386220326;
+	private static final long serialVersionUID = 1012120727;
 
 	/**
-	 * The table column <code>PUBLIC.LONG.ID</code>
+	 * Setter for <code>PUBLIC.LONG.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class LongRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsql
 	}
 
 	/**
-	 * The table column <code>PUBLIC.LONG.ID</code>
+	 * Getter for <code>PUBLIC.LONG.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class LongRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsql
 	}
 
 	/**
-	 * The table column <code>PUBLIC.LONG.OTHER</code>
+	 * Setter for <code>PUBLIC.LONG.OTHER</code>. 
 	 */
 	@Override
 	public void setOther(java.lang.Long value) {
@@ -36,19 +36,16 @@ public class LongRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsql
 	}
 
 	/**
-	 * The table column <code>PUBLIC.LONG.OTHER</code>
+	 * Getter for <code>PUBLIC.LONG.OTHER</code>. 
 	 */
 	@Override
 	public java.lang.Long getOther() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.Long.LONG.OTHER);
 	}
 
-	/**
-	 * Create a detached LongRecord
-	 */
-	public LongRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.Long.LONG);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -100,5 +97,38 @@ public class LongRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsql
 	@Override
 	public java.lang.Long value2() {
 		return getOther();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ILong from) {
+		setId(from.getId());
+		setOther(from.getOther());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ILong> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached LongRecord
+	 */
+	public LongRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.Long.LONG);
 	}
 }

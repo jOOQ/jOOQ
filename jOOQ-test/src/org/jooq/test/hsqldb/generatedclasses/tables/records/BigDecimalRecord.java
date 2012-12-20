@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class BigDecimalRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord> implements org.jooq.Record2<java.lang.Integer, java.math.BigInteger>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IBigDecimal {
 
-	private static final long serialVersionUID = 2085074530;
+	private static final long serialVersionUID = 1228887651;
 
 	/**
-	 * The table column <code>PUBLIC.BIG_DECIMAL.ID</code>
+	 * Setter for <code>PUBLIC.BIG_DECIMAL.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class BigDecimalRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * The table column <code>PUBLIC.BIG_DECIMAL.ID</code>
+	 * Getter for <code>PUBLIC.BIG_DECIMAL.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class BigDecimalRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * The table column <code>PUBLIC.BIG_DECIMAL.OTHER</code>
+	 * Setter for <code>PUBLIC.BIG_DECIMAL.OTHER</code>. 
 	 */
 	@Override
 	public void setOther(java.math.BigInteger value) {
@@ -36,19 +36,16 @@ public class BigDecimalRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * The table column <code>PUBLIC.BIG_DECIMAL.OTHER</code>
+	 * Getter for <code>PUBLIC.BIG_DECIMAL.OTHER</code>. 
 	 */
 	@Override
 	public java.math.BigInteger getOther() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal.BIG_DECIMAL.OTHER);
 	}
 
-	/**
-	 * Create a detached BigDecimalRecord
-	 */
-	public BigDecimalRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal.BIG_DECIMAL);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -100,5 +97,38 @@ public class BigDecimalRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	@Override
 	public java.math.BigInteger value2() {
 		return getOther();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IBigDecimal from) {
+		setId(from.getId());
+		setOther(from.getOther());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IBigDecimal> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached BigDecimalRecord
+	 */
+	public BigDecimalRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal.BIG_DECIMAL);
 	}
 }

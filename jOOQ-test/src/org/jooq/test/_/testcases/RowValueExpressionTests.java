@@ -416,28 +416,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(1903, (int) author.value5());
         // ignore field6(), which is possibly a UDT
 
-        // Check if the author can be re-selected using row-value expression predicates
-        assertEquals(author,
+        // Check if the a record can be re-selected using row-value expression predicates
+        // Note, can't use author, because it contains a NULL value in the address field
+        B2S b2s = create().selectFrom(TBookToBookStore()).where(TBookToBookStore_BOOK_ID().eq(2)).fetchOne();
+        assertEquals(b2s,
         create().fetchOne(
             select(
-                author.field1(),
-                author.field2(),
-                author.field3(),
-                author.field4(),
-                author.field5(),
-                author.field6())
-            .from(TAuthor())
-            .where(author.fieldsRow().eq(author.valuesRow()))
+                b2s.field1(),
+                b2s.field2(),
+                b2s.field3())
+            .from(TBookToBookStore())
+            .where(b2s.fieldsRow().eq(b2s.valuesRow()))
 
             // Add a dummy union, as a compile-time type-check
             .union(
             select(
-                val(1),
                 val("abc"),
-                val("xyz"),
-                val(Date.valueOf("1903-06-25")),
-                val(123),
-                val(null))
+                val(1),
+                val(1))
             .where(val(1).eq(val(0))))
         ));
     }

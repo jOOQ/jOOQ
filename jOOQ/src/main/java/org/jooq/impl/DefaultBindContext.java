@@ -40,7 +40,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Utils.getDriverConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
@@ -284,7 +283,7 @@ class DefaultBindContext extends AbstractBindContext {
             }
         }
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            Connection connection = getDriverConnection(this);
+            Connection connection = getConnectionProvider().acquire();
             ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
             stmt.setArray(nextIndex(), on(connection).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
         }

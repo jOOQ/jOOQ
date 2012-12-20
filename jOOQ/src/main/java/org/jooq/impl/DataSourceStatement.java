@@ -77,9 +77,7 @@ class DataSourceStatement extends JDBC41Statement implements Statement {
             getDelegate().close();
         }
         finally {
-            if (connection.getDataSource() != null) {
-                connection.close();
-            }
+            connection.close();
         }
     }
 

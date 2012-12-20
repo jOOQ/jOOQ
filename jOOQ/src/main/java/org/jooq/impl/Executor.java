@@ -57,23 +57,19 @@ import static org.jooq.impl.Factory.trueCondition;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
-import javax.xml.bind.JAXB;
 
 import org.jooq.Attachable;
 import org.jooq.Batch;
@@ -81,6 +77,7 @@ import org.jooq.BatchBindStep;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
 import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.DeleteQuery;
@@ -121,20 +118,18 @@ import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.conf.Settings;
-import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
 
 /**
  * TODO: Write this Javadoc
  * <p>
  * An <code>Executor</code> holds a reference to a JDBC {@link Connection} and
- * operates upon that connection. This means, that a <code>Factory</code> is
+ * operates upon that connection. This means, that an <code>Executor</code> is
  * <i>not</i> thread-safe, since a JDBC Connection is not thread-safe either.
  *
  * @author Lukas Eder
@@ -145,8 +140,6 @@ public class Executor implements Configuration {
      * Generated UID
      */
     private static final long       serialVersionUID  = 2681360188806309513L;
-    private static final JooqLogger log               = JooqLogger.getLogger(Factory.class);
-
     private final Configuration     configuration;
 
     // -------------------------------------------------------------------------
@@ -154,136 +147,135 @@ public class Executor implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a factory with a connection and a dialect configured.
+     * Create an executor with a dialect configured.
      * <p>
-     * If you provide a JDBC connection to a jOOQ Factory, jOOQ will use that
-     * connection for creating statements, but it will never call any of these
-     * methods:
-     * <ul>
-     * <li> {@link Connection#commit()}</li>
-     * <li> {@link Connection#rollback()}</li>
-     * <li> {@link Connection#close()}</li>
-     * </ul>
-     * Use this constructor if you want to handle transactions directly on the
-     * connection.
+     * Without a connection or data source, this executor cannot execute
+     * queries. Use it to render SQL only.
      *
-     * @param connection The connection to use with objects created from this
-     *            factory
-     * @param dialect The dialect to use with objects created from this factory
-     */
-    public Executor(Connection connection, SQLDialect dialect) {
-        this(null, connection, dialect, null, null, null);
-    }
-
-    /**
-     * Create a factory with a data source and a dialect configured.
-     * <p>
-     * If you provide a JDBC data source to a jOOQ Factory, jOOQ will use that
-     * data source for initialising connections, and creating statements.
-     * <p>
-     * Use this constructor if you want to run distributed transactions, such as
-     * <code>javax.transaction.UserTransaction</code>. If you provide jOOQ
-     * factories with a data source, jOOQ will {@link Connection#close()
-     * close()} all connections after query execution in order to return the
-     * connection to the connection pool. If you do not use distributed
-     * transactions, this will produce driver-specific behaviour at the end of
-     * query execution at <code>close()</code> invocation (e.g. a transaction
-     * rollback). Use {@link #Executor(Connection, SQLDialect)} instead, to
-     * control the connection's lifecycle.
-     *
-     * @param datasource The data source to use with objects created from this
-     *            factory
-     * @param dialect The dialect to use with objects created from this factory
-     */
-    public Executor(DataSource datasource, SQLDialect dialect) {
-        this(datasource, null, dialect, null, null, null);
-    }
-
-    /**
-     * Create a factory with a dialect configured.
-     * <p>
-     * Without a connection or data source, this factory cannot execute queries.
-     * Use it to render SQL only.
-     *
-     * @param dialect The dialect to use with objects created from this factory
+     * @param dialect The dialect to use with objects created from this executor
      */
     public Executor(SQLDialect dialect) {
-        this(null, null, dialect, null, null, null);
+        this(dialect, null);
     }
 
     /**
-     * Create a factory with a connection, a dialect and settings configured.
+     * Create an executor with a dialect and settings configured
      * <p>
-     * If you provide a JDBC connection to a jOOQ Factory, jOOQ will use that
-     * connection for creating statements, but it will never call any of these
-     * methods:
-     * <ul>
-     * <li> {@link Connection#commit()}</li>
-     * <li> {@link Connection#rollback()}</li>
-     * <li> {@link Connection#close()}</li>
-     * </ul>
-     * Use this constructor if you want to handle transactions directly on the
-     * connection.
+     * Without a connection or data source, this executor cannot execute
+     * queries. Use it to render SQL only.
+     *
+     * @param dialect The dialect to use with objects created from this executor
+     * @param settings The runtime settings to apply to objects created from
+     *            this executor
+     */
+    public Executor(SQLDialect dialect, Settings settings) {
+        this(new DefaultConfiguration(new NoConnectionProvider(), dialect, settings, null));
+    }
+
+    /**
+     * Create an executor with a connection and a dialect configured.
+     * <p>
+     * If you provide a JDBC connection to a jOOQ Executor, jOOQ will use that
+     * connection directly for creating statements.
+     * <p>
+     * This is a convenience constructor for
+     * {@link #Executor(ConnectionProvider, SQLDialect, Settings)} using a
+     * {@link DefaultConnectionProvider}
      *
      * @param connection The connection to use with objects created from this
-     *            factory
-     * @param dialect The dialect to use with objects created from this factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
+     *            executor
+     * @param dialect The dialect to use with objects created from this executor
+     * @see DefaultConnectionProvider
      */
-    @SuppressWarnings("deprecation")
-    public Executor(Connection connection, SQLDialect dialect, Settings settings) {
-        this(null, connection, dialect, settings, new org.jooq.SchemaMapping(settings), null);
+    public Executor(Connection connection, SQLDialect dialect) {
+        this(connection, dialect, null);
     }
 
     /**
-     * Create a factory with a data source, a dialect and settings configured.
+     * Create an executor with a connection, a dialect and settings configured.
      * <p>
-     * If you provide a JDBC data source to a jOOQ Factory, jOOQ will use that
+     * If you provide a JDBC connection to a jOOQ Executor, jOOQ will use that
+     * connection directly for creating statements.
+     * <p>
+     * This is a convenience constructor for
+     * {@link #Executor(ConnectionProvider, SQLDialect, Settings)} using a
+     * {@link DefaultConnectionProvider}
+     *
+     * @param connection The connection to use with objects created from this
+     *            executor
+     * @param dialect The dialect to use with objects created from this executor
+     * @param settings The runtime settings to apply to objects created from
+     *            this executor
+     * @see DefaultConnectionProvider
+     */
+    public Executor(Connection connection, SQLDialect dialect, Settings settings) {
+        this(new DefaultConfiguration(new DefaultConnectionProvider(connection), dialect, settings, null));
+    }
+
+    /**
+     * Create an executor with a data source and a dialect configured.
+     * <p>
+     * If you provide a JDBC data source to a jOOQ Executor, jOOQ will use that
      * data source for initialising connections, and creating statements.
      * <p>
-     * Use this constructor if you want to run distributed transactions, such as
-     * <code>javax.transaction.UserTransaction</code>. If you provide jOOQ
-     * factories with a data source, jOOQ will {@link Connection#close()
-     * close()} all connections after query execution in order to return the
-     * connection to the connection pool. If you do not use distributed
-     * transactions, this will produce driver-specific behaviour at the end of
-     * query execution at <code>close()</code> invocation (e.g. a transaction
-     * rollback). Use {@link #Executor(Connection, SQLDialect, Settings)}
-     * instead, to control the connection's lifecycle.
+     * This is a convenience constructor for
+     * {@link #Executor(ConnectionProvider, SQLDialect)} using a
+     * {@link DataSourceConnectionProvider}
      *
      * @param datasource The data source to use with objects created from this
-     *            factory
-     * @param dialect The dialect to use with objects created from this factory
-     * @param settings The runtime settings to apply to objects created from
-     *            this factory
+     *            executor
+     * @param dialect The dialect to use with objects created from this executor
+     * @see DataSourceConnectionProvider
      */
-    @SuppressWarnings("deprecation")
-    public Executor(DataSource datasource, SQLDialect dialect, Settings settings) {
-        this(datasource, null, dialect, settings, new org.jooq.SchemaMapping(settings), null);
+    public Executor(DataSource datasource, SQLDialect dialect) {
+        this(datasource, dialect, null);
     }
 
     /**
-     * Create a factory with a dialect and settings configured
+     * Create an executor with a data source, a dialect and settings configured.
      * <p>
-     * Without a connection or data source, this factory cannot execute queries.
-     * Use it to render SQL only.
+     * If you provide a JDBC data source to a jOOQ Executor, jOOQ will use that
+     * data source for initialising connections, and creating statements.
+     * <p>
+     * This is a convenience constructor for
+     * {@link #Executor(ConnectionProvider, SQLDialect, Settings)} using a
+     * {@link DataSourceConnectionProvider}
      *
-     * @param dialect The dialect to use with objects created from this factory
+     * @param datasource The data source to use with objects created from this
+     *            executor
+     * @param dialect The dialect to use with objects created from this executor
      * @param settings The runtime settings to apply to objects created from
-     *            this factory
+     *            this executor
+     * @see DataSourceConnectionProvider
      */
-    @SuppressWarnings("deprecation")
-    public Executor(SQLDialect dialect, Settings settings) {
-        this(null, null, dialect, settings, new org.jooq.SchemaMapping(settings), null);
+    public Executor(DataSource datasource, SQLDialect dialect, Settings settings) {
+        this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), dialect, settings, null));
     }
 
     /**
-     * Do the instanciation
+     * Create an executor with a custom connection provider and a dialect
+     * configured.
+     *
+     * @param connectionProvider The connection provider providing jOOQ with
+     *            JDBC connections
+     * @param dialect The dialect to use with objects created from this executor
      */
-    @SuppressWarnings("deprecation")
-    private Executor(DataSource datasource, Connection connection, SQLDialect dialect, Settings settings, org.jooq.SchemaMapping mapping, Map<String, Object> data) {
-        this(new ExecutorConfiguration(datasource, connection, dialect, settings, mapping, data));
+    public Executor(ConnectionProvider connectionProvider, SQLDialect dialect) {
+        this(connectionProvider, dialect, null);
+    }
+
+    /**
+     * Create an executor with a custom connection provider, a dialect and settings
+     * configured.
+     *
+     * @param connectionProvider The connection provider providing jOOQ with
+     *            JDBC connections
+     * @param dialect The dialect to use with objects created from this executor
+     * @param settings The runtime settings to apply to objects created from
+     *            this executor
+     */
+    public Executor(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
+        this(new DefaultConfiguration(connectionProvider, dialect, settings, null));
     }
 
     /**
@@ -296,7 +288,7 @@ public class Executor implements Configuration {
         // The Configuration can be null when unattached Query objects are
         // executed or when unattached Records are stored...
         if (configuration == null) {
-            configuration = DefaultConfiguration.DEFAULT_CONFIGURATION;
+            configuration = new DefaultConfiguration();
         }
 
         this.configuration = configuration;
@@ -309,26 +301,6 @@ public class Executor implements Configuration {
     @Override
     public final SQLDialect getDialect() {
         return configuration.getDialect();
-    }
-
-    @Override
-    public final DataSource getDataSource() {
-        return configuration.getDataSource();
-    }
-
-    @Override
-    public final void setDataSource(DataSource datasource) {
-        configuration.setDataSource(datasource);
-    }
-
-    @Override
-    public final Connection getConnection() {
-        return configuration.getConnection();
-    }
-
-    @Override
-    public final void setConnection(Connection connection) {
-        configuration.setConnection(connection);
     }
 
     @Override
@@ -357,147 +329,9 @@ public class Executor implements Configuration {
         return configuration.setData(key, value);
     }
 
-    private static class ExecutorConfiguration implements Configuration {
-
-        /**
-         * Serial version UID
-         */
-        private static final long            serialVersionUID = 8193158984283234708L;
-
-        private transient Connection         connection;
-        private transient DataSource         datasource;
-        private final SQLDialect             dialect;
-
-        @SuppressWarnings("deprecation")
-        private final org.jooq.SchemaMapping mapping;
-        private final Settings               settings;
-        private final Map<String, Object>    data;
-
-        @SuppressWarnings("deprecation")
-        ExecutorConfiguration(DataSource datasource, Connection connection, SQLDialect dialect, Settings settings, org.jooq.SchemaMapping mapping, Map<String, Object> data) {
-            this.connection = connection;
-            this.datasource = datasource;
-            this.dialect = dialect;
-            this.settings = settings != null ? settings : SettingsTools.defaultSettings();
-            this.mapping = mapping != null ? mapping : new org.jooq.SchemaMapping(this.settings);
-            this.data = data != null ? data : new HashMap<String, Object>();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public final SQLDialect getDialect() {
-            return dialect;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public final DataSource getDataSource() {
-            return datasource;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void setDataSource(DataSource datasource) {
-            this.datasource = datasource;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public final Connection getConnection() {
-
-            // SQL-builder only Factory
-            if (connection == null && datasource == null) {
-                return null;
-            }
-
-            // [#1424] DataSource-enabled Factory with no Connection yet
-            else if (connection == null && datasource != null) {
-                return new DataSourceConnection(datasource, null, settings);
-            }
-
-            // Factory clone
-            else if (connection.getClass() == DataSourceConnection.class) {
-                return connection;
-            }
-
-            // Factory clone
-            else if (connection.getClass() == ConnectionProxy.class) {
-                return connection;
-            }
-
-            // [#1424] Connection-based Factory
-            else {
-                return new DataSourceConnection(null, new ConnectionProxy(connection, settings), settings);
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public final void setConnection(Connection connection) {
-            this.connection = connection;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        @Deprecated
-        public final org.jooq.SchemaMapping getSchemaMapping() {
-            return mapping;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public final Settings getSettings() {
-            return settings;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public final Map<String, Object> getData() {
-            return data;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public final Object getData(String key) {
-            return data.get(key);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public final Object setData(String key, Object value) {
-            return data.put(key, value);
-        }
-
-        @Override
-        public String toString() {
-            StringWriter writer = new StringWriter();
-            JAXB.marshal(settings, writer);
-
-            return "ExecutorConfiguration [\n\tconnected=" + (connection != null) +
-                ",\n\tdialect=" + dialect +
-                ",\n\tdata=" + data +
-                ",\n\tsettings=\n\t\t" + writer.toString().trim().replace("\n", "\n\t\t") +
-                "\n]";        }
+    @Override
+    public final ConnectionProvider getConnectionProvider() {
+        return configuration.getConnectionProvider();
     }
 
     // -------------------------------------------------------------------------
@@ -508,275 +342,13 @@ public class Executor implements Configuration {
         return new MetaImpl(this);
     }
 
-    /**
-     * Convenience method to access {@link Connection#commit()}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final void commit() throws DataAccessException {
-        try {
-            log.debug("commit");
-            getConnection().commit();
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot commit transaction", e);
-        }
-    }
-
-    /**
-     * Convenience method to access {@link Connection#rollback()}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final void rollback() throws DataAccessException {
-        try {
-            log.debug("rollback");
-            getConnection().rollback();
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot rollback transaction", e);
-        }
-    }
-
-    /**
-     * Convenience method to access {@link Connection#rollback(Savepoint)}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final void rollback(Savepoint savepoint) throws DataAccessException {
-        try {
-            log.debug("rollback to savepoint");
-            getConnection().rollback(savepoint);
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot rollback transaction", e);
-        }
-    }
-
-    /**
-     * Convenience method to access {@link Connection#setSavepoint()}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final Savepoint setSavepoint() throws DataAccessException {
-        try {
-            log.debug("set savepoint");
-            return getConnection().setSavepoint();
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot set savepoint", e);
-        }
-    }
-
-    /**
-     * Convenience method to access {@link Connection#setSavepoint(String)}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final Savepoint setSavepoint(String name) throws DataAccessException {
-        try {
-            log.debug("set savepoint", name);
-            return getConnection().setSavepoint(name);
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot set savepoint", e);
-        }
-    }
-
-    /**
-     * Convenience method to access
-     * {@link Connection#releaseSavepoint(Savepoint)}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final void releaseSavepoint(Savepoint savepoint) throws DataAccessException {
-        try {
-            log.debug("release savepoint");
-            getConnection().releaseSavepoint(savepoint);
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot release savepoint", e);
-        }
-    }
-
-    /**
-     * Convenience method to access {@link Connection#setAutoCommit(boolean)}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final void setAutoCommit(boolean autoCommit) throws DataAccessException {
-        try {
-            log.debug("setting auto commit", autoCommit);
-            getConnection().setAutoCommit(autoCommit);
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot set autoCommit", e);
-        }
-    }
-
-    /**
-     * Convenience method to access {@link Connection#getAutoCommit()}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final boolean getAutoCommit() throws DataAccessException {
-        try {
-            return getConnection().getAutoCommit();
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot get autoCommit", e);
-        }
-    }
-
-    /**
-     * Convenience method to access {@link Connection#setHoldability(int)}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final void setHoldability(int holdability) throws DataAccessException {
-        try {
-            log.debug("setting holdability", holdability);
-            getConnection().setHoldability(holdability);
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot set holdability", e);
-        }
-    }
-
-    /**
-     * Convenience method to access {@link Connection#getHoldability()}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final int getHoldability() throws DataAccessException {
-        try {
-            return getConnection().getHoldability();
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot get holdability", e);
-        }
-    }
-
-    /**
-     * Convenience method to access
-     * {@link Connection#setTransactionIsolation(int)}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final void setTransactionIsolation(int level) throws DataAccessException {
-        try {
-            log.debug("setting tx isolation", level);
-            getConnection().setTransactionIsolation(level);
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot set transactionIsolation", e);
-        }
-    }
-
-    /**
-     * Convenience method to access {@link Connection#getTransactionIsolation()}
-     * <p>
-     * Use this method only if you control the JDBC {@link Connection} wrapped
-     * by this {@link Configuration}, and if that connection manages the current
-     * transaction. If your transaction is operated on a distributed
-     * <code>javax.transaction.UserTransaction</code>, for instance, this method
-     * will not work.
-     *
-     * @see Configuration#setConnection(Connection)
-     * @see Configuration#setDataSource(DataSource)
-     */
-    public final int getTransactionIsolation() throws DataAccessException {
-        try {
-            return getConnection().getTransactionIsolation();
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Cannot get transactionIsolation", e);
-        }
-    }
 
     // -------------------------------------------------------------------------
     // XXX RenderContext and BindContext accessors
     // -------------------------------------------------------------------------
 
     /**
-     * Get a new {@link RenderContext} for the context of this factory
+     * Get a new {@link RenderContext} for the context of this executor
      * <p>
      * This will return an initialised render context as such:
      * <ul>
@@ -793,7 +365,7 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Render a QueryPart in the context of this factory
+     * Render a QueryPart in the context of this executor
      * <p>
      * This is the same as calling <code>renderContext().render(part)</code>
      *
@@ -805,7 +377,7 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Render a QueryPart in the context of this factory, rendering bind
+     * Render a QueryPart in the context of this executor, rendering bind
      * variables as named parameters.
      * <p>
      * This is the same as calling
@@ -819,7 +391,7 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Render a QueryPart in the context of this factory, inlining all bind
+     * Render a QueryPart in the context of this executor, inlining all bind
      * variables.
      * <p>
      * This is the same as calling
@@ -833,7 +405,7 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Get a new {@link BindContext} for the context of this factory
+     * Get a new {@link BindContext} for the context of this executor
      * <p>
      * This will return an initialised bind context as such:
      * <ul>
@@ -848,7 +420,7 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Get a new {@link BindContext} for the context of this factory
+     * Get a new {@link BindContext} for the context of this executor
      * <p>
      * This will return an initialised bind context as such:
      * <ul>
@@ -867,16 +439,16 @@ public class Executor implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Attach this <code>Factory</code> to some attachables
+     * Attach this <code>Executor</code> to some attachables
      */
     public final void attach(Attachable... attachables) {
         attach(Arrays.asList(attachables));
     }
 
     /**
-     * Attach this <code>Factory</code> to some attachables
+     * Attach this <code>Executor</code> to some attachables
      */
-    public final void attach(Collection<Attachable> attachables) {
+    public final void attach(Collection<? extends Attachable> attachables) {
         for (Attachable attachable : attachables) {
             attachable.attach(this);
         }
@@ -1742,7 +1314,7 @@ public class Executor implements Configuration {
      * {@link Factory#select(Field...)} instead.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.select(field1, field2)
      *       .from(table1)
@@ -1771,7 +1343,7 @@ public class Executor implements Configuration {
      * {@link Factory#select(Collection)} instead.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.select(fields)
      *       .from(table1)
@@ -1799,7 +1371,7 @@ public class Executor implements Configuration {
      * {@link Factory#selectDistinct(Field...)} instead.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.selectDistinct(field1, field2)
      *       .from(table1)
@@ -1827,7 +1399,7 @@ public class Executor implements Configuration {
      * {@link Factory#selectDistinct(Collection)} instead.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.selectDistinct(fields)
      *       .from(table1)
@@ -1855,7 +1427,7 @@ public class Executor implements Configuration {
      * {@link Factory#selectZero()} instead.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.selectZero()
      *       .from(table1)
@@ -1886,7 +1458,7 @@ public class Executor implements Configuration {
      * {@link Factory#selectOne()} instead.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.selectOne()
      *       .from(table1)
@@ -1917,7 +1489,7 @@ public class Executor implements Configuration {
      * {@link Factory#selectCount()} instead.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.selectCount()
      *       .from(table1)
@@ -1973,7 +1545,7 @@ public class Executor implements Configuration {
      * <code>SET a = b</code> syntax.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.insertInto(table)
      *       .set(field1, value1)
@@ -1996,7 +1568,7 @@ public class Executor implements Configuration {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.insertInto(table, field1, field2)
      *       .values(value1, value2)
@@ -2016,7 +1588,7 @@ public class Executor implements Configuration {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.insertInto(table, field1, field2)
      *       .values(value1, value2)
@@ -2047,7 +1619,7 @@ public class Executor implements Configuration {
      * Create a new DSL update statement.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.update(table)
      *       .set(field1, value1)
@@ -2118,7 +1690,7 @@ public class Executor implements Configuration {
      * </table>
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.mergeInto(table)
      *       .using(select)
@@ -2190,7 +1762,7 @@ public class Executor implements Configuration {
      * Create a new DSL delete statement.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.delete(table)
      *       .where(field1.greaterThan(100))
@@ -2342,7 +1914,7 @@ public class Executor implements Configuration {
      * Create a new DSL truncate statement.
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * Executor create = new Executor();
      *
      * create.truncate(table)
      *       .execute();

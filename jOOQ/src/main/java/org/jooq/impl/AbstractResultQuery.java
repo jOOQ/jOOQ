@@ -141,12 +141,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         // [#1296] These dialects do not implement FOR UPDATE. But the same
         // effect can be achieved using ResultSet.CONCUR_UPDATABLE
         if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.getDialect())) {
-            ctx.statement(ctx.getConnection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
+            ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
         }
 
         // Regular behaviour
         else {
-            ctx.statement(ctx.getConnection().prepareStatement(ctx.sql()));
+            ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
         }
 
         // [#1263] Allow for negative fetch sizes to support some non-standard
@@ -166,7 +166,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
-        Connection connection = ctx.getConnection();
+        Connection connection = ctx.connection();
         boolean autoCommit = false;
 
         // [#706] Postgres requires two separate queries running in the same

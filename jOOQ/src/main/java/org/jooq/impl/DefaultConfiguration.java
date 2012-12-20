@@ -35,90 +35,118 @@
  */
 package org.jooq.impl;
 
-import java.sql.Connection;
+import static org.jooq.SQLDialect.SQL99;
+
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.sql.DataSource;
+import javax.xml.bind.JAXB;
 
 import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 
 /**
- * The default configuration, if no other configuration is supplied
- *
- * @author Lukas Eder
+ * A default implementation for configurations within an Executor, if no
+ * custom configuration was supplied to {@link Executor#Executor(Configuration)}
  */
-final class DefaultConfiguration implements Configuration {
+class DefaultConfiguration implements Configuration {
 
     /**
-     * Generated UID
+     * Serial version UID
      */
-    private static final long  serialVersionUID      = -5746537675969065088L;
+    private static final long            serialVersionUID = 8193158984283234708L;
 
-    static final Configuration DEFAULT_CONFIGURATION = new DefaultConfiguration();
+    private transient ConnectionProvider connectionProvider;
+    private final SQLDialect             dialect;
 
     @SuppressWarnings("deprecation")
+    private final org.jooq.SchemaMapping mapping;
+    private final Settings               settings;
+    private final Map<String, Object>    data;
+
+    @SuppressWarnings("deprecation")
+    DefaultConfiguration() {
+        this(new NoConnectionProvider(), SQL99, SettingsTools.defaultSettings(), null);
+    }
+
+    @SuppressWarnings("deprecation")
+    DefaultConfiguration(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings, Map<String, Object> data) {
+        this.connectionProvider = connectionProvider;
+        this.dialect = dialect;
+        this.settings = settings != null ? settings : SettingsTools.defaultSettings();
+        this.mapping = new org.jooq.SchemaMapping(this.settings);
+        this.data = data != null ? data : new HashMap<String, Object>();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final SQLDialect getDialect() {
-        return SQLDialect.SQL99;
+        return dialect;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final DataSource getDataSource() {
-        return null;
+    public final ConnectionProvider getConnectionProvider() {
+        return connectionProvider;
     }
 
-    @Override
-    public void setDataSource(DataSource datasource) {}
-
-    @Override
-    public final Connection getConnection() {
-        return null;
-    }
-
-    @Override
-    public final void setConnection(Connection connection) {}
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Deprecated
     public final org.jooq.SchemaMapping getSchemaMapping() {
-        return org.jooq.SchemaMapping.NO_MAPPING;
-    }
-
-    @Override
-    public final Settings getSettings() {
-        return SettingsTools.defaultSettings();
-    }
-
-    @Override
-    public final Map<String, Object> getData() {
-        return new HashMap<String, Object>();
-    }
-
-    @Override
-    public final Object getData(String key) {
-        return null;
-    }
-
-    @Override
-    public final Object setData(String key, Object value) {
-        return null;
+        return mapping;
     }
 
     /**
-     * No further instances
+     * {@inheritDoc}
      */
-    private DefaultConfiguration() {}
+    @Override
+    public final Settings getSettings() {
+        return settings;
+    }
 
-    // -------------------------------------------------------------------------
-    // XXX The Object API
-    // -------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Map<String, Object> getData() {
+        return data;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Object getData(String key) {
+        return data.get(key);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Object setData(String key, Object value) {
+        return data.put(key, value);
+    }
 
     @Override
     public String toString() {
-        return new Executor(getConnection(), getDialect(), getSettings()).toString();
-    }
+        StringWriter writer = new StringWriter();
+        JAXB.marshal(settings, writer);
+
+        return "DefaultConfiguration [\n\tconnected=" + (connectionProvider != null && !(connectionProvider instanceof NoConnectionProvider)) +
+            ",\n\tdialect=" + dialect +
+            ",\n\tdata=" + data +
+            ",\n\tsettings=\n\t\t" + writer.toString().trim().replace("\n", "\n\t\t") +
+            "\n]";        }
 }

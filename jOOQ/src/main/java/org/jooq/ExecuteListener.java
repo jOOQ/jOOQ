@@ -56,15 +56,15 @@ import org.jooq.tools.StopWatchListener;
  * profilers, data collectors that can be hooked into a jOOQ {@link Executor}
  * using the {@link Settings#getExecuteListeners()} property, passing
  * <code>Settings</code> to
- * {@link Executor#Executor(java.sql.Connection, SQLDialect, Settings)}. jOOQ will
- * use those settings at the beginning of a query execution event to instanciate
- * all the provided listeners. In other words, listeners have the same lifetime
- * as a single query execution, and can thus be used to store state between the
- * moment when a query execution starts, and the moment when a query execution
- * finishes. Advanced <code>ExecuteListeners</code> can also provide custom
- * implementations of {@link Connection}, {@link PreparedStatement},
- * {@link ResultSet}, {@link SQLException} or {@link RuntimeException} to jOOQ
- * in apropriate methods.
+ * {@link Executor#Executor(java.sql.Connection, SQLDialect, Settings)}. jOOQ
+ * will use those settings at the beginning of a query execution event to
+ * instanciate all the provided listeners. In other words, listeners have the
+ * same lifetime as a single query execution, and can thus be used to store
+ * state between the moment when a query execution starts, and the moment when a
+ * query execution finishes. Advanced <code>ExecuteListeners</code> can also
+ * provide custom implementations of {@link Connection},
+ * {@link PreparedStatement}, {@link ResultSet}, {@link SQLException} or
+ * {@link RuntimeException} to jOOQ in apropriate methods.
  * <p>
  * For convenience, consider extending {@link DefaultExecuteListener} instead of
  * implementing this interface. This will prevent compilation errors in future
@@ -265,7 +265,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -275,9 +275,10 @@ public interface ExecuteListener extends EventListener {
      * </ul>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#setConnection(Connection)}: The connection used
-     * for execution. This may be particularly interesting if a {@link Query}
-     * was de-serialised and is thus lacking the underlying connection</li>
+     * <li> {@link ExecuteContext#connectionProvider(ConnectionProvider)}: The
+     * connection provider used for execution. This may be particularly
+     * interesting if a {@link Query} was de-serialised and is thus lacking the
+     * underlying connection</li>
      * </ul>
      */
     void start(ExecuteContext ctx);
@@ -287,7 +288,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -303,7 +304,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -329,7 +330,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -355,7 +356,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -399,7 +400,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -442,7 +443,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -486,7 +487,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -530,7 +531,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -576,7 +577,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -628,7 +629,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -671,7 +672,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -713,7 +714,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -755,7 +756,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -800,7 +801,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -848,7 +849,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
@@ -891,7 +892,7 @@ public interface ExecuteListener extends EventListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
-     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * <li> {@link ExecuteContext#connection()}: The connection used for
      * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a

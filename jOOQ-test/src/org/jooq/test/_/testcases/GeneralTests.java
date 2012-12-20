@@ -77,6 +77,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DetachedException;
+import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
@@ -228,7 +229,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 .getValue(TAuthor_FIRST_NAME()));
 
         // [#1191] Check execution capabilities with new features in ExecuteListener
-        ConnectionProviderListener.c = create().getConnection();
+        ConnectionProviderListener.c = create().getConnectionProvider().acquire();
         try {
             q = create(new Settings().withExecuteListeners(ConnectionProviderListener.class.getName()))
                     .selectFrom(TAuthor())
@@ -266,7 +267,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         @Override
         public void start(ExecuteContext ctx) {
-            ctx.setConnection(c);
+            ctx.connectionProvider(new DefaultConnectionProvider(c));
         }
     }
 

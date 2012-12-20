@@ -253,7 +253,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         ExecuteListener listener = new ExecuteListeners(ctx);
 
         try {
-            Connection connection = configuration.getConnection();
+            Connection connection = ctx.connection();
 
             listener.renderStart(ctx);
             ctx.sql(create(configuration).render(this));

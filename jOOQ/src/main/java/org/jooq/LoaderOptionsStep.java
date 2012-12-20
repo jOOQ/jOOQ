@@ -137,8 +137,9 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in
      * the database. Use this on fresh transactions only. Commits/Rollbacks are
-     * executed directly upon {@link Configuration#getConnection()}. This might
-     * not work with container-managed transactions, or when
+     * executed directly upon the connection returned by
+     * {@link Configuration#getConnectionProvider()}. This might not work with
+     * container-managed transactions, or when
      * {@link Connection#getAutoCommit()} is set to true.
      * <p>
      * If you don't specify a COMMIT OPTION, {@link #commitNone()} will be the
@@ -157,8 +158,9 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in
      * the database. Use this on fresh transactions only. Commits/Rollbacks are
-     * executed directly upon {@link Configuration#getConnection()}. This might
-     * not work with container-managed transactions, or when
+     * executed directly upon the connection returned by
+     * {@link Configuration#getConnectionProvider()}. This might not work with
+     * container-managed transactions, or when
      * {@link Connection#getAutoCommit()} is set to true.
      * <p>
      * If you don't specify a COMMIT OPTION, {@link #commitNone()} will be the
@@ -177,8 +179,9 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in
      * the database. Use this on fresh transactions only. Commits/Rollbacks are
-     * executed directly upon {@link Configuration#getConnection()}. This might
-     * not work with container-managed transactions, or when
+     * executed directly upon the connection returned by
+     * {@link Configuration#getConnectionProvider()}. This might not work with
+     * container-managed transactions, or when
      * {@link Connection#getAutoCommit()} is set to true.
      * <p>
      * If you don't specify a COMMIT OPTION, {@link #commitNone()} will be the

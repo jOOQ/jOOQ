@@ -409,7 +409,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
                     if (commit == COMMIT_AFTER) {
                         if (processed % commitAfter == 0) {
-                            create.getConnection().commit();
+                            create.getConnectionProvider().acquire().commit();
                         }
                     }
                 }
@@ -428,17 +428,17 @@ class LoaderImpl<R extends TableRecord<R>> implements
                 if (commit == COMMIT_ALL) {
                     if (!errors.isEmpty()) {
                         stored = 0;
-                        create.getConnection().rollback();
+                        create.getConnectionProvider().acquire().rollback();
                     }
                     else {
-                        create.getConnection().commit();
+                        create.getConnectionProvider().acquire().commit();
                     }
                 }
 
                 // Commit remaining elements in COMMIT_AFTER mode
                 else if (commit == COMMIT_AFTER) {
                     if (processed % commitAfter != 0) {
-                        create.getConnection().commit();
+                        create.getConnectionProvider().acquire().commit();
                     }
                 }
             }

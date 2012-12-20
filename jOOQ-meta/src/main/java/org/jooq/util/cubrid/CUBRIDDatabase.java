@@ -129,7 +129,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-        DatabaseMetaData meta = create().getConnection().getMetaData();
+        DatabaseMetaData meta = create().getConnectionProvider().acquire().getMetaData();
 
         for (String table : create()
                 .selectDistinct(DB_INDEX.CLASS_NAME)

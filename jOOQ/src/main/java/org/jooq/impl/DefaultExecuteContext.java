@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
 import org.jooq.Delete;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
@@ -81,6 +82,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     private final String[]                       batchSQL;
 
     // Transient attributes (created afresh per execution)
+    private transient ConnectionProvider         connectionProvider;
     private transient PreparedStatement          statement;
     private transient ResultSet                  resultSet;
     private transient Record                     record;
@@ -365,6 +367,31 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    @Override
+    public final void connectionProvider(ConnectionProvider provider) {
+        this.connectionProvider = provider;
+    }
+
+    @Override
+    public final Connection connection() {
+        // All jOOQ internals are expected to get a connection through this
+        // single method. It can thus be guaranteed, that every connection is
+        // wrapped by a ConnectionProxy, transparently, in order to implement
+        // Settings.getStatementType() correctly.
+
+        ConnectionProvider provider = connectionProvider != null ? connectionProvider : getConnectionProvider();
+
+        if (provider != null) {
+            Connection connection = provider.acquire();
+
+            if (connection != null) {
+                return new ConnectionProxy(new DataSourceConnection(provider, connection), getSettings());
+            }
+        }
+
+        return null;
     }
 
     @Override

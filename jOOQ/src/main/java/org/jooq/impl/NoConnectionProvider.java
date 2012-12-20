@@ -36,68 +36,27 @@
 package org.jooq.impl;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
-import org.jooq.Batch;
-import org.jooq.ExecuteContext;
-import org.jooq.ExecuteListener;
-import org.jooq.Query;
+import org.jooq.ConnectionProvider;
 
 /**
+ * An "empty" implementation that is never connected
+ *
  * @author Lukas Eder
  */
-class BatchMultiple implements Batch {
+public class NoConnectionProvider implements ConnectionProvider {
 
     /**
-     * Generated UID
+     * This method will always return <code>null</code>
      */
-    private static final long serialVersionUID = -7337667281292354043L;
-
-    private final Executor    create;
-    private final Query[]     queries;
-
-    public BatchMultiple(Executor create, Query... queries) {
-        this.create = create;
-        this.queries = queries;
-    }
-
     @Override
-    public final int[] execute() {
-        ExecuteContext ctx = new DefaultExecuteContext(create, queries);
-        ExecuteListener listener = new ExecuteListeners(ctx);
-        Connection connection = ctx.connection();
-
-        try {
-            ctx.statement(new PreparedStatementProxy(connection));
-
-            String[] batchSQL = ctx.batchSQL();
-            for (int i = 0; i < queries.length; i++) {
-                listener.renderStart(ctx);
-                batchSQL[i] = create.renderInlined(queries[i]);
-                listener.renderEnd(ctx);
-            }
-
-            for (String sql : batchSQL) {
-                ctx.sql(sql);
-                listener.prepareStart(ctx);
-                ctx.statement().addBatch(sql);
-                listener.prepareEnd(ctx);
-                ctx.sql(null);
-            }
-
-            listener.executeStart(ctx);
-            int[] result = ctx.statement().executeBatch();
-            listener.executeEnd(ctx);
-
-            return result;
-        }
-        catch (SQLException e) {
-            ctx.sqlException(e);
-            listener.exception(ctx);
-            throw ctx.exception();
-        }
-        finally {
-            Utils.safeClose(listener, ctx);
-        }
+    public final Connection acquire() {
+        return null;
     }
+
+    /**
+     * This method has no effect
+     */
+    @Override
+    public final void release(Connection connection) {}
 }

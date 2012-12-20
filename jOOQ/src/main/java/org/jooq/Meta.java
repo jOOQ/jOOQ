@@ -64,22 +64,32 @@ public interface Meta {
 
     /**
      * Get all catalog objects from the underlying {@link DatabaseMetaData}
+     * <p>
+     * For those databases that don't really support JDBC meta data catalogs, a
+     * single empty catalog (named <code>""</code>) will be returned. In other
+     * words, there is always at least one catalog in a database.
      *
-     * @throws DataAccessException If something went wrong fetching the meta objects
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
      */
+    @Support
     List<Catalog> getCatalogs() throws DataAccessException;
 
     /**
      * Get all schema objects from the underlying {@link DatabaseMetaData}
      *
-     * @throws DataAccessException If something went wrong fetching the meta objects
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
      */
+    @Support
     List<Schema> getSchemas() throws DataAccessException;
 
     /**
      * Get all table objects from the underlying {@link DatabaseMetaData}
      *
-     * @throws DataAccessException If something went wrong fetching the meta objects
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
      */
+    @Support
     List<Table<?>> getTables() throws DataAccessException;
 }

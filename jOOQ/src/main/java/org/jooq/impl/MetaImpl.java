@@ -92,6 +92,11 @@ class MetaImpl implements Meta {
                 result.add(new MetaCatalog(name));
             }
 
+            // There should always be at least one (empty) catalog in a database
+            if (result.isEmpty()) {
+                result.add(new MetaCatalog(""));
+            }
+
             return result;
         }
         catch (SQLException e) {

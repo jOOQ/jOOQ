@@ -134,6 +134,7 @@ import org.jooq.tools.csv.CSVReader;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class Executor implements Configuration {
 
     /**
@@ -1272,8 +1273,6 @@ public class Executor implements Configuration {
 
             if (all.size() > 1) {
                 for (String[] values : all.subList(1, all.size())) {
-
-                    @SuppressWarnings("rawtypes")
                     Record record = new RecordImpl(fields);
 
                     for (int i = 0; i < Math.min(values.length, fields.size()); i++) {
@@ -1311,6 +1310,34 @@ public class Executor implements Configuration {
      * statement from this {@link Executor}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
+     * {@link Factory#select(Collection)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(fields)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#select(Collection)
+     */
+    @Support
+    public final SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
+        SelectSelectStep<Record> result = Factory.select(fields);
+        result.attach(this);
+        return result;
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
      * {@link Factory#select(Field...)} instead.
      * <p>
      * Example: <code><pre>
@@ -1333,6 +1360,10 @@ public class Executor implements Configuration {
         return result;
     }
 
+// [jooq-tools] START [select]
+
+// [jooq-tools] END [select]
+
     /**
      * Create a new DSL select statement.
      * <p>
@@ -1340,23 +1371,23 @@ public class Executor implements Configuration {
      * statement from this {@link Executor}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Collection)} instead.
+     * {@link Factory#selectDistinct(Collection)} instead.
      * <p>
      * Example: <code><pre>
      * Executor create = new Executor();
      *
-     * create.select(fields)
+     * create.selectDistinct(fields)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#select(Collection)
+     * @see Factory#selectDistinct(Collection)
      */
     @Support
-    public final SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
-        SelectSelectStep<Record> result = Factory.select(fields);
+    public final SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
+        SelectSelectStep<Record> result = Factory.selectDistinct(fields);
         result.attach(this);
         return result;
     }
@@ -1389,33 +1420,9 @@ public class Executor implements Configuration {
         return result;
     }
 
-    /**
-     * Create a new DSL select statement.
-     * <p>
-     * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link Executor}. If you don't need to render or
-     * execute this <code>SELECT</code> statement (e.g. because you want to
-     * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Collection)} instead.
-     * <p>
-     * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(fields)
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2);
-     * </pre></code>
-     *
-     * @see Factory#selectDistinct(Collection)
-     */
-    @Support
-    public final SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
-        SelectSelectStep<Record> result = Factory.selectDistinct(fields);
-        result.attach(this);
-        return result;
-    }
+// [jooq-tools] START [selectDistinct]
+
+// [jooq-tools] END [selectDistinct]
 
     /**
      * Create a new DSL select statement for constant <code>0</code> literal
@@ -1441,7 +1448,6 @@ public class Executor implements Configuration {
      * @see Factory#selectZero()
      */
     @Support
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final SelectSelectStep<Record> selectZero() {
         SelectSelectStep<Record> result = (SelectSelectStep) Factory.selectZero();
         result.attach(this);
@@ -1472,7 +1478,6 @@ public class Executor implements Configuration {
      * @see Factory#selectOne()
      */
     @Support
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final SelectSelectStep<Record> selectOne() {
         SelectSelectStep<Record> result = (SelectSelectStep) Factory.selectOne();
         result.attach(this);
@@ -1502,7 +1507,6 @@ public class Executor implements Configuration {
      * @see Factory#selectCount()
      */
     @Support
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final SelectSelectStep<Record> selectCount() {
         SelectSelectStep<Record> result = (SelectSelectStep) Factory.selectCount();
         result.attach(this);

@@ -49,9 +49,11 @@ import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.currentDate;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.not;
+import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.Factory.zero;
 
 import java.sql.Date;
 
@@ -435,6 +437,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 val(1),
                 val(1))
             .where(val(1).eq(val(0))))
+
+            // Another dummy union as a compile-time type-check
+            .union(create()
+            .selectFrom(TBookToBookStore())
+            .where(one().eq(zero())))
         ));
     }
 

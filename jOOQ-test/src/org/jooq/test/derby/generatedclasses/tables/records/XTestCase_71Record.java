@@ -9,55 +9,31 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 365498706;
+	private static final long serialVersionUID = -89110137;
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.X_TEST_CASE_71.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_71.ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.X_TEST_CASE_71.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_71.ID);
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	public void setTestCase_64_69Id(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)
-	 * </pre></code>
-	 */
-	public java.lang.Integer getTestCase_64_69Id() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record 
-	 * XTestCase_64_69Record}
+	 * Link this record to a given {@link org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record}
 	 */
 	public void setTestCase_64_69Id(org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record value) {
 		if (value == null) {
@@ -69,13 +45,18 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
+	 */
+	public java.lang.Integer getTestCase_64_69Id() {
+		return getValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a <code>TEST.X_TEST_CASE_64_69</code> referenced by this <code>TEST.X_TEST_CASE_71</code>
 	 */
 	public org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {
 		return create()
@@ -84,11 +65,16 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 			.fetchOne();
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached XTestCase_71Record
+	 * {@inheritDoc}
 	 */
-	public XTestCase_71Record() {
-		super(org.jooq.test.derby.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -141,5 +127,16 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.Integer value2() {
 		return getTestCase_64_69Id();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_71Record
+	 */
+	public XTestCase_71Record() {
+		super(org.jooq.test.derby.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
 	}
 }

@@ -9,85 +9,88 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1037152248;
+	private static final long serialVersionUID = -660157160;
 
 	/**
-	 * The table column <code>TEST.T_LANGUAGE.CD</code>
+	 * Setter for <code>TEST.T_LANGUAGE.CD</code>. 
 	 */
 	public void setCd(java.lang.String value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.CD, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_LANGUAGE.CD</code>
+	 * Getter for <code>TEST.T_LANGUAGE.CD</code>. 
 	 */
 	public java.lang.String getCd() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.CD);
 	}
 
 	/**
-	 * The table column <code>TEST.T_LANGUAGE.DESCRIPTION</code>
+	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. 
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.DESCRIPTION, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_LANGUAGE.DESCRIPTION</code>
+	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. 
 	 */
 	public java.lang.String getDescription() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.DESCRIPTION);
 	}
 
 	/**
-	 * The table column <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>
+	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>
+	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public java.lang.String getDescriptionEnglish() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH);
 	}
 
 	/**
-	 * The table column <code>TEST.T_LANGUAGE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_LANGUAGE.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_LANGUAGE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_LANGUAGE.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.ID);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
 	/**
-	 * The table column <code>TEST.T_LANGUAGE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Fetch a list of <code>TEST.T_BOOK</code> referencing this <code>TEST.T_LANGUAGE</code>
 	 */
-	public java.util.List<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> fetchTBookList() {
+	public org.jooq.Result<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> fetchTBookList() {
 		return create()
 			.selectFrom(org.jooq.test.derby.generatedclasses.tables.TBook.T_BOOK)
 			.where(org.jooq.test.derby.generatedclasses.tables.TBook.LANGUAGE_ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.ID)))
 			.fetch();
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TLanguageRecord
+	 * {@inheritDoc}
 	 */
-	public TLanguageRecord() {
-		super(org.jooq.test.derby.generatedclasses.tables.TLanguage.T_LANGUAGE);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -172,5 +175,16 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.lang.Integer value4() {
 		return getId();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TLanguageRecord
+	 */
+	public TLanguageRecord() {
+		super(org.jooq.test.derby.generatedclasses.tables.TLanguage.T_LANGUAGE);
 	}
 }

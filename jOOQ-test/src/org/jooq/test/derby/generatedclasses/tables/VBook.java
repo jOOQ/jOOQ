@@ -9,10 +9,10 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1655701618;
+	private static final long serialVersionUID = 1021893993;
 
 	/**
-	 * The singleton instance of TEST.V_BOOK
+	 * The singleton instance of <code>TEST.V_BOOK</code>
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.VBook V_BOOK = new org.jooq.test.derby.generatedclasses.tables.VBook();
 
@@ -25,52 +25,52 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.derby.generated
 	}
 
 	/**
-	 * The table column <code>TEST.V_BOOK.ID</code>
+	 * The column <code>TEST.V_BOOK.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>TEST.V_BOOK.AUTHOR_ID</code>
+	 * The column <code>TEST.V_BOOK.AUTHOR_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>TEST.V_BOOK.CO_AUTHOR_ID</code>
+	 * The column <code>TEST.V_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>TEST.V_BOOK.DETAILS_ID</code>
+	 * The column <code>TEST.V_BOOK.DETAILS_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>TEST.V_BOOK.TITLE</code>
+	 * The column <code>TEST.V_BOOK.TITLE</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, V_BOOK);
 
 	/**
-	 * The table column <code>TEST.V_BOOK.PUBLISHED_IN</code>
+	 * The column <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>TEST.V_BOOK.LANGUAGE_ID</code>
+	 * The column <code>TEST.V_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>TEST.V_BOOK.CONTENT_TEXT</code>
+	 * The column <code>TEST.V_BOOK.CONTENT_TEXT</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, V_BOOK);
 
 	/**
-	 * The table column <code>TEST.V_BOOK.CONTENT_PDF</code>
+	 * The column <code>TEST.V_BOOK.CONTENT_PDF</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, V_BOOK);
 
 	/**
-	 * The table column <code>TEST.V_BOOK.REC_TIMESTAMP</code>
+	 * The column <code>TEST.V_BOOK.REC_TIMESTAMP</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, V_BOOK);
 

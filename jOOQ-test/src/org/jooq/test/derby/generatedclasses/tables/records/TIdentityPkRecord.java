@@ -9,45 +9,50 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 438441662;
+	private static final long serialVersionUID = -1964191283;
 
 	/**
-	 * The table column <code>TEST.T_IDENTITY_PK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_IDENTITY_PK.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TIdentityPk.ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_IDENTITY_PK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_IDENTITY_PK.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TIdentityPk.ID);
 	}
 
 	/**
-	 * The table column <code>TEST.T_IDENTITY_PK.VAL</code>
+	 * Setter for <code>TEST.T_IDENTITY_PK.VAL</code>. 
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TIdentityPk.VAL, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_IDENTITY_PK.VAL</code>
+	 * Getter for <code>TEST.T_IDENTITY_PK.VAL</code>. 
 	 */
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TIdentityPk.VAL);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TIdentityPkRecord
+	 * {@inheritDoc}
 	 */
-	public TIdentityPkRecord() {
-		super(org.jooq.test.derby.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -100,5 +105,16 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@Override
 	public java.lang.Integer value2() {
 		return getVal();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TIdentityPkRecord
+	 */
+	public TIdentityPkRecord() {
+		super(org.jooq.test.derby.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
 	}
 }

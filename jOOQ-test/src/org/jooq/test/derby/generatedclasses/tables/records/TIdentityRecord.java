@@ -9,42 +9,39 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -2074434539;
+	private static final long serialVersionUID = -1019643275;
 
 	/**
-	 * The table column <code>TEST.T_IDENTITY.ID</code>
+	 * Setter for <code>TEST.T_IDENTITY.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TIdentity.ID, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_IDENTITY.ID</code>
+	 * Getter for <code>TEST.T_IDENTITY.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TIdentity.ID);
 	}
 
 	/**
-	 * The table column <code>TEST.T_IDENTITY.VAL</code>
+	 * Setter for <code>TEST.T_IDENTITY.VAL</code>. 
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TIdentity.VAL, value);
 	}
 
 	/**
-	 * The table column <code>TEST.T_IDENTITY.VAL</code>
+	 * Getter for <code>TEST.T_IDENTITY.VAL</code>. 
 	 */
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TIdentity.VAL);
 	}
 
-	/**
-	 * Create a detached TIdentityRecord
-	 */
-	public TIdentityRecord() {
-		super(org.jooq.test.derby.generatedclasses.tables.TIdentity.T_IDENTITY);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -96,5 +93,16 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	@Override
 	public java.lang.Integer value2() {
 		return getVal();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TIdentityRecord
+	 */
+	public TIdentityRecord() {
+		super(org.jooq.test.derby.generatedclasses.tables.TIdentity.T_IDENTITY);
 	}
 }

@@ -9,10 +9,10 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 2133629853;
+	private static final long serialVersionUID = -1512455826;
 
 	/**
-	 * The singleton instance of TEST.X_TEST_CASE_85
+	 * The singleton instance of <code>TEST.X_TEST_CASE_85</code>
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = new org.jooq.test.derby.generatedclasses.tables.XTestCase_85();
 
@@ -25,31 +25,17 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_85.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>TEST.X_TEST_CASE_85.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * The column <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("X_UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * The column <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("X_UNUSED_NAME", org.jooq.impl.SQLDataType.VARCHAR, X_TEST_CASE_85);
 
@@ -60,19 +46,26 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 		super("X_TEST_CASE_85", org.jooq.test.derby.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record> getMainKey() {
 		return org.jooq.test.derby.generatedclasses.Keys.PK_X_TEST_CASE_85;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record>>asList(org.jooq.test.derby.generatedclasses.Keys.PK_X_TEST_CASE_85);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record, ?>>asList(org.jooq.test.derby.generatedclasses.Keys.FK_X_TEST_CASE_85);
 	}

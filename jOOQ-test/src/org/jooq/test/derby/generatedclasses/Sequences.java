@@ -12,12 +12,12 @@ package org.jooq.test.derby.generatedclasses;
 public final class Sequences {
 
 	/**
-	 * The sequence TEST.S_AUTHOR_ID
+	 * The sequence <code>TEST.S_AUTHOR_ID</code>
 	 */
 	public static final org.jooq.Sequence<java.lang.Integer> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Integer>("S_AUTHOR_ID", org.jooq.test.derby.generatedclasses.Test.TEST, org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Sequences() {}
 }

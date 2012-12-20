@@ -9,10 +9,10 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 886988399;
+	private static final long serialVersionUID = 1320733358;
 
 	/**
-	 * The singleton instance of TEST.T_TRIGGERS
+	 * The singleton instance of <code>TEST.T_TRIGGERS</code>
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.TTriggers T_TRIGGERS = new org.jooq.test.derby.generatedclasses.tables.TTriggers();
 
@@ -25,19 +25,17 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.de
 	}
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.ID_GENERATED</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.ID</code>
+	 * The column <code>TEST.T_TRIGGERS.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.COUNTER</code>
+	 * The column <code>TEST.T_TRIGGERS.COUNTER</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
@@ -48,18 +46,26 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.de
 		super("T_TRIGGERS", org.jooq.test.derby.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.test.derby.generatedclasses.Keys.IDENTITY_T_TRIGGERS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord> getMainKey() {
 		return org.jooq.test.derby.generatedclasses.Keys.PK_T_TRIGGERS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.derby.generatedclasses.Keys.PK_T_TRIGGERS);
 	}

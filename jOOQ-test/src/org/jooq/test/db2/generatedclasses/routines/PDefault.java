@@ -9,36 +9,35 @@ package org.jooq.test.db2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1446428199;
-
+	private static final long serialVersionUID = 589750591;
 
 	/**
-	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_IN_NUMBER</code>
+	 * The parameter <code>LUKAS.P_DEFAULT.P_IN_NUMBER</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_IN_NUMBER = createParameter("P_IN_NUMBER", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_OUT_NUMBER</code>
+	 * The parameter <code>LUKAS.P_DEFAULT.P_OUT_NUMBER</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_OUT_NUMBER = createParameter("P_OUT_NUMBER", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_IN_VARCHAR</code>
+	 * The parameter <code>LUKAS.P_DEFAULT.P_IN_VARCHAR</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_IN_VARCHAR = createParameter("P_IN_VARCHAR", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_OUT_VARCHAR</code>
+	 * The parameter <code>LUKAS.P_DEFAULT.P_OUT_VARCHAR</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_OUT_VARCHAR = createParameter("P_OUT_VARCHAR", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_IN_DATE</code>
+	 * The parameter <code>LUKAS.P_DEFAULT.P_IN_DATE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Date> P_IN_DATE = createParameter("P_IN_DATE", org.jooq.impl.SQLDataType.DATE);
 
 	/**
-	 * The procedure parameter <code>LUKAS.P_DEFAULT.P_OUT_DATE</code>
+	 * The parameter <code>LUKAS.P_DEFAULT.P_OUT_DATE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Date> P_OUT_DATE = createParameter("P_OUT_DATE", org.jooq.impl.SQLDataType.DATE);
 

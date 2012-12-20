@@ -9,42 +9,39 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 1201298873;
+	private static final long serialVersionUID = -807870787;
 
 	/**
-	 * The table column <code>LUKAS.V_LIBRARY.AUTHOR</code>
+	 * Setter for <code>LUKAS.V_LIBRARY.AUTHOR</code>. 
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VLibrary.AUTHOR, value);
 	}
 
 	/**
-	 * The table column <code>LUKAS.V_LIBRARY.AUTHOR</code>
+	 * Getter for <code>LUKAS.V_LIBRARY.AUTHOR</code>. 
 	 */
 	public java.lang.String getAuthor() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VLibrary.AUTHOR);
 	}
 
 	/**
-	 * The table column <code>LUKAS.V_LIBRARY.TITLE</code>
+	 * Setter for <code>LUKAS.V_LIBRARY.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VLibrary.TITLE, value);
 	}
 
 	/**
-	 * The table column <code>LUKAS.V_LIBRARY.TITLE</code>
+	 * Getter for <code>LUKAS.V_LIBRARY.TITLE</code>. 
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VLibrary.TITLE);
 	}
 
-	/**
-	 * Create a detached VLibraryRecord
-	 */
-	public VLibraryRecord() {
-		super(org.jooq.test.db2.generatedclasses.tables.VLibrary.V_LIBRARY);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -96,5 +93,16 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.String value2() {
 		return getTitle();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached VLibraryRecord
+	 */
+	public VLibraryRecord() {
+		super(org.jooq.test.db2.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 }

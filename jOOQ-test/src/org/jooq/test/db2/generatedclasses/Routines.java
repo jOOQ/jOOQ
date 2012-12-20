@@ -12,13 +12,7 @@ package org.jooq.test.db2.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Call LUKAS.F317
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>LUKAS.F317</code>
 	 */
 	public static java.lang.Integer f317(org.jooq.Configuration configuration, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
 		org.jooq.test.db2.generatedclasses.routines.F317 f = new org.jooq.test.db2.generatedclasses.routines.F317();
@@ -32,12 +26,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get LUKAS.F317 as a field
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
+	 * Get <code>LUKAS.F317</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> f317(java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
 		org.jooq.test.db2.generatedclasses.routines.F317 f = new org.jooq.test.db2.generatedclasses.routines.F317();
@@ -50,12 +39,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get LUKAS.F317 as a field
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
+	 * Get <code>LUKAS.F317</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> f317(org.jooq.Field<java.lang.Integer> p1, org.jooq.Field<java.lang.Integer> p2, org.jooq.Field<java.lang.Integer> p3, org.jooq.Field<java.lang.Integer> p4) {
 		org.jooq.test.db2.generatedclasses.routines.F317 f = new org.jooq.test.db2.generatedclasses.routines.F317();
@@ -68,10 +52,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call LUKAS.F_AUTHOR_EXISTS
-	 *
-	 * @param authorName
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>LUKAS.F_AUTHOR_EXISTS</code>
 	 */
 	public static java.lang.Integer fAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {
 		org.jooq.test.db2.generatedclasses.routines.FAuthorExists f = new org.jooq.test.db2.generatedclasses.routines.FAuthorExists();
@@ -82,9 +63,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get LUKAS.F_AUTHOR_EXISTS as a field
-	 *
-	 * @param authorName
+	 * Get <code>LUKAS.F_AUTHOR_EXISTS</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fAuthorExists(java.lang.String authorName) {
 		org.jooq.test.db2.generatedclasses.routines.FAuthorExists f = new org.jooq.test.db2.generatedclasses.routines.FAuthorExists();
@@ -94,9 +73,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get LUKAS.F_AUTHOR_EXISTS as a field
-	 *
-	 * @param authorName
+	 * Get <code>LUKAS.F_AUTHOR_EXISTS</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fAuthorExists(org.jooq.Field<java.lang.String> authorName) {
 		org.jooq.test.db2.generatedclasses.routines.FAuthorExists f = new org.jooq.test.db2.generatedclasses.routines.FAuthorExists();
@@ -106,10 +83,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call LUKAS.F_NUMBER
-	 *
-	 * @param n
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>LUKAS.F_NUMBER</code>
 	 */
 	public static java.lang.Integer fNumber(org.jooq.Configuration configuration, java.lang.Integer n) {
 		org.jooq.test.db2.generatedclasses.routines.FNumber f = new org.jooq.test.db2.generatedclasses.routines.FNumber();
@@ -120,9 +94,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get LUKAS.F_NUMBER as a field
-	 *
-	 * @param n
+	 * Get <code>LUKAS.F_NUMBER</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fNumber(java.lang.Integer n) {
 		org.jooq.test.db2.generatedclasses.routines.FNumber f = new org.jooq.test.db2.generatedclasses.routines.FNumber();
@@ -132,9 +104,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get LUKAS.F_NUMBER as a field
-	 *
-	 * @param n
+	 * Get <code>LUKAS.F_NUMBER</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fNumber(org.jooq.Field<java.lang.Integer> n) {
 		org.jooq.test.db2.generatedclasses.routines.FNumber f = new org.jooq.test.db2.generatedclasses.routines.FNumber();
@@ -144,9 +114,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call LUKAS.F_ONE
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>LUKAS.F_ONE</code>
 	 */
 	public static java.lang.Integer fOne(org.jooq.Configuration configuration) {
 		org.jooq.test.db2.generatedclasses.routines.FOne f = new org.jooq.test.db2.generatedclasses.routines.FOne();
@@ -156,8 +124,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get LUKAS.F_ONE as a field
-	 *
+	 * Get <code>LUKAS.F_ONE</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fOne() {
 		org.jooq.test.db2.generatedclasses.routines.FOne f = new org.jooq.test.db2.generatedclasses.routines.FOne();
@@ -166,15 +133,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call LUKAS.P391
-	 *
-	 * @param i1 IN parameter
-	 * @param io1 IN OUT parameter
-	 * @param o1 OUT parameter
-	 * @param o2 OUT parameter
-	 * @param io2 IN OUT parameter
-	 * @param i2 IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>LUKAS.P391</code>
 	 */
 	public static org.jooq.test.db2.generatedclasses.routines.P391 p391(org.jooq.Configuration configuration, java.lang.Integer i1, java.lang.Integer io1, java.lang.Integer io2, java.lang.Integer i2) {
 		org.jooq.test.db2.generatedclasses.routines.P391 p = new org.jooq.test.db2.generatedclasses.routines.P391();
@@ -188,11 +147,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call LUKAS.P_AUTHOR_EXISTS
-	 *
-	 * @param authorName IN parameter
-	 * @param result OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>LUKAS.P_AUTHOR_EXISTS</code>
 	 */
 	public static java.lang.Integer pAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {
 		org.jooq.test.db2.generatedclasses.routines.PAuthorExists p = new org.jooq.test.db2.generatedclasses.routines.PAuthorExists();
@@ -203,9 +158,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call LUKAS.P_CREATE_AUTHOR
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>LUKAS.P_CREATE_AUTHOR</code>
 	 */
 	public static void pCreateAuthor(org.jooq.Configuration configuration) {
 		org.jooq.test.db2.generatedclasses.routines.PCreateAuthor p = new org.jooq.test.db2.generatedclasses.routines.PCreateAuthor();
@@ -214,11 +167,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call LUKAS.P_CREATE_AUTHOR_BY_NAME
-	 *
-	 * @param firstName IN parameter
-	 * @param lastName IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>LUKAS.P_CREATE_AUTHOR_BY_NAME</code>
 	 */
 	public static void pCreateAuthorByName(org.jooq.Configuration configuration, java.lang.String firstName, java.lang.String lastName) {
 		org.jooq.test.db2.generatedclasses.routines.PCreateAuthorByName p = new org.jooq.test.db2.generatedclasses.routines.PCreateAuthorByName();
@@ -229,15 +178,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call LUKAS.P_DEFAULT
-	 *
-	 * @param pInNumber IN parameter
-	 * @param pOutNumber OUT parameter
-	 * @param pInVarchar IN parameter
-	 * @param pOutVarchar OUT parameter
-	 * @param pInDate IN parameter
-	 * @param pOutDate OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>LUKAS.P_DEFAULT</code>
 	 */
 	public static org.jooq.test.db2.generatedclasses.routines.PDefault pDefault(org.jooq.Configuration configuration, java.lang.Integer pInNumber, java.lang.String pInVarchar, java.sql.Date pInDate) {
 		org.jooq.test.db2.generatedclasses.routines.PDefault p = new org.jooq.test.db2.generatedclasses.routines.PDefault();
@@ -250,12 +191,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call LUKAS.P_UNUSED
-	 *
-	 * @param in1 IN parameter
-	 * @param out1 OUT parameter
-	 * @param out2 IN OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>LUKAS.P_UNUSED</code>
 	 */
 	public static org.jooq.test.db2.generatedclasses.routines.PUnused pUnused(org.jooq.Configuration configuration, java.lang.String in1, java.lang.Integer out2) {
 		org.jooq.test.db2.generatedclasses.routines.PUnused p = new org.jooq.test.db2.generatedclasses.routines.PUnused();
@@ -267,7 +203,7 @@ public final class Routines {
 	}
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Routines() {}
 }

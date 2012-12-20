@@ -9,101 +9,106 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long> {
 
-	private static final long serialVersionUID = -606567190;
+	private static final long serialVersionUID = 1267359017;
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>LUKAS.T_DATES.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.ID, value);
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>LUKAS.T_DATES.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.ID);
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.D</code>
+	 * Setter for <code>LUKAS.T_DATES.D</code>. 
 	 */
 	public void setD(java.sql.Date value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.D, value);
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.D</code>
+	 * Getter for <code>LUKAS.T_DATES.D</code>. 
 	 */
 	public java.sql.Date getD() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.D);
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.T</code>
+	 * Setter for <code>LUKAS.T_DATES.T</code>. 
 	 */
 	public void setT(java.sql.Time value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.T, value);
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.T</code>
+	 * Getter for <code>LUKAS.T_DATES.T</code>. 
 	 */
 	public java.sql.Time getT() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.T);
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.TS</code>
+	 * Setter for <code>LUKAS.T_DATES.TS</code>. 
 	 */
 	public void setTs(java.sql.Timestamp value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.TS, value);
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.TS</code>
+	 * Getter for <code>LUKAS.T_DATES.TS</code>. 
 	 */
 	public java.sql.Timestamp getTs() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.TS);
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.D_INT</code>
+	 * Setter for <code>LUKAS.T_DATES.D_INT</code>. 
 	 */
 	public void setDInt(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.D_INT, value);
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.D_INT</code>
+	 * Getter for <code>LUKAS.T_DATES.D_INT</code>. 
 	 */
 	public java.lang.Integer getDInt() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.D_INT);
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.TS_BIGINT</code>
+	 * Setter for <code>LUKAS.T_DATES.TS_BIGINT</code>. 
 	 */
 	public void setTsBigint(java.lang.Long value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.TS_BIGINT, value);
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_DATES.TS_BIGINT</code>
+	 * Getter for <code>LUKAS.T_DATES.TS_BIGINT</code>. 
 	 */
 	public java.lang.Long getTsBigint() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.TS_BIGINT);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TDatesRecord
+	 * {@inheritDoc}
 	 */
-	public TDatesRecord() {
-		super(org.jooq.test.db2.generatedclasses.tables.TDates.T_DATES);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -220,5 +225,16 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	@Override
 	public java.lang.Long value6() {
 		return getTsBigint();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TDatesRecord
+	 */
+	public TDatesRecord() {
+		super(org.jooq.test.db2.generatedclasses.tables.TDates.T_DATES);
 	}
 }

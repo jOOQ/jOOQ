@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = 230833852;
+	private static final long serialVersionUID = -1046780130;
 
 	/**
-	 * The singleton instance of LUKAS.T_986_2
+	 * The singleton instance of <code>LUKAS.T_986_2</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.T_986_2 T_986_2 = new org.jooq.test.db2.generatedclasses.tables.T_986_2();
 
@@ -25,15 +25,7 @@ public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_986_2.REF</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT T_986_2__FK_986
-	 * FOREIGN KEY (REF)
-	 * REFERENCES LUKAS.X_UNUSED (ID)
-	 * </pre></code>
+	 * The column <code>LUKAS.T_986_2.REF</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_986_2Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER, T_986_2);
 
@@ -44,19 +36,26 @@ public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.
 		super("T_986_2", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_986_2Record> getMainKey() {
 		return org.jooq.test.db2.generatedclasses.Keys.T_986_2__PK_986;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_986_2Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_986_2Record>>asList(org.jooq.test.db2.generatedclasses.Keys.T_986_2__PK_986);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.db2.generatedclasses.tables.records.T_986_2Record, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.db2.generatedclasses.tables.records.T_986_2Record, ?>>asList(org.jooq.test.db2.generatedclasses.Keys.T_986_2__FK_986);
 	}

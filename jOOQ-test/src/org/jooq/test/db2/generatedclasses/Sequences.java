@@ -12,17 +12,17 @@ package org.jooq.test.db2.generatedclasses;
 public final class Sequences {
 
 	/**
-	 * The sequence LUKAS.S_AUTHOR_ID
+	 * The sequence <code>LUKAS.S_AUTHOR_ID</code>
 	 */
 	public static final org.jooq.Sequence<java.lang.Integer> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Integer>("S_AUTHOR_ID", org.jooq.test.db2.generatedclasses.Lukas.LUKAS, org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The sequence LUKAS.S_TRIGGER_ID
+	 * The sequence <code>LUKAS.S_TRIGGER_ID</code>
 	 */
 	public static final org.jooq.Sequence<java.lang.Integer> S_TRIGGER_ID = new org.jooq.impl.SequenceImpl<java.lang.Integer>("S_TRIGGER_ID", org.jooq.test.db2.generatedclasses.Lukas.LUKAS, org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Sequences() {}
 }

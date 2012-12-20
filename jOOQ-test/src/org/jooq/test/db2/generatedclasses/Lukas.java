@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Lukas extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1882849565;
+	private static final long serialVersionUID = 211525058;
 
 	/**
-	 * The singleton instance of LUKAS
+	 * The singleton instance of <code>LUKAS</code>
 	 */
 	public static final Lukas LUKAS = new Lukas();
 

@@ -56,11 +56,11 @@ class BatchSingle implements BatchBindStep {
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = 3793967258181493207L;
+    private static final long    serialVersionUID = 3793967258181493207L;
 
-    private final Executor           create;
-    private final Query             query;
-    private final List<Object[]>    allBindValues;
+    private final Executor       create;
+    private final Query          query;
+    private final List<Object[]> allBindValues;
 
     public BatchSingle(Executor create, Query query) {
         this.create = create;
@@ -88,10 +88,9 @@ class BatchSingle implements BatchBindStep {
     }
 
     private final int[] executePrepared() {
-        Connection connection = create.getConnection();
-
         ExecuteContext ctx = new DefaultExecuteContext(create, new Query[] { query });
         ExecuteListener listener = new ExecuteListeners(ctx);
+        Connection connection = ctx.connection();
 
         // [#1371] fetch bind variables to restore them again, later
         List<Param<?>> params = new ArrayList<Param<?>>(query.getParams().values());

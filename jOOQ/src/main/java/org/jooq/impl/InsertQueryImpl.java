@@ -423,7 +423,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     protected final void prepare(ExecuteContext ctx) throws SQLException {
-        Connection connection = ctx.getConnection();
+        Connection connection = ctx.connection();
 
         // Just in case, always set Sybase ASE statement mode to return
         // Generated keys if client code wants to SELECT @@identity afterwards
@@ -496,7 +496,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     result = ctx.statement().executeUpdate();
                     listener.executeEnd(ctx);
 
-                    Executor create = new Executor(ctx.getConnection(), SQLDialect.SQLITE, ctx.getSettings());
+                    Executor create = new Executor(ctx.connection(), SQLDialect.SQLITE, ctx.getSettings());
                     returned =
                     create.select(returning)
                           .from(getInto())

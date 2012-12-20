@@ -40,6 +40,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 
@@ -58,6 +59,21 @@ public interface ExecuteContext extends Configuration {
      * The configuration wrapped by this context
      */
     Configuration configuration();
+
+    /**
+     * The connection to be used in this execute context
+     * <p>
+     * This returns a proxy to the {@link #getConnectionProvider()}'s supplied
+     * connection. This proxy takes care of two things:
+     * <ul>
+     * <li>It takes care of properly implementing
+     * {@link Settings#getStatementType()}</li>
+     * <li>It takes care of properly returning a connection to
+     * {@link ConnectionProvider#release(Connection)}, once jOOQ can release the
+     * connection</li>
+     * </ul>
+     */
+    Connection connection();
 
     /**
      * The type of database interaction that is being executed
@@ -130,20 +146,13 @@ public interface ExecuteContext extends Configuration {
     String[] batchSQL();
 
     /**
-     * The {@link Connection} that is being used for execution.
-     */
-    @Override
-    Connection getConnection();
-
-    /**
      * Override the {@link Connection} that is being used for execution.
      * <p>
      * This may have no effect, if called at the wrong moment.
      *
      * @see ExecuteListener#start(ExecuteContext)
      */
-    @Override
-    void setConnection(Connection connection);
+    void connectionProvider(ConnectionProvider connectionProvider);
 
     /**
      * The {@link PreparedStatement} that is being executed or <code>null</code>

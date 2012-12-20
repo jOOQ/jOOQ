@@ -38,7 +38,6 @@ package org.jooq.impl;
 
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -181,11 +180,6 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         return keepStatement;
     }
 
-    /**
-     * Subclasses may override this for covariant result types
-     * <p>
-     * {@inheritDoc}
-     */
     @Override
     public final void close() {
         if (statement != null) {
@@ -199,11 +193,6 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         }
     }
 
-    /**
-     * Subclasses may override this for covariant result types
-     * <p>
-     * {@inheritDoc}
-     */
     @Override
     public final void cancel() {
         if (statement != null) {
@@ -229,8 +218,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             ExecuteContext ctx = new DefaultExecuteContext(c, this);
             ExecuteListener listener = new ExecuteListeners(ctx);
 
-            Connection connection = c.getConnection();
-            if (connection == null) {
+            if (ctx.connection() == null) {
                 throw new DetachedException("Cannot execute query. No Connection configured");
             }
 
@@ -313,7 +301,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      * this method.
      */
     protected void prepare(ExecuteContext ctx) throws SQLException {
-        ctx.statement(ctx.getConnection().prepareStatement(ctx.sql()));
+        ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
     }
 
     /**

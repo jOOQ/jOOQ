@@ -196,6 +196,6 @@ public abstract class AbstractDefinition implements Definition {
     }
 
     protected final SQLDialect getDialect() {
-        return create().getDialect();
+        return database.getDialect();
     }
 }

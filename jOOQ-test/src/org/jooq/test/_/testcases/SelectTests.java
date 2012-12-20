@@ -62,6 +62,7 @@ import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -365,8 +366,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         final Executor create1 = create();
         final Executor create2 = create();
 
-        create2.setConnection(getNewConnection());
-        create2.getConnection().setAutoCommit(false);
+        ((DefaultConnectionProvider) create2.getConnectionProvider()).setConnection(getNewConnection());
+        create2.getConnectionProvider().acquire().setAutoCommit(false);
 
         final Vector<String> execOrder = new Vector<String>();
 
@@ -408,8 +409,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                     execOrder.add("t1-fail-or-t2-commit");
 
                     try {
-                        create2.getConnection().commit();
-                        create2.getConnection().close();
+                        create2.getConnectionProvider().acquire().commit();
+                        create2.getConnectionProvider().acquire().close();
                     }
                     catch (Exception e) {}
                 }
@@ -433,7 +434,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         }
         finally {
             try {
-                create2.getConnection().close();
+                create2.getConnectionProvider().acquire().close();
             }
             catch (Exception e) {}
         }

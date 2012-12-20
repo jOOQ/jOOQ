@@ -72,7 +72,7 @@ class MetaImpl implements Meta {
     private final DatabaseMetaData meta() {
         if (meta == null) {
             try {
-                meta = executor.getConnection().getMetaData();
+                meta = executor.getConnectionProvider().acquire().getMetaData();
             }
             catch (SQLException e) {
                 throw new DataAccessException("Error while accessing DatabaseMetaData", e);

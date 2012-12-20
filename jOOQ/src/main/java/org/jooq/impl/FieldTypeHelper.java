@@ -38,7 +38,6 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.impl.Utils.getDriverConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.math.BigDecimal;
@@ -344,7 +343,7 @@ public final class FieldTypeHelper {
 
             // [#1544] We can safely assume that localConfiguration has been
             // set on DefaultBindContext, prior to serialising arrays to SQLOut
-            Connection connection = getDriverConnection(DefaultExecuteContext.registeredConfiguration());
+            Connection connection = DefaultExecuteContext.registeredConfiguration().getConnectionProvider().acquire();
             ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
             stream.writeArray(on(connection).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
         }

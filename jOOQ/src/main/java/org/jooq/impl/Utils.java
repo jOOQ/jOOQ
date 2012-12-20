@@ -46,7 +46,6 @@ import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -687,36 +686,6 @@ final class Utils {
     }
 
     /**
-     * Extract an underlying connection
-     */
-    static final Connection getDriverConnection(Configuration configuration) {
-        if (configuration != null) {
-            Connection connection = configuration.getConnection();
-
-            if (connection != null) {
-
-                // If the connection is wrapped by jOOQ, extract the underlying
-                // connection
-                if (connection.getClass() == DataSourceConnection.class) {
-                    connection = ((DataSourceConnection) connection).getDelegate();
-                }
-
-                if (connection.getClass() == ConnectionProxy.class) {
-                    connection = ((ConnectionProxy) connection).getDelegate();
-                }
-
-                // [#1157] TODO: If jOOQ's extended tracing / logging feature
-                // allows for further wrapping a connection, this must be
-                // treated here...
-
-                return connection;
-            }
-        }
-
-        throw new DataAccessException("Cannot get a JDBC driver connection from configuration: " + configuration);
-    }
-
-    /**
      * Check if JPA classes can be loaded. This is only done once per JVM!
      */
     private static final boolean isJPAAvailable() {
@@ -1213,7 +1182,7 @@ final class Utils {
         if (attachable instanceof AttachableInternal) {
             return ((AttachableInternal) attachable).getConfiguration();
         }
-    
+
         return null;
     }
 }

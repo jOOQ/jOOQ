@@ -35,18 +35,16 @@
  */
 package org.jooq.impl;
 
-import java.sql.Connection;
 import java.util.Map;
 
-import javax.sql.DataSource;
-
 import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 
 /**
- * A base class for all objects implementing {@link Configuration}, wrapping
- * another configuration.
+ * A base mixin class for all objects implementing {@link Configuration},
+ * wrapping another configuration.
  *
  * @author Lukas Eder
  */
@@ -55,37 +53,22 @@ abstract class AbstractConfiguration implements Configuration {
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = -8527430313425232841L;
+    private static final long serialVersionUID = -8527430313425232841L;
 
-    final Configuration configuration;
+    final Configuration       configuration;
 
     AbstractConfiguration(Configuration configuration) {
         this.configuration = configuration;
     }
 
     @Override
+    public final ConnectionProvider getConnectionProvider() {
+        return configuration.getConnectionProvider();
+    }
+
+    @Override
     public final SQLDialect getDialect() {
         return configuration.getDialect();
-    }
-
-    @Override
-    public final DataSource getDataSource() {
-        return configuration.getDataSource();
-    }
-
-    @Override
-    public final void setDataSource(DataSource datasource) {
-        configuration.setDataSource(datasource);
-    }
-
-    @Override
-    public final Connection getConnection() {
-        return configuration.getConnection();
-    }
-
-    @Override
-    public final void setConnection(Connection connection) {
-        configuration.setConnection(connection);
     }
 
     @Override

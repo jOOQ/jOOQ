@@ -300,7 +300,7 @@ class LocalDebugger implements Debugger {
             }
             @Override
             public Connection getConnection() {
-                return ctx.getConnection();
+                return ctx.connection();
             }
             @Override
             public void releaseConnection(Connection connection) {

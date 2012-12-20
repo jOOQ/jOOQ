@@ -55,8 +55,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.jooq.conf.Settings;
-import org.jooq.exception.DataAccessException;
+import org.jooq.ConnectionProvider;
 import org.jooq.tools.jdbc.JDBC41Connection;
 
 /**
@@ -71,32 +70,16 @@ import org.jooq.tools.jdbc.JDBC41Connection;
  */
 class DataSourceConnection extends JDBC41Connection implements Connection {
 
-    private final DataSource datasource;
-    private final Settings   settings;
+    private final ConnectionProvider connectionProvider;
+    private final Connection         connection;
 
-    private Connection       connection;
-
-    DataSourceConnection(DataSource datasource, Connection connection, Settings settings) {
-        this.datasource = datasource;
+    DataSourceConnection(ConnectionProvider connectionProvider, Connection connection) {
+        this.connectionProvider = connectionProvider;
         this.connection = connection;
-        this.settings = settings;
     }
 
     final Connection getDelegate() {
-        if (connection == null) {
-            try {
-                connection = new ConnectionProxy(datasource.getConnection(), settings);
-            }
-            catch (SQLException e) {
-                throw new DataAccessException("Error when fetching Connection from DataSource", e);
-            }
-        }
-
         return connection;
-    }
-
-    final DataSource getDataSource() {
-        return datasource;
     }
 
     // ------------------------------------------------------------------------
@@ -105,11 +88,7 @@ class DataSourceConnection extends JDBC41Connection implements Connection {
 
     @Override
     public final void close() throws SQLException {
-        getDelegate().close();
-
-        if (datasource != null) {
-            connection = null;
-        }
+        connectionProvider.release(connection);
     }
 
     // ------------------------------------------------------------------------

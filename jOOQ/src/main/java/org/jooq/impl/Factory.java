@@ -49,7 +49,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.DefaultConfiguration.DEFAULT_CONFIGURATION;
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Utils.combine;
 
@@ -210,7 +209,7 @@ public class Factory {
      */
     @Support
     public static SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
-        return new SelectImpl<Record>(DEFAULT_CONFIGURATION).select(fields);
+        return new SelectImpl<Record>(new DefaultConfiguration()).select(fields);
     }
 
     /**
@@ -241,7 +240,7 @@ public class Factory {
      */
     @Support
     public static SelectSelectStep<Record> select(Field<?>... fields) {
-        return new SelectImpl<Record>(DEFAULT_CONFIGURATION).select(fields);
+        return new SelectImpl<Record>(new DefaultConfiguration()).select(fields);
     }
 
 // [jooq-tools] START [select]
@@ -1111,7 +1110,7 @@ public class Factory {
      */
     @Support
     public static SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
-        return new SelectImpl<Record>(DEFAULT_CONFIGURATION, true).select(fields);
+        return new SelectImpl<Record>(new DefaultConfiguration(), true).select(fields);
     }
 
     /**
@@ -1142,7 +1141,7 @@ public class Factory {
      */
     @Support
     public static SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
-        return new SelectImpl<Record>(DEFAULT_CONFIGURATION, true).select(fields);
+        return new SelectImpl<Record>(new DefaultConfiguration(), true).select(fields);
     }
 
 // [jooq-tools] START [selectDistinct]
@@ -2013,7 +2012,7 @@ public class Factory {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectZero() {
-        return new SelectImpl<Record1<Integer>>(DEFAULT_CONFIGURATION).select(zero());
+        return new SelectImpl<Record1<Integer>>(new DefaultConfiguration()).select(zero());
     }
 
     /**
@@ -2045,7 +2044,7 @@ public class Factory {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectOne() {
-        return new SelectImpl<Record1<Integer>>(DEFAULT_CONFIGURATION).select(one());
+        return new SelectImpl<Record1<Integer>>(new DefaultConfiguration()).select(one());
     }
 
     /**
@@ -2077,7 +2076,7 @@ public class Factory {
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectCount() {
-        return new SelectImpl<Record1<Integer>>(DEFAULT_CONFIGURATION).select(count());
+        return new SelectImpl<Record1<Integer>>(new DefaultConfiguration()).select(count());
     }
 
     // -------------------------------------------------------------------------

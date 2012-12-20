@@ -221,7 +221,7 @@ public class DebugListener extends DefaultExecuteListener {
                 try {
                     ctx.statement().close();
                     ctx.sql(mainSQL);
-                    ctx.statement(ctx.getConnection().prepareStatement(mainSQL));
+                    ctx.statement(ctx.connection().prepareStatement(mainSQL));
                 } catch(Exception e) {
                     // TODO: how to process properly breakpoint errors??
                     throw new RuntimeException(e);
@@ -248,7 +248,7 @@ public class DebugListener extends DefaultExecuteListener {
                         try {
                             ctx.statement().close();
                             ctx.sql(effectiveSQL);
-                            ctx.statement(ctx.getConnection().prepareStatement(effectiveSQL));
+                            ctx.statement(ctx.connection().prepareStatement(effectiveSQL));
                         } catch(Exception e) {
                             // TODO: how to process properly breakpoint errors??
                             throw new RuntimeException(e);
@@ -269,7 +269,7 @@ public class DebugListener extends DefaultExecuteListener {
                         // Better return possibility? Based on originating query?
                         String sql = new Executor(ctx.getDialect()).selectZero().where("1 = 2").getSQL();
                         ctx.sql(sql);
-                        ctx.statement(ctx.getConnection().prepareStatement(sql));
+                        ctx.statement(ctx.connection().prepareStatement(sql));
                     } catch(Exception e) {
                         // TODO: how to process properly breakpoint errors??
                         throw new RuntimeException(e);
@@ -287,7 +287,7 @@ public class DebugListener extends DefaultExecuteListener {
     private void executeSQL(ExecuteContext ctx, String sql) {
         Statement statement = null;
         try {
-            statement = ctx.getConnection().createStatement();
+            statement = ctx.connection().createStatement();
             statement.execute(sql);
         } catch(Exception e) {
             // TODO: how to process properly breakpoint errors??

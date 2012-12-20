@@ -33,71 +33,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
+package org.jooq;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
-import org.jooq.Batch;
-import org.jooq.ExecuteContext;
-import org.jooq.ExecuteListener;
-import org.jooq.Query;
+import org.jooq.exception.DataAccessException;
 
 /**
+ * A connection lifecycle handler API
+ * <p>
+ * The <code>ConnectionProvider</code> allows for abstracting the handling of
+ * custom <code>Connection</code> lifecycles outside of jOOQ, injecting
+ * behaviour into jOOQ's internals. jOOQ will try to get a new JDBC
+ * {@link Connection} from the connection provider as early as needed, and will
+ * return it as early as possible.
+ *
+ * @author Aaron Digulla
  * @author Lukas Eder
  */
-class BatchMultiple implements Batch {
+public interface ConnectionProvider {
 
     /**
-     * Generated UID
+     * Acquire a connection from the connection lifecycle handler
+     * <p>
+     * The general contract is that a <code>ConnectionProvider</code> is
+     * expected to always return the same connection, until this connection is
+     * returned by jOOQ through {@link #release(Connection)}.
+     *
+     * @throws DataAccessException If anything went wrong while acquiring a
+     *             connection
      */
-    private static final long serialVersionUID = -7337667281292354043L;
+    Connection acquire() throws DataAccessException;
 
-    private final Executor    create;
-    private final Query[]     queries;
-
-    public BatchMultiple(Executor create, Query... queries) {
-        this.create = create;
-        this.queries = queries;
-    }
-
-    @Override
-    public final int[] execute() {
-        ExecuteContext ctx = new DefaultExecuteContext(create, queries);
-        ExecuteListener listener = new ExecuteListeners(ctx);
-        Connection connection = ctx.connection();
-
-        try {
-            ctx.statement(new PreparedStatementProxy(connection));
-
-            String[] batchSQL = ctx.batchSQL();
-            for (int i = 0; i < queries.length; i++) {
-                listener.renderStart(ctx);
-                batchSQL[i] = create.renderInlined(queries[i]);
-                listener.renderEnd(ctx);
-            }
-
-            for (String sql : batchSQL) {
-                ctx.sql(sql);
-                listener.prepareStart(ctx);
-                ctx.statement().addBatch(sql);
-                listener.prepareEnd(ctx);
-                ctx.sql(null);
-            }
-
-            listener.executeStart(ctx);
-            int[] result = ctx.statement().executeBatch();
-            listener.executeEnd(ctx);
-
-            return result;
-        }
-        catch (SQLException e) {
-            ctx.sqlException(e);
-            listener.exception(ctx);
-            throw ctx.exception();
-        }
-        finally {
-            Utils.safeClose(listener, ctx);
-        }
-    }
+    /**
+     * Release a connection to the connection lifecycle handler
+     * <p>
+     * The general contract is that a <code>ConnectionProvider</code> must not
+     * generate a new connection in {@link #acquire()}, before a previous
+     * connection is returned.
+     *
+     * @throws DataAccessException If anything went wrong while releasing a
+     *             connection
+     */
+    void release(Connection connection) throws DataAccessException;
 }

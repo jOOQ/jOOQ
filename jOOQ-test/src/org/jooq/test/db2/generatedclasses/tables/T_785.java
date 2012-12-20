@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 155336379;
+	private static final long serialVersionUID = -1081157266;
 
 	/**
-	 * The singleton instance of LUKAS.T_785
+	 * The singleton instance of <code>LUKAS.T_785</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.T_785 T_785 = new org.jooq.test.db2.generatedclasses.tables.T_785();
 
@@ -25,17 +25,17 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedcl
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_785.ID</code>
+	 * The column <code>LUKAS.T_785.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_785);
 
 	/**
-	 * The table column <code>LUKAS.T_785.NAME</code>
+	 * The column <code>LUKAS.T_785.NAME</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, T_785);
 
 	/**
-	 * The table column <code>LUKAS.T_785.VALUE</code>
+	 * The column <code>LUKAS.T_785.VALUE</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, T_785);
 

@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 436107276;
+	private static final long serialVersionUID = 142482806;
 
 	/**
-	 * The singleton instance of LUKAS.T_BOOK_TO_BOOK_STORE
+	 * The singleton instance of <code>LUKAS.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.db2.generatedclasses.tables.TBookToBookStore();
 
@@ -25,33 +25,17 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT T_BOOK_TO_BOOK_STORE__FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES LUKAS.T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * The column <code>LUKAS.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_TO_BOOK_STORE);
 
 	/**
-	 * The table column <code>LUKAS.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT T_BOOK_TO_BOOK_STORE__FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES LUKAS.T_BOOK (ID)
-	 * </pre></code>
+	 * The column <code>LUKAS.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 
 	/**
-	 * The table column <code>LUKAS.T_BOOK_TO_BOOK_STORE.STOCK</code>
+	 * The column <code>LUKAS.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 
@@ -62,19 +46,26 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 		super("T_BOOK_TO_BOOK_STORE", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
 		return org.jooq.test.db2.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__PK_B2BS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.db2.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__PK_B2BS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.db2.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_BS_NAME, org.jooq.test.db2.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_B_ID);
 	}

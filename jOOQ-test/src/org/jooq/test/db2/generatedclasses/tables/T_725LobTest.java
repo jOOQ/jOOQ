@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 1239961246;
+	private static final long serialVersionUID = 563662987;
 
 	/**
-	 * The singleton instance of LUKAS.T_725_LOB_TEST
+	 * The singleton instance of <code>LUKAS.T_725_LOB_TEST</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = new org.jooq.test.db2.generatedclasses.tables.T_725LobTest();
 
@@ -25,14 +25,12 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_725_LOB_TEST.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>LUKAS.T_725_LOB_TEST.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_725_LOB_TEST);
 
 	/**
-	 * The table column <code>LUKAS.T_725_LOB_TEST.LOB</code>
+	 * The column <code>LUKAS.T_725_LOB_TEST.LOB</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, T_725_LOB_TEST);
 
@@ -43,13 +41,18 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 		super("T_725_LOB_TEST", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_725LobTestRecord> getMainKey() {
 		return org.jooq.test.db2.generatedclasses.Keys.T_725_LOB_TEST__PK_T_725_LOB_TEST;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_725LobTestRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_725LobTestRecord>>asList(org.jooq.test.db2.generatedclasses.Keys.T_725_LOB_TEST__PK_T_725_LOB_TEST);
 	}

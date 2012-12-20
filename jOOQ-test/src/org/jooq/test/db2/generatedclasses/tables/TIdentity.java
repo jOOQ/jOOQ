@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -522862167;
+	private static final long serialVersionUID = 961708872;
 
 	/**
-	 * The singleton instance of LUKAS.T_IDENTITY
+	 * The singleton instance of <code>LUKAS.T_IDENTITY</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.TIdentity T_IDENTITY = new org.jooq.test.db2.generatedclasses.tables.TIdentity();
 
@@ -25,12 +25,12 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.db2.generat
 	}
 
 	/**
-	 * The table column <code>LUKAS.T_IDENTITY.ID</code>
+	 * The column <code>LUKAS.T_IDENTITY.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 
 	/**
-	 * The table column <code>LUKAS.T_IDENTITY.VAL</code>
+	 * The column <code>LUKAS.T_IDENTITY.VAL</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 
@@ -41,6 +41,9 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.db2.generat
 		super("T_IDENTITY", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.db2.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.test.db2.generatedclasses.Keys.IDENTITY_T_IDENTITY;

@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1911414773;
+	private static final long serialVersionUID = -1274286600;
 
 	/**
-	 * The singleton instance of LUKAS.V_BOOK
+	 * The singleton instance of <code>LUKAS.V_BOOK</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.VBook V_BOOK = new org.jooq.test.db2.generatedclasses.tables.VBook();
 
@@ -25,47 +25,47 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedcl
 	}
 
 	/**
-	 * The table column <code>LUKAS.V_BOOK.ID</code>
+	 * The column <code>LUKAS.V_BOOK.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>LUKAS.V_BOOK.AUTHOR_ID</code>
+	 * The column <code>LUKAS.V_BOOK.AUTHOR_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>LUKAS.V_BOOK.CO_AUTHOR_ID</code>
+	 * The column <code>LUKAS.V_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>LUKAS.V_BOOK.DETAILS_ID</code>
+	 * The column <code>LUKAS.V_BOOK.DETAILS_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>LUKAS.V_BOOK.TITLE</code>
+	 * The column <code>LUKAS.V_BOOK.TITLE</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, V_BOOK);
 
 	/**
-	 * The table column <code>LUKAS.V_BOOK.PUBLISHED_IN</code>
+	 * The column <code>LUKAS.V_BOOK.PUBLISHED_IN</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>LUKAS.V_BOOK.LANGUAGE_ID</code>
+	 * The column <code>LUKAS.V_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>LUKAS.V_BOOK.CONTENT_TEXT</code>
+	 * The column <code>LUKAS.V_BOOK.CONTENT_TEXT</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.LONGVARCHAR, V_BOOK);
 
 	/**
-	 * The table column <code>LUKAS.V_BOOK.CONTENT_PDF</code>
+	 * The column <code>LUKAS.V_BOOK.CONTENT_PDF</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, V_BOOK);
 

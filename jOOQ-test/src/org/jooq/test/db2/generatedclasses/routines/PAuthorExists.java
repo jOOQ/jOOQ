@@ -9,16 +9,15 @@ package org.jooq.test.db2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 738187537;
-
+	private static final long serialVersionUID = -1038395879;
 
 	/**
-	 * The procedure parameter <code>LUKAS.P_AUTHOR_EXISTS.AUTHOR_NAME</code>
+	 * The parameter <code>LUKAS.P_AUTHOR_EXISTS.AUTHOR_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>LUKAS.P_AUTHOR_EXISTS.RESULT</code>
+	 * The parameter <code>LUKAS.P_AUTHOR_EXISTS.RESULT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RESULT = createParameter("RESULT", org.jooq.impl.SQLDataType.INTEGER);
 

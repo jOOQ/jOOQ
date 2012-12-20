@@ -9,67 +9,31 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -477955753;
+	private static final long serialVersionUID = 1513849367;
 
 	/**
-	 * The table column <code>LUKAS.X_TEST_CASE_64_69.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>LUKAS.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID, value);
 	}
 
 	/**
-	 * The table column <code>LUKAS.X_TEST_CASE_64_69.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>LUKAS.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID);
 	}
 
 	/**
-	 * The table column <code>LUKAS.X_TEST_CASE_64_69.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
-		return create()
-			.selectFrom(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
-			.where(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID, Short.class)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>LUKAS.X_TEST_CASE_64_69.UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A
-	 * FOREIGN KEY (UNUSED_ID)
-	 * REFERENCES LUKAS.X_UNUSED (ID)
-	 * </pre></code>
+	 * Setter for <code>LUKAS.X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	public void setUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, value);
 	}
 
 	/**
-	 * The table column <code>LUKAS.X_TEST_CASE_64_69.UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A
-	 * FOREIGN KEY (UNUSED_ID)
-	 * REFERENCES LUKAS.X_UNUSED (ID)
-	 * </pre></code>
-	 */
-	public java.lang.Integer getUnusedId() {
-		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord 
-	 * XUnusedRecord}
+	 * Link this record to a given {@link org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord}
 	 */
 	public void setUnusedId(org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord value) {
 		if (value == null) {
@@ -81,13 +45,28 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>LUKAS.X_TEST_CASE_64_69.UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A
-	 * FOREIGN KEY (UNUSED_ID)
-	 * REFERENCES LUKAS.X_UNUSED (ID)
-	 * </pre></code>
+	 * Getter for <code>LUKAS.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 */
+	public java.lang.Integer getUnusedId() {
+		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>LUKAS.X_TEST_CASE_71</code> referencing this <code>LUKAS.X_TEST_CASE_64_69</code>
+	 */
+	public org.jooq.Result<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
+		return create()
+			.selectFrom(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
+			.where(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID, Short.class)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a <code>LUKAS.X_UNUSED</code> referenced by this <code>LUKAS.X_TEST_CASE_64_69</code>
 	 */
 	public org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()
@@ -96,11 +75,16 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 			.fetchOne();
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached XTestCase_64_69Record
+	 * {@inheritDoc}
 	 */
-	public XTestCase_64_69Record() {
-		super(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -153,5 +137,16 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	@Override
 	public java.lang.Integer value2() {
 		return getUnusedId();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_64_69Record
+	 */
+	public XTestCase_64_69Record() {
+		super(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
 	}
 }

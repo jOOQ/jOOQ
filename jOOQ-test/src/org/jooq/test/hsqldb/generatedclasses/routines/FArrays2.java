@@ -9,16 +9,15 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Long[]> {
 
-	private static final long serialVersionUID = -1419005349;
-
+	private static final long serialVersionUID = -1598703559;
 
 	/**
-	 * The procedure parameter <code>PUBLIC.F_ARRAYS2.RETURN_VALUE</code>
+	 * The parameter <code>PUBLIC.F_ARRAYS2.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Long[]> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BIGINT.getArrayDataType());
 
 	/**
-	 * The procedure parameter <code>PUBLIC.F_ARRAYS2.IN_ARRAY</code>
+	 * The parameter <code>PUBLIC.F_ARRAYS2.IN_ARRAY</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Long[]> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.BIGINT.getArrayDataType());
 
@@ -40,9 +39,7 @@ public class FArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Long[]> {
 	}
 
 	/**
-	 * Set the <code>IN_ARRAY</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>IN_ARRAY</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setInArray(org.jooq.Field<java.lang.Long[]> field) {
 		setField(IN_ARRAY, field);

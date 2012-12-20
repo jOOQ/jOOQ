@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class PreparedStatementRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IPreparedStatement {
 
-	private static final long serialVersionUID = 321330363;
+	private static final long serialVersionUID = 719106441;
 
 	/**
-	 * The table column <code>PUBLIC.PREPARED_STATEMENT.ID</code>
+	 * Setter for <code>PUBLIC.PREPARED_STATEMENT.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,19 +20,16 @@ public class PreparedStatementRecord extends org.jooq.impl.TableRecordImpl<org.j
 	}
 
 	/**
-	 * The table column <code>PUBLIC.PREPARED_STATEMENT.ID</code>
+	 * Getter for <code>PUBLIC.PREPARED_STATEMENT.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement.PREPARED_STATEMENT.ID);
 	}
 
-	/**
-	 * Create a detached PreparedStatementRecord
-	 */
-	public PreparedStatementRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement.PREPARED_STATEMENT);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record1 type implementation
@@ -68,5 +65,37 @@ public class PreparedStatementRecord extends org.jooq.impl.TableRecordImpl<org.j
 	@Override
 	public java.lang.Integer value1() {
 		return getId();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IPreparedStatement from) {
+		setId(from.getId());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IPreparedStatement> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached PreparedStatementRecord
+	 */
+	public PreparedStatementRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement.PREPARED_STATEMENT);
 	}
 }

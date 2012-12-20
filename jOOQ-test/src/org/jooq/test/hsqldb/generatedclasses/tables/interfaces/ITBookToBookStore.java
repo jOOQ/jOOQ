@@ -10,64 +10,46 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITBookToBookStore extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
 	 */
 	public void setBookStoreName(java.lang.String value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
 	 */
 	public java.lang.String getBookStoreName();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES PUBLIC.T_BOOK (ID)
-	 * </pre></code>
+	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
 	public void setBookId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES PUBLIC.T_BOOK (ID)
-	 * </pre></code>
+	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
 	public java.lang.Integer getBookId();
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>
+	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
 	public void setStock(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>
+	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
 	public java.lang.Integer getStock();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITBookToBookStore
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBookToBookStore from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITBookToBookStore
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBookToBookStore> E into(E into);
 }

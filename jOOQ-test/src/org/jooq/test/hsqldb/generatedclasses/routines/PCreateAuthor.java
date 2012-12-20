@@ -9,8 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PCreateAuthor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 716490700;
-
+	private static final long serialVersionUID = -436043728;
 
 	/**
 	 * Create a new routine call instance

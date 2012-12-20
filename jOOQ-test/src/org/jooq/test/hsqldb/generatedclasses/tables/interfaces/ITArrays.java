@@ -10,46 +10,56 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITArrays extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
+	 * Setter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	public void setStringArray(java.lang.String[] value);
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>
+	 * Getter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	public java.lang.String[] getStringArray();
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
+	 * Setter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	public void setNumberArray(java.lang.Integer[] value);
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>
+	 * Getter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	public java.lang.Integer[] getNumberArray();
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
+	 * Setter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	public void setDateArray(java.sql.Date[] value);
 
 	/**
-	 * The table column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>
+	 * Getter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	public java.sql.Date[] getDateArray();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITArrays
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITArrays from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITArrays
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITArrays> E into(E into);
 }

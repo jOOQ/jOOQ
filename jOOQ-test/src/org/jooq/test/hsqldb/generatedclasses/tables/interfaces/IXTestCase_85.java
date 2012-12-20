@@ -10,60 +10,46 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IXTestCase_85 extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_85.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>PUBLIC.X_TEST_CASE_85.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_85.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>PUBLIC.X_TEST_CASE_85.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * Setter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	public void setXUnusedId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * Getter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	public java.lang.Integer getXUnusedId();
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * Setter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
 	public void setXUnusedName(java.lang.String value);
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * Getter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
 	public java.lang.String getXUnusedName();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IXTestCase_85
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IXTestCase_85 from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IXTestCase_85
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IXTestCase_85> E into(E into);
 }

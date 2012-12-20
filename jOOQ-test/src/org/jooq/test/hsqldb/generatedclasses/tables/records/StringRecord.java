@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IString {
 
-	private static final long serialVersionUID = 718579492;
+	private static final long serialVersionUID = 953937131;
 
 	/**
-	 * The table column <code>PUBLIC.STRING.ID</code>
+	 * Setter for <code>PUBLIC.STRING.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * The table column <code>PUBLIC.STRING.ID</code>
+	 * Getter for <code>PUBLIC.STRING.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * The table column <code>PUBLIC.STRING.OTHER</code>
+	 * Setter for <code>PUBLIC.STRING.OTHER</code>. 
 	 */
 	@Override
 	public void setOther(java.lang.String value) {
@@ -36,19 +36,16 @@ public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * The table column <code>PUBLIC.STRING.OTHER</code>
+	 * Getter for <code>PUBLIC.STRING.OTHER</code>. 
 	 */
 	@Override
 	public java.lang.String getOther() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.String.STRING.OTHER);
 	}
 
-	/**
-	 * Create a detached StringRecord
-	 */
-	public StringRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.String.STRING);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -100,5 +97,38 @@ public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	@Override
 	public java.lang.String value2() {
 		return getOther();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IString from) {
+		setId(from.getId());
+		setOther(from.getOther());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IString> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached StringRecord
+	 */
+	public StringRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.String.STRING);
 	}
 }

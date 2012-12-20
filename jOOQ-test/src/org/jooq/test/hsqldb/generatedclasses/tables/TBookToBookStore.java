@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 233592745;
+	private static final long serialVersionUID = 643945384;
 
 	/**
-	 * The singleton instance of PUBLIC.T_BOOK_TO_BOOK_STORE
+	 * The singleton instance of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore();
 
@@ -25,61 +25,61 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES PUBLIC.T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * The column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES PUBLIC.T_BOOK (ID)
-	 * </pre></code>
+	 * The column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>
+	 * The column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> table reference
+	 */
 	public TBookToBookStore() {
 		super("T_BOOK_TO_BOOK_STORE", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
+	/**
+	 * Create an aliased <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> table reference
+	 */
 	public TBookToBookStore(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
 		return org.jooq.test.hsqldb.generatedclasses.Keys.PK_B2BS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.hsqldb.generatedclasses.Keys.PK_B2BS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.hsqldb.generatedclasses.Keys.FK_B2BS_BS_NAME, org.jooq.test.hsqldb.generatedclasses.Keys.FK_B2BS_B_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore as(java.lang.String alias) {
 		return new org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore(alias);

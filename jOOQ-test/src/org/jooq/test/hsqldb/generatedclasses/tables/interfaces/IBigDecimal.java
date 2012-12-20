@@ -10,22 +10,36 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IBigDecimal extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.BIG_DECIMAL.ID</code>
+	 * Setter for <code>PUBLIC.BIG_DECIMAL.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.BIG_DECIMAL.ID</code>
+	 * Getter for <code>PUBLIC.BIG_DECIMAL.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.BIG_DECIMAL.OTHER</code>
+	 * Setter for <code>PUBLIC.BIG_DECIMAL.OTHER</code>. 
 	 */
 	public void setOther(java.math.BigInteger value);
 
 	/**
-	 * The table column <code>PUBLIC.BIG_DECIMAL.OTHER</code>
+	 * Getter for <code>PUBLIC.BIG_DECIMAL.OTHER</code>. 
 	 */
 	public java.math.BigInteger getOther();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IBigDecimal
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IBigDecimal from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IBigDecimal
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IBigDecimal> E into(E into);
 }

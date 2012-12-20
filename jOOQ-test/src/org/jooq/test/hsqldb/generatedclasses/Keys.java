@@ -12,11 +12,17 @@ package org.jooq.test.hsqldb.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Keys {
 
+	// -------------------------------------------------------------------------
 	// IDENTITY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.Identity<org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> IDENTITY_T_IDENTITY = Identities0.IDENTITY_T_IDENTITY;
 	public static final org.jooq.Identity<org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;
 
+	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = UniqueKeys0.PK_T_639_NUMBERS_TABLE;
 	public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = UniqueKeys0.PK_T_725_LOB_TEST;
 	public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> T_937 = UniqueKeys0.T_937;
@@ -36,7 +42,10 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> PK_X_UNUSED = UniqueKeys0.PK_X_UNUSED;
 	public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> UK_X_UNUSED_ID = UniqueKeys0.UK_X_UNUSED_ID;
 
+	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_AUTHOR_ID;
 	public static final org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_CO_AUTHOR_ID;
 	public static final org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord> FK_T_BOOK_LANGUAGE_ID = ForeignKeys0.FK_T_BOOK_LANGUAGE_ID;
@@ -48,17 +57,19 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> FK_X_UNUSED_SELF = ForeignKeys0.FK_X_UNUSED_SELF;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings("hiding")
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> IDENTITY_T_IDENTITY = createIdentity(org.jooq.test.hsqldb.generatedclasses.tables.TIdentity.T_IDENTITY, org.jooq.test.hsqldb.generatedclasses.tables.TIdentity.T_IDENTITY.ID);
 		public static org.jooq.Identity<org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = createIdentity(org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);
@@ -80,7 +91,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> UK_X_UNUSED_ID = createUniqueKey(org.jooq.test.hsqldb.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.hsqldb.generatedclasses.tables.XUnused.X_UNUSED.ID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_AUTHOR_ID = createForeignKey(org.jooq.test.hsqldb.generatedclasses.Keys.PK_T_AUTHOR, org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID);
 		public static final org.jooq.ForeignKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(org.jooq.test.hsqldb.generatedclasses.Keys.PK_T_AUTHOR, org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID);

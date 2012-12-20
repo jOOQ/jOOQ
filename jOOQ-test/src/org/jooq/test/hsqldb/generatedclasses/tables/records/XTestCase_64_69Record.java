@@ -9,12 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IXTestCase_64_69 {
 
-	private static final long serialVersionUID = 302805744;
+	private static final long serialVersionUID = -166752188;
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,9 +20,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -32,25 +28,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
-		return create()
-			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
-			.where(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, Short.class)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_64_69
-	 * FOREIGN KEY (UNUSED_ID)
-	 * REFERENCES PUBLIC.X_UNUSED (ID)
-	 * </pre></code>
+	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	@Override
 	public void setUnusedId(java.lang.Integer value) {
@@ -58,22 +36,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_64_69
-	 * FOREIGN KEY (UNUSED_ID)
-	 * REFERENCES PUBLIC.X_UNUSED (ID)
-	 * </pre></code>
-	 */
-	@Override
-	public java.lang.Integer getUnusedId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord 
-	 * XUnusedRecord}
+	 * Link this record to a given {@link org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord}
 	 */
 	public void setUnusedId(org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord value) {
 		if (value == null) {
@@ -85,13 +48,29 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * The table column <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_64_69
-	 * FOREIGN KEY (UNUSED_ID)
-	 * REFERENCES PUBLIC.X_UNUSED (ID)
-	 * </pre></code>
+	 * Getter for <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 */
+	@Override
+	public java.lang.Integer getUnusedId() {
+		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>PUBLIC.X_TEST_CASE_71</code> referencing this <code>PUBLIC.X_TEST_CASE_64_69</code>
+	 */
+	public org.jooq.Result<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
+		return create()
+			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
+			.where(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, Short.class)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a <code>PUBLIC.X_UNUSED</code> referenced by this <code>PUBLIC.X_TEST_CASE_64_69</code>
 	 */
 	public org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()
@@ -100,11 +79,16 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 			.fetchOne();
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached XTestCase_64_69Record
+	 * {@inheritDoc}
 	 */
-	public XTestCase_64_69Record() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -157,5 +141,38 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	@Override
 	public java.lang.Integer value2() {
 		return getUnusedId();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IXTestCase_64_69 from) {
+		setId(from.getId());
+		setUnusedId(from.getUnusedId());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IXTestCase_64_69> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_64_69Record
+	 */
+	public XTestCase_64_69Record() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
 	}
 }

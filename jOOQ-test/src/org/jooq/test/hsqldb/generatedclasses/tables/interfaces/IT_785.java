@@ -10,32 +10,46 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IT_785 extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.T_785.ID</code>
+	 * Setter for <code>PUBLIC.T_785.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_785.ID</code>
+	 * Getter for <code>PUBLIC.T_785.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.T_785.NAME</code>
+	 * Setter for <code>PUBLIC.T_785.NAME</code>. 
 	 */
 	public void setName(java.lang.String value);
 
 	/**
-	 * The table column <code>PUBLIC.T_785.NAME</code>
+	 * Getter for <code>PUBLIC.T_785.NAME</code>. 
 	 */
 	public java.lang.String getName();
 
 	/**
-	 * The table column <code>PUBLIC.T_785.VALUE</code>
+	 * Setter for <code>PUBLIC.T_785.VALUE</code>. 
 	 */
 	public void setValue(java.lang.String value);
 
 	/**
-	 * The table column <code>PUBLIC.T_785.VALUE</code>
+	 * Getter for <code>PUBLIC.T_785.VALUE</code>. 
 	 */
 	public java.lang.String getValue();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IT_785
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_785 from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IT_785
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_785> E into(E into);
 }

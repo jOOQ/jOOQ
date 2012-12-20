@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Object>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IObject {
 
-	private static final long serialVersionUID = 1616337734;
+	private static final long serialVersionUID = 1435078307;
 
 	/**
-	 * The table column <code>PUBLIC.OBJECT.ID</code>
+	 * Setter for <code>PUBLIC.OBJECT.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * The table column <code>PUBLIC.OBJECT.ID</code>
+	 * Getter for <code>PUBLIC.OBJECT.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,10 +28,7 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * The table column <code>PUBLIC.OBJECT.OTHER</code>
-	 * <p>
-	 * The SQL type of this item (OTHER, null) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>PUBLIC.OBJECT.OTHER</code>. 
 	 */
 	@Override
 	public void setOther(java.lang.Object value) {
@@ -39,22 +36,16 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * The table column <code>PUBLIC.OBJECT.OTHER</code>
-	 * <p>
-	 * The SQL type of this item (OTHER, null) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>PUBLIC.OBJECT.OTHER</code>. 
 	 */
 	@Override
 	public java.lang.Object getOther() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT.OTHER);
 	}
 
-	/**
-	 * Create a detached ObjectRecord
-	 */
-	public ObjectRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -106,5 +97,38 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	@Override
 	public java.lang.Object value2() {
 		return getOther();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IObject from) {
+		setId(from.getId());
+		setOther(from.getOther());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IObject> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached ObjectRecord
+	 */
+	public ObjectRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT);
 	}
 }

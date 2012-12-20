@@ -9,16 +9,15 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1452895157;
-
+	private static final long serialVersionUID = -194819457;
 
 	/**
-	 * The procedure parameter <code>PUBLIC.P_AUTHOR_EXISTS.AUTHOR_NAME</code>
+	 * The parameter <code>PUBLIC.P_AUTHOR_EXISTS.AUTHOR_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>PUBLIC.P_AUTHOR_EXISTS.RESULT</code>
+	 * The parameter <code>PUBLIC.P_AUTHOR_EXISTS.RESULT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RESULT = createParameter("RESULT", org.jooq.impl.SQLDataType.INTEGER);
 

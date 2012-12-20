@@ -10,12 +10,26 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IInteger extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.INTEGER.ID</code>
+	 * Setter for <code>PUBLIC.INTEGER.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.INTEGER.ID</code>
+	 * Getter for <code>PUBLIC.INTEGER.ID</code>. 
 	 */
 	public java.lang.Integer getId();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IInteger
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IInteger from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IInteger
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IInteger> E into(E into);
 }

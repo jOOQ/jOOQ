@@ -10,12 +10,26 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IPreparedStatement extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.PREPARED_STATEMENT.ID</code>
+	 * Setter for <code>PUBLIC.PREPARED_STATEMENT.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.PREPARED_STATEMENT.ID</code>
+	 * Getter for <code>PUBLIC.PREPARED_STATEMENT.ID</code>. 
 	 */
 	public java.lang.Integer getId();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IPreparedStatement
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IPreparedStatement from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IPreparedStatement
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IPreparedStatement> E into(E into);
 }

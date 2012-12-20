@@ -10,22 +10,36 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ILong extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.LONG.ID</code>
+	 * Setter for <code>PUBLIC.LONG.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.LONG.ID</code>
+	 * Getter for <code>PUBLIC.LONG.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.LONG.OTHER</code>
+	 * Setter for <code>PUBLIC.LONG.OTHER</code>. 
 	 */
 	public void setOther(java.lang.Long value);
 
 	/**
-	 * The table column <code>PUBLIC.LONG.OTHER</code>
+	 * Getter for <code>PUBLIC.LONG.OTHER</code>. 
 	 */
 	public java.lang.Long getOther();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ILong
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ILong from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ILong
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ILong> E into(E into);
 }

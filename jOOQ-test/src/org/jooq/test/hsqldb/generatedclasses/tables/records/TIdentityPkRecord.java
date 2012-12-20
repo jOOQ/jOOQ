@@ -9,12 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITIdentityPk {
 
-	private static final long serialVersionUID = -940372755;
+	private static final long serialVersionUID = 1827133397;
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY_PK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>PUBLIC.T_IDENTITY_PK.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,9 +20,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY_PK.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>PUBLIC.T_IDENTITY_PK.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -32,7 +28,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY_PK.VAL</code>
+	 * Setter for <code>PUBLIC.T_IDENTITY_PK.VAL</code>. 
 	 */
 	@Override
 	public void setVal(java.lang.Integer value) {
@@ -40,18 +36,27 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	}
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY_PK.VAL</code>
+	 * Getter for <code>PUBLIC.T_IDENTITY_PK.VAL</code>. 
 	 */
 	@Override
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.VAL);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TIdentityPkRecord
+	 * {@inheritDoc}
 	 */
-	public TIdentityPkRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -104,5 +109,38 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@Override
 	public java.lang.Integer value2() {
 		return getVal();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITIdentityPk from) {
+		setId(from.getId());
+		setVal(from.getVal());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITIdentityPk> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TIdentityPkRecord
+	 */
+	public TIdentityPkRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
 	}
 }

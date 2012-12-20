@@ -9,16 +9,15 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PArrays3 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1302403507;
-
+	private static final long serialVersionUID = -2118027751;
 
 	/**
-	 * The procedure parameter <code>PUBLIC.P_ARRAYS3.IN_ARRAY</code>
+	 * The parameter <code>PUBLIC.P_ARRAYS3.IN_ARRAY</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String[]> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType());
 
 	/**
-	 * The procedure parameter <code>PUBLIC.P_ARRAYS3.OUT_ARRAY</code>
+	 * The parameter <code>PUBLIC.P_ARRAYS3.OUT_ARRAY</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String[]> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType());
 

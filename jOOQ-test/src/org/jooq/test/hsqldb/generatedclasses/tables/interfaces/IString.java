@@ -10,22 +10,36 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IString extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.STRING.ID</code>
+	 * Setter for <code>PUBLIC.STRING.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.STRING.ID</code>
+	 * Getter for <code>PUBLIC.STRING.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.STRING.OTHER</code>
+	 * Setter for <code>PUBLIC.STRING.OTHER</code>. 
 	 */
 	public void setOther(java.lang.String value);
 
 	/**
-	 * The table column <code>PUBLIC.STRING.OTHER</code>
+	 * Getter for <code>PUBLIC.STRING.OTHER</code>. 
 	 */
 	public java.lang.String getOther();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IString
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IString from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IString
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IString> E into(E into);
 }

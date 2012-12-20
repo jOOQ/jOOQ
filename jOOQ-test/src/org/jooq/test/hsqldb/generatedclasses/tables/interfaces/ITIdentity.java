@@ -10,22 +10,36 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITIdentity extends java.io.Serializable {
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY.ID</code>
+	 * Setter for <code>PUBLIC.T_IDENTITY.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY.ID</code>
+	 * Getter for <code>PUBLIC.T_IDENTITY.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY.VAL</code>
+	 * Setter for <code>PUBLIC.T_IDENTITY.VAL</code>. 
 	 */
 	public void setVal(java.lang.Integer value);
 
 	/**
-	 * The table column <code>PUBLIC.T_IDENTITY.VAL</code>
+	 * Getter for <code>PUBLIC.T_IDENTITY.VAL</code>. 
 	 */
 	public java.lang.Integer getVal();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITIdentity
+	 */
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITIdentity from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITIdentity
+	 */
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITIdentity> E into(E into);
 }

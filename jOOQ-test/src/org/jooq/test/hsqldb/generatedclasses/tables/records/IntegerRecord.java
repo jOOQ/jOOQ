@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class IntegerRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.IntegerRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IInteger {
 
-	private static final long serialVersionUID = -963661925;
+	private static final long serialVersionUID = -607644931;
 
 	/**
-	 * The table column <code>PUBLIC.INTEGER.ID</code>
+	 * Setter for <code>PUBLIC.INTEGER.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,19 +20,16 @@ public class IntegerRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	}
 
 	/**
-	 * The table column <code>PUBLIC.INTEGER.ID</code>
+	 * Getter for <code>PUBLIC.INTEGER.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.Integer.INTEGER.ID);
 	}
 
-	/**
-	 * Create a detached IntegerRecord
-	 */
-	public IntegerRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.Integer.INTEGER);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record1 type implementation
@@ -68,5 +65,37 @@ public class IntegerRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	@Override
 	public java.lang.Integer value1() {
 		return getId();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IInteger from) {
+		setId(from.getId());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IInteger> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached IntegerRecord
+	 */
+	public IntegerRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.Integer.INTEGER);
 	}
 }

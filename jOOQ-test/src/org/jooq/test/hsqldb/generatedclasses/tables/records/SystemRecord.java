@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class SystemRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.SystemRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ISystem {
 
-	private static final long serialVersionUID = -592284846;
+	private static final long serialVersionUID = -990962220;
 
 	/**
-	 * The table column <code>PUBLIC.SYSTEM.ID</code>
+	 * Setter for <code>PUBLIC.SYSTEM.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,19 +20,16 @@ public class SystemRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * The table column <code>PUBLIC.SYSTEM.ID</code>
+	 * Getter for <code>PUBLIC.SYSTEM.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.System.SYSTEM.ID);
 	}
 
-	/**
-	 * Create a detached SystemRecord
-	 */
-	public SystemRecord() {
-		super(org.jooq.test.hsqldb.generatedclasses.tables.System.SYSTEM);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record1 type implementation
@@ -68,5 +65,37 @@ public class SystemRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	@Override
 	public java.lang.Integer value1() {
 		return getId();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ISystem from) {
+		setId(from.getId());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ISystem> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached SystemRecord
+	 */
+	public SystemRecord() {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.System.SYSTEM);
 	}
 }

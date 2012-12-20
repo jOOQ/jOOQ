@@ -35,6 +35,7 @@
  */
 package org.jooq.test;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -314,7 +315,7 @@ public abstract class jOOQAbstractTest<
 
                 // There is no DROP FUNCTION IF EXISTS statement in Postgres
                 else if (e.getClass().getName().startsWith("org.postgresql")) {
-                    if ("42883".equals(((PSQLException) e).getSQLState())) {
+                    if (asList("42704", "42883", "42P01").contains(((PSQLException) e).getSQLState())) {
                         continue;
                     }
                 }

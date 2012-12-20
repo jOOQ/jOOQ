@@ -35,69 +35,38 @@
  */
 package org.jooq.impl;
 
-import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.Batch;
-import org.jooq.ExecuteContext;
-import org.jooq.ExecuteListener;
-import org.jooq.Query;
+import org.jooq.ConnectionProvider;
+import org.jooq.tools.jdbc.DefaultPreparedStatement;
 
 /**
+ * A {@link ConnectionProvider}-enabled statement.
+ *
  * @author Lukas Eder
  */
-class BatchMultiple implements Batch {
+class ProviderEnabledPreparedStatement extends DefaultPreparedStatement {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7337667281292354043L;
+    private final ProviderEnabledConnection connection;
 
-    private final Executor    create;
-    private final Query[]     queries;
+    ProviderEnabledPreparedStatement(ProviderEnabledConnection connection, PreparedStatement statement) {
+        super(statement);
 
-    public BatchMultiple(Executor create, Query... queries) {
-        this.create = create;
-        this.queries = queries;
+        this.connection = connection;
     }
 
+    // ------------------------------------------------------------------------
+    // XXX Closing the Statement
+    // ------------------------------------------------------------------------
+
     @Override
-    public final int[] execute() {
-        ExecuteContext ctx = new DefaultExecuteContext(create, queries);
-        ExecuteListener listener = new ExecuteListeners(ctx);
-        Connection connection = ctx.connection();
-
+    public final void close() throws SQLException {
         try {
-            ctx.statement(new SettingsEnabledPreparedStatement(connection));
-
-            String[] batchSQL = ctx.batchSQL();
-            for (int i = 0; i < queries.length; i++) {
-                listener.renderStart(ctx);
-                batchSQL[i] = create.renderInlined(queries[i]);
-                listener.renderEnd(ctx);
-            }
-
-            for (String sql : batchSQL) {
-                ctx.sql(sql);
-                listener.prepareStart(ctx);
-                ctx.statement().addBatch(sql);
-                listener.prepareEnd(ctx);
-                ctx.sql(null);
-            }
-
-            listener.executeStart(ctx);
-            int[] result = ctx.statement().executeBatch();
-            listener.executeEnd(ctx);
-
-            return result;
-        }
-        catch (SQLException e) {
-            ctx.sqlException(e);
-            listener.exception(ctx);
-            throw ctx.exception();
+            getDelegate().close();
         }
         finally {
-            Utils.safeClose(listener, ctx);
+            connection.close();
         }
     }
 }

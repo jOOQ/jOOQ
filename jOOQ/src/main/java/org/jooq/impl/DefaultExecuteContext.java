@@ -387,7 +387,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
             Connection connection = provider.acquire();
 
             if (connection != null) {
-                return new ConnectionProxy(new DataSourceConnection(provider, connection), getSettings());
+                return new SettingsEnabledConnection(new ProviderEnabledConnection(provider, connection), getSettings());
             }
         }
 

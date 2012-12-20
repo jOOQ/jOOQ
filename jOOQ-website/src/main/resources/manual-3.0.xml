@@ -971,6 +971,39 @@ object Test {                                                        //
 							</p>
 						</content>
 					</section>
+					
+					<section id="semantic-versioning">
+						<title>jOOQ and backwards-compatibility</title>
+						<content>
+							<p>
+								jOOQ follows the rules of semantic versioning according to <a href="http://semver.org">http://semver.org</a> quite strictly. Those rules impose a versioning scheme [X].[Y].[Z] that can be summarised as follows:
+							</p>
+							<ul>
+								<li>If a patch release includes bugfixes, performance improvements and API-irrelevant new features, [Z] is incremented by one.</li>
+								<li>If a minor release includes backwards-compatible, API-relevant new features, [Y] is incremented by one and [Z] is reset to zero.</li>
+								<li>If a major release includes backwards-incompatible, API-relevant new features, [X] is incremented by one and [Y], [Z] are reset to zero.</li>
+							</ul>
+							
+							<h3>jOOQ's understanding of backwards-compatibility</h3>
+							<p>
+								Backwards-compatibility is important to jOOQ. You've chosen jOOQ as a strategic SQL engine and you don't want your SQL to break. That is why there is at most one major release per year, which changes only those parts of jOOQ's API and functionality, which were agreed upon on the user group. During the year, only minor releases are shipped, adding new features in a backwards-compatible way
+							</p>
+							<p>
+								However, there are some elements of API evolution that would be considered backwards-incompatible in other APIs, but not in jOOQ. As discussed later on in the section about <reference id="dsl-and-non-dsl" title="jOOQ's DSL API"/>, much of jOOQ's API is indeed an internal domain-specific language implemented mostly using Java interfaces. Adding language elements to these interfaces means any of these actions:  
+							</p>
+							<ul>
+								<li>Adding methods to the interface</li>
+								<li>Overloading methods for convenience</li>
+								<li>Changing the type hierarchy of interfaces</li>
+							</ul>
+							
+							<p>
+								It becomes obvious that it would be impossible to add new language elements (e.g. new <reference id="column-expressions" title="SQL functions"/>, new <reference id="select-statement" title="SELECT clauses"/>) to the API without breaking any client code that actually implements those interfaces. Hence, the following rule should be observed: 
+							</p>
+							
+							<p>jOOQ's DSL interfaces should not be implemented by client code! Extend only those extension points that are explicitly documented as "extendable" (e.g. <reference id="custom-queryparts" title="custom QueryParts"/>)</p>
+						</content>
+					</section>
 				</sections>
 			</section>
 

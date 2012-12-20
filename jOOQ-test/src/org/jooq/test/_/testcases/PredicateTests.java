@@ -40,7 +40,6 @@ import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.Factory.all;
 import static org.jooq.impl.Factory.any;
@@ -48,12 +47,15 @@ import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.escape;
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.lower;
+import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.selectOne;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.upper;
 import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.Factory.zero;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -63,6 +65,7 @@ import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -459,7 +462,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 .fetch(TBook_ID()));
 
         // [#1073] Some dialects incorrectly handle NULL in NOT IN predicates
-        if (asList(ASE, MYSQL).contains(getDialect())) {
+        if (asList(ASE).contains(getDialect())) {
             assertEquals(
             asList(2, 3, 4),
             create().select(TBook_ID())
@@ -486,6 +489,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             .from(TBook())
             .where(val(2).in(TBook_ID(), TBook_AUTHOR_ID()))
             .orderBy(TBook_ID()).fetch(TBook_ID()));
+    }
+
+    @Test
+    public void testConditionsAsFields() throws Exception {
+        Record record = create().select(field(one().eq(zero())), field(one().eq(1))).fetchOne();
+
+        assertEquals(false, record.getValue(0));
+        assertEquals(true, record.getValue(1));
     }
 
     @Test

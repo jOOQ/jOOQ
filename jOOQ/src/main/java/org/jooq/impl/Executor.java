@@ -123,6 +123,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.csv.CSVReader;
 
 /**
@@ -1895,7 +1896,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Batch batchStore(UpdatableRecord<?>... records) {
-        return new BatchStore(this, records);
+        return new BatchCRUD(this, Action.STORE, records);
     }
 
     /**
@@ -1908,6 +1909,58 @@ public class Executor implements Configuration {
     @Support
     public final Batch batchStore(Collection<? extends UpdatableRecord<?>> records) {
         return batchStore(records.toArray(new UpdatableRecord[records.size()]));
+    }
+
+    /**
+     * Execute a set of <code>DELETE</code> queries in batch mode (with bind
+     * values).
+     * <p>
+     * This batch operation can be executed in two modes:
+     * <h3>With
+     * <code>{@link Settings#getStatementType()} == {@link StatementType#PREPARED_STATEMENT}</code>
+     * (the default)</h3> In this mode, record order is preserved as much as
+     * possible, as long as two subsequent records generate the same SQL (with
+     * bind variables). The number of executed batch operations corresponds to
+     * <code>[number of distinct rendered SQL statements]</code>. In the worst
+     * case, this corresponds to the number of total records.
+     * <p>
+     * The record type order is preserved in the way they are passed to this
+     * method. This is an example of how statements will be ordered: <code><pre>
+     * // Let's assume a[n] are all of the same type, just as b[n], c[n]...
+     * int[] result = create.batchStore(a1, a2, a3, b1, a4, c1, c2, a5)
+     *                      .execute();
+     * </pre></code> The above results in <code>result.length == 8</code> and
+     * the following 5 separate batch statements:
+     * <ol>
+     * <li>DELETE a1, a2, a3</li>
+     * <li>DELETE b1</li>
+     * <li>DELETE a4</li>
+     * <li>DELETE c1, c2</li>
+     * <li>DELETE a5</li>
+     * </ol>
+     * <h3>With
+     * <code>{@link Settings#getStatementType()} == {@link StatementType#STATIC_STATEMENT}</code>
+     * </h3> This mode may be better for large and complex batch delete
+     * operations, as the order of records is preserved entirely, and jOOQ can
+     * guarantee that only a single batch statement is serialised to the
+     * database.
+     *
+     * @see Statement#executeBatch()
+     */
+    @Support
+    public final Batch batchDelete(UpdatableRecord<?>... records) {
+        return new BatchCRUD(this, Action.DELETE, records);
+    }
+
+    /**
+     * Execute a set of <code>DELETE</code> in batch mode (with bind values).
+     *
+     * @see #batchDelete(UpdatableRecord...)
+     * @see Statement#executeBatch()
+     */
+    @Support
+    public final Batch batchDelete(Collection<? extends UpdatableRecord<?>> records) {
+        return batchDelete(records.toArray(new UpdatableRecord[records.size()]));
     }
 
     // -------------------------------------------------------------------------

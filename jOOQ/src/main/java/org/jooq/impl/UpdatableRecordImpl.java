@@ -310,9 +310,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         // [#673] If store() is called after delete(), a new INSERT should
         // be executed and the record should be recreated
         finally {
-            for (Field<?> field : getFields()) {
-                getValue0(field).setChanged(true);
-            }
+            setAllChanged(true);
         }
     }
 

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = -1301755148;
+	private static final long serialVersionUID = -55012411;
 
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.ID</code>. 
@@ -237,6 +237,32 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	@Override
 	public java.lang.Long value6() {
 		return getTsBigint();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates from) {
+		setId(from.getId());
+		setD(from.getD());
+		setT(from.getT());
+		setTs(from.getTs());
+		setDInt(from.getDInt());
+		setTsBigint(from.getTsBigint());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

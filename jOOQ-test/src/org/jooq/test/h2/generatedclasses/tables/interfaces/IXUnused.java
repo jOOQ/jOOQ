@@ -168,4 +168,18 @@ public interface IXUnused extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.X_UNUSED.FIELD 737</code>. 
 	 */
 	public java.math.BigDecimal getField_737();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IXUnused
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IXUnused
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused> E into(E into);
 }

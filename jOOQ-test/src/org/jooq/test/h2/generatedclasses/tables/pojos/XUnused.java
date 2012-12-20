@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -1976918483;
+	private static final long serialVersionUID = -141692394;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
@@ -186,5 +186,41 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	@Override
 	public void setField_737(java.math.BigDecimal field_737) {
 		this.field_737 = field_737;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused from) {
+		setId(from.getId());
+		setName(from.getName());
+		setBigInteger(from.getBigInteger());
+		setIdRef(from.getIdRef());
+		setNameRef(from.getNameRef());
+		setClass_(from.getClass_());
+		setFields_(from.getFields_());
+		setTable_(from.getTable_());
+		setConfiguration_(from.getConfiguration_());
+		setUDT(from.getUDT());
+		setMetaData(from.getMetaData());
+		setValues_(from.getValues_());
+		setType0(from.getType0());
+		setPrimaryKey(from.getPrimaryKey());
+		setPrimarykey(from.getPrimarykey());
+		setField_737(from.getField_737());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

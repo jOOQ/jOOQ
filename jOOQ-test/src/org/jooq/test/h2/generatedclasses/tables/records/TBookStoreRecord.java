@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = -1035164353;
+	private static final long serialVersionUID = -1255183067;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
@@ -89,6 +89,27 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value1() {
 		return getName();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore from) {
+		setName(from.getName());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

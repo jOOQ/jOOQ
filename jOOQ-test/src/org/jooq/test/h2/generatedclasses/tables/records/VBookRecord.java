@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = 991195252;
+	private static final long serialVersionUID = 929633736;
 
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.ID</code>. 
@@ -385,6 +385,37 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	@Override
 	public java.sql.Timestamp value11() {
 		return getRecTimestamp();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook from) {
+		setId(from.getId());
+		setAuthorId(from.getAuthorId());
+		setCoAuthorId(from.getCoAuthorId());
+		setDetailsId(from.getDetailsId());
+		setTitle(from.getTitle());
+		setPublishedIn(from.getPublishedIn());
+		setLanguageId(from.getLanguageId());
+		setContentText(from.getContentText());
+		setContentPdf(from.getContentPdf());
+		setRecVersion(from.getRecVersion());
+		setRecTimestamp(from.getRecTimestamp());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = 504766064;
+	private static final long serialVersionUID = 1822432958;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
@@ -153,5 +153,38 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	@Override
 	public void setDouble(java.lang.Double double_) {
 		this.double_ = double_;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable from) {
+		setId(from.getId());
+		setByte(from.getByte());
+		setShort(from.getShort());
+		setInteger(from.getInteger());
+		setLong(from.getLong());
+		setByteDecimal(from.getByteDecimal());
+		setShortDecimal(from.getShortDecimal());
+		setIntegerDecimal(from.getIntegerDecimal());
+		setLongDecimal(from.getLongDecimal());
+		setBigInteger(from.getBigInteger());
+		setBigDecimal(from.getBigDecimal());
+		setFloat(from.getFloat());
+		setDouble(from.getDouble());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

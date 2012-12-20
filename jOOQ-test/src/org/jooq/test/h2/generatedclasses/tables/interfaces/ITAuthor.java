@@ -70,4 +70,18 @@ public interface ITAuthor extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. The author's address
 	 */
 	public java.lang.String getAddress();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITAuthor
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITAuthor
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor> E into(E into);
 }

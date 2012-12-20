@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class TTriggers implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers {
 
-	private static final long serialVersionUID = 1635592345;
+	private static final long serialVersionUID = -1331859487;
 
 	private java.lang.Integer idGenerated;
 	private java.lang.Integer id;
@@ -43,5 +43,28 @@ public class TTriggers implements org.jooq.test.h2.generatedclasses.tables.inter
 	@Override
 	public void setCounter(java.lang.Integer counter) {
 		this.counter = counter;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers from) {
+		setIdGenerated(from.getIdGenerated());
+		setId(from.getId());
+		setCounter(from.getCounter());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

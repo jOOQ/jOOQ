@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = 384518162;
+	private static final long serialVersionUID = -754715741;
 
 	private java.lang.Integer  id;
 	private java.sql.Date      d;
@@ -76,5 +76,31 @@ public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfac
 	@Override
 	public void setTsBigint(java.lang.Long tsBigint) {
 		this.tsBigint = tsBigint;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates from) {
+		setId(from.getId());
+		setD(from.getD());
+		setT(from.getT());
+		setTs(from.getTs());
+		setDInt(from.getDInt());
+		setTsBigint(from.getTsBigint());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

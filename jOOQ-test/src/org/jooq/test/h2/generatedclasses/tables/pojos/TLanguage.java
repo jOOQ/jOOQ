@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = -2092117416;
+	private static final long serialVersionUID = 1104093601;
 
 	private java.lang.String  cd;
 	private java.lang.String  description;
@@ -56,5 +56,29 @@ public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.inter
 	@Override
 	public void setId(java.lang.Integer id) {
 		this.id = id;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage from) {
+		setCd(from.getCd());
+		setDescription(from.getDescription());
+		setDescriptionEnglish(from.getDescriptionEnglish());
+		setId(from.getId());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

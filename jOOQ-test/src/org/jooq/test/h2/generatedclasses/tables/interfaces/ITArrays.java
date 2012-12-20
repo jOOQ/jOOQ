@@ -48,4 +48,18 @@ public interface ITArrays extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	public java.lang.Object[] getDateArray();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITArrays
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITArrays
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays> E into(E into);
 }

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class T_877 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877 {
 
-	private static final long serialVersionUID = -800036791;
+	private static final long serialVersionUID = 1290343045;
 
 	private java.lang.Integer id;
 
@@ -21,5 +21,26 @@ public class T_877 implements org.jooq.test.h2.generatedclasses.tables.interface
 	@Override
 	public void setId(java.lang.Integer id) {
 		this.id = id;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877 from) {
+		setId(from.getId());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

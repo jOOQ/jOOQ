@@ -138,4 +138,18 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.DOUBLE</code>. 
 	 */
 	public java.lang.Double getDouble();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IT_639NumbersTable
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IT_639NumbersTable
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable> E into(E into);
 }

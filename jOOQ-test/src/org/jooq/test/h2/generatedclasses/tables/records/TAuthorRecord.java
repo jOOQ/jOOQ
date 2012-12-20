@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 359011413;
+	private static final long serialVersionUID = -1648173938;
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
@@ -259,6 +259,32 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.String value6() {
 		return getAddress();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor from) {
+		setId(from.getId());
+		setFirstName(from.getFirstName());
+		setLastName(from.getLastName());
+		setDateOfBirth(from.getDateOfBirth());
+		setYearOfBirth(from.getYearOfBirth());
+		setAddress(from.getAddress());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

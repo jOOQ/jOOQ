@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class TAuthor implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 1234286625;
+	private static final long serialVersionUID = -615792294;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;
@@ -78,5 +78,31 @@ public class TAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	@Override
 	public void setAddress(java.lang.String address) {
 		this.address = address;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor from) {
+		setId(from.getId());
+		setFirstName(from.getFirstName());
+		setLastName(from.getLastName());
+		setDateOfBirth(from.getDateOfBirth());
+		setYearOfBirth(from.getYearOfBirth());
+		setAddress(from.getAddress());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

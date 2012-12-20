@@ -28,4 +28,18 @@ public interface IVLibrary extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.V_LIBRARY.TITLE</code>. 
 	 */
 	public java.lang.String getTitle();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IVLibrary
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IVLibrary from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IVLibrary
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IVLibrary> E into(E into);
 }

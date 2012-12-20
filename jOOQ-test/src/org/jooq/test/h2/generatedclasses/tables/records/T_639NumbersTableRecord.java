@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record13<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Float, java.lang.Double>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -938412350;
+	private static final long serialVersionUID = -1624086388;
 
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>. 
@@ -461,6 +461,39 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	@Override
 	public java.lang.Double value13() {
 		return getDouble();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable from) {
+		setId(from.getId());
+		setByte(from.getByte());
+		setShort(from.getShort());
+		setInteger(from.getInteger());
+		setLong(from.getLong());
+		setByteDecimal(from.getByteDecimal());
+		setShortDecimal(from.getShortDecimal());
+		setIntegerDecimal(from.getIntegerDecimal());
+		setLongDecimal(from.getLongDecimal());
+		setBigInteger(from.getBigInteger());
+		setBigDecimal(from.getBigDecimal());
+		setFloat(from.getFloat());
+		setDouble(from.getDouble());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

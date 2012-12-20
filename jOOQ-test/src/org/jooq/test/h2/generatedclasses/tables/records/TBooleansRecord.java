@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -1276459887;
+	private static final long serialVersionUID = -1763591423;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.ID</code>. 
@@ -397,6 +397,37 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.lang.Boolean value11() {
 		return getNBoolean();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans from) {
+		setId(from.getId());
+		setOneZero(from.getOneZero());
+		setTrueFalseLc(from.getTrueFalseLc());
+		setTrueFalseUc(from.getTrueFalseUc());
+		setYesNoLc(from.getYesNoLc());
+		setYesNoUc(from.getYesNoUc());
+		setYNLc(from.getYNLc());
+		setYNUc(from.getYNUc());
+		setVcBoolean(from.getVcBoolean());
+		setCBoolean(from.getCBoolean());
+		setNBoolean(from.getNBoolean());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

@@ -107,11 +107,6 @@ public class BookWithAnnotations {
         throw new AssertionError();
     }
 
-    @Column(name = "LAST_NAME")
-    public void notEnoughParameters() {
-        throw new AssertionError();
-    }
-
     @Override
     public String toString() {
         return "JPABook [id=" + id + ", title=" + title + ", firstName=" + firstName + ", lastName=" + lastName + "]";

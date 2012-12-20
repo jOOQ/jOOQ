@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -948499497;
+	private static final long serialVersionUID = 111938185;
 
 	/**
-	 * The singleton instance of <code>LUKAS.T_TRIGGERS</code>
+	 * The singleton instance of <code>TEST.T_TRIGGERS</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.TTriggers T_TRIGGERS = new org.jooq.test.db2.generatedclasses.tables.TTriggers();
 
@@ -25,17 +25,17 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db
 	}
 
 	/**
-	 * The column <code>LUKAS.T_TRIGGERS.ID_GENERATED</code>. 
+	 * The column <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
 	/**
-	 * The column <code>LUKAS.T_TRIGGERS.ID</code>. 
+	 * The column <code>TEST.T_TRIGGERS.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
 	/**
-	 * The column <code>LUKAS.T_TRIGGERS.COUNTER</code>. 
+	 * The column <code>TEST.T_TRIGGERS.COUNTER</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
@@ -43,7 +43,7 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db
 	 * No further instances allowed
 	 */
 	private TTriggers() {
-		super("T_TRIGGERS", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
+		super("T_TRIGGERS", org.jooq.test.db2.generatedclasses.Test.TEST);
 	}
 
 	/**

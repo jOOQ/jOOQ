@@ -3,7 +3,7 @@
     <jdbc>
         <driver>com.ibm.db2.jcc.DB2Driver</driver>
         <url>jdbc:db2://localhost:50000/TEST:retrieveMessagesFromServerOnGetMessage=true;</url>
-        <schema>LUKAS</schema>
+        <schema>TEST</schema>
         <user>lukas</user>
         <password>lukas</password>
     </jdbc>

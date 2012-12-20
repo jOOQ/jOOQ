@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 142482806;
+	private static final long serialVersionUID = -842721662;
 
 	/**
-	 * The singleton instance of <code>LUKAS.T_BOOK_TO_BOOK_STORE</code>
+	 * The singleton instance of <code>TEST.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.db2.generatedclasses.tables.TBookToBookStore();
 
@@ -25,17 +25,17 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * The column <code>LUKAS.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * The column <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_TO_BOOK_STORE);
 
 	/**
-	 * The column <code>LUKAS.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * The column <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 
 	/**
-	 * The column <code>LUKAS.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * The column <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 
@@ -43,7 +43,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * No further instances allowed
 	 */
 	private TBookToBookStore() {
-		super("T_BOOK_TO_BOOK_STORE", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
+		super("T_BOOK_TO_BOOK_STORE", org.jooq.test.db2.generatedclasses.Test.TEST);
 	}
 
 	/**

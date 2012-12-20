@@ -9,87 +9,87 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 856688586;
+	private static final long serialVersionUID = 1601930680;
 
 	/**
-	 * Setter for <code>LUKAS.T_AUTHOR.ID</code>. 
+	 * Setter for <code>TEST.T_AUTHOR.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.ID, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_AUTHOR.ID</code>. 
+	 * Getter for <code>TEST.T_AUTHOR.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.ID);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.T_AUTHOR.FIRST_NAME</code>. 
+	 * Setter for <code>TEST.T_AUTHOR.FIRST_NAME</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.FIRST_NAME, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_AUTHOR.FIRST_NAME</code>. 
+	 * Getter for <code>TEST.T_AUTHOR.FIRST_NAME</code>. 
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.FIRST_NAME);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.T_AUTHOR.LAST_NAME</code>. 
+	 * Setter for <code>TEST.T_AUTHOR.LAST_NAME</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.LAST_NAME, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_AUTHOR.LAST_NAME</code>. 
+	 * Getter for <code>TEST.T_AUTHOR.LAST_NAME</code>. 
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.LAST_NAME);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.T_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Setter for <code>TEST.T_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.DATE_OF_BIRTH, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Getter for <code>TEST.T_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	public java.sql.Date getDateOfBirth() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.DATE_OF_BIRTH);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.T_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Setter for <code>TEST.T_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Getter for <code>TEST.T_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	public java.lang.Integer getYearOfBirth() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.T_AUTHOR.ADDRESS</code>. 
+	 * Setter for <code>TEST.T_AUTHOR.ADDRESS</code>. 
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.ADDRESS, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_AUTHOR.ADDRESS</code>. 
+	 * Getter for <code>TEST.T_AUTHOR.ADDRESS</code>. 
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TAuthor.ADDRESS);
@@ -100,7 +100,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Fetch a list of <code>LUKAS.T_BOOK</code> referencing this <code>LUKAS.T_AUTHOR</code>
+	 * Fetch a list of <code>TEST.T_BOOK</code> referencing this <code>TEST.T_AUTHOR</code>
 	 */
 	public org.jooq.Result<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
 		return create()
@@ -110,7 +110,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Fetch a list of <code>LUKAS.T_BOOK</code> referencing this <code>LUKAS.T_AUTHOR</code>
+	 * Fetch a list of <code>TEST.T_BOOK</code> referencing this <code>TEST.T_AUTHOR</code>
 	 */
 	public org.jooq.Result<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
 		return create()

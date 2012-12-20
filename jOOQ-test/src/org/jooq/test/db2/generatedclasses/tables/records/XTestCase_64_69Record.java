@@ -9,24 +9,24 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1513849367;
+	private static final long serialVersionUID = 2095207035;
 
 	/**
-	 * Setter for <code>LUKAS.X_TEST_CASE_64_69.ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.X_TEST_CASE_64_69.ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	public void setUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, value);
@@ -45,7 +45,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Getter for <code>LUKAS.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	public java.lang.Integer getUnusedId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
@@ -56,7 +56,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Fetch a list of <code>LUKAS.X_TEST_CASE_71</code> referencing this <code>LUKAS.X_TEST_CASE_64_69</code>
+	 * Fetch a list of <code>TEST.X_TEST_CASE_71</code> referencing this <code>TEST.X_TEST_CASE_64_69</code>
 	 */
 	public org.jooq.Result<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
 		return create()
@@ -66,7 +66,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Fetch a <code>LUKAS.X_UNUSED</code> referenced by this <code>LUKAS.X_TEST_CASE_64_69</code>
+	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.X_TEST_CASE_64_69</code>
 	 */
 	public org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()

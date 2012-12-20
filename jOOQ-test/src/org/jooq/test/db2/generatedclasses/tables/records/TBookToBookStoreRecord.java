@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1418361235;
+	private static final long serialVersionUID = 976613343;
 
 	/**
-	 * Setter for <code>LUKAS.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value);
@@ -31,14 +31,14 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
 	 */
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TBookToBookStore.BOOK_ID, value);
@@ -57,21 +57,21 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TBookToBookStore.BOOK_ID);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
 	public void setStock(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TBookToBookStore.STOCK, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
 	public java.lang.Integer getStock() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TBookToBookStore.STOCK);
@@ -82,7 +82,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Fetch a <code>LUKAS.T_BOOK_STORE</code> referenced by this <code>LUKAS.T_BOOK_TO_BOOK_STORE</code>
+	 * Fetch a <code>TEST.T_BOOK_STORE</code> referenced by this <code>TEST.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public org.jooq.test.db2.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
 		return create()
@@ -92,7 +92,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Fetch a <code>LUKAS.T_BOOK</code> referenced by this <code>LUKAS.T_BOOK_TO_BOOK_STORE</code>
+	 * Fetch a <code>TEST.T_BOOK</code> referenced by this <code>TEST.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public org.jooq.test.db2.generatedclasses.tables.records.TBookRecord fetchTBook() {
 		return create()

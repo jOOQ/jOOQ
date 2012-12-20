@@ -9,45 +9,45 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1524546898;
+	private static final long serialVersionUID = -236850270;
 
 	/**
-	 * Setter for <code>LUKAS.X_TEST_CASE_85.ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_85.ID, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.X_TEST_CASE_85.ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_85.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_85.ID);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_85.X_UNUSED_ID, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	public java.lang.Integer getXUnusedId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_85.X_UNUSED_ID);
 	}
 
 	/**
-	 * Setter for <code>LUKAS.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
 	public void setXUnusedName(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME, value);
 	}
 
 	/**
-	 * Getter for <code>LUKAS.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
 	public java.lang.String getXUnusedName() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME);
@@ -58,7 +58,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Fetch a <code>LUKAS.X_UNUSED</code> referenced by this <code>LUKAS.X_TEST_CASE_85</code>
+	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.X_TEST_CASE_85</code>
 	 */
 	public org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()

@@ -20,4 +20,18 @@ public interface ITBookStore extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
 	 */
 	public java.lang.String getName();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITBookStore
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITBookStore
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore> E into(E into);
 }

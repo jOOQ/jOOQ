@@ -28,4 +28,18 @@ public interface ITIdentity extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.T_IDENTITY.VAL</code>. 
 	 */
 	public java.lang.Integer getVal();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITIdentity
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITIdentity
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity> E into(E into);
 }

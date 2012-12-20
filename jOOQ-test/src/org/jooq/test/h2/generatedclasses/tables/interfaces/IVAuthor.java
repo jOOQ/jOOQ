@@ -68,4 +68,18 @@ public interface IVAuthor extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.V_AUTHOR.ADDRESS</code>. 
 	 */
 	public java.lang.String getAddress();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IVAuthor
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IVAuthor
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor> E into(E into);
 }

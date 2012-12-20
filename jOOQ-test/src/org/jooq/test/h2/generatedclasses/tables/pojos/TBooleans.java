@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -985371310;
+	private static final long serialVersionUID = 874813986;
 
 	private java.lang.Integer                            id;
 	private org.jooq.test._.converters.Boolean_10        oneZero;
@@ -131,5 +131,36 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	@Override
 	public void setNBoolean(java.lang.Boolean nBoolean) {
 		this.nBoolean = nBoolean;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans from) {
+		setId(from.getId());
+		setOneZero(from.getOneZero());
+		setTrueFalseLc(from.getTrueFalseLc());
+		setTrueFalseUc(from.getTrueFalseUc());
+		setYesNoLc(from.getYesNoLc());
+		setYesNoUc(from.getYesNoUc());
+		setYNLc(from.getYNLc());
+		setYNUc(from.getYNUc());
+		setVcBoolean(from.getVcBoolean());
+		setCBoolean(from.getCBoolean());
+		setNBoolean(from.getNBoolean());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class TIdentity implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity {
 
-	private static final long serialVersionUID = 1991839014;
+	private static final long serialVersionUID = 1250495333;
 
 	private java.lang.Integer id;
 	private java.lang.Integer val;
@@ -32,5 +32,27 @@ public class TIdentity implements org.jooq.test.h2.generatedclasses.tables.inter
 	@Override
 	public void setVal(java.lang.Integer val) {
 		this.val = val;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity from) {
+		setId(from.getId());
+		setVal(from.getVal());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

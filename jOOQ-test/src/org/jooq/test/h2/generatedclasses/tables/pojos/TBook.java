@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class TBook implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -2060004160;
+	private static final long serialVersionUID = -16051774;
 
 	private java.lang.Integer  id;
 	private java.lang.Integer  authorId;
@@ -133,5 +133,36 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	@Override
 	public void setRecTimestamp(java.sql.Timestamp recTimestamp) {
 		this.recTimestamp = recTimestamp;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook from) {
+		setId(from.getId());
+		setAuthorId(from.getAuthorId());
+		setCoAuthorId(from.getCoAuthorId());
+		setDetailsId(from.getDetailsId());
+		setTitle(from.getTitle());
+		setPublishedIn(from.getPublishedIn());
+		setLanguageId(from.getLanguageId());
+		setContentText(from.getContentText());
+		setContentPdf(from.getContentPdf());
+		setRecVersion(from.getRecVersion());
+		setRecTimestamp(from.getRecTimestamp());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

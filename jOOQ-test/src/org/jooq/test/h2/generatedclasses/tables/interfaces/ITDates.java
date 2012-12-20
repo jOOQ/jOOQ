@@ -68,4 +68,18 @@ public interface ITDates extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.T_DATES.TS_BIGINT</code>. 
 	 */
 	public java.lang.Long getTsBigint();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITDates
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITDates
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates> E into(E into);
 }

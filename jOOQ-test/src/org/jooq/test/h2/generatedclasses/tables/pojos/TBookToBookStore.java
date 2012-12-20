@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = -161836218;
+	private static final long serialVersionUID = 1562666620;
 
 	private java.lang.String  bookStoreName;
 	private java.lang.Integer bookId;
@@ -45,5 +45,28 @@ public class TBookToBookStore implements org.jooq.test.h2.generatedclasses.table
 	@Override
 	public void setStock(java.lang.Integer stock) {
 		this.stock = stock;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore from) {
+		setBookStoreName(from.getBookStoreName());
+		setBookId(from.getBookId());
+		setStock(from.getStock());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

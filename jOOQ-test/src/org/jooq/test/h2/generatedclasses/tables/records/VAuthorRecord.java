@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = 1028452511;
+	private static final long serialVersionUID = -1142616424;
 
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.ID</code>. 
@@ -225,6 +225,32 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	@Override
 	public java.lang.String value6() {
 		return getAddress();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor from) {
+		setId(from.getId());
+		setFirstName(from.getFirstName());
+		setLastName(from.getLastName());
+		setDateOfBirth(from.getDateOfBirth());
+		setYearOfBirth(from.getYearOfBirth());
+		setAddress(from.getAddress());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

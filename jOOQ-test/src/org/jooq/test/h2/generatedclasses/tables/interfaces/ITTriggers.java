@@ -38,4 +38,18 @@ public interface ITTriggers extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
 	 */
 	public java.lang.Integer getCounter();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITTriggers
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITTriggers
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers> E into(E into);
 }

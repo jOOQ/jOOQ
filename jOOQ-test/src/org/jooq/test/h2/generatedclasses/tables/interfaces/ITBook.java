@@ -120,4 +120,18 @@ public interface ITBook extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
 	 */
 	public java.sql.Timestamp getRecTimestamp();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITBook
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITBook
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook> E into(E into);
 }

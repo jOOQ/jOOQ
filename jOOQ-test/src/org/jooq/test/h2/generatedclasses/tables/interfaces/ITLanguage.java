@@ -50,4 +50,18 @@ public interface ITLanguage extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.T_LANGUAGE.ID</code>. The language ID
 	 */
 	public java.lang.Integer getId();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITLanguage
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITLanguage
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage> E into(E into);
 }

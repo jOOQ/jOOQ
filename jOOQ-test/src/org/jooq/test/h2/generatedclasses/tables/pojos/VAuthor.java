@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = 1051323957;
+	private static final long serialVersionUID = 245583790;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;
@@ -76,5 +76,31 @@ public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	@Override
 	public void setAddress(java.lang.String address) {
 		this.address = address;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor from) {
+		setId(from.getId());
+		setFirstName(from.getFirstName());
+		setLastName(from.getLastName());
+		setDateOfBirth(from.getDateOfBirth());
+		setYearOfBirth(from.getYearOfBirth());
+		setAddress(from.getAddress());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

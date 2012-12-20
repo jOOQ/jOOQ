@@ -40,4 +40,18 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
 	public java.lang.Integer getStock();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITBookToBookStore
+	 */
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITBookToBookStore
+	 */
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore> E into(E into);
 }

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_71 {
 
-	private static final long serialVersionUID = -1433832681;
+	private static final long serialVersionUID = -1983284316;
 
 	private java.lang.Integer id;
 	private java.lang.Short   testCase_64_69Id;
@@ -32,5 +32,27 @@ public class XTestCase_71 implements org.jooq.test.h2.generatedclasses.tables.in
 	@Override
 	public void setTestCase_64_69Id(java.lang.Short testCase_64_69Id) {
 		this.testCase_64_69Id = testCase_64_69Id;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_71 from) {
+		setId(from.getId());
+		setTestCase_64_69Id(from.getTestCase_64_69Id());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_71> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

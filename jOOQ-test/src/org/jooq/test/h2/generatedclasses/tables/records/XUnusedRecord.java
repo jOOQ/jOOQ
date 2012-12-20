@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -1352523182;
+	private static final long serialVersionUID = 235245819;
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.ID</code>. 
@@ -567,6 +567,42 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.math.BigDecimal value16() {
 		return getField_737();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused from) {
+		setId(from.getId());
+		setName(from.getName());
+		setBigInteger(from.getBigInteger());
+		setIdRef(from.getIdRef());
+		setNameRef(from.getNameRef());
+		setClass_(from.getClass_());
+		setFields_(from.getFields_());
+		setTable_(from.getTable_());
+		setConfiguration_(from.getConfiguration_());
+		setUDT(from.getUDT());
+		setMetaData(from.getMetaData());
+		setValues_(from.getValues_());
+		setType0(from.getType0());
+		setPrimaryKey(from.getPrimaryKey());
+		setPrimarykey(from.getPrimarykey());
+		setField_737(from.getField_737());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

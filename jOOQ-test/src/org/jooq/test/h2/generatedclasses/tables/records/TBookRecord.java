@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -2144499631;
+	private static final long serialVersionUID = 468810255;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
@@ -475,6 +475,37 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public java.sql.Timestamp value11() {
 		return getRecTimestamp();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook from) {
+		setId(from.getId());
+		setAuthorId(from.getAuthorId());
+		setCoAuthorId(from.getCoAuthorId());
+		setDetailsId(from.getDetailsId());
+		setTitle(from.getTitle());
+		setPublishedIn(from.getPublishedIn());
+		setLanguageId(from.getLanguageId());
+		setContentText(from.getContentText());
+		setContentPdf(from.getContentPdf());
+		setRecVersion(from.getRecVersion());
+		setRecTimestamp(from.getRecTimestamp());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

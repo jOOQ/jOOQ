@@ -602,6 +602,10 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
+        if (generateInterfaces()) {
+            printFromAndInto(out, table);
+        }
+
         out.tab(1).header("Constructors");
         out.tab(1).javadoc("Create a detached %s", className);
         out.tab(1).println("public %s() {", className);
@@ -668,6 +672,15 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public %s %s();", type, getter);
         }
 
+        String local = getStrategy().getJavaClassName(table, Mode.INTERFACE);
+        String qualified = getStrategy().getFullJavaClassName(table, Mode.INTERFACE);
+
+        out.tab(1).header("FROM and INTO");
+        out.tab(1).javadoc("Load data from another generated Record/POJO implementing the common interface %s", local);
+        out.tab(1).println("public void from(%s from);", qualified);
+
+        out.tab(1).javadoc("Copy data into another generated Record/POJO implementing the common interface %s", local);
+        out.tab(1).println("public <E extends %s> E into(E into);", qualified);
         out.println("}");
         out.close();
     }
@@ -1338,6 +1351,10 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
+        if (generateInterfaces()) {
+            printFromAndInto(out, table);
+        }
+
         out.println("}");
         out.close();
     }
@@ -1592,6 +1609,29 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println("}");
         out.close();
+    }
+
+    protected void printFromAndInto(JavaWriter out, TableDefinition table) {
+        String qualified = getStrategy().getFullJavaClassName(table, Mode.INTERFACE);
+
+        out.tab(1).header("FROM and INTO");
+        out.tab(1).overrideInherit();
+        out.tab(1).println("public void from(%s from) {", qualified);
+
+        for (ColumnDefinition column : table.getColumns()) {
+            String setter = getStrategy().getJavaSetterName(column, Mode.INTERFACE);
+            String getter = getStrategy().getJavaGetterName(column, Mode.INTERFACE);
+
+            out.tab(2).println("%s(from.%s());", setter, getter);
+        }
+
+        out.tab(1).println("}");
+
+        out.tab(1).overrideInherit();
+        out.tab(1).println("public <E extends %s> E into(E into) {", qualified);
+        out.tab(2).println("into.from(this);");
+        out.tab(2).println("return into;");
+        out.tab(1).println("}");
     }
 
     protected void printSchemaReferences(JavaWriter out, List<? extends Definition> definitions, Class<?> type, boolean isGeneric) {

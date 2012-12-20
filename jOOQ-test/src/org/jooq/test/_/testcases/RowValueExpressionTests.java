@@ -437,10 +437,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             // Add a dummy union, as a compile-time type-check
             .union(
             select(
-                val("abc"),
-                val(1),
-                val(1))
-            .where(val(1).eq(val(0))))
+                inline("abc"),
+                inline(1),
+                inline(1))
+            .where(inline(1).eq(inline(0))))
 
             // Another dummy union as a compile-time type-check
             .union(create()

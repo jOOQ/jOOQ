@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1317168367;
+	private static final long serialVersionUID = 1669317032;
 
 	/**
 	 * The singleton instance of <code>TEST.X_UNUSED</code>
@@ -34,12 +34,12 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	/**
 	 * The column <code>TEST.X_UNUSED.NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
 	 * The column <code>TEST.X_UNUSED.BIG_INTEGER</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38), this);
 
 	/**
 	 * The column <code>TEST.X_UNUSED.ID_REF</code>. 
@@ -89,12 +89,12 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	/**
 	 * The column <code>TEST.X_UNUSED.NAME_REF</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
 	 * The column <code>TEST.X_UNUSED.FIELD 737</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC.precision(25).scale(2), this);
 
 	/**
 	 * The column <code>TEST.X_UNUSED.MS_UNUSED_ID_REF</code>. 
@@ -104,7 +104,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	/**
 	 * The column <code>TEST.X_UNUSED.MS_UNUSED_NAME_REF</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.String> MS_UNUSED_NAME_REF = createField("MS_UNUSED_NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.String> MS_UNUSED_NAME_REF = createField("MS_UNUSED_NAME_REF", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
 	 * Create a <code>TEST.X_UNUSED</code> table reference

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 1716520624;
+	private static final long serialVersionUID = 916339698;
 
 	/**
 	 * The singleton instance of <code>TEST.T_785</code>
@@ -32,12 +32,12 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	/**
 	 * The column <code>TEST.T_785.NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>TEST.T_785.VALUE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * Create a <code>TEST.T_785</code> table reference

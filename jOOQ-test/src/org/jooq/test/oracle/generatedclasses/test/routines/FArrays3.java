@@ -9,23 +9,23 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings("all")
 public class FArrays3 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord> {
 
-	private static final long serialVersionUID = 437717339;
+	private static final long serialVersionUID = 559419628;
 
 	/**
 	 * The parameter <code>TEST.F_ARRAYS3.RETURN_VALUE</code>. 
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord.class));
+	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(20).asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord.class));
 
 	/**
 	 * The parameter <code>TEST.F_ARRAYS3.IN_ARRAY</code>. 
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord.class));
+	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.length(20).asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord.class));
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public FArrays3() {
-		super("F_ARRAYS3", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.VARCHAR.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord.class));
+		super("F_ARRAYS3", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.VARCHAR.length(20).asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord.class));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(IN_ARRAY);

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class MLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> {
 
-	private static final long serialVersionUID = 927576019;
+	private static final long serialVersionUID = -1212312203;
 
 	/**
 	 * The singleton instance of <code>TEST.M_LIBRARY</code>
@@ -29,12 +29,12 @@ public class MLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gener
 	/**
 	 * The column <code>TEST.M_LIBRARY.AUTHOR</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this);
 
 	/**
 	 * The column <code>TEST.M_LIBRARY.TITLE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
 
 	/**
 	 * Create a <code>TEST.M_LIBRARY</code> table reference

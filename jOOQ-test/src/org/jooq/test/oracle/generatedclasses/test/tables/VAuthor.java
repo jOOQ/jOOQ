@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 822866289;
+	private static final long serialVersionUID = -1458295817;
 
 	/**
 	 * The singleton instance of <code>TEST.V_AUTHOR</code>
@@ -32,12 +32,12 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 	/**
 	 * The column <code>TEST.V_AUTHOR.FIRST_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>TEST.V_AUTHOR.LAST_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>. 

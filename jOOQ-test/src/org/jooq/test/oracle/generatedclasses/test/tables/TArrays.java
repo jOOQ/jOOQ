@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 469640654;
+	private static final long serialVersionUID = -16408425;
 
 	/**
 	 * The singleton instance of <code>TEST.T_ARRAYS</code>
@@ -32,7 +32,7 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	/**
 	 * The column <code>TEST.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord> STRING_ARRAY = createField("STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord> STRING_ARRAY = createField("STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.length(20).asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord.class), this);
 
 	/**
 	 * The column <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>. 

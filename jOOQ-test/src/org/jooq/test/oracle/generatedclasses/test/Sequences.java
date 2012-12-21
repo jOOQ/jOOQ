@@ -19,7 +19,7 @@ public final class Sequences {
 	/**
 	 * The sequence <code>TEST.S_961_BIG_INTEGER</code>
 	 */
-	public static final org.jooq.Sequence<java.math.BigInteger> S_961_BIG_INTEGER = new org.jooq.impl.SequenceImpl<java.math.BigInteger>("S_961_BIG_INTEGER", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.DECIMAL_INTEGER);
+	public static final org.jooq.Sequence<java.math.BigInteger> S_961_BIG_INTEGER = new org.jooq.impl.SequenceImpl<java.math.BigInteger>("S_961_BIG_INTEGER", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38));
 
 	/**
 	 * The sequence <code>TEST.S_961_BYTE</code>

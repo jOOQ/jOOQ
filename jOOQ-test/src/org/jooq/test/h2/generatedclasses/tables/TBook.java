@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -162277983;
+	private static final long serialVersionUID = 328169272;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK</code>
@@ -49,7 +49,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.gen
 	/**
 	 * The column <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK);
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. The year the book was published in

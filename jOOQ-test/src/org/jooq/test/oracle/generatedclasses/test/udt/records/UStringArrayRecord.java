@@ -9,13 +9,13 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings("all")
 public class UStringArrayRecord extends org.jooq.impl.ArrayRecordImpl<java.lang.String> {
 
-	private static final long serialVersionUID = 396516404;
+	private static final long serialVersionUID = 1424356617;
 
 	/**
 	 * Create a new <code>TEST.U_STRING_ARRAY</code> record
 	 */
 	public UStringArrayRecord(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR, configuration);
+		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.length(20), configuration);
 	}
 
 	/**

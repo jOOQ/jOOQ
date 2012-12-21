@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1799030325;
+	private static final long serialVersionUID = 271895928;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_LANGUAGE</code>
@@ -29,17 +29,17 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2
 	/**
 	 * The column <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2), T_LANGUAGE);
 
 	/**
 	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
 
 	/**
 	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
 
 	/**
 	 * The column <code>PUBLIC.T_LANGUAGE.ID</code>. The language ID

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings("all")
 public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord> {
 
-	private static final long serialVersionUID = -909078793;
+	private static final long serialVersionUID = 1393819393;
 
 	/**
 	 * The singleton instance of <code>TEST.U_STREET_TYPE</code>
@@ -27,12 +27,12 @@ public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	/**
 	 * The attribute <code>TEST.U_STREET_TYPE.STREET</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord, java.lang.String> STREET = createField("STREET", org.jooq.impl.SQLDataType.VARCHAR, U_STREET_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord, java.lang.String> STREET = createField("STREET", org.jooq.impl.SQLDataType.VARCHAR.length(100), U_STREET_TYPE);
 
 	/**
 	 * The attribute <code>TEST.U_STREET_TYPE.NO</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord, java.lang.String> NO = createField("NO", org.jooq.impl.SQLDataType.VARCHAR, U_STREET_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord, java.lang.String> NO = createField("NO", org.jooq.impl.SQLDataType.VARCHAR.length(30), U_STREET_TYPE);
 
 	/**
 	 * The attribute <code>TEST.U_STREET_TYPE.FLOORS</code>. 

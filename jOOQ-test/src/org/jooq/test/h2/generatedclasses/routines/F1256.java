@@ -9,23 +9,23 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class F1256 extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 1235499843;
+	private static final long serialVersionUID = 832086396;
 
 	/**
 	 * The parameter <code>PUBLIC.F1256.RETURN_VALUE</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647));
 
 	/**
 	 * The parameter <code>PUBLIC.F1256.P1</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> P1 = createParameter("P1", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> P1 = createParameter("P1", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647));
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public F1256() {
-		super("F1256", org.jooq.test.h2.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.VARCHAR);
+		super("F1256", org.jooq.test.h2.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.VARCHAR.length(2147483647));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(P1);

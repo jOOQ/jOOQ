@@ -407,22 +407,19 @@ public class DB2Test extends jOOQAbstractTest<
         return TBooleans.YES_NO_UC;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_VC() {
-        return (TableField) TBooleans.VC_BOOLEAN;
+        return TBooleans.VC_BOOLEAN;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_C() {
-        return (TableField) TBooleans.C_BOOLEAN;
+        return TBooleans.C_BOOLEAN;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_N() {
-        return (TableField) TBooleans.N_BOOLEAN;
+        return TBooleans.N_BOOLEAN;
     }
 
     @Override

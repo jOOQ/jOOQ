@@ -61,7 +61,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.util.Arrays;
 
-import org.jooq.Batch;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.Record;

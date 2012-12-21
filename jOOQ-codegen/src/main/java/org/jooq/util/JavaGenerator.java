@@ -2372,10 +2372,10 @@ public class JavaGenerator extends AbstractGenerator {
     protected String getJavaTypeReference(Database db, DataTypeDefinition type) {
         if (database.isArrayType(type.getType())) {
             String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), type.getType(), type.getUserType());
-            return getTypeReference(db, type.getSchema(), baseType, 0, 0, baseType) + ".getArrayDataType()";
+            return getTypeReference(db, type.getSchema(), baseType, 0, 0, 0, baseType) + ".getArrayDataType()";
         }
         else {
-            return getTypeReference(db, type.getSchema(), type.getType(), type.getPrecision(), type.getScale(), type.getUserType());
+            return getTypeReference(db, type.getSchema(), type.getType(), type.getPrecision(), type.getScale(), type.getLength(), type.getUserType());
         }
     }
 
@@ -2449,7 +2449,7 @@ public class JavaGenerator extends AbstractGenerator {
         return type;
     }
 
-    protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, String u) {
+    protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, String u) {
         StringBuilder sb = new StringBuilder();
         if (db.getArray(schema, u) != null) {
             ArrayDefinition array = database.getArray(schema, u);
@@ -2495,6 +2495,16 @@ public class JavaGenerator extends AbstractGenerator {
                 sb.append(SQLDataType.class.getCanonicalName());
                 sb.append(".");
                 sb.append(DefaultDataType.normalise(sqlDataType.getTypeName()));
+
+                if (dataType.hasPrecision() && p > 0) {
+                    sb.append(".precision(").append(p).append(")");
+                }
+                if (dataType.hasScale() && s > 0) {
+                    sb.append(".scale(").append(s).append(")");
+                }
+                if (dataType.hasLength() && l > 0) {
+                    sb.append(".length(").append(l).append(")");
+                }
 
                 if (db.getConfiguredCustomType(u) != null) {
                     sb.append(".asConvertedDataType(new ");

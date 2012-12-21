@@ -105,6 +105,18 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
 
                 try {
                     dataType = DefaultDataType.getDataType(configuration.getDialect(), type, precision, scale);
+
+                    if (dataType.hasPrecision()) {
+                        dataType = dataType.precision(precision);
+                    }
+                    if (dataType.hasScale()) {
+                        dataType = dataType.scale(scale);
+                    }
+                    if (dataType.hasLength()) {
+
+                        // JDBC doesn't distinguish between precision and length
+                        dataType = dataType.length(precision);
+                    }
                 }
 
                 // [#650, #667] TODO This should not happen. All types

@@ -300,42 +300,77 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             log.info("SKIPPING", "References tests");
         }
 
+        // Some string data type tests
+        // ---------------------------
+        assertEquals(0, TAuthor_LAST_NAME().getDataType().precision());
+        assertEquals(0, TAuthor_LAST_NAME().getDataType().scale());
+        assertEquals(50, TAuthor_LAST_NAME().getDataType().length());
+
+        // Some numeric data type tests
+        // ----------------------------
         for (Field<?> field : T639().getFields()) {
             if ("BYTE".equalsIgnoreCase(field.getName())) {
                 assertEquals(Byte.class, field.getType());
                 assertEquals(SQLDataType.TINYINT, field.getDataType());
+                assertEquals(3, field.getDataType().precision());
+                assertEquals(0, field.getDataType().scale());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("SHORT".equalsIgnoreCase(field.getName())) {
                 assertEquals(Short.class, field.getType());
                 assertEquals(SQLDataType.SMALLINT, field.getDataType());
+                assertEquals(5, field.getDataType().precision());
+                assertEquals(0, field.getDataType().scale());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("INTEGER".equalsIgnoreCase(field.getName())) {
                 assertEquals(Integer.class, field.getType());
                 assertEquals(SQLDataType.INTEGER, field.getDataType());
+                assertEquals(10, field.getDataType().precision());
+                assertEquals(0, field.getDataType().scale());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("LONG".equalsIgnoreCase(field.getName())) {
                 assertEquals(Long.class, field.getType());
                 assertEquals(SQLDataType.BIGINT, field.getDataType());
+                assertEquals(19, field.getDataType().precision());
+                assertEquals(0, field.getDataType().scale());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("BYTE_DECIMAL".equalsIgnoreCase(field.getName())) {
                 assertEquals(Byte.class, field.getType());
                 assertEquals(SQLDataType.TINYINT, field.getDataType());
+                assertEquals(3, field.getDataType().precision());
+                assertEquals(0, field.getDataType().scale());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("SHORT_DECIMAL".equalsIgnoreCase(field.getName())) {
                 assertEquals(Short.class, field.getType());
                 assertEquals(SQLDataType.SMALLINT, field.getDataType());
+                assertEquals(5, field.getDataType().precision());
+                assertEquals(0, field.getDataType().scale());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("INTEGER_DECIMAL".equalsIgnoreCase(field.getName())) {
                 assertEquals(Integer.class, field.getType());
                 assertEquals(SQLDataType.INTEGER, field.getDataType());
+                assertEquals(10, field.getDataType().precision());
+                assertEquals(0, field.getDataType().scale());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("LONG_DECIMAL".equalsIgnoreCase(field.getName())) {
                 assertEquals(Long.class, field.getType());
                 assertEquals(SQLDataType.BIGINT, field.getDataType());
+                assertEquals(19, field.getDataType().precision());
+                assertEquals(0, field.getDataType().scale());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("BIG_INTEGER".equalsIgnoreCase(field.getName())) {
                 assertEquals(BigInteger.class, field.getType());
                 assertEquals(SQLDataType.DECIMAL_INTEGER, field.getDataType());
+                assertTrue(field.getDataType().precision() > 0);
+                assertEquals(0, field.getDataType().scale());
+                assertEquals(0, field.getDataType().length());
             }
 
             // [#745] TODO: Unify distinction between NUMERIC and DECIMAL
@@ -347,14 +382,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
                 assertEquals(BigDecimal.class, field.getType());
                 assertEquals(SQLDataType.DECIMAL, field.getDataType());
+                assertTrue(field.getDataType().precision() > 0);
+                assertEquals(5, field.getDataType().scale());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("BIG_DECIMAL".equalsIgnoreCase(field.getName())) {
                 assertEquals(BigDecimal.class, field.getType());
                 assertEquals(SQLDataType.NUMERIC, field.getDataType());
+                assertTrue(field.getDataType().precision() > 0);
+                assertEquals(5, field.getDataType().scale());
+                assertEquals(0, field.getDataType().length());
             }
 
             // [#746] TODO: Interestingly, HSQLDB and MySQL match REAL with DOUBLE.
             // There is no matching type for java.lang.Float...
+
+            // [#456] TODO: Should floating point numbers have precision and scale?
             else if ("FLOAT".equalsIgnoreCase(field.getName())
                     && getDialect() != SQLDialect.HSQLDB
                     && getDialect() != SQLDialect.MYSQL
@@ -362,6 +405,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
                 assertEquals(Float.class, field.getType());
                 assertEquals(SQLDataType.REAL, field.getDataType());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("FLOAT".equalsIgnoreCase(field.getName())
                     && getDialect() != SQLDialect.MYSQL
@@ -369,10 +413,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
                 assertEquals(Double.class, field.getType());
                 assertEquals(SQLDataType.DOUBLE, field.getDataType());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("FLOAT".equalsIgnoreCase(field.getName())) {
                 assertEquals(Double.class, field.getType());
                 assertEquals(SQLDataType.FLOAT, field.getDataType());
+                assertEquals(0, field.getDataType().length());
             }
 
             // [#746] TODO: Fix this, too
@@ -382,10 +428,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
                 assertEquals(Double.class, field.getType());
                 assertEquals(SQLDataType.DOUBLE, field.getDataType());
+                assertEquals(0, field.getDataType().length());
             }
             else if ("DOUBLE".equalsIgnoreCase(field.getName())) {
                 assertEquals(Double.class, field.getType());
                 assertEquals(SQLDataType.FLOAT, field.getDataType());
+                assertEquals(0, field.getDataType().length());
             }
         }
     }

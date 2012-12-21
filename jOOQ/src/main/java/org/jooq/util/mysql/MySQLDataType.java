@@ -42,8 +42,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.DataType;
 import org.jooq.SQLDialect;
-import org.jooq.impl.AbstractDataType;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -57,81 +58,71 @@ import org.jooq.types.UShort;
  * @see <a href="http://dev.mysql.com/doc/refman/5.5/en/data-types.html">http://dev.mysql.com/doc/refman/5.5/en/data-types.html</a>
  * @see <a href="http://dev.mysql.com/doc/refman/5.5/en/cast-functions.html#function_cast">http://dev.mysql.com/doc/refman/5.5/en/cast-functions.html#function_cast</a>
  */
-public class MySQLDataType<T> extends AbstractDataType<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                     serialVersionUID = -5677365115109672781L;
+public class MySQLDataType<T> {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final MySQLDataType<Byte>       TINYINT          = new MySQLDataType<Byte>(SQLDataType.TINYINT, "tinyint", "signed");
-    public static final MySQLDataType<UByte>      TINYINTUNSIGNED  = new MySQLDataType<UByte>(SQLDataType.TINYINTUNSIGNED, "tinyintunsigned", "unsigned");
-    public static final MySQLDataType<Short>      SMALLINT         = new MySQLDataType<Short>(SQLDataType.SMALLINT, "smallint", "signed");
-    public static final MySQLDataType<UShort>     SMALLINTUNSIGNED = new MySQLDataType<UShort>(SQLDataType.SMALLINTUNSIGNED, "smallintunsigned", "unsigned");
-    public static final MySQLDataType<Integer>    INT              = new MySQLDataType<Integer>(SQLDataType.INTEGER, "int", "signed");
-    public static final MySQLDataType<UInteger>   INTUNSIGNED      = new MySQLDataType<UInteger>(SQLDataType.INTEGERUNSIGNED, "intunsigned", "unsigned");
-    public static final MySQLDataType<Integer>    MEDIUMINT        = new MySQLDataType<Integer>(SQLDataType.INTEGER, "mediumint", "signed");
-    public static final MySQLDataType<UInteger>   MEDIUMINTUNSIGNED= new MySQLDataType<UInteger>(SQLDataType.INTEGERUNSIGNED, "mediumintunsigned", "unsigned");
-    public static final MySQLDataType<Integer>    INTEGER          = new MySQLDataType<Integer>(SQLDataType.INTEGER, "integer", "signed");
-    public static final MySQLDataType<UInteger>   INTEGERUNSIGNED  = new MySQLDataType<UInteger>(SQLDataType.INTEGERUNSIGNED, "integerunsigned", "unsigned");
-    public static final MySQLDataType<Long>       BIGINT           = new MySQLDataType<Long>(SQLDataType.BIGINT, "bigint", "signed");
-    public static final MySQLDataType<ULong>      BIGINTUNSIGNED   = new MySQLDataType<ULong>(SQLDataType.BIGINTUNSIGNED, "bigintunsigned", "unsigned");
-    public static final MySQLDataType<Double>     DOUBLE           = new MySQLDataType<Double>(SQLDataType.DOUBLE, "double", "decimal");
-    public static final MySQLDataType<Double>     FLOAT            = new MySQLDataType<Double>(SQLDataType.FLOAT, "float", "decimal");
-    public static final MySQLDataType<Float>      REAL             = new MySQLDataType<Float>(SQLDataType.REAL, "real", "decimal");
-    public static final MySQLDataType<Boolean>    BOOLEAN          = new MySQLDataType<Boolean>(SQLDataType.BOOLEAN, "boolean", "unsigned");
-    public static final MySQLDataType<Boolean>    BOOL             = new MySQLDataType<Boolean>(SQLDataType.BOOLEAN, "bool", "unsigned");
-    public static final MySQLDataType<Boolean>    BIT              = new MySQLDataType<Boolean>(SQLDataType.BIT, "bit", "unsigned");
-    public static final MySQLDataType<BigDecimal> DECIMAL          = new MySQLDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal", "decimal");
-    public static final MySQLDataType<BigDecimal> DEC              = new MySQLDataType<BigDecimal>(SQLDataType.DECIMAL, "dec", "decimal");
-    public static final MySQLDataType<String>     VARCHAR          = new MySQLDataType<String>(SQLDataType.VARCHAR, "varchar", "char");
-    public static final MySQLDataType<String>     CHAR             = new MySQLDataType<String>(SQLDataType.CHAR, "char", "char");
-    public static final MySQLDataType<String>     TEXT             = new MySQLDataType<String>(SQLDataType.CLOB, "text", "char");
-    public static final MySQLDataType<byte[]>     BLOB             = new MySQLDataType<byte[]>(SQLDataType.BLOB, "blob", "binary");
-    public static final MySQLDataType<byte[]>     BINARY           = new MySQLDataType<byte[]>(SQLDataType.BINARY, "binary", "binary");
-    public static final MySQLDataType<byte[]>     VARBINARY        = new MySQLDataType<byte[]>(SQLDataType.VARBINARY, "varbinary", "binary");
-    public static final MySQLDataType<Date>       DATE             = new MySQLDataType<Date>(SQLDataType.DATE, "date", "date");
-    public static final MySQLDataType<Time>       TIME             = new MySQLDataType<Time>(SQLDataType.TIME, "time", "time");
-    public static final MySQLDataType<Timestamp>  TIMESTAMP        = new MySQLDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp", "datetime");
-    public static final MySQLDataType<Timestamp>  DATETIME         = new MySQLDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime", "datetime");
+    public static final DataType<Byte>       TINYINT            = new DefaultDataType<Byte>(SQLDialect.MYSQL, SQLDataType.TINYINT, "tinyint", "signed");
+    public static final DataType<UByte>      TINYINTUNSIGNED    = new DefaultDataType<UByte>(SQLDialect.MYSQL, SQLDataType.TINYINTUNSIGNED, "tinyintunsigned", "unsigned");
+    public static final DataType<Short>      SMALLINT           = new DefaultDataType<Short>(SQLDialect.MYSQL, SQLDataType.SMALLINT, "smallint", "signed");
+    public static final DataType<UShort>     SMALLINTUNSIGNED   = new DefaultDataType<UShort>(SQLDialect.MYSQL, SQLDataType.SMALLINTUNSIGNED, "smallintunsigned", "unsigned");
+    public static final DataType<Integer>    INT                = new DefaultDataType<Integer>(SQLDialect.MYSQL, SQLDataType.INTEGER, "int", "signed");
+    public static final DataType<UInteger>   INTUNSIGNED        = new DefaultDataType<UInteger>(SQLDialect.MYSQL, SQLDataType.INTEGERUNSIGNED, "intunsigned", "unsigned");
+    public static final DataType<Integer>    MEDIUMINT          = new DefaultDataType<Integer>(SQLDialect.MYSQL, SQLDataType.INTEGER, "mediumint", "signed");
+    public static final DataType<UInteger>   MEDIUMINTUNSIGNED  = new DefaultDataType<UInteger>(SQLDialect.MYSQL, SQLDataType.INTEGERUNSIGNED, "mediumintunsigned", "unsigned");
+    public static final DataType<Integer>    INTEGER            = new DefaultDataType<Integer>(SQLDialect.MYSQL, SQLDataType.INTEGER, "integer", "signed");
+    public static final DataType<UInteger>   INTEGERUNSIGNED    = new DefaultDataType<UInteger>(SQLDialect.MYSQL, SQLDataType.INTEGERUNSIGNED, "integerunsigned", "unsigned");
+    public static final DataType<Long>       BIGINT             = new DefaultDataType<Long>(SQLDialect.MYSQL, SQLDataType.BIGINT, "bigint", "signed");
+    public static final DataType<ULong>      BIGINTUNSIGNED     = new DefaultDataType<ULong>(SQLDialect.MYSQL, SQLDataType.BIGINTUNSIGNED, "bigintunsigned", "unsigned");
+    public static final DataType<Double>     DOUBLE             = new DefaultDataType<Double>(SQLDialect.MYSQL, SQLDataType.DOUBLE, "double", "decimal");
+    public static final DataType<Double>     FLOAT              = new DefaultDataType<Double>(SQLDialect.MYSQL, SQLDataType.FLOAT, "float", "decimal");
+    public static final DataType<Float>      REAL               = new DefaultDataType<Float>(SQLDialect.MYSQL, SQLDataType.REAL, "real", "decimal");
+    public static final DataType<Boolean>    BOOLEAN            = new DefaultDataType<Boolean>(SQLDialect.MYSQL, SQLDataType.BOOLEAN, "boolean", "unsigned");
+    public static final DataType<Boolean>    BOOL               = new DefaultDataType<Boolean>(SQLDialect.MYSQL, SQLDataType.BOOLEAN, "bool", "unsigned");
+    public static final DataType<Boolean>    BIT                = new DefaultDataType<Boolean>(SQLDialect.MYSQL, SQLDataType.BIT, "bit", "unsigned");
+    public static final DataType<BigDecimal> DECIMAL            = new DefaultDataType<BigDecimal>(SQLDialect.MYSQL, SQLDataType.DECIMAL, "decimal", "decimal");
+    public static final DataType<BigDecimal> DEC                = new DefaultDataType<BigDecimal>(SQLDialect.MYSQL, SQLDataType.DECIMAL, "dec", "decimal");
+    public static final DataType<String>     VARCHAR            = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.VARCHAR, "varchar", "char");
+    public static final DataType<String>     CHAR               = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CHAR, "char", "char");
+    public static final DataType<String>     TEXT               = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CLOB, "text", "char");
+    public static final DataType<byte[]>     BLOB               = new DefaultDataType<byte[]>(SQLDialect.MYSQL, SQLDataType.BLOB, "blob", "binary");
+    public static final DataType<byte[]>     BINARY             = new DefaultDataType<byte[]>(SQLDialect.MYSQL, SQLDataType.BINARY, "binary", "binary");
+    public static final DataType<byte[]>     VARBINARY          = new DefaultDataType<byte[]>(SQLDialect.MYSQL, SQLDataType.VARBINARY, "varbinary", "binary");
+    public static final DataType<Date>       DATE               = new DefaultDataType<Date>(SQLDialect.MYSQL, SQLDataType.DATE, "date", "date");
+    public static final DataType<Time>       TIME               = new DefaultDataType<Time>(SQLDialect.MYSQL, SQLDataType.TIME, "time", "time");
+    public static final DataType<Timestamp>  TIMESTAMP          = new DefaultDataType<Timestamp>(SQLDialect.MYSQL, SQLDataType.TIMESTAMP, "timestamp", "datetime");
+    public static final DataType<Timestamp>  DATETIME           = new DefaultDataType<Timestamp>(SQLDialect.MYSQL, SQLDataType.TIMESTAMP, "datetime", "datetime");
 
     // -------------------------------------------------------------------------
-    // Compatibility types for supported SQLDataTypes
+    // Compatibility types for supported SQLDialect.MYSQL, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final MySQLDataType<String>     __NCHAR         = new MySQLDataType<String>(SQLDataType.NCHAR, "char", "char");
-    protected static final MySQLDataType<String>     __NCLOB         = new MySQLDataType<String>(SQLDataType.NCLOB, "clob", "char");
-    protected static final MySQLDataType<String>     __LONGNVARCHAR  = new MySQLDataType<String>(SQLDataType.LONGNVARCHAR, "varchar", "char");
-    protected static final MySQLDataType<BigDecimal> __NUMERIC       = new MySQLDataType<BigDecimal>(SQLDataType.NUMERIC, "decimal", "decimal");
-    protected static final MySQLDataType<String>     __NVARCHAR      = new MySQLDataType<String>(SQLDataType.NVARCHAR, "varchar", "char");
-    protected static final MySQLDataType<String>     __LONGVARCHAR   = new MySQLDataType<String>(SQLDataType.LONGVARCHAR, "varchar", "char");
-    protected static final MySQLDataType<byte[]>     __LONGVARBINARY = new MySQLDataType<byte[]>(SQLDataType.LONGVARBINARY, "varbinary", "binary");
+    protected static final DataType<String>     __NCHAR         = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.NCHAR, "char", "char");
+    protected static final DataType<String>     __NCLOB         = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.NCLOB, "clob", "char");
+    protected static final DataType<String>     __LONGNVARCHAR  = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.LONGNVARCHAR, "varchar", "char");
+    protected static final DataType<BigDecimal> __NUMERIC       = new DefaultDataType<BigDecimal>(SQLDialect.MYSQL, SQLDataType.NUMERIC, "decimal", "decimal");
+    protected static final DataType<String>     __NVARCHAR      = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.NVARCHAR, "varchar", "char");
+    protected static final DataType<String>     __LONGVARCHAR   = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.LONGVARCHAR, "varchar", "char");
+    protected static final DataType<byte[]>     __LONGVARBINARY = new DefaultDataType<byte[]>(SQLDialect.MYSQL, SQLDataType.LONGVARBINARY, "varbinary", "binary");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final MySQLDataType<BigInteger> __BIGINTEGER = new MySQLDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "decimal", "decimal");
+    protected static final DataType<BigInteger> __BIGINTEGER    = new DefaultDataType<BigInteger>(SQLDialect.MYSQL, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final MySQLDataType<String>     MEDIUMTEXT       = new MySQLDataType<String>(SQLDataType.CLOB, "mediumtext", "char");
-    public static final MySQLDataType<String>     LONGTEXT         = new MySQLDataType<String>(SQLDataType.CLOB, "longtext", "char");
-    public static final MySQLDataType<String>     ENUM             = new MySQLDataType<String>(SQLDataType.VARCHAR, "enum", "char");
-    public static final MySQLDataType<String>     SET              = new MySQLDataType<String>(SQLDataType.VARCHAR, "set", "char");
-    public static final MySQLDataType<byte[]>     TINYBLOB         = new MySQLDataType<byte[]>(SQLDataType.BLOB, "tinyblob", "binary");
-    public static final MySQLDataType<byte[]>     MEDIUMBLOB       = new MySQLDataType<byte[]>(SQLDataType.BLOB, "mediumblob", "binary");
-    public static final MySQLDataType<byte[]>     LONGBLOB         = new MySQLDataType<byte[]>(SQLDataType.BLOB, "longblob", "binary");
-    public static final MySQLDataType<Date>       YEAR             = new MySQLDataType<Date>(SQLDataType.DATE, "year", "date");
-
-
-    private MySQLDataType(SQLDataType<T> sqlDataType, String typeName, String castTypeName) {
-        super(SQLDialect.MYSQL, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
-    }
+    public static final DataType<String>     MEDIUMTEXT         = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CLOB, "mediumtext", "char");
+    public static final DataType<String>     LONGTEXT           = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CLOB, "longtext", "char");
+    public static final DataType<String>     ENUM               = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.VARCHAR, "enum", "char");
+    public static final DataType<String>     SET                = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.VARCHAR, "set", "char");
+    public static final DataType<byte[]>     TINYBLOB           = new DefaultDataType<byte[]>(SQLDialect.MYSQL, SQLDataType.BLOB, "tinyblob", "binary");
+    public static final DataType<byte[]>     MEDIUMBLOB         = new DefaultDataType<byte[]>(SQLDialect.MYSQL, SQLDataType.BLOB, "mediumblob", "binary");
+    public static final DataType<byte[]>     LONGBLOB           = new DefaultDataType<byte[]>(SQLDialect.MYSQL, SQLDataType.BLOB, "longblob", "binary");
+    public static final DataType<Date>       YEAR               = new DefaultDataType<Date>(SQLDialect.MYSQL, SQLDataType.DATE, "year", "date");
 }

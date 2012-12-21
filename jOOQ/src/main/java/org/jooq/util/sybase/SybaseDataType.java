@@ -36,8 +36,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.DataType;
 import org.jooq.SQLDialect;
-import org.jooq.impl.AbstractDataType;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 
 /**
@@ -46,78 +47,69 @@ import org.jooq.impl.SQLDataType;
  * @see <a href="http://infocenter.sybase.com/help/topic/com.sybase.help.sqlanywhere.12.0.0/dbreference/rf-datatypes.html">http://infocenter.sybase.com/help/topic/com.sybase.help.sqlanywhere.12.0.0/dbreference/rf-datatypes.html</a>
  * @author Espen Stromsnes
  */
-public class SybaseDataType<T> extends AbstractDataType<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                      serialVersionUID           = -4442303192680774346L;
+public class SybaseDataType<T> {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final SybaseDataType<Byte>       TINYINT                    = new SybaseDataType<Byte>(SQLDataType.TINYINT, "tinyint");
-    public static final SybaseDataType<Short>      SMALLINT                   = new SybaseDataType<Short>(SQLDataType.SMALLINT, "smallint");
-    public static final SybaseDataType<Short>      UNSIGNEDSMALLLINT          = new SybaseDataType<Short>(SQLDataType.SMALLINT, "unsignedsmallint");
-    public static final SybaseDataType<Integer>    INT                        = new SybaseDataType<Integer>(SQLDataType.INTEGER, "int");
-    public static final SybaseDataType<Integer>    INTEGER                    = new SybaseDataType<Integer>(SQLDataType.INTEGER, "integer");
-    public static final SybaseDataType<Integer>    UNSIGNEDINT                = new SybaseDataType<Integer>(SQLDataType.INTEGER, "unsignedint");
-    public static final SybaseDataType<Long>       BIGINT                     = new SybaseDataType<Long>(SQLDataType.BIGINT, "bigint");
-    public static final SybaseDataType<Long>       UNSIGNEDBIGINT             = new SybaseDataType<Long>(SQLDataType.BIGINT, "unsignedbigint");
-    public static final SybaseDataType<Double>     DOUBLE                     = new SybaseDataType<Double>(SQLDataType.DOUBLE, "double");
-    public static final SybaseDataType<Double>     FLOAT                      = new SybaseDataType<Double>(SQLDataType.FLOAT, "float");
-    public static final SybaseDataType<Float>      REAL                       = new SybaseDataType<Float>(SQLDataType.REAL, "real");
-    public static final SybaseDataType<BigDecimal> DECIMAL                    = new SybaseDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
-    public static final SybaseDataType<BigDecimal> NUMERIC                    = new SybaseDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric");
-    public static final SybaseDataType<Boolean>    BIT                        = new SybaseDataType<Boolean>(SQLDataType.BIT, "bit");
-    public static final SybaseDataType<String>     VARCHAR                    = new SybaseDataType<String>(SQLDataType.VARCHAR, "varchar");
-    public static final SybaseDataType<String>     CHAR                       = new SybaseDataType<String>(SQLDataType.CHAR, "char");
-    public static final SybaseDataType<String>     LONGNVARCHAR               = new SybaseDataType<String>(SQLDataType.LONGNVARCHAR, "long nvarchar");
-    public static final SybaseDataType<String>     LONGVARCHAR                = new SybaseDataType<String>(SQLDataType.LONGVARCHAR, "long varchar");
-    public static final SybaseDataType<String>     NCHAR                      = new SybaseDataType<String>(SQLDataType.NCHAR, "nchar");
-    public static final SybaseDataType<String>     NTEXT                      = new SybaseDataType<String>(SQLDataType.NCLOB, "ntext");
-    public static final SybaseDataType<String>     NVARCHAR                   = new SybaseDataType<String>(SQLDataType.NVARCHAR, "nvarchar");
-    public static final SybaseDataType<String>     TEXT                       = new SybaseDataType<String>(SQLDataType.CLOB, "text");
-    public static final SybaseDataType<Date>       DATE                       = new SybaseDataType<Date>(SQLDataType.DATE, "date");
-    public static final SybaseDataType<Time>       TIME                       = new SybaseDataType<Time>(SQLDataType.TIME, "time");
-    public static final SybaseDataType<Timestamp>  DATETIME                   = new SybaseDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime");
-    public static final SybaseDataType<Timestamp>  TIMESTAMP                  = new SybaseDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp");
-    public static final SybaseDataType<byte[]>     BINARY                     = new SybaseDataType<byte[]>(SQLDataType.BINARY, "binary");
-    public static final SybaseDataType<byte[]>     LONGBINARY                 = new SybaseDataType<byte[]>(SQLDataType.LONGVARBINARY, "long binary");
-    public static final SybaseDataType<byte[]>     VARBINARY                  = new SybaseDataType<byte[]>(SQLDataType.VARBINARY, "varbinary");
+    public static final DataType<Byte>       TINYINT                    = new DefaultDataType<Byte>(SQLDialect.SYBASE, SQLDataType.TINYINT, "tinyint");
+    public static final DataType<Short>      SMALLINT                   = new DefaultDataType<Short>(SQLDialect.SYBASE, SQLDataType.SMALLINT, "smallint");
+    public static final DataType<Short>      UNSIGNEDSMALLLINT          = new DefaultDataType<Short>(SQLDialect.SYBASE, SQLDataType.SMALLINT, "unsignedsmallint");
+    public static final DataType<Integer>    INT                        = new DefaultDataType<Integer>(SQLDialect.SYBASE, SQLDataType.INTEGER, "int");
+    public static final DataType<Integer>    INTEGER                    = new DefaultDataType<Integer>(SQLDialect.SYBASE, SQLDataType.INTEGER, "integer");
+    public static final DataType<Integer>    UNSIGNEDINT                = new DefaultDataType<Integer>(SQLDialect.SYBASE, SQLDataType.INTEGER, "unsignedint");
+    public static final DataType<Long>       BIGINT                     = new DefaultDataType<Long>(SQLDialect.SYBASE, SQLDataType.BIGINT, "bigint");
+    public static final DataType<Long>       UNSIGNEDBIGINT             = new DefaultDataType<Long>(SQLDialect.SYBASE, SQLDataType.BIGINT, "unsignedbigint");
+    public static final DataType<Double>     DOUBLE                     = new DefaultDataType<Double>(SQLDialect.SYBASE, SQLDataType.DOUBLE, "double");
+    public static final DataType<Double>     FLOAT                      = new DefaultDataType<Double>(SQLDialect.SYBASE, SQLDataType.FLOAT, "float");
+    public static final DataType<Float>      REAL                       = new DefaultDataType<Float>(SQLDialect.SYBASE, SQLDataType.REAL, "real");
+    public static final DataType<BigDecimal> DECIMAL                    = new DefaultDataType<BigDecimal>(SQLDialect.SYBASE, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<BigDecimal> NUMERIC                    = new DefaultDataType<BigDecimal>(SQLDialect.SYBASE, SQLDataType.NUMERIC, "numeric");
+    public static final DataType<Boolean>    BIT                        = new DefaultDataType<Boolean>(SQLDialect.SYBASE, SQLDataType.BIT, "bit");
+    public static final DataType<String>     VARCHAR                    = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.VARCHAR, "varchar");
+    public static final DataType<String>     CHAR                       = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.CHAR, "char");
+    public static final DataType<String>     LONGNVARCHAR               = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.LONGNVARCHAR, "long nvarchar");
+    public static final DataType<String>     LONGVARCHAR                = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.LONGVARCHAR, "long varchar");
+    public static final DataType<String>     NCHAR                      = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.NCHAR, "nchar");
+    public static final DataType<String>     NTEXT                      = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.NCLOB, "ntext");
+    public static final DataType<String>     NVARCHAR                   = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.NVARCHAR, "nvarchar");
+    public static final DataType<String>     TEXT                       = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.CLOB, "text");
+    public static final DataType<Date>       DATE                       = new DefaultDataType<Date>(SQLDialect.SYBASE, SQLDataType.DATE, "date");
+    public static final DataType<Time>       TIME                       = new DefaultDataType<Time>(SQLDialect.SYBASE, SQLDataType.TIME, "time");
+    public static final DataType<Timestamp>  DATETIME                   = new DefaultDataType<Timestamp>(SQLDialect.SYBASE, SQLDataType.TIMESTAMP, "datetime");
+    public static final DataType<Timestamp>  TIMESTAMP                  = new DefaultDataType<Timestamp>(SQLDialect.SYBASE, SQLDataType.TIMESTAMP, "timestamp");
+    public static final DataType<byte[]>     BINARY                     = new DefaultDataType<byte[]>(SQLDialect.SYBASE, SQLDataType.BINARY, "binary");
+    public static final DataType<byte[]>     LONGBINARY                 = new DefaultDataType<byte[]>(SQLDialect.SYBASE, SQLDataType.LONGVARBINARY, "long binary");
+    public static final DataType<byte[]>     VARBINARY                  = new DefaultDataType<byte[]>(SQLDialect.SYBASE, SQLDataType.VARBINARY, "varbinary");
 
     // -------------------------------------------------------------------------
-    // Compatibility types for supported SQLDataTypes
+    // Compatibility types for supported SQLDialect.SYBASE, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final SybaseDataType<byte[]>  __BLOB                     = new SybaseDataType<byte[]>(SQLDataType.BLOB, "binary");
-    protected static final SybaseDataType<Boolean> __BOOLEAN                  = new SybaseDataType<Boolean>(SQLDataType.BOOLEAN, "bit");
+    protected static final DataType<byte[]>  __BLOB                     = new DefaultDataType<byte[]>(SQLDialect.SYBASE, SQLDataType.BLOB, "binary");
+    protected static final DataType<Boolean> __BOOLEAN                  = new DefaultDataType<Boolean>(SQLDialect.SYBASE, SQLDataType.BOOLEAN, "bit");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final SybaseDataType<BigInteger> __BIGINTEGER = new SybaseDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "decimal");
+    protected static final DataType<BigInteger> __BIGINTEGER            = new DefaultDataType<BigInteger>(SQLDialect.SYBASE, SQLDataType.DECIMAL_INTEGER, "decimal");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final SybaseDataType<BigDecimal> MONEY                 = new SybaseDataType<BigDecimal>(SQLDataType.DECIMAL, "money");
-    public static final SybaseDataType<BigDecimal> SMALLMONEY            = new SybaseDataType<BigDecimal>(SQLDataType.DECIMAL, "smallmoney");
-    public static final SybaseDataType<String>     UNIQUEIDENTIFIERSTR   = new SybaseDataType<String>(SQLDataType.VARCHAR, "uniqueidentifierstr");
-    public static final SybaseDataType<String>     XML                   = new SybaseDataType<String>(SQLDataType.VARCHAR, "xml");
-    public static final SybaseDataType<String>     UNIQUEIDENTIFIER      = new SybaseDataType<String>(SQLDataType.VARCHAR, "uniqueidentifier");
-    public static final SybaseDataType<Timestamp>  DATETIMEOFFSET        = new SybaseDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetimeoffset");
-    public static final SybaseDataType<Timestamp>  SMALLDATETIME         = new SybaseDataType<Timestamp>(SQLDataType.TIMESTAMP, "smalldatetime");
-    public static final SybaseDataType<Timestamp>  TIMESTAMPWITHTIMEZONE = new SybaseDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestampwithtimezone");
-    public static final SybaseDataType<byte[]>     IMAGE                 = new SybaseDataType<byte[]>(SQLDataType.BINARY, "image");
-    public static final SybaseDataType<byte[]>     VARBIT                = new SybaseDataType<byte[]>(SQLDataType.VARBINARY, "varbit");
-    public static final SybaseDataType<byte[]>     LONGVARBIT            = new SybaseDataType<byte[]>(SQLDataType.LONGVARBINARY, "longvarbit");
+    public static final DataType<BigDecimal> MONEY                      = new DefaultDataType<BigDecimal>(SQLDialect.SYBASE, SQLDataType.DECIMAL, "money");
+    public static final DataType<BigDecimal> SMALLMONEY                 = new DefaultDataType<BigDecimal>(SQLDialect.SYBASE, SQLDataType.DECIMAL, "smallmoney");
+    public static final DataType<String>     UNIQUEIDENTIFIERSTR        = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.VARCHAR, "uniqueidentifierstr");
+    public static final DataType<String>     XML                        = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.VARCHAR, "xml");
+    public static final DataType<String>     UNIQUEIDENTIFIER           = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.VARCHAR, "uniqueidentifier");
+    public static final DataType<Timestamp>  DATETIMEOFFSET             = new DefaultDataType<Timestamp>(SQLDialect.SYBASE, SQLDataType.TIMESTAMP, "datetimeoffset");
+    public static final DataType<Timestamp>  SMALLDATETIME              = new DefaultDataType<Timestamp>(SQLDialect.SYBASE, SQLDataType.TIMESTAMP, "smalldatetime");
+    public static final DataType<Timestamp>  TIMESTAMPWITHTIMEZONE      = new DefaultDataType<Timestamp>(SQLDialect.SYBASE, SQLDataType.TIMESTAMP, "timestampwithtimezone");
+    public static final DataType<byte[]>     IMAGE                      = new DefaultDataType<byte[]>(SQLDialect.SYBASE, SQLDataType.BINARY, "image");
+    public static final DataType<byte[]>     VARBIT                     = new DefaultDataType<byte[]>(SQLDialect.SYBASE, SQLDataType.VARBINARY, "varbit");
+    public static final DataType<byte[]>     LONGVARBIT                 = new DefaultDataType<byte[]>(SQLDialect.SYBASE, SQLDataType.LONGVARBINARY, "longvarbit");
 
-
-    private SybaseDataType(SQLDataType<T> sqlDataType, String typeName) {
-        super(SQLDialect.SYBASE, sqlDataType, sqlDataType.getType(), typeName);
-    }
 }

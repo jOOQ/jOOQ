@@ -7652,7 +7652,7 @@ public class Factory {
     @SuppressWarnings("deprecation")
     @Support
     public static <T> DataType<T> getDataType(Class<T> type) {
-        return AbstractDataType.getDataType(SQLDialect.SQL99, type);
+        return DefaultDataType.getDataType(SQLDialect.SQL99, type);
     }
 
     /**

@@ -36,8 +36,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.DataType;
 import org.jooq.SQLDialect;
-import org.jooq.impl.AbstractDataType;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 
 /**
@@ -46,78 +47,70 @@ import org.jooq.impl.SQLDataType;
  * @see <a href="http://infocenter.sybase.com/help/topic/com.sybase.infocenter.dc36271.1550/html/blocks/X31825.htm">http://infocenter.sybase.com/help/topic/com.sybase.infocenter.dc36271.1550/html/blocks/X31825.htm</a>
  * @author Lukas Eder
  */
-public class ASEDataType<T> extends AbstractDataType<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                      serialVersionUID           = -4442303192680774346L;
+public class ASEDataType<T> {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final ASEDataType<Byte>       TINYINT                    = new ASEDataType<Byte>(SQLDataType.TINYINT, "tinyint");
-    public static final ASEDataType<Short>      SMALLINT                   = new ASEDataType<Short>(SQLDataType.SMALLINT, "smallint");
-    public static final ASEDataType<Short>      UNSIGNEDSMALLLINT          = new ASEDataType<Short>(SQLDataType.SMALLINT, "unsigned smallint");
-    public static final ASEDataType<Integer>    INT                        = new ASEDataType<Integer>(SQLDataType.INTEGER, "int");
-    public static final ASEDataType<Integer>    INTEGER                    = new ASEDataType<Integer>(SQLDataType.INTEGER, "integer");
-    public static final ASEDataType<Integer>    UNSIGNEDINT                = new ASEDataType<Integer>(SQLDataType.INTEGER, "unsigned int");
-    public static final ASEDataType<Long>       BIGINT                     = new ASEDataType<Long>(SQLDataType.BIGINT, "bigint");
-    public static final ASEDataType<Long>       UNSIGNEDBIGINT             = new ASEDataType<Long>(SQLDataType.BIGINT, "unsigned bigint");
-    public static final ASEDataType<Double>     DOUBLE_PRECISION           = new ASEDataType<Double>(SQLDataType.DOUBLE, "double precision");
-    public static final ASEDataType<Double>     FLOAT                      = new ASEDataType<Double>(SQLDataType.FLOAT, "float");
-    public static final ASEDataType<Float>      REAL                       = new ASEDataType<Float>(SQLDataType.REAL, "real");
-    public static final ASEDataType<BigDecimal> DECIMAL                    = new ASEDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
-    public static final ASEDataType<BigDecimal> DEC                        = new ASEDataType<BigDecimal>(SQLDataType.DECIMAL, "dec");
-    public static final ASEDataType<BigDecimal> NUMERIC                    = new ASEDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric");
-    public static final ASEDataType<Boolean>    BIT                        = new ASEDataType<Boolean>(SQLDataType.BIT, "bit");
-    public static final ASEDataType<String>     VARCHAR                    = new ASEDataType<String>(SQLDataType.VARCHAR, "varchar");
-    public static final ASEDataType<String>     CHAR                       = new ASEDataType<String>(SQLDataType.CHAR, "char");
-    public static final ASEDataType<String>     LONGVARCHAR                = new ASEDataType<String>(SQLDataType.LONGVARCHAR, "text");
-    public static final ASEDataType<String>     NCHAR                      = new ASEDataType<String>(SQLDataType.NCHAR, "nchar");
-    public static final ASEDataType<String>     NVARCHAR                   = new ASEDataType<String>(SQLDataType.NVARCHAR, "nvarchar");
-    public static final ASEDataType<String>     TEXT                       = new ASEDataType<String>(SQLDataType.CLOB, "text");
-    public static final ASEDataType<Date>       DATE                       = new ASEDataType<Date>(SQLDataType.DATE, "date");
-    public static final ASEDataType<Time>       TIME                       = new ASEDataType<Time>(SQLDataType.TIME, "time");
-    public static final ASEDataType<Timestamp>  DATETIME                   = new ASEDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime");
-    public static final ASEDataType<Timestamp>  TIMESTAMP                  = new ASEDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime");
-    public static final ASEDataType<byte[]>     BINARY                     = new ASEDataType<byte[]>(SQLDataType.BINARY, "binary");
-    public static final ASEDataType<byte[]>     VARBINARY                  = new ASEDataType<byte[]>(SQLDataType.VARBINARY, "varbinary");
+    public static final DataType<Byte>       TINYINT                    = new DefaultDataType<Byte>(SQLDialect.ASE, SQLDataType.TINYINT, "tinyint");
+    public static final DataType<Short>      SMALLINT                   = new DefaultDataType<Short>(SQLDialect.ASE, SQLDataType.SMALLINT, "smallint");
+    public static final DataType<Short>      UNSIGNEDSMALLLINT          = new DefaultDataType<Short>(SQLDialect.ASE, SQLDataType.SMALLINT, "unsigned smallint");
+    public static final DataType<Integer>    INT                        = new DefaultDataType<Integer>(SQLDialect.ASE, SQLDataType.INTEGER, "int");
+    public static final DataType<Integer>    INTEGER                    = new DefaultDataType<Integer>(SQLDialect.ASE, SQLDataType.INTEGER, "integer");
+    public static final DataType<Integer>    UNSIGNEDINT                = new DefaultDataType<Integer>(SQLDialect.ASE, SQLDataType.INTEGER, "unsigned int");
+    public static final DataType<Long>       BIGINT                     = new DefaultDataType<Long>(SQLDialect.ASE, SQLDataType.BIGINT, "bigint");
+    public static final DataType<Long>       UNSIGNEDBIGINT             = new DefaultDataType<Long>(SQLDialect.ASE, SQLDataType.BIGINT, "unsigned bigint");
+    public static final DataType<Double>     DOUBLE_PRECISION           = new DefaultDataType<Double>(SQLDialect.ASE, SQLDataType.DOUBLE, "double precision");
+    public static final DataType<Double>     FLOAT                      = new DefaultDataType<Double>(SQLDialect.ASE, SQLDataType.FLOAT, "float");
+    public static final DataType<Float>      REAL                       = new DefaultDataType<Float>(SQLDialect.ASE, SQLDataType.REAL, "real");
+    public static final DataType<BigDecimal> DECIMAL                    = new DefaultDataType<BigDecimal>(SQLDialect.ASE, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<BigDecimal> DEC                        = new DefaultDataType<BigDecimal>(SQLDialect.ASE, SQLDataType.DECIMAL, "dec");
+    public static final DataType<BigDecimal> NUMERIC                    = new DefaultDataType<BigDecimal>(SQLDialect.ASE, SQLDataType.NUMERIC, "numeric");
+    public static final DataType<Boolean>    BIT                        = new DefaultDataType<Boolean>(SQLDialect.ASE, SQLDataType.BIT, "bit");
+    public static final DataType<String>     VARCHAR                    = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.VARCHAR, "varchar");
+    public static final DataType<String>     CHAR                       = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.CHAR, "char");
+    public static final DataType<String>     LONGVARCHAR                = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.LONGVARCHAR, "text");
+    public static final DataType<String>     NCHAR                      = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.NCHAR, "nchar");
+    public static final DataType<String>     NVARCHAR                   = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.NVARCHAR, "nvarchar");
+    public static final DataType<String>     TEXT                       = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.CLOB, "text");
+    public static final DataType<Date>       DATE                       = new DefaultDataType<Date>(SQLDialect.ASE, SQLDataType.DATE, "date");
+    public static final DataType<Time>       TIME                       = new DefaultDataType<Time>(SQLDialect.ASE, SQLDataType.TIME, "time");
+    public static final DataType<Timestamp>  DATETIME                   = new DefaultDataType<Timestamp>(SQLDialect.ASE, SQLDataType.TIMESTAMP, "datetime");
+    public static final DataType<Timestamp>  TIMESTAMP                  = new DefaultDataType<Timestamp>(SQLDialect.ASE, SQLDataType.TIMESTAMP, "datetime");
+    public static final DataType<byte[]>     BINARY                     = new DefaultDataType<byte[]>(SQLDialect.ASE, SQLDataType.BINARY, "binary");
+    public static final DataType<byte[]>     VARBINARY                  = new DefaultDataType<byte[]>(SQLDialect.ASE, SQLDataType.VARBINARY, "varbinary");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final ASEDataType<byte[]>  __BLOB                     = new ASEDataType<byte[]>(SQLDataType.BLOB, "binary");
-    protected static final ASEDataType<byte[]>  __LONGVARBINARY            = new ASEDataType<byte[]>(SQLDataType.LONGVARBINARY, "varbinary");
-    protected static final ASEDataType<Boolean> __BOOLEAN                  = new ASEDataType<Boolean>(SQLDataType.BOOLEAN, "bit");
-    protected static final ASEDataType<String>  __LONGNVARCHAR             = new ASEDataType<String>(SQLDataType.LONGNVARCHAR, "unitext");
+    protected static final DataType<byte[]>  __BLOB                     = new DefaultDataType<byte[]>(SQLDialect.ASE, SQLDataType.BLOB, "binary");
+    protected static final DataType<byte[]>  __LONGVARBINARY            = new DefaultDataType<byte[]>(SQLDialect.ASE, SQLDataType.LONGVARBINARY, "varbinary");
+    protected static final DataType<Boolean> __BOOLEAN                  = new DefaultDataType<Boolean>(SQLDialect.ASE, SQLDataType.BOOLEAN, "bit");
+    protected static final DataType<String>  __LONGNVARCHAR             = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.LONGNVARCHAR, "unitext");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final ASEDataType<BigInteger> __BIGINTEGER = new ASEDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "decimal");
+    protected static final DataType<BigInteger> __BIGINTEGER            = new DefaultDataType<BigInteger>(SQLDialect.ASE, SQLDataType.DECIMAL_INTEGER, "decimal");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final ASEDataType<String>     UNICHAR               = new ASEDataType<String>(SQLDataType.NCHAR, "unichar");
-    public static final ASEDataType<String>     UNITEXT               = new ASEDataType<String>(SQLDataType.NCLOB, "unitext");
-    public static final ASEDataType<String>     UNIVARCHAR            = new ASEDataType<String>(SQLDataType.NVARCHAR, "univarchar");
-    public static final ASEDataType<String>     SYSNAME               = new ASEDataType<String>(SQLDataType.VARCHAR, "sysname");
-    public static final ASEDataType<String>     LONGSYSNAME           = new ASEDataType<String>(SQLDataType.VARCHAR, "longsysname");
-    public static final ASEDataType<BigDecimal> MONEY                 = new ASEDataType<BigDecimal>(SQLDataType.DECIMAL, "money");
-    public static final ASEDataType<BigDecimal> SMALLMONEY            = new ASEDataType<BigDecimal>(SQLDataType.DECIMAL, "smallmoney");
-    public static final ASEDataType<Timestamp>  SMALLDATETIME         = new ASEDataType<Timestamp>(SQLDataType.TIMESTAMP, "smalldatetime");
-    public static final ASEDataType<Timestamp>  BIGDATETIME           = new ASEDataType<Timestamp>(SQLDataType.TIMESTAMP, "bigdatetime");
-    public static final ASEDataType<Time>       BIGTIME               = new ASEDataType<Time>(SQLDataType.TIME, "bigtime");
-    public static final ASEDataType<byte[]>     IMAGE                 = new ASEDataType<byte[]>(SQLDataType.BINARY, "image");
+    public static final DataType<String>     UNICHAR                    = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.NCHAR, "unichar");
+    public static final DataType<String>     UNITEXT                    = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.NCLOB, "unitext");
+    public static final DataType<String>     UNIVARCHAR                 = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.NVARCHAR, "univarchar");
+    public static final DataType<String>     SYSNAME                    = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.VARCHAR, "sysname");
+    public static final DataType<String>     LONGSYSNAME                = new DefaultDataType<String>(SQLDialect.ASE, SQLDataType.VARCHAR, "longsysname");
+    public static final DataType<BigDecimal> MONEY                      = new DefaultDataType<BigDecimal>(SQLDialect.ASE, SQLDataType.DECIMAL, "money");
+    public static final DataType<BigDecimal> SMALLMONEY                 = new DefaultDataType<BigDecimal>(SQLDialect.ASE, SQLDataType.DECIMAL, "smallmoney");
+    public static final DataType<Timestamp>  SMALLDATETIME              = new DefaultDataType<Timestamp>(SQLDialect.ASE, SQLDataType.TIMESTAMP, "smalldatetime");
+    public static final DataType<Timestamp>  BIGDATETIME                = new DefaultDataType<Timestamp>(SQLDialect.ASE, SQLDataType.TIMESTAMP, "bigdatetime");
+    public static final DataType<Time>       BIGTIME                    = new DefaultDataType<Time>(SQLDialect.ASE, SQLDataType.TIME, "bigtime");
+    public static final DataType<byte[]>     IMAGE                      = new DefaultDataType<byte[]>(SQLDialect.ASE, SQLDataType.BINARY, "image");
 
-
-    private ASEDataType(SQLDataType<T> sqlDataType, String typeName) {
-        super(SQLDialect.ASE, sqlDataType, sqlDataType.getType(), typeName);
-    }
+    private ASEDataType() {}
 }

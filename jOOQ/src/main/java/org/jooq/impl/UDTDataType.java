@@ -42,7 +42,7 @@ import org.jooq.UDTRecord;
 /**
  * @author Lukas Eder
  */
-class UDTDataType<R extends UDTRecord<R>> extends AbstractDataType<R> {
+class UDTDataType<R extends UDTRecord<R>> extends DefaultDataType<R> {
 
     /**
      * Generated UID

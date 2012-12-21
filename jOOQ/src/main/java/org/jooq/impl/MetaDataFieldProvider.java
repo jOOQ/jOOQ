@@ -104,7 +104,7 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
                 String type = meta.getColumnTypeName(i);
 
                 try {
-                    dataType = AbstractDataType.getDataType(configuration.getDialect(), type, precision, scale);
+                    dataType = DefaultDataType.getDataType(configuration.getDialect(), type, precision, scale);
                 }
 
                 // [#650, #667] TODO This should not happen. All types

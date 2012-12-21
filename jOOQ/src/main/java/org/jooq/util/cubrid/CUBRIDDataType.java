@@ -42,8 +42,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.DataType;
 import org.jooq.SQLDialect;
-import org.jooq.impl.AbstractDataType;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 
 /**
@@ -51,93 +52,80 @@ import org.jooq.impl.SQLDataType;
  *
  * @author Lukas Eder
  */
-public class CUBRIDDataType<T> extends AbstractDataType<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                     serialVersionUID = -5677365115109672781L;
+public class CUBRIDDataType<T> {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final CUBRIDDataType<Integer>    INT                      = new CUBRIDDataType<Integer>(SQLDataType.INTEGER, "int");
-    public static final CUBRIDDataType<Integer>    INTEGER                  = new CUBRIDDataType<Integer>(SQLDataType.INTEGER, "integer");
-    public static final CUBRIDDataType<Short>      SHORT                    = new CUBRIDDataType<Short>(SQLDataType.SMALLINT, "short");
-    public static final CUBRIDDataType<Short>      SMALLINT                 = new CUBRIDDataType<Short>(SQLDataType.SMALLINT, "smallint");
-    public static final CUBRIDDataType<Long>       BIGINT                   = new CUBRIDDataType<Long>(SQLDataType.BIGINT, "bigint");
-    public static final CUBRIDDataType<BigDecimal> DECIMAL                  = new CUBRIDDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
-    public static final CUBRIDDataType<BigDecimal> DEC                      = new CUBRIDDataType<BigDecimal>(SQLDataType.DECIMAL, "dec");
-    public static final CUBRIDDataType<BigDecimal> NUMERIC                  = new CUBRIDDataType<BigDecimal>(SQLDataType.DECIMAL, "numeric");
-    public static final CUBRIDDataType<Float>      FLOAT                    = new CUBRIDDataType<Float>(SQLDataType.REAL, "float");
-    public static final CUBRIDDataType<Float>      REAL                     = new CUBRIDDataType<Float>(SQLDataType.REAL, "real");
-    public static final CUBRIDDataType<Double>     DOUBLE                   = new CUBRIDDataType<Double>(SQLDataType.DOUBLE, "double");
-    public static final CUBRIDDataType<Double>     DOUBLEPRECISION          = new CUBRIDDataType<Double>(SQLDataType.DOUBLE, "double precision");
+    public static final DataType<Integer>    INT                      = new DefaultDataType<Integer>(SQLDialect.CUBRID, SQLDataType.INTEGER, "int");
+    public static final DataType<Integer>    INTEGER                  = new DefaultDataType<Integer>(SQLDialect.CUBRID, SQLDataType.INTEGER, "integer");
+    public static final DataType<Short>      SHORT                    = new DefaultDataType<Short>(SQLDialect.CUBRID, SQLDataType.SMALLINT, "short");
+    public static final DataType<Short>      SMALLINT                 = new DefaultDataType<Short>(SQLDialect.CUBRID, SQLDataType.SMALLINT, "smallint");
+    public static final DataType<Long>       BIGINT                   = new DefaultDataType<Long>(SQLDialect.CUBRID, SQLDataType.BIGINT, "bigint");
+    public static final DataType<BigDecimal> DECIMAL                  = new DefaultDataType<BigDecimal>(SQLDialect.CUBRID, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<BigDecimal> DEC                      = new DefaultDataType<BigDecimal>(SQLDialect.CUBRID, SQLDataType.DECIMAL, "dec");
+    public static final DataType<BigDecimal> NUMERIC                  = new DefaultDataType<BigDecimal>(SQLDialect.CUBRID, SQLDataType.DECIMAL, "numeric");
+    public static final DataType<Float>      FLOAT                    = new DefaultDataType<Float>(SQLDialect.CUBRID, SQLDataType.REAL, "float");
+    public static final DataType<Float>      REAL                     = new DefaultDataType<Float>(SQLDialect.CUBRID, SQLDataType.REAL, "real");
+    public static final DataType<Double>     DOUBLE                   = new DefaultDataType<Double>(SQLDialect.CUBRID, SQLDataType.DOUBLE, "double");
+    public static final DataType<Double>     DOUBLEPRECISION          = new DefaultDataType<Double>(SQLDialect.CUBRID, SQLDataType.DOUBLE, "double precision");
 
-    public static final CUBRIDDataType<String>     VARCHAR                  = new CUBRIDDataType<String>(SQLDataType.VARCHAR, "varchar");
-    public static final CUBRIDDataType<String>     CHARVARYING              = new CUBRIDDataType<String>(SQLDataType.VARCHAR, "char varying");
-    public static final CUBRIDDataType<String>     CHARACTERVARYING         = new CUBRIDDataType<String>(SQLDataType.VARCHAR, "character varying");
-    public static final CUBRIDDataType<String>     CHAR                     = new CUBRIDDataType<String>(SQLDataType.CHAR, "char", "varchar");
-    public static final CUBRIDDataType<String>     CHARACTER                = new CUBRIDDataType<String>(SQLDataType.CHAR, "character", "varchar");
-    public static final CUBRIDDataType<String>     STRING                   = new CUBRIDDataType<String>(SQLDataType.VARCHAR, "string");
-    public static final CUBRIDDataType<String>     NCHAR                    = new CUBRIDDataType<String>(SQLDataType.NCHAR, "nchar");
-    public static final CUBRIDDataType<String>     NCHARVARYING             = new CUBRIDDataType<String>(SQLDataType.NVARCHAR, "nchar varying");
-    public static final CUBRIDDataType<String>     NATIONALCHARVARYING      = new CUBRIDDataType<String>(SQLDataType.NVARCHAR, "national char varying");
-    public static final CUBRIDDataType<String>     NATIONALCHARACTERVARYING = new CUBRIDDataType<String>(SQLDataType.NVARCHAR, "national character varying");
-    public static final CUBRIDDataType<String>     VARNCHAR                 = new CUBRIDDataType<String>(SQLDataType.NVARCHAR, "varnchar");
-    public static final CUBRIDDataType<String>     CLOB                     = new CUBRIDDataType<String>(SQLDataType.CLOB, "clob");
+    public static final DataType<String>     VARCHAR                  = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.VARCHAR, "varchar");
+    public static final DataType<String>     CHARVARYING              = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.VARCHAR, "char varying");
+    public static final DataType<String>     CHARACTERVARYING         = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.VARCHAR, "character varying");
+    public static final DataType<String>     CHAR                     = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.CHAR, "char", "varchar");
+    public static final DataType<String>     CHARACTER                = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.CHAR, "character", "varchar");
+    public static final DataType<String>     STRING                   = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.VARCHAR, "string");
+    public static final DataType<String>     NCHAR                    = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NCHAR, "nchar");
+    public static final DataType<String>     NCHARVARYING             = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NVARCHAR, "nchar varying");
+    public static final DataType<String>     NATIONALCHARVARYING      = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NVARCHAR, "national char varying");
+    public static final DataType<String>     NATIONALCHARACTERVARYING = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NVARCHAR, "national character varying");
+    public static final DataType<String>     VARNCHAR                 = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NVARCHAR, "varnchar");
+    public static final DataType<String>     CLOB                     = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.CLOB, "clob");
 
-    public static final CUBRIDDataType<Date>       DATE                     = new CUBRIDDataType<Date>(SQLDataType.DATE, "date");
-    public static final CUBRIDDataType<Time>       TIME                     = new CUBRIDDataType<Time>(SQLDataType.TIME, "time");
-    public static final CUBRIDDataType<Timestamp>  DATETIME                 = new CUBRIDDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime");
-    public static final CUBRIDDataType<Timestamp>  TIMESTAMP                = new CUBRIDDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp");
+    public static final DataType<Date>       DATE                     = new DefaultDataType<Date>(SQLDialect.CUBRID, SQLDataType.DATE, "date");
+    public static final DataType<Time>       TIME                     = new DefaultDataType<Time>(SQLDialect.CUBRID, SQLDataType.TIME, "time");
+    public static final DataType<Timestamp>  DATETIME                 = new DefaultDataType<Timestamp>(SQLDialect.CUBRID, SQLDataType.TIMESTAMP, "datetime");
+    public static final DataType<Timestamp>  TIMESTAMP                = new DefaultDataType<Timestamp>(SQLDialect.CUBRID, SQLDataType.TIMESTAMP, "timestamp");
 
-    public static final CUBRIDDataType<byte[]>     BITVARYING               = new CUBRIDDataType<byte[]>(SQLDataType.VARBINARY, "bitvarying");
-    public static final CUBRIDDataType<byte[]>     VARBIT                   = new CUBRIDDataType<byte[]>(SQLDataType.VARBINARY, "varbit");
-    public static final CUBRIDDataType<byte[]>     BIT                      = new CUBRIDDataType<byte[]>(SQLDataType.BINARY, "bit");
-    public static final CUBRIDDataType<byte[]>     BLOB                     = new CUBRIDDataType<byte[]>(SQLDataType.BLOB, "blob");
+    public static final DataType<byte[]>     BITVARYING               = new DefaultDataType<byte[]>(SQLDialect.CUBRID, SQLDataType.VARBINARY, "bitvarying");
+    public static final DataType<byte[]>     VARBIT                   = new DefaultDataType<byte[]>(SQLDialect.CUBRID, SQLDataType.VARBINARY, "varbit");
+    public static final DataType<byte[]>     BIT                      = new DefaultDataType<byte[]>(SQLDialect.CUBRID, SQLDataType.BINARY, "bit");
+    public static final DataType<byte[]>     BLOB                     = new DefaultDataType<byte[]>(SQLDialect.CUBRID, SQLDataType.BLOB, "blob");
 
     // -------------------------------------------------------------------------
-    // Compatibility types for supported SQLDataTypes
+    // Compatibility types for supported SQLDialect.CUBRID, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final CUBRIDDataType<Boolean>    __BOOL                = new CUBRIDDataType<Boolean>(SQLDataType.BOOLEAN, "bit", "bit(1)");
-    protected static final CUBRIDDataType<Boolean>    __BIT                 = new CUBRIDDataType<Boolean>(SQLDataType.BIT, "bit", "bit(1)");
-    protected static final CUBRIDDataType<String>     __LONGNVARCHAR        = new CUBRIDDataType<String>(SQLDataType.LONGNVARCHAR, "nvarchar");
-    protected static final CUBRIDDataType<String>     __NCLOB               = new CUBRIDDataType<String>(SQLDataType.NCLOB, "clob");
-    protected static final CUBRIDDataType<String>     __LONGVARCHAR         = new CUBRIDDataType<String>(SQLDataType.LONGVARCHAR, "varchar");
-    protected static final CUBRIDDataType<byte[]>     __LONGVARBINARY       = new CUBRIDDataType<byte[]>(SQLDataType.LONGVARBINARY, "blob");
-    protected static final CUBRIDDataType<Byte>       __TINYINT             = new CUBRIDDataType<Byte>(SQLDataType.TINYINT, "smallint");
-    protected static final CUBRIDDataType<Double>     __FLOAT               = new CUBRIDDataType<Double>(SQLDataType.DOUBLE, "double");
-    protected static final CUBRIDDataType<BigDecimal> __NUMERIC             = new CUBRIDDataType<BigDecimal>(SQLDataType.NUMERIC, "decimal");
+    protected static final DataType<Boolean>    __BOOL                = new DefaultDataType<Boolean>(SQLDialect.CUBRID, SQLDataType.BOOLEAN, "bit", "bit(1)");
+    protected static final DataType<Boolean>    __BIT                 = new DefaultDataType<Boolean>(SQLDialect.CUBRID, SQLDataType.BIT, "bit", "bit(1)");
+    protected static final DataType<String>     __LONGNVARCHAR        = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.LONGNVARCHAR, "nvarchar");
+    protected static final DataType<String>     __NCLOB               = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NCLOB, "clob");
+    protected static final DataType<String>     __LONGVARCHAR         = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.LONGVARCHAR, "varchar");
+    protected static final DataType<byte[]>     __LONGVARBINARY       = new DefaultDataType<byte[]>(SQLDialect.CUBRID, SQLDataType.LONGVARBINARY, "blob");
+    protected static final DataType<Byte>       __TINYINT             = new DefaultDataType<Byte>(SQLDialect.CUBRID, SQLDataType.TINYINT, "smallint");
+    protected static final DataType<Double>     __FLOAT               = new DefaultDataType<Double>(SQLDialect.CUBRID, SQLDataType.DOUBLE, "double");
+    protected static final DataType<BigDecimal> __NUMERIC             = new DefaultDataType<BigDecimal>(SQLDialect.CUBRID, SQLDataType.NUMERIC, "decimal");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final CUBRIDDataType<BigInteger> __BIGINTEGER = new CUBRIDDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "decimal", "decimal");
+    protected static final DataType<BigInteger> __BIGINTEGER          = new DefaultDataType<BigInteger>(SQLDialect.CUBRID, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final CUBRIDDataType<Double> MONETARY             = new CUBRIDDataType<Double>(SQLDataType.DOUBLE, "monetary");
-    public static final CUBRIDDataType<String> ENUM                 = new CUBRIDDataType<String>(SQLDataType.VARCHAR, "enum", "varchar");
+    public static final DataType<Double> MONETARY                     = new DefaultDataType<Double>(SQLDialect.CUBRID, SQLDataType.DOUBLE, "monetary");
+    public static final DataType<String> ENUM                         = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.VARCHAR, "enum", "varchar");
 
     // These types are not yet formally supported
-    public static final CUBRIDDataType<Object> OBJECT               = new CUBRIDDataType<Object>(SQLDataType.OTHER, "object");
-    public static final CUBRIDDataType<Object> OID                  = new CUBRIDDataType<Object>(SQLDataType.OTHER, "oid");
-    public static final CUBRIDDataType<Object> ELO                  = new CUBRIDDataType<Object>(SQLDataType.OTHER, "elo");
-    public static final CUBRIDDataType<Object> MULTISET             = new CUBRIDDataType<Object>(SQLDataType.OTHER, "multiset");
-    public static final CUBRIDDataType<Object> SEQUENCE             = new CUBRIDDataType<Object>(SQLDataType.OTHER, "sequence");
-    public static final CUBRIDDataType<Object> SET                  = new CUBRIDDataType<Object>(SQLDataType.OTHER, "set");
-
-    private CUBRIDDataType(SQLDataType<T> sqlDataType, String typeName) {
-        super(SQLDialect.CUBRID, sqlDataType, sqlDataType.getType(), typeName);
-    }
-
-    private CUBRIDDataType(SQLDataType<T> sqlDataType, String typeName, String castTypeName) {
-        super(SQLDialect.CUBRID, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
-    }
+    public static final DataType<Object> OBJECT                       = new DefaultDataType<Object>(SQLDialect.CUBRID, SQLDataType.OTHER, "object");
+    public static final DataType<Object> OID                          = new DefaultDataType<Object>(SQLDialect.CUBRID, SQLDataType.OTHER, "oid");
+    public static final DataType<Object> ELO                          = new DefaultDataType<Object>(SQLDialect.CUBRID, SQLDataType.OTHER, "elo");
+    public static final DataType<Object> MULTISET                     = new DefaultDataType<Object>(SQLDialect.CUBRID, SQLDataType.OTHER, "multiset");
+    public static final DataType<Object> SEQUENCE                     = new DefaultDataType<Object>(SQLDialect.CUBRID, SQLDataType.OTHER, "sequence");
+    public static final DataType<Object> SET                          = new DefaultDataType<Object>(SQLDialect.CUBRID, SQLDataType.OTHER, "set");
 }

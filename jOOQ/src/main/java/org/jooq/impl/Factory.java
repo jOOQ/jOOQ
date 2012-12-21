@@ -6490,7 +6490,7 @@ public class Factory {
      */
     @Support
     public static <T> Param<T> param(String name, Class<T> type) {
-        return param(name, SQLDataType.getDataType(null, type));
+        return param(name, DefaultDataType.getDataType(null, type));
     }
 
     /**

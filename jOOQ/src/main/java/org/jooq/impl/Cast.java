@@ -68,7 +68,7 @@ class Cast<T> extends AbstractField<T> {
         this.field = field;
     }
 
-    private final SQLDataType<T> getSQLDataType() {
+    private final DataType<T> getSQLDataType() {
         return getDataType().getSQLDataType();
     }
 

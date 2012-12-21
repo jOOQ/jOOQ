@@ -194,7 +194,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
      * Render the bind variable including a cast, if necessary
      */
     private void toSQLCast(RenderContext context) {
-        SQLDataType<T> type = getDataType(context).getSQLDataType();
+        DataType<T> type = getDataType(context).getSQLDataType();
         SQLDialect dialect = context.getDialect();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals

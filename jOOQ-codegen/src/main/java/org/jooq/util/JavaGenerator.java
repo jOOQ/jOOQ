@@ -2490,7 +2490,7 @@ public class JavaGenerator extends AbstractGenerator {
             // If there is a standard SQLDataType available for the dialect-
             // specific DataType t, then reference that one.
             if (dataType != null && dataType.getSQLDataType() != null) {
-                SQLDataType<?> sqlDataType = dataType.getSQLDataType();
+                DataType<?> sqlDataType = dataType.getSQLDataType();
 
                 sb.append(SQLDataType.class.getCanonicalName());
                 sb.append(".");

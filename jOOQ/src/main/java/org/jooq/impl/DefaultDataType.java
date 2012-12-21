@@ -148,7 +148,7 @@ public class DefaultDataType<T> implements DataType<T> {
     /**
      * The SQL DataType corresponding to this data type
      */
-    private final SQLDataType<T>                         sqlDataType;
+    private final DataType<T>                            sqlDataType;
 
     /**
      * The Java class corresponding to this data type
@@ -184,23 +184,23 @@ public class DefaultDataType<T> implements DataType<T> {
         SQL_DATATYPES_BY_TYPE = new LinkedHashMap<Class<?>, DataType<?>>();
     }
 
-    public DefaultDataType(SQLDialect dialect, SQLDataType<T> sqlDataType, String typeName) {
+    public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName) {
         this(dialect, sqlDataType, sqlDataType.getType(), typeName, typeName);
     }
 
-    public DefaultDataType(SQLDialect dialect, SQLDataType<T> sqlDataType, String typeName, String castTypeName) {
+    public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName, String castTypeName) {
         this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 
-    public DefaultDataType(SQLDialect dialect, SQLDataType<T> sqlDataType, Class<T> type, String typeName) {
+    public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName) {
         this(dialect, sqlDataType, type, typeName, typeName);
     }
 
-    public DefaultDataType(SQLDialect dialect, SQLDataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName) {
+    public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName) {
         this.dialect = dialect;
 
         // [#858] SQLDataTypes should reference themselves for more convenience
-        this.sqlDataType = (SQLDataType<T>) ((this instanceof SQLDataType) ? this : sqlDataType);
+        this.sqlDataType = (dialect == null) ? this : sqlDataType;
         this.type = type;
         this.typeName = typeName;
         this.castTypeName = castTypeName;
@@ -236,7 +236,7 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     @Override
-    public final SQLDataType<T> getSQLDataType() {
+    public final DataType<T> getSQLDataType() {
         return sqlDataType;
     }
 
@@ -568,7 +568,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isLob() {
-        SQLDataType<T> t = getSQLDataType();
+        DataType<T> t = getSQLDataType();
         return (t == BLOB || t == CLOB || t == NCLOB);
     }
 

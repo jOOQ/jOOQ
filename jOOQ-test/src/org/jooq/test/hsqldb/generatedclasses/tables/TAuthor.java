@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -658262129;
+	private static final long serialVersionUID = -1470391337;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_AUTHOR</code>
@@ -32,12 +32,12 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsql
 	/**
 	 * The column <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. 
@@ -52,7 +52,7 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsql
 	/**
 	 * The column <code>PUBLIC.T_AUTHOR.ADDRESS</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * Create a <code>PUBLIC.T_AUTHOR</code> table reference

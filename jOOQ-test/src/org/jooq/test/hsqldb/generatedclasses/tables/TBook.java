@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 499458141;
+	private static final long serialVersionUID = -1736770266;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK</code>
@@ -47,7 +47,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb
 	/**
 	 * The column <code>PUBLIC.T_BOOK.TITLE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. 
@@ -62,12 +62,12 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb
 	/**
 	 * The column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.VARCHAR.length(16777216), this);
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.VARBINARY, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.VARBINARY.length(16777216), this);
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.REC_VERSION</code>. 

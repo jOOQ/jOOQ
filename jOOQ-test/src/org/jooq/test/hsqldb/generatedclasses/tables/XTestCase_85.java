@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -1326782430;
+	private static final long serialVersionUID = -1558240186;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_TEST_CASE_85</code>
@@ -37,7 +37,7 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	/**
 	 * The column <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("X_UNUSED_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("X_UNUSED_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
 	 * Create a <code>PUBLIC.X_TEST_CASE_85</code> table reference

@@ -9203,6 +9203,8 @@ for (Record record : create().select(
 								<li>Connection-related utility methods (commit, rollback, etc) moved to DefaultConnectionProvider</li>
 							</ul>
 							
+							<h3>The data type API has been slightly adapted</h3>
+							
 							<h3>Object renames</h3>
 							<ul>
 								<li>jOOU</li>

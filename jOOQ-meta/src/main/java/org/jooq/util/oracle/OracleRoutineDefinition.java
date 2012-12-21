@@ -98,7 +98,7 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
             .where(ALL_ARGUMENTS.OWNER.equal(getSchema().getName()))
             .and(ALL_ARGUMENTS.OBJECT_NAME.equal(getName()))
             .and(ALL_ARGUMENTS.OBJECT_ID.equal(objectId))
-            .and(ALL_ARGUMENTS.OVERLOAD.equal(getOverload()))
+            .and(ALL_ARGUMENTS.OVERLOAD.isNotDistinctFrom(getOverload()))
             .and(ALL_ARGUMENTS.DATA_LEVEL.equal(BigDecimal.ZERO))
 
             // [#284] In packages, procedures without arguments may have a

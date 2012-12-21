@@ -9203,7 +9203,11 @@ for (Record record : create().select(
 								<li>Connection-related utility methods (commit, rollback, etc) moved to DefaultConnectionProvider</li>
 							</ul>
 							
-							<h3>The data type API has been slightly adapted</h3>
+							<h3>The data type API has been changed heavily</h3>
+							<ul>
+								<li>[SQLDialect]DataType and SQLDataType no longer implement DataType. They're mere constant containers</li>
+								<li>Various API changes have been done</li>
+							</ul>
 							
 							<h3>Object renames</h3>
 							<ul>

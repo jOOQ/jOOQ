@@ -57,7 +57,7 @@ public interface DataType<T> extends Serializable {
      * Get the standard SQL data type of this (dialect-specific) data type if
      * available.
      */
-    SQLDataType<T> getSQLDataType();
+    DataType<T> getSQLDataType();
 
     /**
      * The dialect-specific data type representing this data type.

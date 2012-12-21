@@ -52,7 +52,7 @@ import org.jooq.impl.SQLDataType;
  *
  * @author Lukas Eder
  */
-public class CUBRIDDataType<T> {
+public class CUBRIDDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

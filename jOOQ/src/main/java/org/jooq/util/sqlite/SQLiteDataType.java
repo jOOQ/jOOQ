@@ -52,7 +52,7 @@ import org.jooq.impl.SQLDataType;
  * @author Lukas Eder
  * @see <a href="http://www.sqlite.org/datatype3.html">http://www.sqlite.org/datatype3.html</a>
  */
-public class SQLiteDataType<T> {
+public class SQLiteDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

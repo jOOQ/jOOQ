@@ -57,7 +57,7 @@ import org.jooq.types.YearToMonth;
  * @author Lukas Eder
  * @see <a href="http://www.postgresql.org/docs/9.0/interactive/datatype.html">http://www.postgresql.org/docs/9.0/interactive/datatype.html</a>
  */
-public class PostgresDataType<T> {
+public class PostgresDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

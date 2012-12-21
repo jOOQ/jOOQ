@@ -58,7 +58,7 @@ import org.jooq.types.YearToMonth;
  * @see <a href="http://hsqldb.org/doc/guide/ch09.html#datatypes-section">http://hsqldb.org/doc/guide/ch09.html#datatypes-section</a>
  * @see <a href="http://hsqldb.org/doc/2.0/guide/sqlgeneral-chapt.html#sqlgeneral_types_ops-sect">http://hsqldb.org/doc/2.0/guide/sqlgeneral-chapt.html#sqlgeneral_types_ops-sect</a>
  */
-public class HSQLDBDataType<T> {
+public class HSQLDBDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

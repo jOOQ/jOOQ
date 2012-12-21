@@ -54,7 +54,7 @@ import org.jooq.impl.SQLDataType;
  * @see <a href="http://docs.ingres.com/ingres/9.3/quel-reference-guide/1240-data-types">http://docs.ingres.com/ingres/9.3/quel-reference-guide/1240-data-types</a>
  * @see <a href="http://docs.ingres.com/ingres/10.0/sql-reference-guide/2638-storage-formats-of-data-types">http://docs.ingres.com/ingres/10.0/sql-reference-guide/2638-storage-formats-of-data-types</a>
  */
-public class IngresDataType<T> {
+public class IngresDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

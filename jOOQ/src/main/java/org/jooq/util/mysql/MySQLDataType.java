@@ -58,7 +58,7 @@ import org.jooq.types.UShort;
  * @see <a href="http://dev.mysql.com/doc/refman/5.5/en/data-types.html">http://dev.mysql.com/doc/refman/5.5/en/data-types.html</a>
  * @see <a href="http://dev.mysql.com/doc/refman/5.5/en/cast-functions.html#function_cast">http://dev.mysql.com/doc/refman/5.5/en/cast-functions.html#function_cast</a>
  */
-public class MySQLDataType<T> {
+public class MySQLDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

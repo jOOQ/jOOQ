@@ -53,7 +53,7 @@ import org.jooq.impl.SQLDataType;
  * @author Lukas Eder
  * @see <a href="http://db.apache.org/derby/docs/10.7/ref/crefsqlj31068.html">http://db.apache.org/derby/docs/10.7/ref/crefsqlj31068.html</a>
  */
-public class DerbyDataType<T> {
+public class DerbyDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

@@ -47,7 +47,7 @@ import org.jooq.impl.SQLDataType;
  * @see <a href="http://infocenter.sybase.com/help/topic/com.sybase.infocenter.dc36271.1550/html/blocks/X31825.htm">http://infocenter.sybase.com/help/topic/com.sybase.infocenter.dc36271.1550/html/blocks/X31825.htm</a>
  * @author Lukas Eder
  */
-public class ASEDataType<T> {
+public class ASEDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

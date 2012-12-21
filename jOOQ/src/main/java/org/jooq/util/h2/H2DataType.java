@@ -54,7 +54,7 @@ import org.jooq.impl.SQLDataType;
  * @author Lukas Eder
  * @see <a href="http://www.h2database.com/html/datatypes.html">http://www.h2database.com/html/datatypes.html</a>
  */
-public class H2DataType<T> {
+public class H2DataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

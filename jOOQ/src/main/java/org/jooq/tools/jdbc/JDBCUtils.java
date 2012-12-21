@@ -36,9 +36,12 @@
 package org.jooq.tools.jdbc;
 
 import java.sql.Blob;
+import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLInput;
 import java.sql.Statement;
 
 /**
@@ -119,6 +122,51 @@ public class JDBCUtils {
             }
             catch (Exception ignore) {}
         }
+    }
+
+    /**
+     * Convenient way to check if a JDBC-originated record was null
+     * <p>
+     * This is useful to check if primitive types obtained from the JDBC API
+     * were actually SQL NULL values.
+     *
+     * @param stream The data source from which a value was read
+     * @param value The value that was read
+     * @return The <code>value</code> or <code>null</code> if the
+     *         {@link SQLInput#wasNull()} is <code>true</code>
+     */
+    public static final <T> T wasNull(SQLInput stream, T value) throws SQLException {
+        return stream.wasNull() ? null : value;
+    }
+
+    /**
+     * Convenient way to check if a JDBC-originated record was null
+     * <p>
+     * This is useful to check if primitive types obtained from the JDBC API
+     * were actually SQL NULL values.
+     *
+     * @param rs The data source from which a value was read
+     * @param value The value that was read
+     * @return The <code>value</code> or <code>null</code> if the
+     *         {@link ResultSet#wasNull()} is <code>true</code>
+     */
+    public static final <T> T wasNull(ResultSet rs, T value) throws SQLException {
+        return rs.wasNull() ? null : value;
+    }
+
+    /**
+     * Convenient way to check if a JDBC-originated record was null
+     * <p>
+     * This is useful to check if primitive types obtained from the JDBC API
+     * were actually SQL NULL values.
+     *
+     * @param statement The data source from which a value was read
+     * @param value The value that was read
+     * @return The <code>value</code> or <code>null</code> if the
+     *         {@link CallableStatement#wasNull()} is <code>true</code>
+     */
+    public static final <T> T wasNull(CallableStatement statement, T value) throws SQLException {
+        return statement.wasNull() ? null : value;
     }
 
     /**

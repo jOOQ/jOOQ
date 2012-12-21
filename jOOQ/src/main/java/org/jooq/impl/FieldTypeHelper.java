@@ -38,6 +38,8 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
+import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.math.BigDecimal;
@@ -75,7 +77,6 @@ import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -125,7 +126,7 @@ public final class FieldTypeHelper {
             return (T) stream.readBlob();
         }
         else if (type == Boolean.class) {
-            return (T) checkWasNull(stream, Boolean.valueOf(stream.readBoolean()));
+            return (T) wasNull(stream, Boolean.valueOf(stream.readBoolean()));
         }
         else if (type == BigInteger.class) {
             BigDecimal result = stream.readBigDecimal();
@@ -135,7 +136,7 @@ public final class FieldTypeHelper {
             return (T) stream.readBigDecimal();
         }
         else if (type == Byte.class) {
-            return (T) checkWasNull(stream, Byte.valueOf(stream.readByte()));
+            return (T) wasNull(stream, Byte.valueOf(stream.readByte()));
         }
         else if (type == byte[].class) {
 
@@ -147,7 +148,7 @@ public final class FieldTypeHelper {
                     return (T) (blob == null ? null : blob.getBytes(1, (int) blob.length()));
                 }
                 finally {
-                    JDBCUtils.safeFree(blob);
+                    safeFree(blob);
                 }
             }
             else {
@@ -161,19 +162,19 @@ public final class FieldTypeHelper {
             return (T) stream.readDate();
         }
         else if (type == Double.class) {
-            return (T) checkWasNull(stream, Double.valueOf(stream.readDouble()));
+            return (T) wasNull(stream, Double.valueOf(stream.readDouble()));
         }
         else if (type == Float.class) {
-            return (T) checkWasNull(stream, Float.valueOf(stream.readFloat()));
+            return (T) wasNull(stream, Float.valueOf(stream.readFloat()));
         }
         else if (type == Integer.class) {
-            return (T) checkWasNull(stream, Integer.valueOf(stream.readInt()));
+            return (T) wasNull(stream, Integer.valueOf(stream.readInt()));
         }
         else if (type == Long.class) {
-            return (T) checkWasNull(stream, Long.valueOf(stream.readLong()));
+            return (T) wasNull(stream, Long.valueOf(stream.readLong()));
         }
         else if (type == Short.class) {
-            return (T) checkWasNull(stream, Short.valueOf(stream.readShort()));
+            return (T) wasNull(stream, Short.valueOf(stream.readShort()));
         }
         else if (type == String.class) {
             return (T) stream.readString();
@@ -383,7 +384,7 @@ public final class FieldTypeHelper {
             return (T) rs.getBlob(index);
         }
         else if (type == Boolean.class) {
-            return (T) checkWasNull(rs, Boolean.valueOf(rs.getBoolean(index)));
+            return (T) wasNull(rs, Boolean.valueOf(rs.getBoolean(index)));
         }
         else if (type == BigInteger.class) {
         	// The SQLite JDBC driver doesn't support BigDecimals
@@ -405,7 +406,7 @@ public final class FieldTypeHelper {
             }
         }
         else if (type == Byte.class) {
-            return (T) checkWasNull(rs, Byte.valueOf(rs.getByte(index)));
+            return (T) wasNull(rs, Byte.valueOf(rs.getByte(index)));
         }
         else if (type == byte[].class) {
             return (T) rs.getBytes(index);
@@ -417,19 +418,19 @@ public final class FieldTypeHelper {
             return (T) getDate(ctx.getDialect(), rs, index);
         }
         else if (type == Double.class) {
-            return (T) checkWasNull(rs, Double.valueOf(rs.getDouble(index)));
+            return (T) wasNull(rs, Double.valueOf(rs.getDouble(index)));
         }
         else if (type == Float.class) {
-            return (T) checkWasNull(rs, Float.valueOf(rs.getFloat(index)));
+            return (T) wasNull(rs, Float.valueOf(rs.getFloat(index)));
         }
         else if (type == Integer.class) {
-            return (T) checkWasNull(rs, Integer.valueOf(rs.getInt(index)));
+            return (T) wasNull(rs, Integer.valueOf(rs.getInt(index)));
         }
         else if (type == Long.class) {
-            return (T) checkWasNull(rs, Long.valueOf(rs.getLong(index)));
+            return (T) wasNull(rs, Long.valueOf(rs.getLong(index)));
         }
         else if (type == Short.class) {
-            return (T) checkWasNull(rs, Short.valueOf(rs.getShort(index)));
+            return (T) wasNull(rs, Short.valueOf(rs.getShort(index)));
         }
         else if (type == String.class) {
             return (T) rs.getString(index);
@@ -648,18 +649,6 @@ public final class FieldTypeHelper {
         }
     }
 
-    private static <T> T checkWasNull(SQLInput stream, T value) throws SQLException {
-        return stream.wasNull() ? null : value;
-    }
-
-    private static <T> T checkWasNull(ResultSet rs, T value) throws SQLException {
-        return rs.wasNull() ? null : value;
-    }
-
-    private static <T> T checkWasNull(CallableStatement statement, T value) throws SQLException {
-        return statement.wasNull() ? null : value;
-    }
-
     @SuppressWarnings("unchecked")
     private static <T> T getEnumType(Class<T> type, String literal) throws SQLException {
         try {
@@ -688,7 +677,7 @@ public final class FieldTypeHelper {
             return (T) stmt.getBlob(index);
         }
         else if (type == Boolean.class) {
-            return (T) checkWasNull(stmt, Boolean.valueOf(stmt.getBoolean(index)));
+            return (T) wasNull(stmt, Boolean.valueOf(stmt.getBoolean(index)));
         }
         else if (type == BigInteger.class) {
             BigDecimal result = stmt.getBigDecimal(index);
@@ -698,7 +687,7 @@ public final class FieldTypeHelper {
             return (T) stmt.getBigDecimal(index);
         }
         else if (type == Byte.class) {
-            return (T) checkWasNull(stmt, Byte.valueOf(stmt.getByte(index)));
+            return (T) wasNull(stmt, Byte.valueOf(stmt.getByte(index)));
         }
         else if (type == byte[].class) {
             return (T) stmt.getBytes(index);
@@ -710,19 +699,19 @@ public final class FieldTypeHelper {
             return (T) stmt.getDate(index);
         }
         else if (type == Double.class) {
-            return (T) checkWasNull(stmt, Double.valueOf(stmt.getDouble(index)));
+            return (T) wasNull(stmt, Double.valueOf(stmt.getDouble(index)));
         }
         else if (type == Float.class) {
-            return (T) checkWasNull(stmt, Float.valueOf(stmt.getFloat(index)));
+            return (T) wasNull(stmt, Float.valueOf(stmt.getFloat(index)));
         }
         else if (type == Integer.class) {
-            return (T) checkWasNull(stmt, Integer.valueOf(stmt.getInt(index)));
+            return (T) wasNull(stmt, Integer.valueOf(stmt.getInt(index)));
         }
         else if (type == Long.class) {
-            return (T) checkWasNull(stmt, Long.valueOf(stmt.getLong(index)));
+            return (T) wasNull(stmt, Long.valueOf(stmt.getLong(index)));
         }
         else if (type == Short.class) {
-            return (T) checkWasNull(stmt, Short.valueOf(stmt.getShort(index)));
+            return (T) wasNull(stmt, Short.valueOf(stmt.getShort(index)));
         }
         else if (type == String.class) {
             return (T) stmt.getString(index);

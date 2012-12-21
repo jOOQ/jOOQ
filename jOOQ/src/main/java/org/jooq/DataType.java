@@ -75,11 +75,6 @@ public interface DataType<T> extends Serializable {
     Class<T> getType();
 
     /**
-     * Retrieve a Java type associated with this data type and precision/scale
-     */
-    Class<?> getType(int precision, int scale);
-
-    /**
      * Retrieve the Java type associated with ARRAYs of this data type
      */
     Class<T[]> getArrayType();

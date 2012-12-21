@@ -36,7 +36,7 @@
 package org.jooq.util;
 
 
-import static org.jooq.impl.FieldTypeHelper.normalise;
+import static org.jooq.impl.AbstractDataType.normalise;
 
 import org.jooq.SQLDialect;
 import org.jooq.util.oracle.OracleDataType;

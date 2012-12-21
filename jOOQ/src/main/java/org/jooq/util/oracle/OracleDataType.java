@@ -67,10 +67,10 @@ public class OracleDataType<T> extends AbstractDataType<T> {
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final OracleDataType<BigDecimal>   NUMBER                 = new OracleDataType<BigDecimal>(SQLDataType.NUMERIC, "number", true);
-    public static final OracleDataType<BigDecimal>   NUMERIC                = new OracleDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric", true);
-    public static final OracleDataType<BigDecimal>   DECIMAL                = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal", true);
-    public static final OracleDataType<BigDecimal>   DEC                    = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "dec", true);
+    public static final OracleDataType<BigDecimal>   NUMBER                 = new OracleDataType<BigDecimal>(SQLDataType.NUMERIC, "number");
+    public static final OracleDataType<BigDecimal>   NUMERIC                = new OracleDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric");
+    public static final OracleDataType<BigDecimal>   DECIMAL                = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
+    public static final OracleDataType<BigDecimal>   DEC                    = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "dec");
     public static final OracleDataType<String>       VARCHAR2               = new OracleDataType<String>(SQLDataType.VARCHAR, "varchar2", "varchar2(4000)");
     public static final OracleDataType<String>       VARCHAR                = new OracleDataType<String>(SQLDataType.VARCHAR, "varchar", "varchar2(4000)");
     public static final OracleDataType<String>       CHAR                   = new OracleDataType<String>(SQLDataType.CHAR, "char", "varchar2(4000)");
@@ -141,18 +141,10 @@ public class OracleDataType<T> extends AbstractDataType<T> {
     public static final OracleDataType<Boolean>      BOOLEAN                = new OracleDataType<Boolean>(SQLDataType.BOOLEAN, "boolean");
 
     private OracleDataType(SQLDataType<T> sqlDataType, String typeName) {
-        this(sqlDataType, typeName, false);
+        super(SQLDialect.ORACLE, sqlDataType, sqlDataType.getType(), typeName);
     }
 
     private OracleDataType(SQLDataType<T> sqlDataType, String typeName, String castTypeName) {
-        this(sqlDataType, typeName, castTypeName, false);
-    }
-
-    private OracleDataType(SQLDataType<T> sqlDataType, String typeName, boolean hasPrecisionAndScale) {
-        super(SQLDialect.ORACLE, sqlDataType, sqlDataType.getType(), typeName, hasPrecisionAndScale);
-    }
-
-    private OracleDataType(SQLDataType<T> sqlDataType, String typeName, String castTypeName, boolean hasPrecisionAndScale) {
-        super(SQLDialect.ORACLE, sqlDataType, sqlDataType.getType(), typeName, castTypeName, hasPrecisionAndScale);
+        super(SQLDialect.ORACLE, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 }

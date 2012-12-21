@@ -223,7 +223,7 @@ class MetaImpl implements Meta {
                     // TODO: Exception handling should be moved inside SQLDataType
                     DataType<?> type = null;
                     try {
-                        type = FieldTypeHelper.getDialectDataType(SQLDialect.SQL99, typeName, precision, scale);
+                        type = AbstractDataType.getDataType(SQLDialect.SQL99, typeName, precision, scale);
                     }
                     catch (SQLDialectNotSupportedException e) {
                         type = SQLDataType.OTHER;

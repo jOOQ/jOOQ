@@ -223,12 +223,12 @@ public final class SQLDataType<T> extends AbstractDataType<T> {
     /**
      * The {@link Types#NUMERIC} type
      */
-    public static final SQLDataType<BigDecimal> NUMERIC = new SQLDataType<BigDecimal>(BigDecimal.class, "numeric", true);
+    public static final SQLDataType<BigDecimal> NUMERIC = new SQLDataType<BigDecimal>(BigDecimal.class, "numeric");
 
     /**
      * The {@link Types#DECIMAL} type
      */
-    public static final SQLDataType<BigDecimal> DECIMAL = new SQLDataType<BigDecimal>(BigDecimal.class, "decimal", true);
+    public static final SQLDataType<BigDecimal> DECIMAL = new SQLDataType<BigDecimal>(BigDecimal.class, "decimal");
 
     // -------------------------------------------------------------------------
     // Datetime types
@@ -328,10 +328,6 @@ public final class SQLDataType<T> extends AbstractDataType<T> {
     }
 
     private SQLDataType(Class<T> type, String typeName) {
-        this(type, typeName, false);
-    }
-
-    private SQLDataType(Class<T> type, String typeName, boolean hasPrecisionAndScale) {
-        super(null, null, type, typeName, hasPrecisionAndScale);
+        super(null, null, type, typeName);
     }
 }

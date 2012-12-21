@@ -65,6 +65,10 @@ import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.types.Interval;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 
 /**
  * A common base class for data types.
@@ -205,6 +209,10 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     private DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length) {
+
+        // Initialise final instance members
+        // ---------------------------------
+
         this.dialect = dialect;
 
         // [#858] SQLDataTypes should reference themselves for more convenience
@@ -214,14 +222,27 @@ public class DefaultDataType<T> implements DataType<T> {
         this.castTypeName = castTypeName;
         this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
 
-        this.precision = precision;
+        if (type == Long.class || type == ULong.class) {
+            this.precision = LONG_PRECISION;
+        }
+        else if (type == Integer.class  || type == UInteger.class) {
+            this.precision = INTEGER_PRECISION;
+        }
+        else if (type == Short.class || type == UShort.class) {
+            this.precision = SHORT_PRECISION;
+        }
+        else if (type == Byte.class || type == UByte.class) {
+            this.precision = BYTE_PRECISION;
+        }
+        else {
+            this.precision = precision;
+        }
+
         this.scale = scale;
         this.length = length;
 
-        init();
-    }
-
-    private final void init() {
+        // Register data type in static caches
+        // -----------------------------------
 
         // Dialect-specific data types
         int ordinal = dialect == null ? SQLDialect.SQL99.ordinal() : dialect.ordinal();
@@ -263,9 +284,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean hasPrecision() {
-        return sqlDataType == SQLDataType.DECIMAL
-            || sqlDataType == SQLDataType.DECIMAL_INTEGER
-            || sqlDataType == SQLDataType.NUMERIC;
+        return type == BigInteger.class || type == BigDecimal.class;
     }
 
     @Override
@@ -284,7 +303,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean hasScale() {
-        return hasPrecision();
+        return type == BigDecimal.class;
     }
 
     @Override

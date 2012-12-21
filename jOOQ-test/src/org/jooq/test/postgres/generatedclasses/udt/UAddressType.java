@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.udt;
 @java.lang.SuppressWarnings("all")
 public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = 1004552631;
+	private static final long serialVersionUID = 1174800253;
 
 	/**
 	 * The singleton instance of <code>public.u_address_type</code>
@@ -32,12 +32,12 @@ public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.g
 	/**
 	 * The attribute <code>public.u_address_type.zip</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> ZIP = createField("zip", org.jooq.impl.SQLDataType.VARCHAR, U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> ZIP = createField("zip", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_ADDRESS_TYPE);
 
 	/**
 	 * The attribute <code>public.u_address_type.city</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> CITY = createField("city", org.jooq.impl.SQLDataType.VARCHAR, U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> CITY = createField("city", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_ADDRESS_TYPE);
 
 	/**
 	 * The attribute <code>public.u_address_type.country</code>. 

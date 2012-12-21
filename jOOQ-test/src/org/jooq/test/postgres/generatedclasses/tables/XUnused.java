@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1780305588;
+	private static final long serialVersionUID = 1011107005;
 
 	/**
 	 * The singleton instance of <code>public.x_unused</code>
@@ -32,12 +32,12 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 	/**
 	 * The column <code>public.x_unused.name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
 	 * The column <code>public.x_unused.big_integer</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("big_integer", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("big_integer", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(25), this);
 
 	/**
 	 * The column <code>public.x_unused.id_ref</code>. 
@@ -92,12 +92,12 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 	/**
 	 * The column <code>public.x_unused.name_ref</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("name_ref", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("name_ref", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
 	 * The column <code>public.x_unused.FIELD 737</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC, this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC.precision(25).scale(2), this);
 
 	/**
 	 * Create a <code>public.x_unused</code> table reference

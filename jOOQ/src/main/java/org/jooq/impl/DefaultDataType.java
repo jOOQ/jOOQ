@@ -92,6 +92,12 @@ public class DefaultDataType<T> implements DataType<T> {
      */
     private static final Pattern                         NORMALISE_PATTERN = Pattern.compile("\"|\\.|\\s|\\(\\w+(,\\w+)*\\)|(NOT\\s*NULL)?");
 
+    /**
+     * A pattern to be used to replace all precision, scale, and length
+     * information
+     */
+    private static final Pattern                         TYPE_NAME_PATTERN = Pattern.compile("\\([^\\)]*\\)");
+
     // -------------------------------------------------------------------------
     // Data type caches
     // -------------------------------------------------------------------------
@@ -168,6 +174,10 @@ public class DefaultDataType<T> implements DataType<T> {
      * The type name used for casting to this type
      */
     private final String                                 castTypeName;
+    /**
+     * The type name used for casting to this type
+     */
+    private final String                                 castTypeBase;
 
     /**
      * The type name
@@ -220,6 +230,7 @@ public class DefaultDataType<T> implements DataType<T> {
         this.type = type;
         this.typeName = typeName;
         this.castTypeName = castTypeName;
+        this.castTypeBase = TYPE_NAME_PATTERN.matcher(castTypeName).replaceAll("").trim();
         this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
 
         if (type == Long.class || type == ULong.class) {
@@ -270,11 +281,15 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> precision(int p) {
-        if (hasPrecision()) {
+        if (precision == p) {
+            return this;
+        }
+        else if (hasPrecision()) {
             return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, p, scale, length);
         }
-
-        return this;
+        else {
+            return this;
+        }
     }
 
     @Override
@@ -289,11 +304,15 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> scale(int s) {
-        if (hasScale()) {
+        if (scale == s) {
+            return this;
+        }
+        else if (hasScale()) {
             return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, s, length);
         }
-
-        return this;
+        else {
+            return this;
+        }
     }
 
     @Override
@@ -308,11 +327,15 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> length(int l) {
-        if (hasLength()) {
+        if (length == l) {
+            return this;
+        }
+        else if (hasLength()) {
             return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, l);
         }
-
-        return this;
+        else {
+            return this;
+        }
     }
 
     @Override
@@ -322,16 +345,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean hasLength() {
-        return sqlDataType == SQLDataType.BINARY
-            || sqlDataType == SQLDataType.BIT
-            || sqlDataType == SQLDataType.CHAR
-            || sqlDataType == SQLDataType.LONGNVARCHAR
-            || sqlDataType == SQLDataType.LONGVARBINARY
-            || sqlDataType == SQLDataType.LONGVARCHAR
-            || sqlDataType == SQLDataType.NCHAR
-            || sqlDataType == SQLDataType.NVARCHAR
-            || sqlDataType == SQLDataType.VARBINARY
-            || sqlDataType == SQLDataType.VARCHAR;
+        return type == byte[].class || type == String.class;
     }
 
     @Override
@@ -345,7 +359,10 @@ public class DefaultDataType<T> implements DataType<T> {
         // If this is a SQLDataType find the most suited dialect-specific
         // data type
         if (getDialect() == null) {
-            DataType<?> dataType = TYPES_BY_SQL_DATATYPE[configuration.getDialect().ordinal()].get(this);
+
+            // Be sure to reset length, precision, and scale, as those values
+            // were not registered in the below cache
+            DataType<?> dataType = TYPES_BY_SQL_DATATYPE[configuration.getDialect().ordinal()].get(length(0).precision(0).scale(0));
 
             if (dataType != null) {
                 return (DataType<T>) dataType;
@@ -475,41 +492,20 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final String getCastTypeName() {
-        return castTypeName;
-    }
-
-    @Override
-    public /* final */ String getCastTypeName(Configuration configuration, int length) {
-        String result = getCastTypeName(configuration);
-
-        if (length != 0) {
-
-            // Remove existing length information, first
-            result = result.replaceAll("\\([^\\)]*\\)", "");
-            result += "(" + length + ")";
+        if (length != 0 && hasLength()) {
+            return castTypeBase + "(" + length + ")";
         }
-
-        return result;
-    }
-
-    @Override
-    public /* final */ String getCastTypeName(Configuration configuration, int precision, int scale) {
-        String result = getCastTypeName(configuration);
-
-        if (precision != 0) {
-
-            // Remove existing precision / scale information, first
-            result = result.replaceAll("\\([^\\)]*\\)", "");
-
-            if (scale != 0) {
-                result += "(" + precision + ", " + scale + ")";
+        else if (precision != 0 && hasPrecision()) {
+            if (scale != 0 && hasScale()) {
+                return castTypeBase + "(" + precision + ", " + scale + ")";
             }
             else {
-                result += "(" + precision + ")";
+                return castTypeBase + "(" + precision + ")";
             }
         }
-
-        return result;
+        else {
+            return castTypeName;
+        }
     }
 
     @Override
@@ -696,6 +692,9 @@ public class DefaultDataType<T> implements DataType<T> {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((dialect == null) ? 0 : dialect.hashCode());
+        result = prime * result + length;
+        result = prime * result + precision;
+        result = prime * result + scale;
         result = prime * result + ((type == null) ? 0 : type.hashCode());
         result = prime * result + ((typeName == null) ? 0 : typeName.hashCode());
         return result;
@@ -711,6 +710,12 @@ public class DefaultDataType<T> implements DataType<T> {
             return false;
         DefaultDataType<?> other = (DefaultDataType<?>) obj;
         if (dialect != other.dialect)
+            return false;
+        if (length != other.length)
+            return false;
+        if (precision != other.precision)
+            return false;
+        if (scale != other.scale)
             return false;
         if (type == null) {
             if (other.type != null)

@@ -367,7 +367,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             }
             else if ("BIG_INTEGER".equalsIgnoreCase(field.getName())) {
                 assertEquals(BigInteger.class, field.getType());
-                assertEquals(SQLDataType.DECIMAL_INTEGER, field.getDataType());
+                assertEquals(SQLDataType.DECIMAL_INTEGER.getType(), field.getDataType().getType());
                 assertTrue(field.getDataType().precision() > 0);
                 assertEquals(0, field.getDataType().scale());
                 assertEquals(0, field.getDataType().length());
@@ -381,14 +381,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                     && getDialect() != SQLDialect.SQLSERVER) {
 
                 assertEquals(BigDecimal.class, field.getType());
-                assertEquals(SQLDataType.DECIMAL, field.getDataType());
+                assertEquals(SQLDataType.DECIMAL.getType(), field.getDataType().getType());
                 assertTrue(field.getDataType().precision() > 0);
                 assertEquals(5, field.getDataType().scale());
                 assertEquals(0, field.getDataType().length());
             }
             else if ("BIG_DECIMAL".equalsIgnoreCase(field.getName())) {
                 assertEquals(BigDecimal.class, field.getType());
-                assertEquals(SQLDataType.NUMERIC, field.getDataType());
+                assertEquals(SQLDataType.NUMERIC.getType(), field.getDataType().getType());
                 assertTrue(field.getDataType().precision() > 0);
                 assertEquals(5, field.getDataType().scale());
                 assertEquals(0, field.getDataType().length());

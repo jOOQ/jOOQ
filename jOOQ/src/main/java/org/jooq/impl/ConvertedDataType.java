@@ -78,11 +78,6 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
         return delegate.getCastTypeName(configuration);
     }
 
-    @Override
-    public String getCastTypeName(Configuration configuration, int precision, int scale) {
-        return delegate.getCastTypeName(configuration, precision, scale);
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public U convert(Object object) {

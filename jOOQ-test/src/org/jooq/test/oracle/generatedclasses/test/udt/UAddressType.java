@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings("all")
 public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -1330336698;
+	private static final long serialVersionUID = 668124878;
 
 	/**
 	 * The singleton instance of <code>TEST.U_ADDRESS_TYPE</code>
@@ -32,17 +32,17 @@ public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gen
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.ZIP</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord, java.lang.String> ZIP = createField("ZIP", org.jooq.impl.SQLDataType.VARCHAR, U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord, java.lang.String> ZIP = createField("ZIP", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_ADDRESS_TYPE);
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.CITY</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord, java.lang.String> CITY = createField("CITY", org.jooq.impl.SQLDataType.VARCHAR, U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord, java.lang.String> CITY = createField("CITY", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_ADDRESS_TYPE);
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.COUNTRY</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord, java.lang.String> COUNTRY = createField("COUNTRY", org.jooq.impl.SQLDataType.VARCHAR, U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord, java.lang.String> COUNTRY = createField("COUNTRY", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_ADDRESS_TYPE);
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.SINCE</code>. 

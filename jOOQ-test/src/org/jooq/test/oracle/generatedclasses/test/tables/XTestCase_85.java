@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 1418100052;
+	private static final long serialVersionUID = 1629575032;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_85</code>
@@ -37,7 +37,7 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	/**
 	 * The column <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("X_UNUSED_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("X_UNUSED_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
 	 * Create a <code>TEST.X_TEST_CASE_85</code> table reference

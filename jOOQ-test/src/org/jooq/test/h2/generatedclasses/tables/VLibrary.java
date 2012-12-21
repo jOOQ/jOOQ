@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -1740400555;
+	private static final long serialVersionUID = -799663639;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.V_LIBRARY</code>
@@ -27,12 +27,12 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.h2.generated
 	/**
 	 * The column <code>PUBLIC.V_LIBRARY.AUTHOR</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR, V_LIBRARY);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), V_LIBRARY);
 
 	/**
 	 * The column <code>PUBLIC.V_LIBRARY.TITLE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, V_LIBRARY);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), V_LIBRARY);
 
 	/**
 	 * No further instances allowed

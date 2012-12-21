@@ -47,7 +47,7 @@ import org.jooq.impl.SQLDataType;
  * @see <a href="http://infocenter.sybase.com/help/topic/com.sybase.help.sqlanywhere.12.0.0/dbreference/rf-datatypes.html">http://infocenter.sybase.com/help/topic/com.sybase.help.sqlanywhere.12.0.0/dbreference/rf-datatypes.html</a>
  * @author Espen Stromsnes
  */
-public class SybaseDataType<T> {
+public class SybaseDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

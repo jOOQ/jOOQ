@@ -52,7 +52,7 @@ import org.jooq.impl.SQLDataType;
  * @author Lukas Eder
  * @see <a href="http://msdn.microsoft.com/en-us/library/aa258271%28v=sql.80%29.aspx">http://msdn.microsoft.com/en-us/library/aa258271%28v=sql.80%29.aspx</a>
  */
-public class SQLServerDataType<T> {
+public class SQLServerDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

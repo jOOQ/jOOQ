@@ -51,7 +51,7 @@ import org.jooq.impl.SQLDataType;
  * @see <a href="http://publib.boulder.ibm.com/infocenter/db2luw/v9/index.jsp?topic=/com.ibm.db2.udb.apdv.java.doc/doc/rjvjdata.htm">http://publib.boulder.ibm.com/infocenter/db2luw/v9/index.jsp?topic=/com.ibm.db2.udb.apdv.java.doc/doc/rjvjdata.htm</a>
  * @author Espen Stromsnes
  */
-public class DB2DataType<T> {
+public class DB2DataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

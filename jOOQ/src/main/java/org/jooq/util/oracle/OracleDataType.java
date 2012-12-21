@@ -57,7 +57,7 @@ import org.jooq.types.YearToMonth;
  * @see <a href="http://www.techonthenet.com/oracle/datatypes.php">http://www.techonthenet.com/oracle/datatypes.php</a>
  * @see <a href="http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14261/datatypes.htm">http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14261/datatypes.htm</a>
  */
-public class OracleDataType<T> {
+public class OracleDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

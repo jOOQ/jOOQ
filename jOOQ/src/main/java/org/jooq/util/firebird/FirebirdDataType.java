@@ -54,7 +54,7 @@ import org.jooq.types.YearToMonth;
  *
  * @author Lukas Eder
  */
-public class FirebirdDataType<T> {
+public class FirebirdDataType {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof

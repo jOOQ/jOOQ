@@ -81,20 +81,68 @@ public abstract class AbstractDataType<T> implements DataType<T> {
      * Generated UID
      */
     private static final long                            serialVersionUID = 4155588654449505119L;
+
+    // -------------------------------------------------------------------------
+    // Data type caches
+    // -------------------------------------------------------------------------
+
+    /**
+     * A cache for dialect-specific data types by normalised
+     */
     private static final Map<String, DataType<?>>[]      TYPES_BY_NAME;
+
+    /**
+     * A cache for dialect-specific data types by Java type
+     */
     private static final Map<Class<?>, DataType<?>>[]    TYPES_BY_TYPE;
+
+    /**
+     * A cache for dialect-specific data types by SQL DataTypes
+     */
     private static final Map<DataType<?>, DataType<?>>[] TYPES_BY_SQL_DATATYPE;
+
+    /**
+     * A cache for SQL DataTypes by Java type
+     */
     private static final Map<Class<?>, DataType<?>>      SQL_DATATYPES_BY_TYPE;
 
+    // -------------------------------------------------------------------------
+    // Data type attributes
+    // -------------------------------------------------------------------------
+
+    /**
+     * The SQL dialect associated with this data type
+     */
     private final SQLDialect                             dialect;
 
+    /**
+     * The SQL DataType corresponding to this data type
+     */
     private final SQLDataType<T>                         sqlDataType;
-    private final Class<T>                               type;
-    private final String                                 castTypeName;
-    private final String                                 typeName;
 
+    /**
+     * The Java class corresponding to this data type
+     */
+    private final Class<T>                               type;
+
+    /**
+     * The Java class corresponding to arrays of this data type
+     */
     private final Class<T[]>                             arrayType;
 
+    /**
+     * The type name used for casting to this type
+     */
+    private final String                                 castTypeName;
+
+    /**
+     * The type name
+     */
+    private final String                                 typeName;
+
+    /**
+     * Whether this type has allows for precision and scale
+     */
     private final boolean                                hasPrecisionAndScale;
 
     static {
